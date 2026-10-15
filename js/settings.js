@@ -106,33 +106,20 @@
       document.querySelectorAll('.book-phonetic-dot').forEach((el) => {
         el.style.display = val ? '' : 'none';
       });
-      if (!isInitial && window.showToast) {
-        window.showToast(val ? '💡 한글 발음 표기가 켜졌습니다.' : '💡 한글 발음 표기가 꺼졌습니다.', '✨');
-      }
     } else if (key === 'autoPlayAudio') {
-      if (!isInitial && window.showToast) {
-        window.showToast(val ? '🔊 원어민 발음 자동 재생이 켜졌습니다.' : '🔇 원어민 발음 자동 재생이 꺼졌습니다.', '🎙️');
-      }
+      // no toast
     } else if (key === 'soundEffects') {
       if (!isInitial) {
         if (val && typeof window.playSuccessChime === 'function') {
           try { window.playSuccessChime(); } catch (_) {}
         }
-        if (window.showToast) {
-          window.showToast(val ? '🎵 효과음 및 사운드가 켜졌습니다.' : '🔇 효과음 및 사운드가 꺼졌습니다.', '✨');
-        }
       }
     } else if (key === 'hapticFeedback') {
       if (!isInitial) {
         if (val) triggerHaptic(40);
-        if (window.showToast) {
-          window.showToast(val ? '📳 햅틱 진동 피드백이 켜졌습니다.' : '📳 햅틱 진동 피드백이 꺼졌습니다.', '⚡');
-        }
       }
     } else if (key === 'dailyReminder') {
-      if (!isInitial && window.showToast) {
-        window.showToast(val ? '학습 리마인더가 설정되었습니다' : '학습 리마인더가 해제되었습니다', val ? '⏰' : '🔕');
-      }
+      // no toast
     } else if (key === 'reminderTime') {
       const timeText = document.getElementById('settings-reminder-time-text');
       if (timeText) {
@@ -207,7 +194,7 @@
         window.applyProfileAvatar(profileVal);
       } else {
         const file = (profileVal.split('/').pop().split('?')[0]) || 'profile-spanish.webp';
-        const src = `assets/profiles/${file}?v=5`;
+        const src = `assets/profiles/${file}?v=7`;
         if (settingsAvatarImg) settingsAvatarImg.src = src;
         if (statsAvatarImg) statsAvatarImg.src = src;
         if (hallUserAvatar) hallUserAvatar.src = src;
@@ -434,10 +421,6 @@
     applySetting('reminderTime', finalTime, false);
 
     closeReminderModal();
-
-    if (window.showToast) {
-      window.showToast(`⏰ 알림 시간이 ${formatKoreanTime(finalTime)}(으)로 설정되었습니다.`, '🔔');
-    }
     triggerHaptic(40);
   }
 

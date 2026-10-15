@@ -308,13 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM Helpers
   const el = (id) => document.getElementById(id), setText = (id, txt) => { const node = el(id); if (node) node.textContent = txt; }, on = (id, evt, fn) => { const node = el(id); if (node) node.addEventListener(evt, fn); };
 
-  // 2. Global Toast & Modal Toggle
-  window.showToast = function (message, icon = '🎉') {
-    const toast = el('course-toast'); if (!toast) return;
-    setText('toast-icon', icon); setText('toast-msg', message);
-    toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none'); toast.classList.add('opacity-100', 'translate-y-0');
-    setTimeout(() => { toast.classList.remove('opacity-100', 'translate-y-0'); toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none'); }, 2200);
-  };
+  // 2. Global Toast & Notifications completely disabled per requirements
+  window.showToast = function () {};
+  window.showNotification = function () {};
 
   function toggleModal(backdrop, card, open, anim = 'fade') {
     if (backdrop) {
@@ -915,12 +911,6 @@ document.addEventListener('DOMContentLoaded', () => {
         courseMenu.classList.add('hidden', 'opacity-0', '-translate-y-2', 'pointer-events-none');
         courseMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
       }
-
-      if (typeof showToast === 'function') {
-        showToast(`${title} 코스로 변경되었습니다!`, icon);
-      } else if (typeof window.showToast === 'function') {
-        window.showToast(`${title} 코스로 변경되었습니다!`, icon);
-      }
     };
   }
 
@@ -957,7 +947,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.renderBookCourseDropdown(modalSelectedCourse, selectedCourse);
     }
     window.closeLanguageModal();
-    window.showToast(`${c.flag} ${c.name} 학습을 시작합니다!`, '🚀');
   });
 
   // 6. Streak & Profile Modals & Bottom Tabs
@@ -2358,7 +2347,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=5`;
+    return `assets/profiles/${file}?v=7`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -2568,10 +2557,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       applyProfileAvatar(selectedAvatarFile);
       syncHallOfFameAvatar();
-
-      if (typeof window.showToast === 'function') {
-        window.showToast(`🐱 ${targetName}로 프로필이 변경되었습니다!`, '✨');
-      }
     });
   });
 
@@ -2660,7 +2645,6 @@ document.addEventListener('DOMContentLoaded', () => {
       syncHallOfFameAvatar();
 
       window.closeProfileModal();
-      window.showToast('✅ 프로필이 성공적으로 저장되었습니다!', '✨');
     });
   }
 
