@@ -194,7 +194,7 @@
         window.applyProfileAvatar(profileVal);
       } else {
         const file = (profileVal.split('/').pop().split('?')[0]) || 'profile-spanish.webp';
-        const src = `assets/profiles/${file}?v=7`;
+        const src = `assets/profiles/${file}?v=8`;
         if (settingsAvatarImg) settingsAvatarImg.src = src;
         if (statsAvatarImg) statsAvatarImg.src = src;
         if (hallUserAvatar) hallUserAvatar.src = src;
@@ -206,6 +206,13 @@
     if (statsNick && settingsNick && statsNick.textContent) {
       settingsNick.textContent = statsNick.textContent;
     }
+
+    // 학습 언어 설정 표시 동기화
+    const curLang = (window.currentLanguage || window.currentActiveCourse || localStorage.getItem('vocadash_language') || 'es') === 'en' ? 'en' : 'es';
+    const sFlag = document.getElementById('settings-current-lang-flag');
+    if (sFlag) sFlag.textContent = (curLang === 'en') ? '🇺🇸' : '🇪🇸';
+    const sDesc = document.getElementById('settings-current-lang-desc');
+    if (sDesc) sDesc.textContent = (curLang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (여행 필수 패턴)';
 
     // 전체 발음 힌트 표시 상태 재적용
     applySetting('showPhonetic', !!s.showPhonetic, true);

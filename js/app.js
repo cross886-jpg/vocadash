@@ -222,8 +222,17 @@ document.addEventListener('DOMContentLoaded', () => {
   window.nodeProgressMap = loadNodeProgress();
   window.saveNodeProgress = saveNodeProgress;
   window.currentSessionQuestions = [];
-  window.currentActiveCourse = 'es';
-  window.currentLanguage = 'es';
+
+  function getSavedLanguage() {
+    try {
+      const val = localStorage.getItem('vocadash_language');
+      if (val === 'en' || val === 'es') return val;
+    } catch (_) {}
+    return 'es';
+  }
+  window.getSavedLanguage = getSavedLanguage;
+  window.currentActiveCourse = getSavedLanguage();
+  window.currentLanguage = window.currentActiveCourse;
 
   function getSavedCourseId() {
     try {
@@ -256,42 +265,65 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '기초 회화', mascotImg: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCP0JQeI4Dd0jPH-7xXCEyBdJGSJA_0M64KbAE-BGazI8m_Obek3-febLbZP6EApI5kIvctYdTgN57X-U5nDsngc4keOpz7pTToB_R_h2Nuke2HhcMaG1hqDMvsZ0hh5qomDeqXWBP2n8FjE5YcJL73OjopNvSrmb8ef0s2B_SxahJe5VqHYYipsHTcjQ9kMmU1oFP7LTlY43K7fuqHEp34Kj_Gsvs2RS6VS6D866u7NtJt3qW6-cGI', ctaText: '스페인어로 학습하기' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '기초 회화', mascotImg: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=240&q=80', ctaText: '영어로 학습하기' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.png?v=8', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.png?v=8', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
-    basic: {
-      'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱' },
-      'node-2': { title: '2과: 감사/사과', desc: 'Gracias, Por favor, Lo siento 등 필수 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏' },
-      'node-3': { title: '3과: 숫자/시간', desc: '1부터 100까지의 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰' },
-      'node-boss': { title: '4과: 일상 기초 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑' }
+    es: {
+      basic: {
+        'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱' },
+        'node-2': { title: '2과: 감사/사과', desc: 'Gracias, Por favor, Lo siento 등 필수 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏' },
+        'node-3': { title: '3과: 숫자/시간', desc: '1부터 100까지의 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰' },
+        'node-boss': { title: '4과: 일상 기초 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑' }
+      },
+      travel: {
+        'node-1': { title: '1과: 기내 기본 표현', desc: '좌석 요청, 음료 주문, 착륙 안내 등 비행기 탑승 필수 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️' },
+        'node-2': { title: '2과: 입국 심사', desc: '입국 목적, 체류 기간, 숙소 위치 등 필수 공항 인터뷰 질문과 핵심 어휘 10개 및 실전 문장 3개를 마스터하세요!', icon: '🛂' },
+        'node-3': { title: '3과: 수하물 찾기와 세관', desc: '수하물 수취대 찾기, 분실물 신고, 세관 검사 필수 표현과 실전문장 13개를 마스터해보세요!', icon: '🧳' },
+        'node-boss': { title: '보스전: 공항 마스터 관문', desc: '입국 심사 완벽 통과 & 특별 보상', icon: '👑' }
+      },
+      dele: {
+        'node-1': { title: '1과: DELE A1 필수 어휘', desc: '기초 문법과 A1 빈출 단어 50선', icon: '📝' },
+        'node-2': { title: '2과: DELE A2 어휘와 독해', desc: '중급 도약을 위한 일상 독해 어휘', icon: '📖' },
+        'node-3': { title: '3과: DELE B1 핵심 표현', desc: '의견 표현과 논리적 문장 구성 어휘', icon: '🎓' },
+        'node-boss': { title: '4과: DELE 실전 모의테스트', desc: 'DELE 시험 완벽 대비 실전 문제', icon: '👑' }
+      },
+      business: {
+        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝' },
+        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼' },
+        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧' },
+        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑' }
+      }
     },
-    travel: {
-      'node-1': { title: '1과: 기내 기본 표현', desc: '좌석 요청, 음료 주문, 착륙 안내 등 비행기 탑승 필수 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️' },
-      'node-2': { title: '2과: 입국 심사', desc: '입국 목적, 체류 기간, 숙소 위치 등 필수 공항 인터뷰 질문과 핵심 어휘 10개 및 실전 문장 3개를 마스터하세요!', icon: '🛂' },
-      'node-3': { title: '3과: 수하물 찾기와 세관', desc: '수하물 수취대 찾기, 분실물 신고, 세관 검사 필수 표현과 실전문장 13개를 마스터해보세요!', icon: '🧳' },
-      'node-boss': { title: '보스전: 공항 마스터 관문', desc: '입국 심사 완벽 통과 & 특별 보상', icon: '👑' }
-    },
-    dele: {
-      'node-1': { title: '1과: DELE A1 필수 어휘', desc: '기초 문법과 A1 빈출 단어 50선', icon: '📝' },
-      'node-2': { title: '2과: DELE A2 어휘와 독해', desc: '중급 도약을 위한 일상 독해 어휘', icon: '📖' },
-      'node-3': { title: '3과: DELE B1 핵심 표현', desc: '의견 표현과 논리적 문장 구성 어휘', icon: '🎓' },
-      'node-boss': { title: '4과: DELE 실전 모의테스트', desc: 'DELE 시험 완벽 대비 실전 문제', icon: '👑' }
-    },
-    business: {
-      'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝' },
-      'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼' },
-      'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧' },
-      'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑' }
-    },
-    toeic: {
-      'node-1': { title: '1과: Part 1/2 빈출 어휘', desc: '사진 묘사 및 질의응답 핵심 단어', icon: '🎧' },
-      'node-2': { title: '2과: Part 3/4 비즈니스 회화', desc: '대화 및 설명문 빈출 표현', icon: '💬' },
-      'node-3': { title: '3과: Part 5/6 문법/어휘', desc: '단문 및 장문 공란 메우기 핵심 단어', icon: '📄' },
-      'node-boss': { title: '4과: Part 7 독해 실전 마스터', desc: '장문 독해 및 이메일/기사 지문 완성', icon: '👑' }
+    en: {
+      basic: {
+        'node-1': { title: '1과: 인사/기초 표현', desc: 'Hello, Thank you, Please 등 매일 쓰는 첫인사와 필수 기초 회화를 마스터하세요!', icon: '🌱' },
+        'node-2': { title: '2과: 감사/사과 표현', desc: 'Thank you, Sorry, Excuse me 등 필수 영어 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏' },
+        'node-3': { title: '3과: 숫자와 시간', desc: '1부터 100까지의 영어 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰' },
+        'node-boss': { title: '4과: 필수 회화 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑' }
+      },
+      travel: {
+        'node-1': { title: '1과: 기내 필수 영어', desc: 'Water, Blanket, Aisle seat 등 비행기 탑승 필수 영어 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️' },
+        'node-2': { title: '2과: 공항 & 입국 심사', desc: 'Passport, Purpose of visit 등 입국 심사 핵심 영어 어휘와 문장 마스터!', icon: '🛂' },
+        'node-3': { title: '3과: 수하물 찾기와 세관', desc: 'Baggage claim, Customs 등 수하물 분실 신고와 세관 통관 표현 마스터!', icon: '🧳' },
+        'node-boss': { title: '보스전: 여행 영어 마스터', desc: '여행 영어 완벽 마스터 & 특별 보상', icon: '👑' }
+      },
+      toeic: {
+        'node-1': { title: '1과: Part 1/2 빈출 어휘', desc: '사진 묘사 및 질의응답 핵심 단어', icon: '🎧' },
+        'node-2': { title: '2과: Part 3/4 비즈니스 회화', desc: '대화 및 설명문 빈출 표현', icon: '💬' },
+        'node-3': { title: '3과: Part 5/6 문법/어휘', desc: '단문 및 장문 공란 메우기 핵심 단어', icon: '📄' },
+        'node-boss': { title: '4과: Part 7 독해 실전 마스터', desc: '장문 독해 및 이메일/기사 지문 완성', icon: '👑' }
+      },
+      business: {
+        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝' },
+        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼' },
+        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧' },
+        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑' }
+      }
     }
   };
+  Object.assign(COURSE_LESSONS, COURSE_LESSONS.es);
   window.COURSE_LESSONS = COURSE_LESSONS;
   window.nodeLessonData = COURSE_LESSONS.basic;
 
@@ -375,8 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function updateRoadmapNodesUI() {
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
-    const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || COURSE_LESSONS.basic;
+    const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
+    const lessons = langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic;
 
     // Node 1 타이틀 및 버튼 타이틀 동적 반영
     const node1Title = el('node-1-title') || document.querySelector('[data-node-id="node-1"] .font-label-md');
@@ -931,22 +965,180 @@ document.addEventListener('DOMContentLoaded', () => {
   window.closeLanguageModal = () => toggleModal(langBackdrop, langCard, false);
   on('logo-lang-trigger', 'click', window.openLanguageModal);
   on('close-modal-btn', 'click', window.closeLanguageModal);
-  if (cardEs) cardEs.addEventListener('click', () => updateModalCardsUI('es'));
-  if (cardEn) cardEn.addEventListener('click', () => updateModalCardsUI('en'));
+  // ===================================================
+  // 5-B. 마스코트 고양이 캐릭터 및 전역 언어 상태 동기화
+  // ===================================================
+  function updateMascotCharacters(targetLang) {
+    const lang = (targetLang === 'en') ? 'en' : 'es';
+    const v = '?v=8';
+
+    // 1. Flashcard mascot
+    const flashcardMascot = document.getElementById('flashcard-mascot-img');
+    if (flashcardMascot) {
+      flashcardMascot.src = 'assets/characters/' + lang + '-study.png' + v;
+    }
+
+    // 2. Game result clear mascot
+    const resultMascot = document.getElementById('result-mascot-img');
+    if (resultMascot) {
+      resultMascot.src = 'assets/characters/' + lang + '-victory.png' + v;
+    }
+
+    // 3. Game over card mascot
+    const gameoverMascot = document.querySelector('#game-result-gameover-card img');
+    if (gameoverMascot) {
+      gameoverMascot.src = 'assets/characters/' + lang + '-sad.png' + v;
+    }
+
+    // 4. Roadmap speed review banner mascot
+    const reviewMascot = document.querySelector('#review-cat-banner-tile img');
+    if (reviewMascot) {
+      reviewMascot.src = 'assets/characters/' + lang + '-run.png' + v;
+    }
+
+    // 5. Book sticker mascot
+    const bookMascot = document.querySelector('#book-screen img[alt*="scholarly"]') || document.querySelector('#book-screen img[src*="characters/"]');
+    if (bookMascot) {
+      bookMascot.src = 'assets/characters/' + lang + '-study.png' + v;
+    }
+
+    // 6. Language modal preview mascots
+    const modalEs = document.getElementById('mascot-img-es');
+    if (modalEs) modalEs.src = 'assets/characters/es-study.png' + v;
+    const modalEn = document.getElementById('mascot-img-en');
+    if (modalEn) modalEn.src = 'assets/characters/en-study.png' + v;
+  }
+  window.updateMascotCharacters = updateMascotCharacters;
+
+  function renderBookWords(targetLang, courseId) {
+    const lang = (targetLang === 'en') ? 'en' : 'es';
+    const container = document.getElementById('book-words-container');
+    if (!container) return;
+
+    const chapterTitleEl = document.getElementById('book-chapter-title');
+    if (chapterTitleEl) {
+      chapterTitleEl.textContent = lang === 'en'
+        ? '1과: 인사/기초 표현 (필수 회화 & 어휘)'
+        : '1과: 인사/안부 (여행 필수 패턴)';
+    }
+
+    const wordsData = lang === 'en' ? [
+      { term: 'Hello', meaning: '안녕 / 안녕하세요', phonetic: '[헬로우]', star: true },
+      { term: 'Water', meaning: '물', phonetic: '[워터]', star: false },
+      { term: 'Please', meaning: '부탁합니다 / 제발', phonetic: '[플리즈]', star: false },
+      { term: 'Thank you', meaning: '감사합니다 / 고마워', phonetic: '[땡큐]', star: true },
+      { term: 'Passport', meaning: '여권', phonetic: '[패스포트]', star: false },
+      { term: 'Visa', meaning: '비자 / 입국 허가', phonetic: '[비자]', star: false },
+      { term: 'Purpose', meaning: '방문 목적', phonetic: '[퍼포스]', star: false },
+      { term: 'Tourism', meaning: '관광 / 여행', phonetic: '[투어리즘]', star: false },
+      { term: 'Luggage', meaning: '수하물 / 짐', phonetic: '[러기지]', star: false },
+      { term: 'Ticket', meaning: '항공권 / 탑승권', phonetic: '[티켓]', star: false },
+      { term: 'Aisle seat', meaning: '통로 좌석', phonetic: '[아일 시트]', star: false },
+      { term: 'Restroom', meaning: '화장실', phonetic: '[레스트룸]', star: false }
+    ] : [
+      { term: '¡Hola!', meaning: '안녕 / 안녕하세요', phonetic: '[올라]', star: true },
+      { term: 'Agua', meaning: '물', phonetic: '[아구아]', star: false },
+      { term: 'Por favor', meaning: '부탁합니다 / 제발', phonetic: '[포르 파보르]', star: false },
+      { term: 'Gracias', meaning: '감사합니다 / 고마워', phonetic: '[그라시아스]', star: true },
+      { term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', star: false },
+      { term: 'Visado', meaning: '비자 / 입국 허가', phonetic: '[비사도]', star: false },
+      { term: 'Propósito', meaning: '방문 목적', phonetic: '[프로포시토]', star: false },
+      { term: 'Turismo', meaning: '관광 / 여행', phonetic: '[투리스모]', star: false },
+      { term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', star: false },
+      { term: 'Billete', meaning: '항공권 / 탑승권', phonetic: '[비예테]', star: false },
+      { term: 'Asiento', meaning: '좌석 / 자리', phonetic: '[아시엔토]', star: false },
+      { term: 'Baño', meaning: '화장실', phonetic: '[바뇨]', star: false }
+    ];
+
+    const cards = container.querySelectorAll('.book-word-card');
+    cards.forEach(c => c.remove());
+
+    const isPhoneticVisible = window.vocadashSettings ? !!window.vocadashSettings.showPhonetic : true;
+    const phoneticStyle = isPhoneticVisible ? '' : 'style="display: none;"';
+
+    wordsData.forEach(item => {
+      const art = document.createElement('article');
+      art.className = 'book-word-card bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between mb-3 transition-all hover:shadow-md';
+      art.dataset.term = item.term;
+      art.dataset.meaning = item.meaning;
+      art.innerHTML = `
+        <div class="flex flex-col min-w-0 pr-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-bold text-slate-800 tracking-tight">${escapeHTML(item.term)}</span>
+            <button aria-label="발음 듣기" class="book-audio-btn text-slate-400 hover:text-emerald-500 p-0.5 transition-colors cursor-pointer" type="button">
+              <span class="material-symbols-outlined text-[20px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+            </button>
+          </div>
+          <span class="text-xs text-slate-400 font-medium mt-0.5">
+            <span class="book-phonetic phonetic-hint" ${phoneticStyle}>${escapeHTML(item.phonetic)}</span>
+            <span class="book-phonetic-dot text-slate-300 font-bold mx-0.5" ${phoneticStyle}>·</span>
+            <span class="text-slate-700 font-semibold text-[13px]">${escapeHTML(item.meaning)}</span>
+          </span>
+        </div>
+        <button aria-label="즐겨찾기" class="book-star-btn w-9 h-9 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center ${item.star ? 'text-amber-400' : 'text-slate-300'} active:scale-90 transition-all cursor-pointer" type="button">
+          <span class="material-symbols-outlined text-[20px]" ${item.star ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>star</span>
+        </button>
+      `;
+      container.appendChild(art);
+    });
+
+    initBookScreenEvents();
+  }
+  window.renderBookWords = renderBookWords;
+
+  function setLanguage(targetLang) {
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : 'es';
+    window.currentActiveCourse = lang;
+    window.currentLanguage = lang;
+    try {
+      localStorage.setItem('vocadash_language', lang);
+    } catch (_) {}
+
+    // 1. Settings screen 학습 언어 UI 즉시 갱신
+    const settingsFlag = document.getElementById('settings-current-lang-flag');
+    if (settingsFlag) {
+      settingsFlag.textContent = (lang === 'en') ? '🇺🇸' : '🇪🇸';
+    }
+    const settingsDesc = document.getElementById('settings-current-lang-desc');
+    if (settingsDesc) {
+      settingsDesc.textContent = (lang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (여행 필수 패턴)';
+    }
+
+    // 2. 상단 헤더 국기 이모지 즉시 갱신
+    const headerFlag = document.getElementById('header-flag-emoji');
+    if (headerFlag) {
+      headerFlag.textContent = (lang === 'en') ? '🇺🇸' : '🇪🇸';
+    }
+
+    // 3. 코스 및 단어장 드롭다운 목록 즉시 갱신
+    const selectedCourse = window.currentCourseId || 'basic';
+    renderCourseDropdown(lang, selectedCourse);
+    if (typeof window.renderBookCourseDropdown === 'function') {
+      window.renderBookCourseDropdown(lang, selectedCourse);
+    }
+
+    // 4. 로드맵 노드 및 스테이지 타이틀 갱신
+    updateRoadmapNodesUI();
+
+    // 5. 단어장 단어 갱신
+    renderBookWords(lang, selectedCourse);
+
+    // 6. 캐릭터 마스코트 prefix (es-* <-> en-*) 갱신
+    updateMascotCharacters(lang);
+
+    // 7. 언어 선택 모달 내 상태 갱신 및 창 닫기 (토스트/알림 배너 없이 즉각 반영)
+    updateModalCardsUI(lang);
+    window.closeLanguageModal();
+  }
+  window.setLanguage = setLanguage;
+  window.changeCourse = setLanguage;
+  window.changeLanguage = setLanguage;
+
+  if (cardEs) cardEs.addEventListener('click', () => setLanguage('es'));
+  if (cardEn) cardEn.addEventListener('click', () => setLanguage('en'));
 
   on('cta-start-btn', 'click', () => {
-    window.currentActiveCourse = modalSelectedCourse;
-    window.currentLanguage = modalSelectedCourse;
-    const c = window.courseData[modalSelectedCourse];
-    const headerMascot = el('header-mascot-img');
-    if (headerMascot) headerMascot.src = c.mascotImg;
-    setText('header-flag-emoji', c.flag);
-    const selectedCourse = window.currentCourseId || 'basic';
-    renderCourseDropdown(modalSelectedCourse, selectedCourse);
-    if (typeof window.renderBookCourseDropdown === 'function') {
-      window.renderBookCourseDropdown(modalSelectedCourse, selectedCourse);
-    }
-    window.closeLanguageModal();
+    setLanguage(modalSelectedCourse || 'es');
   });
 
   // 6. Streak & Profile Modals & Bottom Tabs
@@ -2347,7 +2539,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=7`;
+    return `assets/profiles/${file}?v=8`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -2987,12 +3179,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }, true);
 
   const initialCourse = window.currentCourseId || getSavedCourseId() || 'basic';
-  renderCourseDropdown(window.currentActiveCourse, initialCourse);
-  renderBookCourseDropdown(window.currentActiveCourse, initialCourse);
+  const initialLang = getSavedLanguage();
+  setLanguage(initialLang);
   updateWrongWordsBadge();
   renderReviewWords('waiting');
-  updateRoadmapNodesUI();
-  initBookScreenEvents();
   syncBookPhoneticSetting();
   initHallOfFameEvents();
 });
