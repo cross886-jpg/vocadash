@@ -2337,27 +2337,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 프로필 편집 모달 내부 인터랙션
-  const DEFAULT_AVATAR_SRC = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23D1FAE5'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E🐱%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🇪🇸%3C/text%3E%3C/svg%3E";
+  // 프로필 편집 및 고양이 아바타 연동 로직
+  const VALID_AVATAR_FILES = [
+    'profile-spanish.webp',
+    'profile-english.webp',
+    'profile-artist.webp',
+    'profile-explorer.webp'
+  ];
 
-  let selectedAvatarSrc = DEFAULT_AVATAR_SRC;
+  function resolveAvatarFile(val) {
+    if (!val) return 'profile-spanish.webp';
+    const clean = String(val).split('?')[0];
+    const filename = clean.split('/').pop();
+    if (VALID_AVATAR_FILES.includes(filename)) return filename;
+    if (clean.includes('english') || clean.includes('sunglass')) return 'profile-english.webp';
+    if (clean.includes('artist') || clean.includes('scholar')) return 'profile-artist.webp';
+    if (clean.includes('explorer') || clean.includes('relax')) return 'profile-explorer.webp';
+    return 'profile-spanish.webp';
+  }
+
+  function resolveAvatarSrc(val) {
+    const file = resolveAvatarFile(val);
+    return `assets/profiles/${file}`;
+  }
+
+  let selectedAvatarFile = 'profile-spanish.webp';
   try {
-    const userProfileStr = localStorage.getItem('userProfile');
-    if (userProfileStr) {
-      const parsed = JSON.parse(userProfileStr);
-      if (parsed && parsed.avatar && !parsed.avatar.includes('lh3.googleusercontent.com/aida/')) {
-        selectedAvatarSrc = parsed.avatar;
+    const savedProfile = localStorage.getItem('vocadash_profile');
+    if (savedProfile) {
+      selectedAvatarFile = resolveAvatarFile(savedProfile);
+    } else {
+      const savedAvatar = localStorage.getItem('vocadash_profile_avatar');
+      if (savedAvatar && !savedAvatar.includes('lh3.googleusercontent.com/aida/')) {
+        selectedAvatarFile = resolveAvatarFile(savedAvatar);
+      } else {
+        const userProfileStr = localStorage.getItem('userProfile');
+        if (userProfileStr) {
+          const parsed = JSON.parse(userProfileStr);
+          if (parsed && (parsed.profile || parsed.avatar)) {
+            selectedAvatarFile = resolveAvatarFile(parsed.profile || parsed.avatar);
+          }
+        }
       }
     }
   } catch (_) {}
-  if (selectedAvatarSrc === DEFAULT_AVATAR_SRC) {
-    try {
-      const saved = localStorage.getItem('vocadash_profile_avatar');
-      if (saved && !saved.includes('lh3.googleusercontent.com/aida/')) {
-        selectedAvatarSrc = saved;
-      }
-    } catch (_) {}
-  }
+
+  let selectedAvatarSrc = resolveAvatarSrc(selectedAvatarFile);
 
   let selectedTitle = '초급 마스터';
   try {
@@ -2387,14 +2412,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (statsTitleBadge) statsTitleBadge.textContent = selectedTitle;
   } catch (_) {}
 
-  function applyProfileAvatar(src) {
-    if (!src) return;
-    const currentAvatarImg = document.getElementById('current-avatar-img');
-    if (currentAvatarImg) currentAvatarImg.src = src;
+  function applyProfileAvatar(srcOrFile) {
+    if (!srcOrFile) return;
+    const file = resolveAvatarFile(srcOrFile);
+    const src = resolveAvatarSrc(file);
+    selectedAvatarFile = file;
+    selectedAvatarSrc = src;
 
+    // 1. 헤더 아바타
+    const headerMascotImg = document.getElementById('header-mascot-img');
+    if (headerMascotImg) {
+      headerMascotImg.src = src;
+      headerMascotImg.className = 'w-full h-full object-cover rounded-full';
+    }
+
+    // 2. 모달 내 메인 프리뷰
+    const currentAvatarImg = document.getElementById('current-avatar-img');
+    if (currentAvatarImg) {
+      currentAvatarImg.src = src;
+      currentAvatarImg.className = 'w-full h-full object-cover rounded-full transition-transform duration-200';
+    }
+
+    // 3. 통계 화면 아바타
     const statsAvatarImg = document.getElementById('stats-avatar-img');
     if (statsAvatarImg) statsAvatarImg.src = src;
 
+    // 4. 설정 화면 배너 아바타
     const settingsAvatarImg = document.getElementById('settings-streak-avatar-img') || document.getElementById('settings-avatar-img');
     if (settingsAvatarImg) settingsAvatarImg.src = src;
 
@@ -2404,29 +2447,66 @@ document.addEventListener('DOMContentLoaded', () => {
       if (bannerImg) bannerImg.src = src;
     }
 
-    // 명예의 전당 아바타 동기화
+    // 5. 명예의 전당 아바타 동기화
     const hallUserAvatar = document.getElementById('hall-user-avatar');
     if (hallUserAvatar) hallUserAvatar.src = src;
     const hallHeaderAvatar = document.getElementById('hall-header-avatar');
     if (hallHeaderAvatar) hallHeaderAvatar.src = src;
+
+    // 6. 설정 화면 빠른 선택 그리드 UI 동기화
+    document.querySelectorAll('.quick-avatar-btn').forEach((btn) => {
+      const btnFile = btn.dataset.avatarFile;
+      const isSelected = (btnFile === file);
+      const ring = btn.querySelector('.quick-avatar-ring');
+      const chk = btn.querySelector('.quick-avatar-check');
+      const lbl = btn.querySelector('.quick-avatar-label');
+      if (ring) {
+        ring.className = isSelected
+          ? 'quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all ring-2 ring-primary/20'
+          : 'quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
+      }
+      if (chk) chk.classList.toggle('hidden', !isSelected);
+      if (lbl) {
+        lbl.className = isSelected
+          ? 'quick-avatar-label text-[11px] font-bold text-primary mt-1.5 truncate max-w-[64px]'
+          : 'quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]';
+      }
+    });
+
+    // 7. 모달 내 아바타 선택 그리드 UI 동기화
+    document.querySelectorAll('.avatar-option').forEach((opt) => {
+      const optFile = resolveAvatarFile(opt.dataset.avatarFile || opt.dataset.avatarSrc);
+      const isSelected = (optFile === file);
+      const ring = opt.querySelector('.avatar-ring') || opt.querySelector('div');
+      const chk = opt.querySelector('.avatar-check');
+      const lbl = opt.querySelector('.avatar-label');
+      if (ring) {
+        ring.className = isSelected
+          ? 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs ring-2 ring-emerald-400/20'
+          : 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
+      }
+      if (chk) chk.classList.toggle('hidden', !isSelected);
+      if (lbl) {
+        lbl.className = isSelected
+          ? 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]'
+          : 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
+      }
+    });
   }
 
   function syncHallOfFameAvatar() {
     let avatarSrc = null;
     try {
-      const userProfileStr = localStorage.getItem('userProfile');
-      if (userProfileStr) {
-        const parsed = JSON.parse(userProfileStr);
-        if (parsed && parsed.avatar && !parsed.avatar.includes('lh3.googleusercontent.com/aida/')) {
-          avatarSrc = parsed.avatar;
-        }
+      const savedProfile = localStorage.getItem('vocadash_profile');
+      if (savedProfile) {
+        avatarSrc = resolveAvatarSrc(savedProfile);
       }
     } catch (_) {}
     if (!avatarSrc) {
       try {
         const saved = localStorage.getItem('vocadash_profile_avatar');
         if (saved && !saved.includes('lh3.googleusercontent.com/aida/')) {
-          avatarSrc = saved;
+          avatarSrc = resolveAvatarSrc(saved);
         }
       } catch (_) {}
     }
@@ -2441,51 +2521,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.syncHallOfFameAvatar = syncHallOfFameAvatar;
+  window.applyProfileAvatar = applyProfileAvatar;
 
   // 초기 렌더링 시 아바타 및 UI 동기화
-  applyProfileAvatar(selectedAvatarSrc);
+  applyProfileAvatar(selectedAvatarFile);
 
-  // 아바타 선택 상태 초기화 및 클릭 이벤트 바인딩
+  // 상단 헤더 프로필 버튼 클릭 이벤트 (프로필 선택 모달 열기)
+  const headerProfileBtn = document.getElementById('btn-header-profile');
+  if (headerProfileBtn) {
+    headerProfileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (typeof window.openProfileModal === 'function') {
+        window.openProfileModal();
+      }
+    });
+  }
+
+  // 설정 화면 스트릭 배너 아바타 클릭 이벤트
+  const settingsStreakAvatarContainer = document.getElementById('settings-streak-avatar-container');
+  if (settingsStreakAvatarContainer) {
+    settingsStreakAvatarContainer.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (typeof window.openProfileModal === 'function') {
+        window.openProfileModal();
+      }
+    });
+  }
+
+  // 설정 화면 내 4종 고양이 즉시 변경 버튼 이벤트 바인딩
+  document.querySelectorAll('.quick-avatar-btn').forEach((btn) => {
+    btn.addEventListener('click', function () {
+      const targetFile = this.dataset.avatarFile || 'profile-spanish.webp';
+      const targetName = this.dataset.avatarName || '프로필 고양이';
+      selectedAvatarFile = targetFile;
+      selectedAvatarSrc = resolveAvatarSrc(targetFile);
+
+      try {
+        localStorage.setItem('vocadash_profile', selectedAvatarFile);
+        localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
+        const userProfileStr = localStorage.getItem('userProfile');
+        const parsed = userProfileStr ? JSON.parse(userProfileStr) : {};
+        parsed.profile = selectedAvatarFile;
+        parsed.avatar = selectedAvatarSrc;
+        localStorage.setItem('userProfile', JSON.stringify(parsed));
+      } catch (_) {}
+
+      applyProfileAvatar(selectedAvatarFile);
+      syncHallOfFameAvatar();
+
+      if (typeof window.showToast === 'function') {
+        window.showToast(`🐱 ${targetName}로 프로필이 변경되었습니다!`, '✨');
+      }
+    });
+  });
+
+  // 프로필 모달 내 아바타 선택 상태 및 클릭 이벤트 바인딩
   document.querySelectorAll('.avatar-option').forEach((opt) => {
-    const optSrc = opt.dataset.avatarSrc;
-    const isSelected = (optSrc === selectedAvatarSrc);
-    const ring = opt.querySelector('.avatar-ring') || opt.querySelector('div');
-    const chk = opt.querySelector('.avatar-check');
-    const lbl = opt.querySelector('.avatar-label');
-    if (ring) {
-      ring.className = isSelected
-        ? 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all'
-        : 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
-    }
-    if (chk) chk.classList.toggle('hidden', !isSelected);
-    if (lbl) {
-      lbl.className = isSelected
-        ? 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]'
-        : 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
-    }
-
     opt.addEventListener('click', function () {
+      const targetFile = this.dataset.avatarFile || resolveAvatarFile(this.dataset.avatarSrc);
+      selectedAvatarFile = targetFile;
+      selectedAvatarSrc = resolveAvatarSrc(targetFile);
+
       document.querySelectorAll('.avatar-option').forEach((o) => {
+        const oFile = o.dataset.avatarFile || resolveAvatarFile(o.dataset.avatarSrc);
+        const isCur = (oFile === targetFile);
         const oRing = o.querySelector('.avatar-ring') || o.querySelector('div');
-        if (oRing) {
-          oRing.className = 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
-        }
         const oChk = o.querySelector('.avatar-check');
-        if (oChk) oChk.classList.add('hidden');
         const oLbl = o.querySelector('.avatar-label');
-        if (oLbl) oLbl.className = 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
+        if (oRing) {
+          oRing.className = isCur
+            ? 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs ring-2 ring-emerald-400/20'
+            : 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
+        }
+        if (oChk) oChk.classList.toggle('hidden', !isCur);
+        if (oLbl) {
+          oLbl.className = isCur
+            ? 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]'
+            : 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
+        }
       });
 
-      const myRing = this.querySelector('.avatar-ring') || this.querySelector('div');
-      if (myRing) {
-        myRing.className = 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all';
-      }
-      const myChk = this.querySelector('.avatar-check');
-      if (myChk) myChk.classList.remove('hidden');
-      const myLbl = this.querySelector('.avatar-label');
-      if (myLbl) myLbl.className = 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]';
-
-      selectedAvatarSrc = this.dataset.avatarSrc || selectedAvatarSrc;
       const currentAvatarImg = document.getElementById('current-avatar-img');
       if (currentAvatarImg) currentAvatarImg.src = selectedAvatarSrc;
     });
@@ -2520,7 +2635,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const statsTitleBadge = document.getElementById('stats-title-badge');
       if (statsTitleBadge) statsTitleBadge.textContent = selectedTitle;
 
-      applyProfileAvatar(selectedAvatarSrc);
+      applyProfileAvatar(selectedAvatarFile);
 
       const settingsStreakBanner = document.getElementById('settings-streak-banner');
       if (settingsStreakBanner) {
@@ -2531,10 +2646,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
+        localStorage.setItem('vocadash_profile', selectedAvatarFile);
         localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
         localStorage.setItem('vocadash_profile_nickname', newNickname);
         localStorage.setItem('vocadash_profile_title', selectedTitle);
         localStorage.setItem('userProfile', JSON.stringify({
+          profile: selectedAvatarFile,
           avatar: selectedAvatarSrc,
           nickname: newNickname,
           title: selectedTitle

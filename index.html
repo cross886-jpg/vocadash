@@ -195,7 +195,7 @@
   </script>
 
   <!-- Custom CSS & Keyframe Animations -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -211,21 +211,26 @@
 
         <!-- Top Row: Logo / Flag Mascot Button & Stats Badges -->
         <div class="h-14 flex items-center justify-between">
-          <!-- 언어 선택 모달 트리거: 상단 좌측 로고/국기 영역 -->
-          <button id="logo-lang-trigger" type="button" class="flex items-center gap-2 p-1 -m-1 rounded-2xl cursor-pointer hover:bg-slate-100/70 active:scale-95 transition-all focus:outline-none select-none text-left" title="도전할 언어 선택">
-            <div class="relative flex-shrink-0 pointer-events-none">
-              <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-secondary-fixed ring-2 ring-secondary-container shadow-sm">
-                <img id="header-mascot-img" alt="스페인어 마스코트 고양이" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP0JQeI4Dd0jPH-7xXCEyBdJGSJA_0M64KbAE-BGazI8m_Obek3-febLbZP6EApI5kIvctYdTgN57X-U5nDsngc4keOpz7pTToB_R_h2Nuke2HhcMaG1hqDMvsZ0hh5qomDeqXWBP2n8FjE5YcJL73OjopNvSrmb8ef0s2B_SxahJe5VqHYYipsHTcjQ9kMmU1oFP7LTlY43K7fuqHEp34Kj_Gsvs2RS6VS6D866u7NtJt3qW6-cGI">
+          <div class="flex items-center gap-2">
+            <!-- 상단 프로필 고양이 아바타 버튼 (클릭 시 프로필 선택 모달 열기) -->
+            <button id="btn-header-profile" type="button" class="relative flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 transition-all p-0.5 rounded-full ring-2 ring-primary/25 hover:ring-primary focus:outline-none select-none" title="프로필 고양이 변경">
+              <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-secondary-fixed ring-1 ring-secondary-container shadow-sm">
+                <img id="header-mascot-img" alt="프로필 고양이" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp">
               </div>
-              <div class="absolute -bottom-1 -right-1 bg-surface-container-lowest border border-outline-variant/60 rounded-full px-1.5 py-0.5 shadow-sm flex items-center gap-0.5 text-[10px] font-bold leading-none ring-1 ring-surface shadow-sm">
+              <div class="absolute -bottom-1 -right-1 bg-surface-container-lowest border border-outline-variant/60 rounded-full w-4 h-4 shadow-sm flex items-center justify-center text-[9px] font-bold ring-1 ring-surface">
+                <span>✏️</span>
+              </div>
+            </button>
+
+            <!-- 언어 선택 모달 트리거: 상단 좌측 로고/국기 영역 -->
+            <button id="logo-lang-trigger" type="button" class="flex items-center gap-1.5 p-1 rounded-2xl cursor-pointer hover:bg-slate-100/70 active:scale-95 transition-all focus:outline-none select-none text-left" title="도전할 언어 선택">
+              <span class="font-headline-sm text-[20px] text-on-surface leading-tight font-extrabold tracking-tight">VocaDash</span>
+              <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-full px-1.5 py-0.5 shadow-sm flex items-center gap-0.5 text-[10px] font-bold leading-none ring-1 ring-surface">
                 <span id="header-flag-emoji" class="leading-none">🇪🇸</span>
                 <span class="text-[8px] text-on-surface-variant font-black leading-none">▾</span>
               </div>
-            </div>
-            <div class="flex flex-col select-none pointer-events-none">
-              <span class="font-headline-sm text-[20px] text-on-surface leading-tight font-extrabold tracking-tight">VocaDash</span>
-            </div>
-          </button>
+            </button>
+          </div>
 
           <div class="flex items-center gap-1.5">
             <button id="streak-trigger" type="button" class="flex items-center gap-1 px-2 py-0.5 bg-tertiary-fixed rounded-full shadow-[0_1px_0_0_#ffb690] cursor-pointer active-pop transition-transform" title="연속 학습 스트릭">
@@ -975,8 +980,8 @@
           <!-- Gamified Streak Mascot Banner -->
           <div id="settings-streak-banner" class="mt-2 mb-2 bg-surface-container rounded-2xl p-4 flex items-center justify-between shadow-xs relative overflow-hidden">
             <div class="flex items-center gap-3 z-10">
-              <div id="settings-streak-avatar-container" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-sm bg-surface-container-lowest flex items-center justify-center">
-                <img id="settings-streak-avatar-img" alt="스페인 캣 마스코트 아바타" class="w-full h-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23D1FAE5'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E🐱%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🇪🇸%3C/text%3E%3C/svg%3E" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-2xl select-none\'>🐱</div>';"/>
+              <div id="settings-streak-avatar-container" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-sm bg-surface-container-lowest flex items-center justify-center ring-2 ring-primary/30 cursor-pointer hover:scale-105 active:scale-95 transition-transform" title="프로필 변경">
+                <img id="settings-streak-avatar-img" alt="프로필 고양이 아바타" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp"/>
               </div>
               <div class="flex flex-col">
                 <div class="flex items-center gap-1.5">
@@ -989,11 +994,67 @@
                 <span id="settings-streak-level" class="font-body-sm text-xs text-on-surface-variant mt-0.5">레벨 12 · 초급 마스터</span>
               </div>
             </div>
-            <button id="btn-edit-profile-header" class="z-10 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary font-bold text-xs shadow-xs active:scale-95 transition-transform flex items-center gap-0.5 cursor-pointer" type="button">
+            <button id="btn-edit-profile-header" class="z-10 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary font-bold text-xs shadow-xs active:scale-95 transition-transform flex items-center gap-0.5 cursor-pointer" type="button" title="프로필 상세 편집">
               수정
               <span class="material-symbols-outlined text-[16px]">chevron_right</span>
             </button>
             <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-primary/10 pointer-events-none"></div>
+          </div>
+
+          <!-- Quick 4-Cat Avatar Picker Card (터치 즉시 변경) -->
+          <div class="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant/30 shadow-xs mb-2">
+            <div class="flex items-center justify-between mb-3 px-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-base leading-none">🐱</span>
+                <span class="text-xs font-bold text-on-surface tracking-tight">프로필 고양이 아바타</span>
+              </div>
+              <span class="text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">터치 시 즉시 변경</span>
+            </div>
+            <div id="settings-quick-avatar-grid" class="grid grid-cols-4 gap-2">
+              <!-- 1. 스페인 냥이 -->
+              <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-spanish.webp" data-avatar-name="스페인 냥이">
+                <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all">
+                  <img src="assets/profiles/profile-spanish.webp" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
+                  <div class="quick-avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                  </div>
+                </div>
+                <span class="quick-avatar-label text-[11px] font-bold text-primary mt-1.5 truncate max-w-[64px]">스페인</span>
+              </button>
+
+              <!-- 2. 잉글리시 냥이 -->
+              <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-english.webp" data-avatar-name="잉글리시 냥이">
+                <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                  <img src="assets/profiles/profile-english.webp" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
+                  <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                  </div>
+                </div>
+                <span class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">잉글리시</span>
+              </button>
+
+              <!-- 3. 아티스트 냥이 -->
+              <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-artist.webp" data-avatar-name="아티스트 냥이">
+                <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                  <img src="assets/profiles/profile-artist.webp" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
+                  <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                  </div>
+                </div>
+                <span class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">아티스트</span>
+              </button>
+
+              <!-- 4. 탐험가 냥이 -->
+              <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-explorer.webp" data-avatar-name="탐험가 냥이">
+                <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                  <img src="assets/profiles/profile-explorer.webp" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
+                  <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                  </div>
+                </div>
+                <span class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">탐험가</span>
+              </button>
+            </div>
           </div>
 
           <!-- SECTION 1: 학습 및 게임 환경 -->
@@ -1667,75 +1728,62 @@
         </div>
 
         <!-- Main Mascot Avatar Section -->
-        <!-- Main Mascot Avatar Section -->
         <div class="flex flex-col items-center justify-center mb-3.5">
           <div class="relative inline-block">
-            <div id="current-avatar-container" class="w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-[#22c55e] p-1 bg-white shadow-md relative flex items-center justify-center">
-              <img id="current-avatar-img" alt="스페인 캣 아바타" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23D1FAE5'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E🐱%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🇪🇸%3C/text%3E%3C/svg%3E" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-2xl select-none\'>🐱</div>';" />
+            <div id="current-avatar-container" class="w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-[#22c55e] p-0.5 bg-white shadow-md relative flex items-center justify-center">
+              <img id="current-avatar-img" alt="선택된 프로필 고양이" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="assets/profiles/profile-spanish.webp" />
             </div>
-            <button aria-label="아바타 사진 변경" class="absolute bottom-0 right-0 w-7 h-7 bg-[#22c55e] text-white rounded-full flex items-center justify-center border-2 border-white shadow active:scale-90 transition-transform cursor-pointer" type="button">
-              <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
-            </button>
+            <div class="absolute bottom-0 right-0 w-7 h-7 bg-[#22c55e] text-white rounded-full flex items-center justify-center border-2 border-white shadow">
+              <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">pets</span>
+            </div>
           </div>
         </div>
 
         <!-- Avatar Selection Grid -->
         <div class="mb-4">
-          <div class="flex items-center justify-between gap-2.5">
-            <!-- 1. 스페인 캣 (기본) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spain" data-avatar-name="스페인 캣" data-avatar-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23D1FAE5'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E🐱%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🇪🇸%3C/text%3E%3C/svg%3E" type="button">
-              <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all">
-                <div class="w-full h-full rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center text-[22px] relative select-none shadow-inner overflow-hidden">
-                  <span>🐱</span>
-                  <span class="absolute -bottom-0.5 -right-0.5 text-[11px] bg-white rounded-full p-0.5 leading-none shadow-xs">🇪🇸</span>
-                </div>
+          <div class="flex items-center justify-between gap-2">
+            <!-- 1. 스페인 냥이 (오렌지) -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spanish" data-avatar-name="스페인 냥이" data-avatar-file="profile-spanish.webp" data-avatar-src="assets/profiles/profile-spanish.webp" type="button">
+              <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs">
+                <img src="assets/profiles/profile-spanish.webp" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
               </div>
-              <span class="avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]">스페인 캣</span>
+              <span class="avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]">스페인</span>
             </button>
 
-            <!-- 2. 선글라스 캣 -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="sunglass" data-avatar-name="선글라스 캣" data-avatar-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23E0F2FE'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E😼%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🕶️%3C/text%3E%3C/svg%3E" type="button">
+            <!-- 2. 잉글리시 냥이 (하늘색) -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="english" data-avatar-name="잉글리시 냥이" data-avatar-file="profile-english.webp" data-avatar-src="assets/profiles/profile-english.webp" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <div class="w-full h-full rounded-full bg-gradient-to-br from-sky-100 to-sky-200 flex items-center justify-center text-[22px] relative select-none shadow-inner overflow-hidden">
-                  <span>😼</span>
-                  <span class="absolute -bottom-0.5 -right-0.5 text-[11px] bg-white rounded-full p-0.5 leading-none shadow-xs">🕶️</span>
-                </div>
+                <img src="assets/profiles/profile-english.webp" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
               </div>
-              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">선글라스 캣</span>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">잉글리시</span>
             </button>
 
-            <!-- 3. 학구파 캣 -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="scholar" data-avatar-name="학구파 캣" data-avatar-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FEF3C7'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E😺%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E🎓%3C/text%3E%3C/svg%3E" type="button">
+            <!-- 3. 아티스트 냥이 (핑크) -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="artist" data-avatar-name="아티스트 냥이" data-avatar-file="profile-artist.webp" data-avatar-src="assets/profiles/profile-artist.webp" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <div class="w-full h-full rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-[22px] relative select-none shadow-inner overflow-hidden">
-                  <span>😺</span>
-                  <span class="absolute -bottom-0.5 -right-0.5 text-[11px] bg-white rounded-full p-0.5 leading-none shadow-xs">🎓</span>
-                </div>
+                <img src="assets/profiles/profile-artist.webp" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
               </div>
-              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">학구파 캣</span>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">아티스트</span>
             </button>
 
-            <!-- 4. 여유 캣 -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="relax" data-avatar-name="여유 캣" data-avatar-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23F3E8FF'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' dominant-baseline='middle'%3E😸%3C/text%3E%3Ctext x='82' y='85' font-size='24' text-anchor='middle'%3E☕%3C/text%3E%3C/svg%3E" type="button">
+            <!-- 4. 탐험가 냥이 (민트) -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="explorer" data-avatar-name="탐험가 냥이" data-avatar-file="profile-explorer.webp" data-avatar-src="assets/profiles/profile-explorer.webp" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-100 to-indigo-200 flex items-center justify-center text-[22px] relative select-none shadow-inner overflow-hidden">
-                  <span>😸</span>
-                  <span class="absolute -bottom-0.5 -right-0.5 text-[11px] bg-white rounded-full p-0.5 leading-none shadow-xs">☕</span>
-                </div>
+                <img src="assets/profiles/profile-explorer.webp" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
               </div>
-              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">여유 캣</span>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">탐험가</span>
             </button>
           </div>
         </div>
@@ -2431,12 +2479,12 @@
   </div>
 
   <!-- Application Data & Logic (단 하나의 유효한 스크립트 세트) -->
-  <script src="js/data.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/flashcard.js"></script>
-  <script src="js/gameEngine.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/data.js?v=3"></script>
+  <script src="js/settings.js?v=3"></script>
+  <script src="js/flashcard.js?v=3"></script>
+  <script src="js/gameEngine.js?v=3"></script>
+  <script src="js/navigation.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
 
 </body>
 

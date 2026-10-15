@@ -202,29 +202,16 @@
     const hallUserAvatar = document.getElementById('hall-user-avatar');
     const hallHeaderAvatar = document.getElementById('hall-header-avatar');
     try {
-      let savedAvatar = null;
-      const userProfileStr = localStorage.getItem('userProfile');
-      if (userProfileStr) {
-        const parsed = JSON.parse(userProfileStr);
-        if (parsed && parsed.avatar && !parsed.avatar.includes('lh3.googleusercontent.com/aida/')) {
-          savedAvatar = parsed.avatar;
-        }
-      }
-      if (!savedAvatar) {
-        const directSaved = localStorage.getItem('vocadash_profile_avatar');
-        if (directSaved && !directSaved.includes('lh3.googleusercontent.com/aida/')) {
-          savedAvatar = directSaved;
-        }
-      }
-      if (savedAvatar) {
-        if (settingsAvatarImg) settingsAvatarImg.src = savedAvatar;
-        if (statsAvatarImg) statsAvatarImg.src = savedAvatar;
-        if (hallUserAvatar) hallUserAvatar.src = savedAvatar;
-        if (hallHeaderAvatar) hallHeaderAvatar.src = savedAvatar;
-      } else if (statsAvatarImg && statsAvatarImg.src && !statsAvatarImg.src.includes('lh3.googleusercontent.com/aida/')) {
-        if (settingsAvatarImg) settingsAvatarImg.src = statsAvatarImg.src;
-        if (hallUserAvatar) hallUserAvatar.src = statsAvatarImg.src;
-        if (hallHeaderAvatar) hallHeaderAvatar.src = statsAvatarImg.src;
+      const profileVal = localStorage.getItem('vocadash_profile') || 'profile-spanish.webp';
+      if (typeof window.applyProfileAvatar === 'function') {
+        window.applyProfileAvatar(profileVal);
+      } else {
+        const file = (profileVal.split('/').pop().split('?')[0]) || 'profile-spanish.webp';
+        const src = `assets/profiles/${file}`;
+        if (settingsAvatarImg) settingsAvatarImg.src = src;
+        if (statsAvatarImg) statsAvatarImg.src = src;
+        if (hallUserAvatar) hallUserAvatar.src = src;
+        if (hallHeaderAvatar) hallHeaderAvatar.src = src;
       }
     } catch (_) {}
     const statsNick = document.getElementById('stats-nickname');
