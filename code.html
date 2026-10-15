@@ -9,7 +9,8 @@
   <!-- Google Fonts & Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
   <!-- Tailwind CSS CDN & Design System Config -->
@@ -69,16 +70,16 @@
             "on-primary-fixed": "#002109"
           },
           fontFamily: {
-            "headline-xl": ["Outfit", "sans-serif"],
-            "headline-lg": ["Outfit", "sans-serif"],
-            "headline-md": ["Outfit", "sans-serif"],
-            "headline-sm": ["Outfit", "sans-serif"],
-            "body-lg": ["Plus Jakarta Sans", "sans-serif"],
-            "body-md": ["Plus Jakarta Sans", "sans-serif"],
-            "body-sm": ["Plus Jakarta Sans", "sans-serif"],
-            "label-lg": ["Plus Jakarta Sans", "sans-serif"],
-            "label-md": ["Plus Jakarta Sans", "sans-serif"],
-            "label-sm": ["Plus Jakarta Sans", "sans-serif"]
+            "headline-xl": ["Outfit", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "headline-lg": ["Outfit", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "headline-md": ["Outfit", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "headline-sm": ["Outfit", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "body-lg": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "body-md": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "body-sm": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "label-lg": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "label-md": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"],
+            "label-sm": ["Plus Jakarta Sans", "Pretendard", "Noto Sans KR", "sans-serif"]
           },
           animation: {
             'wiggle': 'wiggle 1s ease-in-out infinite',
@@ -95,53 +96,8 @@
     };
   </script>
 
-  <style>
-    @layer base {
-      html, body {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overscroll-behavior: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-      body {
-        min-height: max(884px, 100dvh);
-        background-color: #f1f5f9;
-      }
-      .pb-safe {
-        padding-bottom: env(safe-area-inset-bottom, 12px);
-      }
-      .pt-safe {
-        padding-top: env(safe-area-inset-top, 0px);
-      }
-    }
-    
-    ::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Springy tactile bounce effect when clicking nodes */
-    @keyframes node-bounce {
-      0% { transform: scale(1); }
-      30% { transform: scale(0.88) translateY(6px); }
-      55% { transform: scale(1.15) translateY(-8px); }
-      75% { transform: scale(0.96) translateY(2px); }
-      100% { transform: scale(1) translateY(0); }
-    }
-    .animate-node-bounce {
-      animation: node-bounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    /* Small badge tap bounce */
-    @keyframes micro-pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.9); }
-      100% { transform: scale(1); }
-    }
-    .active-pop:active {
-      transform: scale(0.92);
-    }
-  </style>
+  <!-- Custom CSS & Keyframe Animations -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -150,33 +106,34 @@
   <div id="app" class="relative w-full max-w-[440px] min-h-screen bg-surface flex flex-col shadow-2xl overflow-hidden border-x border-slate-200/80">
 
     <!-- ================================================= -->
-    <!-- TOP STICKY HEADER                                 -->
+    <!-- 1. TOP STICKY HEADER                              -->
     <!-- ================================================= -->
     <header class="sticky top-0 left-0 right-0 z-40 pt-safe bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-outline-variant/30">
       <div class="px-4 pt-3 pb-2.5 flex flex-col gap-2.5">
         
-        <!-- Top Row: Avatar Mascot, Logo & Stats Badges -->
+        <!-- Top Row: Logo / Flag Mascot Button & Stats Badges -->
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="relative flex-shrink-0 group cursor-pointer">
-              <button class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-secondary-fixed ring-2 ring-secondary-container shadow-sm active:scale-95 transition-all cursor-pointer" type="button" title="언어 변경">
-                <img alt="스페인어 마스코트 고양이" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP0JQeI4Dd0jPH-7xXCEyBdJGSJA_0M64KbAE-BGazI8m_Obek3-febLbZP6EApI5kIvctYdTgN57X-U5nDsngc4keOpz7pTToB_R_h2Nuke2HhcMaG1hqDMvsZ0hh5qomDeqXWBP2n8FjE5YcJL73OjopNvSrmb8ef0s2B_SxahJe5VqHYYipsHTcjQ9kMmU1oFP7LTlY43K7fuqHEp34Kj_Gsvs2RS6VS6D866u7NtJt3qW6-cGI">
-              </button>
-              <div class="absolute -bottom-1 -right-1 bg-surface-container-lowest border border-outline-variant/60 rounded-full px-1.5 py-0.5 shadow-sm flex items-center gap-0.5 text-[10px] font-bold leading-none pointer-events-none ring-1 ring-surface">
-                <span class="leading-none">🇪🇸</span>
+          <!-- 1. [언어 선택 모달 단독 트리거]: 상단 좌측 로고/국기 영역 -->
+          <button id="logo-lang-trigger" type="button" class="flex items-center gap-2 p-1 -m-1 rounded-2xl cursor-pointer hover:bg-slate-100/70 active:scale-95 transition-all focus:outline-none select-none text-left" title="도전할 언어 선택">
+            <div class="relative flex-shrink-0 pointer-events-none">
+              <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-secondary-fixed ring-2 ring-secondary-container shadow-sm">
+                <img id="header-mascot-img" alt="스페인어 마스코트 고양이" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP0JQeI4Dd0jPH-7xXCEyBdJGSJA_0M64KbAE-BGazI8m_Obek3-febLbZP6EApI5kIvctYdTgN57X-U5nDsngc4keOpz7pTToB_R_h2Nuke2HhcMaG1hqDMvsZ0hh5qomDeqXWBP2n8FjE5YcJL73OjopNvSrmb8ef0s2B_SxahJe5VqHYYipsHTcjQ9kMmU1oFP7LTlY43K7fuqHEp34Kj_Gsvs2RS6VS6D866u7NtJt3qW6-cGI">
+              </div>
+              <div class="absolute -bottom-1 -right-1 bg-surface-container-lowest border border-outline-variant/60 rounded-full px-1.5 py-0.5 shadow-sm flex items-center gap-0.5 text-[10px] font-bold leading-none ring-1 ring-surface shadow-sm">
+                <span id="header-flag-emoji" class="leading-none">🇪🇸</span>
                 <span class="text-[8px] text-on-surface-variant font-black leading-none">▾</span>
               </div>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col select-none pointer-events-none">
               <span class="font-headline-sm text-[20px] text-on-surface leading-tight font-extrabold tracking-tight">VocaDash</span>
             </div>
-          </div>
+          </button>
 
           <div class="flex items-center gap-1.5">
-            <div class="flex items-center gap-1 px-2 py-0.5 bg-tertiary-fixed rounded-full shadow-[0_1px_0_0_#ffb690] cursor-pointer active-pop transition-transform" title="연속 학습 스트릭">
+            <button id="streak-trigger" type="button" class="flex items-center gap-1 px-2 py-0.5 bg-tertiary-fixed rounded-full shadow-[0_1px_0_0_#ffb690] cursor-pointer active-pop transition-transform" title="연속 학습 스트릭">
               <span class="text-xs leading-none">🔥</span>
               <span class="font-label-sm text-[11px] text-on-tertiary-fixed-variant leading-none font-bold">5</span>
-            </div>
+            </button>
             <div class="flex items-center gap-1 px-2 py-0.5 bg-error-container/70 rounded-full shadow-[0_1px_0_0_#ffdad6] cursor-pointer active-pop transition-transform" title="남은 하트">
               <span class="text-xs leading-none">❤️</span>
               <span class="font-label-sm text-[11px] text-on-error-container leading-none font-bold">5</span>
@@ -185,33 +142,70 @@
               <span class="text-xs leading-none">💎</span>
               <span class="font-label-sm text-[11px] text-on-secondary-fixed-variant leading-none font-bold">120</span>
             </div>
-            <button class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary transition-all active:scale-95 shadow-sm cursor-pointer" title="프로필" type="button">
+            <button id="profile-trigger" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary transition-all active:scale-95 shadow-sm cursor-pointer" title="프로필" type="button">
               <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
             </button>
           </div>
         </div>
 
-        <!-- Course Selector Dropdown Button -->
-        <div class="w-full">
-          <button class="w-full py-2 px-3.5 rounded-2xl font-label-md text-xs bg-surface-container-lowest text-on-surface border border-outline-variant/60 flex items-center justify-between shadow-sm active:translate-y-0.5 transition-all cursor-pointer" type="button">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-sm">✈️</span>
-              <span class="font-bold truncate text-on-surface text-[13px]">여행 필수 스페인어</span>
+        <!-- 2. [교재/코스 선택 전용 드롭다운]: 상위 대분류 3개 드롭다운 메뉴 -->
+        <div class="w-full relative">
+          <button id="course-selector-btn" class="w-full py-2 px-3.5 rounded-2xl font-label-md text-xs bg-surface-container-lowest text-on-surface border border-outline-variant/60 flex items-center justify-between shadow-sm active:translate-y-0.5 transition-all cursor-pointer hover:border-primary-container" type="button" title="교재/코스 선택" aria-expanded="false" aria-haspopup="true">
+            <div class="flex items-center gap-1.5 truncate pointer-events-none">
+              <span id="dropdown-course-icon" class="text-sm">✈️</span>
+              <span id="dropdown-course-title" class="font-bold truncate text-on-surface text-[13px]">여행 스페인어</span>
             </div>
-            <span class="material-symbols-outlined text-[18px] text-secondary flex-shrink-0">expand_more</span>
+            <span id="dropdown-chevron-icon" class="material-symbols-outlined text-[18px] text-secondary flex-shrink-0 pointer-events-none transition-transform duration-200">expand_more</span>
           </button>
+
+          <!-- Course Dropdown Popover Menu (상위 대분류 3개) -->
+          <div id="course-dropdown-menu" class="hidden absolute top-[calc(100%+6px)] left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border border-outline-variant/50 rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 transition-all duration-200 opacity-0 -translate-y-2 pointer-events-none" role="menu">
+            <!-- 1) ✈️ 여행 스페인어 (기본 선택) -->
+            <button type="button" data-course-id="travel" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-500/20 text-on-surface cursor-pointer transition-all hover:bg-emerald-50" role="menuitem">
+              <div class="flex items-center gap-2.5 pointer-events-none">
+                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs">✈️</span>
+                <div class="flex flex-col text-left">
+                  <span class="font-bold text-xs text-on-surface item-title">여행 스페인어</span>
+                  <span class="text-[10px] text-on-surface-variant">공항, 숙소, 식당 필수 회화</span>
+                </div>
+              </div>
+              <span class="item-check material-symbols-outlined text-[18px] text-primary font-bold">check</span>
+            </button>
+
+            <!-- 2) 💼 비즈니스 스페인어 -->
+            <button type="button" data-course-id="business" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl border border-transparent text-on-surface cursor-pointer transition-all hover:bg-surface-container-low" role="menuitem">
+              <div class="flex items-center gap-2.5 pointer-events-none">
+                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs">💼</span>
+                <div class="flex flex-col text-left">
+                  <span class="font-bold text-xs text-on-surface item-title">비즈니스 스페인어</span>
+                  <span class="text-[10px] text-on-surface-variant">오피스 일상, 미팅, 이메일</span>
+                </div>
+              </div>
+              <span class="item-check hidden material-symbols-outlined text-[18px] text-primary font-bold">check</span>
+            </button>
+
+            <!-- 3) 🎓 DELE 시험 대비 -->
+            <button type="button" data-course-id="dele" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl border border-transparent text-on-surface cursor-pointer transition-all hover:bg-surface-container-low" role="menuitem">
+              <div class="flex items-center gap-2.5 pointer-events-none">
+                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs">🎓</span>
+                <div class="flex flex-col text-left">
+                  <span class="font-bold text-xs text-on-surface item-title">DELE 시험 대비</span>
+                  <span class="text-[10px] text-on-surface-variant">A1 ~ B2 레벨별 핵심 단어</span>
+                </div>
+              </div>
+              <span class="item-check hidden material-symbols-outlined text-[18px] text-primary font-bold">check</span>
+            </button>
+          </div>
         </div>
 
         <!-- Horizontal Category Pills -->
         <div class="relative w-full">
           <div id="category-tabs" class="w-full flex items-center gap-1.5 overflow-x-auto pb-0.5 select-none pr-8 no-scrollbar">
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">전체</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-primary text-on-primary font-bold shadow-sm cursor-pointer" type="button">✈️ 공항/기내</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">🚖 교통/길찾기</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">🏨 호텔/숙소</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">☕ 카페/식당</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">🛍️ 쇼핑/결제</button>
-            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">🚨 비상상황</button>
+            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-primary text-on-primary font-bold shadow-sm cursor-pointer" type="button">전체</button>
+            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">공항/기내</button>
+            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">교통/길찾기</button>
+            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">호텔/숙소</button>
+            <button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer" type="button">식당/카페</button>
           </div>
           <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-surface-container-lowest/95 to-transparent pointer-events-none"></div>
         </div>
@@ -220,7 +214,7 @@
     </header>
 
     <!-- ================================================= -->
-    <!-- MAIN ROADMAP PATH & NODES                         -->
+    <!-- 2. MAIN ROADMAP PATH & LESSON NODES               -->
     <!-- ================================================= -->
     <main class="flex flex-col relative w-full pt-6 pb-28 px-4 bg-surface flex-grow">
       
@@ -233,16 +227,16 @@
         </svg>
 
         <!-- Node 1: Completed (1과: 기내 기본 표현) -->
-        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-14" style="width: 200px;">
-          <div class="relative group node-target cursor-pointer">
-            <button class="node-btn w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_6px_0_0_#15803d,0_12px_20px_-2px_rgba(34,197,94,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#15803d] transition-all cursor-pointer" type="button">
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-14" style="width: 200px;" data-node-id="node-1">
+          <div class="relative group node-target cursor-pointer" data-node-type="completed">
+            <button class="node-btn w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_6px_0_0_#15803d,0_12px_20px_-2px_rgba(34,197,94,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#15803d] transition-all cursor-pointer" type="button" title="1과: 기내 기본 표현">
               <span class="material-symbols-outlined text-[34px]" style="font-variation-settings: 'FILL' 1;">check</span>
             </button>
-            <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface">
+            <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface pointer-events-none">
               <span class="material-symbols-outlined text-[16px] font-black">check</span>
             </div>
           </div>
-          <div class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30">
+          <div class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none">
             <span class="font-label-md text-xs text-on-surface font-extrabold">1과: 기내 기본 표현</span>
             <div class="flex items-center gap-1 mt-0.5">
               <span class="text-xs">⭐</span>
@@ -254,10 +248,9 @@
         </div>
 
         <!-- Node 2: Active Target (2과: 입국 심사) with START ↓ Indicator -->
-        <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-4 mb-16" style="width: 220px;">
-          
+        <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-4 mb-16" style="width: 220px;" data-node-id="node-2" id="node-2-container">
           <!-- START ↓ Banner -->
-          <div class="relative mb-3 animate-bounce">
+          <div id="node-2-start-banner" class="relative mb-3 animate-bounce pointer-events-none">
             <div class="bg-secondary text-on-secondary px-3.5 py-1 rounded-full font-label-md text-xs font-extrabold shadow-[0_3px_0_0_#004666] flex items-center gap-1">
               <span>START</span>
               <span class="material-symbols-outlined text-[15px]">arrow_downward</span>
@@ -266,53 +259,54 @@
           </div>
 
           <!-- Pulsing Rings & Action Button -->
-          <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-            <span class="absolute w-[98px] h-[98px] rounded-full bg-secondary-container/30 animate-ping"></span>
-            <span class="absolute w-[88px] h-[88px] rounded-full bg-secondary-fixed/60"></span>
-            <button class="node-btn relative w-[76px] h-[76px] rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-[0_7px_0_0_#0284c7,0_16px_28px_rgba(2,132,199,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#0284c7] transition-all cursor-pointer" type="button">
+          <div id="node-2-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="active">
+            <span class="absolute w-[98px] h-[98px] rounded-full bg-secondary-container/30 animate-ping pointer-events-none"></span>
+            <span class="absolute w-[88px] h-[88px] rounded-full bg-secondary-fixed/60 pointer-events-none"></span>
+            <button id="node-2-btn" class="node-btn relative w-[76px] h-[76px] rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-[0_7px_0_0_#0284c7,0_16px_28px_rgba(2,132,199,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#0284c7] transition-all cursor-pointer" type="button" title="2과: 입국 심사">
               <span class="material-symbols-outlined text-[36px] animate-wiggle" style="font-variation-settings: 'FILL' 1;">flight_takeoff</span>
             </button>
           </div>
 
           <!-- Node 2 Label -->
-          <div class="mt-3.5 flex flex-col items-center bg-surface-container-lowest px-4 py-2 rounded-2xl shadow-[0_4px_14px_rgba(0,101,145,0.1)] text-center ring-2 ring-secondary-container/50">
+          <div id="node-2-label-card" class="mt-3.5 flex flex-col items-center bg-surface-container-lowest px-4 py-2 rounded-2xl shadow-[0_4px_14px_rgba(0,101,145,0.1)] text-center ring-2 ring-secondary-container/50 pointer-events-none">
             <span class="font-label-md text-xs text-on-surface font-extrabold">2과: 입국 심사</span>
-            <div class="flex items-center gap-1 mt-0.5">
+            <div id="node-2-label-badge" class="flex items-center gap-1 mt-0.5">
               <span class="font-label-sm text-[11px] text-secondary font-black">0/3 레슨 진행중</span>
             </div>
           </div>
-
         </div>
 
         <!-- Node 3: Locked (3과: 수하물 찾기와 세관) -->
-        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-16 opacity-75" style="width: 190px;">
-          <div class="relative node-target cursor-pointer">
-            <button class="node-btn w-[66px] h-[66px] rounded-full bg-surface-container-high text-outline flex items-center justify-center shadow-[0_5px_0_0_#bccbb9] active:translate-y-1 active:shadow-[0_1px_0_0_#bccbb9] transition-all cursor-pointer" type="button">
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-16 opacity-75" style="width: 190px;" data-node-id="node-3" id="node-3-container">
+          <div id="node-3-target" class="relative node-target cursor-pointer" data-node-type="locked" data-lock-msg="이전 레슨을 먼저 완료해야 열려요!" data-lock-icon="🔒">
+            <button id="node-3-btn" class="node-btn w-[66px] h-[66px] rounded-full bg-surface-container-high text-outline flex items-center justify-center shadow-[0_5px_0_0_#bccbb9] active:translate-y-1 active:shadow-[0_1px_0_0_#bccbb9] transition-all cursor-pointer" type="button" title="3과: 잠김">
               <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">lock</span>
             </button>
           </div>
-          <div class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30">
+          <div id="node-3-label-card" class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none">
             <span class="font-label-md text-xs text-on-surface font-extrabold">3과: 수하물 찾기와 세관</span>
-            <span class="font-label-sm text-[10px] text-outline font-semibold mt-0.5">2과 완료 후 잠금 해제</span>
+            <div id="node-3-label-badge" class="flex items-center gap-1 mt-0.5">
+              <span class="font-label-sm text-[10px] text-outline font-semibold">2과 완료 후 잠금 해제</span>
+            </div>
           </div>
         </div>
 
         <!-- Final Boss Node: Exam Gate (보스전) -->
-        <div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6" style="width: 290px;">
-          <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full bg-tertiary-fixed text-on-tertiary-container shadow-[0_2px_0_0_#ffb690]">
+        <div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6" style="width: 290px;" data-node-id="node-boss">
+          <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full bg-tertiary-fixed text-on-tertiary-container shadow-[0_2px_0_0_#ffb690] pointer-events-none">
             <span class="text-xs">🔥</span>
             <span class="font-label-sm text-[11px] font-extrabold uppercase tracking-wide">FINAL AIRPORT EXAM</span>
           </div>
-          <div class="relative flex items-center justify-center node-target cursor-pointer">
-            <div class="absolute w-[104px] h-[104px] rounded-full bg-tertiary-fixed blur-md opacity-80 animate-pulse"></div>
-            <button class="node-btn relative w-[86px] h-[86px] rounded-full text-white flex items-center justify-center shadow-[0_8px_0_0_#b45309,0_18px_32px_rgba(245,158,11,0.4)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#b45309] transition-all cursor-pointer border-2 border-yellow-200" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 60%, #fde68a 100%);" type="button">
+          <div class="relative flex items-center justify-center node-target cursor-pointer" data-node-type="locked" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
+            <div class="absolute w-[104px] h-[104px] rounded-full bg-tertiary-fixed blur-md opacity-80 animate-pulse pointer-events-none"></div>
+            <button class="node-btn relative w-[86px] h-[86px] rounded-full text-white flex items-center justify-center shadow-[0_8px_0_0_#b45309,0_18px_32px_rgba(245,158,11,0.4)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#b45309] transition-all cursor-pointer border-2 border-yellow-200" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 60%, #fde68a 100%);" type="button" title="보스전: 잠김">
               <span class="text-[42px] leading-none select-none drop-shadow-sm">🏆</span>
-              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm">
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm pointer-events-none">
                 <span class="material-symbols-outlined text-[14px]">lock</span>
               </div>
             </button>
           </div>
-          <div class="mt-4 flex flex-col items-center bg-surface-container-lowest px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.06)] text-center ring-2 ring-tertiary-fixed">
+          <div class="mt-4 flex flex-col items-center bg-surface-container-lowest px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.06)] text-center ring-2 ring-tertiary-fixed pointer-events-none">
             <div class="flex items-center gap-1">
               <span class="text-base">👑</span>
               <span class="font-headline-sm text-sm text-on-surface font-black">보스전: 공항 마스터 관문</span>
@@ -321,88 +315,877 @@
           </div>
         </div>
 
+        <!-- Floating Reusable Lock Tooltip -->
+        <div id="locked-node-tooltip" class="absolute z-30 pointer-events-none transition-all duration-200 opacity-0 scale-90 select-none whitespace-nowrap" style="display: none;">
+          <div class="relative bg-slate-900/95 backdrop-blur-sm text-white font-label-md text-xs px-3.5 py-2 rounded-2xl shadow-xl flex items-center gap-1.5 border border-slate-700/60">
+            <span id="locked-tooltip-icon" class="text-sm">🔒</span>
+            <span id="locked-tooltip-text" class="font-bold">이전 레슨을 먼저 완료해야 열려요!</span>
+            <!-- Downward speech bubble triangle pointer -->
+            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900/95 rotate-45 border-b border-r border-slate-700/60"></div>
+          </div>
+        </div>
+
       </div>
 
     </main>
 
     <!-- ================================================= -->
-    <!-- FLOATING BOTTOM NAVIGATION                        -->
+    <!-- 3. FLOATING BOTTOM NAVIGATION BAR                 -->
     <!-- ================================================= -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 pb-safe pointer-events-none px-4 mb-2">
       <div class="pointer-events-auto max-w-[420px] mx-auto bg-surface-container-lowest/95 backdrop-blur-xl rounded-full shadow-[0_12px_32px_-4px_rgba(15,23,42,0.12),0_4px_12px_0_rgba(15,23,42,0.06)] h-16 px-4 flex justify-around items-center border border-outline-variant/30">
-        <a aria-current="page" class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] transition-colors text-primary font-bold cursor-pointer" href="#">
+        <button type="button" aria-current="page" class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] transition-colors text-primary font-bold cursor-pointer">
           <span class="material-symbols-outlined text-[24px]">home</span>
           <span class="font-label-sm text-xs mt-0.5">홈</span>
-        </a>
-        <a class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant relative transition-colors cursor-pointer" href="#">
+        </button>
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant relative transition-colors cursor-pointer">
           <div class="relative flex items-center justify-center">
             <span class="material-symbols-outlined text-[24px]">crisis_alert</span>
             <span class="absolute -top-1 -right-2 min-w-[16px] h-4 px-1 rounded-full bg-error text-on-error font-label-sm text-[10px] flex items-center justify-center leading-none">2</span>
           </div>
           <span class="font-label-sm text-xs mt-0.5">오답 탈출</span>
-        </a>
-        <a class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant transition-colors cursor-pointer" href="#">
+        </button>
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant transition-colors cursor-pointer">
           <span class="material-symbols-outlined text-[24px]">menu_book</span>
           <span class="font-label-sm text-xs mt-0.5">교재/단어장</span>
-        </a>
-        <a class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant transition-colors cursor-pointer" href="#">
+        </button>
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-[54px] min-h-[44px] text-on-surface-variant transition-colors cursor-pointer">
           <span class="material-symbols-outlined text-[24px]">bar_chart</span>
           <span class="font-label-sm text-xs mt-0.5">내 기록</span>
-        </a>
+        </button>
       </div>
     </nav>
 
+    <!-- ================================================= -->
+    <!-- 4. LANGUAGE SELECTION MODAL                       -->
+    <!-- ================================================= -->
+    <!-- Dark Translucent Backdrop with Blur -->
+    <div id="language-modal-backdrop" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-center justify-center p-4">
+      
+      <!-- Centered Floating Modal Card (Matched with Stitch Design System) -->
+      <div id="language-modal-card" class="w-full max-w-[340px] bg-white rounded-[24px] shadow-2xl p-6 relative flex flex-col items-center transform transition-all duration-200 scale-95 opacity-0 pointer-events-none" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        
+        <!-- Header Close Button -->
+        <button id="close-modal-btn" type="button" aria-label="닫기" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center transition-colors active:scale-90 cursor-pointer">
+          <span class="material-symbols-outlined text-[20px] leading-none">close</span>
+        </button>
+
+        <!-- Title -->
+        <h2 id="modal-title" class="font-headline-sm text-[18px] font-bold text-slate-900 text-center mt-1 leading-snug">
+          도전할 언어를 선택하세요
+        </h2>
+
+        <!-- Subtitle -->
+        <p class="font-body-sm text-xs text-slate-500 text-center mt-1 mb-5">
+          국가별 마스코트와 함께 단어를 질주해보세요!
+        </p>
+
+        <!-- Content Grid (2-Column Course Cards) -->
+        <div id="language-grid" class="grid grid-cols-2 gap-3 w-full mb-4" role="radiogroup" aria-label="도전할 언어 선택">
+          
+          <!-- Card 1: American Cat (English) -->
+          <div id="card-en" role="radio" aria-checked="false" tabindex="0" class="course-card border border-slate-200 bg-white rounded-2xl p-3 text-center relative cursor-pointer hover:border-slate-300 transition-all duration-200 transform active:scale-95 scale-100 flex flex-col items-center shadow-sm opacity-80 hover:opacity-100">
+            <!-- Active Checkmark Badge -->
+            <div id="badge-en" class="hidden absolute top-2 right-2 w-6 h-6 rounded-full bg-[#22C55E] text-white items-center justify-center text-xs shadow">
+              <span class="material-symbols-outlined text-[15px] font-bold leading-none">check</span>
+            </div>
+            <!-- Flag & Label Badge -->
+            <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 mb-2 text-[11px] font-semibold">
+              🇺🇸 English
+            </div>
+            <!-- Avatar Image -->
+            <div class="w-20 h-20 rounded-xl overflow-hidden shadow-sm mb-1 bg-surface-container-high flex items-center justify-center">
+              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl" src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=240&q=80" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=240&q=80';">
+            </div>
+            <!-- Title -->
+            <span class="font-bold text-slate-900 text-sm mt-2 leading-tight">
+              영어
+            </span>
+            <!-- Description -->
+            <span class="font-body-sm text-xs text-slate-500 mt-0.5">
+              여행 &amp; 일상 회화
+            </span>
+            <!-- Status Chip -->
+            <span class="bg-blue-50 text-blue-600 text-[10px] font-semibold py-0.5 px-2 rounded-full inline-block mt-1.5">
+              NEW 코스 오픈!
+            </span>
+          </div>
+
+          <!-- Card 2: Spanish Cat (Español - Active State Default) -->
+          <div id="card-es" role="radio" aria-checked="true" tabindex="0" class="course-card border-2 border-[#22C55E] bg-emerald-50/50 rounded-2xl p-3 text-center relative cursor-pointer shadow-[0_4px_16px_-2px_rgba(34,197,94,0.22)] ring-2 ring-[#22C55E]/20 scale-[1.02] transition-all duration-200 transform active:scale-95 flex flex-col items-center">
+            <!-- Active Checkmark Badge -->
+            <div id="badge-es" class="flex absolute top-2 right-2 w-6 h-6 rounded-full bg-[#22C55E] text-white items-center justify-center text-xs shadow">
+              <span class="material-symbols-outlined text-[15px] font-bold leading-none">check</span>
+            </div>
+            <!-- Flag & Label Badge -->
+            <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white text-slate-700 shadow-sm mb-2 text-[11px] font-semibold">
+              🇪🇸 Español
+            </div>
+            <!-- Avatar Image -->
+            <div class="w-20 h-20 rounded-xl overflow-hidden shadow-sm mb-1 bg-surface-container-high flex items-center justify-center">
+              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP0JQeI4Dd0jPH-7xXCEyBdJGSJA_0M64KbAE-BGazI8m_Obek3-febLbZP6EApI5kIvctYdTgN57X-U5nDsngc4keOpz7pTToB_R_h2Nuke2HhcMaG1hqDMvsZ0hh5qomDeqXWBP2n8FjE5YcJL73OjopNvSrmb8ef0s2B_SxahJe5VqHYYipsHTcjQ9kMmU1oFP7LTlY43K7fuqHEp34Kj_Gsvs2RS6VS6D866u7NtJt3qW6-cGI">
+            </div>
+            <!-- Title -->
+            <span class="font-bold text-slate-900 text-sm mt-2 leading-tight">
+              스페인어
+            </span>
+            <!-- Description -->
+            <span class="font-body-sm text-xs text-slate-500 mt-0.5">
+              여행 &amp; 기초 회화
+            </span>
+            <!-- Status Chip -->
+            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-semibold py-0.5 px-2 rounded-full inline-block mt-1.5">
+              ● 진행중 · 1과 완료
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Footer Note Teaser -->
+        <div class="font-body-sm text-[11px] text-slate-400 text-center mb-4 flex items-center justify-center gap-1">
+          <span>⌛</span>
+          <span>일본어 · 프랑스어 코스 준비 중</span>
+        </div>
+
+        <!-- Tactical Action Button -->
+        <button id="cta-start-btn" type="button" class="bg-[#22C55E] hover:bg-[#16a34a] text-white font-bold h-12 rounded-full w-full shadow-[0_4px_0_#15803d] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-1.5 text-base cursor-pointer">
+          <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+          <span id="cta-button-text">스페인어로 학습하기</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 5. STREAK CALENDAR MODAL                          -->
+    <!-- ================================================= -->
+    <!-- Dim Backdrop with Blur -->
+    <div id="streak-modal-backdrop" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-end sm:items-center justify-center p-0 sm:p-4">
+      
+      <!-- Centered/Bottomsheet Card -->
+      <div id="streak-modal-card" class="relative z-50 w-full max-w-[400px] bg-white rounded-t-[32px] sm:rounded-[28px] shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto pt-4 pb-6 px-5 transform transition-all duration-300 ease-out translate-y-full sm:translate-y-0 sm:scale-95 opacity-0 pointer-events-none no-scrollbar select-none" role="dialog" aria-modal="true" aria-labelledby="streak-modal-title">
+        
+        <!-- Top Drag Handle (Mobile Feel) -->
+        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-2.5"></div>
+
+        <!-- Header: Title & Close Button -->
+        <div class="flex items-center justify-between mb-2 shrink-0">
+          <div class="w-8"></div>
+          <h2 class="text-[17px] font-bold text-slate-800 tracking-tight text-center">연속 학습 스트릭</h2>
+          <button id="close-streak-modal-btn" type="button" aria-label="닫기" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors active:scale-90 cursor-pointer flex-shrink-0">
+            <span class="material-symbols-outlined text-[18px] font-bold">close</span>
+          </button>
+        </div>
+
+        <!-- Mascot & Title Section -->
+        <div class="flex flex-col items-center text-center shrink-0">
+          <div class="relative inline-block">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-red-100 shadow-sm bg-white flex items-center justify-center">
+              <img alt="2D Cute Black Kitten Mascot" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WzOFErhQAJkaQ-1XeuBEs_ccy2ZxHYLtvfEKUngx-bmWXlxp3dN1R8QAbAqlh55ywl0rBCdEbJZrD6iPnZk5He1kbDVQrS6prHaGITOWkK4VLQHvxZLOcHdJtvW__7Arq6RsM_umsEFAYBPyXNAiRaqnbW4L0JHpDO0nJDU0BPp1UVWGxb0VYmmcvNGvLN6_wbdMMKZuc5xZNtEDiu5_9MUPaO15m0HElE8_3EHerpkOdajmFoGdYUuzs">
+            </div>
+            <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm border border-red-100 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            </div>
+          </div>
+          <h3 id="streak-modal-title" class="text-[20px] font-bold text-slate-900 tracking-tight mt-2 text-center flex items-center justify-center gap-1 leading-tight">
+            <span>🔥 5일 연속 질주 중!</span>
+          </h3>
+          <p class="text-[12px] text-slate-500 mt-0.5 text-center font-medium leading-snug">
+            매일 작은 질주가 유창한 회화가 됩니다
+          </p>
+        </div>
+
+        <!-- 7일 / 14일 / 30일 Goal Milestone Selector -->
+        <div class="w-full my-2.5 p-1 bg-slate-100 rounded-xl flex items-center gap-1.5 shrink-0">
+          <button class="milestone-btn flex-1 py-1.5 px-2 rounded-lg bg-[#FF9600] text-white font-bold text-[12px] text-center shadow-sm border-b-2 border-[#E07900] truncate cursor-pointer transition active:scale-95" type="button" data-milestone="7">
+            ✔ 7일 (5/7)
+          </button>
+          <button class="milestone-btn flex-1 py-1.5 px-2 rounded-lg bg-white text-slate-600 font-semibold text-[12px] text-center truncate cursor-pointer hover:bg-slate-50 transition active:scale-95" type="button" data-milestone="14">
+            14일 질주
+          </button>
+          <button class="milestone-btn flex-1 py-1.5 px-2 rounded-lg bg-white text-slate-600 font-semibold text-[12px] text-center truncate cursor-pointer hover:bg-slate-50 transition active:scale-95" type="button" data-milestone="30">
+            30일 마스터
+          </button>
+        </div>
+
+        <!-- Full Monthly Calendar Grid (October 2026 / 1일~31일) -->
+        <div class="w-full bg-slate-50/90 rounded-2xl p-3 border border-slate-100 flex flex-col justify-between my-1 overflow-hidden">
+          <!-- Calendar Header -->
+          <div class="flex items-center justify-between mb-1.5 shrink-0">
+            <div class="text-[13px] font-bold text-slate-800 flex items-center gap-1">
+              <span>📅 2026년 10월</span>
+            </div>
+            <div class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2 py-0.5 rounded-full border border-blue-200/60 flex items-center gap-0.5">
+              <span>🛡️ 얼음 방패 1개</span>
+            </div>
+          </div>
+          <!-- Days of the week row -->
+          <div class="grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400 mb-1 shrink-0">
+            <span class="text-red-400">일</span>
+            <span>월</span>
+            <span>화</span>
+            <span>수</span>
+            <span>목</span>
+            <span>금</span>
+            <span class="text-blue-500">토</span>
+          </div>
+          <!-- 31 Days Grid -->
+          <div class="grid grid-cols-7 gap-y-1.5 gap-x-1 items-center justify-items-center">
+            <div class="w-7 h-7"></div>
+            <div class="w-7 h-7"></div>
+            <div class="w-7 h-7"></div>
+            <div class="w-7 h-7"></div>
+            <!-- Oct 1 (Thu - Day 1 Completed) -->
+            <div class="w-7 h-7 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[15px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="text-[10px] font-bold text-[#EA580C] leading-none mt-0.5">1</span>
+            </div>
+            <!-- Oct 2 (Fri - Day 2 Completed) -->
+            <div class="w-7 h-7 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[15px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="text-[10px] font-bold text-[#EA580C] leading-none mt-0.5">2</span>
+            </div>
+            <!-- Oct 3 (Sat - Day 3 Completed) -->
+            <div class="w-7 h-7 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[15px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="text-[10px] font-bold text-[#EA580C] leading-none mt-0.5">3</span>
+            </div>
+            <!-- Oct 4 (Sun - Day 4 Completed) -->
+            <div class="w-7 h-7 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[15px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="text-[10px] font-bold text-[#EA580C] leading-none mt-0.5">4</span>
+            </div>
+            <!-- Oct 5 (Mon - Day 5 Completed) -->
+            <div class="w-7 h-7 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-[#FF9600] text-[15px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="text-[10px] font-bold text-[#EA580C] leading-none mt-0.5">5</span>
+            </div>
+            <!-- Oct 6 (Tue - Today / Next target: Pulsing orange highlight +50 XP tag) -->
+            <div class="w-7 h-7 rounded-lg border-2 border-[#FF9600] bg-orange-50 flex flex-col items-center justify-center shadow-xs animate-pulse">
+              <span class="text-[7px] font-extrabold text-[#EA580C] leading-none">+50</span>
+              <span class="text-[10px] font-extrabold text-[#EA580C] leading-none">6</span>
+            </div>
+            <!-- Oct 7 ~ 31 -->
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">7</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">8</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">9</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">10</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">11</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">12</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">13</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">14</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">15</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">16</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">17</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">18</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">19</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">20</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">21</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">22</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">23</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">24</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">25</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">26</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">27</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">28</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">29</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">30</div>
+            <div class="w-7 h-7 flex items-center justify-center text-[11px] font-medium text-slate-500">31</div>
+          </div>
+        </div>
+
+        <!-- Milestone Reward Preview Card -->
+        <div class="w-full bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/70 rounded-xl p-2.5 flex items-center gap-2.5 my-2 shadow-sm shrink-0">
+          <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-[16px] shadow-xs shrink-0">
+            🏆
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span id="milestone-reward-title" class="text-[11px] font-bold text-amber-800 leading-tight">다음 보상까지 2일!</span>
+            <span id="milestone-reward-desc" class="text-[11px] font-semibold text-slate-700 leading-snug break-keep">
+              앞으로 2일 더 출석하면 <span class="text-[#EA580C] font-bold">[불꽃 스트릭 7일]</span> 배지 해금!
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Button: Duolingo-style Chunky 3D Emerald Button -->
+        <button id="continueStreakBtn" class="w-full h-12 rounded-2xl bg-[#22C55E] hover:bg-[#16A34A] text-white font-extrabold text-sm shadow-[0_4px_0_#15803d,0_8px_16px_-2px_rgba(34,197,94,0.3)] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center cursor-pointer shrink-0 mt-1" type="button">
+          <span>⚡ 오늘의 단어 질주 시작하기 ⚡</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 6. PROFILE EDIT MODAL                             -->
+    <!-- ================================================= -->
+    <!-- Soft Dimmed Backdrop Overlay -->
+    <div id="profile-modal-backdrop" class="fixed inset-0 z-50 bg-[#0F172A]/50 backdrop-blur-[2px] transition-opacity duration-200 opacity-0 pointer-events-none flex items-end sm:items-center justify-center p-0 sm:p-4">
+      
+      <!-- Bottom Sheet Modal Container (fits strictly within 390px, max mobile layout) -->
+      <div id="profile-modal-card" class="relative w-full max-w-[390px] bg-white rounded-t-[32px] sm:rounded-[28px] pt-4 pb-6 px-6 shadow-2xl flex flex-col z-20 max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-out translate-y-full sm:translate-y-0 sm:scale-95 opacity-0 pointer-events-none box-border select-none no-scrollbar" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+        
+        <!-- Top Draggable Handle Bar -->
+        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3.5"></div>
+        
+        <!-- Modal Header Row -->
+        <div class="flex items-center justify-between mb-3.5">
+          <div class="w-8"></div>
+          <h2 id="profile-modal-title" class="text-[19px] font-bold text-slate-800 tracking-tight text-center">프로필 편집</h2>
+          <button id="close-profile-modal-btn" aria-label="닫기" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 active:scale-95 transition cursor-pointer" type="button">
+            <span class="material-symbols-outlined text-[18px] leading-none">close</span>
+          </button>
+        </div>
+        
+        <!-- Main Mascot Avatar Section (88px) -->
+        <div class="flex flex-col items-center justify-center mb-3.5">
+          <div class="relative inline-block">
+            <div class="w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-[#22c55e] p-1 bg-white shadow-md relative">
+              <img alt="Cute stylized black cat avatar with Spanish hat" class="w-full h-full object-cover rounded-full transition-transform duration-200" id="current-avatar-img" src="https://lh3.googleusercontent.com/aida/AEtjO1VFbBVBZXy1VCwltPewGogYmUcngQjn1gLcd4XO5Dv2uBfEyUWQAd7bmDFTVovBYX66jQhqeRWVSBmUxgRliO5X3zUsqO26t_u5Sz_yN4tNOVmX0Q-SCgoHkrWl9nLAYnm4hPpyWuveDj3O8YOu0i9lx1Z-8M2uaBKKZu6K3fPt_up26JfG4VyhSDAe10dHgCaq1QQngFKsemYpjCS1k7nYccZM75dXzANq1uH-2y8ne4_xOugqNbkZCVY"/>
+            </div>
+            <!-- Floating small camera badge -->
+            <button aria-label="아바타 사진 변경" class="absolute bottom-0 right-0 w-7 h-7 bg-[#22c55e] text-white rounded-full flex items-center justify-center border-2 border-white shadow active:scale-90 transition-transform cursor-pointer" type="button">
+              <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Avatar Selection Carousel / Grid (4 Options) -->
+        <div class="mb-4">
+          <div class="flex items-center justify-between gap-2.5">
+            <!-- 1. [스페인 캣] (Selected) -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-name="스페인 캣" data-avatar-src="https://lh3.googleusercontent.com/aida/AEtjO1VFbBVBZXy1VCwltPewGogYmUcngQjn1gLcd4XO5Dv2uBfEyUWQAd7bmDFTVovBYX66jQhqeRWVSBmUxgRliO5X3zUsqO26t_u5Sz_yN4tNOVmX0Q-SCgoHkrWl9nLAYnm4hPpyWuveDj3O8YOu0i9lx1Z-8M2uaBKKZu6K3fPt_up26JfG4VyhSDAe10dHgCaq1QQngFKsemYpjCS1k7nYccZM75dXzANq1uH-2y8ne4_xOugqNbkZCVY" type="button">
+              <div class="relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all">
+                <img alt="스페인 캣" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1VFbBVBZXy1VCwltPewGogYmUcngQjn1gLcd4XO5Dv2uBfEyUWQAd7bmDFTVovBYX66jQhqeRWVSBmUxgRliO5X3zUsqO26t_u5Sz_yN4tNOVmX0Q-SCgoHkrWl9nLAYnm4hPpyWuveDj3O8YOu0i9lx1Z-8M2uaBKKZu6K3fPt_up26JfG4VyhSDAe10dHgCaq1QQngFKsemYpjCS1k7nYccZM75dXzANq1uH-2y8ne4_xOugqNbkZCVY"/>
+                <div class="avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
+                  <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                </div>
+              </div>
+              <span class="avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]">스페인 캣</span>
+            </button>
+            <!-- 2. [선글라스 캣] -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-name="선글라스 캣" data-avatar-src="https://lh3.googleusercontent.com/aida/AEtjO1VFH7lTUXezARzYZJy3pMVRRdJzmm_S-XjrhEZQaZ6aWu-18QU0Cu2g2iyZZ9Tbq5qZZ89V6g6Ke2hI55QzJsxKsX7ZfIRY9CC4Px9P2l8S83-ASlA7MslvV-9e3kopYmqqM1LvK1RL2FLxyHhzzI8m597W8VIiiOm5jG3FHswJJZVJxuSVhKzQp1TrsM9FDNXI8aL69qKjIbIvVLJa0mFzQaNwsFDvg83NHFUfNGPqCsrHdZ3L46IjBg" type="button">
+              <div class="relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                <img alt="선글라스 캣" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1VFH7lTUXezARzYZJy3pMVRRdJzmm_S-XjrhEZQaZ6aWu-18QU0Cu2g2iyZZ9Tbq5qZZ89V6g6Ke2hI55QzJsxKsX7ZfIRY9CC4Px9P2l8S83-ASlA7MslvV-9e3kopYmqqM1LvK1RL2FLxyHhzzI8m597W8VIiiOm5jG3FHswJJZVJxuSVhKzQp1TrsM9FDNXI8aL69qKjIbIvVLJa0mFzQaNwsFDvg83NHFUfNGPqCsrHdZ3L46IjBg"/>
+                <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
+                  <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                </div>
+              </div>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">선글라스 캣</span>
+            </button>
+            <!-- 3. [학구파 캣] -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-name="학구파 캣" data-avatar-src="https://lh3.googleusercontent.com/aida/AEtjO1UTfhSI9tqjtGycZxAAtyxu1DzvocxzUz0P-5Uan9t6E83YDVpIkrp1leeQi3xiNr6cOKIJqi1XTotb0SXAqwNPB2XNb-LK6jA1jgzV_2fVE4cf7nfUIA_uqTmvzb0R1xH8lKecSORnmBB2eEkY5XWOFsdERsxxGkusTDOXV8Bb1XQ5ygqLs2P4fTs31In5jjDv-FWMuBasZvqqKnTg5PjPfsQaoaY7XmTKZMcUuTJUpgpsxgIatVBpVA" type="button">
+              <div class="relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                <img alt="학구파 캣" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1UTfhSI9tqjtGycZxAAtyxu1DzvocxzUz0P-5Uan9t6E83YDVpIkrp1leeQi3xiNr6cOKIJqi1XTotb0SXAqwNPB2XNb-LK6jA1jgzV_2fVE4cf7nfUIA_uqTmvzb0R1xH8lKecSORnmBB2eEkY5XWOFsdERsxxGkusTDOXV8Bb1XQ5ygqLs2P4fTs31In5jjDv-FWMuBasZvqqKnTg5PjPfsQaoaY7XmTKZMcUuTJUpgpsxgIatVBpVA"/>
+                <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
+                  <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                </div>
+              </div>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">학구파 캣</span>
+            </button>
+            <!-- 4. [여유 캣] -->
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-name="여유 캣" data-avatar-src="https://lh3.googleusercontent.com/aida/AEtjO1X5LR48QLAv1y4-DG9NaFBtZFruS4R9Hpk8-idgZEqaVOb3FBz6gae0oWbJi_Dff8jm9j0mHoZjQ_ErmCsONJ7zlco67Fsyy0TpPHar8bAgm8Je5d6W2Hh7iTbNbNVq2t9rhSHp7hnNG-PP2dROQUNxDydxiSyZ_hX7oIeJfgwyncKyWRKaaoyzwFMbzC67H5xspAQWO-v72s53XI0k6wKn4qQU4_1Yc8hBWa51IJRKb8F8SYatj0-1bA" type="button">
+              <div class="relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
+                <img alt="여유 캣" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1X5LR48QLAv1y4-DG9NaFBtZFruS4R9Hpk8-idgZEqaVOb3FBz6gae0oWbJi_Dff8jm9j0mHoZjQ_ErmCsONJ7zlco67Fsyy0TpPHar8bAgm8Je5d6W2Hh7iTbNbNVq2t9rhSHp7hnNG-PP2dROQUNxDydxiSyZ_hX7oIeJfgwyncKyWRKaaoyzwFMbzC67H5xspAQWO-v72s53XI0k6wKn4qQU4_1Yc8hBWa51IJRKb8F8SYatj0-1bA"/>
+                <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
+                  <span class="material-symbols-outlined text-[11px] font-bold">check</span>
+                </div>
+              </div>
+              <span class="avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]">여유 캣</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Nickname Input Field -->
+        <div class="flex flex-col mb-4">
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-[14px] font-bold text-slate-700" for="nickname-input">질주러 닉네임</label>
+            <span class="text-xs text-slate-400">최대 10자</span>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 flex items-center justify-between mt-1.5 focus-within:border-[#22c55e] focus-within:bg-white transition-colors">
+            <input class="w-full bg-transparent font-bold text-[15px] text-slate-800 outline-none" id="nickname-input" maxlength="10" type="text" value="스페인어 질주러"/>
+            <span class="material-symbols-outlined text-slate-400 text-lg ml-2 pointer-events-none">edit</span>
+          </div>
+        </div>
+        
+        <!-- [대표 칭호 선택] Title Chips (Duolingo Tactile 3D Styling) -->
+        <div class="flex flex-col mb-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[14px] font-bold text-slate-700">대표 칭호 선택</span>
+            <span class="text-xs font-semibold text-[#16a34a] cursor-pointer">전용 칭호 획득 가능</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <!-- Chip 1 [초급 마스터] (SELECTED) -->
+            <button class="title-pill bg-[#22c55e] text-white font-bold text-sm py-2.5 px-3 rounded-xl border-b-4 border-[#16a34a] flex items-center justify-center gap-1.5 shadow-sm active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full" type="button" data-title="초급 마스터">
+              <span class="material-symbols-outlined text-[15px] font-bold">check</span>
+              <span>초급 마스터</span>
+            </button>
+            <!-- Chip 2 [불꽃 연속러] (UNSELECTED) -->
+            <button class="title-pill bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-sm py-2.5 px-3 rounded-xl border-b-4 border-slate-200 flex items-center justify-center gap-1.5 active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full" type="button" data-title="🔥 불꽃 연속러">
+              <span class="hidden material-symbols-outlined text-[15px] font-bold">check</span>
+              <span>🔥 불꽃 연속러</span>
+            </button>
+            <!-- Chip 3 [스피드 러너] (UNSELECTED) -->
+            <button class="title-pill bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-sm py-2.5 px-3 rounded-xl border-b-4 border-slate-200 flex items-center justify-center gap-1.5 active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full" type="button" data-title="⚡ 스피드 러너">
+              <span class="hidden material-symbols-outlined text-[15px] font-bold">check</span>
+              <span>⚡ 스피드 러너</span>
+            </button>
+            <!-- Chip 4 [단어 수집가] (UNSELECTED) -->
+            <button class="title-pill bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-sm py-2.5 px-3 rounded-xl border-b-4 border-slate-200 flex items-center justify-center gap-1.5 active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full" type="button" data-title="📚 단어 수집가">
+              <span class="hidden material-symbols-outlined text-[15px] font-bold">check</span>
+              <span>📚 단어 수집가</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Main Bottom CTA [저장하기] Button -->
+        <div class="w-full">
+          <button class="w-full h-[52px] py-3.5 px-6 rounded-2xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-[16px] shadow-md border-b-4 border-[#16a34a] active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 cursor-pointer" id="save-profile-btn" type="button">
+            <span class="material-symbols-outlined text-[20px]">save</span>
+            <span>저장하기</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 7. LESSON PREVIEW BOTTOM SHEET                    -->
+    <!-- ================================================= -->
+    <!-- Dim Backdrop for Lesson Popup -->
+    <div id="lesson-modal-backdrop" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-[2px] transition-opacity duration-200 opacity-0 pointer-events-none"></div>
+
+    <!-- Lesson Floating Action Card (Mini Bottomsheet style) -->
+    <div id="lesson-card-sheet" class="fixed bottom-20 left-4 right-4 max-w-[408px] mx-auto z-40 bg-surface-container-lowest border-2 border-outline-variant/30 rounded-[28px] shadow-[0_20px_40px_-8px_rgba(15,23,42,0.28)] p-5 flex flex-col gap-3.5 transform transition-all duration-300 ease-out translate-y-8 scale-95 opacity-0 pointer-events-none select-none" role="dialog" aria-modal="true" aria-labelledby="lesson-modal-title">
+      
+      <!-- Top Pill Handle -->
+      <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto -mt-1 mb-0.5"></div>
+
+      <!-- Header Row: Icon, Title & Close Button -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div id="lesson-modal-icon-box" class="w-12 h-12 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-secondary-container/40 flex-shrink-0">
+            <span id="lesson-modal-icon">✈️</span>
+          </div>
+          <div class="flex flex-col">
+            <span id="lesson-modal-badge" class="font-label-sm text-[11px] text-secondary font-extrabold uppercase tracking-wide">2과 · 현재 도전 중</span>
+            <h3 id="lesson-modal-title" class="font-headline-sm text-[18px] text-on-surface font-extrabold leading-snug">2과: 입국 심사</h3>
+          </div>
+        </div>
+        <button id="lesson-modal-close-btn" class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-outline active:scale-90 transition-all cursor-pointer" type="button" aria-label="닫기">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Description -->
+      <p id="lesson-modal-desc" class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+        입국 심사 질문과 답변 완벽 정복! 공항 필수 어휘 15개를 마스터해보세요.
+      </p>
+
+      <!-- Progress & Rewards Stats Box -->
+      <div class="flex items-center justify-between bg-surface-container-low px-4 py-2.5 rounded-2xl border border-outline-variant/30">
+        <!-- Left: Progress -->
+        <div class="flex flex-col gap-1 w-[46%]">
+          <div class="flex items-center justify-between pr-1">
+            <span class="font-label-sm text-[10px] text-on-surface-variant font-bold">진행 상태</span>
+            <span id="lesson-modal-progress-text" class="font-label-sm text-[11px] text-secondary font-black">0/3</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
+            <div id="lesson-modal-progress-bar" class="h-full rounded-full bg-secondary transition-all duration-300" style="width: 0%;"></div>
+          </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="h-7 w-[1px] bg-outline-variant/50"></div>
+
+        <!-- Right: Reward Chips -->
+        <div class="flex items-center gap-1.5 pl-1">
+          <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant shadow-[0_1px_0_0_#ffb690]">
+            <span class="text-xs leading-none">⚡</span>
+            <span id="lesson-modal-xp" class="font-label-sm text-[11px] font-bold">+20 XP</span>
+          </div>
+          <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant shadow-[0_1px_0_0_#89ceff]">
+            <span class="text-xs leading-none">💎</span>
+            <span id="lesson-modal-gems" class="font-label-sm text-[11px] font-bold">+10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button: Chunky 3D Emerald Green CTA -->
+      <button id="lesson-start-btn" type="button" class="w-full h-12 rounded-2xl font-label-lg text-base bg-[#22c55e] hover:bg-[#16a34a] text-white font-extrabold flex items-center justify-center gap-2 shadow-[0_4px_0_#15803d,0_8px_16px_-2px_rgba(34,197,94,0.4)] active:translate-y-1 active:shadow-none transition-all cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        <span id="lesson-start-btn-text">학습 시작하기</span>
+      </button>
+
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 8. WORD PREVIEW FLASHCARD SCREEN (CARD STACK)     -->
+    <!-- ================================================= -->
+    <div id="flashcard-screen" class="fixed inset-0 z-50 flex justify-center bg-slate-900/60 backdrop-blur-xs transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true" aria-label="단어 예습 플래시카드">
+      <div id="flashcard-container" class="relative w-full max-w-[440px] h-full min-h-screen bg-[#faf8ff] flex flex-col justify-between pt-safe pb-safe shadow-2xl overflow-hidden transform transition-transform duration-300 ease-out translate-y-full">
+        <div class="flex flex-col w-full h-[844px] max-w-[390px] mx-auto px-5 py-4 justify-between overflow-hidden select-none">
+          
+          <!-- 1. Top Navigation -->
+          <header class="w-full flex items-center justify-between gap-3 pt-1">
+            <!-- Close Button (Simple '✕') -->
+            <button id="flashcard-close-btn" aria-label="닫기" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-slate-500 hover:text-slate-800 active:scale-90 transition-transform cursor-pointer" type="button">
+              <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <!-- Center Subtitle & Wide Progress Bar -->
+            <div class="flex-1 flex flex-col items-center px-1">
+              <span id="flashcard-lesson-title" class="text-[13px] text-slate-500 mb-1.5 font-medium tracking-tight">2과: 입국 심사 · 단어 예습</span>
+              <div class="w-full max-w-[210px] h-2 bg-surface-container-high rounded-full overflow-hidden p-0.5">
+                <div id="flashcard-progress-bar" class="h-full bg-[#22C55E] rounded-full w-[20%] transition-all duration-300"></div>
+              </div>
+            </div>
+            <!-- Skip Button -->
+            <button id="flashcard-skip-btn" class="text-right py-1 px-1 font-label-md text-label-md text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-0.5 active:scale-95 cursor-pointer" type="button">
+              <span class="font-medium">건너뛰기</span>
+              <span class="material-symbols-outlined text-[16px] leading-none">chevron_right</span>
+            </button>
+          </header>
+
+          <!-- 2. Central 3D Flashcard Deck Container (Stack Effect) -->
+          <div class="relative w-full flex items-center justify-center my-auto py-2">
+            <!-- Deck Layer 2 (Bottom-most peek layer: shifted -16px, 90% scale) -->
+            <div id="flashcard-deck-layer-2" class="absolute w-[338px] h-[415px] bg-[#f0f3fe] rounded-[28px] border border-slate-200/60 shadow-sm transform -translate-y-4 scale-[0.90] pointer-events-none opacity-80 z-[1]"></div>
+            
+            <!-- Behind Card (Next Card in Stack, Waiting at scale 0.95, opacity 0.7, z-index 5) -->
+            <div id="flashcard-behind" class="absolute w-[342px] h-[420px] bg-white rounded-[28px] shadow-[0_12px_28px_-8px_rgba(30,41,59,0.12),0_0_0_1px_rgba(226,232,240,0.8)] p-6 flex flex-col justify-between items-center text-center select-none pointer-events-none transform -translate-y-2 scale-[0.95] opacity-70 z-[5]">
+              <!-- Top Tag Pill -->
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                <span class="material-symbols-outlined text-[14px] text-[#22C55E]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                <span id="flashcard-behind-tag" class="text-[12px] font-semibold tracking-wide">스페인어 필수 어휘</span>
+              </div>
+              
+              <!-- Content: Next Word Preview -->
+              <div class="flex flex-col items-center my-auto w-full">
+                <div class="w-16 h-16 rounded-full bg-[#EBFDF2] text-[#16A34A] flex items-center justify-center mb-5 shadow-sm">
+                  <span class="material-symbols-outlined text-[30px]" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+                </div>
+                <h1 id="flashcard-behind-word" class="font-headline-xl text-[36px] text-[#0F172A] font-extrabold tracking-tight mb-2 leading-none">
+                  Visado
+                </h1>
+                <span id="flashcard-behind-phonetic" class="text-sm font-semibold text-slate-400 tracking-wide">[비사도]</span>
+              </div>
+
+              <!-- Bottom Hint Pill -->
+              <div class="w-full flex justify-center">
+                <div class="inline-flex items-center gap-1.5 bg-slate-100/90 text-slate-600 font-medium text-[13px] px-4 py-2 rounded-full shadow-xs">
+                  <span>다음 학습 대기 중</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Top Card (Current Interactive Card, z-index 10, scale 1) -->
+            <div id="flashcard-wrapper" class="relative z-10 w-full max-w-[342px] h-[420px] cursor-grab select-none touch-none" style="touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none;">
+              <!-- Front Flashcard (Main Interactive Card Body) -->
+              <div id="flashcard" class="flashcard-card w-full h-full bg-white rounded-[28px] shadow-[0_16px_36px_-10px_rgba(30,41,59,0.14),0_0_0_1px_rgba(226,232,240,0.8)] p-6 flex flex-col justify-between items-center text-center overflow-hidden transition-transform duration-200" role="button" aria-label="플래시카드 탭하여 뜻 확인 또는 좌우 스와이프">
+                <!-- Top Tag Pill -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 pointer-events-none">
+                  <span class="material-symbols-outlined text-[14px] text-[#22C55E]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                  <span id="flashcard-tag" class="text-[12px] font-semibold tracking-wide">스페인어 필수 어휘</span>
+                </div>
+                
+                <!-- Front Content: Speaker Button & Pronunciation -->
+                <div id="flashcard-front" class="flex flex-col items-center my-auto w-full transition-opacity duration-200 pointer-events-none">
+                  <!-- Circular Sound/Speaker Button (Soft Mint Circle) -->
+                  <button id="flashcard-speaker-btn" aria-label="발음 듣기" class="w-16 h-16 rounded-full bg-[#EBFDF2] text-[#16A34A] flex items-center justify-center mb-5 shadow-sm hover:bg-[#dcfce7] active:scale-90 transition-transform cursor-pointer pointer-events-auto" type="button">
+                    <span class="material-symbols-outlined text-[30px]" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+                  </button>
+                  <!-- Main Spanish Word -->
+                  <h1 id="flashcard-word" class="font-headline-xl text-[36px] text-[#0F172A] font-extrabold tracking-tight mb-2 leading-none">
+                    Pasaporte
+                  </h1>
+                  <!-- Phonetic Pronunciation -->
+                  <span id="flashcard-phonetic" class="text-sm font-semibold text-slate-400 tracking-wide">[파사포르테]</span>
+                </div>
+
+                <!-- Back Content: Meaning & Example Sentence (Shown upon tap) -->
+                <div id="flashcard-back" class="hidden flex-col items-center my-auto w-full transition-opacity duration-200 pointer-events-none">
+                  <span class="text-[13px] font-bold text-emerald-600 mb-2 tracking-wide">한국어 뜻</span>
+                  <h2 id="flashcard-meaning" class="font-headline-xl text-[34px] font-extrabold text-[#0F172A] tracking-tight mb-4 leading-tight">
+                    여권
+                  </h2>
+                  <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 w-full max-w-[290px] shadow-xs">
+                    <p id="flashcard-example-target" class="text-[14px] font-bold text-slate-800 leading-snug">"Aquí tiene mi pasaporte."</p>
+                    <p id="flashcard-example-meaning" class="text-[12px] font-medium text-slate-500 mt-1.5 leading-snug">"여기 제 여권이 있습니다."</p>
+                  </div>
+                </div>
+
+                <!-- Bottom Hint Pill -->
+                <div class="w-full flex justify-center pointer-events-none">
+                  <div id="flashcard-hint" class="inline-flex items-center gap-1.5 bg-slate-100/90 text-slate-600 font-medium text-[13px] px-4 py-2 rounded-full shadow-xs">
+                    <span>👆 탭: 뜻 확인 · ↔ 밀기: 단어 넘기기</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Cheering Mascot Micro-Interaction -->
+          <div class="w-full flex items-center justify-center gap-2.5 px-3 py-1">
+            <!-- Black Cat Mascot Avatar (30x30px) -->
+            <div class="w-[30px] h-[30px] rounded-full overflow-hidden ring-2 ring-[#22c55e]/30 shadow-xs flex-shrink-0 bg-[#a5b4fc]">
+              <img id="flashcard-mascot-img" alt="마스코트 고양이" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1U_q5kTRrmT8KOSpDWoZMTahzojhZYVkqNqkpT_DrD677SOSR4_wmFG0t6NRcg9ZQeZdMAD_8eXSEqCxwZCgyabYmRhWuBTKgTLsQXgRVEoAA0_4VtPC7DUq50QxnX_GaMo7uzqZg8Zlo2jH5Nrf71bJn72Oc6LDTMEDaFtbdj1sx7WrDlx65Io4r7snLe511CKuN0xo1byjv15XtlwdDfsqsB4LKBX9Ybcwpin1ZT6zPP8Ftn7-GrJmw">
+            </div>
+            <!-- Rounded Pill Speech Balloon -->
+            <div class="bg-emerald-50/90 border border-emerald-200/70 text-emerald-800 text-[12px] font-medium px-3.5 py-1.5 rounded-full shadow-xs flex items-center gap-1">
+              <span id="flashcard-mascot-msg">잘하고 있어요! 4개 남았어요 🐾</span>
+            </div>
+          </div>
+
+          <!-- 4. Bottom Navigation & Action CTA Button -->
+          <footer class="w-full flex flex-col gap-3 pb-2 pt-1">
+            <!-- Row 1: Carousel Step Controls -->
+            <div id="flashcard-nav" class="flex flex-row items-center justify-between px-2 text-slate-600 gap-2 w-full">
+              <!-- Previous Button -->
+              <button id="flashcard-prev-btn"
+                class="whitespace-nowrap shrink-0 flex flex-row items-center justify-center font-bold text-sm min-w-[48px] gap-0.5 px-2.5 py-1.5 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-surface-container active:scale-95 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                style="font-weight: 700; white-space: nowrap; min-width: 48px;"
+                type="button" disabled>
+                <span class="material-symbols-outlined text-[18px] shrink-0 font-bold">chevron_left</span>
+                <span class="whitespace-nowrap shrink-0 font-bold">이전</span>
+              </button>
+              <!-- Step Counter & Dots -->
+              <div class="flex items-center justify-center gap-1.5 min-w-0 flex-1 overflow-hidden px-1">
+                <div id="flashcard-dots" class="flex items-center justify-center gap-1 shrink-0 overflow-hidden max-w-full">
+                  <span class="w-2 h-2 rounded-full bg-[#22C55E] shrink-0"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-200 shrink-0"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-200 shrink-0"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-200 shrink-0"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-200 shrink-0"></span>
+                </div>
+                <span id="flashcard-step-text" class="text-[12px] font-bold text-slate-500 ml-1 shrink-0 whitespace-nowrap">(1/5)</span>
+              </div>
+              <!-- Next Button -->
+              <button id="flashcard-next-btn"
+                class="whitespace-nowrap shrink-0 flex flex-row items-center justify-center font-bold text-sm min-w-[48px] gap-0.5 px-2.5 py-1.5 rounded-xl text-[#16A34A] hover:bg-emerald-50 active:scale-95 transition-all cursor-pointer"
+                style="font-weight: 700; white-space: nowrap; min-width: 48px;"
+                type="button">
+                <span class="whitespace-nowrap shrink-0 font-bold">다음</span>
+                <span class="material-symbols-outlined text-[18px] shrink-0 font-bold">chevron_right</span>
+              </button>
+            </div>
+            <!-- Row 2: Tactile Push CTA Button -->
+            <button id="flashcard-cta-btn"
+              class="w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] active:shadow-[0_2px_0_0_#15803d] transition-all cursor-pointer"
+              style="font-weight: 800;"
+              type="button">
+              <span id="flashcard-cta-text" class="font-extrabold text-base tracking-wide" style="font-weight: 800;">다음 단어 보기 (1/5)</span>
+              <span id="flashcard-cta-icon" class="material-symbols-outlined text-[20px] font-extrabold leading-none" style="font-weight: 800;">chevron_right</span>
+            </button>
+          </footer>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 9. WORD DROP ACTION GAME SCREEN                   -->
+    <!-- ================================================= -->
+    <div id="game-screen" class="fixed inset-0 z-50 flex justify-center bg-slate-900/60 backdrop-blur-xs transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true" aria-label="단어 낙하 액션 게임">
+      <div id="game-container" class="relative w-full max-w-[440px] h-full h-[100dvh] bg-surface flex flex-col justify-between pt-safe pb-safe shadow-2xl overflow-hidden transform transition-transform duration-300 ease-out translate-y-full">
+        
+        <main class="flex flex-col relative w-full h-full max-h-[100dvh] py-3 px-4 bg-surface mx-auto gap-2 overflow-hidden select-none box-border flex-1">
+          
+          <!-- 1. Header & Status -->
+          <div class="flex flex-col gap-1.5 w-full flex-shrink-0">
+            <!-- Row 1: Hearts, Stage Name, Exit button -->
+            <div class="w-full flex items-center justify-between py-1 px-2.5 bg-surface-container-lowest rounded-xl shadow-sm border border-slate-100">
+              <!-- 5 Hearts -->
+              <div id="game-hearts" class="flex items-center gap-0.5 bg-error-container/30 px-2 py-0.5 rounded-full">
+                <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+              </div>
+              <!-- Stage Info Badge -->
+              <div class="flex items-center gap-1 bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 rounded-full shadow-sm">
+                <span class="material-symbols-outlined text-[13px] text-amber-700" style="font-variation-settings: 'FILL' 1;">local_activity</span>
+                <span id="game-stage-title" class="font-label-sm text-[11px] text-amber-900 tracking-tight font-bold">Stage 1: 기본 인사</span>
+              </div>
+              <!-- Pause / Exit Button -->
+              <button id="game-close-btn" aria-label="일시정지/나가기" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 active:scale-95 transition-all shadow-sm cursor-pointer" type="button">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+              </button>
+            </div>
+
+            <!-- Row 2: Progress bar -->
+            <div class="w-full flex items-center gap-2 px-1 py-0.5">
+              <div class="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden flex relative">
+                <div id="game-progress-bar" class="h-full bg-primary-container rounded-full transition-all duration-300" style="width: 8%;"></div>
+              </div>
+              <span id="game-progress-text" class="font-label-sm text-[10px] text-slate-500 font-bold leading-none tracking-tight">1/13</span>
+            </div>
+
+            <!-- Row 3: Combo, Speed, Hint -->
+            <div class="w-full flex items-center justify-between px-1 h-[24px]">
+              <div class="flex items-center gap-1.5">
+                <div id="game-combo-badge" class="flex items-center gap-1 bg-tertiary-container/20 text-on-tertiary-container px-2 py-0.5 rounded-full font-label-sm text-[10px] font-bold border border-tertiary-container/30 transition-all">
+                  <span>🔥</span><span id="game-combo-text">Combo x0</span>
+                </div>
+                <div class="flex items-center gap-1 bg-surface-container-lowest text-secondary px-2 py-0.5 rounded-full font-label-sm text-[10px] font-bold shadow-sm border border-slate-100">
+                  <span>⏱️</span><span id="game-speed-text">1.0x</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm border border-slate-100">
+                <span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+                <span class="font-label-sm text-[10px] text-primary font-bold">떨어지기 전에 탭!</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Responsive Dropping Arena -->
+          <div id="game-arena" class="relative w-full flex-1 min-h-0 rounded-3xl bg-gradient-to-b from-sky-50/70 via-surface-container-lowest to-rose-50/40 border border-slate-100 overflow-hidden flex flex-col items-center justify-between pt-2.5 px-3 pb-0 shadow-inner">
+            
+            <!-- Ceiling Mark -->
+            <div class="w-full flex justify-center pt-0.5 opacity-20 pointer-events-none">
+              <div class="w-16 h-1 rounded-full bg-slate-300"></div>
+            </div>
+
+            <!-- Freezing Frost Overlay -->
+            <div id="game-freeze-overlay" class="hidden absolute inset-0 bg-sky-200/25 pointer-events-none z-30 animate-frost border-2 border-sky-400/40 rounded-3xl flex items-center justify-center">
+              <div class="bg-sky-500/85 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                <span>❄️</span><span>시간 빙결 중!</span>
+              </div>
+            </div>
+
+            <!-- Floating Score Pop Effect -->
+            <div id="game-floating-effect" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 z-40 pointer-events-none text-center">
+              <span id="game-floating-text" class="px-3 py-1 rounded-full bg-emerald-500 text-white font-headline-sm text-sm font-extrabold shadow-lg">정답! +100</span>
+            </div>
+
+            <!-- Dynamic Dropping Word Bubble -->
+            <div id="game-dropping-bubble" class="absolute left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-center transition-all cursor-pointer select-none max-w-[85%] w-auto" style="top: 3%;">
+              <div class="relative flex items-center px-4 py-2 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center">
+                <span id="game-dropping-word" class="font-headline-xl text-[24px] font-extrabold text-[#1E293B] tracking-tight drop-shadow-sm select-none break-keep text-center leading-snug">¡Hola!</span>
+              </div>
+            </div>
+
+            <!-- Deadline Zone (위험선) -->
+            <div id="game-deadline" class="w-full flex flex-col items-center gap-1 z-10 flex-shrink-0 pb-1.5 mt-auto">
+              <div class="flex items-center gap-1.5 bg-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-[0_2px_4px_rgba(244,63,94,0.3)] animate-pulse">
+                <span class="material-symbols-outlined text-[12px]">warning</span>
+                <span class="font-label-sm text-[9px] tracking-wider uppercase font-black">위험선 (DEADLINE)</span>
+              </div>
+              <div class="w-full border-t-2 border-dashed border-rose-400 opacity-90 relative">
+                <div class="absolute inset-0 -top-1 h-3 bg-gradient-to-b from-rose-500/20 to-transparent blur-[2px] pointer-events-none"></div>
+              </div>
+            </div>
+
+            <!-- Dialogs: Pause, Game Over, Stage Clear -->
+            <!-- 1) Pause Dialog -->
+            <div id="game-pause-dialog" class="hidden absolute inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center">
+              <div class="bg-white rounded-[24px] p-6 w-full max-w-[300px] shadow-2xl flex flex-col items-center gap-3">
+                <span class="text-3xl">⏸️</span>
+                <h3 class="font-headline-sm text-lg font-bold text-slate-800">게임 일시정지</h3>
+                <p class="text-xs text-slate-500">잠시 숨을 고르고 계속 질주해보세요!</p>
+                <button id="game-resume-btn" type="button" class="w-full h-11 rounded-xl bg-[#22C55E] text-white font-bold text-sm shadow-md active:scale-95 transition cursor-pointer">계속하기</button>
+                <button id="game-quit-btn" type="button" class="w-full h-10 rounded-xl bg-slate-100 text-slate-600 font-semibold text-xs hover:bg-slate-200 active:scale-95 transition cursor-pointer">게임 나가기</button>
+              </div>
+            </div>
+
+            <!-- 2) Game Over Dialog -->
+            <div id="game-over-dialog" class="hidden absolute inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center">
+              <div class="bg-white rounded-[24px] p-6 w-full max-w-[300px] shadow-2xl flex flex-col items-center gap-3 animate-bubble-pop">
+                <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-3xl">💔</div>
+                <h3 class="font-headline-sm text-xl font-bold text-slate-900">하트 모두 소진!</h3>
+                <p class="text-xs text-slate-500">위험선에 닿거나 틀리면 하트가 줄어들어요.<br>다시 도전해볼까요?</p>
+                <button id="game-retry-btn" type="button" class="w-full h-12 rounded-xl bg-[#22C55E] text-white font-bold text-sm shadow-[0_4px_0_#15803d] active:translate-y-1 active:shadow-none transition cursor-pointer">다시 도전하기</button>
+                <button id="game-over-exit-btn" type="button" class="w-full h-10 rounded-xl bg-slate-100 text-slate-600 font-semibold text-xs hover:bg-slate-200 active:scale-95 transition cursor-pointer">로드맵으로 나가기</button>
+              </div>
+            </div>
+
+            <!-- 3) Stage Clear Dialog -->
+            <div id="game-clear-dialog" class="hidden absolute inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center">
+              <div class="bg-white rounded-[28px] p-6 w-full max-w-[320px] shadow-2xl flex flex-col items-center gap-3 animate-bubble-pop">
+                <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-3xl shadow-sm">🏆</div>
+                <h3 class="font-headline-sm text-2xl font-black text-slate-900 leading-tight">STAGE CLEAR!</h3>
+                <div id="game-clear-stars" class="flex items-center gap-1.5 text-2xl">
+                  <span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+                <p class="text-xs text-slate-500">모든 단어를 멋지게 클리어했습니다!</p>
+                <div class="flex items-center gap-3 bg-amber-50 border border-amber-200/80 px-4 py-2 rounded-2xl w-full justify-center">
+                  <div class="flex items-center gap-1 text-amber-800 font-bold text-sm">
+                    <span>⚡</span><span>+50 XP</span>
+                  </div>
+                  <div class="w-px h-4 bg-amber-200"></div>
+                  <div class="flex items-center gap-1 text-sky-700 font-bold text-sm">
+                    <span>💎</span><span>+10</span>
+                  </div>
+                </div>
+                <button id="game-finish-btn" type="button" class="w-full h-12 rounded-2xl bg-[#22C55E] text-white font-extrabold text-base shadow-[0_4px_0_#15803d] active:translate-y-1 active:shadow-none transition cursor-pointer mt-1">로드맵으로 돌아가기</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 3. Slim Utility Item Bar (34px height) -->
+          <div class="w-full grid grid-cols-4 gap-1.5 h-[34px] flex-shrink-0 mb-2">
+            <!-- Pass Item -->
+            <button id="game-item-pass" class="group relative flex items-center justify-center gap-1 py-1 px-1.5 rounded-xl bg-white border border-amber-200 shadow-[0_2px_0_0_#fcd34d] active:shadow-none active:translate-y-0.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" type="button" title="현재 단어 패스하기">
+              <span id="game-item-pass-count" class="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-label-sm text-[9px] font-black leading-tight shadow-sm">x2</span>
+              <span class="text-[11px]">⚡</span>
+              <span class="font-label-sm text-[10px] text-slate-800 font-bold leading-none">패스</span>
+            </button>
+            <!-- Freeze Item -->
+            <button id="game-item-freeze" class="group relative flex items-center justify-center gap-1 py-1 px-1.5 rounded-xl bg-white border border-sky-200 shadow-[0_2px_0_0_#7dd3fc] active:shadow-none active:translate-y-0.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" type="button" title="단어 낙하 3초 정지">
+              <span id="game-item-freeze-count" class="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full bg-sky-500 text-white font-label-sm text-[9px] font-black leading-tight shadow-sm">x1</span>
+              <span class="text-[11px]">❄️</span>
+              <span class="font-label-sm text-[10px] text-slate-800 font-bold leading-none">빙결</span>
+            </button>
+            <!-- Bomb Item -->
+            <button id="game-item-bomb" class="group relative flex items-center justify-center gap-1 py-1 px-1.5 rounded-xl bg-white border border-purple-200 shadow-[0_2px_0_0_#d8b4fe] active:shadow-none active:translate-y-0.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" type="button" title="현재 단어 즉시 파괴 및 정답 인정">
+              <span id="game-item-bomb-count" class="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full bg-purple-500 text-white font-label-sm text-[9px] font-black leading-tight shadow-sm">x1</span>
+              <span class="text-[11px]">💣</span>
+              <span class="font-label-sm text-[10px] text-slate-800 font-bold leading-none">폭탄</span>
+            </button>
+            <!-- Heal Item -->
+            <button id="game-item-heal" class="group relative flex items-center justify-center gap-1 py-1 px-1.5 rounded-xl bg-white border border-rose-200 shadow-[0_2px_0_0_#fda4af] active:shadow-none active:translate-y-0.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" type="button" title="하트 1개 회복">
+              <span id="game-item-heal-count" class="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-label-sm text-[9px] font-black leading-tight shadow-sm">x1</span>
+              <span class="text-[11px]">💖</span>
+              <span class="font-label-sm text-[10px] text-slate-800 font-bold leading-none">회복</span>
+            </button>
+          </div>
+
+          <!-- 4. Compact 2x2 Choice Buttons (44px each) -->
+          <div id="game-choices-container" class="w-full grid grid-cols-2 gap-2 flex-shrink-0">
+            <button id="game-choice-0" class="game-choice-btn h-[44px] rounded-xl bg-white text-on-surface border border-slate-200 border-b-[4px] border-b-slate-300 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center px-2 font-headline-sm text-[15px] font-extrabold shadow-sm hover:bg-slate-50 cursor-pointer" type="button">
+              <span class="choice-text">안녕</span>
+            </button>
+            <button id="game-choice-1" class="game-choice-btn h-[44px] rounded-xl bg-white text-on-surface border border-slate-200 border-b-[4px] border-b-slate-300 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center px-2 font-headline-sm text-[15px] font-extrabold shadow-sm hover:bg-slate-50 cursor-pointer" type="button">
+              <span class="choice-text">잘 가</span>
+            </button>
+            <button id="game-choice-2" class="game-choice-btn h-[44px] rounded-xl bg-white text-on-surface border border-slate-200 border-b-[4px] border-b-slate-300 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center px-2 font-headline-sm text-[15px] font-extrabold shadow-sm hover:bg-slate-50 cursor-pointer" type="button">
+              <span class="choice-text">감사합니다</span>
+            </button>
+            <button id="game-choice-3" class="game-choice-btn h-[44px] rounded-xl bg-white text-on-surface border border-slate-200 border-b-[4px] border-b-slate-300 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center px-2 font-headline-sm text-[15px] font-extrabold shadow-sm hover:bg-slate-50 cursor-pointer" type="button">
+              <span class="choice-text">부탁해요</span>
+            </button>
+          </div>
+
+        </main>
+
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 10. FLOATING TOAST NOTIFICATION                   -->
+    <!-- ================================================= -->
+    <div id="course-toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2 font-label-md text-xs transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
+      <span id="toast-icon" class="text-sm">🎉</span>
+      <span id="toast-msg">언어 코스가 변경되었습니다!</span>
+    </div>
+
   </div>
 
-  <!-- ================================================= -->
-  <!-- LIGHTWEIGHT INTERACTION JAVASCRIPT                 -->
-  <!-- ================================================= -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Springy bounce effect on node click
-      const nodeTargets = document.querySelectorAll('.node-target');
-      nodeTargets.forEach((target) => {
-        target.addEventListener('click', (e) => {
-          const btn = target.querySelector('.node-btn');
-          if (btn) {
-            btn.classList.remove('animate-node-bounce');
-            // Force browser reflow to restart animation reliably
-            void btn.offsetWidth;
-            btn.classList.add('animate-node-bounce');
-
-            btn.addEventListener('animationend', () => {
-              btn.classList.remove('animate-node-bounce');
-            }, { once: true });
-          }
-        });
-      });
-
-      // 2. Category Filter Pills Toggle
-      const pills = document.querySelectorAll('.category-pill');
-      pills.forEach((pill) => {
-        pill.addEventListener('click', () => {
-          pills.forEach((p) => {
-            p.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer';
-          });
-          pill.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-primary text-on-primary font-bold shadow-sm cursor-pointer';
-        });
-      });
-
-      // 3. Bottom Nav Items Toggle
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach((item) => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          navItems.forEach((n) => {
-            n.classList.remove('text-primary', 'font-bold');
-            n.classList.add('text-on-surface-variant');
-          });
-          item.classList.add('text-primary', 'font-bold');
-          item.classList.remove('text-on-surface-variant');
-        });
-      });
-    });
-  </script>
+  <!-- Application Data & Logic -->
+  <script src="js/data.js"></script>
+  <script src="js/flashcard.js"></script>
+  <script src="js/gameEngine.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
