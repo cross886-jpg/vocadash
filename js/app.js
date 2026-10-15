@@ -2358,7 +2358,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}`;
+    return `assets/profiles/${file}?v=5`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
