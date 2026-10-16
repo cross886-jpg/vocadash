@@ -224,6 +224,10 @@
       }
     } else if (normTab === 'book') {
       try {
+        const curLang = window.currentLanguage || 'es';
+        const curCourse = window.currentCourseId || 'basic';
+        if (typeof window.renderBookCourseDropdown === 'function') window.renderBookCourseDropdown(curLang, curCourse);
+        if (typeof window.renderBookWords === 'function') window.renderBookWords(curLang, curCourse);
         if (typeof window.syncBookPhoneticSetting === 'function') window.syncBookPhoneticSetting();
         if (typeof window.initBookScreenEvents === 'function') window.initBookScreenEvents();
       } catch (err) {

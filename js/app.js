@@ -265,8 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=10', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=10', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=11', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=11', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -1009,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=10';
+    const v = '?v=11';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1168,7 +1168,10 @@ document.addEventListener('DOMContentLoaded', () => {
       window.renderBookCourseDropdown(lang, selectedCourse);
     }
 
-    // 4. 로드맵 노드 및 스테이지 타이틀 갱신
+    // 4. 로드맵 노드 및 스테이지 타이틀 갱신 (진행도 언어별 로드)
+    if (typeof loadNodeProgress === 'function') {
+      window.nodeProgressMap = loadNodeProgress(lang);
+    }
     updateRoadmapNodesUI();
 
     // 5. 단어장 단어 갱신
@@ -1180,6 +1183,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. 언어 선택 모달 내 상태 갱신 및 창 닫기 (토스트/알림 배너 없이 즉각 반영)
     updateModalCardsUI(lang);
     window.closeLanguageModal();
+
+    // 8. 오답 노트 데이터 언어별(es/en) 격리 로드 및 오답 탭 즉시 리렌더링
+    if (typeof loadWrongWords === 'function') {
+      window.wrongWords = loadWrongWords(lang);
+    }
+    if (typeof updateWrongWordsBadge === 'function') {
+      updateWrongWordsBadge();
+    }
+    if (typeof renderReviewWords === 'function') {
+      renderReviewWords(window.currentReviewFilter || 'waiting');
+    }
+
+    // 9. 내 기록(통계) 화면 언어별 UI 갱신
+    if (typeof updateStatsScreenUI === 'function') {
+      updateStatsScreenUI();
+    }
   }
   window.setLanguage = setLanguage;
   window.changeCourse = setLanguage;
@@ -1310,49 +1329,100 @@ document.addEventListener('DOMContentLoaded', () => {
   on('close-profile-modal-btn', 'click', window.closeProfileModal);
 
   // ===================================================
-  // 6-B. 오답노트 (오답 탈출) 데이터 및 화면 로직
+  // 6-B. 오답노트 (오답 탈출) 데이터 및 화면 로직 (언어별 독립 격리)
   // ===================================================
-  const DEFAULT_WRONG_WORDS = [
-    { id: 'w1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', wrongCount: 1, escaped: false },
-    { id: 'w2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', wrongCount: 2, escaped: false },
-    { id: 'w3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', wrongCount: 1, escaped: false },
-    { id: 'w4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', wrongCount: 1, escaped: false },
-    { id: 'w5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', wrongCount: 2, escaped: false },
-    { id: 'w6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', wrongCount: 1, escaped: false },
-    { id: 'w7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', wrongCount: 1, escaped: false }
+  const DEFAULT_WRONG_WORDS_ES = [
+    { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', wrongCount: 2, escaped: false, lang: 'es' },
+    { id: 'w_es_3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', wrongCount: 2, escaped: false, lang: 'es' },
+    { id: 'w_es_6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', wrongCount: 1, escaped: false, lang: 'es' }
   ];
+  const DEFAULT_WRONG_WORDS_EN = [];
 
-  function loadWrongWords() {
+  function getWrongStorageKey(lang) {
+    const curLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    return `vocadash_wrong_answers_${curLang}`;
+  }
+
+  function migrateLegacyWrongWords() {
     try {
-      const saved = localStorage.getItem('vocadash_wrong_words');
+      const legacy = localStorage.getItem('vocadash_wrong_words');
+      if (legacy) {
+        const parsed = JSON.parse(legacy);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const esKey = 'vocadash_wrong_answers_es';
+          const enKey = 'vocadash_wrong_answers_en';
+          if (!localStorage.getItem(esKey)) {
+            const esItems = parsed.filter(item => (item.lang || 'es') === 'es').map(item => ({ ...item, lang: 'es' }));
+            if (esItems.length > 0) {
+              localStorage.setItem(esKey, JSON.stringify(esItems));
+            }
+          }
+          if (!localStorage.getItem(enKey)) {
+            const enItems = parsed.filter(item => item.lang === 'en').map(item => ({ ...item, lang: 'en' }));
+            if (enItems.length > 0) {
+              localStorage.setItem(enKey, JSON.stringify(enItems));
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
+  migrateLegacyWrongWords();
+
+  function loadWrongWords(targetLang) {
+    const lang = (targetLang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const key = getWrongStorageKey(lang);
+    try {
+      let saved = localStorage.getItem(key);
+      if (!saved && lang === 'es') {
+        saved = localStorage.getItem('vocadash_wrong_words');
+      }
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((item, idx) => ({
-            id: String(item.id || `w${idx + 1}`),
-            term: String(item.term || item.word || ''),
-            meaning: String(item.meaning || ''),
-            phonetic: String(item.phonetic || ''),
-            wrongCount: Number(item.wrongCount) || 1,
-            escaped: !!item.escaped
-          }));
+        if (Array.isArray(parsed)) {
+          return parsed
+            .map((item, idx) => ({
+              id: String(item.id || `w_${lang}_${idx + 1}`),
+              term: String(item.term || item.word || ''),
+              meaning: String(item.meaning || item.kor || ''),
+              phonetic: String(item.phonetic || ''),
+              wrongCount: Number(item.wrongCount) || 1,
+              escaped: !!item.escaped,
+              lang: item.lang || lang
+            }))
+            .filter((item) => item.lang === lang);
         }
       }
     } catch (e) {
       console.warn('오답 단어 로드 파싱 오류 방어, 기본값 복구:', e);
     }
-    return [...DEFAULT_WRONG_WORDS];
+    return lang === 'es' ? [...DEFAULT_WRONG_WORDS_ES] : [...DEFAULT_WRONG_WORDS_EN];
   }
 
-  function saveWrongWords(words) {
+  function saveWrongWords(words, targetLang) {
+    const lang = (targetLang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const key = getWrongStorageKey(lang);
     try {
-      localStorage.setItem('vocadash_wrong_words', JSON.stringify(words));
+      const validated = (words || []).map((w) => ({
+        ...w,
+        lang: w.lang || lang
+      }));
+      localStorage.setItem(key, JSON.stringify(validated));
+      if (lang === 'es') {
+        localStorage.setItem('vocadash_wrong_words', JSON.stringify(validated));
+      }
     } catch (e) {
       console.warn('오답 단어 저장 실패:', e);
     }
   }
 
-  window.wrongWords = loadWrongWords();
+  window.loadWrongWords = loadWrongWords;
+  window.saveWrongWords = saveWrongWords;
+  window.wrongWords = loadWrongWords(window.currentLanguage || 'es');
   window.userHearts = 5;
 
   function updateHeartsUI() {
@@ -1364,7 +1434,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateUserHeartsUI = updateHeartsUI;
 
   function updateWrongWordsBadge() {
-    const waitingWords = window.wrongWords.filter((w) => !w.escaped);
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const list = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
+      (item) => (item.lang || currentLang) === currentLang
+    );
+    const waitingWords = list.filter((w) => !w.escaped);
     const count = waitingWords.length;
 
     updateHeartsUI();
@@ -1391,7 +1465,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterWaitingBadge) {
       filterWaitingBadge.textContent = count;
     }
-    const escapedCount = window.wrongWords.filter((w) => w.escaped).length;
+    const escapedCount = list.filter((w) => w.escaped).length;
     const filterEscapedBadge = document.getElementById('review-filter-escaped-count');
     if (filterEscapedBadge) {
       filterEscapedBadge.textContent = escapedCount;
@@ -1403,23 +1477,32 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const term = wordObj.term || wordObj.word;
       if (!term) return;
-      const existing = window.wrongWords.find((w) => w.term.toLowerCase() === term.toLowerCase());
+      const lang = (wordObj.lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const list = loadWrongWords(lang);
+      const existing = list.find((w) => w.term.toLowerCase() === term.toLowerCase());
       if (existing) {
         existing.wrongCount = (existing.wrongCount || 1) + 1;
         existing.escaped = false;
+        existing.lang = lang;
       } else {
-        window.wrongWords.unshift({
-          id: 'w_' + Date.now() + Math.random().toString(36).substr(2, 4),
+        list.unshift({
+          id: 'w_' + lang + '_' + Date.now() + Math.random().toString(36).substr(2, 4),
           term: term,
           meaning: wordObj.meaning || wordObj.kor || '뜻 없음',
           phonetic: wordObj.phonetic || `[${term}]`,
           wrongCount: 1,
-          escaped: false
+          escaped: false,
+          lang: lang
         });
       }
-      saveWrongWords(window.wrongWords);
-      updateWrongWordsBadge();
-      renderReviewWords(currentReviewFilter);
+      saveWrongWords(list, lang);
+
+      const currentActiveLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      if (currentActiveLang === lang) {
+        window.wrongWords = list;
+        updateWrongWordsBadge();
+        renderReviewWords(currentReviewFilter);
+      }
     } catch (err) {
       console.warn('⚠️ addWrongWord 예외 방어:', err);
     }
@@ -1442,6 +1525,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   let currentSortMode = 'wrong_desc';
   let currentReviewFilter = 'waiting';
+  window.currentReviewFilter = currentReviewFilter;
 
   function sortWords(list, mode) {
     const arr = [...list];
@@ -1454,32 +1538,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return idB.localeCompare(idA);
       });
     } else if (mode === 'alpha' || mode === 'alphabet') {
+      const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       arr.sort((a, b) => {
         const strA = getSortableWord(a.word || a.term);
         const strB = getSortableWord(b.word || b.term);
-        // 스페인어 로케일 기준 정렬 (악센트 a/á 동등 취급 또는 올바른 스페인어 사전 순)
-        return strA.localeCompare(strB, 'es', { sensitivity: 'base' });
+        return strA.localeCompare(strB, curLang, { sensitivity: 'base' });
       });
     }
     return arr;
   }
   function sortReviewWords(list = window.wrongWords, mode = currentSortMode) {
-    return sortWords(list, mode);
+    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const langList = (Array.isArray(list) ? list : []).filter(item => (item.lang || curLang) === curLang);
+    return sortWords(langList, mode);
   }
   window.sortWords = sortWords;
   window.sortReviewWords = sortReviewWords;
 
   function renderReviewWords(filter = currentReviewFilter) {
     currentReviewFilter = filter;
+    window.currentReviewFilter = filter;
     if (typeof updateReviewFilterTabs === 'function') {
       updateReviewFilterTabs(filter);
     }
     const container = document.getElementById('review-word-list');
     if (!container) return;
 
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const currentWrongList = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
+      (item) => (item.lang || currentLang) === currentLang
+    );
+
     const baseWords = filter === 'escaped'
-      ? window.wrongWords.filter((w) => w.escaped)
-      : window.wrongWords.filter((w) => !w.escaped);
+      ? currentWrongList.filter((w) => w.escaped)
+      : currentWrongList.filter((w) => !w.escaped);
 
     const words = sortWords(baseWords, currentSortMode);
 
@@ -1487,7 +1579,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.innerHTML = `
         <div class="py-12 px-4 text-center bg-surface-container-lowest rounded-[20px] border border-outline-variant/30 flex flex-col items-center">
           <span class="text-4xl mb-2">🎉</span>
-          <p class="font-headline-sm font-bold text-on-surface">탈출 대기 중인 오답이 없습니다!</p>
+          <p class="font-headline-sm font-bold text-on-surface">틀린 단어가 없습니다! 완벽해요 🎉</p>
           <p class="text-xs text-on-surface-variant mt-1">모든 단어를 완벽하게 마스터했어요.</p>
         </div>
       `;
@@ -1547,10 +1639,11 @@ document.addEventListener('DOMContentLoaded', () => {
             audioBtn.classList.remove('scale-125', 'text-emerald-600');
           }, 300);
         }
+        const activeCourse = window.currentLanguage || window.currentActiveCourse || 'es';
         if (typeof window.safePlayTTS === 'function') {
-          window.safePlayTTS(term, window.currentActiveCourse || 'es', audioBtn);
+          window.safePlayTTS(term, activeCourse, audioBtn);
         } else if (typeof window.speakWord === 'function') {
-          window.speakWord(term, window.currentActiveCourse || 'es', audioBtn);
+          window.speakWord(term, activeCourse, audioBtn);
         }
       };
     });
@@ -1581,6 +1674,10 @@ document.addEventListener('DOMContentLoaded', () => {
           avatarSrc = localStorage.getItem('vocadash_profile_avatar');
         } catch (_) {}
       }
+      const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      if (!avatarSrc) {
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=11' : 'assets/profiles/profile-spanish.webp?v=11';
+      }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
         if (hallUserAvatar) hallUserAvatar.src = avatarSrc;
@@ -1591,21 +1688,26 @@ document.addEventListener('DOMContentLoaded', () => {
       const nicknameInput = document.getElementById('nickname-input');
       if (statsNickname) {
         let nick = (nicknameInput && nicknameInput.value) ? nicknameInput.value.trim() : null;
+        let hasCustomNick = false;
         if (!nick) {
           try {
             const userProfileStr = localStorage.getItem('userProfile');
             if (userProfileStr) {
               const parsed = JSON.parse(userProfileStr);
-              if (parsed && parsed.nickname) nick = parsed.nickname;
+              if (parsed && parsed.nickname) { nick = parsed.nickname; hasCustomNick = true; }
             }
           } catch (_) {}
         }
         if (!nick) {
           try {
-            nick = localStorage.getItem('vocadash_profile_nickname');
+            const savedNick = localStorage.getItem('vocadash_profile_nickname');
+            if (savedNick) { nick = savedNick; hasCustomNick = true; }
           } catch (_) {}
         }
-        if (nick) statsNickname.textContent = nick;
+        if (!hasCustomNick) {
+          nick = currentLang === 'en' ? '영어 질주러' : '스페인어 질주러';
+        }
+        statsNickname.textContent = nick;
       }
 
       const statsTitleBadge = document.getElementById('stats-title-badge');
@@ -1617,13 +1719,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const statsLevelBadge = document.getElementById('stats-level-badge');
-      if (statsLevelBadge && !statsLevelBadge.textContent) {
-        statsLevelBadge.textContent = 'Lv.5 여행자 ✈️';
+      if (statsLevelBadge) {
+        statsLevelBadge.textContent = currentLang === 'en' ? 'Lv.5 글로벌 러너 ✈️' : 'Lv.5 여행자 ✈️';
       }
 
       const statsWordsCount = document.getElementById('stats-words-count');
-      if (statsWordsCount && !statsWordsCount.textContent) {
-        statsWordsCount.textContent = '38개';
+      if (statsWordsCount) {
+        statsWordsCount.textContent = currentLang === 'en' ? '24개' : '38개';
       }
       const statsAccuracyRate = document.getElementById('stats-accuracy-rate');
       if (statsAccuracyRate && !statsAccuracyRate.textContent) {
@@ -2621,7 +2723,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=10`;
+    return `assets/profiles/${file}?v=11`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3009,9 +3111,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1분 스피드 복습 시작 로직
   function startGameWithWords(words, options = {}) {
-    const list = (words && words.length > 0) ? words : window.wrongWords;
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const fallbackList = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
+      (item) => (item.lang || currentLang) === currentLang
+    );
+    const list = (words && words.length > 0)
+      ? words.filter((item) => (item.lang || currentLang) === currentLang)
+      : fallbackList;
     if (!list || list.length === 0) {
-      window.showToast('복습할 오답 단어가 없습니다! 🎉', '💡');
+      if (typeof window.showToast === 'function') {
+        window.showToast('복습할 오답 단어가 없습니다! 🎉', '💡');
+      }
       return;
     }
 
@@ -3031,7 +3141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'word',
         isSentence: false,
         tag: '오답 복습',
-        isReviewMode: true
+        isReviewMode: true,
+        lang: currentLang
       });
       idx++;
     }
@@ -3054,8 +3165,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleStartReview = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
-    const waitingWords = window.wrongWords.filter((w) => !w.escaped);
-    const targetList = waitingWords.length > 0 ? waitingWords : window.wrongWords;
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const currentWrongList = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
+      (item) => (item.lang || currentLang) === currentLang
+    );
+    const waitingWords = currentWrongList.filter((w) => !w.escaped);
+    const targetList = waitingWords.length > 0 ? waitingWords : currentWrongList;
     startGameWithWords(targetList, { isReviewMode: true });
   };
 
@@ -3109,7 +3224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=10';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=11';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3151,7 +3266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=10';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=11';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
