@@ -265,8 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=9', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=9', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=10', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=10', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -954,14 +954,52 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateModalCardsUI(lang) {
     modalSelectedCourse = lang;
     const isEs = lang === 'es';
-    if (cardEs) cardEs.className = `course-card border-2 rounded-2xl p-3 text-center relative cursor-pointer transition-all flex flex-col items-center ${isEs ? 'border-[#22C55E] bg-emerald-50/50 ring-2 ring-[#22C55E]/20 scale-[1.02]' : 'border-slate-200 bg-white hover:border-slate-300'}`;
-    if (cardEn) cardEn.className = `course-card border-2 rounded-2xl p-3 text-center relative cursor-pointer transition-all flex flex-col items-center ${!isEs ? 'border-[#22C55E] bg-emerald-50/50 ring-2 ring-[#22C55E]/20 scale-[1.02]' : 'border-slate-200 bg-white hover:border-slate-300'}`;
-    if (badgeEs) badgeEs.className = `absolute -top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs ${isEs ? 'bg-[#22C55E] text-white' : 'hidden'}`;
-    if (badgeEn) badgeEn.className = `absolute -top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs ${!isEs ? 'bg-[#22C55E] text-white' : 'hidden'}`;
-    setText('cta-button-text', window.courseData[lang].ctaText);
+
+    const setCardStyle = (card, badge, isSelected) => {
+      if (!card) return;
+      card.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      card.className = `course-card relative p-3.5 rounded-2xl border-2 transition-all duration-150 flex flex-col items-center cursor-pointer active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#22c55e] ${
+        isSelected
+          ? 'border-[#22c55e] bg-[#f0fdf4] ring-2 ring-[#22c55e]/20 scale-[1.02] shadow-xs'
+          : 'border-slate-100 bg-slate-50 hover:bg-slate-100/70 hover:border-slate-200'
+      }`;
+
+      if (badge) {
+        badge.className = `absolute top-2.5 right-2.5 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+          isSelected ? 'border-[#22c55e] bg-[#22c55e]' : 'border-slate-300 bg-transparent'
+        }`;
+        const dot = badge.querySelector('.badge-dot') || badge.firstElementChild;
+        if (dot) {
+          dot.className = `badge-dot w-2 h-2 rounded-full transition-colors ${isSelected ? 'bg-white' : 'bg-transparent'}`;
+        }
+      }
+
+      const nameEl = card.querySelector('.card-lang-name');
+      if (nameEl) {
+        nameEl.className = `card-lang-name font-bold text-sm tracking-tight transition-colors ${
+          isSelected ? 'text-[#15803d]' : 'text-slate-700'
+        }`;
+      }
+
+      const subEl = card.querySelector('.card-lang-sub');
+      if (subEl) {
+        subEl.className = `card-lang-sub text-[11px] transition-colors ${
+          isSelected ? 'text-[#22c55e] font-semibold' : 'text-slate-400 font-medium'
+        }`;
+      }
+    };
+
+    setCardStyle(cardEs, badgeEs, isEs);
+    setCardStyle(cardEn, badgeEn, !isEs);
   }
 
-  window.openLanguageModal = () => { window.closeCourseDropdown(); updateModalCardsUI(window.currentActiveCourse); toggleModal(langBackdrop, langCard, true); };
+  window.openLanguageModal = () => { 
+    if (typeof window.closeCourseDropdown === 'function') {
+      window.closeCourseDropdown();
+    }
+    updateModalCardsUI(window.currentActiveCourse || 'es'); 
+    toggleModal(langBackdrop, langCard, true); 
+  };
   window.closeLanguageModal = () => toggleModal(langBackdrop, langCard, false);
   on('logo-lang-trigger', 'click', window.openLanguageModal);
   on('close-modal-btn', 'click', window.closeLanguageModal);
@@ -971,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=9';
+    const v = '?v=10';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1147,12 +1185,43 @@ document.addEventListener('DOMContentLoaded', () => {
   window.changeCourse = setLanguage;
   window.changeLanguage = setLanguage;
 
-  if (cardEs) cardEs.addEventListener('click', () => setLanguage('es'));
-  if (cardEn) cardEn.addEventListener('click', () => setLanguage('en'));
+  let isLanguageSwitching = false;
+  function handleCardLanguageSelect(targetLang) {
+    if (isLanguageSwitching) return;
+    isLanguageSwitching = true;
 
-  on('cta-start-btn', 'click', () => {
-    setLanguage(modalSelectedCourse || 'es');
-  });
+    // 1) 탭한 카드에 초록색 선택 테두리/체크 활성화 (active:scale-95 인터랙션과 함께 즉시 반영)
+    updateModalCardsUI(targetLang);
+
+    // 2) 약 0.15초 뒤 모달이 부드럽게 닫히면서 선택한 언어로 화면과 데이터셋이 즉시 갱신 (토스트/팝업 없이 조용히 전환)
+    setTimeout(() => {
+      try {
+        setLanguage(targetLang);
+      } finally {
+        isLanguageSwitching = false;
+      }
+    }, 150);
+  }
+
+  if (cardEs) {
+    cardEs.addEventListener('click', () => handleCardLanguageSelect('es'));
+    cardEs.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCardLanguageSelect('es');
+      }
+    });
+  }
+
+  if (cardEn) {
+    cardEn.addEventListener('click', () => handleCardLanguageSelect('en'));
+    cardEn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCardLanguageSelect('en');
+      }
+    });
+  }
 
   // 6. Streak & Profile Modals & Bottom Tabs
   const streakModal = el('streak-modal');
@@ -2552,7 +2621,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=9`;
+    return `assets/profiles/${file}?v=10`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3040,7 +3109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=9';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=10';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3082,7 +3151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=9';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=10';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
