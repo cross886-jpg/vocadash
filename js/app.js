@@ -1400,7 +1400,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       console.warn('오답 단어 로드 파싱 오류 방어, 기본값 복구:', e);
     }
-    return lang === 'es' ? [...DEFAULT_WRONG_WORDS_ES] : [...DEFAULT_WRONG_WORDS_EN];
+    const defaults = lang === 'es' ? [...DEFAULT_WRONG_WORDS_ES] : [...DEFAULT_WRONG_WORDS_EN];
+    try {
+      localStorage.setItem(key, JSON.stringify(defaults));
+    } catch (_) {}
+    return defaults;
   }
 
   function saveWrongWords(words, targetLang) {
@@ -2964,6 +2968,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const currentAvatarImg = document.getElementById('current-avatar-img');
       if (currentAvatarImg) currentAvatarImg.src = selectedAvatarSrc;
+
+      // 즉시 상단 헤더 및 통계 아바타 동기화 & 로컬스토리지 즉시 영구 저장
+      if (typeof applyProfileAvatar === 'function') {
+        applyProfileAvatar(targetFile);
+      }
+      try {
+        localStorage.setItem('vocadash_profile', targetFile);
+        localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
+      } catch (_) {}
     });
   });
 
