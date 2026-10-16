@@ -667,6 +667,13 @@
         overCard.style.display = 'none';
       }
 
+      // 결과 마스코트 (승리 고양이) 언어별 동적 바인딩
+      try {
+        const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        const resultMascot = document.getElementById('result-mascot-img');
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=9`;
+      } catch (_) {}
+
       // 낙하 중이던 단어 DOM 숨김
       const droppingEl = document.getElementById('dropping-word') || document.getElementById('game-dropping-bubble') || document.getElementById('game-dropping-word');
       if (droppingEl) droppingEl.style.display = 'none';
@@ -720,6 +727,15 @@
         overCard.classList.remove('hidden');
         overCard.style.display = 'flex';
       }
+
+      // 게임오버 마스코트 (슬픈 고양이) 언어별 동적 바인딩
+      try {
+        const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
+        goMascots.forEach(img => {
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=9`;
+        });
+      } catch (_) {}
 
       // 게임오버 카드 내 통계 & 마지막 오답 데이터 직접 바인딩
       try {

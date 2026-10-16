@@ -265,8 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.png?v=8', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.png?v=8', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=9', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=9', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -970,43 +970,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===================================================
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
-    const v = '?v=8';
+    const charPrefix = lang === 'en' ? 'en' : 'es';
+    const v = '?v=9';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
     if (flashcardMascot) {
-      flashcardMascot.src = 'assets/characters/' + lang + '-study.png' + v;
+      flashcardMascot.src = 'assets/characters/' + charPrefix + '-study.webp' + v;
     }
 
     // 2. Game result clear mascot
     const resultMascot = document.getElementById('result-mascot-img');
     if (resultMascot) {
-      resultMascot.src = 'assets/characters/' + lang + '-victory.png' + v;
+      resultMascot.src = 'assets/characters/' + charPrefix + '-victory.webp' + v;
     }
 
     // 3. Game over card mascot
-    const gameoverMascot = document.querySelector('#game-result-gameover-card img');
-    if (gameoverMascot) {
-      gameoverMascot.src = 'assets/characters/' + lang + '-sad.png' + v;
-    }
+    const gameoverMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
+    gameoverMascots.forEach(img => {
+      img.src = 'assets/characters/' + charPrefix + '-sad.webp' + v;
+    });
 
-    // 4. Roadmap speed review banner mascot
+    // 4. Roadmap speed review banner mascot (runner)
     const reviewMascot = document.querySelector('#review-cat-banner-tile img');
     if (reviewMascot) {
-      reviewMascot.src = 'assets/characters/' + lang + '-run.png' + v;
+      reviewMascot.src = 'assets/characters/' + charPrefix + '-run.webp' + v;
     }
 
     // 5. Book sticker mascot
-    const bookMascot = document.querySelector('#book-screen img[alt*="scholarly"]') || document.querySelector('#book-screen img[src*="characters/"]');
-    if (bookMascot) {
-      bookMascot.src = 'assets/characters/' + lang + '-study.png' + v;
-    }
+    const bookMascots = document.querySelectorAll('#book-screen img[alt*="scholarly"], #book-screen img[src*="characters/"]');
+    bookMascots.forEach(img => {
+      img.src = 'assets/characters/' + charPrefix + '-study.webp' + v;
+    });
 
     // 6. Language modal preview mascots
     const modalEs = document.getElementById('mascot-img-es');
-    if (modalEs) modalEs.src = 'assets/characters/es-study.png' + v;
+    if (modalEs) modalEs.src = 'assets/characters/es-study.webp' + v;
     const modalEn = document.getElementById('mascot-img-en');
-    if (modalEn) modalEn.src = 'assets/characters/en-study.png' + v;
+    if (modalEn) modalEn.src = 'assets/characters/en-study.webp' + v;
+
+    // 7. Streak celebration modal mascot (fever)
+    const streakMascots = document.querySelectorAll('#streak-modal img, #streak-modal-card img');
+    streakMascots.forEach(img => {
+      img.src = 'assets/characters/' + charPrefix + '-fever.webp' + v;
+    });
+
+    // 8. Study profile screen scholar mascot
+    const profileMascot = document.querySelector('#study-profile-screen img[alt*="Scholar Mascot"]') || document.querySelector('img[alt="VocaDash Scholar Mascot"]');
+    if (profileMascot) {
+      profileMascot.src = 'assets/characters/' + charPrefix + '-study.webp' + v;
+    }
   }
   window.updateMascotCharacters = updateMascotCharacters;
 
@@ -2539,7 +2552,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=8`;
+    return `assets/profiles/${file}?v=9`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3026,8 +3039,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (clear) { clear.classList.remove('hidden'); clear.style.display = 'flex'; }
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
-      const mascot = window.courseData[window.currentActiveCourse]?.mascotImg;
-      const mascotImg = el('result-mascot-img'); if (mascotImg && mascot) mascotImg.src = mascot;
+      const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=9';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3066,6 +3079,11 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         if (clear) { clear.classList.add('hidden'); clear.style.display = 'none'; }
         if (over) { over.classList.remove('hidden'); over.style.display = 'flex'; }
+        const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
+        goMascots.forEach(img => {
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=9';
+        });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
           setText('gameover-missed-word', lastFailed.word || lastFailed.term || '¡Buenos días!');

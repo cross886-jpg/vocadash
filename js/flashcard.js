@@ -473,8 +473,13 @@
       flashcardLessonTitle.textContent = currentLessonDeckTitle;
     }
 
-    if (flashcardMascotImg && window.courseData && window.courseData[currentCourse]) {
-      flashcardMascotImg.src = window.courseData[currentCourse].mascotImg;
+    if (flashcardMascotImg) {
+      const activeLang = (window.currentLanguage || window.currentActiveCourse || currentCourse || 'es') === 'en' ? 'en' : 'es';
+      if (window.courseData && window.courseData[activeLang]) {
+        flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
+      } else {
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=9`;
+      }
     }
 
     renderCurrentCard();
