@@ -194,7 +194,7 @@
         window.applyProfileAvatar(profileVal);
       } else {
         const file = (profileVal.split('/').pop().split('?')[0]) || 'profile-spanish.webp';
-        const src = `assets/profiles/${file}?v=15`;
+        const src = `assets/profiles/${file}?v=19`;
         if (settingsAvatarImg) settingsAvatarImg.src = src;
         if (statsAvatarImg) statsAvatarImg.src = src;
         if (hallUserAvatar) hallUserAvatar.src = src;

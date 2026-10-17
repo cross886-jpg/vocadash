@@ -204,4 +204,17 @@
   }
 }
 
+/* Crisp Avatar High-Quality Rendering (Anti-Aliasing & GPU Enhancement) */
+.crisp-avatar,
+#header-mascot-img,
+#current-avatar-img,
+.avatar-option img,
+#settings-streak-avatar-img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 

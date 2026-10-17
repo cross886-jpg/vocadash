@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=15`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=19`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -312,6 +312,8 @@ async function runE2ETests() {
         flagText: flagEmoji ? flagEmoji.textContent.trim() : '',
         hasHeaderSettings: !!headerSettings,
         hasAvatar: !!avatarBtn && !!avatarImg,
+        hasPencil: avatarBtn ? avatarBtn.textContent.includes('✏️') : false,
+        isSticky: header ? (window.getComputedStyle(header).position === 'sticky') : false,
         avatarImgWidth: avatarImg ? avatarImg.clientWidth : 0,
         hasStreak: !!streakBtn,
         hasHearts: !!heartsBadge,
@@ -322,11 +324,27 @@ async function runE2ETests() {
       };
     });
 
+    // Test Course Dropdown interaction & z-index
+    await page.click('#course-selector-btn');
+    await page.waitForTimeout(250);
+    const dropdownState = await page.evaluate(() => {
+      const menu = document.getElementById('course-dropdown-menu');
+      const isOpen = menu && !menu.classList.contains('hidden') && !menu.classList.contains('opacity-0');
+      const zIndex = menu ? parseInt(window.getComputedStyle(menu).zIndex || '0', 10) : 0;
+      return { isOpen, zIndex };
+    });
+    await page.click('#course-selector-btn');
+    await page.waitForTimeout(200);
+
     const headerCompactValid =
       headerState.hasMiniLogo &&
       headerState.hasLangBadge &&
       !headerState.hasHeaderSettings &&
       headerState.hasAvatar &&
+      !headerState.hasPencil &&
+      headerState.isSticky &&
+      dropdownState.isOpen &&
+      dropdownState.zIndex >= 40 &&
       headerState.hasStreak &&
       headerState.hasHearts &&
       headerState.hasGems &&
@@ -334,7 +352,8 @@ async function runE2ETests() {
 
     recordScenario('Scenario H: Compact Mobile Top Header Layout', headerCompactValid, {
       ...headerState,
-      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지([국기+언어명 ▾]) + 우측 재화 3종 칩 무잘림 배치 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
+      dropdown: dropdownState,
+      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지 + 아바타(연필 제거/Sticky 고정) + 카테고리 드롭다운 z-index 정상 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
     });
 
     // -----------------------------------------------------------------
