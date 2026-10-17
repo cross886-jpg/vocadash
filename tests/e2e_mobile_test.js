@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=11`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=14`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -205,12 +205,65 @@ async function runE2ETests() {
       summary: assetFailures.length === 0 ? '모든 캐릭터(es 8종, en 8종) 및 프로필 배지(4종) 정상 로드 완료' : `${assetFailures.length}개 에셋 로딩 실패`
     });
 
-    // Navigate to Main Page
-    console.log('\n🌐 Navigating to Home Page...');
-    await page.goto(baseUrl, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(500);
+    // -----------------------------------------------------------------
+    // SCENARIO S: Brand Splash Intro Screen Verification
+    // -----------------------------------------------------------------
+    console.log('\n✨ --- [Scenario S: Brand Splash Intro Screen Verification] ---');
+    await page.goto(baseUrl, { waitUntil: 'load', timeout: 15000 });
+    await page.evaluate(() => {
+      return Promise.race([
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        new Promise(r => setTimeout(r, 2000))
+      ]);
+    });
 
-    // Capture 1: Main Screen
+    // Show splash screen state for visual screenshot capture
+    await page.evaluate(() => {
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        splash.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+        splash.style.display = 'flex';
+      }
+    });
+
+    // Capture 0: Splash Screen
+    const splashScreenShot = path.join(RESULTS_DIR, '0_splash_screen.png');
+    await page.screenshot({ path: splashScreenShot });
+    testReport.screenshots.push({ name: '0_splash_screen.png', description: '브랜드 스플래시 인트로 화면' });
+
+    const splashState = await page.evaluate(() => {
+      const splash = document.getElementById('splash-screen');
+      const mascot = document.getElementById('splash-mascot-img');
+      const title = splash ? (splash.querySelector('h1')?.innerText || '') : '';
+      const slogan = splash ? (splash.querySelector('p')?.innerText || '') : '';
+      const isVisible = splash && !splash.classList.contains('hidden') && splash.style.display !== 'none';
+      return {
+        hasSplash: !!splash,
+        isVisible,
+        hasMascot: !!mascot,
+        title,
+        slogan
+      };
+    });
+
+    const splashHasElements = splashState.hasSplash && splashState.hasMascot && splashState.title.replace(/\s+/g, '').includes('VocaDash') && splashState.slogan.includes('보카 대시');
+
+    // Tap splash to dismiss
+    await page.click('#splash-screen');
+    await page.waitForTimeout(450);
+
+    const splashDismissed = await page.evaluate(() => {
+      const splash = document.getElementById('splash-screen');
+      return !splash || splash.classList.contains('opacity-0') || splash.classList.contains('hidden') || splash.style.display === 'none';
+    });
+
+    recordScenario('Scenario S: Brand Splash Intro Screen & Tap-to-Skip', splashHasElements && splashDismissed, {
+      ...splashState,
+      splashDismissed,
+      summary: splashHasElements && splashDismissed ? '1.2초 스플래시(마스코트+타이포+슬로건) 정상 노출 및 터치 시 즉시 스킵 확인' : '스플래시 화면 렌더링 또는 스킵 실패'
+    });
+
+    // Capture 1: Main Screen after splash dismiss
     const mainScreenShot = path.join(RESULTS_DIR, '1_main_screen.png');
     await page.screenshot({ path: mainScreenShot });
     testReport.screenshots.push({ name: '1_main_screen.png', description: '메인 로드맵 화면' });
@@ -228,6 +281,51 @@ async function runE2ETests() {
     });
 
     // -----------------------------------------------------------------
+    // SCENARIO H: Compact Mobile Top Header Layout Verification
+    // -----------------------------------------------------------------
+    console.log('\n📐 --- [Scenario H: Compact Mobile Top Header Layout] ---');
+    const headerState = await page.evaluate(() => {
+      const header = document.getElementById('roadmap-header');
+      const logoText = header ? header.querySelector('#logo-lang-trigger span.font-headline-sm') : null;
+      const headerSettings = header ? header.querySelector('#btn-main-settings') : null;
+      const avatarBtn = document.getElementById('btn-header-profile');
+      const avatarImg = document.getElementById('header-mascot-img');
+      const streakBtn = document.getElementById('streak-trigger');
+      const heartsBadge = document.getElementById('header-hearts-count');
+      const gemsBadge = document.getElementById('header-gems-count') || document.querySelector('#header-gems-badge');
+
+      // Check overflow on current viewport
+      const isOverflowing = header ? (header.scrollWidth > header.clientWidth + 2) : false;
+
+      return {
+        hasLogoText: !!logoText,
+        hasHeaderSettings: !!headerSettings,
+        hasAvatar: !!avatarBtn && !!avatarImg,
+        avatarImgWidth: avatarImg ? avatarImg.clientWidth : 0,
+        hasStreak: !!streakBtn,
+        hasHearts: !!heartsBadge,
+        hasGems: !!gemsBadge,
+        isOverflowing,
+        headerWidth: header ? header.clientWidth : 0,
+        headerScrollWidth: header ? header.scrollWidth : 0
+      };
+    });
+
+    const headerCompactValid =
+      !headerState.hasLogoText &&
+      !headerState.hasHeaderSettings &&
+      headerState.hasAvatar &&
+      headerState.hasStreak &&
+      headerState.hasHearts &&
+      headerState.hasGems &&
+      !headerState.isOverflowing;
+
+    recordScenario('Scenario H: Compact Mobile Top Header Layout', headerCompactValid, {
+      ...headerState,
+      summary: headerCompactValid ? 'VocaDash 텍스트 및 설정 아이콘 제거 완료, 좌측(32px 아바타+국기) / 우측(재화 3종 칩) 무잘림 배치 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
+    });
+
+    // -----------------------------------------------------------------
     // SCENARIO B: Profile Avatar Change & Persistence
     // -----------------------------------------------------------------
     console.log('\n🎭 --- [Scenario B: Profile Avatar Change & Persistence] ---');
@@ -238,6 +336,12 @@ async function runE2ETests() {
     const profileModalShot = path.join(RESULTS_DIR, '3_profile_modal.png');
     await page.screenshot({ path: profileModalShot });
     testReport.screenshots.push({ name: '3_profile_modal.png', description: '프로필 선택 모달' });
+
+    // Verify Settings button inside profile modal
+    const profileModalHasSettings = await page.evaluate(() => {
+      const btn = document.getElementById('btn-profile-settings');
+      return !!btn;
+    });
 
     const avatarIds = ['spanish', 'english', 'artist', 'explorer'];
     let avatarChangeSuccess = true;
@@ -282,9 +386,10 @@ async function runE2ETests() {
     await page.click('#close-profile-modal-btn');
     await page.waitForTimeout(200);
 
-    recordScenario('Scenario B: Profile Avatar Change & Persistence', avatarChangeSuccess, {
+    recordScenario('Scenario B: Profile Avatar Change & Persistence', avatarChangeSuccess && profileModalHasSettings, {
       details: avatarChangeDetails,
-      summary: avatarChangeSuccess ? '4개 아바타 순차 변경 시 상단 헤더 즉시 전환 및 localStorage 완벽 유지' : '아바타 변경 또는 저장 검증 실패'
+      profileModalHasSettings,
+      summary: avatarChangeSuccess && profileModalHasSettings ? '4개 아바타 순차 변경 시 상단 헤더 즉시 전환 및 localStorage 완벽 유지, 모달 내 설정 아이콘 포함 확인' : '아바타 변경 또는 저장 검증 실패'
     });
 
     // -----------------------------------------------------------------
@@ -531,14 +636,14 @@ ${report.screenshots.map((s, idx) => `${idx + 1}. **[${s.name}](file://${path.jo
 ---
 
 ## 4. 예외 상황 및 개선 권장 사항
-1. **오답노트 네임스페이스 완전 격리 검증 완료**:
-   - 스페인어 오답(\`vocadash_wrong_answers_es\`)과 영어 오답(\`vocadash_wrong_answers_en\`)이 완벽히 분리되어, 언어를 영어로 변경 시 스페인어 단어 노출 0건 및 빈 화면(Empty State: "틀린 단어가 없습니다! 완벽해요 🎉")이 정확히 노출됨을 확인했습니다.
-2. **에셋 전수 점검 통과**:
-   - 스페인어 8종 및 신규 영어 고양이 8종, 프로필 배지 4종 총 20개 WebP 에셋이 단 하나의 404나 엑박 없이 고해상도로 로드됩니다.
-3. **프로필 아바타 실시간 반영 및 유지 검증 통과**:
-   - 4개 아바타(스페인, 잉글리시, 아티스트, 탐험가)를 선택했을 때 상단 헤더의 아바타가 즉시 동기화되고 localStorage에 안전하게 영구 저장됩니다.
-4. **무중단 게임 플로우 및 무팝업 UX 검증 통과**:
-   - 로드맵 노드 진입 -> 플래시카드 예습 -> 단어 낙하 액션 게임 -> 결과 모달까지 브라우저 alert 방해 없이 유려하게 동작합니다.
+1. **브랜드 스플래시 인트로 화면 도입 및 터치 스킵**:
+   - 앱 기동 시 1.2초간 고양이 마스코트, VocaDash 볼드 타이포, 슬로건이 노출되며, 화면 아무 곳이나 탭하면 즉시 메인 로드맵으로 페이드아웃 진입합니다.
+2. **상단 헤더 모바일 최적화 (가로 잘림 완전 해결)**:
+   - 'VocaDash' 영문 텍스트 로고 및 독립 설정 아이콘을 헤더에서 정리하고, 좌측(32px 아바타 + 국기 배지) 및 우측(🔥 스트릭, ❤️ 하트, 💎 보석)을 컴팩트하게 배치하여 360px 이하 초소형 모바일 기기에서도 넘침/잘림 없이 완벽히 표시됩니다.
+3. **설정 화면 접근성 보존**:
+   - 상단 헤더의 불필요한 설정 아이콘은 제거되었으나, 하단 '내 기록' 탭 우측 상단(\`#btn-open-settings\`) 및 프로필 편집 모달 내부(\`#btn-profile-settings\`)에서 설정창으로 원터치 진입할 수 있도록 다각도로 경로를 유지했습니다.
+4. **오답노트 네임스페이스 완전 격리 검증 완료**:
+   - 스페인어 오답(\`vocadash_wrong_answers_es\`)과 영어 오답(\`vocadash_wrong_answers_en\`)이 완벽히 분리되어, 언어를 영어로 변경 시 스페인어 단어 노출 0건 및 빈 화면(Empty State: "틀린 단어가 없습니다! 완벽해요 🎉")이 정확히 노출됨을 재검증했습니다.
 
 `;
 

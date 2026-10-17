@@ -745,6 +745,12 @@
       e?.stopPropagation();
       openSettingsScreen();
     });
+    on('btn-profile-settings', 'click', (e) => {
+      e?.preventDefault();
+      e?.stopPropagation();
+      if (typeof window.closeProfileModal === 'function') window.closeProfileModal();
+      openSettingsScreen();
+    });
     on('btn-review-settings', 'click', (e) => {
       e?.preventDefault();
       e?.stopPropagation();

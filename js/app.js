@@ -177,6 +177,52 @@ window.safePlayTTS = playDualTTS;
 window.playDualTTS = playDualTTS;
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ===================================================
+  // 0. BRAND SPLASH INTRO CONTROLLER (1.2s auto + tap to skip)
+  // ===================================================
+  const splashScreen = document.getElementById('splash-screen');
+  const splashProgressBar = document.getElementById('splash-progress-bar');
+  const splashMascot = document.getElementById('splash-mascot-img');
+  let splashDismissed = false;
+
+  function dismissSplash() {
+    if (splashDismissed) return;
+    splashDismissed = true;
+    if (!splashScreen) return;
+    splashScreen.classList.add('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      splashScreen.classList.add('hidden');
+      splashScreen.style.display = 'none';
+    }, 400);
+  }
+  window.dismissSplash = dismissSplash;
+
+  if (splashScreen) {
+    if (splashMascot) {
+      let savedLang = 'es';
+      try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=14`;
+    }
+    if (splashProgressBar) {
+      setTimeout(() => {
+        splashProgressBar.style.width = '100%';
+      }, 50);
+    }
+    splashScreen.addEventListener('click', dismissSplash);
+    splashScreen.addEventListener('touchstart', dismissSplash, { passive: true });
+
+    // 리소스 로드 후 약 1.2초 동안 머문 뒤 부드럽게 페이드아웃
+    if (document.readyState === 'complete') {
+      setTimeout(dismissSplash, 1200);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(dismissSplash, 1200);
+      });
+    }
+    // 안전 타임아웃
+    setTimeout(dismissSplash, 3000);
+  }
+
   // 보안 유틸: HTML 특수문자 이스케이프 (XSS 취약점 원천 차단)
   function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -265,8 +311,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=11', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=11', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=14', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=14', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -1009,7 +1055,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=11';
+    const v = '?v=14';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1057,6 +1103,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileMascot = document.querySelector('#study-profile-screen img[alt*="Scholar Mascot"]') || document.querySelector('img[alt="VocaDash Scholar Mascot"]');
     if (profileMascot) {
       profileMascot.src = 'assets/characters/' + charPrefix + '-study.webp' + v;
+    }
+
+    // 9. Splash screen mascot
+    const splashMascot = document.getElementById('splash-mascot-img');
+    if (splashMascot) {
+      splashMascot.src = 'assets/characters/' + charPrefix + '-idle.webp' + v;
     }
   }
   window.updateMascotCharacters = updateMascotCharacters;
@@ -1680,7 +1732,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=11' : 'assets/profiles/profile-spanish.webp?v=11';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=14' : 'assets/profiles/profile-spanish.webp?v=14';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2562,12 +2614,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 1) 설정 화면 진입: 메인 로드맵 상단 (#btn-main-settings), 오답탈출 (#btn-review-settings), '내 기록' 우측 상단 (#btn-open-settings, #btn-stats-settings, .btn-open-settings)
-  const openSettingsBtns = document.querySelectorAll('#btn-main-settings, #btn-review-settings, #btn-open-settings, #btn-stats-settings, .btn-open-settings');
+  // 1) 설정 화면 진입: '내 기록' 우측 상단 (#btn-open-settings, #btn-stats-settings), 프로필 모달 내 (#btn-profile-settings), 오답탈출 (#btn-review-settings)
+  const openSettingsBtns = document.querySelectorAll('#btn-main-settings, #btn-review-settings, #btn-open-settings, #btn-stats-settings, #btn-profile-settings, .btn-open-settings');
   openSettingsBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      if (typeof window.closeProfileModal === 'function') window.closeProfileModal();
       showSettingsScreen();
     });
   });
@@ -2727,7 +2780,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=11`;
+    return `assets/profiles/${file}?v=14`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3237,7 +3290,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=11';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=14';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3279,7 +3332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=11';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=14';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
