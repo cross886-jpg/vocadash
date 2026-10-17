@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=19`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=20`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -313,7 +313,7 @@ async function runE2ETests() {
         hasHeaderSettings: !!headerSettings,
         hasAvatar: !!avatarBtn && !!avatarImg,
         hasPencil: avatarBtn ? avatarBtn.textContent.includes('✏️') : false,
-        isSticky: header ? (window.getComputedStyle(header).position === 'sticky') : false,
+        isFixed: header ? (window.getComputedStyle(header).position === 'fixed') : false,
         avatarImgWidth: avatarImg ? avatarImg.clientWidth : 0,
         hasStreak: !!streakBtn,
         hasHearts: !!heartsBadge,
@@ -336,13 +336,23 @@ async function runE2ETests() {
     await page.click('#course-selector-btn');
     await page.waitForTimeout(200);
 
+    // Test scrolling to verify header remains fixed at top: 0
+    await page.evaluate(() => window.scrollTo(0, 300));
+    await page.waitForTimeout(100);
+    const scrollPinned = await page.evaluate(() => {
+      const h = document.getElementById('roadmap-header');
+      return h ? Math.abs(h.getBoundingClientRect().top) < 2 : false;
+    });
+    await page.evaluate(() => window.scrollTo(0, 0));
+
     const headerCompactValid =
       headerState.hasMiniLogo &&
       headerState.hasLangBadge &&
       !headerState.hasHeaderSettings &&
       headerState.hasAvatar &&
       !headerState.hasPencil &&
-      headerState.isSticky &&
+      headerState.isFixed &&
+      scrollPinned &&
       dropdownState.isOpen &&
       dropdownState.zIndex >= 40 &&
       headerState.hasStreak &&
@@ -352,8 +362,9 @@ async function runE2ETests() {
 
     recordScenario('Scenario H: Compact Mobile Top Header Layout', headerCompactValid, {
       ...headerState,
+      scrollPinned,
       dropdown: dropdownState,
-      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지 + 아바타(연필 제거/Sticky 고정) + 카테고리 드롭다운 z-index 정상 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
+      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지 + 아바타(연필 제거/Fixed 고정) + 카테고리 드롭다운 z-index 정상 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
     });
 
     // -----------------------------------------------------------------
