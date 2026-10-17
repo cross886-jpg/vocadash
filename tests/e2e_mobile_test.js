@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=14`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=15`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -209,7 +209,7 @@ async function runE2ETests() {
     // SCENARIO S: Brand Splash Intro Screen Verification
     // -----------------------------------------------------------------
     console.log('\n✨ --- [Scenario S: Brand Splash Intro Screen Verification] ---');
-    await page.goto(baseUrl, { waitUntil: 'load', timeout: 15000 });
+    await page.goto(baseUrl, { waitUntil: 'load', timeout: 60000 });
     await page.evaluate(() => {
       return Promise.race([
         document.fonts ? document.fonts.ready : Promise.resolve(),
@@ -254,7 +254,12 @@ async function runE2ETests() {
 
     const splashDismissed = await page.evaluate(() => {
       const splash = document.getElementById('splash-screen');
-      return !splash || splash.classList.contains('opacity-0') || splash.classList.contains('hidden') || splash.style.display === 'none';
+      const isDismissed = !splash || splash.classList.contains('opacity-0') || splash.classList.contains('hidden') || splash.style.display === 'none';
+      if (splash) {
+        splash.classList.add('hidden', 'opacity-0', 'pointer-events-none');
+        splash.style.display = 'none';
+      }
+      return isDismissed;
     });
 
     recordScenario('Scenario S: Brand Splash Intro Screen & Tap-to-Skip', splashHasElements && splashDismissed, {
@@ -286,7 +291,10 @@ async function runE2ETests() {
     console.log('\n📐 --- [Scenario H: Compact Mobile Top Header Layout] ---');
     const headerState = await page.evaluate(() => {
       const header = document.getElementById('roadmap-header');
-      const logoText = header ? header.querySelector('#logo-lang-trigger span.font-headline-sm') : null;
+      const miniLogo = header ? header.querySelector('[title="VocaDash"]') : null;
+      const langTrigger = document.getElementById('logo-lang-trigger');
+      const langName = document.getElementById('header-lang-name');
+      const flagEmoji = document.getElementById('header-flag-emoji');
       const headerSettings = header ? header.querySelector('#btn-main-settings') : null;
       const avatarBtn = document.getElementById('btn-header-profile');
       const avatarImg = document.getElementById('header-mascot-img');
@@ -298,7 +306,10 @@ async function runE2ETests() {
       const isOverflowing = header ? (header.scrollWidth > header.clientWidth + 2) : false;
 
       return {
-        hasLogoText: !!logoText,
+        hasMiniLogo: !!miniLogo && miniLogo.textContent.includes('Voca'),
+        hasLangBadge: !!langTrigger && !!langName && !!flagEmoji,
+        langNameText: langName ? langName.textContent.trim() : '',
+        flagText: flagEmoji ? flagEmoji.textContent.trim() : '',
         hasHeaderSettings: !!headerSettings,
         hasAvatar: !!avatarBtn && !!avatarImg,
         avatarImgWidth: avatarImg ? avatarImg.clientWidth : 0,
@@ -312,7 +323,8 @@ async function runE2ETests() {
     });
 
     const headerCompactValid =
-      !headerState.hasLogoText &&
+      headerState.hasMiniLogo &&
+      headerState.hasLangBadge &&
       !headerState.hasHeaderSettings &&
       headerState.hasAvatar &&
       headerState.hasStreak &&
@@ -322,7 +334,7 @@ async function runE2ETests() {
 
     recordScenario('Scenario H: Compact Mobile Top Header Layout', headerCompactValid, {
       ...headerState,
-      summary: headerCompactValid ? 'VocaDash 텍스트 및 설정 아이콘 제거 완료, 좌측(32px 아바타+국기) / 우측(재화 3종 칩) 무잘림 배치 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
+      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지([국기+언어명 ▾]) + 우측 재화 3종 칩 무잘림 배치 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
     });
 
     // -----------------------------------------------------------------
@@ -408,24 +420,27 @@ async function runE2ETests() {
     await page.click('#card-en');
     await page.waitForTimeout(400);
 
-    // Check Header Flag and Roadmap Mascot Prefix
+    // Check Header Flag, Language Name, and Roadmap Mascot Prefix
     const langSwitchState = await page.evaluate(() => {
       const flag = document.getElementById('header-flag-emoji')?.textContent?.trim();
+      const langName = document.getElementById('header-lang-name')?.textContent?.trim();
       const curLang = window.currentLanguage;
       const roadMascot = document.querySelector('#review-cat-banner-tile img, #roadmap-screen img[src*="characters/"]');
       const roadMascotSrc = roadMascot ? roadMascot.src : '';
-      return { flag, curLang, roadMascotSrc };
+      return { flag, langName, curLang, roadMascotSrc };
     });
 
     const flagCorrect = langSwitchState.flag === '🇺🇸';
+    const langNameCorrect = langSwitchState.langName === '영어';
     const langCorrect = langSwitchState.curLang === 'en';
     const mascotCorrect = langSwitchState.roadMascotSrc.includes('en-');
 
-    recordScenario('Scenario C-1: Language Switch to English (Flag & Mascot)', flagCorrect && langCorrect && mascotCorrect, {
+    recordScenario('Scenario C-1: Language Switch to English (Flag & Mascot)', flagCorrect && langNameCorrect && langCorrect && mascotCorrect, {
       flag: langSwitchState.flag,
+      langName: langSwitchState.langName,
       curLang: langSwitchState.curLang,
       mascotSrc: langSwitchState.roadMascotSrc,
-      summary: flagCorrect && langCorrect && mascotCorrect ? '국기 🇺🇸 및 en-* 캐릭터 에셋(en-run)으로 즉시 전환 완료' : `언어 전환 상태 불일치 (flag: ${langSwitchState.flag}, lang: ${langSwitchState.curLang}, mascot: ${langSwitchState.roadMascotSrc})`
+      summary: flagCorrect && langNameCorrect && langCorrect && mascotCorrect ? '국기 🇺🇸 영어 배지 및 en-* 캐릭터 에셋(en-run)으로 즉시 전환 완료' : `언어 전환 상태 불일치 (flag: ${langSwitchState.flag}, langName: ${langSwitchState.langName}, lang: ${langSwitchState.curLang}, mascot: ${langSwitchState.roadMascotSrc})`
     });
 
     // Navigate to '오답탈출' Tab

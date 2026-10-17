@@ -197,4 +197,11 @@
   display: none !important;
 }
 
+/* Header Responsive Brand Typography */
+@media (max-width: 365px) {
+  .logo-dash-text {
+    display: none !important;
+  }
+}
+
 
