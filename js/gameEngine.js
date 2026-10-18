@@ -2931,6 +2931,13 @@
     const lessonId = (options && options.lessonId) || (typeof options === 'string' ? options : 'node-2');
     const runner = (typeof window !== 'undefined' && window.startFallingGame) ? window.startFallingGame : startFallingGame;
     switch (gameType) {
+      case 'wrong_answer':
+      case 'wrong_run':
+        if (typeof window.startRoadmapReviewSpeedrun === 'function') {
+          return window.startRoadmapReviewSpeedrun();
+        }
+        return runner(lessonId, wordList, options);
+
       case 'falling':
       case 'runner':
       case 'default':

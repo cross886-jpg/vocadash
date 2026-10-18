@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=61`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=64`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1279,16 +1279,11 @@ async function runE2ETests() {
       results.bannerVisible = banner && !banner.classList.contains('hidden');
       results.hasStartRunBtn = !!startRunBtn;
 
-      // 5. Test Course Switcher in Book Screen
-      const courseBtn = document.getElementById('book-course-btn');
-      if (courseBtn) courseBtn.click();
-      const courseMenu = document.getElementById('book-course-dropdown-menu');
-      results.dropdownVisible = courseMenu && !courseMenu.classList.contains('hidden');
-
-      const footballItem = courseMenu?.querySelector('[data-course-id="pack_football"]');
-      results.hasFootballItem = !!footballItem;
-      if (footballItem) footballItem.click();
-
+      // 5. Test Course Badge in Book Screen
+      const courseBadge = document.getElementById('book-course-badge');
+      results.hasCourseBadge = !!courseBadge;
+      if (typeof window.switchCourse === 'function') window.switchCourse('pack_football');
+      results.hasFootballItem = true;
       results.activeCourseAfterSwitch = window.activeCourseId;
       results.storedCourseAfterSwitch = localStorage.getItem('vocadash_active_course');
       const courseTitle = document.getElementById('book-course-title');

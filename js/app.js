@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=61`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=64`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -579,8 +579,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=61', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=61', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=64', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=64', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -3286,7 +3286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=61';
+    const v = '?v=64';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -4288,6 +4288,9 @@ document.addEventListener('DOMContentLoaded', () => {
       bookWrongCount.textContent = count;
     }
 
+    // 1-C) 교재·단어장 상단 배너 내 [⚡ 오답 탈출 런] 액션 버튼 상태 갱신
+    updateHeroWrongRunButton(count);
+
     // 2) 상단 배너 '탈출 대기 중인 단어 N개' (#review-waiting-count-text)
     const waitingCountText = document.getElementById('review-waiting-count-text');
     if (waitingCountText) {
@@ -4306,6 +4309,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.updateWrongWordsBadge = updateWrongWordsBadge;
+
+  // 교재·단어장 상단 배너 내 [⚡ 오답 탈출 런] 버튼 상태 갱신 함수
+  function updateHeroWrongRunButton(overrideCount) {
+    const heroWrongRunBtn = document.getElementById('btn-hero-wrong-run');
+    if (!heroWrongRunBtn) return;
+    let count = typeof overrideCount === 'number' ? overrideCount : null;
+    if (count === null) {
+      const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      let wrongList = [];
+      if (typeof window.loadWrongWords === 'function') {
+        wrongList = window.loadWrongWords(currentLang) || [];
+      } else {
+        try {
+          const raw = localStorage.getItem('vocadash_wrong_words');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+              wrongList = parsed.filter(w => (w.lang || 'es') === currentLang);
+            }
+          }
+        } catch (_) {}
+      }
+      count = wrongList.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+    }
+    if (count > 0) {
+      heroWrongRunBtn.disabled = false;
+      heroWrongRunBtn.className = 'w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer opacity-100';
+      heroWrongRunBtn.innerHTML = '<span>⚡ 오답 탈출 런 시작 (하트 +3 회복)</span>';
+    } else {
+      heroWrongRunBtn.disabled = true;
+      heroWrongRunBtn.className = 'w-full bg-slate-200 text-slate-400 font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-none flex items-center justify-center gap-1.5 cursor-not-allowed opacity-80';
+      heroWrongRunBtn.innerHTML = '<span>🎉 모든 오답 정복 완료!</span>';
+    }
+  }
+  window.updateHeroWrongRunButton = updateHeroWrongRunButton;
 
   // 인게임 문제 정답/오답 판정 및 연속 정답 5회(Mastery 5) 졸업 시스템
   function recordAnswerResult(question, isCorrect) {
@@ -4564,7 +4602,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=61' : 'assets/profiles/profile-spanish.webp?v=61';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=64' : 'assets/profiles/profile-spanish.webp?v=64';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4731,6 +4769,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (typeof renderBookWords === 'function') renderBookWords(curLang, curCourse);
           if (typeof syncBookPhoneticSetting === 'function') syncBookPhoneticSetting();
           if (typeof initBookScreenEvents === 'function') initBookScreenEvents();
+          if (typeof updateHeroWrongRunButton === 'function') updateHeroWrongRunButton();
         } catch (_) {}
       } else if (normTab === 'home') {
         try {
@@ -5513,14 +5552,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 6. 상단 우측 코스 선택 버튼 드롭다운 토글 및 항목 선택
+    // 6. 상단 우측 코스 안내 뱃지 갱신
+    renderBookCourseDropdown(window.currentLanguage || window.currentActiveCourse || 'es');
+
     const bookCourseBtn = bookScreen.querySelector('#book-course-btn, .book-course-selector');
     const bookCourseMenu = bookScreen.querySelector('#book-course-dropdown-menu');
     const bookCourseChevron = bookScreen.querySelector('#book-course-chevron');
 
     if (bookCourseBtn && bookCourseMenu && bookCourseBtn.dataset.bound !== 'true') {
       bookCourseBtn.dataset.bound = 'true';
-
       bookCourseBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -5589,6 +5629,23 @@ document.addEventListener('DOMContentLoaded', () => {
       wrongRunBtn.dataset.runBound = 'true';
       wrongRunBtn.addEventListener('click', startWrongRunHandler);
     }
+
+    // 7-B. 중간 배너 내 [⚡ 오답 탈출 런] 액션 버튼 바인딩
+    const heroWrongRunBtn = bookScreen.querySelector('#btn-hero-wrong-run');
+    if (heroWrongRunBtn && heroWrongRunBtn.dataset.runBound !== 'true') {
+      heroWrongRunBtn.dataset.runBound = 'true';
+      heroWrongRunBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (heroWrongRunBtn.disabled) return;
+        if (typeof window.launchGame === 'function') {
+          window.launchGame('wrong_answer');
+        } else if (typeof window.startRoadmapReviewSpeedrun === 'function') {
+          window.startRoadmapReviewSpeedrun();
+        }
+      });
+    }
+    updateHeroWrongRunButton();
   }
   window.initBookScreenEvents = initBookScreenEvents;
 
@@ -5769,7 +5826,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=61`;
+    return `assets/profiles/${file}?v=64`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6285,7 +6342,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=61';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=64';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6329,7 +6386,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=61';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=64';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
