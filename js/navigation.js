@@ -237,7 +237,9 @@
     } else if (normTab === 'book') {
       try {
         const curLang = window.currentLanguage || 'es';
-        const curCourse = window.currentCourseId || 'basic';
+        const curCourse = (typeof window.getCurrentCourseData === 'function' && window.getCurrentCourseData() === window.packFootballData)
+          ? 'pack_football'
+          : (window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.currentCourseId || 'main');
         if (typeof window.renderBookCourseDropdown === 'function') window.renderBookCourseDropdown(curLang, curCourse);
         if (typeof window.renderBookWords === 'function') window.renderBookWords(curLang, curCourse);
         if (typeof window.syncBookPhoneticSetting === 'function') window.syncBookPhoneticSetting();

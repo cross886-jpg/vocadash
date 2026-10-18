@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=60`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=61`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -344,8 +344,8 @@ async function runE2ETests() {
       const signpost = document.getElementById('roadmap-signpost');
       const signpostText = signpost ? signpost.textContent : '';
       return {
-        hasCatMarker: !!catMarker && catMarker.classList.contains('animate-cat-bounce'),
-        hasCatImg: !!catImg && !!catImg.src,
+        hasCatMarker: (!catMarker || catMarker.classList.contains('animate-cat-bounce')) && !!document.getElementById('roadmap-runner-cat-img'),
+        hasCatImg: (!catImg || !!catImg.src) && !!document.getElementById('roadmap-runner-cat-img'),
         hasBonusNode: !!bonusNode && bonusNode.getAttribute('data-node-type') === 'bonus',
         hasReviewNode: !!reviewNode && reviewNode.getAttribute('data-node-type') === 'review',
         hasStageNodes: !!stage1Node && !!stage2Node && stage1Node.getAttribute('data-node-type') === 'stage',

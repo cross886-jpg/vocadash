@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=60`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=61`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -307,13 +307,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 현재 활성화된 코스 데이터를 반환하는 헬퍼 함수
   function getCurrentCourseData() {
-    const courseId = window.activeCourseId || 'main';
-    if (courseId === 'pack_football') {
+    const activeCourseId = localStorage.getItem('vocadash_active_course') || 'main';
+    if (activeCourseId === 'pack_football' && window.packFootballData) {
       return window.packFootballData;
     }
-    return window.courseData;
+    return window.courseData; // 기본 메인 코스
   }
   window.getCurrentCourseData = getCurrentCourseData;
+
+  // 단어 ID 탐색 대상 확대: getCurrentCourseData() 우선 탐색
+  function getWordById(wordId) {
+    const course = getCurrentCourseData();
+    if (course && Array.isArray(course.units)) {
+      for (const unit of course.units) {
+        if (unit && Array.isArray(unit.words)) {
+          const found = unit.words.find(w => w.id === wordId);
+          if (found) return found;
+        }
+      }
+    }
+    if (window.packFootballData && Array.isArray(window.packFootballData.units)) {
+      for (const unit of window.packFootballData.units) {
+        if (unit && Array.isArray(unit.words)) {
+          const found = unit.words.find(w => w.id === wordId);
+          if (found) return found;
+        }
+      }
+    }
+    return null;
+  }
+  window.getWordById = getWordById;
 
   // 코스별 진행도 및 해금 상태(localStorage) 분리
   const PROGRESS_STORAGE_KEY = 'vocadash_node_progress';
@@ -556,8 +579,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=60', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=60', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=61', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=61', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -3263,7 +3286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=60';
+    const v = '?v=61';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3402,7 +3425,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('book-words-container');
     if (!container) return;
 
-    const isFootball = (courseId === 'pack_football' || window.activeCourseId === 'pack_football');
+    const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : window.courseData;
+    let storedCourse = 'main';
+    try {
+      storedCourse = localStorage.getItem('vocadash_active_course') || 'main';
+    } catch (_) {}
+    const isFootball = (courseId === 'pack_football' || window.activeCourseId === 'pack_football' || storedCourse === 'pack_football' || (activeCourse && activeCourse.id === 'pack_football'));
     const chapterTitleEl = document.getElementById('book-chapter-title');
     if (chapterTitleEl) {
       if (isFootball) {
@@ -3425,7 +3453,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const isPhoneticVisible = window.vocadashSettings ? !!window.vocadashSettings.showPhonetic : true;
     const phoneticStyle = isPhoneticVisible ? '' : 'style="display: none;"';
 
+    const ch1Header = document.getElementById('book-chapter-header');
+    const ch2Toggle = document.getElementById('book-chapter-2-toggle');
+    const ch3Locked = document.getElementById('book-chapter-3-locked');
+
     if (isFootball && window.packFootballData && Array.isArray(window.packFootballData.units)) {
+      if (ch1Header) { ch1Header.style.display = 'none'; ch1Header.classList.add('hidden'); }
+      if (ch2Toggle) { ch2Toggle.style.display = 'none'; ch2Toggle.classList.add('hidden'); }
+      if (ch3Locked) { ch3Locked.style.display = 'none'; ch3Locked.classList.add('hidden'); }
+
       window.packFootballData.units.forEach((u, uIdx) => {
         const catHeader = document.createElement('div');
         catHeader.className = 'book-category-header flex items-center justify-between mt-5 mb-2.5 px-1 pt-1 border-t border-slate-100 first:border-0 first:mt-1';
@@ -3436,7 +3472,11 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <span class="text-[11px] font-bold text-slate-400">${(u.words || []).length}단어</span>
         `;
-        container.appendChild(catHeader);
+        if (ch2Toggle && ch2Toggle.parentNode === container) {
+          container.insertBefore(catHeader, ch2Toggle);
+        } else {
+          container.appendChild(catHeader);
+        }
 
         (u.words || []).forEach((w, wIdx) => {
           const isStar = (uIdx === 0 && wIdx < 3);
@@ -3464,12 +3504,20 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="material-symbols-outlined text-[20px]" ${isStar ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>star</span>
             </button>
           `;
-          container.appendChild(art);
+          if (ch2Toggle && ch2Toggle.parentNode === container) {
+            container.insertBefore(art, ch2Toggle);
+          } else {
+            container.appendChild(art);
+          }
         });
       });
       initBookScreenEvents();
       return;
     }
+
+    if (ch1Header) { ch1Header.style.display = ''; ch1Header.classList.remove('hidden'); }
+    if (ch2Toggle) { ch2Toggle.style.display = ''; ch2Toggle.classList.remove('hidden'); }
+    if (ch3Locked) { ch3Locked.style.display = ''; ch3Locked.classList.remove('hidden'); }
 
     const standardWords = lang === 'en' ? [
       { term: 'Hello', meaning: '안녕 / 안녕하세요', phonetic: '[헬로우]', star: true },
@@ -3527,7 +3575,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="material-symbols-outlined text-[20px]" ${item.star ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>star</span>
         </button>
       `;
-      container.appendChild(art);
+      if (ch2Toggle && ch2Toggle.parentNode === container) {
+        container.insertBefore(art, ch2Toggle);
+      } else {
+        container.appendChild(art);
+      }
     });
 
     initBookScreenEvents();
@@ -4512,7 +4564,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=60' : 'assets/profiles/profile-spanish.webp?v=60';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=61' : 'assets/profiles/profile-spanish.webp?v=61';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4671,6 +4723,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) {}
       } else if (normTab === 'book') {
         try {
+          const curLang = window.currentLanguage || 'es';
+          const curCourse = (typeof getCurrentCourseData === 'function' && getCurrentCourseData() === window.packFootballData)
+            ? 'pack_football'
+            : (window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || 'main');
+          if (typeof renderBookCourseDropdown === 'function') renderBookCourseDropdown(curLang, curCourse);
+          if (typeof renderBookWords === 'function') renderBookWords(curLang, curCourse);
           if (typeof syncBookPhoneticSetting === 'function') syncBookPhoneticSetting();
           if (typeof initBookScreenEvents === 'function') initBookScreenEvents();
         } catch (_) {}
@@ -5165,10 +5223,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const currentLang = lang === 'en' ? 'en' : 'es';
     const presets = BOOK_COURSE_PRESETS[currentLang] || BOOK_COURSE_PRESETS.es;
-    const activeId = selectedCourseId || window.activeCourseId || window.currentBookCourseId || window.currentCourseId || 'main';
+    const storedCourse = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null);
+    const activeId = (selectedCourseId && selectedCourseId !== 'basic') ? selectedCourseId : (storedCourse || window.activeCourseId || window.currentBookCourseId || 'main');
     const currentSelected = presets.find((p) => p.id === activeId) || presets[0];
     window.currentBookCourseId = currentSelected.id;
     window.activeCourseId = currentSelected.id;
+    try {
+      localStorage.setItem('vocadash_active_course', currentSelected.id);
+    } catch (_) {}
 
     // 상단 버튼 텍스트 및 아이콘 즉시 갱신
     const titleEl = document.getElementById('book-course-title');
@@ -5372,9 +5434,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const activeWrongChip = bookScreen.querySelector('#book-filter-wrong-chip.bg-emerald-50');
           wrongBanner.style.display = activeWrongChip ? '' : 'none';
         }
-        if (ch1Header) ch1Header.style.display = '';
-        if (ch2Toggle) ch2Toggle.style.display = '';
-        if (ch3Locked) ch3Locked.style.display = '';
+        const isFootball = (window.activeCourseId === 'pack_football' || (typeof getCurrentCourseData === 'function' && getCurrentCourseData() === window.packFootballData));
+        if (ch1Header) { ch1Header.style.display = isFootball ? 'none' : ''; if (isFootball) ch1Header.classList.add('hidden'); else ch1Header.classList.remove('hidden'); }
+        if (ch2Toggle) { ch2Toggle.style.display = isFootball ? 'none' : ''; if (isFootball) ch2Toggle.classList.add('hidden'); else ch2Toggle.classList.remove('hidden'); }
+        if (ch3Locked) { ch3Locked.style.display = isFootball ? 'none' : ''; if (isFootball) ch3Locked.classList.add('hidden'); else ch3Locked.classList.remove('hidden'); }
         bookScreen.querySelectorAll('.book-category-header').forEach(el => el.style.display = '');
       }
 
@@ -5706,7 +5769,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=60`;
+    return `assets/profiles/${file}?v=61`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6222,7 +6285,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=60';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=61';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6266,7 +6329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=60';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=61';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
