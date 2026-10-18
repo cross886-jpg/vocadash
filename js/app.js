@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=49`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=50`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=49', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=49', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=50', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=50', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -715,7 +715,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
 
     let hasWords = false;
-    if (db && Object.prototype.hasOwnProperty.call(db, nodeId)) {
+    if (window.activeCourseId === 'pack_football' && window.packFootballData) {
+      hasWords = true;
+    } else if (db && Object.prototype.hasOwnProperty.call(db, nodeId)) {
       const entry = db[nodeId];
       if (entry) {
         const words = entry[lang] || entry.words || entry.all || (Array.isArray(entry) ? entry : null);
@@ -732,10 +734,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     currentSelectedNodeId = nodeId;
-    const courseId = window.currentCourseId || 'basic';
-    const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || COURSE_LESSONS.basic;
+    const isFootball = (window.activeCourseId === 'pack_football');
+    const courseId = isFootball ? 'pack_football' : (window.currentCourseId || 'basic');
+    let data;
+    if (isFootball && window.packFootballData && window.packFootballData.lessons && window.packFootballData.lessons[nodeId]) {
+      data = window.packFootballData.lessons[nodeId];
+    } else {
+      const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || COURSE_LESSONS.basic;
+      data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]) || { title: '학습 레슨', desc: '새로운 단어를 학습해보세요!', icon: '⚽' };
+    }
     const progress = window.nodeProgressMap[nodeId] || 0;
-    const data = (lessons && lessons[nodeId]) || window.nodeLessonData[nodeId] || window.nodeLessonData['node-2'];
 
     setText('lesson-modal-icon', data.icon); setText('lesson-modal-title', data.title); setText('lesson-modal-desc', data.desc);
     setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : nodeId === 'node-boss' ? '4과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
@@ -866,18 +874,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (window.activeCourseId === 'pack_football') {
+      const fbData = window.packFootballData;
+      const fbCourseName = (fbData && fbData.courseName) || '스페인 축구 실전팩';
+      const fbBadge = (fbData && fbData.badge) || '스페셜 팩';
+
       if (unitLangBadge) {
-        unitLangBadge.textContent = '⚽ 축구 단어팩 (DLC)';
+        unitLangBadge.textContent = `⚽ ${fbBadge}`;
       }
       if (unitThumbIcon) {
         unitThumbIcon.textContent = '⚽';
       }
       if (unitMainTitle) {
-        unitMainTitle.textContent = curUnitPreset ? `${curUnitPreset.title}` : '축구 기본 규칙 & 포지션';
+        unitMainTitle.textContent = fbCourseName;
+      }
+      if (unitSubBadge) {
+        unitSubBadge.textContent = `UNIT ${unlockedLevel} / ${fbData?.units?.length || 4}`;
       }
     } else if (unlockedLevel === 1) {
       if (unitLangBadge) {
-        unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 첫걸음' : '🇪🇸 스페인어 첫걸음';
+        unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 정규 코스' : '🇪🇸 스페인어 정규 코스';
       }
       if (unitThumbIcon) {
         unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '✈️')));
@@ -1425,10 +1440,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.renderRoadmap = renderRoadmap;
 
+  // 코스 스위처 선택 상태 동기화 (모달 & 단어장 드롭다운)
+  function updateCourseSwitcherUI(selectedCourseId) {
+    const activeId = selectedCourseId || window.activeCourseId || 'main';
+
+    const cards = document.querySelectorAll('.course-switcher-card');
+    cards.forEach(card => {
+      const cid = card.dataset.courseId;
+      const isSelected = (cid === activeId);
+      const check = card.querySelector('.course-switcher-check');
+      if (isSelected) {
+        card.className = 'course-switcher-card flex items-center justify-between p-2.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 text-slate-800 text-xs font-bold cursor-pointer transition-all active:scale-98';
+        if (check) check.classList.remove('hidden');
+      } else {
+        card.className = 'course-switcher-card flex items-center justify-between p-2.5 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold cursor-pointer transition-all active:scale-98';
+        if (check) check.classList.add('hidden');
+      }
+    });
+
+    const bookItems = document.querySelectorAll('.book-course-item');
+    bookItems.forEach(item => {
+      const cid = item.dataset.courseId;
+      const isSelected = (cid === activeId);
+      const check = item.querySelector('.book-course-check');
+      if (isSelected) {
+        item.className = 'book-course-item flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/60 text-xs font-bold cursor-pointer transition-all hover:bg-emerald-100/80';
+        if (check) check.classList.remove('hidden');
+      } else {
+        item.className = 'book-course-item flex items-center justify-between p-2.5 rounded-xl border border-transparent text-slate-700 text-xs font-medium cursor-pointer transition-all hover:bg-slate-100';
+        if (check) check.classList.add('hidden');
+      }
+    });
+  }
+  window.updateCourseSwitcherUI = updateCourseSwitcherUI;
+
   // 단어팩(DLC/확장팩) 및 메인 코스 전환 함수
   function switchCourse(courseId) {
     const targetId = courseId || 'main';
     window.activeCourseId = targetId;
+    window.currentBookCourseId = targetId;
     try {
       localStorage.setItem('vocadash_active_course', targetId);
     } catch (_) {}
@@ -1449,9 +1499,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderBookCourseDropdown === 'function') {
       renderBookCourseDropdown(lang, targetId);
     }
+    updateCourseSwitcherUI(targetId);
 
-    const title = targetId === 'pack_football' ? (lang === 'en' ? '축구 실전팩 (DLC)' : '스페인 축구 실전팩') : (lang === 'en' ? '여행 영어' : '여행/일상 기본 코스');
-    const icon = targetId === 'pack_football' ? '⚽' : '✈️';
+    const title = targetId === 'pack_football' ? (lang === 'en' ? '축구 실전팩 (DLC)' : '스페인 축구 실전팩') : (lang === 'en' ? '영어 정규 코스' : '스페인어 정규 코스');
+    const icon = targetId === 'pack_football' ? '⚽' : '🇪🇸';
     if (typeof window.showToast === 'function') {
       window.showToast(`${icon} '${title}' 코스로 전환되었습니다!`, '🚀');
     }
@@ -2428,6 +2479,60 @@ document.addEventListener('DOMContentLoaded', () => {
   on('lesson-modal-close-btn', 'click', window.closeLessonModal);
   if (lessonBackdrop) lessonBackdrop.addEventListener('click', (e) => { if (e.target === lessonBackdrop) window.closeLessonModal(); });
 
+  // 스페인 축구 실전팩 스테이지 세션 문제 생성기
+  function getFootballStageSession(nodeId) {
+    const fb = window.packFootballData;
+    if (!fb || !fb.units) return [];
+    const u1 = fb.units[0];
+    const words1 = (u1 && u1.words) ? u1.words.slice(0, 6) : [];
+    const words2 = (u1 && u1.words) ? u1.words.slice(6, 12) : [];
+    const sent1 = {
+      id: 'fb_1_sentence',
+      term: 'El delantero marca un gol.',
+      word: 'El delantero marca un gol.',
+      meaning: '공격수가 골을 넣는다.',
+      pron: '엘 델란테로 마르카 운 골',
+      phonetic: '[엘 델란테로 마르카 운 골]',
+      type: 'sentence',
+      isSentence: true
+    };
+
+    let pool = [];
+    if (nodeId === 'node-1') {
+      pool = words1;
+    } else if (nodeId === 'node-2') {
+      pool = words2;
+    } else if (nodeId === 'node-3') {
+      pool = [sent1, ...words1.slice(0, 5)];
+    } else {
+      pool = (u1 && u1.words) ? u1.words : [];
+    }
+
+    if (pool.length === 0) return [];
+
+    let session = [];
+    const count = Math.max(10, pool.length);
+    for (let i = 0; i < count; i++) {
+      const w = pool[i % pool.length];
+      const isSent = Boolean(w.type === 'sentence' || w.isSentence);
+      session.push({
+        id: w.id || `fb-q-${i + 1}`,
+        term: w.term,
+        word: w.term,
+        meaning: w.meaning,
+        pron: w.pron || '',
+        phonetic: w.phonetic || `[${w.pron || ''}]`,
+        exampleTarget: isSent ? w.term : `El ${w.term} está en el campo.`,
+        exampleMeaning: isSent ? w.meaning : `${w.meaning}가 경기장에 있다.`,
+        type: isSent ? 'sentence' : 'word',
+        isSentence: isSent,
+        tag: '⚽ 축구 실전'
+      });
+    }
+    return session;
+  }
+  window.getFootballStageSession = getFootballStageSession;
+
   on('lesson-start-btn', 'click', (e) => {
     if (e) {
       e.preventDefault();
@@ -2441,7 +2546,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const targetNodeId = currentSelectedNodeId || 'node-2';
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
-    const session = window.VOCA_DATA ? window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round) : [];
+    let session = [];
+    if (window.activeCourseId === 'pack_football' && window.packFootballData) {
+      session = getFootballStageSession(targetNodeId);
+    } else if (window.VOCA_DATA) {
+      session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round);
+    }
 
     if (!session || !Array.isArray(session) || session.length === 0) {
       if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
@@ -2691,18 +2801,37 @@ document.addEventListener('DOMContentLoaded', () => {
       window.closeCourseDropdown();
     }
     updateModalCardsUI(window.currentActiveCourse || 'es'); 
+    if (typeof updateCourseSwitcherUI === 'function') {
+      updateCourseSwitcherUI(window.activeCourseId || 'main');
+    }
     toggleModal(langBackdrop, langCard, true); 
   };
   window.closeLanguageModal = () => toggleModal(langBackdrop, langCard, false);
   on('logo-lang-trigger', 'click', window.openLanguageModal);
   on('close-modal-btn', 'click', window.closeLanguageModal);
+
+  // 코스 스위처 카드 탭 이벤트 바인딩
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.course-switcher-card');
+    if (!card) return;
+    const cid = card.dataset.courseId;
+    if (cid && typeof window.switchCourse === 'function') {
+      window.switchCourse(cid);
+      if (typeof window.closeLanguageModal === 'function') {
+        window.closeLanguageModal();
+      }
+      if (typeof window.playSound === 'function') {
+        window.playSound('click');
+      }
+    }
+  });
   // ===================================================
   // 5-B. 마스코트 고양이 캐릭터 및 전역 언어 상태 동기화
   // ===================================================
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=49';
+    const v = '?v=50';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -2845,11 +2974,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const chapterTitleEl = document.getElementById('book-chapter-title');
     if (chapterTitleEl) {
       if (isFootball) {
-        chapterTitleEl.textContent = '1과: 축구 기본 규칙 & 포지션 (실전 단어팩)';
+        const u1 = window.packFootballData?.units?.[0];
+        const uTitle = u1?.title || 'Unit 1. 포지션 & 경기장';
+        chapterTitleEl.textContent = `${uTitle} (스페인 축구 실전팩)`;
       } else {
         chapterTitleEl.textContent = lang === 'en'
-          ? '1과: 인사/기초 표현 (필수 회화 & 어휘)'
-          : '1과: 인사/안부 (여행 필수 패턴)';
+          ? '1과: 인사/기초 표현 (영어 정규 코스)'
+          : '1과: 인사/안부 (스페인어 정규 코스)';
       }
     }
 
@@ -2910,7 +3041,22 @@ document.addEventListener('DOMContentLoaded', () => {
       { term: 'Baño', meaning: '화장실', phonetic: '[바뇨]', star: false }
     ];
 
-    const wordsData = isFootball ? footballWords : standardWords;
+    let wordsData = standardWords;
+    if (isFootball) {
+      if (window.packFootballData && Array.isArray(window.packFootballData.units)) {
+        const allFbWords = window.packFootballData.units.flatMap(u => u.words || []);
+        wordsData = allFbWords.map((w, idx) => ({
+          id: w.id,
+          term: w.term,
+          meaning: w.meaning,
+          phonetic: w.pron ? `[${w.pron}]` : (w.phonetic || ''),
+          pron: w.pron || '',
+          star: idx < 6
+        }));
+      } else {
+        wordsData = footballWords;
+      }
+    }
 
     const cards = container.querySelectorAll('.book-word-card');
     cards.forEach(c => c.remove());
@@ -3911,7 +4057,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=49' : 'assets/profiles/profile-spanish.webp?v=49';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=50' : 'assets/profiles/profile-spanish.webp?v=50';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4524,13 +4670,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const BOOK_COURSE_PRESETS = {
     es: [
-      { id: 'main', icon: '✈️', title: '여행/일상 기본 코스' },
+      { id: 'main', icon: '🇪🇸', title: '스페인어 정규 코스' },
       { id: 'pack_football', icon: '⚽', title: '스페인 축구 실전팩' },
       { id: 'dele', icon: '🎓', title: 'DELE 준비과정' },
       { id: 'business', icon: '💼', title: '비즈니스 스페인어' }
     ],
     en: [
-      { id: 'main', icon: '✈️', title: '여행 영어' },
+      { id: 'main', icon: '🇺🇸', title: '영어 정규 코스' },
       { id: 'pack_football', icon: '⚽', title: '축구 실전팩 (DLC)' },
       { id: 'toeic', icon: '🎓', title: '토익/오픽 대비' },
       { id: 'business', icon: '💼', title: '비즈니스 영어' }
@@ -4994,7 +5140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=49`;
+    return `assets/profiles/${file}?v=50`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5510,7 +5656,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=49';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=50';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5557,7 +5703,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=49';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=50';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

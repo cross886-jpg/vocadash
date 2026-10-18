@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=49`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=50`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -966,13 +966,45 @@ async function runE2ETests() {
         mainProgAfter &&
         JSON.stringify(mainProgAfter.unlockedUnits) === JSON.stringify(mainProg.unlockedUnits);
 
-      // 6. 메인 코스로 다시 전환하여 복원 검증
+      // 6. 축구팩 UI 연동 검증 (로드맵 상단 배너, 1번 노드, 단어장 탭)
+      window.switchCourse('pack_football');
+      const bannerTitle = document.getElementById('unit-main-title')?.textContent || '';
+      const bannerBadge = document.getElementById('unit-lang-badge')?.textContent || '';
+      const bannerIcon = document.getElementById('unit-thumb-icon')?.textContent || '';
+      const node1Title = document.getElementById('node-1-title')?.textContent || '';
+      
+      results.bannerTitleFootball = bannerTitle;
+      results.bannerBadgeFootball = bannerBadge;
+      results.bannerIconFootball = bannerIcon;
+      results.node1TitleFootball = node1Title;
+
+      // 단어장 단어 렌더링 검증
+      if (typeof window.renderBookWords === 'function') {
+        window.renderBookWords('es', 'pack_football');
+      }
+      const bookCards = Array.from(document.querySelectorAll('.book-word-card'));
+      const bookTerms = bookCards.map(c => c.dataset.term || '');
+      results.bookHasPortero = bookTerms.includes('portero');
+      results.bookHasDelantero = bookTerms.includes('delantero');
+      results.bookHasArbitro = bookTerms.includes('árbitro');
+      results.bookCardCount = bookCards.length;
+
+      // 7. 메인 코스로 다시 전환하여 복원 검증
       window.switchCourse('main');
       results.restoredActiveCourse = window.activeCourseId;
       results.restoredMainUnitLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel() : 1;
+      results.bannerTitleMain = document.getElementById('unit-main-title')?.textContent || '';
+      results.bannerBadgeMain = document.getElementById('unit-lang-badge')?.textContent || '';
 
-      // 7. renderRoadmap 정상 동작 확인
+      // 8. renderRoadmap 정상 동작 확인
       results.hasRenderRoadmap = typeof window.renderRoadmap === 'function';
+
+      // 9. 공식 축구팩 데이터 상세 필드 검증
+      const fbDataObj = window.packFootballData;
+      results.hasFootballUnits = Array.isArray(fbDataObj?.units) && fbDataObj.units.length === 4;
+      results.unit1HasWords = Array.isArray(fbDataObj?.units?.[0]?.words) && fbDataObj.units[0].words.length === 12;
+      results.unit1HasNodes = Array.isArray(fbDataObj?.units?.[0]?.nodes) && fbDataObj.units[0].nodes.length === 6;
+      results.unit1HasSentence = fbDataObj?.units?.[0]?.nodes?.some(n => n.type === 'sentence' && n.targetSentence?.includes('El delantero marca un gol'));
 
       return results;
     });
@@ -992,13 +1024,23 @@ async function runE2ETests() {
       Array.isArray(courseIsolationResult.footballClaimedBonuses) &&
       courseIsolationResult.footballClaimedBonuses.includes('node-bonus') &&
       courseIsolationResult.mainProgUntouched &&
+      courseIsolationResult.bannerTitleFootball.includes('스페인 축구 실전팩') &&
+      courseIsolationResult.bannerBadgeFootball.includes('스페셜 팩') &&
+      courseIsolationResult.bannerIconFootball.includes('⚽') &&
+      courseIsolationResult.node1TitleFootball.includes('포지션') &&
+      courseIsolationResult.bookHasPortero &&
+      courseIsolationResult.bookHasDelantero &&
+      courseIsolationResult.hasFootballUnits &&
+      courseIsolationResult.unit1HasWords &&
+      courseIsolationResult.unit1HasNodes &&
+      courseIsolationResult.unit1HasSentence &&
       courseIsolationResult.restoredActiveCourse === 'main' &&
       courseIsolationResult.hasRenderRoadmap;
 
     recordScenario('Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)', scenarioGPassed, {
       ...courseIsolationResult,
       summary: scenarioGPassed
-        ? 'activeCourseId 관리, getCurrentCourseData() 팩 분기, 코스별 vocadash_progress_${id} 격리 저장 및 switchCourse 전환 완벽 검증'
+        ? '⚽ 스페인 축구 실전팩(pack_football) 데이터 구축, 코스 스위칭, 배너/노드 갱신 및 단어장 연동 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(courseIsolationResult)}`
     });
 
