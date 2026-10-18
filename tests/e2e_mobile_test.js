@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=41`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=44`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -391,12 +391,17 @@ async function runE2ETests() {
       const desc = document.getElementById('unit-skip-modal-desc');
       const startBtn = document.getElementById('btn-start-unit-skip-test');
       const closeBtn = document.getElementById('btn-close-unit-skip-modal');
+      const card = document.getElementById('unit-skip-modal-card');
+      const cardText = card ? card.innerText : '';
+      const hasTwoColCards = cardText.includes('🎯') && cardText.includes('문제 구성') && cardText.includes('총 15문제 (직행)') &&
+                             cardText.includes('🏆') && cardText.includes('통과 기준') && cardText.includes('80% 이상 (12개)');
       return {
         isOpen: modal && !modal.classList.contains('pointer-events-none') && modal.classList.contains('opacity-100'),
         title: title ? title.textContent.trim() : '',
         desc: desc ? desc.textContent.trim() : '',
         hasStartBtn: !!startBtn,
-        hasCloseBtn: !!closeBtn
+        hasCloseBtn: !!closeBtn,
+        hasTwoColCards
       };
     });
 
@@ -447,9 +452,26 @@ async function runE2ETests() {
     const unlockVerification = await page.evaluate(() => {
       const savedLevel = localStorage.getItem('vocadash_unlocked_unit_es');
       const subBadge = document.getElementById('unit-sub-badge');
+      const prog = window.nodeProgressMap || {};
+      const node1Target = document.getElementById('node-1-target');
+      const node1StartPill = document.getElementById('node-1-start-pill');
+      const node2Target = document.getElementById('node-2-target');
+      const node2LockBadge = document.getElementById('node-2-lock-badge');
+      const node3Target = document.getElementById('node-3-target');
+      const nodeBossTarget = document.getElementById('node-boss-target');
+
+      const isNode1Active = prog['node-1'] === 0 && node1Target?.dataset?.nodeType === 'active' && !node1StartPill?.classList?.contains('hidden');
+      const isNode2Locked = prog['node-2'] === 0 && node2Target?.dataset?.nodeType === 'locked' && !node2LockBadge?.classList?.contains('hidden');
+      const isNode3Locked = prog['node-3'] === 0 && node3Target?.dataset?.nodeType === 'locked';
+      const isNodeBossLocked = prog['node-boss'] === 0 && nodeBossTarget?.dataset?.nodeType === 'locked';
+
       return {
         savedLevel,
-        subBadgeText: subBadge ? subBadge.textContent.trim() : ''
+        subBadgeText: subBadge ? subBadge.textContent.trim() : '',
+        isNode1Active,
+        isNode2Locked,
+        isNode3Locked,
+        isNodeBossLocked
       };
     });
 
@@ -457,6 +479,10 @@ async function runE2ETests() {
     await page.evaluate(() => {
       if (typeof window.closeUnitOverviewModal === 'function') window.closeUnitOverviewModal();
       if (typeof window.closeUnitSkipModal === 'function') window.closeUnitSkipModal();
+      // Unlock subsequent nodes by completing node-1 for review modal test
+      window.nodeProgressMap['node-1'] = 3;
+      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+      window.updateRoadmapNodesUI();
     });
     await page.waitForTimeout(200);
 
@@ -496,13 +522,18 @@ async function runE2ETests() {
       skipModalOpened.title.includes('건너뛰기 시험') &&
       skipModalOpened.hasStartBtn &&
       skipModalOpened.hasCloseBtn &&
+      skipModalOpened.hasTwoColCards &&
       skipModalClosed &&
       directGameTestState.isGameVisible &&
       directGameTestState.isFlashcardHidden &&
       directGameTestState.questionCount === 15 &&
       directGameTestState.stageTitle.includes('건너뛰기') &&
       unlockVerification.savedLevel === '2' &&
-      unlockVerification.subBadgeText.includes('UNIT 2');
+      unlockVerification.subBadgeText.includes('UNIT 2') &&
+      unlockVerification.isNode1Active &&
+      unlockVerification.isNode2Locked &&
+      unlockVerification.isNode3Locked &&
+      unlockVerification.isNodeBossLocked;
 
     const headerCompactValid =
       headerState.hasMiniLogo &&

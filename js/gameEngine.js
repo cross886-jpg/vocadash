@@ -671,7 +671,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=41`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=44`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -759,7 +759,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=41`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=44`;
         });
       } catch (_) {}
 
@@ -933,7 +933,11 @@
         }
         window.nodeProgressMap[targetNodeId] = nextProg;
 
-        if ((targetNodeId === 'node-2' || String(targetNodeId).includes('2')) && nextProg >= 3) {
+        if ((targetNodeId === 'node-1' || String(targetNodeId).includes('1')) && nextProg >= 3) {
+          if (window.nodeProgressMap['node-2'] === undefined || window.nodeProgressMap['node-2'] === 0) {
+            window.nodeProgressMap['node-2'] = 0;
+          }
+        } else if ((targetNodeId === 'node-2' || String(targetNodeId).includes('2')) && nextProg >= 3) {
           if (window.nodeProgressMap['node-3'] === undefined || window.nodeProgressMap['node-3'] === 0) {
             window.nodeProgressMap['node-3'] = 0;
           }
@@ -2203,6 +2207,20 @@
       nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-boss']) || 0;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       if (typeof window.showToast === 'function') window.showToast('🔥 3과 마스터 완료! 최종 4과(보스전) 단어 예습을 시작합니다!', '👑');
+    } else if ((targetNodeId === 'node-1' || String(targetNodeId).includes('1')) && curProg >= 3) {
+      // 1과 완주(3/3) -> 2과 플래시카드 예습 진입
+      if (!window.nodeProgressMap) window.nodeProgressMap = {};
+      window.nodeProgressMap['node-1'] = 3;
+      if (window.nodeProgressMap['node-2'] === undefined) {
+        window.nodeProgressMap['node-2'] = 0;
+      }
+      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+      window.currentSelectedNodeId = 'node-2';
+      currentGameLessonId = 'node-2';
+      nextNodeId = 'node-2';
+      nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-2']) || 0;
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.showToast === 'function') window.showToast('🎉 1과 마스터 완료! 2과 단어 예습을 시작합니다!', '✨');
     } else if (curProg >= 3) {
       // 2과 완주(3/3) -> 3과 플래시카드 예습 진입
       if (!window.nodeProgressMap) window.nodeProgressMap = {};
