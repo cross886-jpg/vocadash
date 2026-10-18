@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=53`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=54`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=53', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=53', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=54', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=54', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -895,11 +895,11 @@ document.addEventListener('DOMContentLoaded', () => {
         unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 정규 코스' : '🇪🇸 스페인어 정규 코스';
       }
       if (unitThumbIcon) {
-        unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '✈️')));
+        unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '🇪🇸')));
       }
       if (unitMainTitle) {
         if (courseId === 'travel') {
-          unitMainTitle.textContent = lang === 'en' ? '실전 여행 영어 완전 정복' : '생존 여행 기초 표현 마스터';
+          unitMainTitle.textContent = lang === 'en' ? '실전 영어 필수 회화 완전 정복' : '일상 회화 & 실전 기초 어휘 마스터';
         } else if (courseId === 'dele') {
           unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
         } else if (courseId === 'toeic') {
@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (courseId === 'business') {
           unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
         } else {
-          unitMainTitle.textContent = '생존 여행 기초 표현 마스터';
+          unitMainTitle.textContent = lang === 'en' ? '실전 영어 필수 회화 완전 정복' : '일상 회화 & 실전 기초 어휘 마스터';
         }
       }
     } else {
@@ -1496,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (heroIcon) heroIcon.textContent = '⚽';
     } else {
       if (heroTitle) heroTitle.textContent = '스페인어 정규 코스 (기본 코스)';
-      if (heroDesc) heroDesc.textContent = '공항, 호텔, 식당 등 여행 & 일상 생존 회화 40개';
+      if (heroDesc) heroDesc.textContent = '일상 회화 & 실전 기초 어휘 마스터 40개';
       if (heroIcon) heroIcon.textContent = '🇪🇸';
     }
 
@@ -2843,8 +2843,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Language Modal
   const langBackdrop = el('language-modal-backdrop'), langCard = el('language-modal-card'), cardEs = el('card-es'), cardEn = el('card-en'), badgeEs = el('badge-es'), badgeEn = el('badge-en');
+  let modalPendingLanguage = 'es';
+  let modalPendingCourseId = 'main';
 
   function updateModalCardsUI(lang) {
+    modalPendingLanguage = lang;
     modalSelectedCourse = lang;
     const isEs = lang === 'es';
 
@@ -2886,42 +2889,91 @@ document.addEventListener('DOMContentLoaded', () => {
     setCardStyle(cardEn, badgeEn, !isEs);
   }
 
+  function updateModalCourseCardsUI(selectedCourseId) {
+    modalPendingCourseId = selectedCourseId || 'main';
+    const cards = document.querySelectorAll('.course-switcher-card');
+    cards.forEach(card => {
+      const cid = card.dataset.courseId;
+      const isSelected = (cid === modalPendingCourseId);
+      const check = card.querySelector('.course-switcher-check');
+      if (isSelected) {
+        card.className = 'course-switcher-card flex items-center justify-between p-2.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 text-slate-800 text-xs font-bold cursor-pointer transition-all active:scale-98';
+        if (check) check.classList.remove('hidden');
+      } else {
+        card.className = 'course-switcher-card flex items-center justify-between p-2.5 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold cursor-pointer transition-all active:scale-98';
+        if (check) check.classList.add('hidden');
+      }
+    });
+  }
+  window.updateModalCourseCardsUI = updateModalCourseCardsUI;
+
   window.openLanguageModal = () => { 
     if (typeof window.closeCourseDropdown === 'function') {
       window.closeCourseDropdown();
     }
-    updateModalCardsUI(window.currentActiveCourse || 'es'); 
-    if (typeof updateCourseSwitcherUI === 'function') {
-      updateCourseSwitcherUI(window.activeCourseId || 'main');
-    }
+    modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || localStorage.getItem('vocadash_language') || 'es';
+    modalPendingCourseId = window.activeCourseId || localStorage.getItem('vocadash_active_course') || 'main';
+
+    updateModalCardsUI(modalPendingLanguage); 
+    updateModalCourseCardsUI(modalPendingCourseId);
     toggleModal(langBackdrop, langCard, true); 
   };
   window.closeLanguageModal = () => toggleModal(langBackdrop, langCard, false);
   on('logo-lang-trigger', 'click', window.openLanguageModal);
   on('close-modal-btn', 'click', window.closeLanguageModal);
 
-  // 코스 스위처 카드 탭 이벤트 바인딩
+  // 코스 스위처 카드 탭 이벤트 바인딩 (즉시 닫히지 않고 pending 상태 및 UI만 변경)
   document.addEventListener('click', (e) => {
     const card = e.target.closest('.course-switcher-card');
     if (!card) return;
     const cid = card.dataset.courseId;
-    if (cid && typeof window.switchCourse === 'function') {
-      window.switchCourse(cid);
-      if (typeof window.closeLanguageModal === 'function') {
-        window.closeLanguageModal();
-      }
+    if (cid) {
+      modalPendingCourseId = cid;
+      updateModalCourseCardsUI(cid);
+    }
+  });
+
+  // 하단 고정 '선택 완료' Primary CTA 버튼 클릭 이벤트
+  const btnConfirmLangCourse = document.getElementById('btn-confirm-language-course');
+  if (btnConfirmLangCourse) {
+    btnConfirmLangCourse.addEventListener('click', () => {
+      // 1) 탭 효과음 재생
       if (typeof window.playSound === 'function') {
         window.playSound('click');
       }
-    }
-  });
+
+      const finalLang = modalPendingLanguage || window.currentLanguage || 'es';
+      const finalCourseId = modalPendingCourseId || window.activeCourseId || 'main';
+
+      // 2) 선택된 언어와 코스(activeCourseId)를 localStorage에 최종 확정 저장
+      try {
+        localStorage.setItem('vocadash_language', finalLang);
+        localStorage.setItem('vocadash_active_course', finalCourseId);
+      } catch (_) {}
+
+      // 3) 언어 적용 (내부에서 로드맵/단어장/UI 등 언어별 갱신 수행 및 모달 닫기)
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage(finalLang);
+      }
+
+      // 4) 코스 적용 (로드맵 및 상단 배너 리렌더링)
+      if (typeof window.switchCourse === 'function') {
+        window.switchCourse(finalCourseId);
+      }
+
+      // 5) 모달 닫기 확정
+      if (typeof window.closeLanguageModal === 'function') {
+        window.closeLanguageModal();
+      }
+    });
+  }
   // ===================================================
   // 5-B. 마스코트 고양이 캐릭터 및 전역 언어 상태 동기화
   // ===================================================
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=53';
+    const v = '?v=54';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3296,7 +3348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const settingsDesc = document.getElementById('settings-current-lang-desc');
     if (settingsDesc) {
-      settingsDesc.textContent = (lang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (여행 필수 패턴)';
+      settingsDesc.textContent = (lang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (일상 실전 패턴)';
     }
 
     // 2. 상단 헤더 국기 이모지 및 언어명 배지 텍스트 즉시 갱신
@@ -3353,22 +3405,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.changeCourse = setLanguage;
   window.changeLanguage = setLanguage;
 
-  let isLanguageSwitching = false;
   function handleCardLanguageSelect(targetLang) {
-    if (isLanguageSwitching) return;
-    isLanguageSwitching = true;
-
-    // 1) 탭한 카드에 초록색 선택 테두리/체크 활성화 (active:scale-95 인터랙션과 함께 즉시 반영)
+    modalPendingLanguage = targetLang;
+    // 탭한 카드에 초록색 선택 테두리/체크 활성화 (active:scale-95 인터랙션과 함께 즉시 반영, 확인 버튼 터치 시 최종 확정)
     updateModalCardsUI(targetLang);
-
-    // 2) 약 0.15초 뒤 모달이 부드럽게 닫히면서 선택한 언어로 화면과 데이터셋이 즉시 갱신 (토스트/팝업 없이 조용히 전환)
-    setTimeout(() => {
-      try {
-        setLanguage(targetLang);
-      } finally {
-        isLanguageSwitching = false;
-      }
-    }, 150);
   }
 
   if (cardEs) {
@@ -4167,7 +4207,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=53' : 'assets/profiles/profile-spanish.webp?v=53';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=54' : 'assets/profiles/profile-spanish.webp?v=54';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4211,7 +4251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const statsLevelBadge = document.getElementById('stats-level-badge');
       if (statsLevelBadge) {
-        statsLevelBadge.textContent = currentLang === 'en' ? 'Lv.5 글로벌 러너 ✈️' : 'Lv.5 여행자 ✈️';
+        statsLevelBadge.textContent = currentLang === 'en' ? 'Lv.5 글로벌 러너 🚀' : 'Lv.5 실전 마스터 🚀';
       }
 
       const statsWordsCount = document.getElementById('stats-words-count');
@@ -5269,7 +5309,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=53`;
+    return `assets/profiles/${file}?v=54`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5785,7 +5825,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=53';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=54';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5829,7 +5869,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=53';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=54';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=53`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=54`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -658,8 +658,30 @@ async function runE2ETests() {
     await page.screenshot({ path: langModalShot });
     testReport.screenshots.push({ name: '2_language_modal.png', description: '언어 선택 모달' });
 
-    // Switch to English course
+    // Verify Language Modal Elements (Subtitle, Course Description, Confirm CTA)
+    const modalCheckBeforeConfirm = await page.evaluate(() => {
+      const modal = document.getElementById('language-modal-card');
+      const isVisible = modal && !modal.classList.contains('pointer-events-none');
+      const subtitle = document.querySelector('#language-modal-card p')?.textContent?.trim();
+      const confirmBtn = document.getElementById('btn-confirm-language-course');
+      const confirmText = confirmBtn?.textContent?.trim() || '';
+      const esCourseDesc = document.querySelector('.course-switcher-card[data-course-id="main"] span.text-\\[10px\\]')?.textContent?.trim() || '';
+      return { isVisible, subtitle, hasConfirmBtn: !!confirmBtn, confirmText, esCourseDesc };
+    });
+
+    // Touch card-en: modal should NOT close immediately, but selection moves to en
     await page.click('#card-en');
+    await page.waitForTimeout(200);
+
+    const modalStillOpenAfterCardTouch = await page.evaluate(() => {
+      const modal = document.getElementById('language-modal-card');
+      const isVisible = modal && !modal.classList.contains('pointer-events-none');
+      const enChecked = document.getElementById('card-en')?.getAttribute('aria-checked') === 'true';
+      return isVisible && enChecked;
+    });
+
+    // Click [선택 완료] CTA button to confirm selection
+    await page.click('#btn-confirm-language-course');
     await page.waitForTimeout(400);
 
     // Check Header Flag, Language Name, Roadmap Mascot Prefix, and Dynamic Signpost
@@ -670,7 +692,9 @@ async function runE2ETests() {
       const roadMascot = document.querySelector('#review-cat-banner-tile img, #roadmap-screen img[src*="characters/"]');
       const roadMascotSrc = roadMascot ? roadMascot.src : '';
       const signpost = document.getElementById('roadmap-signpost')?.textContent?.trim() || '';
-      return { flag, langName, curLang, roadMascotSrc, signpost };
+      const modal = document.getElementById('language-modal-card');
+      const modalClosed = modal?.classList.contains('pointer-events-none');
+      return { flag, langName, curLang, roadMascotSrc, signpost, modalClosed };
     });
 
     const flagCorrect = langSwitchState.flag === '🇺🇸';
@@ -678,14 +702,23 @@ async function runE2ETests() {
     const langCorrect = langSwitchState.curLang === 'en';
     const mascotCorrect = langSwitchState.roadMascotSrc.includes('en-');
     const signpostCorrect = langSwitchState.signpost.includes('NEW YORK');
+    const modalCtaValid = modalCheckBeforeConfirm.hasConfirmBtn && 
+      modalCheckBeforeConfirm.confirmText.includes('선택 완료') && 
+      modalCheckBeforeConfirm.subtitle === '원하는 언어와 코스를 선택해 주세요' &&
+      modalCheckBeforeConfirm.esCourseDesc === '일상 회화 & 실전 기초 어휘 마스터' &&
+      modalStillOpenAfterCardTouch && 
+      langSwitchState.modalClosed;
 
-    recordScenario('Scenario C-1: Language Switch to English (Flag & Mascot & Signpost)', flagCorrect && langNameCorrect && langCorrect && mascotCorrect && signpostCorrect, {
+    recordScenario('Scenario C-1: Language Switch to English (Flag & Mascot & Signpost & Modal CTA)', flagCorrect && langNameCorrect && langCorrect && mascotCorrect && signpostCorrect && modalCtaValid, {
       flag: langSwitchState.flag,
       langName: langSwitchState.langName,
       curLang: langSwitchState.curLang,
       mascotSrc: langSwitchState.roadMascotSrc,
       signpost: langSwitchState.signpost,
-      summary: flagCorrect && langNameCorrect && langCorrect && mascotCorrect && signpostCorrect ? '국기 🇺🇸 영어 배지, en-* 캐릭터 에셋, NEW YORK 이정표 표지판으로 즉시 전환 완료' : `언어 전환 상태 불일치 (flag: ${langSwitchState.flag}, langName: ${langSwitchState.langName}, lang: ${langSwitchState.curLang}, mascot: ${langSwitchState.roadMascotSrc}, signpost: ${langSwitchState.signpost})`
+      modalCtaValid,
+      modalCheckBeforeConfirm,
+      modalStillOpenAfterCardTouch,
+      summary: flagCorrect && langNameCorrect && langCorrect && mascotCorrect && signpostCorrect && modalCtaValid ? '국기 🇺🇸 영어 배지, en-* 캐릭터 에셋, NEW YORK 이정표 표지판 전환 및 확인 CTA 버튼 로직 완벽 검증' : `언어 전환 상태 불일치`
     });
 
     // Navigate to '단어장' Tab & '오답' Filter Chip

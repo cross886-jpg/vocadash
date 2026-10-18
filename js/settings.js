@@ -223,7 +223,7 @@
     const sFlag = document.getElementById('settings-current-lang-flag');
     if (sFlag) sFlag.textContent = (curLang === 'en') ? '🇺🇸' : '🇪🇸';
     const sDesc = document.getElementById('settings-current-lang-desc');
-    if (sDesc) sDesc.textContent = (curLang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (여행 필수 패턴)';
+    if (sDesc) sDesc.textContent = (curLang === 'en') ? '영어 (필수 회화 & 어휘)' : '스페인어 (일상 실전 패턴)';
 
     // 전체 발음 힌트 표시 상태 재적용
     applySetting('showPhonetic', !!s.showPhonetic, true);
