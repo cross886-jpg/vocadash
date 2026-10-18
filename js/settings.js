@@ -31,16 +31,22 @@
   const STORAGE_KEY = 'vocadash_settings';
 
   function loadSettings() {
+    let settings = { ...DEFAULT_SETTINGS };
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        return { ...DEFAULT_SETTINGS, ...parsed };
+        settings = { ...DEFAULT_SETTINGS, ...parsed };
       }
+      const soundDirect = localStorage.getItem('vocadash_sound_enabled');
+      if (soundDirect !== null) {
+        settings.soundEffects = (soundDirect === 'true' || soundDirect === '1');
+      }
+      return settings;
     } catch (e) {
       console.warn('설정 로드 실패, 기본값 사용:', e);
     }
-    return { ...DEFAULT_SETTINGS };
+    return settings;
   }
 
   function saveSettings(settings) {
@@ -109,8 +115,13 @@
     } else if (key === 'autoPlayAudio') {
       // no toast
     } else if (key === 'soundEffects') {
+      try {
+        localStorage.setItem('vocadash_sound_enabled', val ? 'true' : 'false');
+      } catch (_) {}
       if (!isInitial) {
-        if (val && typeof window.playSuccessChime === 'function') {
+        if (val && typeof window.playSound === 'function') {
+          try { window.playSound('correct'); } catch (_) {}
+        } else if (val && typeof window.playSuccessChime === 'function') {
           try { window.playSuccessChime(); } catch (_) {}
         }
       }

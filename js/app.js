@@ -120,6 +120,60 @@ function speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl) {
   }
 }
 
+// =================================================
+// 스페인어 원어민 TTS 엔진 (es-ES 강제 지정, pitch: 1.0, rate: 0.95)
+// =================================================
+function playSpanishTTS(text, buttonEl = null) {
+  stopAllTTS();
+
+  const cleanWord = sanitizeTTSText(text);
+  if (!cleanWord) return;
+
+  if (buttonEl) {
+    setUiSpeakerActive(buttonEl);
+  }
+
+  if (!('speechSynthesis' in window)) {
+    if (typeof playDualTTS === 'function') {
+      playDualTTS(cleanWord, 'es', buttonEl);
+    } else if (buttonEl) {
+      resetUiSpeakerActive(buttonEl);
+    }
+    return;
+  }
+
+  try {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanWord);
+    utterance.lang = 'es-ES'; // 스페인 본토 발음 강제 지정
+    utterance.pitch = 1.0;
+    utterance.rate = 0.95; // 자연스럽고 명확한 전달 속도 설정
+
+    const bestVoice = getBestNaturalVoice('es');
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
+
+    utterance.onend = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    };
+    utterance.onerror = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+      if (typeof playDualTTS === 'function') {
+        playDualTTS(cleanWord, 'es', buttonEl);
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  } catch (err) {
+    if (buttonEl) resetUiSpeakerActive(buttonEl);
+    if (typeof playDualTTS === 'function') {
+      playDualTTS(cleanWord, 'es', buttonEl);
+    }
+  }
+}
+window.playSpanishTTS = playSpanishTTS;
+
 function playDualTTS(text, lang = 'es', buttonEl = null) {
   stopAllTTS();
 
@@ -171,9 +225,17 @@ function playDualTTS(text, lang = 'es', buttonEl = null) {
   }
 }
 
-window.speakWord = playDualTTS;
-window.playTTS = playDualTTS;
-window.safePlayTTS = playDualTTS;
+function safePlayTTS(text, lang = 'es', buttonEl = null) {
+  const isEs = !lang || lang === 'es' || lang === 'es-ES';
+  if (isEs) {
+    return playSpanishTTS(text, buttonEl);
+  }
+  return playDualTTS(text, lang, buttonEl);
+}
+
+window.speakWord = safePlayTTS;
+window.playTTS = safePlayTTS;
+window.safePlayTTS = safePlayTTS;
 window.playDualTTS = playDualTTS;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -200,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=48`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=49`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -494,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=48', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=48', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=49', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=49', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -2328,6 +2390,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateRoadmapNodesUI();
       }
 
+      if (typeof window.playSound === 'function') {
+        window.playSound('gem');
+      }
+
       closeBonusModal();
       if (typeof window.showToast === 'function') {
         window.showToast('💎 보너스 다이아몬드 +15 획득!');
@@ -2636,7 +2702,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=48';
+    const v = '?v=49';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3506,6 +3572,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (gemsEl) gemsEl.textContent = curGems;
 
           setUserHearts(5);
+          if (typeof window.playSound === 'function') {
+            window.playSound('gem');
+          }
           closeHeartRechargeModal();
           if (typeof window.showToast === 'function') {
             window.showToast('💖 보석 100개로 하트 5개 풀 충전 완료!', '🎉');
@@ -3842,7 +3911,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=48' : 'assets/profiles/profile-spanish.webp?v=48';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=49' : 'assets/profiles/profile-spanish.webp?v=49';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4534,8 +4603,10 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.classList.remove('scale-125', 'text-emerald-500');
         }, 350);
 
-        // TTS 발음 재생 (듀얼 고음질 엔진 호출 & 버튼 UI 상태 전달)
-        if (typeof window.safePlayTTS === 'function') {
+        // TTS 발음 재생 (es-ES 원어민 엔진 호출 & 버튼 UI 상태 전달)
+        if (typeof window.playSpanishTTS === 'function' && (!window.currentLanguage || window.currentLanguage === 'es')) {
+          window.playSpanishTTS(term, btn);
+        } else if (typeof window.safePlayTTS === 'function') {
           window.safePlayTTS(term, window.currentActiveCourse || 'es-ES', btn);
         } else if (typeof window.speakWord === 'function') {
           window.speakWord(term, window.currentActiveCourse || 'es-ES', btn);
@@ -4556,7 +4627,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('button')) return;
         const term = card.dataset.term || card.querySelector('span.text-xl')?.textContent?.trim() || '¡Hola!';
         const speaker = card.querySelector('.book-audio-btn, button[aria-label="발음 듣기"]');
-        if (typeof window.safePlayTTS === 'function') {
+        if (typeof window.playSpanishTTS === 'function' && (!window.currentLanguage || window.currentLanguage === 'es')) {
+          window.playSpanishTTS(term, speaker);
+        } else if (typeof window.safePlayTTS === 'function') {
           window.safePlayTTS(term, window.currentActiveCourse || 'es-ES', speaker);
         } else if (typeof window.speakWord === 'function') {
           window.speakWord(term, window.currentActiveCourse || 'es-ES', speaker);
@@ -4921,7 +4994,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=48`;
+    return `assets/profiles/${file}?v=49`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5437,7 +5510,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=48';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=49';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5484,7 +5557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=48';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=49';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

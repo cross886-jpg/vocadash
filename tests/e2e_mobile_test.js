@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=48`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=49`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1222,6 +1222,93 @@ async function runE2ETests() {
       summary: scenarioIPassed
         ? '교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(wordbookAndAdapterResult)}`
+    });
+
+    console.log('\n🔊 --- [Scenario J: Spanish TTS (es-ES) & Web Audio Zero-Latency SFX System] ---');
+    const audioSfxResult = await page.evaluate(async () => {
+      const results = {};
+
+      // 1. Check playSpanishTTS function and utterance configuration
+      results.hasPlaySpanishTTS = typeof window.playSpanishTTS === 'function';
+
+      let capturedUtterance = null;
+      const origSpeak = window.speechSynthesis ? window.speechSynthesis.speak : null;
+      if (window.speechSynthesis) {
+        window.speechSynthesis.speak = function(utt) {
+          capturedUtterance = utt;
+        };
+      }
+
+      window.playSpanishTTS('¡Hola mundo!');
+
+      if (capturedUtterance) {
+        results.ttsLang = capturedUtterance.lang;
+        results.ttsPitch = capturedUtterance.pitch;
+        results.ttsRate = capturedUtterance.rate;
+        results.ttsText = capturedUtterance.text;
+      }
+
+      if (window.speechSynthesis && origSpeak) {
+        window.speechSynthesis.speak = origSpeak;
+      }
+
+      // 2. Check Web Audio SFX playSound engine
+      results.hasPlaySound = typeof window.playSound === 'function';
+      results.hasGetAudioContext = typeof window.getAudioContext === 'function';
+      results.hasIsSoundEnabled = typeof window.isSoundEnabled === 'function';
+
+      // Verify all 4 primary sound types can be called without exception
+      let soundsPlayedWithoutError = true;
+      try {
+        window.playSound('correct');
+        window.playSound('wrong');
+        window.playSound('gem');
+        window.playSound('click');
+        window.playSound('clear');
+      } catch (e) {
+        soundsPlayedWithoutError = false;
+      }
+      results.soundsPlayedWithoutError = soundsPlayedWithoutError;
+
+      // 3. Test sound toggle state (localStorage: vocadash_sound_enabled)
+      localStorage.setItem('vocadash_sound_enabled', 'false');
+      results.soundDisabledCheck = window.isSoundEnabled() === false;
+
+      localStorage.setItem('vocadash_sound_enabled', 'true');
+      results.soundEnabledCheck = window.isSoundEnabled() === true;
+
+      // 4. Test mobile audio policy unlock trigger
+      results.hasUnlockAudioPolicy = typeof window.unlockAudioPolicy === 'function';
+      let unlockSuccess = true;
+      try {
+        window.unlockAudioPolicy();
+      } catch (_) {
+        unlockSuccess = false;
+      }
+      results.unlockSuccess = unlockSuccess;
+
+      return results;
+    });
+
+    console.log('🔊 Audio & SFX test details:', audioSfxResult);
+    const scenarioJPassed = 
+      audioSfxResult.hasPlaySpanishTTS === true &&
+      audioSfxResult.ttsLang === 'es-ES' &&
+      audioSfxResult.ttsPitch === 1.0 &&
+      Math.abs(audioSfxResult.ttsRate - 0.95) < 0.01 &&
+      audioSfxResult.ttsText === 'Hola mundo' &&
+      audioSfxResult.hasPlaySound === true &&
+      audioSfxResult.soundsPlayedWithoutError === true &&
+      audioSfxResult.soundDisabledCheck === true &&
+      audioSfxResult.soundEnabledCheck === true &&
+      audioSfxResult.hasUnlockAudioPolicy === true &&
+      audioSfxResult.unlockSuccess === true;
+
+    recordScenario('Scenario J: Spanish TTS (es-ES) & Web Audio Zero-Latency SFX System', scenarioJPassed, {
+      ...audioSfxResult,
+      summary: scenarioJPassed
+        ? 'es-ES 스페인 본토 TTS 강제 지정(pitch: 1.0, rate: 0.95), Web Audio API 오실레이터 무지연 효과음(correct, wrong, gem, click) 합성음, localStorage 토글 제어 및 모바일 오디오 정책 잠금 해제 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(audioSfxResult)}`
     });
 
   } catch (err) {

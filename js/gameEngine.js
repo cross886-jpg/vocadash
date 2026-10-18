@@ -38,6 +38,10 @@
       if (!window._vocaAudioCtx) {
         window._vocaAudioCtx = new AudioCtx();
       }
+      if (typeof window.playSound === 'function') {
+        window.playSound('correct');
+        return;
+      }
       const ctx = window._vocaAudioCtx;
       if (ctx.state === 'suspended') {
         try { ctx.resume().catch(() => {}); } catch (_) {}
@@ -46,29 +50,33 @@
 
       const osc1 = ctx.createOscillator();
       const gain1 = ctx.createGain();
-      osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(659.25, now);
-      gain1.gain.setValueAtTime(0.15, now);
-      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(523.25, now);
+      gain1.gain.setValueAtTime(0.24, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
       osc1.connect(gain1);
       gain1.connect(ctx.destination);
       osc1.start(now);
-      osc1.stop(now + 0.16);
+      osc1.stop(now + 0.12);
 
       const osc2 = ctx.createOscillator();
       const gain2 = ctx.createGain();
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(987.77, now + 0.08);
-      gain2.gain.setValueAtTime(0.2, now + 0.08);
-      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+      osc2.frequency.setValueAtTime(783.99, now + 0.09);
+      gain2.gain.setValueAtTime(0.28, now + 0.09);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
       osc2.connect(gain2);
       gain2.connect(ctx.destination);
-      osc2.start(now + 0.08);
-      osc2.stop(now + 0.32);
+      osc2.start(now + 0.09);
+      osc2.stop(now + 0.38);
     } catch (e) {}
   }
 
   function playWrongBuzzer() {
+    if (typeof window.playSound === 'function') {
+      window.playSound('wrong');
+      return;
+    }
     if (window.vocadashSettings && window.vocadashSettings.soundEffects === false) return;
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -85,13 +93,13 @@
       const gain = ctx.createGain();
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(180, now);
-      osc.frequency.exponentialRampToValueAtTime(100, now + 0.18);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+      osc.frequency.exponentialRampToValueAtTime(70, now + 0.22);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.18);
+      osc.stop(now + 0.22);
     } catch (_) {}
   }
   window.playWrongBuzzer = playWrongBuzzer;
@@ -692,7 +700,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=48`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=49`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -780,7 +788,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=48`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=49`;
         });
       } catch (_) {}
 
@@ -1194,7 +1202,15 @@
         if (q) {
           const canAutoPlay = !window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false;
           if (canAutoPlay) {
-            safePlayTTS(qTerm, currentCourse);
+            if (currentCourse === 'es' || !currentCourse) {
+              if (typeof window.playSpanishTTS === 'function') {
+                window.playSpanishTTS(qTerm);
+              } else if (typeof safePlayTTS === 'function') {
+                safePlayTTS(qTerm, 'es-ES');
+              }
+            } else if (typeof safePlayTTS === 'function') {
+              safePlayTTS(qTerm, currentCourse);
+            }
           }
         }
       } catch (ttsErr) {
@@ -1461,10 +1477,32 @@
       }
 
       try {
-        if (combo >= 2) {
+        if (typeof window.playSound === 'function') {
+          window.playSound('correct');
+        } else if (combo >= 2) {
           playComboChime(combo);
         } else {
           playSuccessChime();
+        }
+      } catch (_) {}
+
+      // 정답 판정 시 해당 스페인어 단어 자동 발음 재생
+      try {
+        const canAutoPlay = !window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false;
+        if (canAutoPlay && currentQ) {
+          const wordToSpeak = currentQ.word || currentQ.term || '';
+          if (wordToSpeak) {
+            const currentCourse = window.currentActiveCourse || 'es';
+            if (currentCourse === 'es' || !currentCourse) {
+              if (typeof window.playSpanishTTS === 'function') {
+                window.playSpanishTTS(wordToSpeak);
+              } else if (typeof window.safePlayTTS === 'function') {
+                window.safePlayTTS(wordToSpeak, 'es-ES');
+              }
+            } else if (typeof window.safePlayTTS === 'function') {
+              window.safePlayTTS(wordToSpeak, currentCourse);
+            }
+          }
         }
       } catch (_) {}
 
@@ -1651,7 +1689,11 @@
       }
 
       try {
-        playWrongBuzzer();
+        if (typeof window.playSound === 'function') {
+          window.playSound('wrong');
+        } else {
+          playWrongBuzzer();
+        }
       } catch (_) {}
 
       if (typeof window.triggerHaptic === 'function') {
