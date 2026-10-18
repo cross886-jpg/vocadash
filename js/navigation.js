@@ -244,6 +244,8 @@
         if (typeof window.renderBookWords === 'function') window.renderBookWords(curLang, curCourse);
         if (typeof window.syncBookPhoneticSetting === 'function') window.syncBookPhoneticSetting();
         if (typeof window.initBookScreenEvents === 'function') window.initBookScreenEvents();
+        if (typeof window.updateBookCourseBadge === 'function') window.updateBookCourseBadge(curLang, curCourse);
+        if (typeof window.updateBookProgressHero === 'function') window.updateBookProgressHero();
       } catch (err) {
         console.warn('[VocaDash] book screen events error caught:', err);
       }

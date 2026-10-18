@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=65`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=68`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1298,9 +1298,21 @@ async function runE2ETests() {
       const courseTitle = document.getElementById('book-course-title');
       results.courseTitleText = courseTitle ? courseTitle.textContent.trim() : '';
 
+      const progressCountEl = document.getElementById('book-progress-count');
+      results.footballProgressCountText = progressCountEl ? progressCountEl.textContent.trim() : '';
+
+      const firstCatHeader = document.querySelector('.book-category-header');
+      results.has2RowCatHeader = !!(firstCatHeader && firstCatHeader.querySelector('.flex.items-center.justify-between') && firstCatHeader.querySelector('p'));
+
       // Switch back to main
       window.switchCourse('main');
       results.restoredMainCourse = window.activeCourseId;
+      results.restoredProgressCountText = progressCountEl ? progressCountEl.textContent.trim() : '';
+      results.restoredCourseTitleText = courseTitle ? courseTitle.textContent.trim() : '';
+
+      // Profile modal checks
+      results.noExclusiveTitleTag = !document.body.textContent.includes('전용 칭호 획득 가능');
+      results.hasOneSelectLabel = document.body.textContent.includes('1개 선택');
 
       // 6. Test launchGame Adapter
       results.hasLaunchGame = typeof window.launchGame === 'function';
@@ -1335,14 +1347,19 @@ async function runE2ETests() {
       wordbookAndAdapterResult.hasFootballItem === true &&
       wordbookAndAdapterResult.activeCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
+      wordbookAndAdapterResult.courseTitleText === '스페인 축구 실전팩' &&
+      wordbookAndAdapterResult.footballProgressCountText.includes('46개') &&
+      wordbookAndAdapterResult.restoredProgressCountText.includes('120개') &&
       wordbookAndAdapterResult.restoredMainCourse === 'main' &&
+      wordbookAndAdapterResult.noExclusiveTitleTag === true &&
+      wordbookAndAdapterResult.hasOneSelectLabel === true &&
       wordbookAndAdapterResult.hasLaunchGame === true &&
       wordbookAndAdapterResult.launchGameRoutedToFalling === true;
 
     recordScenario('Scenario I: Wordbook Wrong Filter, Course Switcher & MiniGame Adapter', scenarioIPassed, {
       ...wordbookAndAdapterResult,
       summary: scenarioIPassed
-        ? '교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증'
+        ? '교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결, 코스 라벨/진도 수치 동기화, 유닛 헤더 2단 레이아웃 분리, 프로필 모달 칭호 라벨 정돈 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(wordbookAndAdapterResult)}`
     });
 

@@ -17,6 +17,7 @@
     id: "pack_football",
     courseName: "스페인 축구 실전팩",
     name: "스페인 축구 실전팩",
+    title: "스페인 축구 실전팩",
     icon: "⚽",
     badge: "스페셜 팩",
     description: "스페인 현지 경기장과 훈련장에서 바로 쓰는 필수 축구 어휘 & 피치 콜",

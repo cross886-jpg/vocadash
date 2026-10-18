@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=65`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=68`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -579,8 +579,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=65', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=65', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=68', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=68', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       const baseUnits = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -1632,6 +1632,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (check) check.classList.add('hidden');
       }
     });
+    if (typeof updateBookCourseBadge === 'function') {
+      updateBookCourseBadge(window.currentLanguage || 'es', activeId);
+    }
+    if (typeof updateBookProgressHero === 'function') {
+      updateBookProgressHero();
+    }
     if (typeof renderPacksScreenUI === 'function') {
       renderPacksScreenUI();
     }
@@ -3338,7 +3344,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=65';
+    const v = '?v=68';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3472,6 +3478,99 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateRoadmapSignpost = updateRoadmapSignpost;
 
+  // 단어장 우측 상단 활성 코스 뱃지 동적 갱신
+  function updateBookCourseBadge(targetLang, courseId) {
+    const lang = (targetLang === 'en' || window.currentLanguage === 'en' || window.currentActiveCourse === 'en') ? 'en' : 'es';
+    let activeId = courseId || window.activeCourseId;
+    if (!activeId || activeId === 'basic') {
+      try {
+        activeId = localStorage.getItem('vocadash_active_course') || 'main';
+      } catch (_) {
+        activeId = 'main';
+      }
+    }
+    const isFootball = (activeId === 'pack_football');
+    const courseData = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
+
+    let icon = isFootball ? '⚽' : (lang === 'en' ? '🇺🇸' : '🇪🇸');
+    let title = isFootball ? '스페인 축구 실전팩' : (lang === 'en' ? '영어 정규 코스' : '스페인어 정규 코스');
+
+    if (courseData) {
+      if (courseData.icon) icon = courseData.icon;
+      if (courseData.title && courseData.title !== '축구 실전 단어팩 (DLC)' && courseData.title !== '일상 실전 패턴' && courseData.title !== '필수 회화 & 어휘') {
+        title = courseData.title;
+      } else if (courseData.courseName) {
+        title = courseData.courseName;
+      }
+    }
+
+    const titleEl = document.getElementById('book-course-title');
+    const iconEl = document.getElementById('book-course-icon');
+    if (titleEl) titleEl.textContent = title;
+    if (iconEl) iconEl.textContent = icon;
+  }
+  window.updateBookCourseBadge = updateBookCourseBadge;
+
+  // 단어장 중간 학습 진도 배너 및 필터 칩 개수 동적 동기화
+  function updateBookProgressHero() {
+    const courseData = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
+    let storedCourse = 'main';
+    try {
+      storedCourse = localStorage.getItem('vocadash_active_course') || 'main';
+    } catch (_) {}
+    const isFootball = (window.activeCourseId === 'pack_football' || storedCourse === 'pack_football' || (courseData && courseData.id === 'pack_football'));
+
+    let totalWords = 0;
+    if (isFootball) {
+      if (courseData && Array.isArray(courseData.units)) {
+        totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
+      }
+      if (!totalWords) totalWords = 46;
+    } else if (courseData && courseData.id && courseData.id !== 'main' && Array.isArray(courseData.units)) {
+      totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
+      if (!totalWords) totalWords = 120;
+    } else {
+      totalWords = 120;
+    }
+
+    let memorizedCount = isFootball ? 14 : 38;
+    try {
+      const savedCount = localStorage.getItem(`vocadash_memorized_count_${isFootball ? 'pack_football' : 'main'}`);
+      if (savedCount !== null) {
+        const parsed = parseInt(savedCount, 10);
+        if (!isNaN(parsed) && parsed >= 0) memorizedCount = parsed;
+      }
+    } catch (_) {}
+
+    memorizedCount = Math.min(memorizedCount, totalWords);
+    const percent = totalWords > 0 ? Math.round((memorizedCount / totalWords) * 100) : 0;
+    const unmemorizedCount = Math.max(0, totalWords - memorizedCount);
+
+    const countEl = document.getElementById('book-progress-count');
+    const percentEl = document.getElementById('book-progress-percent');
+    const barEl = document.getElementById('book-progress-bar-fill');
+
+    if (countEl) {
+      countEl.textContent = `외운 단어 ${memorizedCount} / ${totalWords}개`;
+    }
+    if (percentEl) {
+      percentEl.textContent = `(${percent}% 달성)`;
+    }
+    if (barEl) {
+      barEl.style.width = `${percent}%`;
+    }
+
+    const allCountEl = document.getElementById('book-filter-all-count');
+    if (allCountEl) allCountEl.textContent = String(totalWords);
+
+    const unmemorizedCountEl = document.getElementById('book-filter-unmemorized-count');
+    if (unmemorizedCountEl) unmemorizedCountEl.textContent = String(unmemorizedCount);
+
+    const memorizedCountEl = document.getElementById('book-filter-memorized-count');
+    if (memorizedCountEl) memorizedCountEl.textContent = String(memorizedCount);
+  }
+  window.updateBookProgressHero = updateBookProgressHero;
+
   function renderBookWords(targetLang, courseId) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const container = document.getElementById('book-words-container');
@@ -3483,15 +3582,30 @@ document.addEventListener('DOMContentLoaded', () => {
       storedCourse = localStorage.getItem('vocadash_active_course') || 'main';
     } catch (_) {}
     const isFootball = (courseId === 'pack_football' || window.activeCourseId === 'pack_football' || storedCourse === 'pack_football' || (activeCourse && activeCourse.id === 'pack_football'));
+
+    // 단어장 상단 코스 뱃지 & 학습 진도 배너 동적 동기화
+    updateBookCourseBadge(lang, courseId);
+    updateBookProgressHero();
+
     const chapterTitleEl = document.getElementById('book-chapter-title');
+    const chapterSubtitleEl = document.getElementById('book-chapter-subtitle');
+    const chapterCountEl = document.getElementById('book-chapter-count');
     if (chapterTitleEl) {
       if (isFootball) {
-        chapterTitleEl.textContent = '스페인 축구 실전팩 (Unit 1~4 전체 어휘)';
+        chapterTitleEl.textContent = '⚽ 스페인 축구 실전팩 (Unit 1~4)';
       } else {
         chapterTitleEl.textContent = lang === 'en'
-          ? '1과: 인사/기초 표현 (영어 정규 코스)'
-          : '1과: 인사/안부 (스페인어 정규 코스)';
+          ? '1과: 인사/기초 표현'
+          : '1과: 인사/안부';
       }
+    }
+    if (chapterSubtitleEl && !isFootball) {
+      chapterSubtitleEl.textContent = lang === 'en'
+        ? 'Greeting, Thanks & Numbers Master'
+        : '인사, 감사, 숫자 등 기초 표현 마스터';
+    }
+    if (chapterCountEl && !isFootball) {
+      chapterCountEl.textContent = '12단어';
     }
 
     const wrongBanner = document.getElementById('book-wrong-run-banner');
@@ -3516,13 +3630,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       window.packFootballData.units.forEach((u, uIdx) => {
         const catHeader = document.createElement('div');
-        catHeader.className = 'book-category-header flex items-center justify-between mt-5 mb-2.5 px-1 pt-1 border-t border-slate-100 first:border-0 first:mt-1';
+        catHeader.className = 'book-category-header flex flex-col mt-5 mb-2.5 px-1 pt-1 border-t border-slate-100 first:border-0 first:mt-1';
+        const wordCount = (u.words || []).length;
+        const subtitleHtml = u.subtitle ? `<p class="mt-1.5 pl-0.5 text-xs text-slate-500 font-medium leading-relaxed">${escapeHTML(u.subtitle)}</p>` : '';
         catHeader.innerHTML = `
-          <div class="flex items-center gap-2">
+          <div class="flex items-center justify-between w-full">
             <span class="text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shadow-2xs">⚽ ${escapeHTML(u.title)}</span>
-            <span class="text-[11px] text-slate-400 font-medium truncate max-w-[190px]">${escapeHTML(u.subtitle || '')}</span>
+            <span class="text-xs text-slate-400 font-semibold">${wordCount}단어</span>
           </div>
-          <span class="text-[11px] font-bold text-slate-400">${(u.words || []).length}단어</span>
+          ${subtitleHtml}
         `;
         if (ch2Toggle && ch2Toggle.parentNode === container) {
           container.insertBefore(catHeader, ch2Toggle);
@@ -4654,7 +4770,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=65' : 'assets/profiles/profile-spanish.webp?v=65';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=68' : 'assets/profiles/profile-spanish.webp?v=68';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5309,9 +5425,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.currentBookCourseId = window.activeCourseId || window.currentCourseId || 'main';
 
   function renderBookCourseDropdown(lang = (window.currentLanguage || window.currentActiveCourse || 'es'), selectedCourseId) {
-    const menu = document.getElementById('book-course-dropdown-menu');
-    if (!menu) return;
-
     const currentLang = lang === 'en' ? 'en' : 'es';
     const presets = BOOK_COURSE_PRESETS[currentLang] || BOOK_COURSE_PRESETS.es;
     const storedCourse = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null);
@@ -5323,11 +5436,16 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('vocadash_active_course', currentSelected.id);
     } catch (_) {}
 
-    // 상단 버튼 텍스트 및 아이콘 즉시 갱신
-    const titleEl = document.getElementById('book-course-title');
-    const iconEl = document.getElementById('book-course-icon');
-    if (titleEl) titleEl.textContent = currentSelected.title;
-    if (iconEl) iconEl.textContent = currentSelected.icon;
+    // 상단 뱃지 텍스트/아이콘 및 학습 진도 배너 즉시 갱신
+    if (typeof updateBookCourseBadge === 'function') {
+      updateBookCourseBadge(currentLang, currentSelected.id);
+    }
+    if (typeof updateBookProgressHero === 'function') {
+      updateBookProgressHero();
+    }
+
+    const menu = document.getElementById('book-course-dropdown-menu');
+    if (!menu) return;
 
     menu.innerHTML = presets.map((course) => {
       const isSelected = course.id === currentSelected.id;
@@ -5878,7 +5996,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=65`;
+    return `assets/profiles/${file}?v=68`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6394,7 +6512,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=65';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=68';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6438,7 +6556,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=65';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=68';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

@@ -984,8 +984,8 @@
   };
 
   const courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=65', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=65', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=68', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=68', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       if (typeof window !== 'undefined' && window.UNIT_LIST_PRESETS) {
         const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -997,8 +997,9 @@
 
   const packFootballData = {
     id: 'pack_football',
-    name: '축구 스페인어/영어 팩',
-    title: '축구 실전 단어팩 (DLC)',
+    name: '스페인 축구 실전팩',
+    title: '스페인 축구 실전팩',
+    icon: '⚽',
     units: [
       { unit: 1, title: '축구 기본 규칙 & 포지션', subtitle: '포지션, 경기장 명칭, 킥오프', progress: 0, status: 'active', icon: '⚽' },
       { unit: 2, title: '패스 & 전술 커뮤니케이션', subtitle: '원투 패스, 침투, 압박 콜사인', progress: 0, status: 'locked', icon: '🏃' },

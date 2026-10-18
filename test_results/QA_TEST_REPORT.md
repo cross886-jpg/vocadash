@@ -1,6 +1,6 @@
 # VocaDash 모바일 E2E 자동화 QA 최종 점검 리포트
 
-- **테스트 일시**: 2026-10-18T21:07:28.519Z
+- **테스트 일시**: 2026-10-18T21:21:55.402Z
 - **테스트 디바이스 규격**: Mobile Emulation (390 x 844 px, DPR=3, Touch Support, Chrome Headless)
 - **종합 결과**: **15/15 전원 통과 (100.0%)**
 
@@ -22,7 +22,7 @@
 | 10 | **Scenario F: Bonus 1-Time Limit & Weakness Review 10-Questions/Graduation** | 🟢 PASS | 보너스 1회 제한 및 중복 방지, 10문제 스피드런 코스 구성, 5연속 정답 시 오답노트 영구 졸업 완벽 검증 |
 | 11 | **Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)** | 🟢 PASS | ⚽ 스페인 축구 실전팩(pack_football) 데이터 구축, 코스 스위칭, 배너/노드 갱신 및 단어장 연동 완벽 검증 |
 | 12 | **Scenario HP: Realistic Heart (HP) System, Zero-Heart Block, Modal & Review Run Recharge** | 🟢 PASS | 하트 상태 영구 유지(localStorage), 0개 시 게임 진입 차단 & 충전 모달 표출, 보석 100개 완충, 30분 타이머 계산, 오답런 0하트 진입/무차감 및 80% 클리어 시 하트 3개 충전 완벽 검증 |
-| 13 | **Scenario I: Wordbook Wrong Filter, Course Switcher & MiniGame Adapter** | 🟢 PASS | 교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증 |
+| 13 | **Scenario I: Wordbook Wrong Filter, Course Switcher & MiniGame Adapter** | 🟢 PASS | 교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결, 코스 라벨/진도 수치 동기화, 유닛 헤더 2단 레이아웃 분리, 프로필 모달 칭호 라벨 정돈 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증 |
 | 14 | **Scenario J: Spanish TTS (es-ES) & Web Audio Zero-Latency SFX System** | 🟢 PASS | es-ES 스페인 본토 TTS 강제 지정(pitch: 1.0, rate: 0.95), Web Audio API 오실레이터 무지연 효과음(correct, wrong, gem, click) 합성음, localStorage 토글 제어 및 모바일 오디오 정책 잠금 해제 완벽 검증 |
 | 15 | **Scenario K: Bottom Nav (4 Tabs), Word Pack Screen, Safe-Bottom & Heart Single Number** | 🟢 PASS | 하단 4개 탭([홈], [단어팩], [단어장], [내 기록]) 전면 개편, 공식 단어팩 보관함/상점 화면 연동 및 장착 관리, 상단 헤더 하트 단일 숫자(❤️ 5, 💔 0) 표기, 로드맵 하단 safe-bottom 여백(140px 이상) 및 하단바 safe-area 완벽 검증 |
 
