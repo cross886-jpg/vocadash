@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=22`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=24`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=22', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=22', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=24', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=24', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -841,110 +841,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   on('continueStreakBtn', 'click', () => { window.closeStreakModal(); window.openLessonModal('node-2'); });
 
-  // 4. Header Category Chips & Subcategory Dropdown & Stage Filter
-  function filterRoadmapByCategory(categoryName) {
-    const activeCategory = (categoryName || '전체').trim();
-    window.currentCategoryFilter = activeCategory;
-
+  // 4. Header Category Chips & Subcategory Dropdown & Stage Filter (Removed per requirements)
+  function filterRoadmapByCategory() {
     const svgPath = document.getElementById('roadmap-svg-path') || document.querySelector('#roadmap-screen svg');
     const nodes = document.querySelectorAll('.roadmap-node');
-
-    if (activeCategory === '전체') {
-      nodes.forEach((node) => {
-        node.classList.remove('hidden');
-        node.style.display = '';
-      });
-      if (svgPath) {
-        svgPath.classList.remove('hidden');
-        svgPath.style.display = '';
-        svgPath.style.opacity = '1';
-      }
-      return;
-    }
-
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const courseId = window.currentCourseId || 'basic';
-    const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
-    const lessons = langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic;
-
-    let visibleCount = 0;
-    const targetClean = activeCategory.toLowerCase().replace(/[\s\-_/]/g, '');
-
     nodes.forEach((node) => {
-      const nid = node.dataset.nodeId;
-      const lesson = lessons ? lessons[nid] : null;
-      let isMatch = false;
-
-      if (lesson) {
-        const catStr = String(lesson.category || '').toLowerCase().replace(/[\s\-_/]/g, '');
-        const lvlStr = String(lesson.level || '').toLowerCase().replace(/[\s\-_/]/g, '');
-        const titleStr = String(lesson.title || '').toLowerCase().replace(/[\s\-_/]/g, '');
-        const tags = Array.isArray(lesson.tags) ? lesson.tags.map(t => String(t).toLowerCase().replace(/[\s\-_/]/g, '')) : [];
-
-        if (catStr === targetClean || lvlStr === targetClean || tags.includes(targetClean)) {
-          isMatch = true;
-        } else if (titleStr.includes(targetClean) || tags.some(t => t.includes(targetClean) || targetClean.includes(t))) {
-          isMatch = true;
-        }
-
-        // DELE 레벨별 서브 필터링 정밀 매칭 ('a1', 'a2', 'b1', 'b2')
-        ['a1', 'a2', 'b1', 'b2'].forEach((lvl) => {
-          if (targetClean.includes(lvl)) {
-            if (catStr.includes(lvl) || lvlStr.includes(lvl) || titleStr.includes(lvl) || tags.some(t => t.includes(lvl))) {
-              isMatch = true;
-            }
-          }
-        });
-      }
-
-      if (isMatch) {
-        node.classList.remove('hidden');
-        node.style.display = '';
-        visibleCount++;
-      } else {
-        node.classList.add('hidden');
-        node.style.display = 'none';
-      }
+      node.classList.remove('hidden');
+      node.style.display = '';
     });
-
     if (svgPath) {
-      if (visibleCount === nodes.length) {
-        svgPath.classList.remove('hidden');
-        svgPath.style.display = '';
-        svgPath.style.opacity = '1';
-      } else {
-        svgPath.classList.add('hidden');
-        svgPath.style.display = 'none';
-        svgPath.style.opacity = '0';
-      }
+      svgPath.classList.remove('hidden');
+      svgPath.style.display = '';
+      svgPath.style.opacity = '1';
     }
   }
   window.filterRoadmapByCategory = filterRoadmapByCategory;
 
-  const categoryContainer = el('category-tabs');
-  function bindCategoryPills() {
-    document.querySelectorAll('.category-pill').forEach((p) => p.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const catName = p.textContent.trim();
-      document.querySelectorAll('.category-pill').forEach((item) => {
-        item.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer';
-      });
-      p.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-primary text-on-primary font-bold shadow-sm cursor-pointer';
-      filterRoadmapByCategory(catName);
-    }));
-  }
-  bindCategoryPills();
-
-  function renderCategoryChips(categories) {
-    if (!categoryContainer || !categories) return;
-    const currentFilter = window.currentCategoryFilter || '전체';
-    categoryContainer.innerHTML = categories.map((cat, idx) => {
-      const isSelected = cat === currentFilter || (currentFilter === '전체' && idx === 0);
-      return `<button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs ${isSelected ? 'bg-primary text-on-primary font-bold shadow-sm' : 'bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container'} transition-colors cursor-pointer" type="button">${escapeHTML(cat)}</button>`;
-    }).join('');
-    categoryContainer.scrollTo({ left: 0, behavior: 'smooth' });
-    bindCategoryPills();
-  }
+  function renderCategoryChips() {}
+  window.renderCategoryChips = renderCategoryChips;
+  function bindCategoryPills() {}
+  window.bindCategoryPills = bindCategoryPills;
 
   const courseSelectBtn = el('course-selector-btn'), courseDropdown = el('course-dropdown-menu'), chevronIcon = el('dropdown-chevron-icon');
 
@@ -1156,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=22';
+    const v = '?v=24';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1837,7 +1753,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=22' : 'assets/profiles/profile-spanish.webp?v=22';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=24' : 'assets/profiles/profile-spanish.webp?v=24';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2885,7 +2801,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=22`;
+    return `assets/profiles/${file}?v=24`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3395,7 +3311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=22';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=24';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3437,7 +3353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=22';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=24';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
