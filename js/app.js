@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=26`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=30`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=26', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=26', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=30', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=30', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -581,52 +581,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (target2) target2.dataset.nodeType = 'completed';
 
       if (btn2) {
-        btn2.className = 'node-btn w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_6px_0_0_#15803d,0_12px_20px_-2px_rgba(34,197,94,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#15803d] transition-all cursor-pointer';
+        btn2.className = 'node-btn btn-3d w-[72px] h-[72px] rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-emerald-700 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer';
         btn2.title = (lessons['node-2'] ? lessons['node-2'].title : '2과: 감사/사과') + ' (완료)';
-        const iconSpan2 = btn2.querySelector('span');
-        if (iconSpan2) {
-          iconSpan2.className = 'material-symbols-outlined text-[34px]';
-          iconSpan2.style.fontVariationSettings = "'FILL' 1";
-          iconSpan2.textContent = 'check';
-        }
+        const numSpan2 = btn2.querySelector('.node-stage-num');
+        if (numSpan2) numSpan2.textContent = '2';
       }
 
       if (card2) {
-        card2.className = 'mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none';
+        card2.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none';
       }
 
       if (badge2) {
-        badge2.innerHTML = '<span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="font-label-sm text-[10px] text-primary font-bold ml-1">완료!</span>';
+        badge2.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
       }
     } else {
       // 2과 진행 중 상태
-      if (banner2) banner2.classList.remove('hidden');
+      if (banner2) banner2.classList.add('hidden');
       if (ping2) ping2.classList.remove('hidden');
       if (pulseRing2) pulseRing2.classList.remove('hidden');
       if (checkBadge2) checkBadge2.classList.add('hidden');
       if (target2) target2.dataset.nodeType = 'active';
 
       if (btn2) {
-        btn2.className = 'node-btn relative w-[76px] h-[76px] rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-[0_7px_0_0_#0284c7,0_16px_28px_rgba(2,132,199,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#0284c7] transition-all cursor-pointer';
+        btn2.className = 'node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-sky-700 shadow-lg active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-sky-300/50';
         btn2.title = lessons['node-2'] ? lessons['node-2'].title : '2과: 감사/사과';
-        const iconSpan2 = btn2.querySelector('span');
-        if (iconSpan2) {
-          iconSpan2.className = 'material-symbols-outlined text-[36px] animate-wiggle';
-          iconSpan2.style.fontVariationSettings = "'FILL' 1";
-          iconSpan2.textContent = courseId === 'basic' ? 'sentiment_satisfied' : 'flight_takeoff';
-        }
+        const numSpan2 = btn2.querySelector('.node-stage-num');
+        if (numSpan2) numSpan2.textContent = '2';
       }
 
       if (card2) {
-        card2.className = 'mt-3.5 flex flex-col items-center bg-surface-container-lowest px-4 py-2 rounded-2xl shadow-[0_4px_14px_rgba(0,101,145,0.1)] text-center ring-2 ring-secondary-container/50 pointer-events-none';
+        card2.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
       }
 
       if (badge2) {
-        if (prog2 > 0) {
-          badge2.innerHTML = `<span class="font-label-sm text-[11px] text-secondary font-black">${prog2}/3 레슨 진행중</span>`;
-        } else {
-          badge2.innerHTML = '<span class="font-label-sm text-[11px] text-secondary font-black">0/3 레슨 진행중</span>';
-        }
+        const pText = prog2 > 0 ? `${prog2}/3 레슨 진행중` : '0/3 레슨 진행중';
+        badge2.innerHTML = `<span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${pText}</span>`;
       }
     }
 
@@ -637,20 +626,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const ping3 = el('node-3-ping');
     const pulseRing3 = el('node-3-pulse-ring');
     const checkBadge3 = el('node-3-check-badge');
+    const lockBadge3 = el('node-3-lock-badge');
     const btn3 = el('node-3-btn');
     const badge3 = el('node-3-label-badge');
     const card3 = el('node-3-label-card');
 
     if (prog3 >= 3) {
-      // 3과 완료 상태 (1과, 2과처럼 초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
+      // 3과 완료 상태 (초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
       if (node3Container) {
-        node3Container.classList.remove('opacity-75');
+        node3Container.classList.remove('opacity-75', 'opacity-80');
         node3Container.classList.add('opacity-100');
         node3Container.style.opacity = '1';
       }
       if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.add('hidden');
       if (pulseRing3) pulseRing3.classList.add('hidden');
+      if (lockBadge3) lockBadge3.classList.add('hidden');
       if (checkBadge3) {
         checkBadge3.classList.remove('hidden');
         checkBadge3.style.display = 'flex';
@@ -661,30 +652,27 @@ document.addEventListener('DOMContentLoaded', () => {
         node3Target.removeAttribute('data-lock-icon');
       }
       if (btn3) {
-        btn3.className = 'node-btn w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_6px_0_0_#15803d,0_12px_20px_-2px_rgba(34,197,94,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#15803d] transition-all cursor-pointer';
+        btn3.className = 'node-btn btn-3d w-[72px] h-[72px] rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-emerald-700 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer';
         btn3.title = (lessons['node-3'] ? lessons['node-3'].title : '3과: 수하물 찾기와 세관') + ' (완료)';
-        const iconSpan3 = btn3.querySelector('span');
-        if (iconSpan3) {
-          iconSpan3.className = 'material-symbols-outlined text-[34px]';
-          iconSpan3.style.fontVariationSettings = "'FILL' 1";
-          iconSpan3.textContent = 'check';
-        }
+        const numSpan3 = btn3.querySelector('.node-stage-num');
+        if (numSpan3) numSpan3.textContent = '3';
       }
       if (card3) {
-        card3.className = 'mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none';
+        card3.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none';
       }
       if (badge3) {
-        badge3.innerHTML = '<span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="font-label-sm text-[10px] text-primary font-bold ml-1">완료!</span>';
+        badge3.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
       }
     } else if (prog2 >= 3) {
       if (node3Container) {
-        node3Container.classList.remove('opacity-75');
+        node3Container.classList.remove('opacity-75', 'opacity-80');
         node3Container.classList.add('opacity-100');
         node3Container.style.opacity = '1';
       }
-      if (banner3) banner3.classList.remove('hidden');
+      if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.remove('hidden');
       if (pulseRing3) pulseRing3.classList.remove('hidden');
+      if (lockBadge3) lockBadge3.classList.add('hidden');
       if (checkBadge3) checkBadge3.classList.add('hidden');
 
       if (node3Target) {
@@ -693,33 +681,28 @@ document.addEventListener('DOMContentLoaded', () => {
         node3Target.removeAttribute('data-lock-icon');
       }
       if (btn3) {
-        btn3.className = 'node-btn relative w-[76px] h-[76px] rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-[0_7px_0_0_#0284c7,0_16px_28px_rgba(2,132,199,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#0284c7] transition-all cursor-pointer';
+        btn3.className = 'node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-sky-700 shadow-lg active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-sky-300/50';
         btn3.title = lessons['node-3'] ? lessons['node-3'].title : '3과: 수하물 찾기와 세관';
-        const iconSpan3 = btn3.querySelector('span');
-        if (iconSpan3) {
-          iconSpan3.className = 'material-symbols-outlined text-[36px] animate-wiggle';
-          iconSpan3.textContent = 'luggage';
-        }
+        const numSpan3 = btn3.querySelector('.node-stage-num');
+        if (numSpan3) numSpan3.textContent = '3';
       }
       if (card3) {
-        card3.className = 'mt-3.5 flex flex-col items-center bg-surface-container-lowest px-4 py-2 rounded-2xl shadow-[0_4px_14px_rgba(0,101,145,0.1)] text-center ring-2 ring-secondary-container/50 pointer-events-none';
+        card3.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
       }
       if (badge3) {
-        if (prog3 > 0) {
-          badge3.innerHTML = `<span class="font-label-sm text-[11px] text-secondary font-black">${prog3}/3 레슨 진행중</span>`;
-        } else {
-          badge3.innerHTML = '<span class="font-label-sm text-[11px] text-secondary font-black">지금 학습 가능! (0/3)</span>';
-        }
+        const pText = prog3 > 0 ? `${prog3}/3 레슨 진행중` : '지금 학습 가능! (0/3)';
+        badge3.innerHTML = `<span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${pText}</span>`;
       }
     } else {
       if (node3Container) {
         node3Container.classList.remove('opacity-100');
-        node3Container.classList.add('opacity-75');
-        node3Container.style.opacity = '0.75';
+        node3Container.classList.add('opacity-80');
+        node3Container.style.opacity = '0.8';
       }
       if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.add('hidden');
       if (pulseRing3) pulseRing3.classList.add('hidden');
+      if (lockBadge3) lockBadge3.classList.remove('hidden');
       if (checkBadge3) checkBadge3.classList.add('hidden');
 
       if (node3Target) {
@@ -728,19 +711,16 @@ document.addEventListener('DOMContentLoaded', () => {
         node3Target.setAttribute('data-lock-icon', '🔒');
       }
       if (btn3) {
-        btn3.className = 'node-btn w-[66px] h-[66px] rounded-full bg-surface-container-high text-outline flex items-center justify-center shadow-[0_5px_0_0_#bccbb9] active:translate-y-1 active:shadow-[0_1px_0_0_#bccbb9] transition-all cursor-pointer';
+        btn3.className = 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer';
         btn3.title = '3과: 잠김';
-        const iconSpan3 = btn3.querySelector('span');
-        if (iconSpan3) {
-          iconSpan3.className = 'material-symbols-outlined text-[28px]';
-          iconSpan3.textContent = 'lock';
-        }
+        const numSpan3 = btn3.querySelector('.node-stage-num');
+        if (numSpan3) numSpan3.textContent = '3';
       }
       if (card3) {
-        card3.className = 'mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none';
+        card3.className = 'mt-2.5 flex flex-col items-center bg-white/90 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/60 text-center pointer-events-none opacity-80';
       }
       if (badge3) {
-        badge3.innerHTML = '<span class="font-label-sm text-[10px] text-outline font-semibold">2과 완료 후 잠금 해제</span>';
+        badge3.innerHTML = '<span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">2과 완료 후</span>';
       }
     }
 
@@ -757,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prog3 >= 3) {
       if (nodeBossContainer) {
-        nodeBossContainer.classList.remove('opacity-75');
+        nodeBossContainer.classList.remove('opacity-75', 'opacity-80');
         nodeBossContainer.classList.add('opacity-100');
         nodeBossContainer.style.opacity = '1';
       }
@@ -779,10 +759,10 @@ document.addEventListener('DOMContentLoaded', () => {
           checkBadgeBoss.style.display = 'flex';
         }
         if (badgeBoss) {
-          badgeBoss.innerHTML = '<span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="font-label-sm text-[10px] text-primary font-bold ml-1">완료!</span>';
+          badgeBoss.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
         }
       } else {
-        if (bannerBoss) bannerBoss.classList.remove('hidden');
+        if (bannerBoss) bannerBoss.classList.add('hidden');
         if (targetBoss) {
           targetBoss.dataset.nodeType = 'active';
           targetBoss.removeAttribute('data-lock-msg');
@@ -798,7 +778,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (nodeBossContainer) {
-        nodeBossContainer.classList.add('opacity-75');
+        nodeBossContainer.classList.add('opacity-80');
       }
       if (bannerBoss) bannerBoss.classList.add('hidden');
       if (targetBoss) {
@@ -809,8 +789,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lockBadgeBoss) lockBadgeBoss.classList.remove('hidden');
       if (checkBadgeBoss) checkBadgeBoss.classList.add('hidden');
       if (badgeBoss) {
-        badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-outline font-semibold">3과 완료 후 잠금 해제</span>';
+        badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-slate-500 font-semibold">3과 완료 후 잠금 해제</span>';
       }
+    }
+
+    // 최신 활성 노드 위치에 고양이 캐릭터 아바타 마커 위치 동적 갱신
+    if (typeof updateCatMarkerPosition === 'function') {
+      updateCatMarkerPosition();
     }
 
     // 각 스테이지 노드 DOM에 category/level/tags 메타데이터 동기화
@@ -831,6 +816,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
 
+  // 고양이 캐릭터 아바타 바운스 위치 마커 동적 갱신 함수
+  function updateCatMarkerPosition() {
+    const marker = el('roadmap-cat-marker');
+    if (!marker) return;
+
+    const prog2 = window.nodeProgressMap['node-2'] || 0;
+    const prog3 = window.nodeProgressMap['node-3'] || 0;
+    const progBoss = window.nodeProgressMap['node-boss'] || 0;
+
+    let targetParent = el('node-2-target');
+    if (prog2 >= 3 && prog3 < 3) {
+      targetParent = el('node-3-target');
+    } else if (prog2 >= 3 && prog3 >= 3) {
+      targetParent = el('node-boss-target');
+    }
+
+    if (targetParent && marker.parentElement !== targetParent) {
+      targetParent.appendChild(marker);
+    }
+
+    // 마커 아바타 이미지 src를 상단 헤더 프로필과 동기화
+    const markerImg = el('cat-marker-img');
+    const headerImg = el('header-mascot-img');
+    if (markerImg && headerImg && headerImg.src) {
+      markerImg.src = headerImg.src;
+    }
+  }
+  window.updateCatMarkerPosition = updateCatMarkerPosition;
+
   function showLockedTooltip(targetBtn) {
     if (!lockedTooltip || !targetBtn) return;
     clearTimeout(lockedTooltipTimer); targetBtn.appendChild(lockedTooltip);
@@ -838,9 +852,41 @@ document.addEventListener('DOMContentLoaded', () => {
     lockedTooltipTimer = setTimeout(() => { lockedTooltip.classList.add('opacity-0', 'scale-95'); setTimeout(() => lockedTooltip.classList.add('hidden'), 200); }, 2400);
   }
 
+  // 보너스 선물 상자 모달 제어
+  function openBonusModal() {
+    const backdrop = el('bonus-modal-backdrop');
+    const card = el('bonus-modal-card');
+    if (!backdrop || !card) return;
+    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop.classList.add('opacity-100', 'pointer-events-auto');
+    card.classList.remove('opacity-0', 'scale-95');
+    card.classList.add('opacity-100', 'scale-100');
+  }
+  window.openBonusModal = openBonusModal;
+
+  function closeBonusModal() {
+    const backdrop = el('bonus-modal-backdrop');
+    const card = el('bonus-modal-card');
+    if (!backdrop || !card) return;
+    backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    card.classList.remove('opacity-100', 'scale-100');
+    card.classList.add('opacity-0', 'scale-95');
+  }
+  window.closeBonusModal = closeBonusModal;
+
   document.querySelectorAll('.roadmap-node').forEach((node) => {
     const nid = node.dataset.nodeId;
     node.addEventListener('click', (e) => {
+      if (nid === 'node-bonus') {
+        openBonusModal();
+        return;
+      }
+      if (nid === 'node-review') {
+        const tabReview = el('tab-review');
+        if (tabReview) tabReview.click();
+        return;
+      }
       if (nid === 'node-3') {
         const btn3 = el('node-3-btn') || node;
         if ((window.nodeProgressMap['node-2'] || 0) < 3) {
@@ -862,6 +908,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   on('node-1-btn', 'click', () => window.openLessonModal('node-1'));
   on('node-2-btn', 'click', () => window.openLessonModal('node-2'));
+  on('node-bonus-btn', 'click', (e) => {
+    e.stopPropagation();
+    openBonusModal();
+  });
+  on('node-review-btn', 'click', (e) => {
+    e.stopPropagation();
+    const tabReview = el('tab-review');
+    if (tabReview) tabReview.click();
+  });
+
+  const bonusClaimBtn = el('bonus-claim-btn');
+  if (bonusClaimBtn) {
+    bonusClaimBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let curGems = 120;
+      try {
+        const saved = localStorage.getItem('vocadash_gems');
+        if (saved !== null) curGems = parseInt(saved, 10) || 120;
+      } catch (err) {}
+      curGems += 15;
+      try {
+        localStorage.setItem('vocadash_gems', curGems.toString());
+      } catch (err) {}
+      const gemsCountEl = el('header-gems-count');
+      if (gemsCountEl) gemsCountEl.textContent = curGems;
+      closeBonusModal();
+      if (typeof window.showToast === 'function') {
+        window.showToast('💎 보너스 다이아몬드 +15 획득!');
+      }
+    });
+  }
+  const bonusBackdrop = el('bonus-modal-backdrop');
+  if (bonusBackdrop) {
+    bonusBackdrop.addEventListener('click', (e) => {
+      if (e.target === bonusBackdrop) closeBonusModal();
+    });
+  }
   const node3Btn = el('node-3-btn');
   if (node3Btn) {
     node3Btn.addEventListener('click', (e) => {
@@ -1150,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=26';
+    const v = '?v=30';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1831,7 +1914,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=26' : 'assets/profiles/profile-spanish.webp?v=26';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=30' : 'assets/profiles/profile-spanish.webp?v=30';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2879,7 +2962,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=26`;
+    return `assets/profiles/${file}?v=30`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -2945,6 +3028,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (headerMascotImg) {
       headerMascotImg.src = src;
       headerMascotImg.className = 'w-full h-full object-cover rounded-full';
+    }
+
+    // 1-B. 로드맵 최신 활성 노드 바운스 고양이 마커
+    const catMarkerImg = document.getElementById('cat-marker-img');
+    if (catMarkerImg) {
+      catMarkerImg.src = src;
     }
 
     // 2. 모달 내 메인 프리뷰
@@ -3389,7 +3478,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=26';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=30';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3431,7 +3520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=26';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=30';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

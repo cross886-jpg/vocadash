@@ -478,7 +478,7 @@
       if (window.courseData && window.courseData[activeLang]) {
         flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
       } else {
-        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=26`;
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=30`;
       }
     }
 

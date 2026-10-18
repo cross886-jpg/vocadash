@@ -278,7 +278,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
 
   <!-- Custom CSS & Keyframe Animations -->
-  <link rel="stylesheet" href="css/style.css?v=26">
+  <link rel="stylesheet" href="css/style.css?v=30">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -297,7 +297,7 @@
       <div class="flex flex-col items-center text-center -mt-8">
         <div class="relative w-36 h-36 flex items-center justify-center mb-5">
           <div class="absolute inset-0 bg-emerald-100/70 rounded-full blur-2xl transform scale-110 animate-pulse"></div>
-          <img id="splash-mascot-img" alt="VocaDash Cat Mascot" class="relative z-10 w-32 h-32 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)] transition-transform duration-300 transform hover:scale-105" src="assets/characters/es-idle.webp?v=26">
+          <img id="splash-mascot-img" alt="VocaDash Cat Mascot" class="relative z-10 w-32 h-32 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)] transition-transform duration-300 transform hover:scale-105" src="assets/characters/es-idle.webp?v=30">
         </div>
         <h1 class="font-headline-lg text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none flex items-center justify-center">Voca<span class="text-[#22c55e]">Dash</span></h1>
         <p class="font-body-md text-[15px] font-semibold text-slate-500 mt-2.5 tracking-tight">
@@ -366,67 +366,8 @@
             <!-- 상단 원형 프로필 고양이 아바타 버튼 (30x30px, 클릭 시 프로필 선택 모달 열기) -->
             <button id="btn-header-profile" type="button" class="flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 transition-all rounded-full border-2 border-emerald-500/30 hover:border-emerald-500 shadow-xs focus:outline-none select-none" title="프로필 고양이 변경">
               <div class="w-[30px] h-[30px] rounded-full overflow-hidden flex items-center justify-center bg-slate-50">
-                <img id="header-mascot-img" alt="프로필 고양이" class="w-full h-full object-cover rounded-full crisp-avatar" src="assets/profiles/profile-spanish.webp?v=26">
+                <img id="header-mascot-img" alt="프로필 고양이" class="w-full h-full object-cover rounded-full crisp-avatar" src="assets/profiles/profile-spanish.webp?v=30">
               </div>
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. 교재/코스 선택 전용 드롭다운 메뉴 (relative z-40으로 스택 컨텍스트 확보) -->
-        <div class="w-full relative z-40">
-          <button id="course-selector-btn" class="w-full py-2 px-3.5 rounded-2xl font-label-md text-xs bg-white text-on-surface border border-slate-200 flex items-center justify-between shadow-xs active:translate-y-0.5 transition-all cursor-pointer hover:border-emerald-500/50" type="button" title="교재/코스 선택" aria-expanded="false" aria-haspopup="true">
-            <div class="flex items-center gap-1.5 truncate pointer-events-none">
-              <span id="dropdown-course-icon" class="text-sm">🌱</span>
-              <span id="dropdown-course-title" class="font-bold truncate text-on-surface text-[13px]">기초 회화</span>
-            </div>
-            <span id="dropdown-chevron-icon" class="material-symbols-outlined text-[18px] text-slate-500 flex-shrink-0 pointer-events-none transition-transform duration-200">expand_more</span>
-          </button>
-
-          <!-- Course Dropdown Popover Menu (z-50, 불투명 bg-white, shadow-xl) -->
-          <div id="course-dropdown-menu" class="hidden absolute top-[calc(100%+6px)] left-0 right-0 z-50 bg-white border border-slate-200/90 rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 transition-all duration-200 opacity-0 -translate-y-2 pointer-events-none" role="menu">
-            <!-- 1) 🌱 기초 회화 -->
-            <button type="button" data-course-id="basic" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/60 border border-emerald-400 text-emerald-950 font-semibold cursor-pointer transition-all" role="menuitem">
-              <div class="flex items-center gap-2.5 pointer-events-none">
-                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs border border-slate-100">🌱</span>
-                <div class="flex flex-col text-left">
-                  <span class="font-bold text-xs text-emerald-950 item-title">기초 회화</span>
-                  <span class="text-[10px] text-emerald-800/80">인사, 감사, 숫자 등 매일 쓰는 첫걸음</span>
-                </div>
-              </div>
-              <span class="item-check material-symbols-outlined text-[18px] text-emerald-600 font-bold">check</span>
-            </button>
-            <!-- 2) ✈️ 여행 스페인어 -->
-            <button type="button" data-course-id="travel" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-slate-700 hover:bg-slate-50 cursor-pointer transition-all" role="menuitem">
-              <div class="flex items-center gap-2.5 pointer-events-none">
-                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs border border-slate-100">✈️</span>
-                <div class="flex flex-col text-left">
-                  <span class="font-bold text-xs text-slate-700 item-title">여행 스페인어</span>
-                  <span class="text-[10px] text-slate-500">공항, 숙소, 식당 필수 회화</span>
-                </div>
-              </div>
-              <span class="item-check hidden material-symbols-outlined text-[18px] text-emerald-600 font-bold">check</span>
-            </button>
-            <!-- 3) 🎓 DELE 준비과정 -->
-            <button type="button" data-course-id="dele" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-slate-700 hover:bg-slate-50 cursor-pointer transition-all" role="menuitem">
-              <div class="flex items-center gap-2.5 pointer-events-none">
-                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs border border-slate-100">🎓</span>
-                <div class="flex flex-col text-left">
-                  <span class="font-bold text-xs text-slate-700 item-title">DELE 준비과정</span>
-                  <span class="text-[10px] text-slate-500">A1~B2 등급별 어휘 및 실전 대비</span>
-                </div>
-              </div>
-              <span class="item-check hidden material-symbols-outlined text-[18px] text-emerald-600 font-bold">check</span>
-            </button>
-            <!-- 4) 💼 비즈니스 스페인어 -->
-            <button type="button" data-course-id="business" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-slate-700 hover:bg-slate-50 cursor-pointer transition-all" role="menuitem">
-              <div class="flex items-center gap-2.5 pointer-events-none">
-                <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs border border-slate-100">💼</span>
-                <div class="flex flex-col text-left">
-                  <span class="font-bold text-xs text-slate-700 item-title">비즈니스 스페인어</span>
-                  <span class="text-[10px] text-slate-500">오피스 일상, 미팅, 이메일</span>
-                </div>
-              </div>
-              <span class="item-check hidden material-symbols-outlined text-[18px] text-emerald-600 font-bold">check</span>
             </button>
           </div>
         </div>
@@ -435,132 +376,162 @@
     </header>
 
     <!-- ================================================= -->
-    <!-- 2. MAIN ROADMAP PATH & LESSON NODES               -->
+    <!-- 2. MAIN ROADMAP PATH & LESSON NODES (CASUAL RUNNING GAME MAP) -->
     <!-- ================================================= -->
-    <main id="roadmap-screen" class="flex flex-col relative w-full pt-[104px] pb-28 px-4 bg-surface flex-grow">
-      <div class="relative w-full py-2 select-none min-h-[760px]">
+    <main id="roadmap-screen" class="flex flex-col relative w-full pt-[54px] pb-28 px-4 bg-surface flex-grow">
+      <div class="relative w-full py-4 select-none min-h-[960px]">
 
-        <!-- Curved Path SVG Layer -->
-        <svg id="roadmap-svg-path" class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 760">
-          <path d="M 120 60 C 120 145, 260 135, 260 215 C 260 295, 120 300, 120 380 C 120 460, 190 470, 190 550" stroke="#dae2fd" stroke-linecap="round" stroke-width="12"></path>
-          <path d="M 120 60 C 120 145, 260 135, 260 215 C 260 295, 120 300, 120 380 C 120 460, 190 470, 190 550" stroke="#39b8fd" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path>
+        <!-- Curved Running Track SVG Layer -->
+        <svg id="roadmap-svg-path" class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 960">
+          <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#dae2fd" stroke-linecap="round" stroke-width="14"></path>
+          <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#38bdf8" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path>
         </svg>
 
-        <!-- Node 1: Completed (1과: 기내 기본 표현) -->
-        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-14" style="width: 200px;" data-node-id="node-1">
+        <!-- Node 1: Completed Stage 1 (1과: 인사/안부) - 3D Stage Type -->
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-5 mb-11" style="width: 200px;" data-node-id="node-1" data-node-type="stage">
           <div class="relative group node-target cursor-pointer" data-node-type="completed">
-            <button id="node-1-btn" class="node-btn w-[72px] h-[72px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_6px_0_0_#15803d,0_12px_20px_-2px_rgba(34,197,94,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#15803d] transition-all cursor-pointer" type="button" title="1과: 기내 기본 표현">
-              <span class="material-symbols-outlined text-[34px]" style="font-variation-settings: 'FILL' 1;">check</span>
+            <button id="node-1-btn" class="node-btn btn-3d w-[72px] h-[72px] rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-emerald-700 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="1과: 인사/안부">
+              <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs">1</span>
             </button>
-            <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface pointer-events-none">
-              <span class="material-symbols-outlined text-[16px] font-black">check</span>
+            <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[15px] font-black">check</span>
             </div>
           </div>
-          <div class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none">
-            <span id="node-1-title" class="font-label-md text-xs text-on-surface font-extrabold">1과: 인사/안부</span>
+          <div class="mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none">
+            <span id="node-1-title" class="font-extrabold text-xs text-slate-800">1과: 인사/안부</span>
             <div class="flex items-center gap-1 mt-0.5">
-              <span class="text-xs">⭐</span><span class="text-xs">⭐</span><span class="text-xs">⭐</span>
-              <span class="font-label-sm text-[10px] text-primary font-bold ml-1">완료!</span>
+              <span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>
+              <span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>
             </div>
           </div>
         </div>
 
-        <!-- Node 2: Active Target (2과: 감사/사과) with START ↓ Indicator -->
-        <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-4 mb-16" style="width: 220px;" data-node-id="node-2" id="node-2-container">
-          <!-- START ↓ Banner -->
-          <div id="node-2-start-banner" class="relative mb-3 animate-bounce pointer-events-none">
-            <div class="bg-secondary text-on-secondary px-3.5 py-1 rounded-full font-label-md text-xs font-extrabold shadow-[0_3px_0_0_#004666] flex items-center gap-1">
-              <span>START</span>
-              <span class="material-symbols-outlined text-[15px]">arrow_downward</span>
-            </div>
-            <div class="w-2.5 h-2.5 bg-secondary rotate-45 mx-auto -mt-1.5 shadow-[2px_2px_0_0_#004666]"></div>
-          </div>
+        <!-- Node 2: Active Target Stage 2 (2과: 감사/사과) - With Bouncing Cat Marker -->
+        <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-5 mb-11" style="width: 210px;" data-node-id="node-2" data-node-type="stage" id="node-2-container">
+          <div id="node-2-start-banner" class="hidden pointer-events-none"></div>
 
-          <!-- Pulsing Rings & Action Button -->
+          <!-- Pulsing Rings & 3D Action Button & Cat Position Marker -->
           <div id="node-2-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="active">
-            <span id="node-2-ping" class="absolute w-[98px] h-[98px] rounded-full bg-secondary-container/30 animate-ping pointer-events-none"></span>
-            <span id="node-2-pulse-ring" class="absolute w-[88px] h-[88px] rounded-full bg-secondary-fixed/60 pointer-events-none"></span>
-            <button id="node-2-btn" class="node-btn relative w-[76px] h-[76px] rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-[0_7px_0_0_#0284c7,0_16px_28px_rgba(2,132,199,0.35)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#0284c7] transition-all cursor-pointer" type="button" title="2과: 감사/사과">
-              <span class="material-symbols-outlined text-[36px] animate-wiggle" style="font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+            <!-- 고양이 캐릭터 통통 바운스 위치 마커 (Cookie Run / Duolingo 스타일) -->
+            <div id="roadmap-cat-marker" class="absolute -top-16 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center pointer-events-none animate-cat-bounce">
+              <div class="relative p-1 bg-white rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.18)] border-2 border-emerald-500 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-emerald-50 flex items-center justify-center">
+                  <img id="cat-marker-img" alt="내 위치 고양이" class="w-full h-full object-cover rounded-full crisp-avatar" src="assets/profiles/profile-spanish.webp?v=30">
+                </div>
+                <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-[9px] font-black rounded-full shadow-xs uppercase tracking-tight leading-none">START</span>
+              </div>
+              <div class="w-2.5 h-2.5 bg-white border-r-2 border-b-2 border-emerald-500 rotate-45 -mt-1 shadow-xs"></div>
+            </div>
+
+            <span id="node-2-ping" class="absolute w-[98px] h-[98px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
+            <span id="node-2-pulse-ring" class="absolute w-[88px] h-[88px] rounded-full bg-sky-200/50 pointer-events-none"></span>
+            <button id="node-2-btn" class="node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-sky-700 shadow-lg active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-sky-300/50" type="button" title="2과: 감사/사과">
+              <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs">2</span>
             </button>
-            <div id="node-2-check-badge" class="hidden absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface pointer-events-none">
-              <span class="material-symbols-outlined text-[16px] font-black">check</span>
+            <div id="node-2-check-badge" class="hidden absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[15px] font-black">check</span>
             </div>
           </div>
 
-          <!-- Node 2 Label -->
-          <div id="node-2-label-card" class="mt-3.5 flex flex-col items-center bg-surface-container-lowest px-4 py-2 rounded-2xl shadow-[0_4px_14px_rgba(0,101,145,0.1)] text-center ring-2 ring-secondary-container/50 pointer-events-none">
-            <span id="node-2-title" class="font-label-md text-xs text-on-surface font-extrabold">2과: 감사/사과</span>
+          <!-- Node 2 Label Card (하단 별 3개 영역) -->
+          <div id="node-2-label-card" class="mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100">
+            <span id="node-2-title" class="font-extrabold text-xs text-slate-900">2과: 감사/사과</span>
             <div id="node-2-label-badge" class="flex items-center gap-1 mt-0.5">
-              <span class="font-label-sm text-[11px] text-secondary font-black">0/3 레슨 진행중</span>
+              <span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span>
+              <span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">0/3 레슨 진행중</span>
             </div>
           </div>
         </div>
 
-        <!-- Node 3: Locked (3과: 숫자/시간) -->
-        <div class="roadmap-node relative z-10 flex flex-col items-center ml-4 mb-16 opacity-75" style="width: 190px;" data-node-id="node-3" id="node-3-container">
-          <!-- START ↓ Banner (Active 시 노출) -->
-          <div id="node-3-start-banner" class="hidden relative mb-3 animate-bounce pointer-events-none">
-            <div class="bg-secondary text-on-secondary px-3.5 py-1 rounded-full font-label-md text-xs font-extrabold shadow-[0_3px_0_0_#004666] flex items-center gap-1">
-              <span>START</span>
-              <span class="material-symbols-outlined text-[15px]">arrow_downward</span>
-            </div>
-            <div class="w-2.5 h-2.5 bg-secondary rotate-45 mx-auto -mt-1.5 shadow-[2px_2px_0_0_#004666]"></div>
-          </div>
-
-          <div id="node-3-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="locked" data-lock-msg="이전 레슨을 먼저 완료해야 열려요!" data-lock-icon="🔒">
-            <span id="node-3-ping" class="hidden absolute w-[98px] h-[98px] rounded-full bg-secondary-container/30 animate-ping pointer-events-none"></span>
-            <span id="node-3-pulse-ring" class="hidden absolute w-[88px] h-[88px] rounded-full bg-secondary-fixed/60 pointer-events-none"></span>
-            <button id="node-3-btn" class="node-btn w-[66px] h-[66px] rounded-full bg-surface-container-high text-outline flex items-center justify-center shadow-[0_5px_0_0_#bccbb9] active:translate-y-1 active:shadow-[0_1px_0_0_#bccbb9] transition-all cursor-pointer" type="button" title="3과: 잠김">
-              <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+        <!-- Node Bonus: 황금 선물상자 (🎁) 보너스 노드 -->
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-7 mb-11" style="width: 170px;" data-node-id="node-bonus" data-node-type="bonus" id="node-bonus-container">
+          <div id="node-bonus-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="bonus">
+            <button id="node-bonus-btn" class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-white flex items-center justify-center border-b-4 border-amber-700 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-200/60" type="button" title="보너스 선물 상자">
+              <span class="text-3xl select-none leading-none drop-shadow-sm animate-wiggle">🎁</span>
             </button>
-            <div id="node-3-check-badge" class="hidden absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface pointer-events-none">
-              <span class="material-symbols-outlined text-[16px] font-black">check</span>
-            </div>
           </div>
-          <div id="node-3-label-card" class="mt-3 flex flex-col items-center bg-surface-container-lowest px-3.5 py-1.5 rounded-2xl shadow-[0_3px_10px_rgba(0,0,0,0.05)] text-center border border-outline-variant/30 pointer-events-none">
-            <span id="node-3-title" class="font-label-md text-xs text-on-surface font-extrabold">3과: 숫자/시간</span>
-            <div id="node-3-label-badge" class="flex items-center gap-1 mt-0.5">
-              <span class="font-label-sm text-[10px] text-outline font-semibold">2과 완료 후 잠금 해제</span>
+          <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-amber-200 text-center pointer-events-none">
+            <span class="font-extrabold text-xs text-amber-950">보너스 선물</span>
+            <div class="flex items-center gap-1 mt-0.5">
+              <span class="text-xs">🎁</span>
+              <span class="font-label-sm text-[10px] text-amber-600 font-bold">깜짝 선물</span>
             </div>
           </div>
         </div>
 
-        <!-- Final Boss Node: Exam Gate (보스전) -->
-        <div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6" style="width: 290px;" data-node-id="node-boss" id="node-boss-container">
-          <!-- START ↓ Banner (Active 시 노출) -->
-          <div id="node-boss-start-banner" class="hidden relative mb-3 animate-bounce pointer-events-none">
-            <div class="bg-amber-500 text-white px-3.5 py-1 rounded-full font-label-md text-xs font-extrabold shadow-[0_3px_0_0_#b45309] flex items-center gap-1">
-              <span>START</span>
-              <span class="material-symbols-outlined text-[15px]">arrow_downward</span>
-            </div>
-            <div class="w-2.5 h-2.5 bg-amber-500 rotate-45 mx-auto -mt-1.5 shadow-[2px_2px_0_0_#b45309]"></div>
-          </div>
-
-          <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full bg-tertiary-fixed text-on-tertiary-container shadow-[0_2px_0_0_#ffb690] pointer-events-none">
-            <span class="text-xs">🔥</span>
-            <span class="font-label-sm text-[11px] font-extrabold uppercase tracking-wide">FINAL BASIC EXAM</span>
-          </div>
-          <div id="node-boss-target" class="relative flex items-center justify-center node-target cursor-pointer" data-node-type="locked" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
-            <div id="node-boss-glow" class="absolute w-[104px] h-[104px] rounded-full bg-tertiary-fixed blur-md opacity-80 animate-pulse pointer-events-none"></div>
-            <button id="node-boss-btn" class="node-btn relative w-[86px] h-[86px] rounded-full text-white flex items-center justify-center shadow-[0_8px_0_0_#b45309,0_18px_32px_rgba(245,158,11,0.4)] active:translate-y-1.5 active:shadow-[0_1px_0_0_#b45309] transition-all cursor-pointer border-2 border-yellow-200" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 60%, #fde68a 100%);" type="button" title="보스전: 잠김">
-              <span class="text-[42px] leading-none select-none drop-shadow-sm">🏆</span>
-              <div id="node-boss-lock-badge" class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm pointer-events-none">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
+        <!-- Node Review: 주황색 응급/번개 (🩹 / ⚡️) 약점 복습 노드 -->
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-auto mr-7 mb-11" style="width: 170px;" data-node-id="node-review" data-node-type="review" id="node-review-container">
+          <div id="node-review-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="review">
+            <button id="node-review-btn" class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white flex items-center justify-center border-b-4 border-orange-800 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-200/60" type="button" title="약점 복습 드릴">
+              <div class="relative flex items-center justify-center">
+                <span class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
+                <span class="absolute -bottom-1 -right-1 text-sm">🩹</span>
               </div>
             </button>
-            <div id="node-boss-check-badge" class="hidden absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-surface pointer-events-none">
+          </div>
+          <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-orange-200 text-center pointer-events-none">
+            <span class="font-extrabold text-xs text-orange-950">약점 복습</span>
+            <div class="flex items-center gap-1 mt-0.5">
+              <span class="text-xs">⚡️</span>
+              <span class="font-label-sm text-[10px] text-orange-600 font-bold">오답 탈출</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 3: Stage 3 (3과: 숫자/시간) - 3D Stage Type -->
+        <div class="roadmap-node relative z-10 flex flex-col items-center ml-5 mb-14 opacity-80" style="width: 190px;" data-node-id="node-3" data-node-type="stage" id="node-3-container">
+          <div id="node-3-start-banner" class="hidden pointer-events-none"></div>
+
+          <div id="node-3-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="locked" data-lock-msg="이전 레슨을 먼저 완료해야 열려요!" data-lock-icon="🔒">
+            <span id="node-3-ping" class="hidden absolute w-[98px] h-[98px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
+            <span id="node-3-pulse-ring" class="hidden absolute w-[88px] h-[88px] rounded-full bg-sky-200/50 pointer-events-none"></span>
+            <button id="node-3-btn" class="node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="3과: 잠김">
+              <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs">3</span>
+            </button>
+            <div id="node-3-lock-badge" class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+            </div>
+            <div id="node-3-check-badge" class="hidden absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[15px] font-black">check</span>
+            </div>
+          </div>
+          <div id="node-3-label-card" class="mt-2.5 flex flex-col items-center bg-white/90 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/60 text-center pointer-events-none opacity-80">
+            <span id="node-3-title" class="font-bold text-xs text-slate-600">3과: 숫자/시간</span>
+            <div id="node-3-label-badge" class="flex items-center gap-1 mt-0.5">
+              <span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span>
+              <span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">2과 완료 후</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node Boss: 왕관/깃발(👑) 대형 보스 노드 -->
+        <div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6" style="width: 290px;" data-node-id="node-boss" data-node-type="boss" id="node-boss-container">
+          <div id="node-boss-start-banner" class="hidden pointer-events-none"></div>
+
+          <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full bg-amber-500 text-white shadow-[0_2px_0_0_#b45309] pointer-events-none font-black text-[11px] uppercase tracking-wide">
+            <span class="text-xs">🔥</span>
+            <span>FINAL BOSS EXAM</span>
+          </div>
+          <div id="node-boss-target" class="relative flex items-center justify-center node-target cursor-pointer" data-node-type="locked" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
+            <div id="node-boss-glow" class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
+            <button id="node-boss-btn" class="node-btn btn-3d relative w-[92px] h-[92px] rounded-full bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white flex items-center justify-center border-b-[6px] border-amber-800 shadow-xl active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/70" type="button" title="보스전: 잠김">
+              <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
+              <div id="node-boss-lock-badge" class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+              </div>
+            </button>
+            <div id="node-boss-check-badge" class="hidden absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none">
               <span class="material-symbols-outlined text-[16px] font-black">check</span>
             </div>
           </div>
-          <div id="node-boss-label-card" class="mt-4 flex flex-col items-center bg-surface-container-lowest px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.06)] text-center ring-2 ring-tertiary-fixed pointer-events-none">
-            <div class="flex items-center gap-1">
+          <div id="node-boss-label-card" class="mt-3.5 flex flex-col items-center bg-white/95 px-4 py-2.5 rounded-2xl shadow-md border-2 border-amber-300 text-center pointer-events-none">
+            <div class="flex items-center gap-1.5">
               <span class="text-base">👑</span>
-              <span id="node-boss-title" class="font-headline-sm text-sm text-on-surface font-black">4과: 일상 기초 (보스전)</span>
+              <span id="node-boss-title" class="font-headline-sm text-sm text-slate-900 font-black">4과: 일상 기초 (보스전)</span>
             </div>
-            <span id="node-boss-desc" class="font-label-sm text-[11px] text-tertiary font-bold mt-0.5">기초 회화 총정리 &amp; 특별 보상</span>
+            <span id="node-boss-desc" class="font-label-sm text-[11px] text-amber-600 font-bold mt-0.5">기초 회화 총정리 &amp; 특별 보상</span>
             <div id="node-boss-label-badge" class="flex items-center gap-1 mt-1">
-              <span class="font-label-sm text-[10px] text-outline font-semibold">1~3과 완료 후 잠금 해제</span>
+              <span class="font-label-sm text-[10px] text-slate-500 font-semibold">1~3과 완료 후 잠금 해제</span>
             </div>
           </div>
         </div>
@@ -630,7 +601,7 @@
                 <div id="review-cat-banner-tile" role="button" tabindex="0" title="1분 스피드 복습 시작" class="relative shrink-0 flex flex-col items-center justify-center pt-1 pb-1 cursor-pointer group active:scale-95 transition-transform duration-150 select-none">
                   <div class="relative w-[84px] h-[84px] flex items-center justify-center">
                     <div class="absolute inset-0 bg-primary-container/20 rounded-full blur-md transform scale-95 group-hover:scale-110 transition-transform"></div>
-                    <img alt="Determination Mascot Black Cat" class="relative z-10 w-[80px] h-[80px] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition-transform duration-300 group-hover:scale-105" src="assets/characters/es-run.webp?v=26">
+                    <img alt="Determination Mascot Black Cat" class="relative z-10 w-[80px] h-[80px] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition-transform duration-300 group-hover:scale-105" src="assets/characters/es-run.webp?v=30">
                   </div>
                   <div id="review-cat-heart-badge" class="mt-1 px-2 py-0.5 rounded-full bg-surface-container-lowest shadow-sm flex items-center gap-1 border border-outline-variant/30 group-hover:border-error/40 group-active:scale-95 transition-all cursor-pointer">
                     <span class="text-[11px] leading-none select-none">❤️</span>
@@ -764,7 +735,7 @@
             </div>
             <!-- Cat Mascot Sticker Badge -->
             <div class="relative shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm bg-emerald-50/50 flex items-center justify-center border border-emerald-100/60">
-              <img alt="Cute scholarly black cat mascot reading book" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-study.webp?v=26" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-3xl select-none\'>📚</div>';" />
+              <img alt="Cute scholarly black cat mascot reading book" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-study.webp?v=30" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-3xl select-none\'>📚</div>';" />
             </div>
           </div>
         </section>
@@ -1087,7 +1058,7 @@
           <div id="settings-streak-banner" class="mt-2 mb-2 bg-surface-container rounded-2xl p-4 flex items-center justify-between shadow-xs relative overflow-hidden">
             <div class="flex items-center gap-3 z-10">
               <div id="settings-streak-avatar-container" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-sm bg-surface-container-lowest flex items-center justify-center ring-2 ring-primary/30 cursor-pointer hover:scale-105 active:scale-95 transition-transform" title="프로필 변경">
-                <img id="settings-streak-avatar-img" alt="프로필 고양이 아바타" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp?v=26"/>
+                <img id="settings-streak-avatar-img" alt="프로필 고양이 아바타" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp?v=30"/>
               </div>
               <div class="flex flex-col">
                 <div class="flex items-center gap-1.5">
@@ -1120,7 +1091,7 @@
               <!-- 1. 스페인 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-spanish.webp" data-avatar-name="스페인 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all">
-                  <img src="assets/profiles/profile-spanish.webp?v=26" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-spanish.webp?v=30" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1131,7 +1102,7 @@
               <!-- 2. 잉글리시 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-english.webp" data-avatar-name="잉글리시 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-english.webp?v=26" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-english.webp?v=30" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1142,7 +1113,7 @@
               <!-- 3. 아티스트 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-artist.webp" data-avatar-name="아티스트 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-artist.webp?v=26" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-artist.webp?v=30" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1153,7 +1124,7 @@
               <!-- 4. 탐험가 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-explorer.webp" data-avatar-name="탐험가 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-explorer.webp?v=26" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-explorer.webp?v=30" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1579,7 +1550,7 @@
               <div class="relative w-[100px] h-[100px] rounded-full p-1 bg-white shadow-lg shadow-emerald-500/10 ring-4 ring-emerald-50 flex items-center justify-center">
                 <div class="w-full h-full rounded-full overflow-hidden bg-slate-50 flex items-center justify-center">
                   <img alt="VocaDash Scholar Mascot" class="w-full h-full object-cover" 
-                    src="assets/characters/es-study.webp?v=26"
+                    src="assets/characters/es-study.webp?v=30"
                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-3xl select-none\'>🐱</div>';"/>
                 </div>
               </div>
@@ -1711,7 +1682,7 @@
               <div class="badge-dot w-2 h-2 rounded-full bg-transparent transition-colors"></div>
             </div>
             <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/en-study.webp?v=26" onerror="this.onerror=null; this.src='assets/characters/en-study.webp?v=26';">
+              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/en-study.webp?v=30" onerror="this.onerror=null; this.src='assets/characters/en-study.webp?v=30';">
               <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">🇺🇸</div>
             </div>
             <span class="card-lang-name font-bold text-sm text-slate-700 tracking-tight transition-colors">영어</span>
@@ -1724,7 +1695,7 @@
               <div class="badge-dot w-2 h-2 rounded-full bg-white transition-colors"></div>
             </div>
             <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/es-study.webp?v=26">
+              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/es-study.webp?v=30">
               <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">🇪🇸</div>
             </div>
             <span class="card-lang-name font-bold text-sm text-[#15803d] tracking-tight transition-colors">스페인어</span>
@@ -1752,7 +1723,7 @@
         <div class="flex flex-col items-center text-center shrink-0">
           <div class="relative inline-block">
             <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-red-100 shadow-sm bg-white flex items-center justify-center">
-              <img alt="2D Cute Black Kitten Mascot" class="w-full h-full object-cover" src="assets/characters/es-fever.webp?v=26" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-amber-100 text-2xl select-none\'>🐱</div>';" />
+              <img alt="2D Cute Black Kitten Mascot" class="w-full h-full object-cover" src="assets/characters/es-fever.webp?v=30" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-amber-100 text-2xl select-none\'>🐱</div>';" />
             </div>
             <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm border border-red-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-[#FF9600] text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
@@ -1834,7 +1805,7 @@
         <div class="flex flex-col items-center justify-center mb-3.5">
           <div class="relative inline-block">
             <div id="current-avatar-container" class="w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-[#22c55e] p-0.5 bg-white shadow-md relative flex items-center justify-center">
-              <img id="current-avatar-img" alt="선택된 프로필 고양이" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="assets/profiles/profile-spanish.webp?v=26" />
+              <img id="current-avatar-img" alt="선택된 프로필 고양이" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="assets/profiles/profile-spanish.webp?v=30" />
             </div>
             <div class="absolute bottom-0 right-0 w-7 h-7 bg-[#22c55e] text-white rounded-full flex items-center justify-center border-2 border-white shadow">
               <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">pets</span>
@@ -1846,9 +1817,9 @@
         <div class="mb-4">
           <div class="flex items-center justify-between gap-2">
             <!-- 1. 스페인 냥이 (오렌지) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spanish" data-avatar-name="스페인 냥이" data-avatar-file="profile-spanish.webp" data-avatar-src="assets/profiles/profile-spanish.webp?v=26" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spanish" data-avatar-name="스페인 냥이" data-avatar-file="profile-spanish.webp" data-avatar-src="assets/profiles/profile-spanish.webp?v=30" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs">
-                <img src="assets/profiles/profile-spanish.webp?v=26" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-spanish.webp?v=30" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -1857,9 +1828,9 @@
             </button>
 
             <!-- 2. 잉글리시 냥이 (하늘색) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="english" data-avatar-name="잉글리시 냥이" data-avatar-file="profile-english.webp" data-avatar-src="assets/profiles/profile-english.webp?v=26" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="english" data-avatar-name="잉글리시 냥이" data-avatar-file="profile-english.webp" data-avatar-src="assets/profiles/profile-english.webp?v=30" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-english.webp?v=26" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-english.webp?v=30" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -1868,9 +1839,9 @@
             </button>
 
             <!-- 3. 아티스트 냥이 (핑크) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="artist" data-avatar-name="아티스트 냥이" data-avatar-file="profile-artist.webp" data-avatar-src="assets/profiles/profile-artist.webp?v=26" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="artist" data-avatar-name="아티스트 냥이" data-avatar-file="profile-artist.webp" data-avatar-src="assets/profiles/profile-artist.webp?v=30" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-artist.webp?v=26" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-artist.webp?v=30" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -1879,9 +1850,9 @@
             </button>
 
             <!-- 4. 탐험가 냥이 (민트) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="explorer" data-avatar-name="탐험가 냥이" data-avatar-file="profile-explorer.webp" data-avatar-src="assets/profiles/profile-explorer.webp?v=26" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="explorer" data-avatar-name="탐험가 냥이" data-avatar-file="profile-explorer.webp" data-avatar-src="assets/profiles/profile-explorer.webp?v=30" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-explorer.webp?v=26" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-explorer.webp?v=30" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -2195,7 +2166,7 @@
           <!-- 3. Cheering Mascot Micro-Interaction -->
           <div class="w-full flex items-center justify-center gap-2.5 px-3 py-1">
             <div class="w-[30px] h-[30px] rounded-full overflow-hidden ring-2 ring-[#22c55e]/30 shadow-xs flex-shrink-0 bg-[#a5b4fc]">
-              <img id="flashcard-mascot-img" alt="마스코트 고양이" class="w-full h-full object-cover" src="assets/characters/es-study.webp?v=26" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-base select-none\'>🐱</div>';" />
+              <img id="flashcard-mascot-img" alt="마스코트 고양이" class="w-full h-full object-cover" src="assets/characters/es-study.webp?v=30" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-base select-none\'>🐱</div>';" />
             </div>
             <div class="bg-emerald-50/90 border border-emerald-200/70 text-emerald-800 text-[12px] font-medium px-3.5 py-1.5 rounded-full shadow-xs flex items-center gap-1">
               <span id="flashcard-mascot-msg">잘하고 있어요! 4개 남았어요 🐾</span>
@@ -2391,7 +2362,7 @@
             <!-- Mascot Container Floating over Header -->
             <div class="relative -mt-16 flex items-center justify-center">
               <div id="result-mascot-aura" class="absolute w-36 h-36 bg-tertiary-container/30 rounded-full blur-xl -z-10 animate-pulse"></div>
-              <img id="result-mascot-img" alt="VocaDash celebrating mascot" class="w-[124px] h-[124px] rounded-2xl object-cover shadow-lg transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-victory.webp?v=26">
+              <img id="result-mascot-img" alt="VocaDash celebrating mascot" class="w-[124px] h-[124px] rounded-2xl object-cover shadow-lg transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-victory.webp?v=30">
               <div id="result-mascot-badge" class="absolute -bottom-2 -right-1 bg-primary text-on-primary rounded-full px-2 py-0.5 shadow-md flex items-center gap-0.5">
                 <span id="result-badge-icon" class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
                 <span id="result-badge-text" class="font-label-sm text-[10px] uppercase tracking-wider font-extrabold">CLEAR</span>
@@ -2507,7 +2478,7 @@
             <!-- Mascot & Stat Badge -->
             <div class="relative mt-1 mb-2.5 flex items-center justify-center">
               <div class="absolute w-24 h-24 rounded-full bg-error-container/60 blur-xl"></div>
-              <img alt="Cute dizzy black kitten mascot" class="w-24 h-24 object-contain rounded-2xl drop-shadow-md relative z-10" src="assets/characters/es-sad.webp?v=26" />
+              <img alt="Cute dizzy black kitten mascot" class="w-24 h-24 object-contain rounded-2xl drop-shadow-md relative z-10" src="assets/characters/es-sad.webp?v=30" />
               <div class="absolute -bottom-2.5 z-20 flex items-center gap-1 bg-error-container text-on-error-container whitespace-nowrap px-3 py-1 text-xs font-bold rounded-full shadow-md border-0">
                 <span class="text-[12px] leading-none shrink-0">💔</span>
                 <span class="whitespace-nowrap px-0 text-xs font-bold tracking-tight">라이프 소진</span>
@@ -2574,6 +2545,29 @@
   </div>
 
   <!-- ================================================= -->
+  <!-- BONUS REWARD MODAL (황금 선물상자 보너스 모달)            -->
+  <!-- ================================================= -->
+  <div id="bonus-modal-backdrop" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title">
+    <div id="bonus-modal-card" class="bg-white rounded-3xl p-6 sm:p-7 max-w-xs w-full shadow-2xl border border-amber-200/60 flex flex-col items-center text-center transition-all duration-200 transform scale-95 opacity-0">
+      <div class="relative w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center text-3xl mb-3 shadow-inner ring-4 ring-amber-200/50">
+        <span class="animate-wiggle">🎁</span>
+        <span class="absolute -top-1 -right-1 text-sm">✨</span>
+      </div>
+      <h3 id="bonus-modal-title" class="font-extrabold text-base text-slate-800 mb-1">깜짝 보너스 상자 오픈!</h3>
+      <p id="bonus-modal-desc" class="text-xs text-slate-600 leading-relaxed mb-4 font-medium">
+        열심히 달린 러너를 위한 특별 응원 선물이에요!
+      </p>
+      <div class="w-full py-2.5 px-4 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl flex items-center justify-center gap-2 mb-4 shadow-2xs">
+        <span class="text-xl">💎</span>
+        <span class="font-black text-sm text-amber-900">+15 다이아몬드</span>
+      </div>
+      <button id="bonus-claim-btn" type="button" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer">
+        보상 받기 ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
   <!-- EMPTY STATE MODAL (미등록 / 준비 중 스테이지 방어)      -->
   <!-- ================================================= -->
   <div id="empty-stage-modal-backdrop" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="empty-stage-title">
@@ -2617,12 +2611,12 @@
   </div>
 
   <!-- Application Data & Logic (단 하나의 유효한 스크립트 세트) -->
-  <script src="js/data.js?v=26"></script>
-  <script src="js/settings.js?v=26"></script>
-  <script src="js/flashcard.js?v=26"></script>
-  <script src="js/gameEngine.js?v=26"></script>
-  <script src="js/navigation.js?v=26"></script>
-  <script src="js/app.js?v=26"></script>
+  <script src="js/data.js?v=30"></script>
+  <script src="js/settings.js?v=30"></script>
+  <script src="js/flashcard.js?v=30"></script>
+  <script src="js/gameEngine.js?v=30"></script>
+  <script src="js/navigation.js?v=30"></script>
+  <script src="js/app.js?v=30"></script>
 
 </body>
 

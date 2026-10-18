@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=26`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=30`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -324,17 +324,44 @@ async function runE2ETests() {
       };
     });
 
-    // Test Course Dropdown interaction & z-index
-    await page.click('#course-selector-btn');
-    await page.waitForTimeout(250);
-    const dropdownState = await page.evaluate(() => {
+    // Verify Course Dropdown Banner is completely removed per user request
+    const courseSelectorRemoved = await page.evaluate(() => {
+      const btn = document.getElementById('course-selector-btn');
       const menu = document.getElementById('course-dropdown-menu');
-      const isOpen = menu && !menu.classList.contains('hidden') && !menu.classList.contains('opacity-0');
-      const zIndex = menu ? parseInt(window.getComputedStyle(menu).zIndex || '0', 10) : 0;
-      return { isOpen, zIndex };
+      return !btn && !menu;
     });
-    await page.click('#course-selector-btn');
-    await page.waitForTimeout(200);
+
+    // Verify 3D Casual Running Game Map & Bouncing Cat Marker
+    const roadmapGameState = await page.evaluate(() => {
+      const catMarker = document.getElementById('roadmap-cat-marker');
+      const catImg = document.getElementById('cat-marker-img');
+      const bonusNode = document.querySelector('[data-node-id="node-bonus"]');
+      const reviewNode = document.querySelector('[data-node-id="node-review"]');
+      const stage1Node = document.querySelector('[data-node-id="node-1"]');
+      const stage2Node = document.querySelector('[data-node-id="node-2"]');
+      const bossNode = document.querySelector('[data-node-id="node-boss"]');
+      const btn3dCount = document.querySelectorAll('.node-btn.btn-3d').length;
+      return {
+        hasCatMarker: !!catMarker && catMarker.classList.contains('animate-cat-bounce'),
+        hasCatImg: !!catImg && !!catImg.src,
+        hasBonusNode: !!bonusNode && bonusNode.getAttribute('data-node-type') === 'bonus',
+        hasReviewNode: !!reviewNode && reviewNode.getAttribute('data-node-type') === 'review',
+        hasStageNodes: !!stage1Node && !!stage2Node && stage1Node.getAttribute('data-node-type') === 'stage',
+        hasBossNode: !!bossNode && bossNode.getAttribute('data-node-type') === 'boss',
+        btn3dCount
+      };
+    });
+
+    // Test Bonus Modal interaction
+    await page.click('#node-bonus-btn');
+    await page.waitForTimeout(250);
+    const bonusModalOpen = await page.evaluate(() => {
+      const modal = document.getElementById('bonus-modal-backdrop');
+      return modal && !modal.classList.contains('pointer-events-none') && modal.classList.contains('opacity-100');
+    });
+    // Claim bonus
+    await page.click('#bonus-claim-btn');
+    await page.waitForTimeout(250);
 
     // Test scrolling to verify header remains fixed at top: 0
     await page.evaluate(() => window.scrollTo(0, 300));
@@ -353,8 +380,14 @@ async function runE2ETests() {
       !headerState.hasPencil &&
       headerState.isFixed &&
       scrollPinned &&
-      dropdownState.isOpen &&
-      dropdownState.zIndex >= 40 &&
+      courseSelectorRemoved &&
+      roadmapGameState.hasCatMarker &&
+      roadmapGameState.hasBonusNode &&
+      roadmapGameState.hasReviewNode &&
+      roadmapGameState.hasStageNodes &&
+      roadmapGameState.hasBossNode &&
+      roadmapGameState.btn3dCount >= 5 &&
+      bonusModalOpen &&
       headerState.hasStreak &&
       headerState.hasHearts &&
       headerState.hasGems &&
@@ -363,8 +396,10 @@ async function runE2ETests() {
     recordScenario('Scenario H: Compact Mobile Top Header Layout', headerCompactValid, {
       ...headerState,
       scrollPinned,
-      dropdown: dropdownState,
-      summary: headerCompactValid ? '미니 로고(⚡️ VocaDash) + 언어 배지 + 아바타(연필 제거/Fixed 고정) + 카테고리 드롭다운 z-index 정상 검증 통과' : '헤더 컴팩트 레이아웃 기준 미달'
+      courseSelectorRemoved,
+      roadmapGameState,
+      bonusModalOpen,
+      summary: headerCompactValid ? '상단 카테고리 셀렉터 완전 제거 + 3D 캐주얼 러닝 게임 맵(stage/bonus/review/boss) + 바운스 고양이 마커 정상 검증 통과' : '헤더 및 로드맵 게임 비주얼 기준 미달'
     });
 
     // -----------------------------------------------------------------

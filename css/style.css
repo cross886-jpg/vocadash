@@ -209,12 +209,53 @@
 #header-mascot-img,
 #current-avatar-img,
 .avatar-option img,
-#settings-streak-avatar-img {
+#settings-streak-avatar-img,
+#cat-marker-img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: high-quality;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
+
+/* ================================================= */
+/* Casual Running Game Map: 3D Push & Cat Mascot     */
+/* ================================================= */
+
+/* Bouncing Cat Mascot Position Marker */
+@keyframes map-cat-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.animate-cat-bounce {
+  animation: map-cat-bounce 0.9s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+}
+
+/* Playful Wiggle Animation for Special Nodes */
+@keyframes map-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg) scale(1.05); }
+  75% { transform: rotate(8deg) scale(1.05); }
+}
+.animate-wiggle {
+  animation: map-wiggle 1.5s ease-in-out infinite;
+}
+
+/* 3D Push Button Tactile Feel (Cookie Run / Duolingo Style) */
+.btn-3d {
+  transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1), border-bottom-width 0.08s ease, box-shadow 0.08s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.btn-3d:active {
+  transform: translateY(4px) !important;
+  border-bottom-width: 0px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15) !important;
+}
+
 
 
