@@ -57,15 +57,28 @@
   // 2. 하단 탭 네비게이션 & 주요 화면 라우터 (switchMainTab)
   // ===================================================
   function setTabActive(activeTabEl) {
+    const activeClasses = ['w-11', 'h-11', 'bg-white', 'text-slate-900', 'shadow-md'];
+    const inactiveClasses = ['p-2', 'text-slate-400', 'hover:text-white'];
+
     document.querySelectorAll('.nav-item').forEach((n) => {
       n.classList.remove('text-primary', 'font-bold', 'text-[#22c55e]');
       n.classList.add('text-on-surface-variant');
       n.removeAttribute('aria-current');
+      const iconContainer = n.querySelector('.nav-icon-container');
+      if (iconContainer) {
+        iconContainer.classList.remove(...activeClasses);
+        iconContainer.classList.add(...inactiveClasses);
+      }
     });
     if (activeTabEl) {
       activeTabEl.classList.remove('text-on-surface-variant');
       activeTabEl.classList.add('text-primary', 'font-bold');
       activeTabEl.setAttribute('aria-current', 'page');
+      const iconContainer = activeTabEl.querySelector('.nav-icon-container');
+      if (iconContainer) {
+        iconContainer.classList.remove(...inactiveClasses);
+        iconContainer.classList.add(...activeClasses);
+      }
     }
   }
 

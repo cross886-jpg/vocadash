@@ -732,6 +732,24 @@
         const targetNodeId = currentGameLessonId || window.currentSelectedNodeId || 'node-2';
         const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
         const btnPrimaryText = document.getElementById('btn-result-primary-text');
+
+        // 동적 유닛 타이틀 추출 (getCurrentCourseData 참조)
+        const activeCourse = (typeof window.getCurrentCourseData === 'function')
+          ? window.getCurrentCourseData()
+          : (window.packFootballData || window.courseData);
+        const currentCourseLang = window.currentActiveCourse || 'es';
+        const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
+        const currentUnitIndex = Math.max(0, unlockedLevel - 1);
+        const targetUnit = (activeCourse && Array.isArray(activeCourse.units))
+          ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
+          : null;
+        const actualUnitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${currentUnitIndex + 1}`;
+
+        const resultSubtitle = document.getElementById('result-subtitle');
+        if (resultSubtitle && !window.isUnitSkipTestMode && !window.isReviewGameMode) {
+          resultSubtitle.textContent = `${actualUnitTitle} 마스터!`;
+        }
+
         if (btnPrimaryText) {
           if (window.isUnitSkipTestMode) {
             const totalQ = (gameQuestions && gameQuestions.length) || 15;
@@ -742,7 +760,6 @@
             btnPrimaryText.textContent = isPassed ? `해금된 Unit ${targetUnit}으로 이동 🚀` : '로드맵으로 돌아가기';
 
             const resultTitle = document.getElementById('result-title');
-            const resultSubtitle = document.getElementById('result-subtitle');
             if (resultTitle) resultTitle.textContent = isPassed ? '⚡ 건너뛰기 시험 통과!' : '⚡ 건너뛰기 시험 결과';
             if (resultSubtitle) {
               resultSubtitle.textContent = isPassed
@@ -753,7 +770,6 @@
             btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '로드맵으로 복귀' : '오답노트로 복귀';
             if (window.isRoadmapReviewSpeedrun) {
               const resultTitle = document.getElementById('result-title');
-              const resultSubtitle = document.getElementById('result-subtitle');
               if (resultTitle) resultTitle.textContent = '⚡ 약점 극복 완료!';
               if (resultSubtitle) {
                 resultSubtitle.textContent = window.isSpeedrunZeroWrongBonus
@@ -766,7 +782,7 @@
           } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
             btnPrimaryText.textContent = '보스전 클리어 & 로드맵으로';
           } else if (curProg >= 3) {
-            btnPrimaryText.textContent = '2과 마스터 완료 & 3과 열기';
+            btnPrimaryText.textContent = `${actualUnitTitle} 마스터 완료 & 다음 유닛 열기`;
           } else {
             btnPrimaryText.textContent = `다음 스테이지 (${Math.min(3, curProg + 1)}/3)`;
           }
@@ -798,6 +814,23 @@
         const totalQ = (gameQuestions && gameQuestions.length) || stats.totalQ || 13;
         const missedList = missedWords || stats.missedWords || [];
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : (gameQuestions && gameQuestions[currentQuestionIdx]);
+
+        // 동적 유닛 타이틀 바인딩
+        const activeCourse = (typeof window.getCurrentCourseData === 'function')
+          ? window.getCurrentCourseData()
+          : (window.packFootballData || window.courseData);
+        const currentCourseLang = window.currentActiveCourse || 'es';
+        const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
+        const currentUnitIndex = Math.max(0, unlockedLevel - 1);
+        const targetUnit = (activeCourse && Array.isArray(activeCourse.units))
+          ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
+          : null;
+        const actualUnitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${currentUnitIndex + 1}`;
+
+        const goMissedCourse = document.getElementById('gameover-missed-course');
+        if (goMissedCourse) {
+          goMissedCourse.textContent = actualUnitTitle;
+        }
 
         const goMissedWord = document.getElementById('gameover-missed-word');
         if (goMissedWord && lastFailed) {
@@ -2836,9 +2869,16 @@
       return false;
     };
 
+    const btnGameOverExit = document.getElementById('game-over-exit-btn') || document.getElementById('btn-gameover-roadmap');
+    if (btnGameOverExit) {
+      btnGameOverExit.onclick = handleGameoverExit;
+      btnGameOverExit.addEventListener('click', handleGameoverExit);
+    }
+
     const btnGameoverRoadmap = document.getElementById('btn-gameover-roadmap');
-    if (btnGameoverRoadmap) {
+    if (btnGameoverRoadmap && btnGameoverRoadmap !== btnGameOverExit) {
       btnGameoverRoadmap.onclick = handleGameoverExit;
+      btnGameoverRoadmap.addEventListener('click', handleGameoverExit);
     }
 
     const btnGameoverClose = document.getElementById('btn-gameover-close');
