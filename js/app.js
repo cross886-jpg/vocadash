@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=45`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=47`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -494,8 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=45', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=45', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=47', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=47', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -635,6 +635,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const lessonBackdrop = el('lesson-modal-backdrop'), lessonSheet = el('lesson-card-sheet'), lockedTooltip = el('locked-node-tooltip');
 
   window.openLessonModal = function (nodeId) {
+    if (typeof checkAndRechargeHearts === 'function') checkAndRechargeHearts();
+    if (window.userHearts <= 0) {
+      console.warn(`[VocaDash] 하트 0개 상태에서 스테이지(${nodeId}) 클릭 차단 -> 하트 충전 모달 팝업`);
+      if (typeof openHeartRechargeModal === 'function') openHeartRechargeModal();
+      return;
+    }
+
     const gScreen = document.getElementById('game-screen');
     if (gScreen && gScreen.classList.contains('opacity-100') && !gScreen.classList.contains('pointer-events-none')) {
       console.warn('🛑 게임 화면 활성 중 openLessonModal 호출 차단됨!');
@@ -2348,6 +2355,12 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       e.stopPropagation();
     }
+    if (typeof checkAndRechargeHearts === 'function') checkAndRechargeHearts();
+    if (window.userHearts <= 0) {
+      if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
+      if (typeof openHeartRechargeModal === 'function') openHeartRechargeModal();
+      return;
+    }
     const targetNodeId = currentSelectedNodeId || 'node-2';
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
     const session = window.VOCA_DATA ? window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round) : [];
@@ -2609,7 +2622,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=45';
+    const v = '?v=47';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3153,15 +3166,231 @@ document.addEventListener('DOMContentLoaded', () => {
   window.loadWrongWords = loadWrongWords;
   window.saveWrongWords = saveWrongWords;
   window.wrongWords = loadWrongWords(window.currentLanguage || 'es');
-  window.userHearts = 5;
+  // ===================================================
+  // 하트(HP) 영구 유지 및 30분 자동 충전 / 충전 모달 제어 시스템
+  // ===================================================
+  function getUserHearts() {
+    try {
+      const val = localStorage.getItem('vocadash_hearts');
+      if (val !== null) {
+        const parsed = parseInt(val, 10);
+        if (!isNaN(parsed)) return Math.max(0, Math.min(5, parsed));
+      }
+    } catch (_) {}
+    return 5;
+  }
 
   function updateHeartsUI() {
+    const hearts = (typeof window.userHearts === 'number' && window.userHearts >= 0 && window.userHearts <= 5)
+      ? window.userHearts
+      : getUserHearts();
+    window.userHearts = hearts;
+
     const headerHeart = document.getElementById('header-hearts-count');
-    if (headerHeart) headerHeart.textContent = window.userHearts;
+    if (headerHeart) headerHeart.textContent = `${hearts}/5`;
     const reviewHeart = document.getElementById('review-hearts-display');
-    if (reviewHeart) reviewHeart.textContent = `${window.userHearts}/5`;
+    if (reviewHeart) reviewHeart.textContent = `${hearts}/5`;
+    if (typeof window.syncInGameHearts === 'function') {
+      window.syncInGameHearts(hearts);
+    }
   }
   window.updateUserHeartsUI = updateHeartsUI;
+
+  function setUserHearts(val) {
+    const clamped = Math.max(0, Math.min(5, parseInt(val, 10) || 0));
+    window.userHearts = clamped;
+    try {
+      localStorage.setItem('vocadash_hearts', String(clamped));
+      if (clamped < 5) {
+        if (!localStorage.getItem('vocadash_hearts_timer_start')) {
+          localStorage.setItem('vocadash_hearts_timer_start', String(Date.now()));
+        }
+      } else {
+        localStorage.removeItem('vocadash_hearts_timer_start');
+      }
+    } catch (_) {}
+    updateHeartsUI();
+    return clamped;
+  }
+  window.getUserHearts = getUserHearts;
+  window.setUserHearts = setUserHearts;
+
+  // 30분 타이머 및 백그라운드 경과 시간 계산 연동
+  function checkAndRechargeHearts() {
+    let hearts = getUserHearts();
+    const RECHARGE_INTERVAL = 30 * 60 * 1000; // 30분 (1,800,000ms)
+
+    if (hearts >= 5) {
+      try { localStorage.removeItem('vocadash_hearts_timer_start'); } catch (_) {}
+      window.userHearts = 5;
+      updateHeartsUI();
+      return { hearts: 5, remainingSeconds: 0, isMax: true };
+    }
+
+    const now = Date.now();
+    let timerStart = 0;
+    try {
+      const raw = localStorage.getItem('vocadash_hearts_timer_start');
+      timerStart = raw ? parseInt(raw, 10) : 0;
+    } catch (_) {}
+
+    if (!timerStart || isNaN(timerStart) || timerStart > now) {
+      timerStart = now;
+      try { localStorage.setItem('vocadash_hearts_timer_start', String(timerStart)); } catch (_) {}
+    }
+
+    const elapsed = now - timerStart;
+    const recovered = Math.floor(elapsed / RECHARGE_INTERVAL);
+
+    if (recovered > 0) {
+      hearts = Math.min(5, hearts + recovered);
+      try {
+        localStorage.setItem('vocadash_hearts', String(hearts));
+        if (hearts >= 5) {
+          localStorage.removeItem('vocadash_hearts_timer_start');
+          window.userHearts = 5;
+          updateHeartsUI();
+          return { hearts: 5, remainingSeconds: 0, isMax: true };
+        } else {
+          timerStart += recovered * RECHARGE_INTERVAL;
+          localStorage.setItem('vocadash_hearts_timer_start', String(timerStart));
+        }
+      } catch (_) {}
+    }
+
+    window.userHearts = hearts;
+    updateHeartsUI();
+    const remainingMs = Math.max(0, RECHARGE_INTERVAL - (now - timerStart));
+    const remainingSeconds = Math.ceil(remainingMs / 1000);
+    return { hearts, remainingSeconds, isMax: false };
+  }
+  window.checkAndRechargeHearts = checkAndRechargeHearts;
+
+  window.userHearts = getUserHearts();
+
+  // 하트 충전 모달 제어
+  let heartTimerInterval = null;
+
+  function updateHeartModalCountdownDisplay() {
+    const status = checkAndRechargeHearts();
+    const display = document.getElementById('heart-countdown-display');
+    const icon = document.getElementById('heart-modal-icon');
+    const title = document.getElementById('heart-modal-title');
+    const desc = document.getElementById('heart-modal-desc');
+
+    if (status.isMax || status.hearts >= 5) {
+      if (display) display.textContent = '완전 충전됨 (5/5)';
+      if (icon) icon.textContent = '💖';
+      if (title) title.textContent = '❤️ 하트 풀 충전 상태';
+      if (desc) desc.textContent = '하트가 가득 차 있습니다! 힘차게 단어를 마스터해 보세요.';
+      return;
+    }
+
+    const mm = String(Math.floor(status.remainingSeconds / 60)).padStart(2, '0');
+    const ss = String(status.remainingSeconds % 60).padStart(2, '0');
+    if (display) display.textContent = `${mm}:${ss}`;
+
+    if (status.hearts === 0) {
+      if (icon) icon.textContent = '💔';
+      if (title) title.textContent = '💔 하트가 모두 소진되었습니다!';
+      if (desc) desc.textContent = '잠시 휴식하거나 아래 방법으로 하트를 채워보세요.';
+    } else {
+      if (icon) icon.textContent = '💖';
+      if (title) title.textContent = `❤️ 현재 하트: ${status.hearts}/5`;
+      if (desc) desc.textContent = '잠시 휴식하거나 아래 방법으로 하트를 채워보세요.';
+    }
+  }
+
+  function openHeartRechargeModal() {
+    const backdrop = document.getElementById('heart-modal-backdrop');
+    const card = document.getElementById('heart-modal-card');
+    if (!backdrop || !card) return;
+
+    updateHeartModalCountdownDisplay();
+
+    clearInterval(heartTimerInterval);
+    heartTimerInterval = setInterval(updateHeartModalCountdownDisplay, 1000);
+
+    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop.classList.add('opacity-100', 'pointer-events-auto');
+    card.classList.remove('scale-95', 'opacity-0');
+    card.classList.add('scale-100', 'opacity-100');
+  }
+  window.openHeartRechargeModal = openHeartRechargeModal;
+
+  function closeHeartRechargeModal() {
+    clearInterval(heartTimerInterval);
+    heartTimerInterval = null;
+    const backdrop = document.getElementById('heart-modal-backdrop');
+    const card = document.getElementById('heart-modal-card');
+    if (!backdrop || !card) return;
+    backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+  }
+  window.closeHeartRechargeModal = closeHeartRechargeModal;
+
+  function initHeartModalEvents() {
+    const closeBtn = document.getElementById('btn-close-heart-modal');
+    if (closeBtn) closeBtn.onclick = closeHeartRechargeModal;
+
+    const backdrop = document.getElementById('heart-modal-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeHeartRechargeModal();
+      });
+    }
+
+    // 옵션 A: 보석 100개로 하트 5개 풀 충전
+    const gemBtn = document.getElementById('btn-recharge-with-gems');
+    if (gemBtn) {
+      gemBtn.onclick = function() {
+        let curGems = 120;
+        try {
+          const saved = localStorage.getItem('vocadash_gems');
+          if (saved !== null) curGems = parseInt(saved, 10) || 120;
+        } catch (_) {}
+
+        if (curGems >= 100) {
+          curGems -= 100;
+          try { localStorage.setItem('vocadash_gems', String(curGems)); } catch (_) {}
+          const gemsEl = document.getElementById('header-gems-count');
+          if (gemsEl) gemsEl.textContent = curGems;
+
+          setUserHearts(5);
+          closeHeartRechargeModal();
+          if (typeof window.showToast === 'function') {
+            window.showToast('💖 보석 100개로 하트 5개 풀 충전 완료!', '🎉');
+          }
+        } else {
+          if (typeof window.showToast === 'function') {
+            window.showToast(`보석이 부족합니다! (보유: ${curGems}개 / 필요: 100개)`, '💎');
+          }
+        }
+      };
+    }
+
+    // 옵션 B: 약점 극복 오답런 뛰기
+    const reviewBtn = document.getElementById('btn-recharge-with-review');
+    if (reviewBtn) {
+      reviewBtn.onclick = function() {
+        closeHeartRechargeModal();
+        if (typeof window.startRoadmapReviewSpeedrun === 'function') {
+          window.startRoadmapReviewSpeedrun();
+        }
+      };
+    }
+
+    // 상단 헤더 하트 칩 터치 이벤트
+    const headerHeartsBadge = document.getElementById('header-hearts-badge');
+    if (headerHeartsBadge) {
+      headerHeartsBadge.onclick = function() {
+        openHeartRechargeModal();
+      };
+    }
+  }
+  window.initHeartModalEvents = initHeartModalEvents;
 
   function updateWrongWordsBadge() {
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -3460,7 +3689,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=45' : 'assets/profiles/profile-spanish.webp?v=45';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=47' : 'assets/profiles/profile-spanish.webp?v=47';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4508,7 +4737,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=45`;
+    return `assets/profiles/${file}?v=47`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5024,7 +5253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=45';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=47';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5071,7 +5300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=45';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=47';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
@@ -5192,4 +5421,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderReviewWords('waiting');
   syncBookPhoneticSetting();
   initHallOfFameEvents();
+  checkAndRechargeHearts();
+  initHeartModalEvents();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) checkAndRechargeHearts();
+  });
+  window.addEventListener('focus', () => {
+    checkAndRechargeHearts();
+  });
 });

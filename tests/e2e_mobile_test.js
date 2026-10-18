@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=45`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=47`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1000,6 +1000,120 @@ async function runE2ETests() {
       summary: scenarioGPassed
         ? 'activeCourseId 관리, getCurrentCourseData() 팩 분기, 코스별 vocadash_progress_${id} 격리 저장 및 switchCourse 전환 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(courseIsolationResult)}`
+    });
+
+    console.log('\n💖 --- [Scenario HP: Realistic Heart (HP) System, 0-Heart Block, Modal & Review Run Recharge] ---');
+    const heartTestResult = await page.evaluate(async () => {
+      const results = {};
+
+      // 1. Initial State & Persistence check
+      window.setUserHearts(5);
+      results.initialHearts = window.getUserHearts();
+      results.initialLocal = localStorage.getItem('vocadash_hearts');
+      const headerEl = document.getElementById('header-hearts-count');
+      results.headerTextInitial = headerEl ? headerEl.textContent.trim() : '';
+
+      // Set to 3 hearts
+      window.setUserHearts(3);
+      results.heartsAfterSet3 = window.getUserHearts();
+      results.localAfterSet3 = localStorage.getItem('vocadash_hearts');
+      results.headerText3 = headerEl ? headerEl.textContent.trim() : '';
+
+      // 2. 0 Hearts Block & Modal Trigger check
+      window.setUserHearts(0);
+      results.heartsZero = window.getUserHearts();
+      results.headerText0 = headerEl ? headerEl.textContent.trim() : '';
+
+      // Try opening stage 1 with 0 hearts
+      const lessonModal = document.getElementById('lesson-card-sheet');
+      const heartBackdrop = document.getElementById('heart-modal-backdrop');
+
+      window.openLessonModal('node-1');
+      results.lessonModalOpenedWithZeroHearts = lessonModal ? lessonModal.classList.contains('translate-y-0') : false;
+      results.heartModalVisible = heartBackdrop ? heartBackdrop.classList.contains('opacity-100') : false;
+
+      // Check modal content
+      const titleEl = document.getElementById('heart-modal-title');
+      const optAGem = document.getElementById('btn-recharge-with-gems');
+      const optBReview = document.getElementById('btn-recharge-with-review');
+      const optCTimer = document.getElementById('heart-countdown-display');
+      results.modalHasTitle = titleEl ? titleEl.textContent.includes('하트가 모두 소진되었습니다') : false;
+      results.hasOptionA = !!optAGem;
+      results.hasOptionB = !!optBReview;
+      results.hasOptionC = !!optCTimer;
+
+      // 3. Gem Full Recharge (Option A) check
+      localStorage.setItem('vocadash_gems', '120');
+      if (optAGem) optAGem.click();
+      results.heartsAfterGemRecharge = window.getUserHearts();
+      results.gemsAfterRecharge = localStorage.getItem('vocadash_gems');
+      results.modalClosedAfterGemRecharge = heartBackdrop ? heartBackdrop.classList.contains('opacity-0') : false;
+
+      // 4. Background 30-min Timer Simulation check
+      window.setUserHearts(3);
+      // Simulate 35 mins elapsed (35 * 60 * 1000 = 2100000ms)
+      const pastTime = Date.now() - (35 * 60 * 1000);
+      localStorage.setItem('vocadash_hearts_timer_start', String(pastTime));
+      const timerCheck = window.checkAndRechargeHearts();
+      results.heartsAfter30MinElapsed = timerCheck.hearts;
+      results.timerCalcWorking = timerCheck.hearts === 4;
+
+      // 5. Review Run (오답런) Immunity & 80% Clear +3 Hearts check
+      window.setUserHearts(0);
+      // 오답런 진입 허용 확인 (10문제)
+      window.isRoadmapReviewSpeedrun = true;
+      window.isReviewGameMode = true;
+      const reviewQuestions = Array.from({ length: 10 }, (_, i) => ({
+        word: `test${i}`,
+        meaning: `의미${i}`,
+        distractors: ['오답1', '오답2', '오답3']
+      }));
+      window.openGameScreen('node-review', reviewQuestions);
+      const gScreen = document.getElementById('game-screen');
+      results.reviewScreenOpenedWithZeroHearts = gScreen ? gScreen.classList.contains('opacity-100') : false;
+
+      // In review run, decreaseHeart should NOT decrease hearts or trigger GameOver
+      const heartBeforeMiss = window.getUserHearts();
+      window.decreaseHeart();
+      const heartAfterMiss = window.getUserHearts();
+      results.reviewHeartNotDeducted = (heartBeforeMiss === 0 && heartAfterMiss === 0);
+
+      // Finish review with 100% (0 missed)
+      window.finishGameStage(true);
+      results.heartsAfter80PctReviewClear = window.getUserHearts();
+
+      // Clean up & return home
+      window.setUserHearts(5);
+      window.isRoadmapReviewSpeedrun = false;
+      window.isReviewGameMode = false;
+      if (typeof window.exitGameToRoadmap === 'function') window.exitGameToRoadmap(true);
+
+      return results;
+    });
+
+    console.log('💖 Heart system test details:', heartTestResult);
+    const scenarioHPPassed = 
+      heartTestResult.initialHearts === 5 &&
+      heartTestResult.localAfterSet3 === '3' &&
+      heartTestResult.headerText3 === '3/5' &&
+      heartTestResult.lessonModalOpenedWithZeroHearts === false &&
+      heartTestResult.heartModalVisible === true &&
+      heartTestResult.modalHasTitle === true &&
+      heartTestResult.hasOptionA === true &&
+      heartTestResult.hasOptionB === true &&
+      heartTestResult.hasOptionC === true &&
+      heartTestResult.heartsAfterGemRecharge === 5 &&
+      heartTestResult.gemsAfterRecharge === '20' &&
+      heartTestResult.timerCalcWorking === true &&
+      heartTestResult.reviewScreenOpenedWithZeroHearts === true &&
+      heartTestResult.reviewHeartNotDeducted === true &&
+      heartTestResult.heartsAfter80PctReviewClear === 3;
+
+    recordScenario('Scenario HP: Realistic Heart (HP) System, Zero-Heart Block, Modal & Review Run Recharge', scenarioHPPassed, {
+      ...heartTestResult,
+      summary: scenarioHPPassed
+        ? '하트 상태 영구 유지(localStorage), 0개 시 게임 진입 차단 & 충전 모달 표출, 보석 100개 완충, 30분 타이머 계산, 오답런 0하트 진입/무차감 및 80% 클리어 시 하트 3개 충전 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(heartTestResult)}`
     });
 
   } catch (err) {

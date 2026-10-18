@@ -478,7 +478,28 @@
   }
 
   function decreaseHeart() {
+    if (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) {
+      // 오답런 진행 중에는 문제를 틀려도 하트가 깎이지 않음!
+      combo = 0;
+      speedMultiplier = 1.0;
+      updateHeartsUI();
+      updateHeaderStatusUI();
+      return currentHearts;
+    }
+
     currentHearts = Math.max(0, currentHearts - 1);
+    if (typeof window.setUserHearts === 'function') {
+      window.setUserHearts(currentHearts);
+    } else {
+      window.userHearts = currentHearts;
+      try {
+        localStorage.setItem('vocadash_hearts', String(currentHearts));
+        if (currentHearts < 5 && !localStorage.getItem('vocadash_hearts_timer_start')) {
+          localStorage.setItem('vocadash_hearts_timer_start', String(Date.now()));
+        }
+      } catch (_) {}
+      if (typeof window.updateUserHeartsUI === 'function') window.updateUserHeartsUI();
+    }
     combo = 0;
     speedMultiplier = 1.0;
     updateHeartsUI();
@@ -518,7 +539,7 @@
     clearAllGameTimers();
     cancelGameLoop();
     dropRafId = null;
-    currentHearts = 5;
+    currentHearts = (typeof window.userHearts === 'number' && window.userHearts >= 0) ? window.userHearts : 5;
     combo = 0;
     maxCombo = 0;
     score = 0;
@@ -671,7 +692,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=45`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=47`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -759,7 +780,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=45`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=47`;
         });
       } catch (_) {}
 
@@ -969,6 +990,31 @@
         if (gemsText) gemsText.textContent = `+${addedGems} 💎`;
         if (typeof window.removeClearedWrongWords === 'function') {
           window.removeClearedWrongWords([]);
+        }
+
+        // 오답 10문제 중 8문제(80%) 이상 정답으로 클리어 시 하트 3개 충전!
+        const totalQ = (gameQuestions && gameQuestions.length) || 10;
+        const missed = missedWords || [];
+        const correctCount = Math.max(0, totalQ - missed.length);
+        if (correctCount >= Math.ceil(totalQ * 0.8)) {
+          if (typeof window.setUserHearts === 'function') {
+            const curH = typeof window.userHearts === 'number' ? window.userHearts : 0;
+            window.setUserHearts(Math.min(5, curH + 3));
+          } else {
+            window.userHearts = Math.min(5, (window.userHearts || 0) + 3);
+            try {
+              localStorage.setItem('vocadash_hearts', String(window.userHearts));
+              if (window.userHearts >= 5) localStorage.removeItem('vocadash_hearts_timer_start');
+            } catch (_) {}
+            if (typeof window.updateUserHeartsUI === 'function') window.updateUserHeartsUI();
+          }
+          const resultSubtitle = document.getElementById('result-subtitle');
+          if (resultSubtitle) {
+            resultSubtitle.textContent = `하트 3개 획득! ❤️❤️❤️ (${correctCount}/${totalQ} 정답 달성)`;
+          }
+          if (typeof window.showToast === 'function') {
+            window.showToast('🎉 약점 극복 80% 달성! 하트 3개 충전 완료! ❤️❤️❤️', '✨');
+          }
         }
       }
 
@@ -1285,23 +1331,23 @@
         correctBtn.className = 'game-choice-btn h-[44px] rounded-xl bg-emerald-100 text-emerald-800 border-2 border-emerald-400 border-b-[4px] border-b-emerald-500 flex items-center justify-center px-2 font-headline-sm text-[15px] font-extrabold';
       }
 
-      // 하트 1개 차감
+      // 하트 1개 차감 (오답런 모드 제외)
       const remainingHearts = decreaseHeart();
 
       clearTimeout(gameNextQuestionTimer);
       gameNextQuestionTimer = setTimeout(() => {
         if (!isActive || !isGameActive) return;
-        // 하트가 0개가 된 경우에만 타이머 멈추고 게임오버 모달 표출 (로드맵 강제 이동 금지!)
-        if (remainingHearts <= 0 || currentHearts <= 0) {
+        // 하트가 0개가 된 경우에만 타이머 멈추고 게임오버 모달 표출 (오답런 모드는 게임오버 제외)
+        if (!window.isRoadmapReviewSpeedrun && !window.isReviewGameMode && (remainingHearts <= 0 || currentHearts <= 0)) {
           triggerGameOver();
         } else {
-          // 하트가 남아있다면 즉시 다음 단어 낙하 진행
+          // 하트가 남아있거나 오답런인 경우 즉시 다음 단어 낙하 진행
           nextQuestion();
         }
       }, 700);
     } catch (err) {
       console.warn('⚠️ handleDeadlineBreached 예외 안전 방어:', err);
-      if (currentHearts <= 0) {
+      if (!window.isRoadmapReviewSpeedrun && !window.isReviewGameMode && currentHearts <= 0) {
         triggerGameOver();
       } else {
         nextQuestion();
@@ -1595,10 +1641,14 @@
         btn.appendChild(wrapSpan);
       }
 
-      // 2) 하트 1개 차감 & 콤보 초기화
+      // 2) 하트 1개 차감 & 콤보 초기화 (오답런 모드 제외)
       const remainingHearts = decreaseHeart();
 
-      showGameFloatingEffect('오답! -1 ❤️', false);
+      if (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) {
+        showGameFloatingEffect('오답! (하트 유지)', false);
+      } else {
+        showGameFloatingEffect('오답! -1 ❤️', false);
+      }
 
       try {
         playWrongBuzzer();
@@ -1613,8 +1663,8 @@
         setTimeout(() => gameArena.classList.remove('animate-game-shake'), 300);
       }
 
-      // 3) 오답으로 인해 하트가 0개가 되면 그 즉시 게임오버 모달 표출 (리로드/이동 없음)
-      if (remainingHearts <= 0 || currentHearts <= 0) {
+      // 3) 오답으로 인해 하트가 0개가 되면 그 즉시 게임오버 모달 표출 (오답런 모드는 게임오버 제외)
+      if (!window.isRoadmapReviewSpeedrun && !window.isReviewGameMode && (remainingHearts <= 0 || currentHearts <= 0)) {
         console.log('💀 하트 소진 (0개) -> triggerGameOver() 실행');
         triggerGameOver();
         return;
@@ -1850,6 +1900,20 @@
     if (window.closeFlashcardScreen) window.closeFlashcardScreen(false);
     if (window.closeGameResultModal) window.closeGameResultModal();
 
+    // 0하트 검사: 약점 극복 오답런(node-review, window.isRoadmapReviewSpeedrun)을 제외하고는 하트 0개 시 게임 진입 불가
+    if (!window.isRoadmapReviewSpeedrun && lessonId !== 'node-review' && !window.isUnitSkipTestMode) {
+      if (typeof window.checkAndRechargeHearts === 'function') {
+        window.checkAndRechargeHearts();
+      }
+      const curH = (typeof window.getUserHearts === 'function') ? window.getUserHearts() : (window.userHearts || 0);
+      if (curH <= 0) {
+        if (typeof window.openHeartRechargeModal === 'function') {
+          window.openHeartRechargeModal();
+        }
+        return;
+      }
+    }
+
     missedWords = [];
     isCurrentQuestionFailed = false;
 
@@ -1910,7 +1974,15 @@
     const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun || window.isUnitSkipTestMode) ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
     if (gameStageTitle) gameStageTitle.textContent = `${stageName}${subRoundText}`;
 
-    currentHearts = 5;
+    if (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) {
+      currentHearts = (typeof window.userHearts === 'number' && window.userHearts > 0) ? window.userHearts : 3;
+    } else if (typeof window.userHearts === 'number' && window.userHearts >= 0) {
+      currentHearts = window.userHearts;
+    } else if (typeof window.getUserHearts === 'function') {
+      currentHearts = window.getUserHearts();
+    } else {
+      currentHearts = 5;
+    }
     combo = 0;
     maxCombo = 0;
     score = 0;
@@ -2337,6 +2409,22 @@
     }
     console.log('🔄 게임오버 모달: [처음부터 다시 도전] 순수 SPA 인메모리 재시작');
 
+    // 하트 수량 검사 (하트가 0개이면 충전 모달 오픈 후 재시작 차단)
+    if (!window.isRoadmapReviewSpeedrun && !window.isReviewGameMode) {
+      if (typeof window.checkAndRechargeHearts === 'function') {
+        window.checkAndRechargeHearts();
+      }
+      const curH = (typeof window.getUserHearts === 'function') ? window.getUserHearts() : (window.userHearts || 0);
+      if (curH <= 0) {
+        closeResultModal();
+        exitGameToRoadmap(true);
+        if (typeof window.openHeartRechargeModal === 'function') {
+          window.openHeartRechargeModal();
+        }
+        return;
+      }
+    }
+
     // ① 결과 모달 닫기
     const resultModal = document.getElementById('game-result-modal');
     if (resultModal) {
@@ -2362,7 +2450,8 @@
     cancelGameLoop();
     dropRafId = null;
 
-    currentHearts = 5;
+    const curH = (typeof window.getUserHearts === 'function') ? window.getUserHearts() : ((typeof window.userHearts === 'number') ? window.userHearts : 5);
+    currentHearts = (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) ? Math.max(1, curH) : curH;
     score = 0;
     combo = 0;
     maxCombo = 0;
@@ -2380,7 +2469,7 @@
     isQuestionActive = false;
 
     if (typeof this !== 'undefined' && this) {
-      this.hearts = 5;
+      this.hearts = currentHearts;
       this.score = 0;
       this.combo = 0;
       this.currentIndex = 0;
@@ -2786,6 +2875,12 @@
   window.reviveGameHearts = function (amount = 3) {
     clearAllGameTimers();
     currentHearts = amount;
+    if (typeof window.setUserHearts === 'function') {
+      window.setUserHearts(amount);
+    } else {
+      window.userHearts = amount;
+      try { localStorage.setItem('vocadash_hearts', String(amount)); } catch (_) {}
+    }
     updateHeartsUI();
     isActive = true;
     isGameActive = true;
