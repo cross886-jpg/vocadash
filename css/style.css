@@ -266,6 +266,12 @@
   animation: float-gentle 2.2s ease-in-out infinite;
 }
 
-
-
-
+/* ================================================= */
+/* Casual Game Roadmap: Pastel Green Dot Grid Pattern */
+/* ================================================= */
+#roadmap-screen,
+.roadmap-grid-bg {
+  background-color: #e6f6e8;
+  background-image: radial-gradient(#bcdfb2 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
