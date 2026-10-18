@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=25`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=26`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=25', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=25', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=26', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=26', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -404,6 +404,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // 3.0 미등록 / 빈 스테이지 안내 모달 (Empty State Modal)
+  window.showEmptyStageModal = function (msg = '🚧 단어장 준비 중! 곧 업데이트될 스테이지입니다.') {
+    const backdrop = document.getElementById('empty-stage-modal-backdrop');
+    const card = document.getElementById('empty-stage-card');
+    const desc = document.getElementById('empty-stage-desc');
+    if (desc && msg) desc.textContent = msg;
+    if (backdrop && card) {
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }
+  };
+
+  window.closeEmptyStageModal = function () {
+    const backdrop = document.getElementById('empty-stage-modal-backdrop');
+    const card = document.getElementById('empty-stage-card');
+    if (backdrop && card) {
+      backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('scale-95', 'opacity-0');
+    }
+  };
+
+  const emptyConfirmBtn = document.getElementById('empty-stage-confirm-btn');
+  if (emptyConfirmBtn) {
+    emptyConfirmBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.closeEmptyStageModal();
+    });
+  }
+  const emptyStageBackdrop = document.getElementById('empty-stage-modal-backdrop');
+  if (emptyStageBackdrop) {
+    emptyStageBackdrop.addEventListener('click', (e) => {
+      if (e.target === emptyStageBackdrop) window.closeEmptyStageModal();
+    });
+  }
+
   // 3. Roadmap Nodes & Lesson Bottom Sheet
   const lessonBackdrop = el('lesson-modal-backdrop'), lessonSheet = el('lesson-card-sheet'), lockedTooltip = el('locked-node-tooltip');
 
@@ -413,6 +452,28 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('🛑 게임 화면 활성 중 openLessonModal 호출 차단됨!');
       return;
     }
+
+    // 데이터 미등록 스테이지 방어 (Empty State Check)
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+
+    let hasWords = false;
+    if (db && Object.prototype.hasOwnProperty.call(db, nodeId)) {
+      const entry = db[nodeId];
+      if (entry) {
+        const words = entry[lang] || entry.words || entry.all || (Array.isArray(entry) ? entry : null);
+        if (Array.isArray(words) && words.length > 0) {
+          hasWords = true;
+        }
+      }
+    }
+
+    if (!hasWords) {
+      console.warn(`[VocaDash] 미등록 또는 빈 스테이지(${nodeId}) 탭 감지됨 -> 안내 모달 표시`);
+      window.showEmptyStageModal('🚧 단어장 준비 중! 곧 업데이트될 스테이지입니다.');
+      return;
+    }
+
     currentSelectedNodeId = nodeId;
     const courseId = window.currentCourseId || 'basic';
     const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || COURSE_LESSONS.basic;
@@ -828,10 +889,17 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       e.stopPropagation();
     }
-    if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
     const targetNodeId = currentSelectedNodeId || 'node-2';
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
     const session = window.VOCA_DATA ? window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round) : [];
+
+    if (!session || !Array.isArray(session) || session.length === 0) {
+      if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
+      window.showEmptyStageModal('🚧 단어장 준비 중! 곧 업데이트될 스테이지입니다.');
+      return;
+    }
+
+    if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
     window.currentSessionQuestions = session;
     if (typeof window.openFlashcardScreen === 'function') {
       window.openFlashcardScreen(targetNodeId, session);
@@ -1082,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=25';
+    const v = '?v=26';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1763,7 +1831,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=25' : 'assets/profiles/profile-spanish.webp?v=25';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=26' : 'assets/profiles/profile-spanish.webp?v=26';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2811,7 +2879,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=25`;
+    return `assets/profiles/${file}?v=26`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3321,7 +3389,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=25';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=26';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3363,7 +3431,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=25';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=26';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
