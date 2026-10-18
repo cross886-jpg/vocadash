@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=58`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=59`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=58', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=58', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=59', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=59', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -1599,9 +1599,26 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateCourseSwitcherUI = updateCourseSwitcherUI;
 
   // 단어팩 보관함 화면 UI 렌더링 함수
-  function renderPacksScreenUI() {
+  function renderPacksScreenUI(lang) {
     const packsScreen = document.getElementById('packs-screen');
     if (!packsScreen) return;
+
+    // 언어 탭 상태 결정: 파라미터 -> window.currentPacksLang -> window.currentLanguage -> 'es'
+    const currentLang = lang || window.currentPacksLang || (window.currentLanguage === 'en' ? 'en' : 'es');
+    window.currentPacksLang = currentLang;
+
+    // 0) 언어 세그먼트 탭 UI 갱신
+    const tabEs = document.getElementById('packs-tab-es');
+    const tabEn = document.getElementById('packs-tab-en');
+    if (tabEs && tabEn) {
+      if (currentLang === 'es') {
+        tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black';
+        tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold';
+      } else {
+        tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-blue-800 shadow-xs font-black';
+        tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold';
+      }
+    }
 
     const activeId = window.activeCourseId || localStorage.getItem('vocadash_active_course') || 'main';
 
@@ -1615,6 +1632,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (heroTitle) heroTitle.textContent = '스페인 축구 실전팩 (Official DLC)';
       if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 40개';
       if (heroIcon) heroIcon.textContent = '⚽';
+    } else if ((window.currentLanguage || 'es') === 'en') {
+      if (heroTitle) heroTitle.textContent = '영어 정규 코스 (기본 코스)';
+      if (heroDesc) heroDesc.textContent = '일상 회화 & 실전 기초 어휘 마스터 40개';
+      if (heroIcon) heroIcon.textContent = '🇺🇸';
     } else {
       if (heroTitle) heroTitle.textContent = '스페인어 정규 코스 (기본 코스)';
       if (heroDesc) heroDesc.textContent = '일상 회화 & 실전 기초 어휘 마스터 40개';
@@ -1623,12 +1644,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2) Pack Cards Status & Buttons
     const packCards = packsScreen.querySelectorAll('.pack-card[data-pack-id]');
+    let visibleCount = 0;
     packCards.forEach(card => {
+      const cardLang = card.dataset.packLang || 'es';
+      if (cardLang === currentLang) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+
       const pid = card.dataset.packId;
-      const isEquipped = (pid === activeId);
+      const isEquipped = (pid === activeId) || (pid === 'main_en' && activeId === 'main' && (window.currentLanguage || 'es') === 'en') || (pid === 'main' && activeId === 'main' && (window.currentLanguage || 'es') === 'es');
       const equipBtn = card.querySelector('.btn-pack-equip');
 
-      if (pid === 'pack_football' || pid === 'main') {
+      if (pid === 'pack_football' || pid === 'main' || pid === 'main_en') {
         if (isEquipped) {
           card.classList.remove('border-slate-200/90', 'border-slate-200');
           card.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/20', 'bg-emerald-50/20');
@@ -1649,6 +1679,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    const countLabel = document.getElementById('packs-count-label');
+    if (countLabel) {
+      countLabel.textContent = `${visibleCount}개 사용 가능`;
+    }
+
     initPacksScreenEvents();
   }
   window.renderPacksScreenUI = renderPacksScreenUI;
@@ -1657,6 +1692,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const packsScreen = document.getElementById('packs-screen');
     if (!packsScreen || packsScreen.dataset.eventsBound === 'true') return;
     packsScreen.dataset.eventsBound = 'true';
+
+    // 언어 세그먼트 탭 클릭 이벤트
+    const tabEs = document.getElementById('packs-tab-es');
+    const tabEn = document.getElementById('packs-tab-en');
+    if (tabEs) {
+      tabEs.addEventListener('click', () => {
+        renderPacksScreenUI('es');
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic(15);
+      });
+    }
+    if (tabEn) {
+      tabEn.addEventListener('click', () => {
+        renderPacksScreenUI('en');
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic(15);
+      });
+    }
 
     packsScreen.addEventListener('click', (e) => {
       const btn = e.target.closest('.btn-pack-equip');
@@ -1687,7 +1738,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 단어팩(DLC/확장팩) 및 메인 코스 전환 함수
   function switchCourse(courseId) {
-    const targetId = courseId || 'main';
+    let targetId = courseId || 'main';
+    if (targetId === 'main_en') {
+      targetId = 'main';
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage('en');
+      } else {
+        window.currentLanguage = 'en';
+        window.currentActiveCourse = 'en';
+      }
+    } else if (targetId === 'pack_football') {
+      if ((window.currentLanguage || 'es') !== 'es' && typeof window.setLanguage === 'function') {
+        window.setLanguage('es');
+      }
+    }
+
     window.activeCourseId = targetId;
     window.currentBookCourseId = targetId;
     try {
@@ -1712,8 +1777,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateCourseSwitcherUI(targetId);
 
-    const title = targetId === 'pack_football' ? (lang === 'en' ? '축구 실전팩 (DLC)' : '스페인 축구 실전팩') : (lang === 'en' ? '영어 정규 코스' : '스페인어 정규 코스');
-    const icon = targetId === 'pack_football' ? '⚽' : (lang === 'en' ? '🇺🇸' : '🇪🇸');
+    const title = targetId === 'pack_football' ? (lang === 'en' ? '축구 실전팩 (DLC)' : '스페인 축구 실전팩') : (targetId === 'main_en' || lang === 'en' ? '영어 정규 코스' : '스페인어 정규 코스');
+    const icon = targetId === 'pack_football' ? '⚽' : (targetId === 'main_en' || lang === 'en' ? '🇺🇸' : '🇪🇸');
     if (typeof window.showToast === 'function') {
       window.showToast(`${icon} '${title}' 코스로 전환되었습니다!`, '🚀');
     }
@@ -3156,11 +3221,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnConfirmLangCourse = document.getElementById('btn-confirm-language-course');
   if (btnConfirmLangCourse) {
     btnConfirmLangCourse.addEventListener('click', () => {
-      // 1) 탭 효과음 재생
-      if (typeof window.playSound === 'function') {
-        window.playSound('click');
-      }
-
       const finalLang = modalPendingLanguage || window.currentLanguage || localStorage.getItem('vocadash_selected_lang') || 'es';
       const finalCourseId = modalPendingCourseId || window.activeCourseId || 'main';
 
@@ -3193,7 +3253,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=58';
+    const v = '?v=59';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -4442,7 +4502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=58' : 'assets/profiles/profile-spanish.webp?v=58';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=59' : 'assets/profiles/profile-spanish.webp?v=59';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5243,6 +5303,15 @@ document.addEventListener('DOMContentLoaded', () => {
           chip.prepend(pulseDot);
         }
 
+        // 검색창에 검색어가 남아있다면 초기화
+        const searchInput = bookScreen.querySelector('#book-search-input, input[type="search"]');
+        if (searchInput && searchInput.value) {
+          searchInput.value = '';
+          if (typeof window.applyBookSearchState === 'function') {
+            window.applyBookSearchState('');
+          }
+        }
+
         const filterType = chip.dataset.filter || 'all';
         applyBookFilter(filterType);
 
@@ -5252,30 +5321,113 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // 4. 검색창 실시간 필터링
+    // 4. 검색창 실시간 필터링 및 키보드 내림/레이아웃 즉시 표시 UX
     const searchInput = bookScreen.querySelector('#book-search-input, input[type="search"]');
+    const searchBtn = bookScreen.querySelector('#book-search-btn');
+    const searchClearBtn = bookScreen.querySelector('#book-search-clear-btn');
+    const progressHero = bookScreen.querySelector('#book-progress-hero');
+    const filterChipsSection = bookScreen.querySelector('#book-filter-chips');
+    const wrongBanner = bookScreen.querySelector('#book-wrong-run-banner');
+    const ch1Header = bookScreen.querySelector('#book-chapter-header');
+    const ch2Toggle = bookScreen.querySelector('#book-chapter-2-toggle');
+    const ch3Locked = bookScreen.querySelector('#book-chapter-3-locked');
+
+    function applyBookSearchState(queryStr) {
+      const query = (queryStr || '').trim().toLowerCase();
+      const isSearching = query.length > 0;
+
+      // 1) X 클리어 버튼 토글
+      if (searchClearBtn) {
+        if (isSearching) {
+          searchClearBtn.classList.remove('hidden');
+        } else {
+          searchClearBtn.classList.add('hidden');
+        }
+      }
+
+      // 2) 검색 중에는 '학습 진도' 배너와 '1과, 2과, 3과' 등의 챕터 아코디언 헤더를 임시 숨김(display: none)
+      //    일치하는 단어 카드 목록이 검색창 바로 아래에 곧바로 이어져 스크롤 없이 한눈에 보이도록 처리
+      if (isSearching) {
+        if (progressHero) progressHero.style.display = 'none';
+        if (filterChipsSection) filterChipsSection.style.display = 'none';
+        if (wrongBanner) wrongBanner.style.display = 'none';
+        if (ch1Header) ch1Header.style.display = 'none';
+        if (ch2Toggle) ch2Toggle.style.display = 'none';
+        if (ch3Locked) ch3Locked.style.display = 'none';
+        bookScreen.querySelectorAll('.book-category-header').forEach(el => el.style.display = 'none');
+      } else {
+        if (progressHero) progressHero.style.display = '';
+        if (filterChipsSection) filterChipsSection.style.display = '';
+        if (wrongBanner) {
+          const activeWrongChip = bookScreen.querySelector('#book-filter-wrong-chip.bg-emerald-50');
+          wrongBanner.style.display = activeWrongChip ? '' : 'none';
+        }
+        if (ch1Header) ch1Header.style.display = '';
+        if (ch2Toggle) ch2Toggle.style.display = '';
+        if (ch3Locked) ch3Locked.style.display = '';
+        bookScreen.querySelectorAll('.book-category-header').forEach(el => el.style.display = '');
+      }
+
+      // 3) 카드 필터링
+      const cleanQuery = typeof getSortableWord === 'function' ? getSortableWord(query) : query;
+      const cards = bookScreen.querySelectorAll('.book-word-card');
+      cards.forEach((card) => {
+        if (!isSearching) {
+          card.classList.remove('hidden');
+          return;
+        }
+        const rawTerm = (card.dataset.term || card.querySelector('span.text-xl')?.textContent?.trim() || '');
+        const term = rawTerm.toLowerCase();
+        const cleanTerm = typeof getSortableWord === 'function' ? getSortableWord(rawTerm) : rawTerm;
+        const meaning = (card.dataset.meaning || card.querySelector('.text-slate-700')?.textContent?.trim() || '').toLowerCase();
+        const text = (card.textContent || '').toLowerCase();
+
+        if (term.includes(query) || meaning.includes(query) || text.includes(query) || (cleanQuery && cleanTerm.includes(cleanQuery))) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+    window.applyBookSearchState = applyBookSearchState;
+
     if (searchInput && searchInput.dataset.searchBound !== 'true') {
       searchInput.dataset.searchBound = 'true';
+
       searchInput.addEventListener('input', (e) => {
-        const query = (e.target.value || '').trim().toLowerCase();
-        const cleanQuery = getSortableWord(query);
-        const cards = bookScreen.querySelectorAll('.book-word-card');
-        cards.forEach((card) => {
-          const rawTerm = (card.dataset.term || card.querySelector('span.text-xl')?.textContent?.trim() || '');
-          const term = rawTerm.toLowerCase();
-          const cleanTerm = getSortableWord(rawTerm);
-          const text = (card.textContent || '').toLowerCase();
-          if (!query || term.includes(query) || text.includes(query) || (cleanQuery && cleanTerm.includes(cleanQuery))) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        applyBookSearchState(e.target.value);
+      });
+
+      // 엔터(Enter) 키 입력 시 스마트폰 가상 키보드 즉시 내림 (input.blur())
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          searchInput.blur();
+        }
+      });
+    }
+
+    if (searchBtn && searchBtn.dataset.bound !== 'true') {
+      searchBtn.dataset.bound = 'true';
+      searchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (searchInput) searchInput.blur();
+      });
+    }
+
+    if (searchClearBtn && searchClearBtn.dataset.bound !== 'true') {
+      searchClearBtn.dataset.bound = 'true';
+      searchClearBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.value = '';
+          applyBookSearchState('');
+          searchInput.blur();
+        }
       });
     }
 
     // 5. 2과 섹션 클릭 피드백
-    const ch2Toggle = bookScreen.querySelector('#book-chapter-2-toggle');
     if (ch2Toggle && ch2Toggle.dataset.toggleBound !== 'true') {
       ch2Toggle.dataset.toggleBound = 'true';
       ch2Toggle.addEventListener('click', () => {
@@ -5544,7 +5696,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=58`;
+    return `assets/profiles/${file}?v=59`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6060,7 +6212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=58';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=59';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6104,7 +6256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=58';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=59';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

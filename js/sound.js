@@ -235,14 +235,5 @@
     document.addEventListener(evt, unlockAudio, { capture: true, passive: true });
   });
 
-  // UI 공통 버튼 클릭 시 가벼운 'click' 효과음 연동 (게임 4지선다 답안 버튼 제외)
-  document.addEventListener('click', (e) => {
-    const clickable = e.target.closest('button, .roadmap-node, .nav-item, .book-filter-chip, .book-course-item, a[role="button"]');
-    if (!clickable) return;
-    if (clickable.classList.contains('game-choice-btn') || clickable.closest('#game-screen')) {
-      return;
-    }
-    playSound('click');
-  }, true);
-
+  // 메뉴/탭 클릭 비프음 제거 완료 (게임 내 정답/오답/보석 사운드만 재생)
 })();
