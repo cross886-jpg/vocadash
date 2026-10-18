@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=20`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=22`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     es: [
       { id: 'basic', icon: '🌱', title: '기초 회화', desc: '인사, 감사, 숫자 등 매일 쓰는 첫걸음' },
       { id: 'travel', icon: '✈️', title: '여행 스페인어', desc: '공항, 숙소, 식당 필수 회화' },
-      { id: 'dele', icon: '🎓', title: 'DELE A1 대비', desc: 'A1 초급 자격증 핵심 단어' },
+      { id: 'dele', icon: '🎓', title: 'DELE 준비과정', desc: 'A1~B2 등급별 어휘 및 실전 대비' },
       { id: 'business', icon: '💼', title: '비즈니스 스페인어', desc: '오피스 일상, 미팅, 이메일' }
     ],
     en: [
@@ -310,61 +310,61 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=20', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=20', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=22', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=22', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
     es: {
       basic: {
-        'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱' },
-        'node-2': { title: '2과: 감사/사과', desc: 'Gracias, Por favor, Lo siento 등 필수 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏' },
-        'node-3': { title: '3과: 숫자/시간', desc: '1부터 100까지의 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰' },
-        'node-boss': { title: '4과: 일상 기초 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱', level: '기초', category: '인사/안부', tags: ['인사/안부', '인사', '안부'] },
+        'node-2': { title: '2과: 감사/사과', desc: 'Gracias, Por favor, Lo siento 등 필수 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏', level: '기초', category: '감사/사과', tags: ['감사/사과', '감사', '사과'] },
+        'node-3': { title: '3과: 숫자/시간', desc: '1부터 100까지의 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰', level: '기초', category: '숫자/시간', tags: ['숫자/시간', '숫자', '시간'] },
+        'node-boss': { title: '4과: 일상 기초 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '일상 기초', tags: ['일상 기초', '일상', '기초', '보스전'] }
       },
       travel: {
-        'node-1': { title: '1과: 기내 기본 표현', desc: '좌석 요청, 음료 주문, 착륙 안내 등 비행기 탑승 필수 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️' },
-        'node-2': { title: '2과: 입국 심사', desc: '입국 목적, 체류 기간, 숙소 위치 등 필수 공항 인터뷰 질문과 핵심 어휘 10개 및 실전 문장 3개를 마스터하세요!', icon: '🛂' },
-        'node-3': { title: '3과: 수하물 찾기와 세관', desc: '수하물 수취대 찾기, 분실물 신고, 세관 검사 필수 표현과 실전문장 13개를 마스터해보세요!', icon: '🧳' },
-        'node-boss': { title: '보스전: 공항 마스터 관문', desc: '입국 심사 완벽 통과 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 기내 기본 표현', desc: '좌석 요청, 음료 주문, 착륙 안내 등 비행기 탑승 필수 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️', level: '초급', category: '공항/기내', tags: ['공항/기내', '공항', '기내', '비행기'] },
+        'node-2': { title: '2과: 입국 심사', desc: '입국 목적, 체류 기간, 숙소 위치 등 필수 공항 인터뷰 질문과 핵심 어휘 10개 및 실전 문장 3개를 마스터하세요!', icon: '🛂', level: '초중급', category: '교통/길찾기', tags: ['교통/길찾기', '입국 심사', '인터뷰', '심사'] },
+        'node-3': { title: '3과: 수하물 찾기와 세관', desc: '수하물 수취대 찾기, 분실물 신고, 세관 검사 필수 표현과 실전문장 13개를 마스터해보세요!', icon: '🧳', level: '중급', category: '호텔/숙소', tags: ['호텔/숙소', '수하물 찾기와 세관', '수하물', '세관'] },
+        'node-boss': { title: '보스전: 공항 마스터 관문', desc: '입국 심사 완벽 통과 & 특별 보상', icon: '👑', level: '보스전', category: '식당/카페', tags: ['식당/카페', '공항 마스터', '보스전'] }
       },
       dele: {
-        'node-1': { title: '1과: DELE A1 필수 어휘', desc: '기초 문법과 A1 빈출 단어 50선', icon: '📝' },
-        'node-2': { title: '2과: DELE A2 어휘와 독해', desc: '중급 도약을 위한 일상 독해 어휘', icon: '📖' },
-        'node-3': { title: '3과: DELE B1 핵심 표현', desc: '의견 표현과 논리적 문장 구성 어휘', icon: '🎓' },
-        'node-boss': { title: '4과: DELE 실전 모의테스트', desc: 'DELE 시험 완벽 대비 실전 문제', icon: '👑' }
+        'node-1': { title: '1과: DELE A1 (우리 몸 1)', desc: '신체 기본 부위 및 A1 기초 어휘 50선', icon: '📝', level: 'DELE A1', category: 'DELE A1', tags: ['DELE A1', 'A1', '우리 몸 1', '우리 몸'] },
+        'node-2': { title: '2과: DELE A1 (우리 몸 2)', desc: '얼굴 및 감각 기관 핵심 어휘', icon: '👀', level: 'DELE A1', category: 'DELE A1', tags: ['DELE A1', 'A1', '우리 몸 2', '우리 몸'] },
+        'node-3': { title: '3과: DELE A2 (세부 부위/장기)', desc: '세부 신체 부위 및 A2 실전 독해 어휘', icon: '🫀', level: 'DELE A2', category: 'DELE A2', tags: ['DELE A2', 'A2', '세부 부위/장기', '장기'] },
+        'node-boss': { title: '4과: DELE 실전 모의테스트', desc: 'DELE B1/B2 실전 모의테스트 & 최종 관문', icon: '👑', level: 'DELE B2', category: 'DELE B2', tags: ['DELE B1', 'DELE B2', 'B1', 'B2', '모의테스트', '실전 모의테스트'] }
       },
       business: {
-        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝' },
-        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼' },
-        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧' },
-        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝', level: '실무', category: '오피스 일상', tags: ['오피스 일상', '출근', '인사'] },
+        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼', level: '실무', category: '이메일/문서', tags: ['이메일/문서', '회의', '보고'] },
+        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧', level: '실무', category: '미팅/협상', tags: ['미팅/협상', '이메일', '전화'] },
+        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '비자/행정', tags: ['비자/행정', '협상', '보스전'] }
       }
     },
     en: {
       basic: {
-        'node-1': { title: '1과: 인사/기초 표현', desc: 'Hello, Thank you, Please 등 매일 쓰는 첫인사와 필수 기초 회화를 마스터하세요!', icon: '🌱' },
-        'node-2': { title: '2과: 감사/사과 표현', desc: 'Thank you, Sorry, Excuse me 등 필수 영어 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏' },
-        'node-3': { title: '3과: 숫자와 시간', desc: '1부터 100까지의 영어 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰' },
-        'node-boss': { title: '4과: 필수 회화 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 인사/기초 표현', desc: 'Hello, Thank you, Please 등 매일 쓰는 첫인사와 필수 기초 회화를 마스터하세요!', icon: '🌱', level: '기초', category: '인사/안부', tags: ['인사/안부', '인사'] },
+        'node-2': { title: '2과: 감사/사과 표현', desc: 'Thank you, Sorry, Excuse me 등 필수 영어 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏', level: '기초', category: '감사/사과', tags: ['감사/사과', '감사'] },
+        'node-3': { title: '3과: 숫자와 시간', desc: '1부터 100까지의 영어 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰', level: '기초', category: '숫자/시간', tags: ['숫자/시간', '숫자'] },
+        'node-boss': { title: '4과: 필수 회화 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '일상 기초', tags: ['일상 기초', '보스전'] }
       },
       travel: {
-        'node-1': { title: '1과: 기내 필수 영어', desc: 'Water, Blanket, Aisle seat 등 비행기 탑승 필수 영어 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️' },
-        'node-2': { title: '2과: 공항 & 입국 심사', desc: 'Passport, Purpose of visit 등 입국 심사 핵심 영어 어휘와 문장 마스터!', icon: '🛂' },
-        'node-3': { title: '3과: 수하물 찾기와 세관', desc: 'Baggage claim, Customs 등 수하물 분실 신고와 세관 통관 표현 마스터!', icon: '🧳' },
-        'node-boss': { title: '보스전: 여행 영어 마스터', desc: '여행 영어 완벽 마스터 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 기내 필수 영어', desc: 'Water, Blanket, Aisle seat 등 비행기 탑승 필수 영어 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️', level: '초급', category: '공항/기내', tags: ['공항/기내', '공항'] },
+        'node-2': { title: '2과: 공항 & 입국 심사', desc: 'Passport, Purpose of visit 등 입국 심사 핵심 영어 어휘와 문장 마스터!', icon: '🛂', level: '초중급', category: '교통/길찾기', tags: ['교통/길찾기', '입국 심사'] },
+        'node-3': { title: '3과: 수하물 찾기와 세관', desc: 'Baggage claim, Customs 등 수하물 분실 신고와 세관 통관 표현 마스터!', icon: '🧳', level: '중급', category: '호텔/숙소', tags: ['호텔/숙소', '수하물'] },
+        'node-boss': { title: '보스전: 여행 영어 마스터', desc: '여행 영어 완벽 마스터 & 특별 보상', icon: '👑', level: '보스전', category: '식당/카페', tags: ['식당/카페', '보스전'] }
       },
       toeic: {
-        'node-1': { title: '1과: Part 1/2 빈출 어휘', desc: '사진 묘사 및 질의응답 핵심 단어', icon: '🎧' },
-        'node-2': { title: '2과: Part 3/4 비즈니스 회화', desc: '대화 및 설명문 빈출 표현', icon: '💬' },
-        'node-3': { title: '3과: Part 5/6 문법/어휘', desc: '단문 및 장문 공란 메우기 핵심 단어', icon: '📄' },
-        'node-boss': { title: '4과: Part 7 독해 실전 마스터', desc: '장문 독해 및 이메일/기사 지문 완성', icon: '👑' }
+        'node-1': { title: '1과: Part 1/2 빈출 어휘', desc: '사진 묘사 및 질의응답 핵심 단어', icon: '🎧', level: '초급', category: 'Part 1/2', tags: ['Part 1/2', 'Part 1', 'Part 2'] },
+        'node-2': { title: '2과: Part 3/4 비즈니스 회화', desc: '대화 및 설명문 빈출 표현', icon: '💬', level: '중급', category: 'Part 3/4', tags: ['Part 3/4', 'Part 3', 'Part 4'] },
+        'node-3': { title: '3과: Part 5/6 문법/어휘', desc: '단문 및 장문 공란 메우기 핵심 단어', icon: '📄', level: '중상급', category: 'Part 5/6', tags: ['Part 5/6', 'Part 5', 'Part 6'] },
+        'node-boss': { title: '4과: Part 7 독해 실전 마스터', desc: '장문 독해 및 이메일/기사 지문 완성', icon: '👑', level: '실전', category: 'Part 7', tags: ['Part 7', '독해', '보스전'] }
       },
       business: {
-        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝' },
-        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼' },
-        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧' },
-        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑' }
+        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝', level: '실무', category: '오피스 일상', tags: ['오피스 일상', '출근'] },
+        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼', level: '실무', category: '이메일/문서', tags: ['이메일/문서', '회의'] },
+        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧', level: '실무', category: '미팅/협상', tags: ['미팅/협상', '이메일'] },
+        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '비자/행정', tags: ['비자/행정', '협상'] }
       }
     }
   };
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const courseCategoryMap = {
     basic: { icon: '🌱', titles: { es: '기초 회화', en: '기초 회화' }, categories: ['전체', '인사/안부', '감사/사과', '숫자/시간', '일상 기초'] },
     travel: { icon: '✈️', titles: { es: '여행 스페인어', en: '여행 영어' }, categories: ['전체', '공항/기내', '교통/길찾기', '호텔/숙소', '식당/카페'] },
-    dele: { icon: '🎓', titles: { es: 'DELE A1 대비', en: 'DELE 시험 대비' }, categories: ['전체', 'DELE A1', 'DELE A2', 'DELE B1', 'DELE B2'] },
+    dele: { icon: '🎓', titles: { es: 'DELE 준비과정', en: 'DELE 준비과정' }, categories: ['전체', 'DELE A1', 'DELE A2', 'DELE B1', 'DELE B2'] },
     business: { icon: '💼', titles: { es: '비즈니스 스페인어', en: '비즈니스 영어' }, categories: ['전체', '오피스 일상', '이메일/문서', '미팅/협상', '비자/행정'] },
     toeic: { icon: '🎓', titles: { es: '토익/오픽 대비', en: '토익/오픽 대비' }, categories: ['전체', 'Part 1/2', 'Part 3/4', 'Part 5/6', 'Part 7'] }
   };
@@ -747,12 +747,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (lockBadgeBoss) lockBadgeBoss.classList.remove('hidden');
       if (checkBadgeBoss) checkBadgeBoss.classList.add('hidden');
-      if (btnBoss) {
-        btnBoss.title = '보스전: 잠김';
-      }
       if (badgeBoss) {
         badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-outline font-semibold">3과 완료 후 잠금 해제</span>';
       }
+    }
+
+    // 각 스테이지 노드 DOM에 category/level/tags 메타데이터 동기화
+    ['node-1', 'node-2', 'node-3', 'node-boss'].forEach((nid) => {
+      const nodeEl = document.querySelector(`.roadmap-node[data-node-id="${nid}"]`);
+      if (nodeEl && lessons && lessons[nid]) {
+        const item = lessons[nid];
+        nodeEl.setAttribute('data-category', item.category || item.level || '');
+        nodeEl.setAttribute('data-level', item.level || item.category || '');
+        nodeEl.setAttribute('data-tags', Array.isArray(item.tags) ? item.tags.join(',') : (item.tags || ''));
+      }
+    });
+
+    // 현재 활성화된 서브 필터(예: '전체', 'DELE A1', 'DELE A2' 등) 적용
+    if (typeof filterRoadmapByCategory === 'function') {
+      filterRoadmapByCategory(window.currentCategoryFilter || '전체');
     }
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
@@ -828,20 +841,107 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   on('continueStreakBtn', 'click', () => { window.closeStreakModal(); window.openLessonModal('node-2'); });
 
-  // 4. Header Category Chips & Subcategory Dropdown
+  // 4. Header Category Chips & Subcategory Dropdown & Stage Filter
+  function filterRoadmapByCategory(categoryName) {
+    const activeCategory = (categoryName || '전체').trim();
+    window.currentCategoryFilter = activeCategory;
+
+    const svgPath = document.getElementById('roadmap-svg-path') || document.querySelector('#roadmap-screen svg');
+    const nodes = document.querySelectorAll('.roadmap-node');
+
+    if (activeCategory === '전체') {
+      nodes.forEach((node) => {
+        node.classList.remove('hidden');
+        node.style.display = '';
+      });
+      if (svgPath) {
+        svgPath.classList.remove('hidden');
+        svgPath.style.display = '';
+        svgPath.style.opacity = '1';
+      }
+      return;
+    }
+
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseId = window.currentCourseId || 'basic';
+    const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
+    const lessons = langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic;
+
+    let visibleCount = 0;
+    const targetClean = activeCategory.toLowerCase().replace(/[\s\-_/]/g, '');
+
+    nodes.forEach((node) => {
+      const nid = node.dataset.nodeId;
+      const lesson = lessons ? lessons[nid] : null;
+      let isMatch = false;
+
+      if (lesson) {
+        const catStr = String(lesson.category || '').toLowerCase().replace(/[\s\-_/]/g, '');
+        const lvlStr = String(lesson.level || '').toLowerCase().replace(/[\s\-_/]/g, '');
+        const titleStr = String(lesson.title || '').toLowerCase().replace(/[\s\-_/]/g, '');
+        const tags = Array.isArray(lesson.tags) ? lesson.tags.map(t => String(t).toLowerCase().replace(/[\s\-_/]/g, '')) : [];
+
+        if (catStr === targetClean || lvlStr === targetClean || tags.includes(targetClean)) {
+          isMatch = true;
+        } else if (titleStr.includes(targetClean) || tags.some(t => t.includes(targetClean) || targetClean.includes(t))) {
+          isMatch = true;
+        }
+
+        // DELE 레벨별 서브 필터링 정밀 매칭 ('a1', 'a2', 'b1', 'b2')
+        ['a1', 'a2', 'b1', 'b2'].forEach((lvl) => {
+          if (targetClean.includes(lvl)) {
+            if (catStr.includes(lvl) || lvlStr.includes(lvl) || titleStr.includes(lvl) || tags.some(t => t.includes(lvl))) {
+              isMatch = true;
+            }
+          }
+        });
+      }
+
+      if (isMatch) {
+        node.classList.remove('hidden');
+        node.style.display = '';
+        visibleCount++;
+      } else {
+        node.classList.add('hidden');
+        node.style.display = 'none';
+      }
+    });
+
+    if (svgPath) {
+      if (visibleCount === nodes.length) {
+        svgPath.classList.remove('hidden');
+        svgPath.style.display = '';
+        svgPath.style.opacity = '1';
+      } else {
+        svgPath.classList.add('hidden');
+        svgPath.style.display = 'none';
+        svgPath.style.opacity = '0';
+      }
+    }
+  }
+  window.filterRoadmapByCategory = filterRoadmapByCategory;
+
   const categoryContainer = el('category-tabs');
   function bindCategoryPills() {
     document.querySelectorAll('.category-pill').forEach((p) => p.addEventListener('click', (e) => {
       e.stopPropagation();
-      document.querySelectorAll('.category-pill').forEach((item) => item.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer');
+      const catName = p.textContent.trim();
+      document.querySelectorAll('.category-pill').forEach((item) => {
+        item.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container transition-colors cursor-pointer';
+      });
       p.className = 'category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs bg-primary text-on-primary font-bold shadow-sm cursor-pointer';
+      filterRoadmapByCategory(catName);
     }));
   }
   bindCategoryPills();
 
   function renderCategoryChips(categories) {
     if (!categoryContainer || !categories) return;
-    categoryContainer.innerHTML = categories.map((cat, idx) => `<button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs ${idx === 0 ? 'bg-primary text-on-primary font-bold shadow-sm' : 'bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container'} transition-colors cursor-pointer" type="button">${escapeHTML(cat)}</button>`).join('');
+    const currentFilter = window.currentCategoryFilter || '전체';
+    categoryContainer.innerHTML = categories.map((cat, idx) => {
+      const isSelected = cat === currentFilter || (currentFilter === '전체' && idx === 0);
+      return `<button class="category-pill flex-shrink-0 py-1 px-3 rounded-full font-label-sm text-xs ${isSelected ? 'bg-primary text-on-primary font-bold shadow-sm' : 'bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container'} transition-colors cursor-pointer" type="button">${escapeHTML(cat)}</button>`;
+    }).join('');
     categoryContainer.scrollTo({ left: 0, behavior: 'smooth' });
     bindCategoryPills();
   }
@@ -896,6 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSelected = presets.find((p) => p.id === targetCourseId) || presets[0];
     window.currentCourseId = currentSelected.id;
     window.currentBookCourseId = currentSelected.id;
+    window.currentCategoryFilter = '전체';
     try {
       localStorage.setItem('vocadash_current_course', currentSelected.id);
     } catch (_) {}
@@ -948,6 +1049,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       window.currentCourseId = courseId;
       window.currentBookCourseId = courseId;
+      window.currentCategoryFilter = '전체';
       try {
         localStorage.setItem('vocadash_current_course', courseId);
       } catch (_) {}
@@ -1054,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=20';
+    const v = '?v=22';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1735,7 +1837,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=20' : 'assets/profiles/profile-spanish.webp?v=20';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=22' : 'assets/profiles/profile-spanish.webp?v=22';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2323,7 +2425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     es: [
       { id: 'basic', icon: '🌱', title: '기초 회화' },
       { id: 'travel', icon: '✈️', title: '여행 스페인어' },
-      { id: 'dele', icon: '🎓', title: 'DELE A1 대비' },
+      { id: 'dele', icon: '🎓', title: 'DELE 준비과정' },
       { id: 'business', icon: '💼', title: '비즈니스 스페인어' }
     ],
     en: [
@@ -2783,7 +2885,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=20`;
+    return `assets/profiles/${file}?v=22`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3293,7 +3395,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=20';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=22';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3335,7 +3437,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=20';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=22';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
