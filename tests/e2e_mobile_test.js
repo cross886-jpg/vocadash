@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=31`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=32`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -363,6 +363,25 @@ async function runE2ETests() {
     await page.click('#bonus-claim-btn');
     await page.waitForTimeout(250);
 
+    // Test Unit Overview Sheet interaction (verify language modal is NOT opened!)
+    await page.click('#unit-banner');
+    await page.waitForTimeout(250);
+    const unitOverviewState = await page.evaluate(() => {
+      const unitModal = document.getElementById('unit-overview-modal-backdrop');
+      const langModal = document.getElementById('language-modal-backdrop');
+      const titleEl = document.getElementById('unit-overview-title');
+      const cards = document.querySelectorAll('.unit-item-card');
+      return {
+        unitModalOpen: unitModal && !unitModal.classList.contains('pointer-events-none') && unitModal.classList.contains('opacity-100'),
+        langModalNotOpen: langModal ? langModal.classList.contains('pointer-events-none') : true,
+        title: titleEl ? titleEl.textContent : '',
+        cardCount: cards.length
+      };
+    });
+    // Close unit overview modal
+    await page.click('#close-unit-overview-btn');
+    await page.waitForTimeout(200);
+
     // Test scrolling to verify header remains fixed at top: 0
     await page.evaluate(() => window.scrollTo(0, 300));
     await page.waitForTimeout(100);
@@ -388,6 +407,9 @@ async function runE2ETests() {
       roadmapGameState.hasBossNode &&
       roadmapGameState.btn3dCount >= 5 &&
       bonusModalOpen &&
+      unitOverviewState.unitModalOpen &&
+      unitOverviewState.langModalNotOpen &&
+      unitOverviewState.cardCount === 10 &&
       headerState.hasStreak &&
       headerState.hasHearts &&
       headerState.hasGems &&
@@ -399,7 +421,8 @@ async function runE2ETests() {
       courseSelectorRemoved,
       roadmapGameState,
       bonusModalOpen,
-      summary: headerCompactValid ? '상단 카테고리 셀렉터 완전 제거 + 3D 캐주얼 러닝 게임 맵(stage/bonus/review/boss) + 바운스 고양이 마커 정상 검증 통과' : '헤더 및 로드맵 게임 비주얼 기준 미달'
+      unitOverviewState,
+      summary: headerCompactValid ? '상단 유닛 배너/드롭다운 클릭 시 유닛 맵 모달(10개 유닛, 언어 모달 미노출) + 3D 캐주얼 러닝 게임 맵 정상 검증 통과' : '헤더 및 로드맵 게임 비주얼 기준 미달'
     });
 
     // -----------------------------------------------------------------

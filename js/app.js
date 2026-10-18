@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=31`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=32`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=31', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=31', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=32', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=32', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -955,12 +955,164 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabReview = el('tab-review');
     if (tabReview) tabReview.click();
   });
+  // ===================================================
+  // UNIT OVERVIEW BOTTOM SHEET (전체 유닛 코스 맵) 로직
+  // ===================================================
+  const UNIT_LIST_PRESETS = {
+    es: [
+      { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
+      { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
+      { unit: 3, title: '길찾기 & 교통', subtitle: '지하철, 버스, 택시 & 위치 묻기', progress: 0, status: 'locked', icon: '🧭' },
+      { unit: 4, title: '쇼핑 & 환전', subtitle: '가격 흥정, 사이즈 & 결제 표현', progress: 0, status: 'locked', icon: '🛍️' },
+      { unit: 5, title: '호텔 & 숙소', subtitle: '체크인, 룸서비스 & 어메니티 요청', progress: 0, status: 'locked', icon: '🏨' },
+      { unit: 6, title: '병원 & 약국', subtitle: '증상 설명, 응급처치 & 분실물 신고', progress: 0, status: 'locked', icon: '🏥' },
+      { unit: 7, title: '친구 사귀기 & 취미', subtitle: '자기소개, 취향 & 주말 약속', progress: 0, status: 'locked', icon: '🎉' },
+      { unit: 8, title: '날씨 & 일상 대화', subtitle: '사계절, 감정 표현 & 스몰토크', progress: 0, status: 'locked', icon: '☀️' },
+      { unit: 9, title: '비즈니스 기초', subtitle: '이메일, 오피스 미팅 & 명함 교환', progress: 0, status: 'locked', icon: '💼' },
+      { unit: 10, title: '현지 문화 & 관용구', subtitle: '스페인 속담, 슬랭 & 마스터 시험', progress: 0, status: 'locked', icon: '👑' }
+    ],
+    en: [
+      { unit: 1, title: '생존 첫걸음', subtitle: 'Greeting, Thanks & Numbers Master', progress: 60, status: 'active', icon: '🇺🇸' },
+      { unit: 2, title: '카페 & 주문', subtitle: 'Cafe, Food Ordering & The Check', progress: 0, status: 'locked', icon: '☕' },
+      { unit: 3, title: '길찾기 & 교통', subtitle: 'Subway, Taxi & Asking Directions', progress: 0, status: 'locked', icon: '🧭' },
+      { unit: 4, title: '쇼핑 & 환전', subtitle: 'Prices, Sizing & Credit Card', progress: 0, status: 'locked', icon: '🛍️' },
+      { unit: 5, title: '호텔 & 숙소', subtitle: 'Check-in, Amenities & Front Desk', progress: 0, status: 'locked', icon: '🏨' },
+      { unit: 6, title: '병원 & 약국', subtitle: 'Symptoms, Pharmacy & Emergencies', progress: 0, status: 'locked', icon: '🏥' },
+      { unit: 7, title: '친구 사귀기 & 취미', subtitle: 'Small Talk, Hobbies & Weekend', progress: 0, status: 'locked', icon: '🎉' },
+      { unit: 8, title: '날씨 & 일상 대화', subtitle: 'Weather, Mood & Daily Life', progress: 0, status: 'locked', icon: '☀️' },
+      { unit: 9, title: '비즈니스 기초', subtitle: 'Emails, Business Meetings & Office', progress: 0, status: 'locked', icon: '💼' },
+      { unit: 10, title: '현지 문화 & 관용구', subtitle: 'Native Idioms, Slang & Master Exam', progress: 0, status: 'locked', icon: '👑' }
+    ]
+  };
+
+  function renderUnitOverviewList(targetLang) {
+    const lang = targetLang === 'en' ? 'en' : 'es';
+    const listEl = el('unit-overview-list');
+    const titleEl = el('unit-overview-title');
+    const subtitleEl = el('unit-overview-subtitle');
+
+    if (titleEl) {
+      titleEl.textContent = lang === 'en' ? '🗺️ 영어 코스 맵' : '🗺️ 스페인어 코스 맵';
+    }
+    if (subtitleEl) {
+      subtitleEl.textContent = '총 10개 유닛 중 Unit 1 진행 중';
+    }
+    if (!listEl) return;
+
+    const units = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    let html = '';
+
+    units.forEach((item) => {
+      const isActive = item.status === 'active';
+      if (isActive) {
+        html += `
+          <div class="unit-item-card p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 shadow-xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between" data-unit="${item.unit}" data-status="active">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">
+                U${item.unit}
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-black text-emerald-900 leading-tight">Unit ${item.unit} : ${item.title}</span>
+                  <span class="px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight leading-none">진행 중</span>
+                </div>
+                <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${item.subtitle}</span>
+                <div class="w-36 bg-emerald-200/80 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                  <div class="h-full bg-emerald-600 rounded-full" style="width: ${item.progress}%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 text-emerald-700 font-extrabold text-xs flex-shrink-0 ml-2">
+              <span>${item.progress}%</span>
+              <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+            </div>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="unit-item-card p-3 rounded-2xl border border-slate-200/80 bg-white/90 hover:bg-slate-50 shadow-2xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between opacity-85" data-unit="${item.unit}" data-status="locked">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-sm shadow-2xs flex-shrink-0">
+                U${item.unit}
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-bold text-slate-800 leading-tight">Unit ${item.unit} : ${item.title}</span>
+                </div>
+                <span class="text-[11px] font-medium text-slate-400 mt-0.5 truncate">${item.subtitle}</span>
+              </div>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 flex-shrink-0 ml-2 shadow-2xs">
+              <span class="material-symbols-outlined text-[15px] font-bold">lock</span>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    listEl.innerHTML = html;
+
+    listEl.querySelectorAll('.unit-item-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const uNum = parseInt(card.dataset.unit, 10);
+        const status = card.dataset.status;
+        if (status === 'active' || uNum === 1) {
+          window.closeUnitOverviewModal();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (typeof window.showToast === 'function') {
+            window.showToast('🚀 현재 진행 중인 Unit 1 로드맵입니다!');
+          }
+        } else {
+          card.classList.add('animate-lock-shake');
+          setTimeout(() => card.classList.remove('animate-lock-shake'), 450);
+          if (typeof window.showToast === 'function') {
+            window.showToast(`Unit ${uNum}은(는) 이전 유닛 완료 후 잠금 해제됩니다! 🔒`);
+          }
+        }
+      });
+    });
+  }
+
+  const unitOverviewBackdrop = el('unit-overview-modal-backdrop');
+  const unitOverviewCard = el('unit-overview-modal-card');
+
+  window.openUnitOverviewModal = function() {
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    renderUnitOverviewList(lang);
+    if (unitOverviewBackdrop && unitOverviewCard) {
+      unitOverviewBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+      unitOverviewBackdrop.classList.add('opacity-100');
+      unitOverviewCard.classList.remove('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
+      unitOverviewCard.classList.add('translate-y-0', 'sm:scale-100', 'opacity-100');
+    }
+  };
+
+  window.closeUnitOverviewModal = function() {
+    if (unitOverviewBackdrop && unitOverviewCard) {
+      unitOverviewBackdrop.classList.remove('opacity-100');
+      unitOverviewBackdrop.classList.add('pointer-events-none', 'opacity-0');
+      unitOverviewCard.classList.remove('translate-y-0', 'sm:scale-100', 'opacity-100');
+      unitOverviewCard.classList.add('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
+    }
+  };
+
+  on('unit-banner', 'click', (e) => {
+    e.stopPropagation();
+    window.openUnitOverviewModal();
+  });
   on('unit-dropdown-btn', 'click', (e) => {
     e.stopPropagation();
-    if (typeof window.openLanguageModal === 'function') {
-      window.openLanguageModal();
-    }
+    window.openUnitOverviewModal();
   });
+  on('close-unit-overview-btn', 'click', window.closeUnitOverviewModal);
+  on('unit-overview-confirm-btn', 'click', window.closeUnitOverviewModal);
+  if (unitOverviewBackdrop) {
+    unitOverviewBackdrop.addEventListener('click', (e) => {
+      if (e.target === unitOverviewBackdrop) {
+        window.closeUnitOverviewModal();
+      }
+    });
+  }
 
   const bonusClaimBtn = el('bonus-claim-btn');
   if (bonusClaimBtn) {
@@ -1277,7 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=31';
+    const v = '?v=32';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1962,7 +2114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=31' : 'assets/profiles/profile-spanish.webp?v=31';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=32' : 'assets/profiles/profile-spanish.webp?v=32';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -3010,7 +3162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=31`;
+    return `assets/profiles/${file}?v=32`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3526,7 +3678,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=31';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=32';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3568,7 +3720,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=31';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=32';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
