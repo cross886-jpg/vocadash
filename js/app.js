@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=50`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=53`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=50', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=50', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=53', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=53', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -1471,8 +1471,98 @@ document.addEventListener('DOMContentLoaded', () => {
         if (check) check.classList.add('hidden');
       }
     });
+    if (typeof renderPacksScreenUI === 'function') {
+      renderPacksScreenUI();
+    }
   }
   window.updateCourseSwitcherUI = updateCourseSwitcherUI;
+
+  // 단어팩 보관함 화면 UI 렌더링 함수
+  function renderPacksScreenUI() {
+    const packsScreen = document.getElementById('packs-screen');
+    if (!packsScreen) return;
+
+    const activeId = window.activeCourseId || localStorage.getItem('vocadash_active_course') || 'main';
+
+    // 1) Active Hero Banner
+    const heroTitle = document.getElementById('packs-hero-title');
+    const heroDesc = document.getElementById('packs-hero-desc');
+    const heroIcon = document.getElementById('packs-hero-icon');
+    const heroStatusPill = document.getElementById('packs-hero-status-pill');
+
+    if (activeId === 'pack_football') {
+      if (heroTitle) heroTitle.textContent = '스페인 축구 실전팩 (Official DLC)';
+      if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 40개';
+      if (heroIcon) heroIcon.textContent = '⚽';
+    } else {
+      if (heroTitle) heroTitle.textContent = '스페인어 정규 코스 (기본 코스)';
+      if (heroDesc) heroDesc.textContent = '공항, 호텔, 식당 등 여행 & 일상 생존 회화 40개';
+      if (heroIcon) heroIcon.textContent = '🇪🇸';
+    }
+
+    // 2) Pack Cards Status & Buttons
+    const packCards = packsScreen.querySelectorAll('.pack-card[data-pack-id]');
+    packCards.forEach(card => {
+      const pid = card.dataset.packId;
+      const isEquipped = (pid === activeId);
+      const equipBtn = card.querySelector('.btn-pack-equip');
+
+      if (pid === 'pack_football' || pid === 'main') {
+        if (isEquipped) {
+          card.classList.remove('border-slate-200/90', 'border-slate-200');
+          card.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/20', 'bg-emerald-50/20');
+          if (equipBtn) {
+            equipBtn.className = 'btn-pack-equip px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center gap-1 bg-emerald-500 text-white shadow-xs cursor-default pointer-events-none';
+            equipBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span> 장착 중';
+            equipBtn.disabled = true;
+          }
+        } else {
+          card.classList.remove('border-emerald-500', 'ring-2', 'ring-emerald-500/20', 'bg-emerald-50/20');
+          card.classList.add('border-slate-200/90');
+          if (equipBtn) {
+            equipBtn.className = 'btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1 bg-slate-900 hover:bg-emerald-600 text-white shadow-xs';
+            equipBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기';
+            equipBtn.disabled = false;
+          }
+        }
+      }
+    });
+
+    initPacksScreenEvents();
+  }
+  window.renderPacksScreenUI = renderPacksScreenUI;
+
+  function initPacksScreenEvents() {
+    const packsScreen = document.getElementById('packs-screen');
+    if (!packsScreen || packsScreen.dataset.eventsBound === 'true') return;
+    packsScreen.dataset.eventsBound = 'true';
+
+    packsScreen.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-pack-equip');
+      if (!btn || btn.disabled) return;
+      const packId = btn.dataset.packId;
+      if (!packId || packId === window.activeCourseId) return;
+
+      if (typeof window.triggerHaptic === 'function') {
+        window.triggerHaptic(25);
+      }
+      if (typeof window.playGameSFX === 'function') {
+        window.playGameSFX('powerup');
+      }
+
+      if (typeof window.switchCourse === 'function') {
+        window.switchCourse(packId);
+      } else {
+        window.activeCourseId = packId;
+        window.currentBookCourseId = packId;
+        try {
+          localStorage.setItem('vocadash_active_course', packId);
+        } catch (_) {}
+      }
+      renderPacksScreenUI();
+    });
+  }
+  window.initPacksScreenEvents = initPacksScreenEvents;
 
   // 단어팩(DLC/확장팩) 및 메인 코스 전환 함수
   function switchCourse(courseId) {
@@ -2831,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=50';
+    const v = '?v=53';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3546,7 +3636,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.userHearts = hearts;
 
     const headerHeart = document.getElementById('header-hearts-count');
-    if (headerHeart) headerHeart.textContent = `${hearts}/5`;
+    const headerHeartIcon = document.getElementById('header-hearts-icon');
+    const headerHeartBadge = document.getElementById('header-hearts-badge');
+
+    if (headerHeart) {
+      headerHeart.textContent = String(hearts);
+    }
+    if (headerHeartIcon) {
+      headerHeartIcon.textContent = hearts === 0 ? '💔' : '❤️';
+    }
+    if (headerHeartBadge) {
+      if (hearts === 0) {
+        headerHeartBadge.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200/80');
+        headerHeartBadge.classList.add('bg-slate-100', 'text-slate-600', 'border-slate-300');
+        headerHeartBadge.title = '하트 소진 (충전 필요)';
+      } else {
+        headerHeartBadge.classList.remove('bg-slate-100', 'text-slate-600', 'border-slate-300');
+        headerHeartBadge.classList.add('bg-rose-50', 'text-rose-600', 'border-rose-200/80');
+        headerHeartBadge.title = `남은 하트: ${hearts}개`;
+      }
+    }
+
     const reviewHeart = document.getElementById('review-hearts-display');
     if (reviewHeart) reviewHeart.textContent = `${hearts}/5`;
     if (typeof window.syncInGameHearts === 'function') {
@@ -4057,7 +4167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=50' : 'assets/profiles/profile-spanish.webp?v=50';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=53' : 'assets/profiles/profile-spanish.webp?v=53';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4142,6 +4252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const roadmapScreen = document.getElementById('roadmap-screen');
       const roadmapHeader = document.getElementById('roadmap-header');
+      const packsScreen = document.getElementById('packs-screen');
       const reviewScreen = document.getElementById('review-screen');
       const statsScreen = document.getElementById('stats-screen') || document.getElementById('my-records-screen');
       const settingsScreen = document.getElementById('settings-screen');
@@ -4150,18 +4261,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const loginScreen = document.getElementById('login-screen');
 
       let normTab = String(tabName || 'home').toLowerCase().trim();
+      if (normTab === 'packs' || normTab === 'pack') normTab = 'packs';
       if (normTab === 'stats' || normTab === 'my-records' || normTab === 'record') normTab = 'records';
       if (normTab === 'study' || normTab === 'wordbook') normTab = 'book';
       if (normTab === 'roadmap') normTab = 'home';
 
       const screenMap = {
         home: { screen: roadmapScreen, header: roadmapHeader, tab: document.getElementById('tab-home') },
+        packs: { screen: packsScreen, header: null, tab: document.querySelector('#tab-packs, .nav-packs') },
         review: { screen: reviewScreen, header: null, tab: document.getElementById('tab-review') },
         book: { screen: bookScreen, header: null, tab: document.querySelector('#tab-book, #tab-study, .nav-book, .nav-study') },
         records: { screen: statsScreen, header: null, tab: document.querySelector('#tab-records, #tab-stats, .nav-stats, .nav-records') }
       };
 
-      const allScreens = [roadmapScreen, reviewScreen, bookScreen, statsScreen, settingsScreen, hallOfFameScreen, loginScreen];
+      const allScreens = [roadmapScreen, packsScreen, reviewScreen, bookScreen, statsScreen, settingsScreen, hallOfFameScreen, loginScreen];
       allScreens.forEach((sc) => {
         if (sc) {
           sc.classList.add('hidden');
@@ -4203,6 +4316,10 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
           updateStatsScreenUI();
         } catch (_) {}
+      } else if (normTab === 'packs') {
+        try {
+          if (typeof renderPacksScreenUI === 'function') renderPacksScreenUI();
+        } catch (_) {}
       } else if (normTab === 'review') {
         try {
           if (typeof renderReviewWords === 'function') renderReviewWords('waiting');
@@ -4227,6 +4344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.switchMainTab = switchMainTab;
   }
 
+  // 1번째 아이콘 '홈' (#tab-home)
   const tabHomeBtn = document.getElementById('tab-home');
   if (tabHomeBtn) {
     tabHomeBtn.addEventListener('click', (e) => {
@@ -4236,6 +4354,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 2번째 아이콘 '단어팩' (#tab-packs, .nav-packs)
+  const tabPacksBtns = document.querySelectorAll('#tab-packs, .nav-packs');
+  tabPacksBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      switchMainTab('packs');
+    });
+  });
+
+  // 오답 탈출 호환용 (#tab-review -> 단어장 오답 필터로 연결)
   const tabReviewBtn = document.getElementById('tab-review');
   if (tabReviewBtn) {
     tabReviewBtn.addEventListener('click', (e) => {
@@ -4253,7 +4382,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3번째 아이콘 '교재/단어장' (#tab-book, #tab-study, .nav-book, .nav-study)
+  // 3번째 아이콘 '단어장' (#tab-book, #tab-study, .nav-book, .nav-study)
   const tabBookBtns = document.querySelectorAll('#tab-book, #tab-study, .nav-book, .nav-study');
   tabBookBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -5140,7 +5269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=50`;
+    return `assets/profiles/${file}?v=53`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5656,7 +5785,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=50';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=53';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5683,10 +5812,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (window.showToast) window.showToast(`💖 1분 스피드 복습 완료! 하트 1개 충전 (+1 ❤️)`, '🎉');
         }
         window.userHearts = Math.min(5, (window.userHearts || 4) + 1);
-        const headerHeart = document.getElementById('header-hearts-count');
-        if (headerHeart) headerHeart.textContent = window.userHearts;
-        const reviewHeart = document.getElementById('review-hearts-display');
-        if (reviewHeart) reviewHeart.textContent = `${window.userHearts}/5`;
+        updateHeartsUI();
       } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
         setText('btn-result-primary-text', '3과 마스터 & 4과(보스전) 도전!');
       } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
@@ -5703,7 +5829,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=50';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=53';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

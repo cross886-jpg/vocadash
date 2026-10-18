@@ -109,6 +109,7 @@
 
     const roadmapScreen = el('roadmap-screen');
     const roadmapHeader = el('roadmap-header');
+    const packsScreen = el('packs-screen');
     const reviewScreen = el('review-screen');
     const statsScreen = el('stats-screen') || el('my-records-screen');
     const settingsScreen = el('settings-screen');
@@ -122,6 +123,7 @@
     }
 
     const tabHome = el('tab-home');
+    const tabPacks = document.querySelector('#tab-packs, .nav-packs');
     const tabReview = el('tab-review');
     const tabBook = document.querySelector('#tab-book, #tab-study, .nav-book, .nav-study');
     const tabRecords = document.querySelector('#tab-records, #tab-stats, .nav-stats, .nav-records');
@@ -138,7 +140,9 @@
 
     // 1) 탭 식별자 정규화 및 screenMap 일원화
     let normTab = String(tabName || 'home').toLowerCase().trim();
-    if (normTab === 'stats' || normTab === 'my-records' || normTab === 'record') {
+    if (normTab === 'packs' || normTab === 'pack') {
+      normTab = 'packs';
+    } else if (normTab === 'stats' || normTab === 'my-records' || normTab === 'record') {
       normTab = 'records';
     } else if (normTab === 'study' || normTab === 'wordbook') {
       normTab = 'book';
@@ -148,6 +152,7 @@
 
     const screenMap = {
       home: { screen: roadmapScreen, header: roadmapHeader, tab: tabHome },
+      packs: { screen: packsScreen, header: null, tab: tabPacks },
       review: { screen: reviewScreen, header: null, tab: tabReview },
       book: { screen: bookScreen, header: null, tab: tabBook },
       records: { screen: statsScreen, header: null, tab: tabRecords }
@@ -156,6 +161,7 @@
     // 2) 모든 화면 일괄 숨김 (hidden 추가 및 인라인 display 잔여물 정리)
     const allScreens = [
       roadmapScreen,
+      packsScreen,
       reviewScreen,
       bookScreen,
       statsScreen,
@@ -215,6 +221,12 @@
         if (typeof window.renderUserStats === 'function' && window.renderUserStats !== window.updateStatsScreenUI) window.renderUserStats();
       } catch (err) {
         console.warn('[VocaDash] stats update error caught:', err);
+      }
+    } else if (normTab === 'packs') {
+      try {
+        if (typeof window.renderPacksScreenUI === 'function') window.renderPacksScreenUI();
+      } catch (err) {
+        console.warn('[VocaDash] packs screen render error caught:', err);
       }
     } else if (normTab === 'review') {
       try {
@@ -668,6 +680,16 @@
         e.preventDefault();
         e.stopPropagation();
         switchMainTab('home');
+      });
+    }
+
+    const tabPacks = document.querySelector('#tab-packs, .nav-packs');
+    if (tabPacks && tabPacks.dataset.bound !== 'true') {
+      tabPacks.dataset.bound = 'true';
+      tabPacks.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        switchMainTab('packs');
       });
     }
 

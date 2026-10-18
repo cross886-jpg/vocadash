@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=50`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=53`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -688,19 +688,22 @@ async function runE2ETests() {
       summary: flagCorrect && langNameCorrect && langCorrect && mascotCorrect && signpostCorrect ? '국기 🇺🇸 영어 배지, en-* 캐릭터 에셋, NEW YORK 이정표 표지판으로 즉시 전환 완료' : `언어 전환 상태 불일치 (flag: ${langSwitchState.flag}, langName: ${langSwitchState.langName}, lang: ${langSwitchState.curLang}, mascot: ${langSwitchState.roadMascotSrc}, signpost: ${langSwitchState.signpost})`
     });
 
-    // Navigate to '오답탈출' Tab
-    await page.click('#tab-review');
-    await page.waitForTimeout(400);
+    // Navigate to '단어장' Tab & '오답' Filter Chip
+    await page.click('#tab-book');
+    await page.waitForTimeout(300);
+    const wrongChip = await page.$('#book-filter-wrong-chip');
+    if (wrongChip) await wrongChip.click();
+    await page.waitForTimeout(300);
 
-    // Capture 4: Review / Wrong Notes Screen
+    // Capture 4: Wordbook Wrong Notes Screen
     const reviewShot = path.join(RESULTS_DIR, '4_review_wrong_notes.png');
     await page.screenshot({ path: reviewShot });
-    testReport.screenshots.push({ name: '4_review_wrong_notes.png', description: '오답탈출(영어 격리) 탭 화면' });
+    testReport.screenshots.push({ name: '4_review_wrong_notes.png', description: '단어장(오답 필터/영어 격리) 탭 화면' });
 
     const reviewState = await page.evaluate(() => {
-      const reviewList = document.getElementById('review-word-list') || document.getElementById('review-list');
+      const reviewList = document.getElementById('book-words-container') || document.getElementById('review-word-list');
       const text = reviewList ? reviewList.innerText : '';
-      const badge = document.getElementById('tab-review-badge')?.textContent?.trim();
+      const badge = document.getElementById('book-filter-wrong-count')?.textContent?.trim() || document.getElementById('tab-review-badge')?.textContent?.trim();
       const esStored = localStorage.getItem('vocadash_wrong_answers_es');
       const enStored = localStorage.getItem('vocadash_wrong_answers_en');
       const windowWrong = window.wrongWords || [];
@@ -1060,11 +1063,14 @@ async function runE2ETests() {
       results.heartsAfterSet3 = window.getUserHearts();
       results.localAfterSet3 = localStorage.getItem('vocadash_hearts');
       results.headerText3 = headerEl ? headerEl.textContent.trim() : '';
+      const iconEl = document.getElementById('header-hearts-icon');
+      results.headerIcon3 = iconEl ? iconEl.textContent.trim() : '';
 
       // 2. 0 Hearts Block & Modal Trigger check
       window.setUserHearts(0);
       results.heartsZero = window.getUserHearts();
       results.headerText0 = headerEl ? headerEl.textContent.trim() : '';
+      results.headerIcon0 = iconEl ? iconEl.textContent.trim() : '';
 
       // Try opening stage 1 with 0 hearts
       const lessonModal = document.getElementById('lesson-card-sheet');
@@ -1137,7 +1143,10 @@ async function runE2ETests() {
     const scenarioHPPassed = 
       heartTestResult.initialHearts === 5 &&
       heartTestResult.localAfterSet3 === '3' &&
-      heartTestResult.headerText3 === '3/5' &&
+      heartTestResult.headerText3 === '3' &&
+      heartTestResult.headerIcon3 === '❤️' &&
+      heartTestResult.headerText0 === '0' &&
+      heartTestResult.headerIcon0 === '💔' &&
       heartTestResult.lessonModalOpenedWithZeroHearts === false &&
       heartTestResult.heartModalVisible === true &&
       heartTestResult.modalHasTitle === true &&
@@ -1183,9 +1192,11 @@ async function runE2ETests() {
       // Check badge updated
       results.wrongBadgeCount = wrongCount ? wrongCount.textContent.trim() : '';
 
-      // 3. Navigate to '오답 탈출' tab (#tab-review)
-      const tabReview = document.getElementById('tab-review');
-      if (tabReview) tabReview.click();
+      // 3. Navigate to '단어장' tab (#tab-book) and click '오답' filter chip
+      const tabBook = document.getElementById('tab-book');
+      if (tabBook) tabBook.click();
+      await new Promise(r => setTimeout(r, 100));
+      if (wrongChip) wrongChip.click();
       await new Promise(r => setTimeout(r, 100));
 
       // Should be on book screen
@@ -1351,6 +1362,110 @@ async function runE2ETests() {
       summary: scenarioJPassed
         ? 'es-ES 스페인 본토 TTS 강제 지정(pitch: 1.0, rate: 0.95), Web Audio API 오실레이터 무지연 효과음(correct, wrong, gem, click) 합성음, localStorage 토글 제어 및 모바일 오디오 정책 잠금 해제 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(audioSfxResult)}`
+    });
+
+    // -----------------------------------------------------------------
+    // SCENARIO K: Bottom Navigation (4 Tabs), Word Pack Screen & Safe Bottom
+    // -----------------------------------------------------------------
+    console.log('\n🎒 --- [Scenario K: Bottom Navigation (4 Tabs: Home, Packs, Wordbook, Records), Word Pack Screen & Safe Bottom Padding] ---');
+    const bottomNavAndPacksResult = await page.evaluate(async () => {
+      const results = {};
+
+      // 1. Check 4 bottom navigation tabs
+      const tabHome = document.getElementById('tab-home');
+      const tabPacks = document.getElementById('tab-packs');
+      const tabBook = document.getElementById('tab-book');
+      const tabRecords = document.getElementById('tab-records');
+
+      results.hasTabHome = !!tabHome;
+      results.hasTabPacks = !!tabPacks;
+      results.hasTabBook = !!tabBook;
+      results.hasTabRecords = !!tabRecords;
+
+      results.tabPacksText = tabPacks ? tabPacks.textContent.trim() : '';
+      results.tabBookText = tabBook ? tabBook.textContent.trim() : '';
+
+      // 2. Test switching to Packs tab
+      if (tabPacks) tabPacks.click();
+      await new Promise(r => setTimeout(r, 100));
+
+      const packsScreen = document.getElementById('packs-screen');
+      results.packsScreenVisible = packsScreen && !packsScreen.classList.contains('hidden') && packsScreen.style.display !== 'none';
+
+      // 3. Check packs screen cards and hero banner
+      const footballCard = packsScreen ? packsScreen.querySelector('.pack-card[data-pack-id="pack_football"]') : null;
+      const mainCard = packsScreen ? packsScreen.querySelector('.pack-card[data-pack-id="main"]') : null;
+      results.hasFootballCard = !!footballCard;
+      results.hasMainCard = !!mainCard;
+
+      // 4. Test equipping pack_football
+      const fbEquipBtn = footballCard ? footballCard.querySelector('.btn-pack-equip') : null;
+      if (fbEquipBtn && !fbEquipBtn.disabled) fbEquipBtn.click();
+      await new Promise(r => setTimeout(r, 100));
+
+      results.activeCourseAfterEquip = window.activeCourseId;
+      results.storedCourseAfterEquip = localStorage.getItem('vocadash_active_course');
+      const heroTitleAfterEquip = document.getElementById('packs-hero-title')?.textContent?.trim() || '';
+      results.heroTitleAfterEquip = heroTitleAfterEquip;
+
+      // Switch back to main
+      const mainEquipBtn = mainCard ? mainCard.querySelector('.btn-pack-equip') : null;
+      if (mainEquipBtn && !mainEquipBtn.disabled) mainEquipBtn.click();
+      await new Promise(r => setTimeout(r, 100));
+      results.restoredMainCourse = window.activeCourseId;
+
+      // 5. Check roadmap safe-bottom padding & bottom nav safe-area
+      const roadmapScreen = document.getElementById('roadmap-screen');
+      const roadmapComputed = roadmapScreen ? window.getComputedStyle(roadmapScreen) : null;
+      const bottomNav = document.getElementById('bottom-nav');
+
+      results.roadmapHasBottomPadding = roadmapScreen ? (parseInt(roadmapComputed?.paddingBottom || '0', 10) >= 140) : false;
+      results.bottomNavHasSafeArea = bottomNav ? (bottomNav.style.paddingBottom.includes('safe-area-inset-bottom') || bottomNav.classList.contains('pb-safe')) : false;
+
+      // 6. Check header hearts single number formatting
+      const heartCountEl = document.getElementById('header-hearts-count');
+      const heartIconEl = document.getElementById('header-hearts-icon');
+      window.setUserHearts(5);
+      results.heartCount5 = heartCountEl ? heartCountEl.textContent.trim() : '';
+      results.heartIcon5 = heartIconEl ? heartIconEl.textContent.trim() : '';
+
+      window.setUserHearts(0);
+      results.heartCount0 = heartCountEl ? heartCountEl.textContent.trim() : '';
+      results.heartIcon0 = heartIconEl ? heartIconEl.textContent.trim() : '';
+
+      window.setUserHearts(5); // restore
+      if (typeof window.switchMainTab === 'function') window.switchMainTab('home');
+
+      return results;
+    });
+
+    console.log('🎒 Bottom Navigation & Packs test details:', bottomNavAndPacksResult);
+    const scenarioKPassed = 
+      bottomNavAndPacksResult.hasTabHome === true &&
+      bottomNavAndPacksResult.hasTabPacks === true &&
+      bottomNavAndPacksResult.hasTabBook === true &&
+      bottomNavAndPacksResult.hasTabRecords === true &&
+      bottomNavAndPacksResult.tabPacksText.includes('단어팩') &&
+      bottomNavAndPacksResult.tabBookText.includes('단어장') &&
+      bottomNavAndPacksResult.packsScreenVisible === true &&
+      bottomNavAndPacksResult.hasFootballCard === true &&
+      bottomNavAndPacksResult.hasMainCard === true &&
+      bottomNavAndPacksResult.activeCourseAfterEquip === 'pack_football' &&
+      bottomNavAndPacksResult.storedCourseAfterEquip === 'pack_football' &&
+      bottomNavAndPacksResult.heroTitleAfterEquip.includes('스페인 축구 실전팩') &&
+      bottomNavAndPacksResult.restoredMainCourse === 'main' &&
+      bottomNavAndPacksResult.roadmapHasBottomPadding === true &&
+      bottomNavAndPacksResult.bottomNavHasSafeArea === true &&
+      bottomNavAndPacksResult.heartCount5 === '5' &&
+      bottomNavAndPacksResult.heartIcon5 === '❤️' &&
+      bottomNavAndPacksResult.heartCount0 === '0' &&
+      bottomNavAndPacksResult.heartIcon0 === '💔';
+
+    recordScenario('Scenario K: Bottom Nav (4 Tabs), Word Pack Screen, Safe-Bottom & Heart Single Number', scenarioKPassed, {
+      ...bottomNavAndPacksResult,
+      summary: scenarioKPassed
+        ? '하단 4개 탭([홈], [단어팩], [단어장], [내 기록]) 전면 개편, 공식 단어팩 보관함/상점 화면 연동 및 장착 관리, 상단 헤더 하트 단일 숫자(❤️ 5, 💔 0) 표기, 로드맵 하단 safe-bottom 여백(140px 이상) 및 하단바 safe-area 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(bottomNavAndPacksResult)}`
     });
 
   } catch (err) {

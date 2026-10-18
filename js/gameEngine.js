@@ -700,7 +700,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=50`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=53`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -788,7 +788,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=50`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=53`;
         });
       } catch (_) {}
 
