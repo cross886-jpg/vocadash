@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=54`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=56`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=54', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=54', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=56', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=56', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -899,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (unitMainTitle) {
         if (courseId === 'travel') {
-          unitMainTitle.textContent = lang === 'en' ? '실전 영어 필수 회화 완전 정복' : '일상 회화 & 실전 기초 어휘 마스터';
+          unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
         } else if (courseId === 'dele') {
           unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
         } else if (courseId === 'toeic') {
@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (courseId === 'business') {
           unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
         } else {
-          unitMainTitle.textContent = lang === 'en' ? '실전 영어 필수 회화 완전 정복' : '일상 회화 & 실전 기초 어휘 마스터';
+          unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
         }
       }
     } else {
@@ -1592,7 +1592,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCourseSwitcherUI(targetId);
 
     const title = targetId === 'pack_football' ? (lang === 'en' ? '축구 실전팩 (DLC)' : '스페인 축구 실전팩') : (lang === 'en' ? '영어 정규 코스' : '스페인어 정규 코스');
-    const icon = targetId === 'pack_football' ? '⚽' : '🇪🇸';
+    const icon = targetId === 'pack_football' ? '⚽' : (lang === 'en' ? '🇺🇸' : '🇪🇸');
     if (typeof window.showToast === 'function') {
       window.showToast(`${icon} '${title}' 코스로 전환되었습니다!`, '🚀');
     }
@@ -2846,6 +2846,78 @@ document.addEventListener('DOMContentLoaded', () => {
   let modalPendingLanguage = 'es';
   let modalPendingCourseId = 'main';
 
+  const MODAL_COURSES = {
+    es: [
+      {
+        id: 'main',
+        icon: '🇪🇸',
+        title: '스페인어 정규 코스',
+        desc: '일상 회화 & 실전 기초 어휘 마스터',
+        badge: ''
+      },
+      {
+        id: 'pack_football',
+        icon: '⚽',
+        title: '스페인 축구 실전팩',
+        desc: '스페셜 팩 · 경기장 어휘 & 피치 콜',
+        badge: 'Official DLC'
+      }
+    ],
+    en: [
+      {
+        id: 'main',
+        icon: '🇺🇸',
+        title: '영어 정규 코스',
+        desc: '일상 회화 & 실전 필수 어휘 마스터',
+        badge: ''
+      }
+    ]
+  };
+
+  function renderModalCourseList(targetLang, selectedCourseId) {
+    const list = document.getElementById('course-switcher-list');
+    if (!list) return;
+
+    const lang = (targetLang === 'en') ? 'en' : 'es';
+    const courses = MODAL_COURSES[lang] || MODAL_COURSES.es;
+
+    // 언어에 해당 코스가 없으면 기본 코스('main')로 설정
+    let activeId = selectedCourseId;
+    if (!courses.some(c => c.id === activeId)) {
+      activeId = 'main';
+    }
+    modalPendingCourseId = activeId;
+
+    list.innerHTML = courses.map(course => {
+      const isSelected = (course.id === activeId);
+      const borderClass = isSelected
+        ? 'border-2 border-emerald-500 bg-emerald-50/70 text-slate-800'
+        : 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700';
+      const checkClass = isSelected ? '' : 'hidden';
+      const badgeHtml = course.badge
+        ? `<span class="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black">${course.badge}</span>`
+        : '';
+      const descColor = course.badge ? 'text-emerald-600 font-semibold' : 'text-slate-500 font-medium';
+
+      return `
+        <button type="button" data-course-id="${course.id}" class="course-switcher-card flex items-center justify-between p-2.5 rounded-2xl ${borderClass} text-xs font-bold cursor-pointer transition-all active:scale-98">
+          <div class="flex items-center gap-2.5 pointer-events-none">
+            <span class="text-xl">${course.icon}</span>
+            <div class="flex flex-col text-left">
+              <div class="flex items-center gap-1.5">
+                <span class="font-extrabold text-slate-900 leading-tight">${course.title}</span>
+                ${badgeHtml}
+              </div>
+              <span class="text-[10px] ${descColor}">${course.desc}</span>
+            </div>
+          </div>
+          <span class="course-switcher-check ${checkClass} material-symbols-outlined text-[18px] text-emerald-600 font-black">check_circle</span>
+        </button>
+      `;
+    }).join('');
+  }
+  window.renderModalCourseList = renderModalCourseList;
+
   function updateModalCardsUI(lang) {
     modalPendingLanguage = lang;
     modalSelectedCourse = lang;
@@ -2911,11 +2983,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.closeCourseDropdown === 'function') {
       window.closeCourseDropdown();
     }
-    modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || localStorage.getItem('vocadash_language') || 'es';
+    modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || localStorage.getItem('vocadash_selected_lang') || localStorage.getItem('vocadash_language') || 'es';
     modalPendingCourseId = window.activeCourseId || localStorage.getItem('vocadash_active_course') || 'main';
 
+    if (modalPendingLanguage === 'en' && modalPendingCourseId !== 'main') {
+      modalPendingCourseId = 'main';
+    }
+
     updateModalCardsUI(modalPendingLanguage); 
-    updateModalCourseCardsUI(modalPendingCourseId);
+    renderModalCourseList(modalPendingLanguage, modalPendingCourseId);
     toggleModal(langBackdrop, langCard, true); 
   };
   window.closeLanguageModal = () => toggleModal(langBackdrop, langCard, false);
@@ -2942,12 +3018,13 @@ document.addEventListener('DOMContentLoaded', () => {
         window.playSound('click');
       }
 
-      const finalLang = modalPendingLanguage || window.currentLanguage || 'es';
+      const finalLang = modalPendingLanguage || window.currentLanguage || localStorage.getItem('vocadash_selected_lang') || 'es';
       const finalCourseId = modalPendingCourseId || window.activeCourseId || 'main';
 
       // 2) 선택된 언어와 코스(activeCourseId)를 localStorage에 최종 확정 저장
       try {
         localStorage.setItem('vocadash_language', finalLang);
+        localStorage.setItem('vocadash_selected_lang', finalLang);
         localStorage.setItem('vocadash_active_course', finalCourseId);
       } catch (_) {}
 
@@ -2973,7 +3050,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=54';
+    const v = '?v=56';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3339,6 +3416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.currentLanguage = lang;
     try {
       localStorage.setItem('vocadash_language', lang);
+      localStorage.setItem('vocadash_selected_lang', lang);
     } catch (_) {}
 
     // 1. Settings screen 학습 언어 UI 즉시 갱신
@@ -3406,9 +3484,15 @@ document.addEventListener('DOMContentLoaded', () => {
   window.changeLanguage = setLanguage;
 
   function handleCardLanguageSelect(targetLang) {
+    const langChanged = (modalPendingLanguage !== targetLang);
     modalPendingLanguage = targetLang;
-    // 탭한 카드에 초록색 선택 테두리/체크 활성화 (active:scale-95 인터랙션과 함께 즉시 반영, 확인 버튼 터치 시 최종 확정)
+    if (langChanged) {
+      // 언어 전환 시 기본 코스('main')로 자동 선택(체크) 포커스 이동
+      modalPendingCourseId = 'main';
+    }
+    // 탭한 카드에 초록색 선택 테두리/체크 활성화 및 해당 언어의 코스 목록 동적 갱신
     updateModalCardsUI(targetLang);
+    renderModalCourseList(targetLang, modalPendingCourseId);
   }
 
   if (cardEs) {
@@ -4207,7 +4291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=54' : 'assets/profiles/profile-spanish.webp?v=54';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=56' : 'assets/profiles/profile-spanish.webp?v=56';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5309,7 +5393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=54`;
+    return `assets/profiles/${file}?v=56`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5825,7 +5909,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=54';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=56';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5869,7 +5953,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=54';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=56';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
