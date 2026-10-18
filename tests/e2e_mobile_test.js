@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=44`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=45`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -922,6 +922,84 @@ async function runE2ETests() {
       summary: scenarioFPassed
         ? '보너스 1회 제한 및 중복 방지, 10문제 스피드런 코스 구성, 5연속 정답 시 오답노트 영구 졸업 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(bonusAndReviewResult)}`
+    });
+
+    console.log('\n📦 --- [Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)] ---');
+    const courseIsolationResult = await page.evaluate(() => {
+      const results = {};
+
+      // 1. 활성 코스 상태값 activeCourseId 기본값 검증
+      results.defaultActiveCourse = window.activeCourseId;
+      const mainCourseData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null;
+      results.mainCourseHasUnits = !!(mainCourseData && mainCourseData.units && mainCourseData.units.length > 0);
+
+      // 2. 메인 코스 초기 진행도 구조 검증
+      const mainProgRaw = localStorage.getItem('vocadash_progress_main');
+      const mainProg = mainProgRaw ? JSON.parse(mainProgRaw) : null;
+      results.mainHasCompletedNodes = Array.isArray(mainProg?.completedNodes);
+      results.mainHasClaimedBonuses = Array.isArray(mainProg?.claimedBonuses);
+      results.mainHasUnlockedUnits = Array.isArray(mainProg?.unlockedUnits);
+      results.mainUnitLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel() : 1;
+
+      // 3. 축구팩(pack_football)으로 코스 전환 (switchCourse)
+      window.switchCourse('pack_football');
+      results.switchedCourseId = window.activeCourseId;
+      results.storedActiveCourse = localStorage.getItem('vocadash_active_course');
+      
+      const footballData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null;
+      results.footballPackId = footballData?.id;
+      results.footballPackUnitsCount = footballData?.units?.length;
+
+      // 4. 축구팩 진행도 격리 저장 검증 (진행도 변경)
+      window.setUnlockedUnitLevel(2);
+      window.markBonusClaimed('node-bonus');
+      
+      const footballProgRaw = localStorage.getItem('vocadash_progress_pack_football');
+      const footballProg = footballProgRaw ? JSON.parse(footballProgRaw) : null;
+      results.footballUnlockedUnits = footballProg?.unlockedUnits;
+      results.footballClaimedBonuses = footballProg?.claimedBonuses;
+
+      // 5. 메인 코스 진행도 불변 검증 (격리 보장)
+      const mainProgAfterRaw = localStorage.getItem('vocadash_progress_main');
+      const mainProgAfter = mainProgAfterRaw ? JSON.parse(mainProgAfterRaw) : null;
+      results.mainProgUntouched = 
+        mainProgAfter &&
+        JSON.stringify(mainProgAfter.unlockedUnits) === JSON.stringify(mainProg.unlockedUnits);
+
+      // 6. 메인 코스로 다시 전환하여 복원 검증
+      window.switchCourse('main');
+      results.restoredActiveCourse = window.activeCourseId;
+      results.restoredMainUnitLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel() : 1;
+
+      // 7. renderRoadmap 정상 동작 확인
+      results.hasRenderRoadmap = typeof window.renderRoadmap === 'function';
+
+      return results;
+    });
+
+    const scenarioGPassed = 
+      courseIsolationResult.defaultActiveCourse === 'main' &&
+      courseIsolationResult.mainCourseHasUnits &&
+      courseIsolationResult.mainHasCompletedNodes &&
+      courseIsolationResult.mainHasClaimedBonuses &&
+      courseIsolationResult.mainHasUnlockedUnits &&
+      courseIsolationResult.switchedCourseId === 'pack_football' &&
+      courseIsolationResult.storedActiveCourse === 'pack_football' &&
+      courseIsolationResult.footballPackId === 'pack_football' &&
+      courseIsolationResult.footballPackUnitsCount === 4 &&
+      Array.isArray(courseIsolationResult.footballUnlockedUnits) &&
+      courseIsolationResult.footballUnlockedUnits.includes(2) &&
+      Array.isArray(courseIsolationResult.footballClaimedBonuses) &&
+      courseIsolationResult.footballClaimedBonuses.includes('node-bonus') &&
+      courseIsolationResult.mainProgUntouched &&
+      courseIsolationResult.restoredActiveCourse === 'main' &&
+      courseIsolationResult.hasRenderRoadmap;
+
+    recordScenario('Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)', scenarioGPassed, {
+      ...courseIsolationResult,
+      summary: scenarioGPassed
+        ? 'activeCourseId 관리, getCurrentCourseData() 팩 분기, 코스별 vocadash_progress_${id} 격리 저장 및 switchCourse 전환 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(courseIsolationResult)}`
     });
 
   } catch (err) {

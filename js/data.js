@@ -984,8 +984,33 @@
   };
 
   const courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=44', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=44', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=45', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=45', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    get units() {
+      if (typeof window !== 'undefined' && window.UNIT_LIST_PRESETS) {
+        const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        return window.UNIT_LIST_PRESETS[lang] || window.UNIT_LIST_PRESETS.es || [];
+      }
+      return [];
+    }
+  };
+
+  const packFootballData = {
+    id: 'pack_football',
+    name: '축구 스페인어/영어 팩',
+    title: '축구 실전 단어팩 (DLC)',
+    units: [
+      { unit: 1, title: '축구 기본 규칙 & 포지션', subtitle: '포지션, 경기장 명칭, 킥오프', progress: 0, status: 'active', icon: '⚽' },
+      { unit: 2, title: '패스 & 전술 커뮤니케이션', subtitle: '원투 패스, 침투, 압박 콜사인', progress: 0, status: 'locked', icon: '🏃' },
+      { unit: 3, title: '심판 & 파울 판정', subtitle: '경고, 퇴장, 오프사이드, VAR', progress: 0, status: 'locked', icon: '🟨' },
+      { unit: 4, title: '골 세레머니 & 인터뷰', subtitle: '득점 순간, 승리 소감, 인터뷰', progress: 0, status: 'locked', icon: '🏆' }
+    ],
+    lessons: {
+      'node-1': { title: '1과: 포지션 & 경기장', desc: 'Delantero, Portero 등 축구 필수 포지션과 경기장 구역 명칭을 익혀보세요!', icon: '⚽', level: '기초', category: '포지션', tags: ['축구', '포지션', '경기장'] },
+      'node-2': { title: '2과: 패스 & 빌드업 콜', desc: 'Pase, Presión 등 그라운드 위에서 실시간으로 외치는 핵심 전술 콜사인!', icon: '🏃', level: '초급', category: '전술', tags: ['축구', '패스', '전술'] },
+      'node-3': { title: '3과: 반칙 & 심판 판정', desc: 'Falta, Tarjeta amarilla 등 파울 및 판정 관련 필수 표현 마스터!', icon: '🟨', level: '중급', category: '심판/규칙', tags: ['축구', '반칙', '규칙'] },
+      'node-boss': { title: '4과: 승리의 세레머니 (보스전)', desc: '¡Golazo!, Campeones! 경기 종료 후 인터뷰와 승리 세레머니 총정리!', icon: '👑', level: '보스전', category: '세레머니', tags: ['축구', '골', '보스전'] }
+    }
   };
 
   const COURSE_LESSONS = {
@@ -1046,6 +1071,7 @@
     window.COURSE_PRESETS = COURSE_PRESETS;
     window.COURSE_LESSONS = COURSE_LESSONS;
     window.courseData = courseData;
+    window.packFootballData = packFootballData;
     window.nodeLessonData = nodeLessonData;
     window.courseCategoryMap = courseCategoryMap;
     window.INITIAL_BADGES = INITIAL_BADGES;

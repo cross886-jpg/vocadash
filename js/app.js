@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=44`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=45`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -234,10 +234,166 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.escapeHTML = escapeHTML;
 
-  // 1. Shared Global State & Course Metadata (localStorage 동기화)
+  // 1. 활성 코스 상태값 (activeCourseId) 관리
+  let activeCourseId = 'main';
+  try {
+    activeCourseId = localStorage.getItem('vocadash_active_course') || 'main';
+  } catch (_) {
+    activeCourseId = 'main';
+  }
+  window.activeCourseId = activeCourseId;
+
+  // 현재 활성화된 코스 데이터를 반환하는 헬퍼 함수
+  function getCurrentCourseData() {
+    const courseId = window.activeCourseId || 'main';
+    if (courseId === 'pack_football') {
+      return window.packFootballData;
+    }
+    return window.courseData;
+  }
+  window.getCurrentCourseData = getCurrentCourseData;
+
+  // 코스별 진행도 및 해금 상태(localStorage) 분리
   const PROGRESS_STORAGE_KEY = 'vocadash_node_progress';
 
+  function getCourseProgress(courseId) {
+    const cid = courseId || window.activeCourseId || 'main';
+    const key = `vocadash_progress_${cid}`;
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          return {
+            completedNodes: Array.isArray(parsed.completedNodes) ? parsed.completedNodes : [],
+            claimedBonuses: Array.isArray(parsed.claimedBonuses) ? parsed.claimedBonuses : [],
+            unlockedUnits: Array.isArray(parsed.unlockedUnits) && parsed.unlockedUnits.length > 0 ? parsed.unlockedUnits : [1],
+            nodeProgressMap: (parsed.nodeProgressMap && typeof parsed.nodeProgressMap === 'object') ? parsed.nodeProgressMap : { 'node-1': (cid === 'main' ? 3 : 0), 'node-2': 0, 'node-3': 0, 'node-boss': 0 }
+          };
+        }
+      }
+    } catch (_) {}
+
+    // 메인 코스 기존 데이터 마이그레이션 연동
+    if (cid === 'main') {
+      let migratedBonuses = [];
+      try {
+        const rawBonuses = localStorage.getItem('vocadash_claimed_bonuses');
+        if (rawBonuses) {
+          const b = JSON.parse(rawBonuses);
+          if (Array.isArray(b)) migratedBonuses = b;
+        }
+      } catch (_) {}
+
+      let migratedUnlocked = [1];
+      try {
+        const rawUnlocked = localStorage.getItem('vocadash_unlocked_units');
+        if (rawUnlocked) {
+          const u = JSON.parse(rawUnlocked);
+          if (Array.isArray(u) && u.length > 0) migratedUnlocked = u;
+        } else {
+          const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+          const rawUnit = localStorage.getItem('vocadash_unlocked_unit_' + lang);
+          if (rawUnit) {
+            const num = parseInt(rawUnit, 10);
+            if (!isNaN(num) && num >= 1) {
+              migratedUnlocked = [];
+              for (let i = 1; i <= num; i++) migratedUnlocked.push(i);
+            }
+          }
+        }
+      } catch (_) {}
+
+      let migratedNodeProg = { 'node-1': 3, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+      try {
+        const rawProg = localStorage.getItem(PROGRESS_STORAGE_KEY);
+        if (rawProg) {
+          const p = JSON.parse(rawProg);
+          if (p && typeof p === 'object') {
+            migratedNodeProg = {
+              'node-1': Math.min(3, Math.max(0, typeof p['node-1'] === 'number' ? p['node-1'] : 3)),
+              'node-2': Math.min(3, Math.max(0, typeof p['node-2'] === 'number' ? p['node-2'] : 0)),
+              'node-3': Math.min(3, Math.max(0, typeof p['node-3'] === 'number' ? p['node-3'] : 0)),
+              'node-boss': Math.min(3, Math.max(0, typeof p['node-boss'] === 'number' ? p['node-boss'] : 0))
+            };
+          }
+        }
+      } catch (_) {}
+
+      let migratedCompleted = [];
+      try {
+        const rawComp = localStorage.getItem('vocadash_completed_nodes');
+        if (rawComp) {
+          const c = JSON.parse(rawComp);
+          if (Array.isArray(c)) migratedCompleted = c;
+        }
+      } catch (_) {}
+      if (migratedCompleted.length === 0) {
+        if (migratedNodeProg['node-1'] >= 3) migratedCompleted.push('node-1');
+        if (migratedNodeProg['node-2'] >= 3) migratedCompleted.push('node-2');
+        if (migratedNodeProg['node-3'] >= 3) migratedCompleted.push('node-3');
+        if (migratedNodeProg['node-boss'] >= 3) migratedCompleted.push('node-boss');
+      }
+
+      const initialMain = {
+        completedNodes: migratedCompleted,
+        claimedBonuses: migratedBonuses,
+        unlockedUnits: migratedUnlocked,
+        nodeProgressMap: migratedNodeProg
+      };
+      try {
+        localStorage.setItem('vocadash_progress_main', JSON.stringify(initialMain));
+      } catch (_) {}
+      return initialMain;
+    }
+
+    // 다른 팩(예: pack_football) 기본 진행도
+    const defaultPackProg = {
+      completedNodes: [],
+      claimedBonuses: [],
+      unlockedUnits: [1],
+      nodeProgressMap: { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }
+    };
+    try {
+      localStorage.setItem(key, JSON.stringify(defaultPackProg));
+    } catch (_) {}
+    return defaultPackProg;
+  }
+  window.getCourseProgress = getCourseProgress;
+
+  function saveCourseProgress(progressObj, courseId) {
+    const cid = courseId || window.activeCourseId || 'main';
+    const key = `vocadash_progress_${cid}`;
+    try {
+      const dataToSave = {
+        completedNodes: Array.isArray(progressObj.completedNodes) ? progressObj.completedNodes : [],
+        claimedBonuses: Array.isArray(progressObj.claimedBonuses) ? progressObj.claimedBonuses : [],
+        unlockedUnits: Array.isArray(progressObj.unlockedUnits) ? progressObj.unlockedUnits : [1],
+        nodeProgressMap: progressObj.nodeProgressMap || window.nodeProgressMap || {}
+      };
+      localStorage.setItem(key, JSON.stringify(dataToSave));
+
+      // 메인 코스 하위 호환성 동기화
+      if (cid === 'main') {
+        localStorage.setItem('vocadash_completed_nodes', JSON.stringify(dataToSave.completedNodes));
+        localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(dataToSave.claimedBonuses));
+        localStorage.setItem('vocadash_unlocked_units', JSON.stringify(dataToSave.unlockedUnits));
+        const maxUnit = Math.max(1, ...dataToSave.unlockedUnits);
+        const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        localStorage.setItem('vocadash_unlocked_unit_' + lang, String(maxUnit));
+        localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(dataToSave.nodeProgressMap));
+      }
+    } catch (e) {
+      console.warn('localStorage 저장 예외 방어:', e);
+    }
+  }
+  window.saveCourseProgress = saveCourseProgress;
+
   function getUnlockedUnitLevel(targetLang) {
+    const prog = getCourseProgress(window.activeCourseId);
+    if (prog && Array.isArray(prog.unlockedUnits) && prog.unlockedUnits.length > 0) {
+      return Math.max(1, Math.min(10, Math.max(...prog.unlockedUnits)));
+    }
     const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
     try {
       const val = localStorage.getItem('vocadash_unlocked_unit_' + lang);
@@ -251,40 +407,45 @@ document.addEventListener('DOMContentLoaded', () => {
   window.getUnlockedUnitLevel = getUnlockedUnitLevel;
 
   function setUnlockedUnitLevel(level, targetLang) {
+    const lvl = Math.max(1, Math.min(10, parseInt(level, 10) || 1));
+    const prog = getCourseProgress(window.activeCourseId);
+    if (!prog.unlockedUnits) prog.unlockedUnits = [1];
+    for (let i = 1; i <= lvl; i++) {
+      if (!prog.unlockedUnits.includes(i)) prog.unlockedUnits.push(i);
+    }
+    prog.unlockedUnits.sort((a, b) => a - b);
+    saveCourseProgress(prog, window.activeCourseId);
+
     const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
     try {
-      localStorage.setItem('vocadash_unlocked_unit_' + lang, String(level));
+      localStorage.setItem('vocadash_unlocked_unit_' + lang, String(lvl));
     } catch (_) {}
   }
   window.setUnlockedUnitLevel = setUnlockedUnitLevel;
 
   function loadNodeProgress(targetLang) {
-    let prog = { 'node-1': 3, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
-    try {
-      const saved = localStorage.getItem(PROGRESS_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed && typeof parsed === 'object') {
-          prog = {
-            'node-1': Math.min(3, Math.max(0, typeof parsed['node-1'] === 'number' ? parsed['node-1'] : 0)),
-            'node-2': Math.min(3, Math.max(0, typeof parsed['node-2'] === 'number' ? parsed['node-2'] : 0)),
-            'node-3': Math.min(3, Math.max(0, typeof parsed['node-3'] === 'number' ? parsed['node-3'] : 0)),
-            'node-boss': Math.min(3, Math.max(0, typeof parsed['node-boss'] === 'number' ? parsed['node-boss'] : 0))
-          };
-        }
-      }
-    } catch (e) {
-      console.warn('localStorage 로드 예외 방어:', e);
+    const prog = getCourseProgress(window.activeCourseId);
+    if (prog && prog.nodeProgressMap) {
+      return {
+        'node-1': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-1'] === 'number' ? prog.nodeProgressMap['node-1'] : (window.activeCourseId === 'main' ? 3 : 0))),
+        'node-2': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-2'] === 'number' ? prog.nodeProgressMap['node-2'] : 0)),
+        'node-3': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-3'] === 'number' ? prog.nodeProgressMap['node-3'] : 0)),
+        'node-boss': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-boss'] === 'number' ? prog.nodeProgressMap['node-boss'] : 0))
+      };
     }
-    return prog;
+    return { 'node-1': (window.activeCourseId === 'main' ? 3 : 0), 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
   }
 
   function saveNodeProgress() {
-    try {
-      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(window.nodeProgressMap));
-    } catch (e) {
-      console.warn('localStorage 저장 예외 방어:', e);
-    }
+    const prog = getCourseProgress(window.activeCourseId);
+    prog.nodeProgressMap = window.nodeProgressMap || {};
+    if (!prog.completedNodes) prog.completedNodes = [];
+    ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nodeId => {
+      if (prog.nodeProgressMap[nodeId] >= 3 && !prog.completedNodes.includes(nodeId)) {
+        prog.completedNodes.push(nodeId);
+      }
+    });
+    saveCourseProgress(prog, window.activeCourseId);
   }
 
   window.nodeProgressMap = loadNodeProgress();
@@ -333,8 +494,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=44', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=44', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=45', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=45', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    get units() {
+      const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
+    }
   };
 
   const COURSE_LESSONS = {
@@ -568,25 +733,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // 보너스 선물(type: bonus) 1회 한정 수령 및 재수령 방지 상태 관리
   // ===================================================
   function getClaimedBonuses() {
-    try {
-      const raw = localStorage.getItem('vocadash_claimed_bonuses');
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (_) {
-      return [];
+    if (window.activeCourseId === 'main') {
+      try {
+        const raw = localStorage.getItem('vocadash_claimed_bonuses');
+        if (raw === null) {
+          const prog = getCourseProgress('main');
+          if (prog.claimedBonuses && prog.claimedBonuses.length > 0) {
+            prog.claimedBonuses = [];
+            saveCourseProgress(prog, 'main');
+            return [];
+          }
+        }
+      } catch (_) {}
     }
+    const prog = getCourseProgress(window.activeCourseId);
+    return Array.isArray(prog.claimedBonuses) ? prog.claimedBonuses : [];
   }
   function isBonusClaimed(nodeId = 'node-bonus') {
     return getClaimedBonuses().includes(nodeId);
   }
   function markBonusClaimed(nodeId = 'node-bonus') {
-    const list = getClaimedBonuses();
-    if (!list.includes(nodeId)) {
-      list.push(nodeId);
-      try {
-        localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(list));
-      } catch (_) {}
+    const prog = getCourseProgress(window.activeCourseId);
+    if (!prog.claimedBonuses) prog.claimedBonuses = [];
+    if (!prog.claimedBonuses.includes(nodeId)) {
+      prog.claimedBonuses.push(nodeId);
+      saveCourseProgress(prog, window.activeCourseId);
     }
   }
   window.getClaimedBonuses = getClaimedBonuses;
@@ -597,7 +768,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
     const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
-    const lessons = langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic;
+    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    let lessons = (activeCourse && activeCourse.lessons) ? activeCourse.lessons : (langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic);
 
     // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
@@ -606,14 +778,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const unitMainTitle = el('unit-main-title');
     const unitProgressBar = el('unit-progress-bar');
     const unitThumbIcon = el('unit-thumb-icon');
-    const unitPresets = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+
+    // getCurrentCourseData()의 units 데이터를 바라보도록 소스 참조 변경
+    let unitPresets = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    if (activeCourse && activeCourse.units) {
+      if (Array.isArray(activeCourse.units)) {
+        unitPresets = activeCourse.units;
+      } else if (activeCourse.units[lang]) {
+        unitPresets = activeCourse.units[lang];
+      } else if (activeCourse.units.es) {
+        unitPresets = activeCourse.units.es;
+      }
+    }
     const curUnitPreset = unitPresets.find(u => u.unit === unlockedLevel) || unitPresets[0];
 
     if (unitSubBadge) {
-      unitSubBadge.textContent = `UNIT ${unlockedLevel} / 10`;
+      unitSubBadge.textContent = `UNIT ${unlockedLevel} / ${unitPresets.length || 10}`;
     }
 
-    if (unlockedLevel === 1) {
+    if (window.activeCourseId === 'pack_football') {
+      if (unitLangBadge) {
+        unitLangBadge.textContent = '⚽ 축구 단어팩 (DLC)';
+      }
+      if (unitThumbIcon) {
+        unitThumbIcon.textContent = '⚽';
+      }
+      if (unitMainTitle) {
+        unitMainTitle.textContent = curUnitPreset ? `${curUnitPreset.title}` : '축구 기본 규칙 & 포지션';
+      }
+    } else if (unlockedLevel === 1) {
       if (unitLangBadge) {
         unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 첫걸음' : '🇪🇸 스페인어 첫걸음';
       }
@@ -1153,6 +1346,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
+
+  // 로드맵 전체 리렌더링 헬퍼 함수
+  function renderRoadmap() {
+    updateRoadmapNodesUI();
+    if (typeof updateCatMarkerPosition === 'function') {
+      updateCatMarkerPosition();
+    }
+  }
+  window.renderRoadmap = renderRoadmap;
+
+  // 단어팩(DLC/확장팩) 및 메인 코스 전환 함수
+  function switchCourse(courseId) {
+    const targetId = courseId || 'main';
+    window.activeCourseId = targetId;
+    try {
+      localStorage.setItem('vocadash_active_course', targetId);
+    } catch (_) {}
+
+    // 진행도 상태를 해당 courseId 기준으로 새로고침
+    window.nodeProgressMap = loadNodeProgress();
+
+    // 새 코스의 로드맵 화면 리렌더링
+    renderRoadmap();
+
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    if (typeof renderUnitOverviewList === 'function') {
+      renderUnitOverviewList(lang);
+    }
+  }
+  window.switchCourse = switchCourse;
 
   // 고양이 캐릭터 아바타 바운스 위치 마커 동적 갱신 함수
   function updateCatMarkerPosition() {
@@ -1725,15 +1948,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const subtitleEl = el('unit-overview-subtitle');
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
 
+    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    if (activeCourse && activeCourse.units) {
+      if (Array.isArray(activeCourse.units)) {
+        units = activeCourse.units;
+      } else if (activeCourse.units[lang]) {
+        units = activeCourse.units[lang];
+      }
+    }
+
     if (titleEl) {
-      titleEl.textContent = lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵';
+      if (window.activeCourseId === 'pack_football') {
+        titleEl.textContent = '⚽ 축구 단어팩 코스 맵';
+      } else {
+        titleEl.textContent = lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵';
+      }
     }
     if (subtitleEl) {
-      subtitleEl.textContent = `총 10개 유닛 중 Unit ${unlockedLevel} 진행 중`;
+      subtitleEl.textContent = `총 ${units.length}개 유닛 중 Unit ${unlockedLevel} 진행 중`;
     }
     if (!listEl) return;
-
-    const units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
     let html = '';
 
     units.forEach((item) => {
@@ -1865,7 +2100,15 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openUnitSkipModal = function(unitNum, unitTitle, targetLang) {
     const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
     const uNum = parseInt(unitNum, 10) || 2;
-    const units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    if (activeCourse && activeCourse.units) {
+      if (Array.isArray(activeCourse.units)) {
+        units = activeCourse.units;
+      } else if (activeCourse.units[lang]) {
+        units = activeCourse.units[lang];
+      }
+    }
     const preset = units.find(u => u.unit === uNum);
     const title = unitTitle || (preset ? preset.title : `Unit ${uNum}`);
     const displayName = preset ? (preset.title.startsWith('Unit') ? preset.title : `Unit ${uNum} ${preset.title}`) : `Unit ${uNum}`;
@@ -2366,7 +2609,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=44';
+    const v = '?v=45';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3217,7 +3460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=44' : 'assets/profiles/profile-spanish.webp?v=44';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=45' : 'assets/profiles/profile-spanish.webp?v=45';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -4265,7 +4508,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=44`;
+    return `assets/profiles/${file}?v=45`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -4781,7 +5024,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=44';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=45';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -4828,7 +5071,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=44';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=45';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

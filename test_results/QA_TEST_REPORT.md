@@ -1,8 +1,8 @@
 # VocaDash 모바일 E2E 자동화 QA 최종 점검 리포트
 
-- **테스트 일시**: 2026-10-18T16:51:48.690Z
+- **테스트 일시**: 2026-10-18T17:07:59.837Z
 - **테스트 디바이스 규격**: Mobile Emulation (390 x 844 px, DPR=3, Touch Support, Chrome Headless)
-- **종합 결과**: **10/10 전원 통과 (100.0%)**
+- **종합 결과**: **11/11 전원 통과 (100.0%)**
 
 ---
 
@@ -20,6 +20,7 @@
 | 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(3회) 및 결과 모달까지 막힘없이 완주 |
 | 9 | **Scenario E: Zero-Popup UX Validation** | 🟢 PASS | 진행 중 방해되는 네이티브 alert/confirm 팝업 0건 (원활한 UX 보장) |
 | 10 | **Scenario F: Bonus 1-Time Limit & Weakness Review 10-Questions/Graduation** | 🟢 PASS | 보너스 1회 제한 및 중복 방지, 10문제 스피드런 코스 구성, 5연속 정답 시 오답노트 영구 졸업 완벽 검증 |
+| 11 | **Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)** | 🟢 PASS | activeCourseId 관리, getCurrentCourseData() 팩 분기, 코스별 vocadash_progress_${id} 격리 저장 및 switchCourse 전환 완벽 검증 |
 
 ---
 
