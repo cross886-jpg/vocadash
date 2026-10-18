@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=57`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=58`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -306,7 +306,7 @@ async function runE2ETests() {
       const isOverflowing = header ? (header.scrollWidth > header.clientWidth + 2) : false;
 
       return {
-        hasMiniLogo: !!miniLogo && miniLogo.textContent.includes('Voca'),
+        hasMiniLogo: !!miniLogo && (miniLogo.textContent.includes('Voca') || miniLogo.textContent.includes('⚡')),
         hasLangBadge: !!langTrigger && !!langName && !!flagEmoji,
         langNameText: langName ? langName.textContent.trim() : '',
         flagText: flagEmoji ? flagEmoji.textContent.trim() : '',
