@@ -671,7 +671,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=37`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=41`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -722,6 +722,16 @@
             }
           } else if (window.isReviewGameMode) {
             btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '로드맵으로 복귀' : '오답노트로 복귀';
+            if (window.isRoadmapReviewSpeedrun) {
+              const resultTitle = document.getElementById('result-title');
+              const resultSubtitle = document.getElementById('result-subtitle');
+              if (resultTitle) resultTitle.textContent = '⚡ 약점 극복 완료!';
+              if (resultSubtitle) {
+                resultSubtitle.textContent = window.isSpeedrunZeroWrongBonus
+                  ? '오답 없는 클린 런 완주! 보너스 보석 5개 획득 💎'
+                  : '오답 단어 집중 훈련을 완료했습니다!';
+              }
+            }
           } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
             btnPrimaryText.textContent = '3과 마스터 & 4과(보스전) 도전!';
           } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
@@ -749,7 +759,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=37`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=41`;
         });
       } catch (_) {}
 
@@ -937,14 +947,24 @@
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       }
 
-      // 약점 극복 스피드런 모드 클리어 시 맞춘 단어 오답 목록 영구 삭제 & 보석 획득
+      // 약점 극복 스피드런 모드 클리어 시 보상 지급 (0오답 보너스: +5 💎, 일반 약점 복습 클리어: +10 💎)
       if (isClear && window.isRoadmapReviewSpeedrun) {
-        const missed = missedWords || [];
-        const clearedQs = (gameQuestions || []).filter(q => {
-          return !missed.some(m => (m.id && m.id === q.id) || (m.term || m.word) === (q.term || q.word));
-        });
+        let curGems = 120;
+        try {
+          const saved = localStorage.getItem('vocadash_gems');
+          if (saved !== null) curGems = parseInt(saved, 10) || 120;
+        } catch (_) {}
+        const addedGems = window.isSpeedrunZeroWrongBonus ? 5 : 10;
+        curGems += addedGems;
+        try {
+          localStorage.setItem('vocadash_gems', String(curGems));
+        } catch (_) {}
+        const gemsCountEl = document.getElementById('header-gems-count');
+        if (gemsCountEl) gemsCountEl.textContent = curGems;
+        const gemsText = document.getElementById('result-gems-text');
+        if (gemsText) gemsText.textContent = `+${addedGems} 💎`;
         if (typeof window.removeClearedWrongWords === 'function') {
-          window.removeClearedWrongWords(clearedQs);
+          window.removeClearedWrongWords([]);
         }
       }
 
@@ -1234,8 +1254,10 @@
         }
       }
 
-      // 오답 발생 시 로컬스토리지 오답노트에 즉시 영구 저장
-      if (q && typeof window.addWrongWord === 'function') {
+      // 오답 발생 시 연속 정답 리셋 및 로컬스토리지 오답노트에 즉시 영구 저장
+      if (q && typeof window.recordAnswerResult === 'function') {
+        try { window.recordAnswerResult(q, false); } catch (_) {}
+      } else if (q && typeof window.addWrongWord === 'function') {
         try { window.addWrongWord(q); } catch (_) {}
       }
 
@@ -1346,6 +1368,11 @@
 
       const currentQ = gameQuestions[currentQuestionIdx];
       const targetAns = ((currentQ && (currentQ.meaning || currentQ.answer || currentQ.korean || currentQ.ko || '')) || '').trim();
+
+      // 문제 정답 시 연속 정답(correctStreak) +1 및 5회 달성 시 오답 탈출 졸업 처리
+      if (currentQ && typeof window.recordAnswerResult === 'function') {
+        try { window.recordAnswerResult(currentQ, true); } catch (_) {}
+      }
 
       if (!btn) {
         btn = gameChoiceBtns.find(b => checkAnswerMatch((b.dataset.choice || b.textContent || '').trim(), targetAns)) || gameChoiceBtns[currentCorrectChoiceIdx];
@@ -1531,8 +1558,14 @@
         }
       }
 
-      // 오답 발생 시 로컬스토리지 오답노트에 즉시 영구 저장
-      if (currentQ && typeof window.addWrongWord === 'function') {
+      // 오답 발생 시 연속 정답(correctStreak) 리셋 및 로컬스토리지 오답노트에 즉시 영구 저장
+      if (currentQ && typeof window.recordAnswerResult === 'function') {
+        try {
+          window.recordAnswerResult(currentQ, false);
+        } catch (storageErr) {
+          console.warn('⚠️ 오답노트 저장 예외 안전 방어:', storageErr);
+        }
+      } else if (currentQ && typeof window.addWrongWord === 'function') {
         try {
           window.addWrongWord(currentQ);
         } catch (storageErr) {
@@ -1865,7 +1898,7 @@
     const roundProg = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const isBoss = (currentGameLessonId === 'node-boss' || String(currentGameLessonId).includes('boss'));
     const stageName = window.isUnitSkipTestMode ? `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`
-      : window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런'
+      : window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런 (10문제)'
       : currentGameLessonId === 'node-1' ? 'Stage 1: 기내 기본 표현'
       : currentGameLessonId === 'node-3' ? 'Stage 3: 수하물과 세관'
       : isBoss ? 'Stage 4: 일상 기초 (보스전)'
@@ -2124,7 +2157,12 @@
         if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
       } else {
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
-        if (typeof window.showToast === 'function') window.showToast('⚡ 약점 극복 스피드 런 완료! 로드맵으로 복귀했습니다.', '🗺️');
+        if (window.isSpeedrunZeroWrongBonus) {
+          if (typeof window.showToast === 'function') window.showToast('🎉 오답 클리어 보너스! 보석 +5 획득! 💎', '🎁');
+        } else {
+          if (typeof window.showToast === 'function') window.showToast('⚡ 약점 극복 스피드 런 완료! 로드맵으로 복귀했습니다.', '🗺️');
+        }
+        window.isSpeedrunZeroWrongBonus = false;
       }
       return false;
     }

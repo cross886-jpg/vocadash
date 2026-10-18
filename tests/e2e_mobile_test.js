@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=37`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=41`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -795,6 +795,102 @@ async function runE2ETests() {
       dialogCount: testReport.unexpectedDialogs.length,
       dialogs: testReport.unexpectedDialogs,
       summary: noPopups ? '진행 중 방해되는 네이티브 alert/confirm 팝업 0건 (원활한 UX 보장)' : `불필요한 팝업 감지: ${JSON.stringify(testReport.unexpectedDialogs)}`
+    });
+
+    // -----------------------------------------------------------------
+    // SCENARIO F: Bonus 1-Time Limit & Weakness Review 10-Questions / Graduation
+    // -----------------------------------------------------------------
+    console.log('\n🎁 --- [Scenario F: Bonus 1-Time Limit & Review 10-Questions/Graduation] ---');
+    const bonusAndReviewResult = await page.evaluate(async () => {
+      const results = {};
+
+      // 1) Bonus Claiming
+      localStorage.removeItem('vocadash_claimed_bonuses');
+      const initialClaimed = window.isBonusClaimed('node-bonus');
+      results.initialClaimed = initialClaimed; // should be false
+
+      const initGems = parseInt(localStorage.getItem('vocadash_gems') || '120', 10);
+      window.openBonusModal('node-bonus');
+      const claimBtn = document.getElementById('bonus-claim-btn');
+      if (claimBtn) claimBtn.click();
+
+      const afterGems = parseInt(localStorage.getItem('vocadash_gems') || '120', 10);
+      const isClaimedNow = window.isBonusClaimed('node-bonus');
+      results.isClaimedNow = isClaimedNow; // should be true
+      results.gemsIncremented = afterGems === initGems + 15;
+
+      const badgeText = document.getElementById('node-bonus-badge-text')?.textContent?.trim();
+      const iconText = document.getElementById('node-bonus-icon')?.textContent?.trim();
+      results.badgeText = badgeText; // '수령 완료 ✅'
+      results.iconText = iconText; // '📦'
+
+      // Try claim again
+      window.openBonusModal('node-bonus');
+      const modalTitleClaimed = document.getElementById('bonus-modal-title')?.textContent?.trim();
+      results.modalTitleClaimed = modalTitleClaimed;
+      if (claimBtn) claimBtn.click();
+      const doubleGems = parseInt(localStorage.getItem('vocadash_gems') || '120', 10);
+      results.duplicateBlocked = doubleGems === afterGems; // no extra gems
+
+      // 2) Review Speedrun Modal & 10 questions
+      window.openReviewSpeedrunModal();
+      const speedrunTitle = document.getElementById('review-speedrun-modal-title')?.textContent?.trim();
+      results.speedrunTitle = speedrunTitle; // '⚡ 약점 극복 스피드 런 (10문제)'
+
+      window.startRoadmapReviewSpeedrun();
+      results.questionsCount = window.currentSessionQuestions?.length; // should be 10
+      results.isSpeedrunMode = window.isRoadmapReviewSpeedrun; // true
+
+      // 3) Graduation streak logic
+      window.recordAnswerResult({ id: 'test-grad-1', term: 'TestWord', meaning: '시험단어', lang: 'es' }, false);
+      let list = window.loadWrongWords('es');
+      let item = list.find(w => w.term === 'TestWord');
+      results.streakInitZero = item && item.correctStreak === 0;
+
+      // 4 correct answers -> streak 4
+      for (let i = 0; i < 4; i++) {
+        window.recordAnswerResult({ id: 'test-grad-1', term: 'TestWord', lang: 'es' }, true);
+      }
+      list = window.loadWrongWords('es');
+      item = list.find(w => w.term === 'TestWord');
+      results.streakFour = item && item.correctStreak === 4;
+
+      // 1 wrong answer -> reset to 0
+      window.recordAnswerResult({ id: 'test-grad-1', term: 'TestWord', lang: 'es' }, false);
+      list = window.loadWrongWords('es');
+      item = list.find(w => w.term === 'TestWord');
+      results.streakResetZero = item && item.correctStreak === 0;
+
+      // 5 consecutive correct answers -> graduated (deleted from list)
+      for (let i = 0; i < 5; i++) {
+        window.recordAnswerResult({ id: 'test-grad-1', term: 'TestWord', lang: 'es' }, true);
+      }
+      list = window.loadWrongWords('es');
+      item = list.find(w => w.term === 'TestWord');
+      results.graduatedDeleted = !item; // should be true (removed completely)
+
+      return results;
+    });
+
+    const scenarioFPassed = 
+      !bonusAndReviewResult.initialClaimed &&
+      bonusAndReviewResult.isClaimedNow &&
+      bonusAndReviewResult.gemsIncremented &&
+      bonusAndReviewResult.badgeText === '수령 완료 ✅' &&
+      bonusAndReviewResult.iconText === '📦' &&
+      bonusAndReviewResult.duplicateBlocked &&
+      bonusAndReviewResult.speedrunTitle.includes('10문제') &&
+      bonusAndReviewResult.questionsCount === 10 &&
+      bonusAndReviewResult.streakInitZero &&
+      bonusAndReviewResult.streakFour &&
+      bonusAndReviewResult.streakResetZero &&
+      bonusAndReviewResult.graduatedDeleted;
+
+    recordScenario('Scenario F: Bonus 1-Time Limit & Weakness Review 10-Questions/Graduation', scenarioFPassed, {
+      ...bonusAndReviewResult,
+      summary: scenarioFPassed
+        ? '보너스 1회 제한 및 중복 방지, 10문제 스피드런 코스 구성, 5연속 정답 시 오답노트 영구 졸업 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(bonusAndReviewResult)}`
     });
 
   } catch (err) {

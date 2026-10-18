@@ -1,8 +1,8 @@
 # VocaDash 모바일 E2E 자동화 QA 최종 점검 리포트
 
-- **테스트 일시**: 2026-10-18T16:11:18.003Z
+- **테스트 일시**: 2026-10-18T16:29:23.434Z
 - **테스트 디바이스 규격**: Mobile Emulation (390 x 844 px, DPR=3, Touch Support, Chrome Headless)
-- **종합 결과**: **9/9 전원 통과 (100.0%)**
+- **종합 결과**: **10/10 전원 통과 (100.0%)**
 
 ---
 
@@ -19,6 +19,7 @@
 | 7 | **Scenario C-2: Wrong Answer Notes Storage Isolation** | 🟢 PASS | 영어 오답 0개 빈 화면(Empty State) 표시 및 스페인어 단어 0건 완전 격리 확인 |
 | 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(4회) 및 결과 모달까지 막힘없이 완주 |
 | 9 | **Scenario E: Zero-Popup UX Validation** | 🟢 PASS | 진행 중 방해되는 네이티브 alert/confirm 팝업 0건 (원활한 UX 보장) |
+| 10 | **Scenario F: Bonus 1-Time Limit & Weakness Review 10-Questions/Graduation** | 🟢 PASS | 보너스 1회 제한 및 중복 방지, 10문제 스피드런 코스 구성, 5연속 정답 시 오답노트 영구 졸업 완벽 검증 |
 
 ---
 

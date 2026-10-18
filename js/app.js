@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=37`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=41`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -347,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=37', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=37', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=41', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=41', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -577,6 +577,35 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
   window.UNIT_LIST_PRESETS = UNIT_LIST_PRESETS;
+
+  // ===================================================
+  // 보너스 선물(type: bonus) 1회 한정 수령 및 재수령 방지 상태 관리
+  // ===================================================
+  function getClaimedBonuses() {
+    try {
+      const raw = localStorage.getItem('vocadash_claimed_bonuses');
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_) {
+      return [];
+    }
+  }
+  function isBonusClaimed(nodeId = 'node-bonus') {
+    return getClaimedBonuses().includes(nodeId);
+  }
+  function markBonusClaimed(nodeId = 'node-bonus') {
+    const list = getClaimedBonuses();
+    if (!list.includes(nodeId)) {
+      list.push(nodeId);
+      try {
+        localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(list));
+      } catch (_) {}
+    }
+  }
+  window.getClaimedBonuses = getClaimedBonuses;
+  window.isBonusClaimed = isBonusClaimed;
+  window.markBonusClaimed = markBonusClaimed;
 
   function updateRoadmapNodesUI() {
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -942,6 +971,54 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof filterRoadmapByCategory === 'function') {
       filterRoadmapByCategory(window.currentCategoryFilter || '전체');
     }
+
+    // Node Bonus 선물 상자 1회 한정 수령 비주얼 상태 동기화
+    const isBonusDone = isBonusClaimed('node-bonus');
+    const bonusBtn = el('node-bonus-btn');
+    const bonusIcon = el('node-bonus-icon');
+    const bonusBadgeText = el('node-bonus-badge-text');
+    const bonusBadgeIcon = el('node-bonus-badge-icon');
+    const bonusLabelCard = el('node-bonus-label-card');
+
+    if (isBonusDone) {
+      if (bonusBtn) {
+        bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 flex items-center justify-center border-b-[5px] border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-2 ring-slate-300/60 overflow-hidden';
+        bonusBtn.title = '보너스 선물 (수령 완료)';
+      }
+      if (bonusIcon) {
+        bonusIcon.textContent = '📦';
+        bonusIcon.classList.remove('animate-wiggle');
+      }
+      if (bonusBadgeText) {
+        bonusBadgeText.textContent = '수령 완료 ✅';
+        bonusBadgeText.className = 'font-label-sm text-[10px] text-slate-500 font-bold';
+      }
+      if (bonusBadgeIcon) {
+        bonusBadgeIcon.textContent = '📦';
+      }
+      if (bonusLabelCard) {
+        bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85';
+      }
+    } else {
+      if (bonusBtn) {
+        bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80 overflow-hidden';
+        bonusBtn.title = '보너스 선물 상자';
+      }
+      if (bonusIcon) {
+        bonusIcon.textContent = '🎁';
+        bonusIcon.classList.add('animate-wiggle');
+      }
+      if (bonusBadgeText) {
+        bonusBadgeText.textContent = '+15 💎 보너스';
+        bonusBadgeText.className = 'font-label-sm text-[10px] text-amber-600 font-bold';
+      }
+      if (bonusBadgeIcon) {
+        bonusBadgeIcon.textContent = '🎁';
+      }
+      if (bonusLabelCard) {
+        bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-amber-200 text-center pointer-events-none';
+      }
+    }
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
 
@@ -981,11 +1058,41 @@ document.addEventListener('DOMContentLoaded', () => {
     lockedTooltipTimer = setTimeout(() => { lockedTooltip.classList.add('opacity-0', 'scale-95'); setTimeout(() => lockedTooltip.classList.add('hidden'), 200); }, 2400);
   }
 
-  // 보너스 선물 상자 모달 제어
-  function openBonusModal() {
+  // 보너스 선물 상자 모달 제어 (1회 한정 수령 및 재수령 방지)
+  function openBonusModal(nodeId = 'node-bonus') {
+    window.currentBonusNodeId = nodeId;
     const backdrop = el('bonus-modal-backdrop');
     const card = el('bonus-modal-card');
     if (!backdrop || !card) return;
+
+    const claimed = isBonusClaimed(nodeId);
+    const titleEl = el('bonus-modal-title');
+    const descEl = el('bonus-modal-desc');
+    const claimBtn = el('bonus-claim-btn');
+    const rewardCard = card.querySelector('.border-amber-200') || card.querySelector('.bg-gradient-to-r');
+
+    if (claimed) {
+      if (titleEl) titleEl.textContent = '보너스 선물 (수령 완료)';
+      if (descEl) descEl.textContent = '이미 수령한 보너스 선물입니다! 🎁 (획득 완료)\n응원 팁: 매일 꾸준히 달리면 실력이 쑥쑥 늘어요!';
+      if (claimBtn) {
+        claimBtn.textContent = '확인 (수령 완료)';
+        claimBtn.className = 'w-full py-3 px-4 rounded-xl bg-slate-300 hover:bg-slate-400 text-slate-700 font-extrabold text-xs shadow-sm transition-all cursor-pointer';
+      }
+      if (rewardCard) {
+        rewardCard.innerHTML = '<span class="text-xl">📦</span><span class="font-black text-sm text-slate-600">수령 완료 (보석 +15 지급됨)</span>';
+      }
+    } else {
+      if (titleEl) titleEl.textContent = '깜짝 보너스 상자 오픈!';
+      if (descEl) descEl.textContent = '열심히 달린 러너를 위한 특별 응원 선물이에요!';
+      if (claimBtn) {
+        claimBtn.textContent = '보상 받기 ✨';
+        claimBtn.className = 'w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer';
+      }
+      if (rewardCard) {
+        rewardCard.innerHTML = '<span class="text-xl">💎</span><span class="font-black text-sm text-amber-900">+15 다이아몬드</span>';
+      }
+    }
+
     backdrop.classList.remove('opacity-0', 'pointer-events-none');
     backdrop.classList.add('opacity-100', 'pointer-events-auto');
     card.classList.remove('opacity-0', 'scale-95');
@@ -1004,6 +1111,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.closeBonusModal = closeBonusModal;
 
+  // 현재 유닛 및 코스의 일반 단어 풀 추출 헬퍼 함수
+  function getCurrentUnitGeneralWords(currentLang) {
+    const lang = (currentLang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let pool = [];
+
+    const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+    if (db) {
+      ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nid => {
+        if (db[nid]) {
+          const arr = db[nid][lang] || db[nid].words || db[nid].all || (Array.isArray(db[nid]) ? db[nid] : []);
+          if (Array.isArray(arr)) {
+            arr.forEach(w => {
+              if (w && (w.term || w.word)) {
+                pool.push({
+                  id: w.id || `gen_${w.term || w.word}`,
+                  term: w.term || w.word || '',
+                  meaning: w.meaning || w.kor || w.ko || '',
+                  phonetic: w.phonetic || '',
+                  lang: lang
+                });
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (pool.length < 10 && window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      const s1 = window.VOCA_DATA.generateStageSession('node-1', lang) || [];
+      const s2 = window.VOCA_DATA.generateStageSession('node-2', lang) || [];
+      [...s1, ...s2].forEach(w => {
+        if (w && (w.term || w.word)) {
+          pool.push({
+            id: w.id || `sess_${w.term || w.word}`,
+            term: w.term || w.word || '',
+            meaning: w.meaning || w.kor || w.ko || '',
+            phonetic: w.phonetic || '',
+            lang: lang
+          });
+        }
+      });
+    }
+
+    if (pool.length < 10 && window.VOCA_DATA && Array.isArray(window.VOCA_DATA.words)) {
+      window.VOCA_DATA.words.forEach(w => {
+        if (w && (w.term || w.word)) {
+          pool.push({
+            id: w.id || `voca_${w.term || w.word}`,
+            term: w.term || w.word || '',
+            meaning: w.meaning || w.kor || w.ko || '',
+            phonetic: w.phonetic || '',
+            lang: lang
+          });
+        }
+      });
+    }
+
+    const seen = new Set();
+    const deduped = [];
+    for (const item of pool) {
+      const key = (item.term || '').trim().toLowerCase();
+      if (key && !seen.has(key)) {
+        seen.add(key);
+        deduped.push(item);
+      }
+    }
+    return deduped;
+  }
+  window.getCurrentUnitGeneralWords = getCurrentUnitGeneralWords;
+
   // ===================================================
   // SPEED RUN REVIEW MODAL (약점 극복 스피드 런 모달) 로직
   // ===================================================
@@ -1014,27 +1191,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let wrongList = [];
-    try {
-      const raw = localStorage.getItem('vocadash_wrong_words');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) {
-          wrongList = parsed.filter(w => (w.lang || 'es') === currentLang && !w.escaped);
-        }
-      }
-    } catch (_) {}
-
-    if (wrongList.length === 0 && typeof window.loadWrongWords === 'function') {
+    if (typeof window.loadWrongWords === 'function') {
       const loaded = window.loadWrongWords(currentLang) || [];
-      wrongList = loaded.filter(w => !w.escaped);
+      wrongList = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
+    } else {
+      try {
+        const raw = localStorage.getItem('vocadash_wrong_words');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            wrongList = parsed.filter(w => (w.lang || 'es') === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
+          }
+        }
+      } catch (_) {}
     }
 
+    const titleEl = el('review-speedrun-modal-title');
+    const descEl = el('review-speedrun-modal-desc');
     const countText = el('review-speedrun-target-count');
-    if (countText) {
-      if (wrongList.length > 0) {
-        countText.textContent = `오답 단어 ${Math.min(5, wrongList.length)}개 코스`;
-      } else {
-        countText.textContent = `핵심 추천 단어 5개 코스`;
+    const rewardEl = card.querySelector('.text-amber-700 span:last-child') || card.querySelector('.text-amber-700');
+
+    if (titleEl) {
+      titleEl.textContent = '⚡ 약점 극복 스피드 런 (10문제)';
+    }
+
+    const wrongCount = wrongList.length;
+    if (wrongCount === 0) {
+      if (descEl) {
+        descEl.textContent = '오답 노트가 깨끗합니다! 👏 현재 유닛 복습 런을 진행하고 보너스 보석 5개를 받으세요!';
+      }
+      if (countText) {
+        countText.textContent = '현재 유닛 복습 10문제 코스';
+      }
+      if (rewardEl) {
+        rewardEl.textContent = '+5 💎';
+      }
+    } else if (wrongCount >= 10) {
+      if (descEl) {
+        descEl.textContent = '틀렸던 약점 단어를 포함해 총 10문제를 달립니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)';
+      }
+      if (countText) {
+        countText.textContent = '오답 단어 10개 코스';
+      }
+      if (rewardEl) {
+        rewardEl.textContent = '+10 💎';
+      }
+    } else {
+      // 1 ~ 9개
+      if (descEl) {
+        descEl.textContent = '틀렸던 약점 단어를 포함해 총 10문제를 달립니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)';
+      }
+      if (countText) {
+        countText.textContent = `오답 ${wrongCount}개 + 유닛 단어 ${10 - wrongCount}개 코스`;
+      }
+      if (rewardEl) {
+        rewardEl.textContent = '+10 💎';
       }
     }
 
@@ -1060,74 +1271,87 @@ document.addEventListener('DOMContentLoaded', () => {
     closeReviewSpeedrunModal();
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
 
-    let candidateWords = [];
-    try {
-      const raw = localStorage.getItem('vocadash_wrong_words');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          candidateWords = parsed
-            .filter(item => (item.lang || 'es') === currentLang && !item.escaped)
-            .map(item => ({
-              id: item.id || `w_${item.term || item.word}`,
-              term: item.term || item.word || '',
-              meaning: item.meaning || item.kor || '',
-              phonetic: item.phonetic || '',
-              lang: item.lang || currentLang
-            }));
-        }
-      }
-    } catch (_) {}
-
-    if (candidateWords.length === 0 && typeof window.loadWrongWords === 'function') {
+    let wrongList = [];
+    if (typeof window.loadWrongWords === 'function') {
       const loaded = window.loadWrongWords(currentLang) || [];
-      candidateWords = loaded
-        .filter(item => !item.escaped)
-        .map(item => ({
-          id: item.id,
-          term: item.term || item.word || '',
-          meaning: item.meaning || '',
-          phonetic: item.phonetic || '',
-          lang: item.lang || currentLang
-        }));
-    }
-
-    if (candidateWords.length === 0) {
-      const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
-      let unitWords = [];
-      if (db) {
-        const entry = db['node-2'] || db['node-1'] || Object.values(db)[0];
-        if (entry) {
-          const arr = entry[currentLang] || entry.words || entry.all || (Array.isArray(entry) ? entry : []);
-          if (Array.isArray(arr) && arr.length > 0) {
-            unitWords = arr;
+      wrongList = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
+    } else {
+      try {
+        const raw = localStorage.getItem('vocadash_wrong_words');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            wrongList = parsed.filter(w => (w.lang || 'es') === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
           }
         }
-      }
-      if (unitWords.length === 0 && window.VOCA_DATA && Array.isArray(window.VOCA_DATA.words)) {
-        unitWords = window.VOCA_DATA.words;
-      }
-      candidateWords = unitWords.slice(0, 5).map(item => ({
-        id: item.id || `unit_${item.term || item.word}`,
-        term: item.term || item.word || '',
-        meaning: item.meaning || '',
-        phonetic: item.phonetic || '',
-        lang: currentLang
-      }));
+      } catch (_) {}
     }
 
-    const selectedWords = candidateWords.slice(0, 5);
-    const sessionQuestions = selectedWords.map((item, idx) => ({
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    let selectedWords = [];
+    window.isSpeedrunZeroWrongBonus = false;
+
+    if (wrongList.length >= 10) {
+      // 오답 10개 이상: 오답 풀에서 10단어를 무작위 선정
+      const shuffledWrong = shuffleArray(wrongList);
+      selectedWords = shuffledWrong.slice(0, 10);
+    } else if (wrongList.length >= 1) {
+      // 오답 1~9개: 남아있는 오답 단어 전원 포함 + 부족한 수량(10 - N개)은 '현재 유닛의 일반 단어'에서 무작위 추출하여 총 10문제 완성
+      const neededCount = 10 - wrongList.length;
+      const wrongTerms = new Set(wrongList.map(w => (w.term || w.word || '').trim().toLowerCase()));
+      const generalWords = getCurrentUnitGeneralWords(currentLang).filter(w => !wrongTerms.has((w.term || w.word || '').trim().toLowerCase()));
+      const shuffledGeneral = shuffleArray(generalWords);
+
+      const extraWords = [];
+      let gIdx = 0;
+      while (extraWords.length < neededCount && shuffledGeneral.length > 0) {
+        extraWords.push(shuffledGeneral[gIdx % shuffledGeneral.length]);
+        gIdx++;
+      }
+
+      selectedWords = shuffleArray([...wrongList, ...extraWords]);
+    } else {
+      // 오답 0개 (오답 클리어 상태): 현재 유닛 핵심 단어 10문제로 세션 진행 -> 클리어 시 보석 +5 지급
+      window.isSpeedrunZeroWrongBonus = true;
+      const generalWords = getCurrentUnitGeneralWords(currentLang);
+      const shuffledGeneral = shuffleArray(generalWords);
+      let gIdx = 0;
+      while (selectedWords.length < 10 && shuffledGeneral.length > 0) {
+        selectedWords.push(shuffledGeneral[gIdx % shuffledGeneral.length]);
+        gIdx++;
+      }
+    }
+
+    // fallback: 혹시라도 10문제 미만이면 일반 단어 풀에서 추가 보충하여 정확히 10문제 보장
+    if (selectedWords.length < 10) {
+      const fallbackPool = getCurrentUnitGeneralWords(currentLang);
+      let fIdx = 0;
+      while (selectedWords.length < 10 && fallbackPool.length > 0) {
+        selectedWords.push(fallbackPool[fIdx % fallbackPool.length]);
+        fIdx++;
+      }
+    }
+
+    const sessionQuestions = selectedWords.slice(0, 10).map((item, idx) => ({
       id: item.id || `speedrun-q-${idx}`,
-      word: item.term || '',
-      term: item.term || '',
-      meaning: item.meaning || '',
+      word: item.term || item.word || '',
+      term: item.term || item.word || '',
+      meaning: item.meaning || item.kor || item.ko || '',
       phonetic: item.phonetic || '',
+      correctStreak: Number(item.correctStreak) || 0,
       type: 'word',
       isSentence: false,
       tag: '약점 복습',
       isReviewMode: true,
-      lang: currentLang
+      lang: item.lang || currentLang
     }));
 
     window.isReviewGameMode = true;
@@ -1143,13 +1367,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const titleEl = document.getElementById('game-stage-title');
     if (titleEl) {
-      titleEl.textContent = '⚡ 약점 극복 스피드 런';
+      titleEl.textContent = '⚡ 약점 극복 스피드 런 (10문제)';
     }
   }
   window.startRoadmapReviewSpeedrun = startRoadmapReviewSpeedrun;
 
   function removeClearedWrongWords(clearedQuestions) {
-    if (!Array.isArray(clearedQuestions) || clearedQuestions.length === 0) return;
+    if (!Array.isArray(clearedQuestions) || clearedQuestions.length === 0) {
+      if (typeof updateWrongWordsBadge === 'function') updateWrongWordsBadge();
+      if (typeof renderReviewWords === 'function') renderReviewWords(window.currentReviewFilter || 'waiting');
+      return;
+    }
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
 
     const termsToRemove = new Set();
@@ -1617,6 +1845,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bonusClaimBtn) {
     bonusClaimBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      const nodeId = window.currentBonusNodeId || 'node-bonus';
+      if (isBonusClaimed(nodeId)) {
+        closeBonusModal();
+        if (typeof window.showToast === 'function') {
+          window.showToast('이미 수령한 보너스 선물입니다! 🎁 (획득 완료)');
+        }
+        return;
+      }
+
       let curGems = 120;
       try {
         const saved = localStorage.getItem('vocadash_gems');
@@ -1628,6 +1865,12 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {}
       const gemsCountEl = el('header-gems-count');
       if (gemsCountEl) gemsCountEl.textContent = curGems;
+
+      markBonusClaimed(nodeId);
+      if (typeof updateRoadmapNodesUI === 'function') {
+        updateRoadmapNodesUI();
+      }
+
       closeBonusModal();
       if (typeof window.showToast === 'function') {
         window.showToast('💎 보너스 다이아몬드 +15 획득!');
@@ -1928,7 +2171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=37';
+    const v = '?v=41';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -2338,13 +2581,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6-B. 오답노트 (오답 탈출) 데이터 및 화면 로직 (언어별 독립 격리)
   // ===================================================
   const DEFAULT_WRONG_WORDS_ES = [
-    { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', wrongCount: 2, escaped: false, lang: 'es' },
-    { id: 'w_es_3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', wrongCount: 2, escaped: false, lang: 'es' },
-    { id: 'w_es_6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', wrongCount: 1, escaped: false, lang: 'es' }
+    { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', correctStreak: 0, wrongCount: 2, escaped: false, lang: 'es' },
+    { id: 'w_es_3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', correctStreak: 0, wrongCount: 2, escaped: false, lang: 'es' },
+    { id: 'w_es_6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
+    { id: 'w_es_7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' }
   ];
   const DEFAULT_WRONG_WORDS_EN = [];
 
@@ -2362,13 +2605,22 @@ document.addEventListener('DOMContentLoaded', () => {
           const esKey = 'vocadash_wrong_answers_es';
           const enKey = 'vocadash_wrong_answers_en';
           if (!localStorage.getItem(esKey)) {
-            const esItems = parsed.filter(item => (item.lang || 'es') === 'es').map(item => ({ ...item, lang: 'es' }));
+            const esItems = parsed
+              .filter(item => (typeof item === 'string' ? true : (item.lang || 'es') === 'es'))
+              .map(item => {
+                if (typeof item === 'string') {
+                  return { id: item, term: item, meaning: '', phonetic: '', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' };
+                }
+                return { ...item, correctStreak: Number(item.correctStreak) || 0, lang: 'es' };
+              });
             if (esItems.length > 0) {
               localStorage.setItem(esKey, JSON.stringify(esItems));
             }
           }
           if (!localStorage.getItem(enKey)) {
-            const enItems = parsed.filter(item => item.lang === 'en').map(item => ({ ...item, lang: 'en' }));
+            const enItems = parsed
+              .filter(item => typeof item !== 'string' && item.lang === 'en')
+              .map(item => ({ ...item, correctStreak: Number(item.correctStreak) || 0, lang: 'en' }));
             if (enItems.length > 0) {
               localStorage.setItem(enKey, JSON.stringify(enItems));
             }
@@ -2391,24 +2643,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
           return parsed
-            .map((item, idx) => ({
-              id: String(item.id || `w_${lang}_${idx + 1}`),
-              term: String(item.term || item.word || ''),
-              meaning: String(item.meaning || item.kor || ''),
-              phonetic: String(item.phonetic || ''),
-              wrongCount: Number(item.wrongCount) || 1,
-              escaped: !!item.escaped,
-              lang: item.lang || lang
-            }))
-            .filter((item) => item.lang === lang);
+            .map((item, idx) => {
+              if (typeof item === 'string') {
+                return {
+                  id: String(item),
+                  term: String(item),
+                  meaning: '',
+                  phonetic: '',
+                  correctStreak: 0,
+                  wrongCount: 1,
+                  escaped: false,
+                  lang: lang
+                };
+              }
+              return {
+                id: String(item.id || `w_${lang}_${idx + 1}`),
+                term: String(item.term || item.word || ''),
+                meaning: String(item.meaning || item.kor || item.ko || ''),
+                phonetic: String(item.phonetic || ''),
+                correctStreak: typeof item.correctStreak === 'number' ? item.correctStreak : (parseInt(item.correctStreak, 10) || 0),
+                wrongCount: Number(item.wrongCount) || 1,
+                escaped: !!item.escaped,
+                lang: item.lang || lang
+              };
+            })
+            .filter((item) => item.lang === lang && (Number(item.correctStreak) || 0) < 5);
         }
       }
     } catch (e) {
       console.warn('오답 단어 로드 파싱 오류 방어, 기본값 복구:', e);
     }
-    const defaults = lang === 'es' ? [...DEFAULT_WRONG_WORDS_ES] : [...DEFAULT_WRONG_WORDS_EN];
+    const defaults = (lang === 'es' ? [...DEFAULT_WRONG_WORDS_ES] : [...DEFAULT_WRONG_WORDS_EN]).map(d => ({
+      ...d,
+      correctStreak: Number(d.correctStreak) || 0
+    }));
     try {
       localStorage.setItem(key, JSON.stringify(defaults));
+      if (lang === 'es') {
+        localStorage.setItem('vocadash_wrong_words', JSON.stringify(defaults));
+      }
     } catch (_) {}
     return defaults;
   }
@@ -2417,10 +2690,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = (targetLang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const key = getWrongStorageKey(lang);
     try {
-      const validated = (words || []).map((w) => ({
-        ...w,
-        lang: w.lang || lang
-      }));
+      // 5회 연속 정답 달성한 단어는 완전 졸업(영구 삭제)
+      const validated = (words || [])
+        .filter(w => (Number(w.correctStreak) || 0) < 5)
+        .map((w, idx) => ({
+          id: String(w.id || `w_${lang}_${idx + 1}`),
+          term: String(w.term || w.word || ''),
+          meaning: String(w.meaning || w.kor || w.ko || ''),
+          phonetic: String(w.phonetic || ''),
+          correctStreak: Number(w.correctStreak) || 0,
+          wrongCount: Number(w.wrongCount) || 1,
+          escaped: !!w.escaped,
+          lang: w.lang || lang
+        }));
       localStorage.setItem(key, JSON.stringify(validated));
       if (lang === 'es') {
         localStorage.setItem('vocadash_wrong_words', JSON.stringify(validated));
@@ -2448,7 +2730,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const list = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
       (item) => (item.lang || currentLang) === currentLang
     );
-    const waitingWords = list.filter((w) => !w.escaped);
+    const waitingWords = list.filter((w) => !w.escaped && (Number(w.correctStreak) || 0) < 5);
     const count = waitingWords.length;
 
     updateHeartsUI();
@@ -2483,39 +2765,86 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateWrongWordsBadge = updateWrongWordsBadge;
 
-  window.addWrongWord = function (wordObj) {
+  // 인게임 문제 정답/오답 판정 및 연속 정답 5회(Mastery 5) 졸업 시스템
+  function recordAnswerResult(question, isCorrect) {
+    if (!question) return;
     try {
-      const term = wordObj.term || wordObj.word;
-      if (!term) return;
-      const lang = (wordObj.lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const list = loadWrongWords(lang);
-      const existing = list.find((w) => w.term.toLowerCase() === term.toLowerCase());
-      if (existing) {
-        existing.wrongCount = (existing.wrongCount || 1) + 1;
-        existing.escaped = false;
-        existing.lang = lang;
-      } else {
-        list.unshift({
-          id: 'w_' + lang + '_' + Date.now() + Math.random().toString(36).substr(2, 4),
-          term: term,
-          meaning: wordObj.meaning || wordObj.kor || '뜻 없음',
-          phonetic: wordObj.phonetic || `[${term}]`,
-          wrongCount: 1,
-          escaped: false,
-          lang: lang
-        });
-      }
-      saveWrongWords(list, lang);
+      const qTerm = (question.term || question.word || '').trim();
+      const qId = question.id ? String(question.id).trim() : '';
+      if (!qTerm && !qId) return;
 
-      const currentActiveLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      if (currentActiveLang === lang) {
-        window.wrongWords = list;
-        updateWrongWordsBadge();
-        renderReviewWords(currentReviewFilter);
+      const lang = (question.lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const list = loadWrongWords(lang);
+
+      const itemIdx = list.findIndex(w => {
+        if (qId && w.id && String(w.id) === qId) return true;
+        if (qTerm && (w.term || w.word)) {
+          return (w.term || w.word).trim().toLowerCase() === qTerm.toLowerCase();
+        }
+        return false;
+      });
+
+      if (isCorrect) {
+        if (itemIdx !== -1) {
+          const item = list[itemIdx];
+          item.correctStreak = (Number(item.correctStreak) || 0) + 1;
+          console.log(`✅ [Weakness Review] '${item.term}' 정답! 연속 정답수: ${item.correctStreak}/5`);
+          if (item.correctStreak >= 5) {
+            // 5회 연속 정답 시 오답 목록에서 완전히 삭제 (마스터 졸업)
+            list.splice(itemIdx, 1);
+            if (typeof window.showToast === 'function') {
+              window.showToast(`🎓 '${item.term}' 5연속 정답으로 오답 탈출 졸업!`, '🎉');
+            }
+          }
+          saveWrongWords(list, lang);
+          const currentActiveLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+          if (currentActiveLang === lang) {
+            window.wrongWords = list;
+            updateWrongWordsBadge();
+            if (typeof renderReviewWords === 'function') {
+              renderReviewWords(window.currentReviewFilter || 'waiting');
+            }
+          }
+        }
+      } else {
+        // 문제 오답 시: 해당 단어의 correctStreak를 즉시 0으로 리셋
+        if (itemIdx !== -1) {
+          const item = list[itemIdx];
+          item.correctStreak = 0;
+          item.wrongCount = (Number(item.wrongCount) || 1) + 1;
+          item.escaped = false;
+          console.log(`❌ [Weakness Review] '${item.term}' 오답! 연속 정답수 리셋 (0/5)`);
+        } else {
+          list.unshift({
+            id: qId || ('w_' + lang + '_' + Date.now()),
+            term: qTerm,
+            meaning: question.meaning || question.kor || question.ko || '뜻 없음',
+            phonetic: question.phonetic || `[${qTerm}]`,
+            correctStreak: 0,
+            wrongCount: 1,
+            escaped: false,
+            lang: lang
+          });
+          console.log(`📝 [Weakness Review] '${qTerm}' 신규 오답 등록`);
+        }
+        saveWrongWords(list, lang);
+        const currentActiveLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        if (currentActiveLang === lang) {
+          window.wrongWords = list;
+          updateWrongWordsBadge();
+          if (typeof renderReviewWords === 'function') {
+            renderReviewWords(window.currentReviewFilter || 'waiting');
+          }
+        }
       }
     } catch (err) {
-      console.warn('⚠️ addWrongWord 예외 방어:', err);
+      console.warn('⚠️ recordAnswerResult 예외 방어:', err);
     }
+  }
+  window.recordAnswerResult = recordAnswerResult;
+
+  window.addWrongWord = function (wordObj) {
+    recordAnswerResult(wordObj, false);
   };
 
   // ===================================================
@@ -2603,14 +2932,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const phoneticFormatted = rawPhonetic ? `[${rawPhonetic}]` : '';
       const isEscaped = !!w.escaped;
       const count = Number(w.wrongCount) || 1;
+      const streak = Number(w.correctStreak) || 0;
       const badgeClass = isEscaped
         ? 'shrink-0 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 font-semibold text-[11px]'
         : 'shrink-0 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100 text-rose-600 font-semibold text-[11px]';
       const badgeText = isEscaped ? '🎉 탈출 완료' : `🚨 오답 ${count}회`;
+      const streakHtml = (!isEscaped && streak > 0)
+        ? `<span class="shrink-0 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-bold text-[10px] flex items-center gap-0.5"><span>⭐</span><span>연속 ${streak}/5</span></span>`
+        : '';
 
       return `
       <div data-word-id="${escapeHTML(w.id || idx)}" data-term="${escapeHTML(word)}" class="review-word-card bg-white rounded-2xl p-4 shadow-sm border border-slate-100/80 hover:border-emerald-300 hover:shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99] select-none">
-        <!-- 1행: 표제어 + 발음 듣기 버튼 / 우측 오답 횟수 뱃지 -->
+        <!-- 1행: 표제어 + 발음 듣기 버튼 / 우측 오답 횟수 및 연속 정답 뱃지 -->
         <div class="flex items-start justify-between gap-3">
           <div class="flex items-center gap-2">
             <span class="text-[17px] font-bold text-slate-900 tracking-tight leading-snug">
@@ -2620,9 +2953,12 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="material-symbols-outlined text-[18px]">volume_up</span>
             </button>
           </div>
-          <span class="${badgeClass}">
-            ${badgeText}
-          </span>
+          <div class="flex items-center gap-1.5 shrink-0">
+            ${streakHtml}
+            <span class="${badgeClass}">
+              ${badgeText}
+            </span>
+          </div>
         </div>
 
         <!-- 2행: 한글 발음 기호 (무조건 단어 아래 독립된 행으로 고정) -->
@@ -2686,7 +3022,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=37' : 'assets/profiles/profile-spanish.webp?v=37';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=41' : 'assets/profiles/profile-spanish.webp?v=41';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -3734,7 +4070,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=37`;
+    return `assets/profiles/${file}?v=41`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -4250,7 +4586,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=37';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=41';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -4297,7 +4633,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=37';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=41';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
