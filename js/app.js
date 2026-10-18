@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=64`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=65`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 현재 활성화된 코스 데이터를 반환하는 헬퍼 함수
   function getCurrentCourseData() {
-    const activeCourseId = localStorage.getItem('vocadash_active_course') || 'main';
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     if (activeCourseId === 'pack_football' && window.packFootballData) {
       return window.packFootballData;
     }
@@ -579,11 +579,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=64', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=64', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=65', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=65', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
+      const baseUnits = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
+      const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+      return baseUnits.map((u, idx) => {
+        if (Array.isArray(u.words) && u.words.length > 0) return u;
+        const dbKey = idx === 0 ? 'node-1' : idx === 1 ? 'node-2' : idx === 2 ? 'node-3' : 'node-boss';
+        const wList = (db && db[dbKey] && (db[dbKey][lang] || db[dbKey].es || [])) || [];
+        return { ...u, words: wList };
+      });
     }
   };
 
@@ -2877,8 +2884,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const targetNodeId = currentSelectedNodeId || 'node-2';
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData);
+
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1) || 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units))
+      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0])
+      : null;
+    const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
+
+    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
+
     let session = [];
-    if (window.activeCourseId === 'pack_football' && window.packFootballData) {
+    if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
       session = getFootballStageSession(targetNodeId);
     } else if (window.VOCA_DATA) {
       session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round);
@@ -2900,6 +2921,37 @@ document.addEventListener('DOMContentLoaded', () => {
       window.openGameScreen(targetNodeId, session);
     }
   });
+
+  function startLesson(nodeId) {
+    const targetNodeId = nodeId || currentSelectedNodeId || 'node-2';
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData);
+
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1) || 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units))
+      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0])
+      : null;
+    const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
+
+    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
+
+    let session = [];
+    if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
+      session = getFootballStageSession(targetNodeId);
+    } else if (window.VOCA_DATA) {
+      session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, 0);
+    }
+    window.currentSessionQuestions = session;
+    if (typeof window.openFlashcardScreen === 'function') {
+      window.openFlashcardScreen(targetNodeId, session);
+    } else if (typeof window.launchGame === 'function') {
+      window.launchGame('falling', session, { lessonId: targetNodeId });
+    }
+    return session;
+  }
+  window.startLesson = startLesson;
   on('continueStreakBtn', 'click', () => { window.closeStreakModal(); window.openLessonModal('node-2'); });
 
   // 4. Header Category Chips & Subcategory Dropdown & Stage Filter (Removed per requirements)
@@ -3286,7 +3338,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=64';
+    const v = '?v=65';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -4602,7 +4654,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=64' : 'assets/profiles/profile-spanish.webp?v=64';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=65' : 'assets/profiles/profile-spanish.webp?v=65';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5826,7 +5878,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=64`;
+    return `assets/profiles/${file}?v=65`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6342,7 +6394,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=64';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=65';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6386,7 +6438,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=64';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=65';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

@@ -1965,14 +1965,35 @@
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const currentCourse = window.currentActiveCourse || 'es';
 
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units)) 
+      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0]) 
+      : null;
+    const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
+
+    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
+
     if (window.isUnitSkipTestMode && session && Array.isArray(session) && session.length > 0) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
     } else if (window.isRoadmapReviewSpeedrun && session && Array.isArray(session) && session.length > 0) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
-    } else if (window.activeCourseId === 'pack_football' && ((session && Array.isArray(session) && session.length > 0) || (window.currentSessionQuestions && window.currentSessionQuestions.length > 0))) {
-      gameQuestions = (session && Array.isArray(session) && session.length > 0) ? session.slice() : window.currentSessionQuestions.slice();
+    } else if (activeCourseId === 'pack_football') {
+      if (session && Array.isArray(session) && session.length > 0) {
+        gameQuestions = session.slice();
+      } else if (window.currentSessionQuestions && Array.isArray(window.currentSessionQuestions) && window.currentSessionQuestions.length > 0) {
+        gameQuestions = window.currentSessionQuestions.slice();
+      } else if (typeof window.getFootballStageSession === 'function') {
+        gameQuestions = window.getFootballStageSession(currentGameLessonId);
+      } else if (currentWords.length > 0) {
+        gameQuestions = currentWords.map(w => ({ ...w, word: w.term, type: 'word' }));
+      }
       window.currentSessionQuestions = gameQuestions;
     } else if (session && Array.isArray(session) && session.length >= 13) {
       gameQuestions = session.slice();
@@ -1989,8 +2010,8 @@
       gameQuestions = [];
     }
 
-    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런 및 건너뛰기 시험 제외)
-    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && window.activeCourseId !== 'pack_football' && (!gameQuestions || gameQuestions.length < 13)) {
+    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런, 건너뛰기 시험 및 축구팩 제외)
+    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && activeCourseId !== 'pack_football' && (!gameQuestions || gameQuestions.length < 13)) {
       if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         gameQuestions = window.VOCA_DATA.generateStageSession(currentGameLessonId, currentCourse, round);
         window.currentSessionQuestions = gameQuestions;

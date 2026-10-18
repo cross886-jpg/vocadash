@@ -337,9 +337,24 @@
     const currentCourse = window.currentActiveCourse || 'es';
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentFlashcardLessonId]) || 0;
 
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units)) 
+      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0]) 
+      : null;
+    const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
+
+    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
+
     let deck = null;
     if (session && Array.isArray(session) && session.length > 0) {
       deck = session.slice();
+    } else if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
+      deck = window.getFootballStageSession(currentFlashcardLessonId);
     } else if (window.VOCA_DATA) {
       if (typeof window.VOCA_DATA.generateStageSession === 'function') {
         deck = window.VOCA_DATA.generateStageSession(currentFlashcardLessonId, currentCourse, round);
@@ -478,7 +493,7 @@
       if (window.courseData && window.courseData[activeLang]) {
         flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
       } else {
-        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=64`;
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=65`;
       }
     }
 

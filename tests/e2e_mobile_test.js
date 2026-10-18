@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=64`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=65`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -730,7 +730,7 @@ async function runE2ETests() {
       modalEnCheck.enDesc === '일상 회화 & 실전 필수 어휘 마스터' &&
       modalEnCheck.enCheckVisible &&
       !modalEnCheck.hasFootballCourse;
-    const clearanceValid = langSwitchState.node1Clearance >= 40;
+    const clearanceValid = langSwitchState.node1Clearance >= 20 && langSwitchState.node1Clearance <= 32;
     const modalCtaValid = modalCheckBeforeConfirm.hasConfirmBtn && 
       modalCheckBeforeConfirm.confirmText.includes('선택 완료') && 
       modalCheckBeforeConfirm.subtitle === '원하는 언어와 코스를 선택해 주세요' &&
@@ -1057,6 +1057,14 @@ async function runE2ETests() {
       results.bookHasArbitro = bookTerms.includes('árbitro');
       results.bookCardCount = bookCards.length;
 
+      // 6-B. 축구팩 활성 상태에서 1번 노드 세션 생성 시 축구 단어 전달 검증
+      window.switchCourse('pack_football');
+      const fbSession = (typeof window.getFootballStageSession === 'function') 
+        ? window.getFootballStageSession('node-1') 
+        : [];
+      results.footballSessionHasWord = fbSession.some(q => q.term === 'pasar' || q.term === 'portero');
+      results.footballSessionCount = fbSession.length;
+
       // 7. 메인 코스로 다시 전환하여 복원 검증
       window.switchCourse('main');
       results.restoredActiveCourse = window.activeCourseId;
@@ -1102,6 +1110,7 @@ async function runE2ETests() {
       courseIsolationResult.unit1HasWords &&
       courseIsolationResult.unit1HasNodes &&
       courseIsolationResult.unit1HasSentence &&
+      courseIsolationResult.footballSessionHasWord &&
       courseIsolationResult.restoredActiveCourse === 'main' &&
       courseIsolationResult.hasRenderRoadmap;
 

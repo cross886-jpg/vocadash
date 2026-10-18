@@ -965,9 +965,24 @@
     const currentCourse = window.currentActiveCourse || 'es';
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
 
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units)) 
+      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0]) 
+      : null;
+    const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
+
+    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
+
     let session = customSession;
     if (!session || !Array.isArray(session) || session.length === 0) {
-      if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
+        session = window.getFootballStageSession(targetNodeId);
+      } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         session = window.VOCA_DATA.generateStageSession(targetNodeId, currentCourse, round);
       }
     }
