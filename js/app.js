@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=24`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=25`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=24', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=24', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=25', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=25', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -866,6 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.openCourseDropdown = () => {
     if (!courseDropdown) return;
+    renderCourseDropdown(window.currentLanguage || window.currentActiveCourse || 'es', window.currentCourseId);
     courseDropdown.classList.remove('hidden', 'opacity-0', '-translate-y-2', 'pointer-events-none');
     courseDropdown.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
     if (chevronIcon) chevronIcon.classList.add('rotate-180');
@@ -919,13 +920,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     menu.innerHTML = presets.map((course) => {
       const isSelected = course.id === currentSelected.id;
+      const btnClass = isSelected
+        ? 'bg-emerald-50/60 border border-emerald-400 text-emerald-950 font-semibold'
+        : 'bg-white border border-slate-100 text-slate-700 hover:bg-slate-50';
+      const titleClass = isSelected ? 'text-emerald-950' : 'text-slate-700';
+      const descClass = isSelected ? 'text-emerald-800/80' : 'text-slate-500';
       return `
-        <button type="button" data-course-id="${escapeHTML(course.id)}" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl ${isSelected ? 'bg-emerald-50 border border-emerald-500/20' : 'border border-transparent'} text-on-surface cursor-pointer transition-all hover:bg-slate-50" role="menuitem">
+        <button type="button" data-course-id="${escapeHTML(course.id)}" class="course-dropdown-item flex items-center justify-between p-2.5 rounded-xl ${btnClass} cursor-pointer transition-all" role="menuitem">
           <div class="flex items-center gap-2.5 pointer-events-none">
-            <span class="text-base p-1.5 rounded-lg bg-white shadow-xs border border-slate-100">${escapeHTML(course.icon)}</span>
+            <span class="text-base p-1.5 rounded-lg bg-surface-container-lowest shadow-xs border border-slate-100">${escapeHTML(course.icon)}</span>
             <div class="flex flex-col text-left">
-              <span class="font-bold text-xs text-slate-800 item-title">${escapeHTML(course.title)}</span>
-              <span class="text-[10px] text-slate-500">${escapeHTML(course.desc)}</span>
+              <span class="font-bold text-xs ${titleClass} item-title">${escapeHTML(course.title)}</span>
+              <span class="text-[10px] ${descClass}">${escapeHTML(course.desc)}</span>
             </div>
           </div>
           <span class="item-check ${isSelected ? '' : 'hidden'} material-symbols-outlined text-[18px] text-emerald-600 font-bold">check</span>
@@ -975,16 +981,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (dropdownTitle) dropdownTitle.textContent = title;
       if (dropdownIcon) dropdownIcon.textContent = icon;
 
-      document.querySelectorAll('.course-dropdown-item').forEach((btn) => {
+      document.querySelectorAll('#course-dropdown-menu .course-dropdown-item').forEach((btn) => {
+        const isSelected = btn.dataset.courseId === courseId;
         const check = btn.querySelector('.item-check');
-        if (btn === itemBtn) {
-          btn.classList.add('bg-emerald-50/70', 'border-emerald-500/20');
-          btn.classList.remove('border-transparent');
-          if (check) check.classList.remove('hidden');
-        } else {
-          btn.classList.remove('bg-emerald-50/70', 'border-emerald-500/20');
-          btn.classList.add('border-transparent');
-          if (check) check.classList.add('hidden');
+        const titleSpan = btn.querySelector('.item-title');
+
+        btn.className = `course-dropdown-item flex items-center justify-between p-2.5 rounded-xl cursor-pointer transition-all ${
+          isSelected
+            ? 'bg-emerald-50/60 border border-emerald-400 text-emerald-950 font-semibold'
+            : 'bg-white border border-slate-100 text-slate-700 hover:bg-slate-50'
+        }`;
+        if (check) check.classList.toggle('hidden', !isSelected);
+        if (titleSpan) {
+          titleSpan.classList.toggle('text-emerald-950', isSelected);
+          titleSpan.classList.toggle('text-slate-700', !isSelected);
         }
       });
 
@@ -1072,7 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=24';
+    const v = '?v=25';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1753,7 +1763,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=24' : 'assets/profiles/profile-spanish.webp?v=24';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=25' : 'assets/profiles/profile-spanish.webp?v=25';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -2801,7 +2811,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=24`;
+    return `assets/profiles/${file}?v=25`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3311,7 +3321,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=24';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=25';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3353,7 +3363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=24';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=25';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
