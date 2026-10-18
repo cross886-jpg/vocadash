@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=35`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=36`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=35', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=35', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=36', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=36', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -1642,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=35';
+    const v = '?v=36';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -1671,6 +1671,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bubbleText) {
       bubbleText.textContent = lang === 'en' ? "Let's Go! 출발!" : "¡Vamos! 출발!";
     }
+
+    // 4-B. Roadmap decors: 이정표 표지판 동적 갱신 (마드리드 <-> 뉴욕 등)
+    updateRoadmapSignpost(lang);
 
     // 5. Book sticker mascot
     const bookMascots = document.querySelectorAll('#book-screen img[alt*="scholarly"], #book-screen img[src*="characters/"]');
@@ -1703,6 +1706,75 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.updateMascotCharacters = updateMascotCharacters;
+
+  // ===================================================
+  // 로드맵 이정표 표지판 언어별 프리셋 & 동적 업데이트
+  // ===================================================
+  const SIGNPOST_PRESETS = {
+    es: {
+      icon: '🏛️',
+      text: 'MADRID 2.4km',
+      code: 'ES',
+      codeClass: 'bg-red-600 text-yellow-300',
+      flag: '🇪🇸'
+    },
+    en: {
+      icon: '🗽',
+      text: 'NEW YORK 2.4km',
+      code: 'US',
+      codeClass: 'bg-blue-600 text-white',
+      flag: '🇺🇸'
+    },
+    fr: {
+      icon: '🗼',
+      text: 'PARIS 2.4km',
+      code: 'FR',
+      codeClass: 'bg-blue-700 text-white',
+      flag: '🇫🇷'
+    },
+    ja: {
+      icon: '⛩️',
+      text: 'TOKYO 2.4km',
+      code: 'JP',
+      codeClass: 'bg-red-600 text-white',
+      flag: '🇯🇵'
+    },
+    zh: {
+      icon: '🏮',
+      text: 'BEIJING 2.4km',
+      code: 'CN',
+      codeClass: 'bg-red-600 text-yellow-300',
+      flag: '🇨🇳'
+    },
+    de: {
+      icon: '🏰',
+      text: 'BERLIN 2.4km',
+      code: 'DE',
+      codeClass: 'bg-slate-900 text-yellow-300',
+      flag: '🇩🇪'
+    }
+  };
+
+  function updateRoadmapSignpost(targetLang) {
+    const lang = targetLang === 'en' ? 'en' : (targetLang || 'es');
+    const preset = SIGNPOST_PRESETS[lang] || SIGNPOST_PRESETS.es;
+
+    const iconEl = document.getElementById('signpost-icon');
+    if (iconEl) iconEl.textContent = preset.icon;
+
+    const textEl = document.getElementById('signpost-text');
+    if (textEl) textEl.textContent = preset.text;
+
+    const codeEl = document.getElementById('signpost-code-badge');
+    if (codeEl) {
+      codeEl.textContent = preset.code;
+      codeEl.className = `text-[8px] ${preset.codeClass} px-1 py-0.2 rounded font-extrabold leading-none`;
+    }
+
+    const flagEl = document.getElementById('signpost-flag');
+    if (flagEl) flagEl.textContent = preset.flag;
+  }
+  window.updateRoadmapSignpost = updateRoadmapSignpost;
 
   function renderBookWords(targetLang, courseId) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
@@ -1824,8 +1896,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. 단어장 단어 갱신
     renderBookWords(lang, selectedCourse);
 
-    // 6. 캐릭터 마스코트 prefix (es-* <-> en-*) 갱신
+    // 6. 캐릭터 마스코트 prefix (es-* <-> en-*) 및 로드맵 이정표 갱신
     updateMascotCharacters(lang);
+    updateRoadmapSignpost(lang);
 
     // 7. 언어 선택 모달 내 상태 갱신 및 창 닫기 (토스트/알림 배너 없이 즉각 반영)
     updateModalCardsUI(lang);
@@ -2327,7 +2400,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=35' : 'assets/profiles/profile-spanish.webp?v=35';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=36' : 'assets/profiles/profile-spanish.webp?v=36';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -3375,7 +3448,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=35`;
+    return `assets/profiles/${file}?v=36`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3891,7 +3964,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=35';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=36';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3938,7 +4011,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=35';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=36';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
