@@ -700,7 +700,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=56`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=57`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -788,7 +788,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=56`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=57`;
         });
       } catch (_) {}
 
@@ -1971,6 +1971,9 @@
     } else if (window.isRoadmapReviewSpeedrun && session && Array.isArray(session) && session.length > 0) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
+    } else if (window.activeCourseId === 'pack_football' && ((session && Array.isArray(session) && session.length > 0) || (window.currentSessionQuestions && window.currentSessionQuestions.length > 0))) {
+      gameQuestions = (session && Array.isArray(session) && session.length > 0) ? session.slice() : window.currentSessionQuestions.slice();
+      window.currentSessionQuestions = gameQuestions;
     } else if (session && Array.isArray(session) && session.length >= 13) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
@@ -1987,7 +1990,7 @@
     }
 
     // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런 및 건너뛰기 시험 제외)
-    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && (!gameQuestions || gameQuestions.length < 13)) {
+    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && window.activeCourseId !== 'pack_football' && (!gameQuestions || gameQuestions.length < 13)) {
       if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         gameQuestions = window.VOCA_DATA.generateStageSession(currentGameLessonId, currentCourse, round);
         window.currentSessionQuestions = gameQuestions;
@@ -2916,6 +2919,10 @@
   });
 
   function startFallingGame(lessonId = 'node-2', session = null, options = {}) {
+    if (Array.isArray(lessonId)) {
+      session = lessonId;
+      lessonId = (options && options.lessonId) || window.currentSelectedNodeId || 'node-1';
+    }
     return openGameScreen(lessonId, session);
   }
 

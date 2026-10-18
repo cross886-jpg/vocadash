@@ -338,7 +338,7 @@
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentFlashcardLessonId]) || 0;
 
     let deck = null;
-    if (session && Array.isArray(session) && session.length >= 10) {
+    if (session && Array.isArray(session) && session.length > 0) {
       deck = session.slice();
     } else if (window.VOCA_DATA) {
       if (typeof window.VOCA_DATA.generateStageSession === 'function') {
@@ -359,7 +359,7 @@
     }
 
     // 견고한 세이프 폴백 (어떤 상황에서도 빈 화면이나 1개짜리 단어가 되지 않도록 레슨별 기본 13개 단어/문장 세트 보장)
-    if (!deck || deck.length < 10) {
+    if (!deck || deck.length === 0) {
       if (currentFlashcardLessonId === 'node-boss') {
         deck = [
           { id: 'fb-nb-01', type: 'word', term: 'Vuelo', word: 'Vuelo', meaning: '항공편 / 비행기', phonetic: '[부에요]', tag: '종합 복습' },
@@ -478,7 +478,7 @@
       if (window.courseData && window.courseData[activeLang]) {
         flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
       } else {
-        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=56`;
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=57`;
       }
     }
 

@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=56`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=57`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=56', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=56', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=57', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=57', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -737,8 +737,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const isFootball = (window.activeCourseId === 'pack_football');
     const courseId = isFootball ? 'pack_football' : (window.currentCourseId || 'basic');
     let data;
-    if (isFootball && window.packFootballData && window.packFootballData.lessons && window.packFootballData.lessons[nodeId]) {
-      data = window.packFootballData.lessons[nodeId];
+    if (isFootball && window.packFootballData && Array.isArray(window.packFootballData.units)) {
+      const fbData = window.packFootballData;
+      const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel('es') : 1) || 1;
+      const curUnit = fbData.units.find(u => u.id === curUnitLevel) || fbData.units[0];
+      let n = null;
+      if (curUnit && Array.isArray(curUnit.nodes)) {
+        if (nodeId === 'node-1') n = curUnit.nodes.find(x => x.stageNumber === 1 || x.id.endsWith('_n1'));
+        else if (nodeId === 'node-2') n = curUnit.nodes.find(x => x.stageNumber === 2 || x.id.endsWith('_n3'));
+        else if (nodeId === 'node-3') n = curUnit.nodes.find(x => x.type === 'sentence' || x.id.endsWith('_n4'));
+        else if (nodeId === 'node-boss') n = curUnit.nodes.find(x => x.type === 'boss' || x.id.endsWith('_n6'));
+        else n = curUnit.nodes.find(x => x.id === nodeId);
+      }
+      if (n) {
+        data = {
+          title: n.title,
+          desc: n.meaning ? `${n.targetSentence} (${n.meaning})` : (curUnit.subtitle || '실전 축구 어휘 마스터!'),
+          icon: curUnit.icon || '⚽'
+        };
+      } else if (fbData.lessons && fbData.lessons[nodeId]) {
+        data = fbData.lessons[nodeId];
+      } else {
+        data = { title: '축구 레슨', desc: '실전 축구 어휘 학습', icon: '⚽' };
+      }
     } else {
       const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || COURSE_LESSONS.basic;
       data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]) || { title: '학습 레슨', desc: '새로운 단어를 학습해보세요!', icon: '⚽' };
@@ -877,6 +898,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const fbData = window.packFootballData;
       const fbCourseName = (fbData && fbData.courseName) || '스페인 축구 실전팩';
       const fbBadge = (fbData && fbData.badge) || '스페셜 팩';
+      const curFbUnit = fbData?.units?.find(u => u.id === unlockedLevel) || fbData?.units?.[0];
 
       if (unitLangBadge) {
         unitLangBadge.textContent = `⚽ ${fbBadge}`;
@@ -885,10 +907,23 @@ document.addEventListener('DOMContentLoaded', () => {
         unitThumbIcon.textContent = '⚽';
       }
       if (unitMainTitle) {
-        unitMainTitle.textContent = fbCourseName;
+        unitMainTitle.textContent = curFbUnit ? `${fbCourseName} · ${curFbUnit.title}` : fbCourseName;
       }
       if (unitSubBadge) {
         unitSubBadge.textContent = `UNIT ${unlockedLevel} / ${fbData?.units?.length || 4}`;
+      }
+
+      if (curFbUnit && Array.isArray(curFbUnit.nodes)) {
+        const n1 = curFbUnit.nodes.find(n => n.stageNumber === 1 || n.id.endsWith('_n1'));
+        const n2 = curFbUnit.nodes.find(n => n.stageNumber === 2 || n.id.endsWith('_n3'));
+        const n3 = curFbUnit.nodes.find(n => n.type === 'sentence' || n.id.endsWith('_n4'));
+        const nBoss = curFbUnit.nodes.find(n => n.type === 'boss' || n.id.endsWith('_n6'));
+        lessons = {
+          'node-1': { title: n1?.title || '1과: 포지션', desc: curFbUnit.subtitle, icon: '⚽' },
+          'node-2': { title: n2?.title || '2과: 경기장 시설', desc: curFbUnit.subtitle, icon: '🏟️' },
+          'node-3': { title: n3?.title || '핵심 문장', desc: n3?.targetSentence || curFbUnit.subtitle, icon: '⚽' },
+          'node-boss': { title: nBoss?.title || `${curFbUnit.title} 보스전`, desc: '축구 실전 테스트 & 챔피언 특별 보상', icon: '👑' }
+        };
       }
     } else if (unlockedLevel === 1) {
       if (unitLangBadge) {
@@ -996,7 +1031,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1과 완료 상태 (그린 톤 + 체크 배지 + ⭐⭐⭐ 완료!)
       if (ping1) ping1.classList.add('hidden');
       if (pulseRing1) pulseRing1.classList.add('hidden');
-      if (startPill1) startPill1.classList.add('hidden');
+      if (startPill1) {
+        startPill1.classList.add('hidden');
+        startPill1.style.display = 'none';
+      }
       if (checkBadge1) {
         checkBadge1.classList.remove('hidden');
         checkBadge1.style.display = 'flex';
@@ -1017,8 +1055,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1과 진행 중 상태 (스카이블루 + START 뱃지 + 활성 링)
       if (ping1) ping1.classList.remove('hidden');
       if (pulseRing1) pulseRing1.classList.remove('hidden');
-      if (startPill1) startPill1.classList.remove('hidden');
-      if (checkBadge1) checkBadge1.classList.add('hidden');
+      if (startPill1) {
+        startPill1.classList.remove('hidden');
+        startPill1.style.display = 'flex';
+      }
+      if (checkBadge1) {
+        checkBadge1.classList.add('hidden');
+        checkBadge1.style.display = 'none';
+      }
       if (target1) target1.dataset.nodeType = 'active';
 
       if (btn1) {
@@ -1057,8 +1101,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner2) banner2.classList.add('hidden');
       if (ping2) ping2.classList.add('hidden');
       if (pulseRing2) pulseRing2.classList.add('hidden');
-      if (startPill2) startPill2.classList.add('hidden');
-      if (lockBadge2) lockBadge2.classList.add('hidden');
+      if (startPill2) {
+        startPill2.classList.add('hidden');
+        startPill2.style.display = 'none';
+      }
+      if (lockBadge2) {
+        lockBadge2.classList.add('hidden');
+        lockBadge2.style.display = 'none';
+      }
       if (checkBadge2) {
         checkBadge2.classList.remove('hidden');
         checkBadge2.style.display = 'flex';
@@ -1093,9 +1143,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner2) banner2.classList.add('hidden');
       if (ping2) ping2.classList.remove('hidden');
       if (pulseRing2) pulseRing2.classList.remove('hidden');
-      if (startPill2) startPill2.classList.remove('hidden');
-      if (lockBadge2) lockBadge2.classList.add('hidden');
-      if (checkBadge2) checkBadge2.classList.add('hidden');
+      if (startPill2) {
+        startPill2.classList.remove('hidden');
+        startPill2.style.display = 'flex';
+      }
+      if (lockBadge2) {
+        lockBadge2.classList.add('hidden');
+        lockBadge2.style.display = 'none';
+      }
+      if (checkBadge2) {
+        checkBadge2.classList.add('hidden');
+        checkBadge2.style.display = 'none';
+      }
       if (target2) {
         target2.dataset.nodeType = 'active';
         target2.removeAttribute('data-lock-msg');
@@ -1127,9 +1186,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner2) banner2.classList.add('hidden');
       if (ping2) ping2.classList.add('hidden');
       if (pulseRing2) pulseRing2.classList.add('hidden');
-      if (startPill2) startPill2.classList.add('hidden');
-      if (checkBadge2) checkBadge2.classList.add('hidden');
-      if (lockBadge2) lockBadge2.classList.remove('hidden');
+      if (startPill2) {
+        startPill2.classList.add('hidden');
+        startPill2.style.display = 'none';
+      }
+      if (checkBadge2) {
+        checkBadge2.classList.add('hidden');
+        checkBadge2.style.display = 'none';
+      }
+      if (lockBadge2) {
+        lockBadge2.classList.remove('hidden');
+        lockBadge2.style.display = 'flex';
+      }
 
       if (target2) {
         target2.dataset.nodeType = 'locked';
@@ -1164,6 +1232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn3 = el('node-3-btn');
     const badge3 = el('node-3-label-badge');
     const card3 = el('node-3-label-card');
+    const startPill3 = el('node-3-start-pill');
 
     if (prog3 >= 3) {
       // 3과 완료 상태 (초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
@@ -1175,7 +1244,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.add('hidden');
       if (pulseRing3) pulseRing3.classList.add('hidden');
-      if (lockBadge3) lockBadge3.classList.add('hidden');
+      if (startPill3) {
+        startPill3.classList.add('hidden');
+        startPill3.style.display = 'none';
+      }
+      if (lockBadge3) {
+        lockBadge3.classList.add('hidden');
+        lockBadge3.style.display = 'none';
+      }
       if (checkBadge3) {
         checkBadge3.classList.remove('hidden');
         checkBadge3.style.display = 'flex';
@@ -1187,7 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (btn3) {
         btn3.className = 'node-btn btn-3d w-[72px] h-[72px] rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-emerald-700 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer';
-        btn3.title = (lessons['node-3'] ? lessons['node-3'].title : '3과: 수하물 찾기와 세관') + ' (완료)';
+        btn3.title = (lessons['node-3'] ? lessons['node-3'].title : '3과: 핵심 문장') + ' (완료)';
         const numSpan3 = btn3.querySelector('.node-stage-num');
         if (numSpan3) numSpan3.textContent = '3';
       }
@@ -1206,8 +1282,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.remove('hidden');
       if (pulseRing3) pulseRing3.classList.remove('hidden');
-      if (lockBadge3) lockBadge3.classList.add('hidden');
-      if (checkBadge3) checkBadge3.classList.add('hidden');
+      if (startPill3) {
+        startPill3.classList.remove('hidden');
+        startPill3.style.display = 'flex';
+      }
+      if (lockBadge3) {
+        lockBadge3.classList.add('hidden');
+        lockBadge3.style.display = 'none';
+      }
+      if (checkBadge3) {
+        checkBadge3.classList.add('hidden');
+        checkBadge3.style.display = 'none';
+      }
 
       if (node3Target) {
         node3Target.dataset.nodeType = 'active';
@@ -1216,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (btn3) {
         btn3.className = 'node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-2xl flex items-center justify-center border-b-4 border-sky-700 shadow-lg active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-sky-300/50';
-        btn3.title = lessons['node-3'] ? lessons['node-3'].title : '3과: 수하물 찾기와 세관';
+        btn3.title = lessons['node-3'] ? lessons['node-3'].title : '3과: 핵심 문장';
         const numSpan3 = btn3.querySelector('.node-stage-num');
         if (numSpan3) numSpan3.textContent = '3';
       }
@@ -1236,8 +1322,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (banner3) banner3.classList.add('hidden');
       if (ping3) ping3.classList.add('hidden');
       if (pulseRing3) pulseRing3.classList.add('hidden');
-      if (lockBadge3) lockBadge3.classList.remove('hidden');
-      if (checkBadge3) checkBadge3.classList.add('hidden');
+      if (startPill3) {
+        startPill3.classList.add('hidden');
+        startPill3.style.display = 'none';
+      }
+      if (lockBadge3) {
+        lockBadge3.classList.remove('hidden');
+        lockBadge3.style.display = 'flex';
+      }
+      if (checkBadge3) {
+        checkBadge3.classList.add('hidden');
+        checkBadge3.style.display = 'none';
+      }
 
       if (node3Target) {
         node3Target.dataset.nodeType = 'locked';
@@ -1267,6 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lockBadgeBoss = el('node-boss-lock-badge');
     const checkBadgeBoss = el('node-boss-check-badge');
     const badgeBoss = el('node-boss-label-badge');
+    const startPillBoss = el('node-boss-start-pill');
 
     if (prog3 >= 3) {
       if (nodeBossContainer) {
@@ -1274,7 +1371,10 @@ document.addEventListener('DOMContentLoaded', () => {
         nodeBossContainer.classList.add('opacity-100');
         nodeBossContainer.style.opacity = '1';
       }
-      if (lockBadgeBoss) lockBadgeBoss.classList.add('hidden');
+      if (lockBadgeBoss) {
+        lockBadgeBoss.classList.add('hidden');
+        lockBadgeBoss.style.display = 'none';
+      }
       if (glowBoss) {
         glowBoss.classList.remove('hidden');
         glowBoss.classList.add('animate-pulse');
@@ -1282,6 +1382,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (progBoss >= 3) {
         if (bannerBoss) bannerBoss.classList.add('hidden');
+        if (startPillBoss) {
+          startPillBoss.classList.add('hidden');
+          startPillBoss.style.display = 'none';
+        }
         if (targetBoss) {
           targetBoss.dataset.nodeType = 'completed';
           targetBoss.removeAttribute('data-lock-msg');
@@ -1296,12 +1400,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         if (bannerBoss) bannerBoss.classList.add('hidden');
+        if (startPillBoss) {
+          startPillBoss.classList.remove('hidden');
+          startPillBoss.style.display = 'flex';
+        }
         if (targetBoss) {
           targetBoss.dataset.nodeType = 'active';
           targetBoss.removeAttribute('data-lock-msg');
           targetBoss.removeAttribute('data-lock-icon');
         }
-        if (checkBadgeBoss) checkBadgeBoss.classList.add('hidden');
+        if (checkBadgeBoss) {
+          checkBadgeBoss.classList.add('hidden');
+          checkBadgeBoss.style.display = 'none';
+        }
         if (btnBoss) {
           btnBoss.title = (lessons['node-boss'] ? lessons['node-boss'].title : '4과: 보스전') + ' (도전 가능!)';
         }
@@ -1314,13 +1425,23 @@ document.addEventListener('DOMContentLoaded', () => {
         nodeBossContainer.classList.add('opacity-80');
       }
       if (bannerBoss) bannerBoss.classList.add('hidden');
+      if (startPillBoss) {
+        startPillBoss.classList.add('hidden');
+        startPillBoss.style.display = 'none';
+      }
       if (targetBoss) {
         targetBoss.dataset.nodeType = 'locked';
         targetBoss.setAttribute('data-lock-msg', '1~3과를 모두 통과해야 보스전에 도전할 수 있어요!');
         targetBoss.setAttribute('data-lock-icon', '👑');
       }
-      if (lockBadgeBoss) lockBadgeBoss.classList.remove('hidden');
-      if (checkBadgeBoss) checkBadgeBoss.classList.add('hidden');
+      if (lockBadgeBoss) {
+        lockBadgeBoss.classList.remove('hidden');
+        lockBadgeBoss.style.display = 'flex';
+      }
+      if (checkBadgeBoss) {
+        checkBadgeBoss.classList.add('hidden');
+        checkBadgeBoss.style.display = 'none';
+      }
       if (badgeBoss) {
         badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-slate-500 font-semibold">3과 완료 후 잠금 해제</span>';
       }
@@ -2569,41 +2690,63 @@ document.addEventListener('DOMContentLoaded', () => {
   on('lesson-modal-close-btn', 'click', window.closeLessonModal);
   if (lessonBackdrop) lessonBackdrop.addEventListener('click', (e) => { if (e.target === lessonBackdrop) window.closeLessonModal(); });
 
-  // 스페인 축구 실전팩 스테이지 세션 문제 생성기
+  // 스페인 축구 실전팩 스테이지 세션 문제 생성기 (Unit 1~4 1:1 정밀 매칭)
   function getFootballStageSession(nodeId) {
     const fb = window.packFootballData;
-    if (!fb || !fb.units) return [];
-    const u1 = fb.units[0];
-    const words1 = (u1 && u1.words) ? u1.words.slice(0, 6) : [];
-    const words2 = (u1 && u1.words) ? u1.words.slice(6, 12) : [];
-    const sent1 = {
-      id: 'fb_1_sentence',
-      term: 'El delantero marca un gol.',
-      word: 'El delantero marca un gol.',
-      meaning: '공격수가 골을 넣는다.',
-      pron: '엘 델란테로 마르카 운 골',
-      phonetic: '[엘 델란테로 마르카 운 골]',
-      type: 'sentence',
-      isSentence: true
-    };
+    if (!fb || !Array.isArray(fb.units) || fb.units.length === 0) return [];
 
-    let pool = [];
-    if (nodeId === 'node-1') {
-      pool = words1;
-    } else if (nodeId === 'node-2') {
-      pool = words2;
-    } else if (nodeId === 'node-3') {
-      pool = [sent1, ...words1.slice(0, 5)];
-    } else {
-      pool = (u1 && u1.words) ? u1.words : [];
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel('es') : 1) || 1;
+    let targetUnit = fb.units.find(u => u.id === unlockedLevel) || fb.units[0];
+
+    let targetNode = null;
+    for (const u of fb.units) {
+      const found = Array.isArray(u.nodes) ? u.nodes.find(n => n.id === nodeId) : null;
+      if (found) {
+        targetUnit = u;
+        targetNode = found;
+        break;
+      }
     }
 
-    if (pool.length === 0) return [];
+    if (!targetNode && targetUnit && Array.isArray(targetUnit.nodes)) {
+      if (nodeId === 'node-1') {
+        targetNode = targetUnit.nodes.find(n => n.stageNumber === 1 || n.id.endsWith('_n1'));
+      } else if (nodeId === 'node-2') {
+        targetNode = targetUnit.nodes.find(n => n.stageNumber === 2 || n.id.endsWith('_n3'));
+      } else if (nodeId === 'node-3') {
+        targetNode = targetUnit.nodes.find(n => n.type === 'sentence' || n.id.endsWith('_n4'));
+      } else if (nodeId === 'node-boss') {
+        targetNode = targetUnit.nodes.find(n => n.type === 'boss' || n.id.endsWith('_n6'));
+      }
+    }
+
+    let words = [];
+    if (targetNode && Array.isArray(targetNode.wordIds) && targetNode.wordIds.length > 0) {
+      const idSet = new Set(targetNode.wordIds);
+      words = (targetUnit.words || []).filter(w => idSet.has(w.id));
+    } else if (targetNode && (targetNode.targetSentence || targetNode.type === 'sentence')) {
+      const sentObj = {
+        id: targetNode.id || `fb_${targetUnit.id}_sent`,
+        term: targetNode.targetSentence || '¡Vamos al partido!',
+        meaning: targetNode.meaning || '경기를 시작하자!',
+        pron: targetNode.pron || '',
+        phonetic: targetNode.pron ? `[${targetNode.pron}]` : '',
+        type: 'sentence',
+        isSentence: true
+      };
+      words = [sentObj, ...(targetUnit.words || []).slice(0, 5)];
+    } else if (nodeId === 'node-boss' || (targetNode && targetNode.type === 'boss')) {
+      words = (targetUnit.words || []).slice();
+    } else {
+      words = (targetUnit.words || []).slice(0, 6);
+    }
+
+    if (!words || words.length === 0) return [];
 
     let session = [];
-    const count = Math.max(10, pool.length);
+    const count = Math.max(10, words.length);
     for (let i = 0; i < count; i++) {
-      const w = pool[i % pool.length];
+      const w = words[i % words.length];
       const isSent = Boolean(w.type === 'sentence' || w.isSentence);
       session.push({
         id: w.id || `fb-q-${i + 1}`,
@@ -2611,12 +2754,12 @@ document.addEventListener('DOMContentLoaded', () => {
         word: w.term,
         meaning: w.meaning,
         pron: w.pron || '',
-        phonetic: w.phonetic || `[${w.pron || ''}]`,
+        phonetic: w.phonetic || (w.pron ? `[${w.pron}]` : ''),
         exampleTarget: isSent ? w.term : `El ${w.term} está en el campo.`,
         exampleMeaning: isSent ? w.meaning : `${w.meaning}가 경기장에 있다.`,
         type: isSent ? 'sentence' : 'word',
         isSentence: isSent,
-        tag: '⚽ 축구 실전'
+        tag: `⚽ ${targetUnit.title ? targetUnit.title.split('.')[0] : '축구 실전'}`
       });
     }
     return session;
@@ -3050,7 +3193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=56';
+    const v = '?v=57';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -3193,9 +3336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chapterTitleEl = document.getElementById('book-chapter-title');
     if (chapterTitleEl) {
       if (isFootball) {
-        const u1 = window.packFootballData?.units?.[0];
-        const uTitle = u1?.title || 'Unit 1. 포지션 & 경기장';
-        chapterTitleEl.textContent = `${uTitle} (스페인 축구 실전팩)`;
+        chapterTitleEl.textContent = '스페인 축구 실전팩 (Unit 1~4 전체 어휘)';
       } else {
         chapterTitleEl.textContent = lang === 'en'
           ? '1과: 인사/기초 표현 (영어 정규 코스)'
@@ -3208,29 +3349,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const oldEmpty = container.querySelector('#book-wrong-empty-state');
     if (oldEmpty) oldEmpty.remove();
 
-    const footballWords = lang === 'en' ? [
-      { term: 'Striker', meaning: '공격수 / 스트라이커', phonetic: '[스트라이커]', star: true },
-      { term: 'Midfielder', meaning: '미드필더', phonetic: '[미드필더]', star: false },
-      { term: 'Defender', meaning: '수비수', phonetic: '[디펜더]', star: true },
-      { term: 'Goalkeeper', meaning: '골키퍼', phonetic: '[골키퍼]', star: false },
-      { term: 'Pass', meaning: '패스', phonetic: '[패스]', star: true },
-      { term: 'Shot', meaning: '슛 / 슈팅', phonetic: '[샷]', star: false },
-      { term: 'Goal', meaning: '골 / 득점', phonetic: '[골]', star: true },
-      { term: 'Foul', meaning: '파울 / 반칙', phonetic: '[파울]', star: false },
-      { term: 'Referee', meaning: '주심 / 심판', phonetic: '[레퍼리]', star: false },
-      { term: 'Offside', meaning: '오프사이드', phonetic: '[오프사이드]', star: false }
-    ] : [
-      { term: 'Delantero', meaning: '공격수 / 스트라이커', phonetic: '[델란테로]', star: true },
-      { term: 'Centrocampista', meaning: '미드필더', phonetic: '[센트로캄피스타]', star: false },
-      { term: 'Defensa', meaning: '수비수', phonetic: '[데펜사]', star: true },
-      { term: 'Portero', meaning: '골키퍼', phonetic: '[포르테로]', star: false },
-      { term: 'Pase', meaning: '패스', phonetic: '[파세]', star: true },
-      { term: 'Tiro', meaning: '슛 / 슈팅', phonetic: '[티로]', star: false },
-      { term: 'Gol', meaning: '골 / 득점', phonetic: '[골]', star: true },
-      { term: 'Falta', meaning: '파울 / 반칙', phonetic: '[팔타]', star: false },
-      { term: 'Árbitro', meaning: '주심 / 심판', phonetic: '[아르비트로]', star: false },
-      { term: 'Fuera de juego', meaning: '오프사이드', phonetic: '[푸에라 데 후에고]', star: false }
-    ];
+    const oldItems = container.querySelectorAll('.book-word-card, .book-category-header');
+    oldItems.forEach(c => c.remove());
+
+    const isPhoneticVisible = window.vocadashSettings ? !!window.vocadashSettings.showPhonetic : true;
+    const phoneticStyle = isPhoneticVisible ? '' : 'style="display: none;"';
+
+    if (isFootball && window.packFootballData && Array.isArray(window.packFootballData.units)) {
+      window.packFootballData.units.forEach((u, uIdx) => {
+        const catHeader = document.createElement('div');
+        catHeader.className = 'book-category-header flex items-center justify-between mt-5 mb-2.5 px-1 pt-1 border-t border-slate-100 first:border-0 first:mt-1';
+        catHeader.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shadow-2xs">⚽ ${escapeHTML(u.title)}</span>
+            <span class="text-[11px] text-slate-400 font-medium truncate max-w-[190px]">${escapeHTML(u.subtitle || '')}</span>
+          </div>
+          <span class="text-[11px] font-bold text-slate-400">${(u.words || []).length}단어</span>
+        `;
+        container.appendChild(catHeader);
+
+        (u.words || []).forEach((w, wIdx) => {
+          const isStar = (uIdx === 0 && wIdx < 3);
+          const art = document.createElement('article');
+          art.className = 'book-word-card bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between mb-3 transition-all hover:shadow-md';
+          art.dataset.term = w.term;
+          art.dataset.meaning = w.meaning;
+          art.dataset.category = u.title;
+          const phonetic = w.pron ? `[${w.pron}]` : (w.phonetic || '');
+          art.innerHTML = `
+            <div class="flex flex-col min-w-0 pr-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-slate-800 tracking-tight">${escapeHTML(w.term)}</span>
+                <button aria-label="발음 듣기" class="book-audio-btn text-slate-400 hover:text-emerald-500 p-0.5 transition-colors cursor-pointer" type="button">
+                  <span class="material-symbols-outlined text-[20px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+                </button>
+              </div>
+              <span class="text-xs text-slate-400 font-medium mt-0.5">
+                <span class="book-phonetic phonetic-hint" ${phoneticStyle}>${escapeHTML(phonetic)}</span>
+                <span class="book-phonetic-dot text-slate-300 font-bold mx-0.5" ${phoneticStyle}>·</span>
+                <span class="text-slate-700 font-semibold text-[13px]">${escapeHTML(w.meaning)}</span>
+              </span>
+            </div>
+            <button aria-label="즐겨찾기" class="book-star-btn w-9 h-9 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center ${isStar ? 'text-amber-400' : 'text-slate-300'} active:scale-90 transition-all cursor-pointer" type="button">
+              <span class="material-symbols-outlined text-[20px]" ${isStar ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>star</span>
+            </button>
+          `;
+          container.appendChild(art);
+        });
+      });
+      initBookScreenEvents();
+      return;
+    }
 
     const standardWords = lang === 'en' ? [
       { term: 'Hello', meaning: '안녕 / 안녕하세요', phonetic: '[헬로우]', star: true },
@@ -3261,27 +3430,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let wordsData = standardWords;
-    if (isFootball) {
-      if (window.packFootballData && Array.isArray(window.packFootballData.units)) {
-        const allFbWords = window.packFootballData.units.flatMap(u => u.words || []);
-        wordsData = allFbWords.map((w, idx) => ({
-          id: w.id,
-          term: w.term,
-          meaning: w.meaning,
-          phonetic: w.pron ? `[${w.pron}]` : (w.phonetic || ''),
-          pron: w.pron || '',
-          star: idx < 6
-        }));
-      } else {
-        wordsData = footballWords;
-      }
-    }
 
     const cards = container.querySelectorAll('.book-word-card');
     cards.forEach(c => c.remove());
-
-    const isPhoneticVisible = window.vocadashSettings ? !!window.vocadashSettings.showPhonetic : true;
-    const phoneticStyle = isPhoneticVisible ? '' : 'style="display: none;"';
 
     wordsData.forEach(item => {
       const art = document.createElement('article');
@@ -4291,7 +4442,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=56' : 'assets/profiles/profile-spanish.webp?v=56';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=57' : 'assets/profiles/profile-spanish.webp?v=57';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5393,7 +5544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=56`;
+    return `assets/profiles/${file}?v=57`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -5909,7 +6060,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=56';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=57';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -5953,7 +6104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=56';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=57';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

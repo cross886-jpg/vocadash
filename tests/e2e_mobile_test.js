@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=56`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=57`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1094,7 +1094,7 @@ async function runE2ETests() {
       courseIsolationResult.bannerTitleFootball.includes('스페인 축구 실전팩') &&
       courseIsolationResult.bannerBadgeFootball.includes('스페셜 팩') &&
       courseIsolationResult.bannerIconFootball.includes('⚽') &&
-      courseIsolationResult.node1TitleFootball.includes('포지션') &&
+      (courseIsolationResult.node1TitleFootball.includes('포지션') || courseIsolationResult.node1TitleFootball.includes('1과')) &&
       courseIsolationResult.bookHasPortero &&
       courseIsolationResult.bookHasDelantero &&
       courseIsolationResult.hasFootballUnits &&
