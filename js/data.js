@@ -916,6 +916,29 @@
   function generateQuestionChoices(q, sessionQuestions, lessonId = 'node-2', lang = 'es') {
     try {
       if (!q) return [];
+      const correctMeaning = String(q.meaning || q.answer || q.korean || q.ko || '').trim();
+      const correctTerm = String(q.term || q.word || '').trim();
+
+      // 1. 활성 코스(getCurrentCourseData)의 어휘 풀에서 오답 후보 우선 추출 (정규 코스 단어 혼입 원천 차단)
+      const currentCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
+      if (currentCourse && Array.isArray(currentCourse.units)) {
+        const allCourseWords = currentCourse.units.flatMap(u => (u && Array.isArray(u.words)) ? u.words : []);
+        if (allCourseWords.length >= 4) {
+          const candidates = allCourseWords.filter(w => {
+            if (!w) return false;
+            if (q.id && w.id === q.id) return false;
+            const m = String(w.meaning || w.korean || '').trim();
+            const t = String(w.term || w.word || '').trim();
+            return m && m !== correctMeaning && t !== correctTerm;
+          }).map(w => String(w.meaning || w.korean || '').trim());
+          const uniqueCandidates = Array.from(new Set(candidates));
+          if (uniqueCandidates.length >= 3) {
+            const selected = shuffle(uniqueCandidates).slice(0, 3);
+            return shuffle([correctMeaning, ...selected]);
+          }
+        }
+      }
+
       const isSentence = Boolean(q.type === 'sentence' || q.isSentence);
       const normId = normalizeLessonId(lessonId);
       const lesson = database[normId] || database[lessonId] || (normId === 'node-boss' ? database['node-boss'] : (String(lessonId).includes('3') ? database['node-3'] : database['node-2']));
@@ -926,8 +949,6 @@
       if (!Array.isArray(fullPool) || fullPool.length === 0) {
         fullPool = normId === 'node-boss' ? LESSON_BOSS_ES : (normId === 'node-3' ? LESSON_3_ES : (Array.isArray(sessionQuestions) && sessionQuestions.length > 0 ? sessionQuestions : [...LESSON_2_WORDS_ES, ...LESSON_2_SENTENCES_ES]));
       }
-
-      const correctMeaning = String(q.meaning || q.answer || q.korean || q.ko || '').trim();
 
       const sameTypeMeanings = fullPool
         .filter(item => item && (item.type === (isSentence ? 'sentence' : 'word') || (isSentence ? item.isSentence : !item.isSentence)) && String(item.meaning || item.korean || '').trim() !== correctMeaning)
@@ -943,11 +964,14 @@
       }
 
       if (candidates.length < 3) {
-        const fallbackMeanings = normId === 'node-boss'
-          ? ['안녕하세요 / 안녕', '좋은 아침 / 안녕하세요', '감사합니다 / 고마워', '부탁합니다 / 제발', '죄송합니다 / 미안해요', '천만에요', '만나서 반갑습니다', '얼마인가요?', '어디에 있나요?', '친구']
-          : (normId === 'node-3'
-            ? ['수하물 수취대', '여행 가방 / 캐리어', '분실 / 유실물', '세관 검사', '관세 / 세금', '반입 금지 물품', '액체류', '수하물 카트', '개인 소지품']
-            : ['여권', '관광', '방문 목적', '체류 기간', '세관 신고서', '숙소 / 숙박지', '출장 / 사업', '귀국 항공권', '수하물 / 짐']);
+        const isFb = currentCourse && (currentCourse.id === 'pack_football' || currentCourse.courseId === 'pack_football');
+        const fallbackMeanings = isFb
+          ? ['골키퍼', '수비수', '미드필더', '공격수', '주장', '감독', '심판', '벤치 / 후보석', '선발 선수', '교체 선수', '경기장 / 피치', '골대 / 골문']
+          : (normId === 'node-boss'
+            ? ['안녕하세요 / 안녕', '좋은 아침 / 안녕하세요', '감사합니다 / 고마워', '부탁합니다 / 제발', '죄송합니다 / 미안해요', '천만에요', '만나서 반갑습니다', '얼마인가요?', '어디에 있나요?', '친구']
+            : (normId === 'node-3'
+              ? ['수하물 수취대', '여행 가방 / 캐리어', '분실 / 유실물', '세관 검사', '관세 / 세금', '반입 금지 물품', '액체류', '수하물 카트', '개인 소지품']
+              : ['여권', '관광', '방문 목적', '체류 기간', '세관 신고서', '숙소 / 숙박지', '출장 / 사업', '귀국 항공권', '수하물 / 짐']));
         for (const fm of fallbackMeanings) {
           if (fm !== correctMeaning && !candidates.includes(fm)) candidates.push(fm);
           if (candidates.length >= 3) break;
@@ -1068,7 +1092,27 @@
     { id: 'b8', name: '주말의 전사', desc: '토요일과 일요일 모두 출석 도장을 찍었습니다.', icon: '⚡', unlocked: false, category: 'streak' }
   ];
 
+  function getCurrentCourseData() {
+    let activeCourseId = 'main';
+    try {
+      activeCourseId = localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && window.activeCourseId) || 'main';
+    } catch (_) {
+      activeCourseId = (typeof window !== 'undefined' && window.activeCourseId) || 'main';
+    }
+    if (activeCourseId === 'pack_football') {
+      if (typeof window !== 'undefined' && window.packFootballData) {
+        return window.packFootballData;
+      }
+      return packFootballData;
+    }
+    if (typeof window !== 'undefined' && window.courseData) {
+      return window.courseData;
+    }
+    return courseData;
+  }
+
   if (typeof window !== 'undefined') {
+    window.getCurrentCourseData = getCurrentCourseData;
     window.COURSE_PRESETS = COURSE_PRESETS;
     window.COURSE_LESSONS = COURSE_LESSONS;
     window.courseData = courseData;

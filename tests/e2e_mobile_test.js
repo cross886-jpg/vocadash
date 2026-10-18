@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=68`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=71`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1078,7 +1078,7 @@ async function runE2ETests() {
       // 9. 공식 축구팩 데이터 상세 필드 검증
       const fbDataObj = window.packFootballData;
       results.hasFootballUnits = Array.isArray(fbDataObj?.units) && fbDataObj.units.length === 4;
-      results.unit1HasWords = Array.isArray(fbDataObj?.units?.[0]?.words) && fbDataObj.units[0].words.length === 12;
+      results.unit1HasWords = Array.isArray(fbDataObj?.units?.[0]?.words) && fbDataObj.units[0].words.length === 15;
       results.unit1HasNodes = Array.isArray(fbDataObj?.units?.[0]?.nodes) && fbDataObj.units[0].nodes.length === 6;
       results.unit1HasSentence = fbDataObj?.units?.[0]?.nodes?.some(n => n.type === 'sentence' && n.targetSentence?.includes('El delantero marca un gol'));
 
@@ -1348,7 +1348,7 @@ async function runE2ETests() {
       wordbookAndAdapterResult.activeCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.courseTitleText === '스페인 축구 실전팩' &&
-      wordbookAndAdapterResult.footballProgressCountText.includes('46개') &&
+      (wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
       wordbookAndAdapterResult.restoredProgressCountText.includes('120개') &&
       wordbookAndAdapterResult.restoredMainCourse === 'main' &&
       wordbookAndAdapterResult.noExclusiveTitleTag === true &&

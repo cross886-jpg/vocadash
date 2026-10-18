@@ -339,7 +339,7 @@
 
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
-    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+    const currentCourseData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : ((activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : window.courseData);
 
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
     const unitIndex = Math.max(0, unlockedLevel - 1);
@@ -450,8 +450,8 @@
 
     window.currentSessionQuestions = activeDeck;
     console.log('📚 [Flashcard] 단어 덱 주입 완료: 레슨', currentFlashcardLessonId, '총', activeDeck.length, '개 단어');
-    currentLessonDeckTitle = (window.VOCA_DATA && window.VOCA_DATA.getLessonTitle ? window.VOCA_DATA.getLessonTitle(currentFlashcardLessonId) : null)
-      || (currentFlashcardLessonId === 'node-boss' ? '4과: 최종 종합 테스트 (보스전) · 단어 예습' : (currentFlashcardLessonId === 'node-3' ? '3과: 수하물 찾기와 세관 · 단어 예습' : '2과: 입국 심사 · 단어 예습'));
+    const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
+    currentLessonDeckTitle = `${unitTitle} · 단어 예습`;
     currentCardIndex = 0;
     isCardFlipped = false;
     isCardTransitioning = false;
@@ -490,10 +490,13 @@
 
     if (flashcardMascotImg) {
       const activeLang = (window.currentLanguage || window.currentActiveCourse || currentCourse || 'es') === 'en' ? 'en' : 'es';
-      if (window.courseData && window.courseData[activeLang]) {
-        flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
+      const activeCourse = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : window.courseData;
+      if (activeCourse && activeCourse[activeLang] && activeCourse[activeLang].mascotImg) {
+        flashcardMascotImg.src = activeCourse[activeLang].mascotImg;
+      } else if (activeCourse && activeCourse.mascotImg) {
+        flashcardMascotImg.src = activeCourse.mascotImg;
       } else {
-        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=68`;
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=71`;
       }
     }
 
@@ -1208,6 +1211,7 @@
   // Export module functions globally
   window.openFlashcardScreen = openFlashcardScreen;
   window.openFlashcard = openFlashcardScreen;
+  window.startFlashcard = openFlashcardScreen;
   window.showFlashcardScreen = openFlashcardScreen;
   window.closeFlashcardScreen = closeFlashcardScreen;
   window.initFlashcardDeck = openFlashcardScreen;

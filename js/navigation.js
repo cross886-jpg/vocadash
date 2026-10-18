@@ -969,7 +969,7 @@
 
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
-    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+    const currentCourseData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData;
 
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
     const unitIndex = Math.max(0, unlockedLevel - 1);

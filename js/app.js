@@ -896,11 +896,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
     const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
-    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    const activeCourse = getCurrentCourseData();
     let lessons = (activeCourse && activeCourse.lessons) ? activeCourse.lessons : (langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic);
 
     // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (activeCourse && Array.isArray(activeCourse.units)) ? (activeCourse.units[unitIndex] || activeCourse.units[0]) : null;
     const unitSubBadge = el('unit-sub-badge');
     const unitLangBadge = el('unit-lang-badge');
     const unitMainTitle = el('unit-main-title');
@@ -1594,12 +1596,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 로드맵 전체 리렌더링 헬퍼 함수
   function renderRoadmap() {
+    const activeCourse = getCurrentCourseData();
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1;
+    const unitIndex = Math.max(0, unlockedLevel - 1);
+    const targetUnit = (activeCourse && Array.isArray(activeCourse.units)) ? (activeCourse.units[unitIndex] || activeCourse.units[0]) : null;
+
     updateRoadmapNodesUI();
     if (typeof updateCatMarkerPosition === 'function') {
       updateCatMarkerPosition();
     }
   }
   window.renderRoadmap = renderRoadmap;
+
+  function loadUnit(unitIndexOrId) {
+    const activeCourse = getCurrentCourseData();
+    if (!activeCourse || !Array.isArray(activeCourse.units)) return null;
+
+    let unitIndex = 0;
+    if (typeof unitIndexOrId === 'number') {
+      unitIndex = (unitIndexOrId >= 1 && unitIndexOrId <= activeCourse.units.length) ? unitIndexOrId - 1 : Math.max(0, Math.min(activeCourse.units.length - 1, unitIndexOrId));
+    } else if (typeof unitIndexOrId === 'string') {
+      const parsed = parseInt(unitIndexOrId.replace(/\D/g, ''), 10);
+      if (!isNaN(parsed) && parsed >= 1 && parsed <= activeCourse.units.length) {
+        unitIndex = parsed - 1;
+      } else {
+        const foundIdx = activeCourse.units.findIndex(u => u.id === unitIndexOrId || u.unit === unitIndexOrId);
+        if (foundIdx >= 0) unitIndex = foundIdx;
+      }
+    }
+
+    const targetUnit = (activeCourse && Array.isArray(activeCourse.units)) ? (activeCourse.units[unitIndex] || activeCourse.units[0]) : null;
+    const unitLevel = unitIndex + 1;
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+
+    if (typeof setUnlockedUnitLevel === 'function') {
+      setUnlockedUnitLevel(unitLevel, lang);
+    }
+
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    try {
+      localStorage.setItem('vocadash_active_course', activeCourseId);
+    } catch (_) {}
+
+    renderRoadmap();
+    return targetUnit;
+  }
+  window.loadUnit = loadUnit;
+
+  function nextUnit() {
+    const activeCourse = getCurrentCourseData();
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
+    const nextLevel = curLevel + 1;
+    if (activeCourse && Array.isArray(activeCourse.units) && nextLevel <= activeCourse.units.length) {
+      return loadUnit(nextLevel);
+    }
+    return null;
+  }
+  window.nextUnit = nextUnit;
 
   // 코스 스위처 선택 상태 동기화 (모달 & 단어장 드롭다운)
   function updateCourseSwitcherUI(selectedCourseId) {
@@ -2402,7 +2457,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const subtitleEl = el('unit-overview-subtitle');
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
 
-    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    const activeCourse = getCurrentCourseData();
     let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
     if (activeCourse && activeCourse.units) {
       if (Array.isArray(activeCourse.units)) {
@@ -2554,7 +2609,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openUnitSkipModal = function(unitNum, unitTitle, targetLang) {
     const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
     const uNum = parseInt(unitNum, 10) || 2;
-    const activeCourse = typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData;
+    const activeCourse = getCurrentCourseData();
     let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
     if (activeCourse && activeCourse.units) {
       if (Array.isArray(activeCourse.units)) {
@@ -2893,12 +2948,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
-    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData);
+    const activeCourse = getCurrentCourseData();
 
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1) || 1;
     const unitIndex = Math.max(0, unlockedLevel - 1);
-    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units))
-      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0])
+    const targetUnit = (activeCourse && Array.isArray(activeCourse.units))
+      ? (activeCourse.units[unitIndex] || activeCourse.units[0])
       : null;
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
 
@@ -2932,12 +2987,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetNodeId = nodeId || currentSelectedNodeId || 'node-2';
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
-    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : window.courseData);
+    const activeCourse = getCurrentCourseData();
 
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1) || 1;
     const unitIndex = Math.max(0, unlockedLevel - 1);
-    const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units))
-      ? (currentCourseData.units[unitIndex] || currentCourseData.units[0])
+    const targetUnit = (activeCourse && Array.isArray(activeCourse.units))
+      ? (activeCourse.units[unitIndex] || activeCourse.units[0])
       : null;
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
 
@@ -3525,7 +3580,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (courseData && Array.isArray(courseData.units)) {
         totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       }
-      if (!totalWords) totalWords = 46;
+      if (!totalWords) totalWords = 49;
     } else if (courseData && courseData.id && courseData.id !== 'main' && Array.isArray(courseData.units)) {
       totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       if (!totalWords) totalWords = 120;
@@ -3576,7 +3631,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('book-words-container');
     if (!container) return;
 
-    const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : window.courseData;
+    const activeCourse = getCurrentCourseData();
     let storedCourse = 'main';
     try {
       storedCourse = localStorage.getItem('vocadash_active_course') || 'main';

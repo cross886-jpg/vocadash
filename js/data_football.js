@@ -24,6 +24,7 @@
     units: [
       {
         id: 1,
+        unit: 1,
         title: "Unit 1. 포지션 & 경기장",
         subtitle: "골키퍼부터 공격수, 축구장 구석구석 명칭",
         words: [
@@ -31,19 +32,22 @@
           { id: "fb_1_w2", term: "defensa", meaning: "수비수", pron: "데펜사" },
           { id: "fb_1_w3", term: "centrocampista", meaning: "미드필더", pron: "센트로캄피스타" },
           { id: "fb_1_w4", term: "delantero", meaning: "공격수", pron: "델란테로" },
-          { id: "fb_1_w5", term: "árbitro", meaning: "심판", pron: "아르비트로" },
-          { id: "fb_1_w6", term: "entrenador", meaning: "감독 / 코치", pron: "엔트레나도르" },
-          { id: "fb_1_w7", term: "campo", meaning: "축구장 / 경기장", pron: "캄포" },
-          { id: "fb_1_w8", term: "portería", meaning: "골대", pron: "포르테리아" },
-          { id: "fb_1_w9", term: "banquillo", meaning: "교체 벤치", pron: "반키요" },
-          { id: "fb_1_w10", term: "fuera de juego", meaning: "오프사이드", pron: "푸에라 데 후에고" },
-          { id: "fb_1_w11", term: "saque de banda", meaning: "스로인", pron: "사케 데 반다" },
-          { id: "fb_1_w12", term: "córner", meaning: "코너킥", pron: "코르네르" }
+          { id: "fb_1_w5", term: "capitán", meaning: "주장", pron: "카피탄" },
+          { id: "fb_1_w6", term: "entrenador", meaning: "감독", pron: "엔트레나도르" },
+          { id: "fb_1_w7", term: "árbitro", meaning: "심판", pron: "아르비트로" },
+          { id: "fb_1_w8", term: "banquillo", meaning: "벤치 / 후보석", pron: "반키요" },
+          { id: "fb_1_w9", term: "titular", meaning: "선발 선수", pron: "티툴라르" },
+          { id: "fb_1_w10", term: "suplente", meaning: "교체 선수", pron: "수플렌테" },
+          { id: "fb_1_w11", term: "campo", meaning: "경기장 / 피치", pron: "캄포" },
+          { id: "fb_1_w12", term: "portería", meaning: "골대 / 골문", pron: "포르테리아" },
+          { id: "fb_1_w13", term: "línea", meaning: "라인 / 터치라인", pron: "리네아" },
+          { id: "fb_1_w14", term: "área", meaning: "페널티 에어리어 / 박스", pron: "아레아" },
+          { id: "fb_1_w15", term: "córner", meaning: "코너킥", pron: "코르네르" }
         ],
         nodes: [
-          { id: "fb_1_n1", type: "stage", title: "1과: 포지션", stageNumber: 1, wordIds: ["fb_1_w1","fb_1_w2","fb_1_w3","fb_1_w4","fb_1_w5","fb_1_w6"] },
+          { id: "fb_1_n1", type: "stage", title: "1과: 포지션", stageNumber: 1, wordIds: ["fb_1_w1","fb_1_w2","fb_1_w3","fb_1_w4","fb_1_w5","fb_1_w6","fb_1_w7","fb_1_w9","fb_1_w10"] },
           { id: "fb_1_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_1_n3", type: "stage", title: "2과: 경기장 시설", stageNumber: 2, wordIds: ["fb_1_w7","fb_1_w8","fb_1_w9","fb_1_w10","fb_1_w11","fb_1_w12"] },
+          { id: "fb_1_n3", type: "stage", title: "2과: 경기장 시설", stageNumber: 2, wordIds: ["fb_1_w8","fb_1_w11","fb_1_w12","fb_1_w13","fb_1_w14","fb_1_w15"] },
           { id: "fb_1_n4", type: "sentence", title: "핵심 문장", targetSentence: "El delantero marca un gol.", meaning: "공격수가 골을 넣는다." },
           { id: "fb_1_n5", type: "review", title: "약점 복습" },
           { id: "fb_1_n6", type: "boss", title: "Unit 1 보스전" }
@@ -51,6 +55,7 @@
       },
       {
         id: 2,
+        unit: 2,
         title: "Unit 2. 패스, 슛 & 경기 액션",
         subtitle: "패스, 드리블, 태클과 판정 어휘",
         words: [
@@ -78,6 +83,7 @@
       },
       {
         id: 3,
+        unit: 3,
         title: "Unit 3. 전술 & 팀 조직",
         subtitle: "압박, 역습, 점유와 공간 전술",
         words: [
@@ -105,6 +111,7 @@
       },
       {
         id: 4,
+        unit: 4,
         title: "Unit 4. 피치 위 실전 콜 & 소통",
         subtitle: "경기 중 선수들끼리 외치는 필수 외침",
         words: [

@@ -1047,6 +1047,35 @@
   }
   window.finishGameStage = finishGameStage;
 
+  function shuffleArray(arr) {
+    const copy = Array.isArray(arr) ? arr.slice() : [];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  window.shuffleArray = shuffleArray;
+
+  function getDistractorOptions(correctWord) {
+    const currentCourse = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : ((window.activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (window.courseData || { units: [] }));
+    const allCourseWords = (currentCourse && Array.isArray(currentCourse.units))
+      ? currentCourse.units.flatMap(u => (Array.isArray(u.words) ? u.words : []))
+      : [];
+    const correctId = correctWord ? (correctWord.id || '') : '';
+    const correctMeaning = String(correctWord ? (correctWord.meaning || correctWord.answer || correctWord.korean || correctWord.ko || '') : '').trim();
+    const candidates = allCourseWords.filter(w => {
+      if (!w) return false;
+      if (correctId && w.id === correctId) return false;
+      const m = String(w.meaning || w.korean || '').trim();
+      return m && m !== correctMeaning;
+    });
+    return shuffleArray(candidates).slice(0, 3);
+  }
+  window.getDistractorOptions = getDistractorOptions;
+
   function spawnQuestion(index) {
     try {
       clearAllGameTimers();
@@ -1110,7 +1139,13 @@
 
       let choices = [];
       try {
-        if (window.VOCA_DATA && typeof window.VOCA_DATA.generateQuestionChoices === 'function') {
+        const distractors = getDistractorOptions(q);
+        const distractorMeanings = distractors.map(d => String(d.meaning || d.korean || '').trim()).filter(Boolean);
+        const candidateSet = [trimmedAnswer, ...distractorMeanings];
+        const uniqueChoices = Array.from(new Set(candidateSet));
+        if (uniqueChoices.length >= 4) {
+          choices = shuffleArray(uniqueChoices).slice(0, 4);
+        } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateQuestionChoices === 'function') {
           choices = window.VOCA_DATA.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentCourse);
         }
       } catch (choiceErr) {
@@ -1129,12 +1164,21 @@
         }
       }
 
-      const defaultFallbacks = ['여권', '관광', '감사합니다', '안녕하세요', '비자'];
-      let dfIdx = 0;
-      while (choices.length < 4) {
-        const df = defaultFallbacks[dfIdx % defaultFallbacks.length];
-        if (!choices.includes(df)) choices.push(df);
-        dfIdx++;
+      // 오답 보기 풀은 반드시 getCurrentCourseData() 단어로만 한정
+      if (choices.length < 4) {
+        const currentCourseObj = (typeof window.getCurrentCourseData === 'function')
+          ? window.getCurrentCourseData()
+          : ((window.activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (window.courseData || { units: [] }));
+        const allCourseWords = (currentCourseObj && Array.isArray(currentCourseObj.units))
+          ? currentCourseObj.units.flatMap(u => (Array.isArray(u.words) ? u.words : []))
+          : [];
+        for (const cw of allCourseWords) {
+          const m = String(cw.meaning || cw.korean || '').trim();
+          if (m && !choices.includes(m) && m !== trimmedAnswer) {
+            choices.push(m);
+          }
+          if (choices.length >= 4) break;
+        }
       }
 
       currentCorrectChoiceIdx = choices.findIndex(c => checkAnswerMatch(c, trimmedAnswer));
@@ -1967,7 +2011,7 @@
 
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
-    const currentCourseData = (activeCourseId === 'pack_football' && window.packFootballData) ? window.packFootballData : (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData);
+    const currentCourseData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData;
 
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
     const unitIndex = Math.max(0, unlockedLevel - 1);
@@ -2382,9 +2426,18 @@
     }
 
     // 4) 다음 스테이지 단어 세션 생성 및 플래시카드 화면으로 경유
-    const nextSession = (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function')
-      ? window.VOCA_DATA.generateStageSession(nextNodeId, currentCourse, nextRound)
-      : null;
+    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
+    window.activeCourseId = activeCourseId;
+    try {
+      localStorage.setItem('vocadash_active_course', activeCourseId);
+    } catch (_) {}
+
+    let nextSession = null;
+    if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
+      nextSession = window.getFootballStageSession(nextNodeId);
+    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      nextSession = window.VOCA_DATA.generateStageSession(nextNodeId, currentCourse, nextRound);
+    }
 
     console.log(`📚 [Flow] 다음 스테이지(${nextNodeId}) 플래시카드 화면으로 진입 (라운드: ${nextRound})`);
 
