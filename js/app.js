@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=59`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=60`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -556,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=59', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=59', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=60', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=60', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       return (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (typeof UNIT_LIST_PRESETS !== 'undefined' ? UNIT_LIST_PRESETS[lang] : []);
@@ -1028,7 +1028,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const card1 = el('node-1-label-card');
 
     if (prog1 >= 3) {
-      // 1과 완료 상태 (그린 톤 + 체크 배지 + ⭐⭐⭐ 완료!)
+      // 1과 완료 상태 (그린 톤 + 숫자 1 복원 + 우상단 체크 배지 + ⭐⭐⭐ 완료!)
       if (ping1) ping1.classList.add('hidden');
       if (pulseRing1) pulseRing1.classList.add('hidden');
       if (startPill1) {
@@ -1044,6 +1044,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btn1) {
         btn1.className = 'node-btn btn-3d relative w-[74px] h-[74px] rounded-full bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl flex items-center justify-center border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden';
         btn1.title = (lessons['node-1'] ? lessons['node-1'].title : '1과: 인사/안부') + ' (완료)';
+        const stageNum1 = btn1.querySelector('.node-stage-num');
+        if (stageNum1) {
+          stageNum1.textContent = '1';
+          stageNum1.className = 'node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white';
+        }
       }
       if (card1) {
         card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none';
@@ -1052,12 +1057,12 @@ document.addEventListener('DOMContentLoaded', () => {
         badge1.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
       }
     } else {
-      // 1과 진행 중 상태 (스카이블루 + START 뱃지 + 활성 링)
+      // 1과 미시작/진행 중 상태 (스카이블루 + 원형 내부 START 텍스트 + 활성 링)
       if (ping1) ping1.classList.remove('hidden');
       if (pulseRing1) pulseRing1.classList.remove('hidden');
       if (startPill1) {
-        startPill1.classList.remove('hidden');
-        startPill1.style.display = 'flex';
+        startPill1.classList.add('hidden');
+        startPill1.style.display = 'none';
       }
       if (checkBadge1) {
         checkBadge1.classList.add('hidden');
@@ -1068,6 +1073,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btn1) {
         btn1.className = 'node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl flex items-center justify-center border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden';
         btn1.title = lessons['node-1'] ? lessons['node-1'].title : '1과: 인사/안부';
+        const stageNum1 = btn1.querySelector('.node-stage-num');
+        if (stageNum1) {
+          stageNum1.textContent = 'START';
+          stageNum1.className = 'node-stage-num text-sm font-extrabold tracking-tight select-none leading-none drop-shadow-xs relative z-10 text-white';
+        }
       }
       if (card1) {
         card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
@@ -3253,7 +3263,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=59';
+    const v = '?v=60';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -4502,7 +4512,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=59' : 'assets/profiles/profile-spanish.webp?v=59';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=60' : 'assets/profiles/profile-spanish.webp?v=60';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -5696,7 +5706,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=59`;
+    return `assets/profiles/${file}?v=60`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -6212,7 +6222,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=59';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=60';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -6256,7 +6266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=59';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=60';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

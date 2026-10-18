@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=59`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=60`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -460,7 +460,8 @@ async function runE2ETests() {
       const node3Target = document.getElementById('node-3-target');
       const nodeBossTarget = document.getElementById('node-boss-target');
 
-      const isNode1Active = prog['node-1'] === 0 && node1Target?.dataset?.nodeType === 'active' && !node1StartPill?.classList?.contains('hidden');
+      const node1BtnText = document.querySelector('#node-1-btn .node-stage-num')?.textContent?.trim() || '';
+      const isNode1Active = prog['node-1'] === 0 && node1Target?.dataset?.nodeType === 'active' && (node1BtnText === 'START' || !node1StartPill || !node1StartPill?.classList?.contains('hidden'));
       const isNode2Locked = prog['node-2'] === 0 && node2Target?.dataset?.nodeType === 'locked' && !node2LockBadge?.classList?.contains('hidden');
       const isNode3Locked = prog['node-3'] === 0 && node3Target?.dataset?.nodeType === 'locked';
       const isNodeBossLocked = prog['node-boss'] === 0 && nodeBossTarget?.dataset?.nodeType === 'locked';
