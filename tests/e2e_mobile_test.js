@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=36`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=37`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -381,8 +381,83 @@ async function runE2ETests() {
         cardCount: cards.length
       };
     });
-    // Close unit overview modal
-    await page.click('#close-unit-overview-btn');
+
+    // Test Unit Skip Test Modal: Click locked unit card (Unit 2)
+    await page.click('.unit-item-card[data-status="locked"]');
+    await page.waitForTimeout(250);
+    const skipModalOpened = await page.evaluate(() => {
+      const modal = document.getElementById('unit-skip-modal-backdrop');
+      const title = document.getElementById('unit-skip-modal-title');
+      const desc = document.getElementById('unit-skip-modal-desc');
+      const startBtn = document.getElementById('btn-start-unit-skip-test');
+      const closeBtn = document.getElementById('btn-close-unit-skip-modal');
+      return {
+        isOpen: modal && !modal.classList.contains('pointer-events-none') && modal.classList.contains('opacity-100'),
+        title: title ? title.textContent.trim() : '',
+        desc: desc ? desc.textContent.trim() : '',
+        hasStartBtn: !!startBtn,
+        hasCloseBtn: !!closeBtn
+      };
+    });
+
+    // Test closing skip modal via [다음에 하기] button
+    await page.click('#btn-close-unit-skip-modal');
+    await page.waitForTimeout(200);
+    const skipModalClosed = await page.evaluate(() => {
+      const modal = document.getElementById('unit-skip-modal-backdrop');
+      return modal ? (modal.classList.contains('pointer-events-none') || modal.classList.contains('opacity-0')) : true;
+    });
+
+    // Test [⚡ 바로 시험 달리기 🏃]: Bypasses flashcard preview directly into 15-question running game
+    await page.click('.unit-item-card[data-status="locked"]');
+    await page.waitForTimeout(200);
+    await page.click('#btn-start-unit-skip-test');
+    await page.waitForTimeout(400);
+
+    const directGameTestState = await page.evaluate(() => {
+      const gameScreen = document.getElementById('game-screen');
+      const flashcardScreen = document.getElementById('flashcard-screen');
+      const stageTitle = document.getElementById('game-stage-title');
+      const isGameVisible = gameScreen && !gameScreen.classList.contains('hidden') && window.getComputedStyle(gameScreen).display !== 'none';
+      const isFlashcardHidden = !flashcardScreen || flashcardScreen.classList.contains('hidden') || flashcardScreen.classList.contains('opacity-0') || window.getComputedStyle(flashcardScreen).display === 'none';
+      const questions = window.currentSessionQuestions || [];
+
+      return {
+        isGameVisible,
+        isFlashcardHidden,
+        isUnitSkipTestMode: !!window.isUnitSkipTestMode,
+        targetUnit: window.currentSkipTestUnit,
+        questionCount: questions.length,
+        stageTitle: stageTitle ? stageTitle.textContent.trim() : ''
+      };
+    });
+
+    // Test unlockUnitsUpTo and view update
+    await page.evaluate(() => {
+      if (typeof window.exitGameToRoadmap === 'function') {
+        window.isUnitSkipTestMode = false;
+        window.exitGameToRoadmap(true);
+      }
+      if (typeof window.unlockUnitsUpTo === 'function') {
+        window.unlockUnitsUpTo(2, 'es');
+      }
+    });
+    await page.waitForTimeout(200);
+
+    const unlockVerification = await page.evaluate(() => {
+      const savedLevel = localStorage.getItem('vocadash_unlocked_unit_es');
+      const subBadge = document.getElementById('unit-sub-badge');
+      return {
+        savedLevel,
+        subBadgeText: subBadge ? subBadge.textContent.trim() : ''
+      };
+    });
+
+    // Close unit overview modal if open
+    await page.evaluate(() => {
+      if (typeof window.closeUnitOverviewModal === 'function') window.closeUnitOverviewModal();
+      if (typeof window.closeUnitSkipModal === 'function') window.closeUnitSkipModal();
+    });
     await page.waitForTimeout(200);
 
     // Test Review Speed Run Modal interaction (Roadmap review node does NOT jump tabs!)
@@ -415,6 +490,20 @@ async function runE2ETests() {
     });
     await page.evaluate(() => window.scrollTo(0, 0));
 
+    const skipTestModalValid =
+      skipModalOpened.isOpen &&
+      skipModalOpened.title.includes('⚡') &&
+      skipModalOpened.title.includes('건너뛰기 시험') &&
+      skipModalOpened.hasStartBtn &&
+      skipModalOpened.hasCloseBtn &&
+      skipModalClosed &&
+      directGameTestState.isGameVisible &&
+      directGameTestState.isFlashcardHidden &&
+      directGameTestState.questionCount === 15 &&
+      directGameTestState.stageTitle.includes('건너뛰기') &&
+      unlockVerification.savedLevel === '2' &&
+      unlockVerification.subBadgeText.includes('UNIT 2');
+
     const headerCompactValid =
       headerState.hasMiniLogo &&
       headerState.hasLangBadge &&
@@ -440,6 +529,7 @@ async function runE2ETests() {
       unitOverviewState.langModalNotOpen &&
       unitOverviewState.cardCount === 10 &&
       !unitOverviewState.title.includes('🗺️') &&
+      skipTestModalValid &&
       headerState.hasStreak &&
       headerState.hasHearts &&
       headerState.hasGems &&
@@ -452,7 +542,10 @@ async function runE2ETests() {
       roadmapGameState,
       bonusModalOpen,
       unitOverviewState,
-      summary: headerCompactValid ? '상단 유닛 배너/드롭다운 클릭 시 유닛 맵 모달(10개 유닛, 언어 모달 미노출) + 3D 캐주얼 러닝 게임 맵 정상 검증 통과' : '헤더 및 로드맵 게임 비주얼 기준 미달'
+      skipModalOpened,
+      directGameTestState,
+      unlockVerification,
+      summary: headerCompactValid ? '상단 유닛 배너 + 코스 맵 잠긴 유닛 건너뛰기 15문제 즉시 실전 러닝 시험 및 해금 정상 통과' : '헤더 및 로드맵 게임 비주얼 기준 미달'
     });
 
     // -----------------------------------------------------------------

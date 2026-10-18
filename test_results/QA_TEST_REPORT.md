@@ -1,6 +1,6 @@
 # VocaDash 모바일 E2E 자동화 QA 최종 점검 리포트
 
-- **테스트 일시**: 2026-10-18T15:58:09.363Z
+- **테스트 일시**: 2026-10-18T16:11:18.003Z
 - **테스트 디바이스 규격**: Mobile Emulation (390 x 844 px, DPR=3, Touch Support, Chrome Headless)
 - **종합 결과**: **9/9 전원 통과 (100.0%)**
 
@@ -13,11 +13,11 @@
 | 1 | **Scenario A: Asset Loading (20 Assets)** | 🟢 PASS | 모든 캐릭터(es 8종, en 8종) 및 프로필 배지(4종) 정상 로드 완료 |
 | 2 | **Scenario S: Brand Splash Intro Screen & Tap-to-Skip** | 🟢 PASS | 1.2초 스플래시(마스코트+타이포+슬로건) 정상 노출 및 터치 시 즉시 스킵 확인 |
 | 3 | **Scenario A-2: DOM Image Rendering Integrity** | 🟢 PASS | 화면 내 엑박(Broken Image) 0건 |
-| 4 | **Scenario H: Compact Mobile Top Header Layout** | 🟢 PASS | 상단 유닛 배너/드롭다운 클릭 시 유닛 맵 모달(10개 유닛, 언어 모달 미노출) + 3D 캐주얼 러닝 게임 맵 정상 검증 통과 |
+| 4 | **Scenario H: Compact Mobile Top Header Layout** | 🟢 PASS | 상단 유닛 배너 + 코스 맵 잠긴 유닛 건너뛰기 15문제 즉시 실전 러닝 시험 및 해금 정상 통과 |
 | 5 | **Scenario B: Profile Avatar Change & Persistence** | 🟢 PASS | 4개 아바타 순차 변경 시 상단 헤더 즉시 전환 및 localStorage 완벽 유지, 모달 내 설정 아이콘 포함 확인 |
 | 6 | **Scenario C-1: Language Switch to English (Flag & Mascot & Signpost)** | 🟢 PASS | 국기 🇺🇸 영어 배지, en-* 캐릭터 에셋, NEW YORK 이정표 표지판으로 즉시 전환 완료 |
 | 7 | **Scenario C-2: Wrong Answer Notes Storage Isolation** | 🟢 PASS | 영어 오답 0개 빈 화면(Empty State) 표시 및 스페인어 단어 0건 완전 격리 확인 |
-| 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(5회) 및 결과 모달까지 막힘없이 완주 |
+| 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(4회) 및 결과 모달까지 막힘없이 완주 |
 | 9 | **Scenario E: Zero-Popup UX Validation** | 🟢 PASS | 진행 중 방해되는 네이티브 alert/confirm 팝업 0건 (원활한 UX 보장) |
 
 ---

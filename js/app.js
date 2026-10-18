@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=36`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=37`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -236,13 +236,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Shared Global State & Course Metadata (localStorage 동기화)
   const PROGRESS_STORAGE_KEY = 'vocadash_node_progress';
-  function loadNodeProgress() {
+
+  function getUnlockedUnitLevel(targetLang) {
+    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    try {
+      const val = localStorage.getItem('vocadash_unlocked_unit_' + lang);
+      if (val !== null) {
+        const num = parseInt(val, 10);
+        if (!isNaN(num) && num >= 1 && num <= 10) return num;
+      }
+    } catch (_) {}
+    return 1;
+  }
+  window.getUnlockedUnitLevel = getUnlockedUnitLevel;
+
+  function setUnlockedUnitLevel(level, targetLang) {
+    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    try {
+      localStorage.setItem('vocadash_unlocked_unit_' + lang, String(level));
+    } catch (_) {}
+  }
+  window.setUnlockedUnitLevel = setUnlockedUnitLevel;
+
+  function loadNodeProgress(targetLang) {
+    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    const unlockedUnit = getUnlockedUnitLevel(lang);
+    let prog = { 'node-1': 3, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
     try {
       const saved = localStorage.getItem(PROGRESS_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
-          return {
+          prog = {
             'node-1': Math.min(3, Math.max(0, typeof parsed['node-1'] === 'number' ? parsed['node-1'] : 3)),
             'node-2': Math.min(3, Math.max(0, typeof parsed['node-2'] === 'number' ? parsed['node-2'] : 0)),
             'node-3': Math.min(3, Math.max(0, typeof parsed['node-3'] === 'number' ? parsed['node-3'] : 0)),
@@ -253,7 +278,19 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       console.warn('localStorage 로드 예외 방어:', e);
     }
-    return { 'node-1': 3, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+    if (unlockedUnit >= 2) {
+      prog['node-1'] = 3;
+      prog['node-2'] = Math.max(prog['node-2'], 1);
+    }
+    if (unlockedUnit >= 3) {
+      prog['node-2'] = 3;
+      prog['node-3'] = Math.max(prog['node-3'], 1);
+    }
+    if (unlockedUnit >= 4) {
+      prog['node-3'] = 3;
+      prog['node-boss'] = Math.max(prog['node-boss'], 1);
+    }
+    return prog;
   }
 
   function saveNodeProgress() {
@@ -310,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=36', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=36', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=37', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=37', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -512,6 +549,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // 전체 코스 맵 유닛 프리셋 정의 (1~10 유닛)
+  const UNIT_LIST_PRESETS = {
+    es: [
+      { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
+      { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
+      { unit: 3, title: '길찾기 & 교통', subtitle: '지하철, 버스, 택시 & 위치 묻기', progress: 0, status: 'locked', icon: '🧭' },
+      { unit: 4, title: '쇼핑 & 환전', subtitle: '가격 흥정, 사이즈 & 결제 표현', progress: 0, status: 'locked', icon: '🛍️' },
+      { unit: 5, title: '호텔 & 숙소', subtitle: '체크인, 룸서비스 & 어메니티 요청', progress: 0, status: 'locked', icon: '🏨' },
+      { unit: 6, title: '병원 & 약국', subtitle: '증상 설명, 응급처치 & 분실물 신고', progress: 0, status: 'locked', icon: '🏥' },
+      { unit: 7, title: '친구 사귀기 & 취미', subtitle: '자기소개, 취향 & 주말 약속', progress: 0, status: 'locked', icon: '🎉' },
+      { unit: 8, title: '날씨 & 일상 대화', subtitle: '사계절, 감정 표현 & 스몰토크', progress: 0, status: 'locked', icon: '☀️' },
+      { unit: 9, title: '비즈니스 기초', subtitle: '이메일, 오피스 미팅 & 명함 교환', progress: 0, status: 'locked', icon: '💼' },
+      { unit: 10, title: '현지 문화 & 관용구', subtitle: '스페인 속담, 슬랭 & 마스터 시험', progress: 0, status: 'locked', icon: '👑' }
+    ],
+    en: [
+      { unit: 1, title: '생존 첫걸음', subtitle: 'Greeting, Thanks & Numbers Master', progress: 60, status: 'active', icon: '🇺🇸' },
+      { unit: 2, title: '카페 & 주문', subtitle: 'Cafe, Food Ordering & The Check', progress: 0, status: 'locked', icon: '☕' },
+      { unit: 3, title: '길찾기 & 교통', subtitle: 'Subway, Taxi & Asking Directions', progress: 0, status: 'locked', icon: '🧭' },
+      { unit: 4, title: '쇼핑 & 환전', subtitle: 'Prices, Sizing & Credit Card', progress: 0, status: 'locked', icon: '🛍️' },
+      { unit: 5, title: '호텔 & 숙소', subtitle: 'Check-in, Amenities & Front Desk', progress: 0, status: 'locked', icon: '🏨' },
+      { unit: 6, title: '병원 & 약국', subtitle: 'Symptoms, Pharmacy & Emergencies', progress: 0, status: 'locked', icon: '🏥' },
+      { unit: 7, title: '친구 사귀기 & 취미', subtitle: 'Small Talk, Hobbies & Weekend', progress: 0, status: 'locked', icon: '🎉' },
+      { unit: 8, title: '날씨 & 일상 대화', subtitle: 'Weather, Mood & Daily Life', progress: 0, status: 'locked', icon: '☀️' },
+      { unit: 9, title: '비즈니스 기초', subtitle: 'Emails, Business Meetings & Office', progress: 0, status: 'locked', icon: '💼' },
+      { unit: 10, title: '현지 문화 & 관용구', subtitle: 'Native Idioms, Slang & Master Exam', progress: 0, status: 'locked', icon: '👑' }
+    ]
+  };
+  window.UNIT_LIST_PRESETS = UNIT_LIST_PRESETS;
+
   function updateRoadmapNodesUI() {
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
@@ -519,28 +585,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const lessons = langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic;
 
     // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    const unitSubBadge = el('unit-sub-badge');
     const unitLangBadge = el('unit-lang-badge');
     const unitMainTitle = el('unit-main-title');
     const unitProgressBar = el('unit-progress-bar');
     const unitThumbIcon = el('unit-thumb-icon');
+    const unitPresets = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    const curUnitPreset = unitPresets.find(u => u.unit === unlockedLevel) || unitPresets[0];
 
-    if (unitLangBadge) {
-      unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 첫걸음' : '🇪🇸 스페인어 첫걸음';
+    if (unitSubBadge) {
+      unitSubBadge.textContent = `UNIT ${unlockedLevel} / 10`;
     }
-    if (unitThumbIcon) {
-      unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '✈️')));
-    }
-    if (unitMainTitle) {
-      if (courseId === 'travel') {
-        unitMainTitle.textContent = lang === 'en' ? '실전 여행 영어 완전 정복' : '생존 여행 기초 표현 마스터';
-      } else if (courseId === 'dele') {
-        unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
-      } else if (courseId === 'toeic') {
-        unitMainTitle.textContent = '토익/오픽 필수 빈출 어휘 마스터';
-      } else if (courseId === 'business') {
-        unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
-      } else {
-        unitMainTitle.textContent = '생존 여행 기초 표현 마스터';
+
+    if (unlockedLevel === 1) {
+      if (unitLangBadge) {
+        unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 첫걸음' : '🇪🇸 스페인어 첫걸음';
+      }
+      if (unitThumbIcon) {
+        unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '✈️')));
+      }
+      if (unitMainTitle) {
+        if (courseId === 'travel') {
+          unitMainTitle.textContent = lang === 'en' ? '실전 여행 영어 완전 정복' : '생존 여행 기초 표현 마스터';
+        } else if (courseId === 'dele') {
+          unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
+        } else if (courseId === 'toeic') {
+          unitMainTitle.textContent = '토익/오픽 필수 빈출 어휘 마스터';
+        } else if (courseId === 'business') {
+          unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
+        } else {
+          unitMainTitle.textContent = '생존 여행 기초 표현 마스터';
+        }
+      }
+    } else {
+      if (unitLangBadge) {
+        unitLangBadge.textContent = lang === 'en' ? `🇺🇸 영어 : ${curUnitPreset.title}` : `🇪🇸 스페인어 : ${curUnitPreset.title}`;
+      }
+      if (unitThumbIcon) {
+        unitThumbIcon.textContent = curUnitPreset.icon || '☕';
+      }
+      if (unitMainTitle) {
+        unitMainTitle.textContent = `${curUnitPreset.title} (${curUnitPreset.subtitle.split(',')[0].trim()})`;
       }
     }
 
@@ -588,11 +674,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Unit banner progress bar
     if (unitProgressBar) {
-      let pct = 35;
-      if (progBoss >= 3) pct = 100;
-      else if (prog3 >= 3) pct = 85;
-      else if (prog2 >= 3) pct = 65;
-      unitProgressBar.style.width = pct + '%';
+      if (unlockedLevel > 1) {
+        const pct = Math.min(100, Math.max(25, (unlockedLevel - 1) * 10 + 20));
+        unitProgressBar.style.width = pct + '%';
+      } else {
+        let pct = 35;
+        if (progBoss >= 3) pct = 100;
+        else if (prog3 >= 3) pct = 85;
+        else if (prog2 >= 3) pct = 65;
+        unitProgressBar.style.width = pct + '%';
+      }
     }
 
     // Node 2 요소 레퍼런스
@@ -1169,90 +1260,123 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   // ===================================================
-  // UNIT OVERVIEW BOTTOM SHEET (전체 유닛 코스 맵) 로직
+  // UNIT OVERVIEW BOTTOM SHEET & SKIP TEST RUNNING GAME
   // ===================================================
-  const UNIT_LIST_PRESETS = {
-    es: [
-      { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
-      { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
-      { unit: 3, title: '길찾기 & 교통', subtitle: '지하철, 버스, 택시 & 위치 묻기', progress: 0, status: 'locked', icon: '🧭' },
-      { unit: 4, title: '쇼핑 & 환전', subtitle: '가격 흥정, 사이즈 & 결제 표현', progress: 0, status: 'locked', icon: '🛍️' },
-      { unit: 5, title: '호텔 & 숙소', subtitle: '체크인, 룸서비스 & 어메니티 요청', progress: 0, status: 'locked', icon: '🏨' },
-      { unit: 6, title: '병원 & 약국', subtitle: '증상 설명, 응급처치 & 분실물 신고', progress: 0, status: 'locked', icon: '🏥' },
-      { unit: 7, title: '친구 사귀기 & 취미', subtitle: '자기소개, 취향 & 주말 약속', progress: 0, status: 'locked', icon: '🎉' },
-      { unit: 8, title: '날씨 & 일상 대화', subtitle: '사계절, 감정 표현 & 스몰토크', progress: 0, status: 'locked', icon: '☀️' },
-      { unit: 9, title: '비즈니스 기초', subtitle: '이메일, 오피스 미팅 & 명함 교환', progress: 0, status: 'locked', icon: '💼' },
-      { unit: 10, title: '현지 문화 & 관용구', subtitle: '스페인 속담, 슬랭 & 마스터 시험', progress: 0, status: 'locked', icon: '👑' }
-    ],
-    en: [
-      { unit: 1, title: '생존 첫걸음', subtitle: 'Greeting, Thanks & Numbers Master', progress: 60, status: 'active', icon: '🇺🇸' },
-      { unit: 2, title: '카페 & 주문', subtitle: 'Cafe, Food Ordering & The Check', progress: 0, status: 'locked', icon: '☕' },
-      { unit: 3, title: '길찾기 & 교통', subtitle: 'Subway, Taxi & Asking Directions', progress: 0, status: 'locked', icon: '🧭' },
-      { unit: 4, title: '쇼핑 & 환전', subtitle: 'Prices, Sizing & Credit Card', progress: 0, status: 'locked', icon: '🛍️' },
-      { unit: 5, title: '호텔 & 숙소', subtitle: 'Check-in, Amenities & Front Desk', progress: 0, status: 'locked', icon: '🏨' },
-      { unit: 6, title: '병원 & 약국', subtitle: 'Symptoms, Pharmacy & Emergencies', progress: 0, status: 'locked', icon: '🏥' },
-      { unit: 7, title: '친구 사귀기 & 취미', subtitle: 'Small Talk, Hobbies & Weekend', progress: 0, status: 'locked', icon: '🎉' },
-      { unit: 8, title: '날씨 & 일상 대화', subtitle: 'Weather, Mood & Daily Life', progress: 0, status: 'locked', icon: '☀️' },
-      { unit: 9, title: '비즈니스 기초', subtitle: 'Emails, Business Meetings & Office', progress: 0, status: 'locked', icon: '💼' },
-      { unit: 10, title: '현지 문화 & 관용구', subtitle: 'Native Idioms, Slang & Master Exam', progress: 0, status: 'locked', icon: '👑' }
-    ]
-  };
+  function unlockUnitsUpTo(targetUnit, targetLang) {
+    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    const currentUnlocked = getUnlockedUnitLevel(lang);
+    const newLevel = Math.max(currentUnlocked, Math.min(10, parseInt(targetUnit, 10) || 1));
+    setUnlockedUnitLevel(newLevel, lang);
+
+    if (!window.nodeProgressMap) window.nodeProgressMap = {};
+    if (newLevel >= 2) {
+      window.nodeProgressMap['node-1'] = 3;
+      window.nodeProgressMap['node-2'] = Math.max(window.nodeProgressMap['node-2'] || 0, 1);
+    }
+    if (newLevel >= 3) {
+      window.nodeProgressMap['node-2'] = 3;
+      window.nodeProgressMap['node-3'] = Math.max(window.nodeProgressMap['node-3'] || 0, 1);
+    }
+    if (newLevel >= 4) {
+      window.nodeProgressMap['node-3'] = 3;
+      window.nodeProgressMap['node-boss'] = Math.max(window.nodeProgressMap['node-boss'] || 0, 1);
+    }
+
+    if (typeof window.saveNodeProgress === 'function') {
+      window.saveNodeProgress();
+    }
+    if (typeof window.updateRoadmapNodesUI === 'function') {
+      window.updateRoadmapNodesUI();
+    }
+    if (typeof renderUnitOverviewList === 'function') {
+      renderUnitOverviewList(lang);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.unlockUnitsUpTo = unlockUnitsUpTo;
 
   function renderUnitOverviewList(targetLang) {
     const lang = targetLang === 'en' ? 'en' : 'es';
     const listEl = el('unit-overview-list');
     const titleEl = el('unit-overview-title');
     const subtitleEl = el('unit-overview-subtitle');
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
 
     if (titleEl) {
       titleEl.textContent = lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵';
     }
     if (subtitleEl) {
-      subtitleEl.textContent = '총 10개 유닛 중 Unit 1 진행 중';
+      subtitleEl.textContent = `총 10개 유닛 중 Unit ${unlockedLevel} 진행 중`;
     }
     if (!listEl) return;
 
-    const units = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    const units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
     let html = '';
 
     units.forEach((item) => {
-      const isActive = item.status === 'active';
-      if (isActive) {
+      const isCompleted = item.unit < unlockedLevel;
+      const isActive = item.unit === unlockedLevel;
+      const progress = isCompleted ? 100 : (isActive ? 35 : 0);
+
+      if (isCompleted) {
         html += `
-          <div class="unit-item-card p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 shadow-xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between" data-unit="${item.unit}" data-status="active">
+          <div class="unit-item-card p-3.5 rounded-2xl border-2 border-emerald-500/80 bg-emerald-50/50 shadow-xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between" data-unit="${item.unit}" data-title="${escapeHTML(item.title)}" data-status="completed">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">
                 U${item.unit}
               </div>
               <div class="flex flex-col min-w-0">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-xs font-black text-emerald-900 leading-tight">Unit ${item.unit} : ${item.title}</span>
-                  <span class="px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight leading-none">진행 중</span>
+                  <span class="text-xs font-black text-emerald-950 leading-tight">Unit ${item.unit} : ${escapeHTML(item.title)}</span>
+                  <span class="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase tracking-tight leading-none border border-emerald-300">완료됨</span>
                 </div>
-                <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${item.subtitle}</span>
+                <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
                 <div class="w-36 bg-emerald-200/80 h-1.5 rounded-full mt-1.5 overflow-hidden">
-                  <div class="h-full bg-emerald-600 rounded-full" style="width: ${item.progress}%;"></div>
+                  <div class="h-full bg-emerald-600 rounded-full" style="width: 100%;"></div>
                 </div>
               </div>
             </div>
             <div class="flex items-center gap-1 text-emerald-700 font-extrabold text-xs flex-shrink-0 ml-2">
-              <span>${item.progress}%</span>
+              <span class="material-symbols-outlined text-base text-emerald-600 font-bold">check_circle</span>
+            </div>
+          </div>
+        `;
+      } else if (isActive) {
+        html += `
+          <div class="unit-item-card p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 shadow-xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between" data-unit="${item.unit}" data-title="${escapeHTML(item.title)}" data-status="active">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">
+                U${item.unit}
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-black text-emerald-900 leading-tight">Unit ${item.unit} : ${escapeHTML(item.title)}</span>
+                  <span class="px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight leading-none">진행 중</span>
+                </div>
+                <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
+                <div class="w-36 bg-emerald-200/80 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                  <div class="h-full bg-emerald-600 rounded-full" style="width: ${progress}%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 text-emerald-700 font-extrabold text-xs flex-shrink-0 ml-2">
+              <span>${progress}%</span>
               <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
             </div>
           </div>
         `;
       } else {
         html += `
-          <div class="unit-item-card p-3 rounded-2xl border border-slate-200/80 bg-white/90 hover:bg-slate-50 shadow-2xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between opacity-85" data-unit="${item.unit}" data-status="locked">
+          <div class="unit-item-card p-3 rounded-2xl border border-slate-200/80 bg-white/90 hover:bg-slate-50 shadow-2xs cursor-pointer active:scale-[0.98] transition-all flex items-center justify-between opacity-85 hover:opacity-100" data-unit="${item.unit}" data-title="${escapeHTML(item.title)}" data-status="locked">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-sm shadow-2xs flex-shrink-0">
                 U${item.unit}
               </div>
               <div class="flex flex-col min-w-0">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-xs font-bold text-slate-800 leading-tight">Unit ${item.unit} : ${item.title}</span>
+                  <span class="text-xs font-bold text-slate-800 leading-tight">Unit ${item.unit} : ${escapeHTML(item.title)}</span>
                 </div>
-                <span class="text-[11px] font-medium text-slate-400 mt-0.5 truncate">${item.subtitle}</span>
+                <span class="text-[11px] font-medium text-slate-400 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
               </div>
             </div>
             <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 flex-shrink-0 ml-2 shadow-2xs">
@@ -1268,19 +1392,17 @@ document.addEventListener('DOMContentLoaded', () => {
     listEl.querySelectorAll('.unit-item-card').forEach((card) => {
       card.addEventListener('click', () => {
         const uNum = parseInt(card.dataset.unit, 10);
+        const uTitle = card.dataset.title || '';
         const status = card.dataset.status;
-        if (status === 'active' || uNum === 1) {
+        if (status === 'active' || status === 'completed') {
           window.closeUnitOverviewModal();
           window.scrollTo({ top: 0, behavior: 'smooth' });
           if (typeof window.showToast === 'function') {
-            window.showToast('🚀 현재 진행 중인 Unit 1 로드맵입니다!');
+            window.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
           }
         } else {
-          card.classList.add('animate-lock-shake');
-          setTimeout(() => card.classList.remove('animate-lock-shake'), 450);
-          if (typeof window.showToast === 'function') {
-            window.showToast(`Unit ${uNum}은(는) 이전 유닛 완료 후 잠금 해제됩니다! 🔒`);
-          }
+          // 🔒 잠긴 유닛 카드 클릭 시 '건너뛰기 시험 안내 모달' 즉시 노출
+          window.openUnitSkipModal(uNum, uTitle, lang);
         }
       });
     });
@@ -1308,6 +1430,170 @@ document.addEventListener('DOMContentLoaded', () => {
       unitOverviewCard.classList.add('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
     }
   };
+
+  // ===================================================
+  // UNIT SKIP TEST MODAL (잠긴 유닛 건너뛰기 실전 시험 모달)
+  // ===================================================
+  const unitSkipModalBackdrop = el('unit-skip-modal-backdrop');
+  const unitSkipModalCard = el('unit-skip-modal-card');
+  const unitSkipModalTitle = el('unit-skip-modal-title');
+  const unitSkipModalDesc = el('unit-skip-modal-desc');
+
+  window.openUnitSkipModal = function(unitNum, unitTitle, targetLang) {
+    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    const uNum = parseInt(unitNum, 10) || 2;
+    const units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    const preset = units.find(u => u.unit === uNum);
+    const title = unitTitle || (preset ? preset.title : `Unit ${uNum}`);
+    const displayName = preset ? (preset.title.startsWith('Unit') ? preset.title : `Unit ${uNum} ${preset.title}`) : `Unit ${uNum}`;
+
+    window.currentSkipTestUnit = uNum;
+    window.currentSkipTestUnitTitle = title;
+
+    if (unitSkipModalTitle) {
+      unitSkipModalTitle.textContent = `⚡ ${displayName} 건너뛰기 시험`;
+    }
+    if (unitSkipModalDesc) {
+      unitSkipModalDesc.innerHTML = `앞선 과정을 건너뛰고 이 유닛을 바로 해금하시겠습니까?<br>실전 테스트를 통과하면 이전 유닛들이 모두 오픈됩니다!`;
+    }
+
+    if (unitSkipModalBackdrop && unitSkipModalCard) {
+      unitSkipModalBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+      unitSkipModalBackdrop.classList.add('opacity-100');
+      unitSkipModalCard.classList.remove('pointer-events-none', 'scale-95', 'opacity-0');
+      unitSkipModalCard.classList.add('scale-100', 'opacity-100');
+    }
+  };
+
+  window.closeUnitSkipModal = function() {
+    if (unitSkipModalBackdrop && unitSkipModalCard) {
+      unitSkipModalBackdrop.classList.remove('opacity-100');
+      unitSkipModalBackdrop.classList.add('pointer-events-none', 'opacity-0');
+      unitSkipModalCard.classList.remove('scale-100', 'opacity-100');
+      unitSkipModalCard.classList.add('pointer-events-none', 'scale-95', 'opacity-0');
+    }
+  };
+
+  // ===================================================
+  // [startRunningGame]: 플래시카드 단계 스킵 및 인게임 직행
+  // - 문제 풀: 해당 유닛 이전까지의 모든 단어 데이터 중 무작위 15문제 선정
+  // ===================================================
+  function startRunningGame(mode, options) {
+    const opts = (typeof mode === 'object' && mode !== null) ? mode : (options || {});
+    const targetUnit = opts.targetUnit || window.currentSkipTestUnit || 2;
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+
+    // 1) Set global test mode flags for gameEngine.js
+    window.isUnitSkipTestMode = true;
+    window.currentSkipTestUnit = targetUnit;
+    window.isReviewGameMode = false;
+    window.isRoadmapReviewSpeedrun = false;
+
+    // 2) Collect all vocabulary data from units/stages prior to targetUnit
+    let rawPool = [];
+    const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : {});
+    const stageKeys = ['node-1'];
+    if (targetUnit >= 3) stageKeys.push('node-2');
+    if (targetUnit >= 4) stageKeys.push('node-3');
+    if (targetUnit >= 5) stageKeys.push('node-boss');
+
+    stageKeys.forEach(k => {
+      if (db[k]) {
+        const arr = db[k][currentLang] || db[k].words || db[k].all || [];
+        if (Array.isArray(arr) && arr.length > 0) {
+          rawPool = rawPool.concat(arr);
+        }
+      }
+    });
+
+    // Fallback: if rawPool is insufficient, draw from all available stages in database
+    if (rawPool.length < 15) {
+      ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(k => {
+        if (db[k]) {
+          const arr = db[k][currentLang] || db[k].words || db[k].all || [];
+          if (Array.isArray(arr) && arr.length > 0) rawPool = rawPool.concat(arr);
+        }
+      });
+    }
+
+    // Secondary fallback: if still insufficient, use VOCA_DATA defaults
+    if (rawPool.length < 15 && window.VOCA_DATA) {
+      if (Array.isArray(window.VOCA_DATA.words)) {
+        rawPool = rawPool.concat(window.VOCA_DATA.words);
+      }
+      if (typeof window.VOCA_DATA.generateStageSession === 'function') {
+        const s1 = window.VOCA_DATA.generateStageSession('node-1', currentLang);
+        const s2 = window.VOCA_DATA.generateStageSession('node-2', currentLang);
+        rawPool = rawPool.concat(s1).concat(s2);
+      }
+    }
+
+    // 3) Shuffle and pick exactly 15 questions
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    const shuffled = shuffleArray(rawPool);
+    const selected = shuffled.slice(0, 15);
+    let sIdx = 0;
+    while (selected.length < 15 && rawPool.length > 0) {
+      selected.push(rawPool[sIdx % rawPool.length]);
+      sIdx++;
+    }
+
+    const sessionQuestions = selected.map((item, idx) => {
+      const isSent = Boolean(item.type === 'sentence' || item.isSentence);
+      return {
+        ...item,
+        id: item.id || `skip-q-${idx + 1}`,
+        word: item.term || item.word || '',
+        term: item.term || item.word || '',
+        meaning: item.meaning || item.korean || item.kor || '',
+        phonetic: item.phonetic || '',
+        exampleTarget: item.example || item.exampleTarget || '',
+        exampleMeaning: item.exampleKo || item.example_ko || item.exampleMeaning || '',
+        isSentence: isSent,
+        tag: item.tag || (isSent ? '실전 문장' : '핵심 어휘')
+      };
+    });
+
+    window.currentSessionQuestions = sessionQuestions;
+
+    // 4) DIRECTLY jump to game screen (BYPASSING flashcards preview!)
+    if (typeof window.openGameScreen === 'function') {
+      window.openGameScreen('node-skip-test', sessionQuestions);
+    } else if (typeof window.startGameSession === 'function') {
+      window.startGameSession('node-skip-test', sessionQuestions);
+    }
+
+    const stageTitleEl = document.getElementById('game-stage-title');
+    if (stageTitleEl) {
+      stageTitleEl.textContent = `⚡ Unit ${targetUnit} 건너뛰기 실전 시험`;
+    }
+  }
+  window.startRunningGame = startRunningGame;
+
+  // 이벤트 바인딩
+  on('btn-close-unit-skip-modal', 'click', window.closeUnitSkipModal);
+  if (unitSkipModalBackdrop) {
+    unitSkipModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === unitSkipModalBackdrop) {
+        window.closeUnitSkipModal();
+      }
+    });
+  }
+
+  on('btn-start-unit-skip-test', 'click', () => {
+    window.closeUnitSkipModal();
+    window.closeUnitOverviewModal();
+    const targetUnit = window.currentSkipTestUnit || 2;
+    window.startRunningGame('skip_test', { targetUnit });
+  });
 
   on('unit-banner', 'click', (e) => {
     e.stopPropagation();
@@ -1642,7 +1928,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=36';
+    const v = '?v=37';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -2400,7 +2686,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=36' : 'assets/profiles/profile-spanish.webp?v=36';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=37' : 'assets/profiles/profile-spanish.webp?v=37';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -3448,7 +3734,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=36`;
+    return `assets/profiles/${file}?v=37`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3964,7 +4250,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=36';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=37';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -4011,7 +4297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=36';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=37';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {

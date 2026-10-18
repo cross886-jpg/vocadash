@@ -671,7 +671,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=36`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=37`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -704,7 +704,23 @@
         const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
         const btnPrimaryText = document.getElementById('btn-result-primary-text');
         if (btnPrimaryText) {
-          if (window.isReviewGameMode) {
+          if (window.isUnitSkipTestMode) {
+            const totalQ = (gameQuestions && gameQuestions.length) || 15;
+            const missed = missedWords || [];
+            const correctCount = Math.max(0, totalQ - missed.length);
+            const isPassed = correctCount >= 12;
+            const targetUnit = window.currentSkipTestUnit || 2;
+            btnPrimaryText.textContent = isPassed ? `해금된 Unit ${targetUnit}으로 이동 🚀` : '로드맵으로 돌아가기';
+
+            const resultTitle = document.getElementById('result-title');
+            const resultSubtitle = document.getElementById('result-subtitle');
+            if (resultTitle) resultTitle.textContent = isPassed ? '⚡ 건너뛰기 시험 통과!' : '⚡ 건너뛰기 시험 결과';
+            if (resultSubtitle) {
+              resultSubtitle.textContent = isPassed
+                ? `정답 ${correctCount}/${totalQ}개 (80% 이상 달성!) · Unit ${targetUnit} 해금 완료!`
+                : `정답 ${correctCount}/${totalQ}개 · 통과 기준(12문제)에 미달했습니다`;
+            }
+          } else if (window.isReviewGameMode) {
             btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '로드맵으로 복귀' : '오답노트로 복귀';
           } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
             btnPrimaryText.textContent = '3과 마스터 & 4과(보스전) 도전!';
@@ -733,7 +749,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=36`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=37`;
         });
       } catch (_) {}
 
@@ -929,6 +945,16 @@
         });
         if (typeof window.removeClearedWrongWords === 'function') {
           window.removeClearedWrongWords(clearedQs);
+        }
+      }
+
+      // 건너뛰기 시험 모드 클리어 및 80%(12문제 이상) 통과 시 즉시 해금
+      if (isClear && window.isUnitSkipTestMode) {
+        const totalQ = (gameQuestions && gameQuestions.length) || 15;
+        const missed = missedWords || [];
+        const correctCount = Math.max(0, totalQ - missed.length);
+        if (correctCount >= 12 && typeof window.unlockUnitsUpTo === 'function') {
+          window.unlockUnitsUpTo(window.currentSkipTestUnit || 2);
         }
       }
     } catch (err) {
@@ -1796,7 +1822,10 @@
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const currentCourse = window.currentActiveCourse || 'es';
 
-    if (window.isRoadmapReviewSpeedrun && session && Array.isArray(session) && session.length > 0) {
+    if (window.isUnitSkipTestMode && session && Array.isArray(session) && session.length > 0) {
+      gameQuestions = session.slice();
+      window.currentSessionQuestions = session;
+    } else if (window.isRoadmapReviewSpeedrun && session && Array.isArray(session) && session.length > 0) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
     } else if (session && Array.isArray(session) && session.length >= 13) {
@@ -1814,16 +1843,16 @@
       gameQuestions = [];
     }
 
-    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런 제외)
-    if (!window.isRoadmapReviewSpeedrun && (!gameQuestions || gameQuestions.length < 13)) {
+    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런 및 건너뛰기 시험 제외)
+    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && (!gameQuestions || gameQuestions.length < 13)) {
       if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         gameQuestions = window.VOCA_DATA.generateStageSession(currentGameLessonId, currentCourse, round);
         window.currentSessionQuestions = gameQuestions;
       }
     }
 
-    // 단어 부족 시 가지고 있는 단어들을 순환(fallback)하여 13문제 완주 보장 (약점 극복 스피드런 제외)
-    if (!window.isRoadmapReviewSpeedrun && gameQuestions && gameQuestions.length > 0 && gameQuestions.length < 13) {
+    // 단어 부족 시 가지고 있는 단어들을 순환(fallback)하여 13문제 완주 보장 (약점 극복 스피드런 및 건너뛰기 시험 제외)
+    if (!window.isRoadmapReviewSpeedrun && !window.isUnitSkipTestMode && gameQuestions && gameQuestions.length > 0 && gameQuestions.length < 13) {
       const orig = gameQuestions.slice();
       let padIdx = 0;
       while (gameQuestions.length < 13) {
@@ -1835,12 +1864,13 @@
 
     const roundProg = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const isBoss = (currentGameLessonId === 'node-boss' || String(currentGameLessonId).includes('boss'));
-    const stageName = window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런'
+    const stageName = window.isUnitSkipTestMode ? `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`
+      : window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런'
       : currentGameLessonId === 'node-1' ? 'Stage 1: 기내 기본 표현'
       : currentGameLessonId === 'node-3' ? 'Stage 3: 수하물과 세관'
       : isBoss ? 'Stage 4: 일상 기초 (보스전)'
       : 'Stage 2: 입국 심사';
-    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun) ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
+    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun || window.isUnitSkipTestMode) ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
     if (gameStageTitle) gameStageTitle.textContent = `${stageName}${subRoundText}`;
 
     currentHearts = 5;
@@ -2048,6 +2078,36 @@
 
     // 2) 액션 게임 화면 안전하게 닫기/정리
     closeGameScreen(true);
+
+    // 2-B) 유닛 건너뛰기 시험 모드 분기
+    if (window.isUnitSkipTestMode) {
+      const targetUnit = window.currentSkipTestUnit || 2;
+      const totalQ = (gameQuestions && gameQuestions.length) || 15;
+      const missed = missedWords || [];
+      const correctCount = Math.max(0, totalQ - missed.length);
+      const isPassed = correctCount >= 12;
+
+      window.isUnitSkipTestMode = false;
+      isExplicitExitRequested = true;
+      window.isExplicitExitRequested = true;
+      exitGameToRoadmap(true);
+      isExplicitExitRequested = false;
+      window.isExplicitExitRequested = false;
+
+      if (isPassed) {
+        if (typeof window.unlockUnitsUpTo === 'function') {
+          window.unlockUnitsUpTo(targetUnit);
+        }
+        if (typeof window.showToast === 'function') {
+          window.showToast(`🎉 축하합니다! Unit ${targetUnit} 및 이전 유닛들이 모두 해금되었습니다! 🔓`, '✨');
+        }
+      } else {
+        if (typeof window.showToast === 'function') {
+          window.showToast(`아쉽게도 불합격했습니다 (${correctCount}/15 정답). 다음에 다시 도전해 보세요! 💪`);
+        }
+      }
+      return false;
+    }
 
     // 3) 오답 복습 모드 분기
     if (window.isReviewGameMode) {
@@ -2503,6 +2563,7 @@
         overCard.classList.add('hidden');
         overCard.style.display = 'none';
       }
+      window.isUnitSkipTestMode = false;
       isExplicitExitRequested = true;
       window.isExplicitExitRequested = true;
       exitGameToRoadmap(true);
