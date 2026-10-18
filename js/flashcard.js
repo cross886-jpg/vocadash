@@ -478,7 +478,7 @@
       if (window.courseData && window.courseData[activeLang]) {
         flashcardMascotImg.src = window.courseData[activeLang].mascotImg;
       } else {
-        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=47`;
+        flashcardMascotImg.src = `assets/characters/${activeLang}-study.webp?v=48`;
       }
     }
 
@@ -717,7 +717,9 @@
     }
 
     if (window.showToast) window.showToast('🎉 단어 예습 완료! 단어 낙하 액션 게임을 시작합니다!', '⚡');
-    if (window.openGameScreen) {
+    if (typeof window.launchGame === 'function') {
+      window.launchGame('falling', window.currentSessionQuestions || activeDeck, { lessonId: currentFlashcardLessonId });
+    } else if (window.openGameScreen) {
       window.openGameScreen(currentFlashcardLessonId, window.currentSessionQuestions || activeDeck);
     }
   }

@@ -692,7 +692,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=47`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=48`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -780,7 +780,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=47`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=48`;
         });
       } catch (_) {}
 
@@ -2872,6 +2872,45 @@
     totalQ: gameQuestions.length,
     currentQuestionIdx
   });
+
+  function startFallingGame(lessonId = 'node-2', session = null, options = {}) {
+    return openGameScreen(lessonId, session);
+  }
+
+  function launchGame(gameType = 'falling', wordList = null, options = {}) {
+    console.log(`🎮 [MiniGame Adapter] launchGame: gameType=${gameType}`, options);
+    const lessonId = (options && options.lessonId) || (typeof options === 'string' ? options : 'node-2');
+    const runner = (typeof window !== 'undefined' && window.startFallingGame) ? window.startFallingGame : startFallingGame;
+    switch (gameType) {
+      case 'falling':
+      case 'runner':
+      case 'default':
+        return runner(lessonId, wordList, options);
+
+      case 'card_flip':
+      case 'flip':
+        console.log('🃏 카드 뒤집기 미니게임 (준비 중)');
+        if (typeof window.showToast === 'function') {
+          window.showToast('🃏 카드 뒤집기 미니게임은 다음 업데이트에 제공됩니다!', '✨');
+        }
+        return false;
+
+      case 'speed_quiz':
+      case 'quiz':
+        console.log('⚡ 4지선다 스피드 퀴즈 (준비 중)');
+        if (typeof window.showToast === 'function') {
+          window.showToast('⚡ 스피드 퀴즈 미니게임은 다음 업데이트에 제공됩니다!', '✨');
+        }
+        return false;
+
+      default:
+        console.warn(`⚠️ 알 수 없는 게임 모드(${gameType}) -> falling 게임 실행`);
+        return runner(lessonId, wordList, options);
+    }
+  }
+
+  window.startFallingGame = startFallingGame;
+  window.launchGame = launchGame;
   window.reviveGameHearts = function (amount = 3) {
     clearAllGameTimers();
     currentHearts = amount;

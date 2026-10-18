@@ -677,7 +677,15 @@
       tabReview.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        switchMainTab('review');
+        switchMainTab('book');
+        setTimeout(() => {
+          const wrongChip = document.getElementById('book-filter-wrong-chip') || document.querySelector('.book-filter-chip[data-filter="wrong"]');
+          if (wrongChip) {
+            wrongChip.click();
+          } else if (typeof window.applyBookFilter === 'function') {
+            window.applyBookFilter('wrong');
+          }
+        }, 50);
       });
     }
 

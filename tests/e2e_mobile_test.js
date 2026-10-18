@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=47`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=48`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1114,6 +1114,114 @@ async function runE2ETests() {
       summary: scenarioHPPassed
         ? '하트 상태 영구 유지(localStorage), 0개 시 게임 진입 차단 & 충전 모달 표출, 보석 100개 완충, 30분 타이머 계산, 오답런 0하트 진입/무차감 및 80% 클리어 시 하트 3개 충전 완벽 검증'
         : `검증 실패 세부사항: ${JSON.stringify(heartTestResult)}`
+    });
+
+    console.log('\n📚 --- [Scenario I: Wordbook Wrong Filter, Course Switcher & MiniGame Adapter] ---');
+    const wordbookAndAdapterResult = await page.evaluate(async () => {
+      const results = {};
+
+      // 1. Ensure Spanish language is active
+      if (typeof window.setLanguage === 'function') window.setLanguage('es');
+
+      // Check wrong filter chip exists and has count badge
+      const wrongChip = document.getElementById('book-filter-wrong-chip');
+      const wrongCount = document.getElementById('book-filter-wrong-count');
+      results.hasWrongChip = !!wrongChip;
+      results.hasWrongCount = !!wrongCount;
+
+      // 2. Set sample wrong words with streaks
+      const sampleWrongWords = [
+        { word: 'Prueba1', meaning: '시험1', correctStreak: 2, escaped: false, lang: 'es' },
+        { word: 'Prueba2', meaning: '시험2', correctStreak: 4, escaped: false, lang: 'es' }
+      ];
+      window.wrongWords = sampleWrongWords;
+      localStorage.setItem('vocadash_wrong_answers_es', JSON.stringify(sampleWrongWords));
+      if (typeof window.updateWrongWordsBadge === 'function') window.updateWrongWordsBadge();
+
+      // Check badge updated
+      results.wrongBadgeCount = wrongCount ? wrongCount.textContent.trim() : '';
+
+      // 3. Navigate to '오답 탈출' tab (#tab-review)
+      const tabReview = document.getElementById('tab-review');
+      if (tabReview) tabReview.click();
+      await new Promise(r => setTimeout(r, 100));
+
+      // Should be on book screen
+      const bookScreen = document.getElementById('book-screen');
+      results.bookScreenVisible = bookScreen && !bookScreen.classList.contains('hidden') && bookScreen.style.display !== 'none';
+
+      // 4. Check wrong cards rendered with streak badges
+      const wrongCards = document.querySelectorAll('.book-word-card-wrong');
+      results.wrongCardsCount = wrongCards.length;
+      results.firstCardStreak = wrongCards[0]?.querySelector('.bg-rose-50, .flex-shrink-0 span')?.textContent?.trim() || '';
+
+      // Check banner exists and is visible
+      const banner = document.getElementById('book-wrong-run-banner');
+      const startRunBtn = document.getElementById('btn-book-start-wrong-run');
+      results.bannerVisible = banner && !banner.classList.contains('hidden');
+      results.hasStartRunBtn = !!startRunBtn;
+
+      // 5. Test Course Switcher in Book Screen
+      const courseBtn = document.getElementById('book-course-btn');
+      if (courseBtn) courseBtn.click();
+      const courseMenu = document.getElementById('book-course-dropdown-menu');
+      results.dropdownVisible = courseMenu && !courseMenu.classList.contains('hidden');
+
+      const footballItem = courseMenu?.querySelector('[data-course-id="pack_football"]');
+      results.hasFootballItem = !!footballItem;
+      if (footballItem) footballItem.click();
+
+      results.activeCourseAfterSwitch = window.activeCourseId;
+      results.storedCourseAfterSwitch = localStorage.getItem('vocadash_active_course');
+      const courseTitle = document.getElementById('book-course-title');
+      results.courseTitleText = courseTitle ? courseTitle.textContent.trim() : '';
+
+      // Switch back to main
+      window.switchCourse('main');
+      results.restoredMainCourse = window.activeCourseId;
+
+      // 6. Test launchGame Adapter
+      results.hasLaunchGame = typeof window.launchGame === 'function';
+      let launchCalled = false;
+      const origStartFallingGame = window.startFallingGame;
+      window.startFallingGame = function(lessonId, wordList, options) {
+        launchCalled = true;
+        return { lessonId, wordList, options };
+      };
+      window.launchGame('falling', [{ word: 'Test' }], { lessonId: 'node-test' });
+      results.launchGameRoutedToFalling = launchCalled;
+      window.startFallingGame = origStartFallingGame;
+
+      // Clean up test wrong words
+      localStorage.removeItem('vocadash_wrong_answers_es');
+      if (typeof window.loadWrongWords === 'function') window.loadWrongWords('es');
+      if (typeof window.updateWrongWordsBadge === 'function') window.updateWrongWordsBadge();
+
+      return results;
+    });
+
+    console.log('📚 Wordbook and adapter test details:', wordbookAndAdapterResult);
+    const scenarioIPassed = 
+      wordbookAndAdapterResult.hasWrongChip === true &&
+      wordbookAndAdapterResult.hasWrongCount === true &&
+      wordbookAndAdapterResult.wrongBadgeCount === '2' &&
+      wordbookAndAdapterResult.bookScreenVisible === true &&
+      wordbookAndAdapterResult.wrongCardsCount === 2 &&
+      wordbookAndAdapterResult.firstCardStreak.includes('/5') &&
+      wordbookAndAdapterResult.bannerVisible === true &&
+      wordbookAndAdapterResult.hasStartRunBtn === true &&
+      wordbookAndAdapterResult.hasFootballItem === true &&
+      wordbookAndAdapterResult.activeCourseAfterSwitch === 'pack_football' &&
+      wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
+      wordbookAndAdapterResult.restoredMainCourse === 'main' &&
+      wordbookAndAdapterResult.hasLaunchGame === true &&
+      wordbookAndAdapterResult.launchGameRoutedToFalling === true;
+
+    recordScenario('Scenario I: Wordbook Wrong Filter, Course Switcher & MiniGame Adapter', scenarioIPassed, {
+      ...wordbookAndAdapterResult,
+      summary: scenarioIPassed
+        ? '교재단어장 [🔥 오답] 필터 칩 연동, 🔥 {streak}/5 뱃지 표시, 약점 극복 10문제 런 배너, 코스 스위처 연동, 하단 탭 연결 및 미니게임 실행 어댑터(launchGame) 정상 동작 완벽 검증'
+        : `검증 실패 세부사항: ${JSON.stringify(wordbookAndAdapterResult)}`
     });
 
   } catch (err) {
