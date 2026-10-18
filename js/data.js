@@ -984,8 +984,8 @@
   };
 
   const courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=34', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=34', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=35', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=35', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {

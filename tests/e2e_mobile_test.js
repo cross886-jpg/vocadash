@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=34`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=35`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -382,6 +382,27 @@ async function runE2ETests() {
     await page.click('#close-unit-overview-btn');
     await page.waitForTimeout(200);
 
+    // Test Review Speed Run Modal interaction (Roadmap review node does NOT jump tabs!)
+    await page.click('#node-review-btn');
+    await page.waitForTimeout(250);
+    const speedrunModalState = await page.evaluate(() => {
+      const modal = document.getElementById('review-speedrun-modal-backdrop');
+      const title = document.getElementById('review-speedrun-modal-title');
+      const startBtn = document.getElementById('btn-start-speedrun-game');
+      const reviewScreen = document.getElementById('review-screen');
+      const roadmapScreen = document.getElementById('roadmap-screen');
+      return {
+        isOpen: modal && !modal.classList.contains('pointer-events-none') && modal.classList.contains('opacity-100'),
+        title: title ? title.textContent.trim() : '',
+        hasStartBtn: !!startBtn,
+        roadmapRemainsVisible: roadmapScreen && !roadmapScreen.classList.contains('hidden'),
+        reviewTabNotSwitched: reviewScreen ? reviewScreen.classList.contains('hidden') : true
+      };
+    });
+    // Close speedrun modal
+    await page.click('#btn-close-speedrun-modal');
+    await page.waitForTimeout(200);
+
     // Test scrolling to verify header remains fixed at top: 0
     await page.evaluate(() => window.scrollTo(0, 300));
     await page.waitForTimeout(100);
@@ -407,9 +428,14 @@ async function runE2ETests() {
       roadmapGameState.hasBossNode &&
       roadmapGameState.btn3dCount >= 5 &&
       bonusModalOpen &&
+      speedrunModalState.isOpen &&
+      speedrunModalState.roadmapRemainsVisible &&
+      speedrunModalState.reviewTabNotSwitched &&
+      speedrunModalState.title.includes('약점 극복 스피드 런') &&
       unitOverviewState.unitModalOpen &&
       unitOverviewState.langModalNotOpen &&
       unitOverviewState.cardCount === 10 &&
+      !unitOverviewState.title.includes('🗺️') &&
       headerState.hasStreak &&
       headerState.hasHearts &&
       headerState.hasGems &&

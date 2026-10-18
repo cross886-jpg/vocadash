@@ -671,7 +671,7 @@
       try {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const resultMascot = document.getElementById('result-mascot-img');
-        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=34`;
+        if (resultMascot) resultMascot.src = `assets/characters/${charPrefix}-victory.webp?v=35`;
       } catch (_) {}
 
       // 낙하 중이던 단어 DOM 숨김
@@ -705,7 +705,7 @@
         const btnPrimaryText = document.getElementById('btn-result-primary-text');
         if (btnPrimaryText) {
           if (window.isReviewGameMode) {
-            btnPrimaryText.textContent = '오답노트로 복귀';
+            btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '로드맵으로 복귀' : '오답노트로 복귀';
           } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
             btnPrimaryText.textContent = '3과 마스터 & 4과(보스전) 도전!';
           } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
@@ -733,7 +733,7 @@
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = `assets/characters/${charPrefix}-sad.webp?v=34`;
+          img.src = `assets/characters/${charPrefix}-sad.webp?v=35`;
         });
       } catch (_) {}
 
@@ -919,6 +919,17 @@
 
         if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      }
+
+      // 약점 극복 스피드런 모드 클리어 시 맞춘 단어 오답 목록 영구 삭제 & 보석 획득
+      if (isClear && window.isRoadmapReviewSpeedrun) {
+        const missed = missedWords || [];
+        const clearedQs = (gameQuestions || []).filter(q => {
+          return !missed.some(m => (m.id && m.id === q.id) || (m.term || m.word) === (q.term || q.word));
+        });
+        if (typeof window.removeClearedWrongWords === 'function') {
+          window.removeClearedWrongWords(clearedQs);
+        }
       }
     } catch (err) {
       console.error('클리어 모달 표시 중 오류 발생:', err);
@@ -1785,7 +1796,10 @@
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const currentCourse = window.currentActiveCourse || 'es';
 
-    if (session && Array.isArray(session) && session.length >= 13) {
+    if (window.isRoadmapReviewSpeedrun && session && Array.isArray(session) && session.length > 0) {
+      gameQuestions = session.slice();
+      window.currentSessionQuestions = session;
+    } else if (session && Array.isArray(session) && session.length >= 13) {
       gameQuestions = session.slice();
       window.currentSessionQuestions = session;
     } else if (window.currentSessionQuestions && window.currentSessionQuestions.length >= 13) {
@@ -1800,16 +1814,16 @@
       gameQuestions = [];
     }
 
-    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충
-    if (!gameQuestions || gameQuestions.length < 13) {
+    // 13문제 완주 보장: 어떤 경우에도 문제 수가 13개 미만이면 전체 13개 세트로 재보충 (약점 극복 스피드런 제외)
+    if (!window.isRoadmapReviewSpeedrun && (!gameQuestions || gameQuestions.length < 13)) {
       if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         gameQuestions = window.VOCA_DATA.generateStageSession(currentGameLessonId, currentCourse, round);
         window.currentSessionQuestions = gameQuestions;
       }
     }
 
-    // 단어 부족 시 가지고 있는 단어들을 순환(fallback)하여 13문제 완주 보장
-    if (gameQuestions && gameQuestions.length > 0 && gameQuestions.length < 13) {
+    // 단어 부족 시 가지고 있는 단어들을 순환(fallback)하여 13문제 완주 보장 (약점 극복 스피드런 제외)
+    if (!window.isRoadmapReviewSpeedrun && gameQuestions && gameQuestions.length > 0 && gameQuestions.length < 13) {
       const orig = gameQuestions.slice();
       let padIdx = 0;
       while (gameQuestions.length < 13) {
@@ -1821,11 +1835,12 @@
 
     const roundProg = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const isBoss = (currentGameLessonId === 'node-boss' || String(currentGameLessonId).includes('boss'));
-    const stageName = currentGameLessonId === 'node-1' ? 'Stage 1: 기내 기본 표현'
+    const stageName = window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런'
+      : currentGameLessonId === 'node-1' ? 'Stage 1: 기내 기본 표현'
       : currentGameLessonId === 'node-3' ? 'Stage 3: 수하물과 세관'
       : isBoss ? 'Stage 4: 일상 기초 (보스전)'
       : 'Stage 2: 입국 심사';
-    const subRoundText = isBoss ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
+    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun) ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
     if (gameStageTitle) gameStageTitle.textContent = `${stageName}${subRoundText}`;
 
     currentHearts = 5;
@@ -2036,14 +2051,21 @@
 
     // 3) 오답 복습 모드 분기
     if (window.isReviewGameMode) {
+      const isRoadmapSpeedrun = !!window.isRoadmapReviewSpeedrun;
       window.isReviewGameMode = false;
+      window.isRoadmapReviewSpeedrun = false;
       isExplicitExitRequested = true;
       window.isExplicitExitRequested = true;
       exitGameToRoadmap(true);
       isExplicitExitRequested = false;
       window.isExplicitExitRequested = false;
-      if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
-      if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
+      if (!isRoadmapSpeedrun) {
+        if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
+        if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
+      } else {
+        if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.showToast === 'function') window.showToast('⚡ 약점 극복 스피드 런 완료! 로드맵으로 복귀했습니다.', '🗺️');
+      }
       return false;
     }
 
@@ -2175,8 +2197,15 @@
     window.isExplicitExitRequested = false;
 
     if (window.isReviewGameMode) {
+      const isRoadmapSpeedrun = !!window.isRoadmapReviewSpeedrun;
       window.isReviewGameMode = false;
-      if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
+      window.isRoadmapReviewSpeedrun = false;
+      if (!isRoadmapSpeedrun) {
+        if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
+      } else {
+        if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.showToast === 'function') window.showToast('로드맵으로 돌아왔습니다.', '🗺️');
+      }
     } else {
       if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();

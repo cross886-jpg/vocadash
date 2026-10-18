@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splashMascot) {
       let savedLang = 'es';
       try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) {}
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=34`;
+      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=35`;
     }
     if (splashProgressBar) {
       setTimeout(() => {
@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
-    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=34', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
-    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=34', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '여행 필수 패턴', mascotImg: 'assets/characters/es-study.webp?v=35', ctaText: '스페인어로 학습하기', desc: '스페인어 (여행 필수 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=35', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' }
   };
 
   const COURSE_LESSONS = {
@@ -913,6 +913,209 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.closeBonusModal = closeBonusModal;
 
+  // ===================================================
+  // SPEED RUN REVIEW MODAL (약점 극복 스피드 런 모달) 로직
+  // ===================================================
+  function openReviewSpeedrunModal() {
+    const backdrop = el('review-speedrun-modal-backdrop');
+    const card = el('review-speedrun-modal-card');
+    if (!backdrop || !card) return;
+
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let wrongList = [];
+    try {
+      const raw = localStorage.getItem('vocadash_wrong_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          wrongList = parsed.filter(w => (w.lang || 'es') === currentLang && !w.escaped);
+        }
+      }
+    } catch (_) {}
+
+    if (wrongList.length === 0 && typeof window.loadWrongWords === 'function') {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      wrongList = loaded.filter(w => !w.escaped);
+    }
+
+    const countText = el('review-speedrun-target-count');
+    if (countText) {
+      if (wrongList.length > 0) {
+        countText.textContent = `오답 단어 ${Math.min(5, wrongList.length)}개 코스`;
+      } else {
+        countText.textContent = `핵심 추천 단어 5개 코스`;
+      }
+    }
+
+    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop.classList.add('opacity-100');
+    card.classList.remove('opacity-0', 'scale-95');
+    card.classList.add('opacity-100', 'scale-100');
+  }
+  window.openReviewSpeedrunModal = openReviewSpeedrunModal;
+
+  function closeReviewSpeedrunModal() {
+    const backdrop = el('review-speedrun-modal-backdrop');
+    const card = el('review-speedrun-modal-card');
+    if (!backdrop || !card) return;
+    backdrop.classList.remove('opacity-100');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    card.classList.remove('opacity-100', 'scale-100');
+    card.classList.add('opacity-0', 'scale-95');
+  }
+  window.closeReviewSpeedrunModal = closeReviewSpeedrunModal;
+
+  function startRoadmapReviewSpeedrun() {
+    closeReviewSpeedrunModal();
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+
+    let candidateWords = [];
+    try {
+      const raw = localStorage.getItem('vocadash_wrong_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          candidateWords = parsed
+            .filter(item => (item.lang || 'es') === currentLang && !item.escaped)
+            .map(item => ({
+              id: item.id || `w_${item.term || item.word}`,
+              term: item.term || item.word || '',
+              meaning: item.meaning || item.kor || '',
+              phonetic: item.phonetic || '',
+              lang: item.lang || currentLang
+            }));
+        }
+      }
+    } catch (_) {}
+
+    if (candidateWords.length === 0 && typeof window.loadWrongWords === 'function') {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      candidateWords = loaded
+        .filter(item => !item.escaped)
+        .map(item => ({
+          id: item.id,
+          term: item.term || item.word || '',
+          meaning: item.meaning || '',
+          phonetic: item.phonetic || '',
+          lang: item.lang || currentLang
+        }));
+    }
+
+    if (candidateWords.length === 0) {
+      const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+      let unitWords = [];
+      if (db) {
+        const entry = db['node-2'] || db['node-1'] || Object.values(db)[0];
+        if (entry) {
+          const arr = entry[currentLang] || entry.words || entry.all || (Array.isArray(entry) ? entry : []);
+          if (Array.isArray(arr) && arr.length > 0) {
+            unitWords = arr;
+          }
+        }
+      }
+      if (unitWords.length === 0 && window.VOCA_DATA && Array.isArray(window.VOCA_DATA.words)) {
+        unitWords = window.VOCA_DATA.words;
+      }
+      candidateWords = unitWords.slice(0, 5).map(item => ({
+        id: item.id || `unit_${item.term || item.word}`,
+        term: item.term || item.word || '',
+        meaning: item.meaning || '',
+        phonetic: item.phonetic || '',
+        lang: currentLang
+      }));
+    }
+
+    const selectedWords = candidateWords.slice(0, 5);
+    const sessionQuestions = selectedWords.map((item, idx) => ({
+      id: item.id || `speedrun-q-${idx}`,
+      word: item.term || '',
+      term: item.term || '',
+      meaning: item.meaning || '',
+      phonetic: item.phonetic || '',
+      type: 'word',
+      isSentence: false,
+      tag: '약점 복습',
+      isReviewMode: true,
+      lang: currentLang
+    }));
+
+    window.isReviewGameMode = true;
+    window.isRoadmapReviewSpeedrun = true;
+    window.currentSpeedrunSessionWords = selectedWords;
+    window.currentSessionQuestions = sessionQuestions;
+
+    if (window.openGameScreen) {
+      window.openGameScreen('node-review', sessionQuestions);
+    } else if (window.startGameSession) {
+      window.startGameSession('node-review', sessionQuestions);
+    }
+
+    const titleEl = document.getElementById('game-stage-title');
+    if (titleEl) {
+      titleEl.textContent = '⚡ 약점 극복 스피드 런';
+    }
+  }
+  window.startRoadmapReviewSpeedrun = startRoadmapReviewSpeedrun;
+
+  function removeClearedWrongWords(clearedQuestions) {
+    if (!Array.isArray(clearedQuestions) || clearedQuestions.length === 0) return;
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+
+    const termsToRemove = new Set();
+    const idsToRemove = new Set();
+    clearedQuestions.forEach(q => {
+      if (q.id) idsToRemove.add(String(q.id));
+      if (q.term) termsToRemove.add(String(q.term).trim().toLowerCase());
+      if (q.word) termsToRemove.add(String(q.word).trim().toLowerCase());
+    });
+
+    const currentList = Array.isArray(window.wrongWords) ? window.wrongWords : (typeof loadWrongWords === 'function' ? loadWrongWords(lang) : []);
+    const updated = currentList.filter(item => {
+      const idMatch = item.id && idsToRemove.has(String(item.id));
+      const termMatch = item.term && termsToRemove.has(String(item.term).trim().toLowerCase());
+      const wordMatch = item.word && termsToRemove.has(String(item.word).trim().toLowerCase());
+      return !(idMatch || termMatch || wordMatch);
+    });
+    window.wrongWords = updated;
+    if (typeof saveWrongWords === 'function') {
+      saveWrongWords(updated, lang);
+    }
+
+    try {
+      const raw = localStorage.getItem('vocadash_wrong_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          const filteredRaw = parsed.filter(item => {
+            const idMatch = item.id && idsToRemove.has(String(item.id));
+            const termMatch = item.term && termsToRemove.has(String(item.term).trim().toLowerCase());
+            const wordMatch = item.word && termsToRemove.has(String(item.word).trim().toLowerCase());
+            return !(idMatch || termMatch || wordMatch);
+          });
+          localStorage.setItem('vocadash_wrong_words', JSON.stringify(filteredRaw));
+        }
+      }
+    } catch (_) {}
+
+    if (typeof updateWrongWordsBadge === 'function') {
+      updateWrongWordsBadge();
+    }
+    if (typeof renderReviewWords === 'function') {
+      renderReviewWords(window.currentReviewFilter || 'waiting');
+    }
+
+    try {
+      let curGems = 120;
+      const savedGems = localStorage.getItem('vocadash_gems');
+      if (savedGems !== null) curGems = parseInt(savedGems, 10) || 120;
+      curGems += 10;
+      localStorage.setItem('vocadash_gems', curGems.toString());
+      const gemsEl = document.getElementById('header-gems-count');
+      if (gemsEl) gemsEl.textContent = curGems;
+    } catch (_) {}
+  }
+  window.removeClearedWrongWords = removeClearedWrongWords;
+
   document.querySelectorAll('.roadmap-node').forEach((node) => {
     const nid = node.dataset.nodeId;
     node.addEventListener('click', (e) => {
@@ -921,8 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       if (nid === 'node-review') {
-        const tabReview = el('tab-review');
-        if (tabReview) tabReview.click();
+        openReviewSpeedrunModal();
         return;
       }
       if (nid === 'node-3') {
@@ -952,9 +1154,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   on('node-review-btn', 'click', (e) => {
     e.stopPropagation();
-    const tabReview = el('tab-review');
-    if (tabReview) tabReview.click();
+    openReviewSpeedrunModal();
   });
+  on('btn-start-speedrun-game', 'click', () => {
+    startRoadmapReviewSpeedrun();
+  });
+  on('btn-close-speedrun-modal', 'click', () => {
+    closeReviewSpeedrunModal();
+  });
+  const speedrunBackdrop = el('review-speedrun-modal-backdrop');
+  if (speedrunBackdrop) {
+    speedrunBackdrop.addEventListener('click', (e) => {
+      if (e.target === speedrunBackdrop) closeReviewSpeedrunModal();
+    });
+  }
   // ===================================================
   // UNIT OVERVIEW BOTTOM SHEET (전체 유닛 코스 맵) 로직
   // ===================================================
@@ -992,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const subtitleEl = el('unit-overview-subtitle');
 
     if (titleEl) {
-      titleEl.textContent = lang === 'en' ? '🗺️ 영어 코스 맵' : '🗺️ 스페인어 코스 맵';
+      titleEl.textContent = lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵';
     }
     if (subtitleEl) {
       subtitleEl.textContent = '총 10개 유닛 중 Unit 1 진행 중';
@@ -1429,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMascotCharacters(targetLang) {
     const lang = (targetLang === 'en') ? 'en' : 'es';
     const charPrefix = lang === 'en' ? 'en' : 'es';
-    const v = '?v=34';
+    const v = '?v=35';
 
     // 1. Flashcard mascot
     const flashcardMascot = document.getElementById('flashcard-mascot-img');
@@ -2114,7 +2327,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       if (!avatarSrc) {
-        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=34' : 'assets/profiles/profile-spanish.webp?v=34';
+        avatarSrc = currentLang === 'en' ? 'assets/profiles/profile-english.webp?v=35' : 'assets/profiles/profile-spanish.webp?v=35';
       }
       if (avatarSrc && !avatarSrc.includes('lh3.googleusercontent.com/aida/')) {
         if (statsAvatarImg) statsAvatarImg.src = avatarSrc;
@@ -3162,7 +3375,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resolveAvatarSrc(val) {
     const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=34`;
+    return `assets/profiles/${file}?v=35`;
   }
 
   let selectedAvatarFile = 'profile-spanish.webp';
@@ -3678,7 +3891,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (over) { over.classList.add('hidden'); over.style.display = 'none'; }
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=34';
+      const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=35';
       const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
       [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
         if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
@@ -3697,13 +3910,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetNodeId = window.currentGameLessonId || currentSelectedNodeId || 'node-2';
       const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
       if (window.isReviewGameMode) {
-        setText('btn-result-primary-text', '오답노트로 복귀');
+        if (window.isRoadmapReviewSpeedrun) {
+          setText('btn-result-primary-text', '로드맵으로 복귀');
+          if (window.showToast) window.showToast('⚡ 약점 극복 스피드 런 완료! 보석을 획득했습니다! 💎', '🎉');
+        } else {
+          setText('btn-result-primary-text', '오답노트로 복귀');
+          if (window.showToast) window.showToast(`💖 1분 스피드 복습 완료! 하트 1개 충전 (+1 ❤️)`, '🎉');
+        }
         window.userHearts = Math.min(5, (window.userHearts || 4) + 1);
         const headerHeart = document.getElementById('header-hearts-count');
         if (headerHeart) headerHeart.textContent = window.userHearts;
         const reviewHeart = document.getElementById('review-hearts-display');
         if (reviewHeart) reviewHeart.textContent = `${window.userHearts}/5`;
-        if (window.showToast) window.showToast(`💖 1분 스피드 복습 완료! 하트 1개 충전 (+1 ❤️)`, '🎉');
       } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
         setText('btn-result-primary-text', '3과 마스터 & 4과(보스전) 도전!');
       } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
@@ -3720,7 +3938,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const goMascots = document.querySelectorAll('#game-result-gameover-card img, #result-gameover-card img');
         goMascots.forEach(img => {
-          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=34';
+          img.src = 'assets/characters/' + charPrefix + '-sad.webp?v=35';
         });
         const lastFailed = missedList.length > 0 ? missedList[missedList.length - 1] : null;
         if (lastFailed) {
