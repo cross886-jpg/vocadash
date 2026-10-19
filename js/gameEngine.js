@@ -729,25 +729,36 @@
         const comboText = document.getElementById('result-combo-text');
         if (comboText) comboText.textContent = `x${maxCombo || combo || 0}`;
 
-        const targetNodeId = currentGameLessonId || window.currentSelectedNodeId || 'node-2';
+        const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
         const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
         const btnPrimaryText = document.getElementById('btn-result-primary-text');
+        const btnPrimaryIcon = document.getElementById('btn-result-primary-icon');
+        if (btnPrimaryIcon) btnPrimaryIcon.style.display = 'none';
 
         // 동적 유닛 타이틀 추출 (getCurrentCourseData 참조)
         const activeCourse = (typeof window.getCurrentCourseData === 'function')
           ? window.getCurrentCourseData()
           : (window.packFootballData || window.courseData);
-        const currentCourseLang = window.currentActiveCourse || 'es';
+        const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
         const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
-        const currentUnitIndex = Math.max(0, unlockedLevel - 1);
+        const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+          ? window.currentUnitIndex
+          : Math.max(0, unlockedLevel - 1);
         const targetUnit = (activeCourse && Array.isArray(activeCourse.units))
           ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
           : null;
         const actualUnitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${currentUnitIndex + 1}`;
 
+        const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
+        const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
+
         const resultSubtitle = document.getElementById('result-subtitle');
         if (resultSubtitle && !window.isUnitSkipTestMode && !window.isReviewGameMode) {
-          resultSubtitle.textContent = `${actualUnitTitle} 마스터!`;
+          if (isBossNode && hasNextUnit) {
+            resultSubtitle.textContent = `${actualUnitTitle} 보스전 완파! Unit ${currentUnitIndex + 2} 해금 🚀`;
+          } else {
+            resultSubtitle.textContent = `${actualUnitTitle} 마스터!`;
+          }
         }
 
         if (btnPrimaryText) {
@@ -777,14 +788,14 @@
                   : '오답 단어 집중 훈련을 완료했습니다!';
               }
             }
-          } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
-            btnPrimaryText.textContent = '3과 마스터 & 4과(보스전) 도전!';
-          } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
-            btnPrimaryText.textContent = '보스전 클리어 & 로드맵으로';
-          } else if (curProg >= 3) {
-            btnPrimaryText.textContent = `${actualUnitTitle} 마스터 완료 & 다음 유닛 열기`;
+          } else if (isBossNode) {
+            if (hasNextUnit) {
+              btnPrimaryText.textContent = '다음 유닛 도전하기 🚀';
+            } else {
+              btnPrimaryText.textContent = '코스 완주 축하! 🏆';
+            }
           } else {
-            btnPrimaryText.textContent = `다음 스테이지 (${Math.min(3, curProg + 1)}/3)`;
+            btnPrimaryText.textContent = '다음 스테이지 ▶';
           }
         }
       } catch (err) {}
@@ -982,7 +993,7 @@
 
       // 스테이지 클리어(isClear = true) 시 진척도 갱신 및 영구 저장
       if (isClear) {
-        const targetNodeId = currentGameLessonId || window.currentSelectedNodeId || 'node-2';
+        const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
         if (!window.nodeProgressMap) window.nodeProgressMap = {};
         const curProg = window.nodeProgressMap[targetNodeId] || 0;
         let nextProg = Math.min(3, curProg + 1);
@@ -1130,16 +1141,34 @@
       return [];
     }
 
-    let unitIdx = 1;
-    if (normId === 'node-1') unitIdx = 0;
-    else if (normId === 'node-3') unitIdx = 2;
-    else if (normId === 'node-boss') unitIdx = (targetCourse.units.length > 3 ? 3 : targetCourse.units.length - 1);
+    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || lang || 'es') === 'en' ? 'en' : 'es';
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
+    const currentUnitIdx = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+      ? window.currentUnitIndex
+      : Math.max(0, Math.min(targetCourse.units.length - 1, unlockedLevel - 1));
 
-    const targetUnit = targetCourse.units[unitIdx] || targetCourse.units[0];
-    let pool = (normId === 'node-boss' && Array.isArray(targetCourse.allWords) && targetCourse.allWords.length > 0)
-      ? targetCourse.allWords.slice()
-      : (targetUnit && Array.isArray(targetUnit.words) ? targetUnit.words.slice() : []);
+    const targetUnit = targetCourse.units[currentUnitIdx] || targetCourse.units[0];
 
+    // 해당 유닛 노드별 단어 필터링
+    let pool = [];
+    if (targetUnit && Array.isArray(targetUnit.nodes)) {
+      let matchedNode = null;
+      if (normId === 'node-1') matchedNode = targetUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
+      else if (normId === 'node-2') matchedNode = targetUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
+      else if (normId === 'node-3') matchedNode = targetUnit.nodes.find(n => n.type === 'sentence' || (n.id && n.id.endsWith('_n4')));
+      else if (normId === 'node-boss') matchedNode = targetUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
+
+      if (matchedNode && Array.isArray(matchedNode.wordIds) && Array.isArray(targetUnit.words)) {
+        pool = targetUnit.words.filter(w => matchedNode.wordIds.includes(w.id));
+      }
+    }
+
+    if (pool.length === 0 && (normId === 'node-boss' || String(normId).includes('boss')) && Array.isArray(targetCourse.allWords) && targetCourse.allWords.length > 0) {
+      pool = targetCourse.allWords.slice();
+    }
+    if (pool.length === 0 && targetUnit && Array.isArray(targetUnit.words)) {
+      pool = targetUnit.words.slice();
+    }
     if (pool.length === 0 && targetCourse.units[0] && Array.isArray(targetCourse.units[0].words)) {
       pool = targetCourse.units[0].words.slice();
     }
@@ -2564,29 +2593,83 @@
       return false;
     }
 
-    const targetNodeId = currentGameLessonId || window.currentSelectedNodeId || 'node-2';
+    const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
     const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
-    const currentCourse = window.currentActiveCourse || 'es';
+    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const activeCourse = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : (window.packFootballData || window.courseData);
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
+    const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+      ? window.currentUnitIndex
+      : Math.max(0, unlockedLevel - 1);
+
+    const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
+    const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
 
     let nextNodeId = targetNodeId;
     let nextRound = 0;
 
-    if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
-      // 4과(보스전) 완료 -> 로드맵 복귀 (전체 완료)
-      if (!window.nodeProgressMap) window.nodeProgressMap = {};
-      window.nodeProgressMap['node-boss'] = 3;
-      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
-      isExplicitExitRequested = true;
-      window.isExplicitExitRequested = true;
-      exitGameToRoadmap(true);
-      isExplicitExitRequested = false;
-      window.isExplicitExitRequested = false;
-      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
-      if (typeof window.showToast === 'function') window.showToast('🏆 축하합니다! 모든 기초 회화 레슨을 완벽 마스터했습니다!', '🎉');
-      return false;
-    }
+    // ===================================================
+    // 유닛 완주(보스전 클리어) 시 다음 유닛 자동 연계 로직
+    // ===================================================
+    if (isBossNode) {
+      if (hasNextUnit) {
+        // 다음 유닛이 존재하는 경우: 다음 유닛으로 전환 및 1번 노드로 직결
+        const nextUnitIndex = currentUnitIndex + 1;
+        const nextUnitLevel = nextUnitIndex + 1;
+        window.currentUnitIndex = nextUnitIndex;
 
-    if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
+        // 1) unlockedLevel 갱신 및 저장
+        if (typeof window.setUnlockedUnitLevel === 'function') {
+          window.setUnlockedUnitLevel(nextUnitLevel, currentCourseLang);
+        }
+        if (typeof window.unlockUnitsUpTo === 'function') {
+          window.unlockUnitsUpTo(nextUnitLevel, currentCourseLang);
+        }
+
+        // 2) currentNodeIndex 0으로 리셋 & nodeProgressMap 초기화
+        window.currentNodeIndex = 0;
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        window.nodeProgressMap['node-1'] = 0;
+        window.nodeProgressMap['node-2'] = 0;
+        window.nodeProgressMap['node-3'] = 0;
+        window.nodeProgressMap['node-boss'] = 0;
+        if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+
+        window.currentSelectedNodeId = 'node-1';
+        currentGameLessonId = 'node-1';
+        nextNodeId = 'node-1';
+        nextRound = 0;
+
+        // 3) UI 갱신 및 로드맵 동기화
+        if (typeof window.updateTopUnitBanner === 'function') window.updateTopUnitBanner(nextUnitIndex);
+        if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+        if (typeof window.showToast === 'function') {
+          window.showToast(`🚀 Unit ${nextUnitLevel} 해금! 1과 단어 예습을 시작합니다!`, '✨');
+        }
+      } else {
+        // 모든 유닛(마지막 유닛)까지 완주한 경우 -> 축하 모달 노출 후 로드맵으로 이동
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        window.nodeProgressMap['node-boss'] = 3;
+        if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+        isExplicitExitRequested = true;
+        window.isExplicitExitRequested = true;
+        exitGameToRoadmap(true);
+        isExplicitExitRequested = false;
+        window.isExplicitExitRequested = false;
+        if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.showCourseCompletionModal === 'function') {
+          window.showCourseCompletionModal();
+        } else {
+          if (typeof window.showToast === 'function') {
+            window.showToast('🏆 축하합니다! 모든 코스 유닛을 완벽 마스터했습니다!', '🎉');
+          }
+        }
+        return false;
+      }
+    } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
       // 3과 완료 -> 4과 (보스전) 플래시카드 예습 진입
       if (!window.nodeProgressMap) window.nodeProgressMap = {};
       window.nodeProgressMap['node-3'] = 3;
@@ -2627,7 +2710,7 @@
       nextNodeId = 'node-3';
       nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-3']) || 0;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
-      if (typeof window.showToast === 'function') window.showToast('🎉 2과 마스터 완료! 3과(수하물 찾기와 세관) 단어 예습을 시작합니다!', '🧳');
+      if (typeof window.showToast === 'function') window.showToast('🎉 2과 마스터 완료! 3과 핵심 문장 학습을 시작합니다!', '💬');
     } else {
       // 아직 3회 미만 (1/3, 2/3) -> 동일 노드의 다음 서브 라운드 플래시카드 예습 진입
       nextNodeId = targetNodeId;
@@ -2646,8 +2729,10 @@
     let nextSession = null;
     if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
       nextSession = window.getFootballStageSession(nextNodeId);
+    } else if (typeof window.generateStageSession === 'function') {
+      nextSession = window.generateStageSession(nextNodeId, currentCourseLang, nextRound);
     } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
-      nextSession = window.VOCA_DATA.generateStageSession(nextNodeId, currentCourse, nextRound);
+      nextSession = window.VOCA_DATA.generateStageSession(nextNodeId, currentCourseLang, nextRound);
     }
 
     console.log(`📚 [Flow] 다음 스테이지(${nextNodeId}) 플래시카드 화면으로 진입 (라운드: ${nextRound})`);
@@ -2700,6 +2785,47 @@
   }
   window.handleResultPrimary = handleResultPrimary;
   window.proceedNextStage = handleResultPrimary;
+  window.moveToNextStage = handleResultPrimary;
+  window.onClearModalNextClick = handleResultPrimary;
+
+  function showCourseCompletionModal() {
+    let modal = document.getElementById('course-completion-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'course-completion-modal';
+      modal.className = 'fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 select-none animate-fade-in';
+      modal.innerHTML = `
+        <div class="relative w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl flex flex-col items-center text-center">
+          <div class="w-24 h-24 mb-3 flex items-center justify-center">
+            <img id="completion-mascot-img" class="w-20 h-20 object-contain drop-shadow-md" src="assets/characters/es-victory.webp?v=99" alt="Victory Mascot">
+          </div>
+          <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-black rounded-full mb-2">🎉 COURSE COMPLETED</span>
+          <h2 class="text-xl font-black text-slate-900 mb-1">모든 코스 완주 달성! 🏆</h2>
+          <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+            축하합니다! 코스의 모든 유닛과 보스전을 성공적으로 마스터했습니다! 훌륭한 실력이에요!
+          </p>
+          <button id="btn-close-completion-modal" type="button" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 text-white font-extrabold text-sm shadow-lg shadow-emerald-500/30 hover:brightness-105 active:scale-95 transition-all cursor-pointer">
+            로드맵으로 돌아가기 🗺️
+          </button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      const closeBtn = modal.querySelector('#btn-close-completion-modal');
+      if (closeBtn) {
+        closeBtn.onclick = function() {
+          modal.classList.add('hidden');
+          modal.style.display = 'none';
+          if (typeof window.exitGameToRoadmap === 'function') window.exitGameToRoadmap(true);
+        };
+      }
+    }
+    const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const mascotImg = document.getElementById('completion-mascot-img');
+    if (mascotImg) mascotImg.src = `assets/characters/${charPrefix}-victory.webp?v=99`;
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+  }
+  window.showCourseCompletionModal = showCourseCompletionModal;
 
   function handleResultSecondary(e) {
     if (e) {

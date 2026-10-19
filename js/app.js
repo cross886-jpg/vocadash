@@ -9034,6 +9034,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.playSuccessChime) window.playSuccessChime();
       const targetNodeId = window.currentGameLessonId || currentSelectedNodeId || 'node-2';
       const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+      const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const activeCourse = (typeof window.getCurrentCourseData === 'function')
+        ? window.getCurrentCourseData()
+        : (window.packFootballData || window.courseData);
+      const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
+      const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+        ? window.currentUnitIndex
+        : Math.max(0, unlockedLevel - 1);
+
+      const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
+      const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
+
       if (window.isReviewGameMode) {
         if (window.isRoadmapReviewSpeedrun) {
           setText('btn-result-primary-text', '로드맵으로 복귀');
@@ -9044,15 +9056,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         window.userHearts = Math.min(5, (window.userHearts || 4) + 1);
         updateHeartsUI();
-      } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
-        setText('btn-result-primary-text', '3과 마스터 & 4과(보스전) 도전!');
-      } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
-        setText('btn-result-primary-text', '보스전 클리어 & 로드맵으로');
-      } else if (curProg >= 3) {
-        setText('btn-result-primary-text', '2과 마스터 완료 & 3과 열기');
+      } else if (isBossNode) {
+        if (hasNextUnit) {
+          setText('btn-result-primary-text', '다음 유닛 도전하기 🚀');
+        } else {
+          setText('btn-result-primary-text', '코스 완주 축하! 🏆');
+        }
       } else {
-        setText('btn-result-primary-text', `다음 스테이지 (${Math.min(3, curProg + 1)}/3)`);
+        setText('btn-result-primary-text', '다음 스테이지 ▶');
       }
+      const pIcon = el('btn-result-primary-icon');
+      if (pIcon) pIcon.style.display = 'none';
     } else {
       try {
         if (clear) { clear.classList.add('hidden'); clear.style.display = 'none'; }
@@ -9130,6 +9144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.proceedNextStage = proceedNextStage;
+  window.moveToNextStage = proceedNextStage;
+  window.onClearModalNextClick = proceedNextStage;
 
   const missedCard = el('result-gameover-card') || el('gameover-missed-card');
   if (missedCard) missedCard.addEventListener('click', (e) => {
