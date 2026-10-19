@@ -56,8 +56,60 @@
   // ===================================================
   // 2. 하단 탭 네비게이션 & 주요 화면 라우터 (switchMainTab)
   // ===================================================
+  const BOTTOM_NAV_HTML_TEMPLATE = `
+    <div class="grid grid-cols-4 w-full h-full items-center justify-items-center">
+      <!-- 1. Home / Roadmap (Active) -->
+      <button id="tab-home" type="button" aria-current="page" aria-label="홈" title="홈" class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md w-11 h-11 aspect-square">
+          <span class="material-symbols-outlined text-[22px]">home</span>
+        </div>
+        <span class="sr-only">홈</span>
+      </button>
+
+      <!-- 2. Pack Library -->
+      <button id="tab-packs" type="button" aria-label="단어팩" title="단어팩" class="nav-tab nav-item nav-packs flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <span class="material-symbols-outlined text-[22px]">inventory_2</span>
+        </div>
+        <span class="sr-only">단어팩</span>
+      </button>
+
+      <!-- 3. Wordbook -->
+      <button id="tab-book" type="button" aria-label="단어장" title="단어장" class="nav-tab nav-item nav-book nav-study flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <span class="material-symbols-outlined text-[22px]">menu_book</span>
+        </div>
+        <span class="sr-only">단어장</span>
+      </button>
+
+      <!-- 4. Records (Stats / Activity) -->
+      <button id="tab-records" type="button" aria-label="내 기록" title="내 기록" class="nav-tab nav-item nav-records nav-stats flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <span class="material-symbols-outlined text-[22px]">bar_chart</span>
+        </div>
+        <span class="sr-only">내 기록</span>
+      </button>
+    </div>
+  `;
+
+  function renderBottomNav() {
+    let bNav = el('bottom-nav') || document.querySelector('nav');
+    if (!bNav) {
+      bNav = document.createElement('nav');
+      bNav.id = 'bottom-nav';
+      document.body.appendChild(bNav);
+    }
+    bNav.className = 'fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-50 border border-slate-200/90 px-3 flex items-center justify-between pb-safe';
+    bNav.style.setProperty('bottom', 'calc(1.2rem + env(safe-area-inset-bottom, 0px))', 'important');
+    if (!bNav.innerHTML || !bNav.querySelector('#tab-home')) {
+      bNav.innerHTML = BOTTOM_NAV_HTML_TEMPLATE;
+    }
+    initNavigationEvents();
+  }
+  window.renderBottomNav = renderBottomNav;
+
   function setTabActive(activeTabEl) {
-    const activeClasses = ['bg-emerald-500', 'text-white', 'shadow-md', 'shadow-emerald-500/30', 'shrink-0', 'aspect-square'];
+    const activeClasses = ['rounded-full', 'bg-emerald-500', 'text-white', 'flex', 'items-center', 'justify-center', 'shrink-0', 'shadow-md', 'w-11', 'h-11', 'aspect-square'];
     const inactiveClasses = ['text-slate-400', 'hover:text-slate-600', 'active:scale-95'];
 
     document.querySelectorAll('.nav-item').forEach((n) => {
@@ -160,6 +212,9 @@
     const bottomNav = el('bottom-nav') || document.querySelector('nav');
     if (bottomNav) {
       bottomNav.classList.remove('hidden');
+      bottomNav.style.removeProperty('display');
+      bottomNav.style.display = '';
+      bottomNav.style.setProperty('bottom', 'calc(1.2rem + env(safe-area-inset-bottom, 0px))', 'important');
     }
 
     // 1) 탭 식별자 정규화 및 screenMap 일원화
@@ -669,6 +724,9 @@
     }
     if (bottomNav) {
       bottomNav.classList.remove('hidden');
+      bottomNav.style.removeProperty('display');
+      bottomNav.style.display = '';
+      bottomNav.style.setProperty('bottom', 'calc(1.2rem + env(safe-area-inset-bottom, 0px))', 'important');
     }
 
     if (targetTab) {
