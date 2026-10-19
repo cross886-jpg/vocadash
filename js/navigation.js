@@ -60,7 +60,7 @@
     <div class="grid grid-cols-4 w-full h-full items-center justify-items-center">
       <!-- 1. Home / Roadmap (Active) -->
       <button id="tab-home" type="button" aria-current="page" aria-label="홈" title="홈" class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all">
-        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md w-11 h-11 aspect-square">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important; box-sizing: border-box !important;" class="nav-icon-container rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
           <span class="material-symbols-outlined text-[22px]">home</span>
         </div>
         <span class="sr-only">홈</span>
@@ -68,7 +68,7 @@
 
       <!-- 2. Pack Library -->
       <button id="tab-packs" type="button" aria-label="단어팩" title="단어팩" class="nav-tab nav-item nav-packs flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important; box-sizing: border-box !important;" class="nav-icon-container flex items-center justify-center shrink-0">
           <span class="material-symbols-outlined text-[22px]">inventory_2</span>
         </div>
         <span class="sr-only">단어팩</span>
@@ -76,7 +76,7 @@
 
       <!-- 3. Wordbook -->
       <button id="tab-book" type="button" aria-label="단어장" title="단어장" class="nav-tab nav-item nav-book nav-study flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important; box-sizing: border-box !important;" class="nav-icon-container flex items-center justify-center shrink-0">
           <span class="material-symbols-outlined text-[22px]">menu_book</span>
         </div>
         <span class="sr-only">단어장</span>
@@ -84,7 +84,7 @@
 
       <!-- 4. Records (Stats / Activity) -->
       <button id="tab-records" type="button" aria-label="내 기록" title="내 기록" class="nav-tab nav-item nav-records nav-stats flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;" class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+        <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important; box-sizing: border-box !important;" class="nav-icon-container flex items-center justify-center shrink-0">
           <span class="material-symbols-outlined text-[22px]">bar_chart</span>
         </div>
         <span class="sr-only">내 기록</span>
@@ -99,11 +99,13 @@
       bNav.id = 'bottom-nav';
       document.body.appendChild(bNav);
     }
-    bNav.className = 'fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-50 border border-slate-200/90 px-3 flex items-center justify-between pb-safe';
+    bNav.className = 'fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-40 border border-slate-200/90 px-2 flex items-center justify-center pb-safe';
     bNav.style.setProperty('bottom', 'calc(1.2rem + env(safe-area-inset-bottom, 0px))', 'important');
-    if (!bNav.innerHTML || !bNav.querySelector('#tab-home')) {
-      bNav.innerHTML = BOTTOM_NAV_HTML_TEMPLATE;
-    }
+    bNav.style.setProperty('padding-bottom', '0px', 'important'); // pb-safe로 인한 늘어짐 방지
+
+    // 이전 잔여물 무시하고 항상 최신 템플릿으로 강제 갱신
+    bNav.innerHTML = BOTTOM_NAV_HTML_TEMPLATE;
+
     initNavigationEvents();
   }
   window.renderBottomNav = renderBottomNav;
@@ -125,6 +127,7 @@
         iconContainer.style.setProperty('width', '44px', 'important');
         iconContainer.style.setProperty('height', '44px', 'important');
         iconContainer.style.setProperty('aspect-ratio', '1/1', 'important');
+        iconContainer.style.setProperty('box-sizing', 'border-box', 'important');
       }
     });
     if (activeTabEl) {
@@ -140,6 +143,7 @@
         iconContainer.style.setProperty('width', '44px', 'important');
         iconContainer.style.setProperty('height', '44px', 'important');
         iconContainer.style.setProperty('aspect-ratio', '1/1', 'important');
+        iconContainer.style.setProperty('box-sizing', 'border-box', 'important');
       }
     }
   }
