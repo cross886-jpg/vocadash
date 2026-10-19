@@ -291,10 +291,30 @@
   height: 4rem !important; /* 64px h-16 */
   background-color: #ffffff !important;
   border-radius: 9999px !important;
-  z-index: 50 !important;
+  z-index: 40 !important;
   box-shadow: 0 20px 25px -5px rgba(148, 163, 184, 0.6), 0 8px 10px -6px rgba(148, 163, 184, 0.6) !important;
   border: 1px solid rgba(226, 232, 240, 0.9) !important;
   box-sizing: border-box !important;
+}
+
+/* ================================================= */
+/* Stage / Node Detail Center Modal (Z-Index: 100)   */
+/* ================================================= */
+#stage-modal-backdrop,
+#lesson-modal-backdrop {
+  z-index: 90 !important;
+}
+
+#stage-modal,
+#node-detail-modal,
+#lesson-card-sheet {
+  top: 50% !important;
+  left: 50% !important;
+  bottom: auto !important;
+  --tw-translate-x: -50% !important;
+  --tw-translate-y: -50% !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) scale(var(--tw-scale-x, 1), var(--tw-scale-y, 1)) !important;
+  z-index: 100 !important;
 }
 
 #bottom-nav .nav-icon-container {

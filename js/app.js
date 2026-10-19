@@ -750,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 3. Roadmap Nodes & Lesson Bottom Sheet
-  const lessonBackdrop = el('lesson-modal-backdrop'), lessonSheet = el('lesson-card-sheet'), lockedTooltip = el('locked-node-tooltip');
+  const lessonBackdrop = el('lesson-modal-backdrop') || el('stage-modal-backdrop'), lessonSheet = el('lesson-card-sheet') || el('stage-modal') || el('node-detail-modal'), lockedTooltip = el('locked-node-tooltip');
 
   window.openLessonModal = function (nodeId) {
     if (typeof checkAndRechargeHearts === 'function') checkAndRechargeHearts();

@@ -297,7 +297,7 @@
   </script>
 
   <!-- Custom CSS & Keyframe Animations -->
-  <link rel="stylesheet" href="css/style.css?v=93">
+  <link rel="stylesheet" href="css/style.css?v=94">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -2076,7 +2076,7 @@
     <!-- ================================================= -->
     <!-- 3. WHITE FLOATING PILL BOTTOM NAVIGATION BAR      -->
     <!-- ================================================= -->
-    <nav id="bottom-nav" class="fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-50 border border-slate-200/90 px-3 flex items-center justify-between pb-safe" style="bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important;">
+    <nav id="bottom-nav" class="fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-40 border border-slate-200/90 px-3 flex items-center justify-between pb-safe" style="bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important;">
       <div class="grid grid-cols-4 w-full h-full items-center justify-items-center">
         <!-- 1. Home / Roadmap (Active) -->
         <button id="tab-home" type="button" aria-current="page" aria-label="홈" title="홈" class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all">
@@ -2519,9 +2519,9 @@
     <!-- ================================================= -->
     <!-- 7. LESSON PREVIEW BOTTOM SHEET                    -->
     <!-- ================================================= -->
-    <div id="lesson-modal-backdrop" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-[2px] transition-opacity duration-200 opacity-0 pointer-events-none"></div>
+    <div id="lesson-modal-backdrop" class="fixed inset-0 z-[90] bg-black/50 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none" data-alias="stage-modal-backdrop"></div>
 
-    <div id="lesson-card-sheet" class="fixed bottom-20 left-4 right-4 max-w-[408px] mx-auto z-40 bg-surface-container-lowest border-2 border-outline-variant/30 rounded-[28px] shadow-[0_20px_40px_-8px_rgba(15,23,42,0.28)] p-5 flex flex-col gap-3.5 transform transition-all duration-300 ease-out translate-y-8 scale-95 opacity-0 pointer-events-none select-none" role="dialog" aria-modal="true" aria-labelledby="lesson-modal-title">
+    <div id="lesson-card-sheet" class="stage-modal stage-center-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white rounded-3xl shadow-2xl p-6 z-[100] transition-all duration-300 ease-out border border-slate-100 flex flex-col gap-3.5 transform translate-y-8 scale-95 opacity-0 pointer-events-none select-none" role="dialog" aria-modal="true" aria-labelledby="lesson-modal-title" data-alias="stage-modal">
       <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto -mt-1 mb-0.5"></div>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2.5">
@@ -3293,15 +3293,15 @@
   </div>
 
   <!-- Application Data & Logic (언어별/테마별 분리 모듈화) -->
-  <script src="js/data_es.js?v=93"></script>
-  <script src="js/data_football.js?v=93"></script>
-  <script src="js/data_en.js?v=93"></script>
-  <script src="js/sound.js?v=93"></script>
-  <script src="js/settings.js?v=93"></script>
-  <script src="js/flashcard.js?v=93"></script>
-  <script src="js/gameEngine.js?v=93"></script>
-  <script src="js/navigation.js?v=93"></script>
-  <script src="js/app.js?v=93"></script>
+  <script src="js/data_es.js?v=94"></script>
+  <script src="js/data_football.js?v=94"></script>
+  <script src="js/data_en.js?v=94"></script>
+  <script src="js/sound.js?v=94"></script>
+  <script src="js/settings.js?v=94"></script>
+  <script src="js/flashcard.js?v=94"></script>
+  <script src="js/gameEngine.js?v=94"></script>
+  <script src="js/navigation.js?v=94"></script>
+  <script src="js/app.js?v=94"></script>
 
 </body>
 
