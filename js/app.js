@@ -3613,7 +3613,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (courseData && Array.isArray(courseData.units)) {
         totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       }
-      if (!totalWords) totalWords = 60;
+      if (!totalWords) totalWords = 120;
     } else if (courseData && courseData.id && courseData.id !== 'main' && courseData.id !== 'es_main' && Array.isArray(courseData.units)) {
       totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       if (!totalWords) totalWords = 120;

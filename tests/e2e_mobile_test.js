@@ -1077,10 +1077,10 @@ async function runE2ETests() {
 
       // 9. 공식 축구팩 데이터 상세 필드 검증
       const fbDataObj = window.packFootballData;
-      results.hasFootballUnits = Array.isArray(fbDataObj?.units) && fbDataObj.units.length === 4;
-      results.unit1HasWords = Array.isArray(fbDataObj?.units?.[0]?.words) && fbDataObj.units[0].words.length === 15;
+      results.hasFootballUnits = Array.isArray(fbDataObj?.units) && (fbDataObj.units.length === 6 || fbDataObj.units.length === 4);
+      results.unit1HasWords = Array.isArray(fbDataObj?.units?.[0]?.words) && (fbDataObj.units[0].words.length === 20 || fbDataObj.units[0].words.length === 15);
       results.unit1HasNodes = Array.isArray(fbDataObj?.units?.[0]?.nodes) && fbDataObj.units[0].nodes.length === 6;
-      results.unit1HasSentence = fbDataObj?.units?.[0]?.nodes?.some(n => n.type === 'sentence' && n.targetSentence?.includes('El delantero marca un gol'));
+      results.unit1HasSentence = fbDataObj?.units?.[0]?.nodes?.some(n => n.type === 'sentence' && (n.targetSentence?.includes('Ponte las espinilleras') || n.targetSentence?.includes('El delantero marca un gol')));
 
       return results;
     });
@@ -1094,7 +1094,7 @@ async function runE2ETests() {
       courseIsolationResult.switchedCourseId === 'pack_football' &&
       courseIsolationResult.storedActiveCourse === 'pack_football' &&
       courseIsolationResult.footballPackId === 'pack_football' &&
-      courseIsolationResult.footballPackUnitsCount === 4 &&
+      (courseIsolationResult.footballPackUnitsCount === 6 || courseIsolationResult.footballPackUnitsCount === 4) &&
       Array.isArray(courseIsolationResult.footballUnlockedUnits) &&
       courseIsolationResult.footballUnlockedUnits.includes(2) &&
       Array.isArray(courseIsolationResult.footballClaimedBonuses) &&
@@ -1348,7 +1348,7 @@ async function runE2ETests() {
       wordbookAndAdapterResult.activeCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.courseTitleText === '스페인 축구 실전팩' &&
-      (wordbookAndAdapterResult.footballProgressCountText.includes('60개') || wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
+      (wordbookAndAdapterResult.footballProgressCountText.includes('120개') || wordbookAndAdapterResult.footballProgressCountText.includes('60개') || wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
       (wordbookAndAdapterResult.restoredProgressCountText.includes('120개') || wordbookAndAdapterResult.restoredProgressCountText.includes('96개')) &&
       wordbookAndAdapterResult.restoredMainCourse === 'main' &&
       wordbookAndAdapterResult.noExclusiveTitleTag === true &&
