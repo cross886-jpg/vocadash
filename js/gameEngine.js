@@ -1733,35 +1733,242 @@
 
       // 총 16~18문제 (14~16 단어 + 2 빈칸 = 16~18문항)
       selected = [...baseWords, ...clozeEnd];
-    } else if (eligibleWeakWords.length > 0) {
-      // 2~3개 이전 오답 단어 무작위 혼합 (비율 약 7:3 유지, 총 10문제)
-      const numWeak = Math.min(eligibleWeakWords.length, eligibleWeakWords.length >= 3 ? (Math.random() < 0.5 ? 2 : 3) : 2);
-      const numBase = 10 - numWeak;
+    } else {
+      // ------------------------------------------------------------------
+      // 점진적 오답 누적 챌린지 시스템 (Progressive Weakness Challenge System)
+      // 1회차: 기본 10단어 1:1 출제 (10문제, 더미/패딩 제거)
+      // 2회차: 기본 10단어 + 최근 오답 3개 (부족 시 같은 유닛/이전 단어 보충, 총 13문제)
+      // 3회차: 기본 10단어 + 누적 오답 3~5개 + 이전 노드 단어들 (총 14~15문제 마스터 챌린지)
+      // ------------------------------------------------------------------
 
-      const shuffledWeak = shuffleArray(eligibleWeakWords).slice(0, numWeak).map(item => ({
-        ...item,
-        isWeakReview: true,
-        tag: '이전 오답 복습'
-      }));
-
-      const shuffledBase = shuffleArray(pool);
-      let selectedBase = shuffledBase.slice(0, numBase);
-      let pIdx = 0;
-      while (selectedBase.length < numBase && pool.length > 0) {
-        selectedBase.push({ ...pool[pIdx % pool.length] });
-        pIdx++;
+      // 회차(subStage / roundIndex) 판정 (1, 2, 3)
+      let subStage = 1;
+      if (typeof roundIndex === 'object' && roundIndex !== null) {
+        if (typeof roundIndex.subStage === 'number') subStage = roundIndex.subStage;
+        else if (typeof roundIndex.subStageIndex === 'number') subStage = roundIndex.subStageIndex + 1;
+        else if (typeof roundIndex.round === 'number') subStage = roundIndex.round + 1;
+      } else if (typeof roundIndex === 'number') {
+        if (roundIndex === 0) subStage = 1;
+        else if (roundIndex === 1) subStage = 2;
+        else if (roundIndex >= 2) subStage = 3;
+      } else if (typeof window.currentSubStageRound === 'number' && window.currentSubStageRound >= 1) {
+        subStage = window.currentSubStageRound;
       }
 
-      selected = shuffleArray([...selectedBase, ...shuffledWeak]);
-    } else {
-      // 누적된 오답이 없거나 일반 스테이지: 10개 채움
-      const targetCount = 10;
-      const shuffledBase = shuffleArray(pool);
-      selected = shuffledBase.slice(0, targetCount);
-      let pIdx = 0;
-      while (selected.length < targetCount && pool.length > 0) {
-        selected.push({ ...pool[pIdx % pool.length] });
-        pIdx++;
+      // 1) 기본 단어(baseWords, 10개)
+      let baseWords = pool.slice();
+      if (baseWords.length < 10 && targetUnit && Array.isArray(targetUnit.words)) {
+        for (const w of targetUnit.words) {
+          if (!baseWords.some(bw => bw.id === w.id || (bw.word || bw.term || '').toLowerCase() === (w.word || w.term || '').toLowerCase())) {
+            baseWords.push(w);
+            if (baseWords.length >= 10) break;
+          }
+        }
+      }
+      if (baseWords.length < 10 && pool.length > 0) {
+        let pIdx = 0;
+        const origBase = baseWords.slice();
+        while (baseWords.length < 10) {
+          baseWords.push({ ...origBase[pIdx % origBase.length] });
+          pIdx++;
+        }
+      }
+      if (baseWords.length > 10) {
+        baseWords = baseWords.slice(0, 10);
+      }
+      const baseWordIds = new Set(baseWords.map(w => w.id).filter(Boolean));
+      const baseWordTerms = new Set(baseWords.map(w => (w.word || w.term || '').toLowerCase()).filter(Boolean));
+
+      // 2) 최근 누적 오답 단어 추출 (기본 단어와 겹치지 않는 단어들, 최신순)
+      const recentWrongWords = [];
+      const reversedWeakIds = [...weakWordIds].reverse();
+      for (const wid of reversedWeakIds) {
+        const wObj = findWordInCourse(wid, targetCourse);
+        if (wObj) {
+          const term = (wObj.word || wObj.term || '').toLowerCase();
+          if (!baseWordIds.has(wObj.id) && !baseWordTerms.has(term) && !recentWrongWords.some(rw => rw.id === wObj.id || (rw.word || rw.term || '').toLowerCase() === term)) {
+            recentWrongWords.push({
+              ...wObj,
+              isWeakReview: true,
+              tag: '오답 복습'
+            });
+          }
+        }
+      }
+
+      // vocadash_wrong_answers_${currentCourseLang} 에서도 보충
+      try {
+        const wrongRaw = localStorage.getItem(`vocadash_wrong_answers_${currentCourseLang}`) || localStorage.getItem('vocadash_wrong_answers_es');
+        if (wrongRaw) {
+          const parsedWrong = JSON.parse(wrongRaw);
+          if (Array.isArray(parsedWrong)) {
+            for (const item of [...parsedWrong].reverse()) {
+              const wTerm = (item.word || item.term || '').toLowerCase();
+              if (!baseWordTerms.has(wTerm) && !recentWrongWords.some(rw => (rw.word || rw.term || '').toLowerCase() === wTerm)) {
+                const matchedInCourse = (item.id && findWordInCourse(item.id, targetCourse)) ||
+                  (targetUnit?.words?.find(w => (w.word || w.term || '').toLowerCase() === wTerm)) ||
+                  (targetCourse?.units?.flatMap(u => u.words || []).find(w => (w.word || w.term || '').toLowerCase() === wTerm));
+                if (matchedInCourse) {
+                  recentWrongWords.push({
+                    ...matchedInCourse,
+                    isWeakReview: true,
+                    tag: '오답 복습'
+                  });
+                } else if (item.word && item.meaning) {
+                  recentWrongWords.push({
+                    id: item.id || `wrong_${wTerm}`,
+                    word: item.word,
+                    term: item.word,
+                    meaning: item.meaning,
+                    pronunciation: item.pronunciation || item.phonetic || '',
+                    isWeakReview: true,
+                    tag: '오답 복습'
+                  });
+                }
+              }
+            }
+          }
+        }
+      } catch (_) {}
+
+      // 3) 같은 유닛 내의 이전 노드 단어들(prevNodeWords) 및 기타 유닛 단어들(unitOtherWords)
+      const prevNodeWords = [];
+      const unitOtherWords = [];
+
+      if (targetUnit && Array.isArray(targetUnit.nodes)) {
+        const currentNodeIndex = matchedNode ? targetUnit.nodes.indexOf(matchedNode) : -1;
+        targetUnit.nodes.forEach((n, nIdx) => {
+          if (currentNodeIndex === -1 || nIdx < currentNodeIndex) {
+            if (Array.isArray(n.wordIds) && Array.isArray(targetUnit.words)) {
+              n.wordIds.forEach(wid => {
+                const found = targetUnit.words.find(w => w && w.id === wid);
+                if (found) {
+                  const term = (found.word || found.term || '').toLowerCase();
+                  if (!baseWordIds.has(found.id) && !baseWordTerms.has(term) && !prevNodeWords.some(pw => pw.id === found.id)) {
+                    prevNodeWords.push(found);
+                  }
+                }
+              });
+            }
+          }
+        });
+      }
+
+      if (targetUnit && Array.isArray(targetUnit.words)) {
+        targetUnit.words.forEach(w => {
+          if (w) {
+            const term = (w.word || w.term || '').toLowerCase();
+            if (!baseWordIds.has(w.id) && !baseWordTerms.has(term)) {
+              if (!unitOtherWords.some(uow => uow.id === w.id || (uow.word || uow.term || '').toLowerCase() === term)) {
+                unitOtherWords.push(w);
+              }
+            }
+          }
+        });
+      }
+
+      const allOtherCourseWords = [];
+      if (targetCourse && Array.isArray(targetCourse.units)) {
+        targetCourse.units.forEach(u => {
+          if (Array.isArray(u.words)) {
+            u.words.forEach(w => {
+              if (w) {
+                const term = (w.word || w.term || '').toLowerCase();
+                if (!baseWordIds.has(w.id) && !baseWordTerms.has(term) && !allOtherCourseWords.some(cw => (cw.word || cw.term || '').toLowerCase() === term)) {
+                  allOtherCourseWords.push(w);
+                }
+              }
+            });
+          }
+        });
+      }
+
+      // 회차별 분기 처리
+      if (subStage === 1) {
+        // [1회차] 기본 10단어만 1:1 출제 (총 10문제, 더미/패딩 완전 제거)
+        selected = shuffleArray([...baseWords]);
+        if (selected.length > 10) {
+          selected = selected.slice(0, 10);
+        }
+      } else if (subStage === 2) {
+        // [2회차] 목표 13문제: 기본 10단어 + 최근 오답 단어 3개 우선 추출
+        // 만약 누적된 오답이 3개 미만이면 같은 유닛의 이전 단어에서 3개를 보충하여 총 13개 세트 구성
+        const targetCount = 13;
+        const additionalNeeded = Math.max(0, targetCount - baseWords.length);
+
+        const wrongSlice = recentWrongWords.slice(0, additionalNeeded).map(w => ({
+          ...w,
+          isWeakReview: true,
+          tag: '오답 복습'
+        }));
+
+        const stillNeeded = additionalNeeded - wrongSlice.length;
+        const fillerList = [];
+
+        if (stillNeeded > 0) {
+          const availablePool = shuffleArray([...prevNodeWords, ...unitOtherWords, ...allOtherCourseWords]);
+          for (const item of availablePool) {
+            const term = (item.word || item.term || '').toLowerCase();
+            if (!wrongSlice.some(w => (w.word || w.term || '').toLowerCase() === term) &&
+                !fillerList.some(w => (w.word || w.term || '').toLowerCase() === term)) {
+              fillerList.push({
+                ...item,
+                tag: '유닛 복습'
+              });
+              if (fillerList.length >= stillNeeded) break;
+            }
+          }
+        }
+
+        selected = shuffleArray([...baseWords, ...wrongSlice, ...fillerList]);
+        if (selected.length > targetCount) {
+          selected = selected.slice(0, targetCount);
+        }
+      } else {
+        // [3회차] 목표 15문제 (최종 마스터 챌린지): 기본 10단어 + 누적 오답 3~5개 + 이전 노드 단어들 (총 14~15개)
+        const targetCount = 15;
+        const additionalNeeded = Math.max(0, targetCount - baseWords.length);
+
+        const wrongCountToTake = Math.min(recentWrongWords.length, 5);
+        const wrongSlice = recentWrongWords.slice(0, wrongCountToTake).map(w => ({
+          ...w,
+          isWeakReview: true,
+          tag: '누적 오답 복습'
+        }));
+
+        const stillNeeded = Math.max(0, additionalNeeded - wrongSlice.length);
+        const fillerList = [];
+
+        if (stillNeeded > 0) {
+          const availablePool = shuffleArray([...prevNodeWords, ...unitOtherWords, ...allOtherCourseWords]);
+          for (const item of availablePool) {
+            const term = (item.word || item.term || '').toLowerCase();
+            if (!wrongSlice.some(w => (w.word || w.term || '').toLowerCase() === term) &&
+                !fillerList.some(w => (w.word || w.term || '').toLowerCase() === term)) {
+              fillerList.push({
+                ...item,
+                tag: '이전 학습 복습'
+              });
+              if (fillerList.length >= stillNeeded) break;
+            }
+          }
+        }
+
+        let combined = shuffleArray([...baseWords, ...wrongSlice, ...fillerList]);
+        if (combined.length > targetCount) {
+          combined = combined.slice(0, targetCount);
+        }
+
+        // 3회차 피날레: 해당 유닛의 빈칸 채우기(Cloze Test) 문장 1~2개를 끝단에 배치하여 15문항 완성
+        const clozeQuestions = generateClozeQuestionsForUnit(targetUnit, (targetUnit && targetUnit.words) || pool, currentCourseLang);
+        if (clozeQuestions.length >= 2 && combined.length >= 2) {
+          combined[combined.length - 2] = clozeQuestions[0];
+          combined[combined.length - 1] = clozeQuestions[1];
+        } else if (clozeQuestions.length === 1 && combined.length >= 1) {
+          combined[combined.length - 1] = clozeQuestions[0];
+        }
+
+        selected = combined;
       }
     }
 

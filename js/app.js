@@ -1216,16 +1216,7 @@
       ];
     }
 
-    // 최소 13개 보장 (일반 예습 모드에서만 순환 패딩, 오답 집중 미니 복습은 패딩 제외)
-    if (!isMiniWrongReview && deck.length < 13) {
-      const origDeck = deck.slice();
-      let padIdx = 0;
-      while (deck.length < 13) {
-        deck.push({ ...origDeck[padIdx % origDeck.length] });
-        padIdx++;
-      }
-    }
-
+    // 회차별 단어 수 보장: 1회차 기본 10개 단어만 1:1 주입 (더미/패딩 제거), 2회차 13개, 3회차 15개
     activeDeck = deck.map((item, idx) => ({
       ...item,
       word: item.word || item.term || '',
@@ -1234,7 +1225,7 @@
       phonetic: item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : ''),
       exampleTarget: item.exampleTarget || item.example || '',
       exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || '',
-      isSentence: item.type === 'sentence' || item.isSentence || (!isMiniWrongReview && idx >= 10),
+      isSentence: Boolean(item.type === 'sentence' || item.isSentence || (item.word && item.word.includes(' ') && item.word.length > 20)),
       tag: item.tag || (isMiniWrongReview ? '오답 복습' : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
     }));
 
@@ -5966,13 +5957,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
 
+    const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
     let session = [];
     if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
       session = getFootballStageSession(targetNodeId);
     } else if (typeof window.generateStageSession === 'function') {
-      session = window.generateStageSession(targetNodeId, window.currentActiveCourse, 0);
+      session = window.generateStageSession(targetNodeId, window.currentActiveCourse, round);
     } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
-      session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, 0);
+      session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round);
     }
     window.currentSessionQuestions = session;
     if (typeof window.openFlashcardScreen === 'function') {
