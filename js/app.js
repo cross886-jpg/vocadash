@@ -771,7 +771,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
 
     let hasWords = false;
+    const curCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
     if (window.activeCourseId === 'pack_football' && window.packFootballData) {
+      hasWords = true;
+    } else if (curCourse && Array.isArray(curCourse.units) && curCourse.units.length > 0) {
       hasWords = true;
     } else if (db && Object.prototype.hasOwnProperty.call(db, nodeId)) {
       const entry = db[nodeId];

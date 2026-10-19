@@ -408,7 +408,12 @@
       title: '1과: 기내 기본 표현',
       icon: '✈️',
       es: LESSON_1_ES,
-      en: []
+      get en() {
+        if (typeof window !== 'undefined' && window.courseData_en && Array.isArray(window.courseData_en.units) && window.courseData_en.units[0]) {
+          return window.courseData_en.units[0].words;
+        }
+        return [];
+      }
     },
     'node-2': {
       title: '2과: 입국 심사',
@@ -416,19 +421,34 @@
       words: LESSON_2_WORDS_ES,
       sentences: LESSON_2_SENTENCES_ES,
       es: [...LESSON_2_WORDS_ES, ...LESSON_2_SENTENCES_ES],
-      en: []
+      get en() {
+        if (typeof window !== 'undefined' && window.courseData_en && Array.isArray(window.courseData_en.units) && window.courseData_en.units[1]) {
+          return window.courseData_en.units[1].words;
+        }
+        return [];
+      }
     },
     'node-3': {
       title: '3과: 수하물 찾기와 세관',
       icon: '🧳',
       es: LESSON_3_ES,
-      en: []
+      get en() {
+        if (typeof window !== 'undefined' && window.courseData_en && Array.isArray(window.courseData_en.units) && window.courseData_en.units[2]) {
+          return window.courseData_en.units[2].words;
+        }
+        return [];
+      }
     },
     'node-boss': {
       title: '보스전: 공항 마스터 관문',
       icon: '👑',
       es: LESSON_BOSS_ES,
-      en: []
+      get en() {
+        if (typeof window !== 'undefined' && window.courseData_en && Array.isArray(window.courseData_en.allWords)) {
+          return window.courseData_en.allWords;
+        }
+        return [];
+      }
     }
   };
   function normalizeLessonId(id) {
@@ -462,19 +482,36 @@
   database['lesson-4'] = database['node-boss'];
 
   // 스마트 샘플링 세션 생성 함수 (Flashcard & Game 연동)
-  // - 20개 단어 풀 중 무작위 10개 추출
-  // - 6개 문장 풀 중 무작위 3개 추출
-  // - 총 13개 문제 세트 생성 (부족 시 순환 폴백 보장)
   function generateStageSession(lessonId = 'node-2', lang = 'es', roundIndex = 0) {
     const normId = normalizeLessonId(lessonId);
-    const lesson = database[normId] || database[lessonId] || (normId === 'node-boss' ? database['node-boss'] : (String(lessonId).includes('3') ? database['node-3'] : database['node-2']));
     const targetLang = (lang === 'en' || lang === 'en-US') ? 'en' : 'es';
+
+    // 영어 코스 활성화 시 window.courseData_en 연동
+    if (targetLang === 'en' && typeof window !== 'undefined' && window.courseData_en && Array.isArray(window.courseData_en.units)) {
+      const uIdx = (normId === 'node-1' ? 0 : (normId === 'node-3' ? 2 : 1));
+      const targetUnit = window.courseData_en.units[uIdx] || window.courseData_en.units[0];
+      const pool = normId === 'node-boss' ? (window.courseData_en.allWords || targetUnit.words) : (targetUnit ? targetUnit.words : []);
+      if (pool && pool.length > 0) {
+        const questions = pool.map(w => ({
+          id: w.id,
+          type: 'word',
+          term: w.word || w.term,
+          meaning: w.meaning,
+          phonetic: w.phonetic || `[${w.pronunciation}]`,
+          example: w.example || `Example with ${w.word || w.term}.`,
+          exampleKo: w.exampleKo || w.meaning
+        }));
+        return shuffle(questions).slice(0, 10);
+      }
+    }
+
+    const lesson = database[normId] || database[lessonId] || (normId === 'node-boss' ? database['node-boss'] : (String(lessonId).includes('3') ? database['node-3'] : database['node-2']));
     let pool = (lesson ? (lesson[targetLang] || lesson.es || lesson.en || []) : []).slice();
 
     if (pool.length === 0 && normId === 'node-boss') {
-      pool = (targetLang === 'en' ? LESSON_BOSS_EN : LESSON_BOSS_ES).slice();
+      pool = LESSON_BOSS_ES.slice();
     } else if (pool.length === 0 && normId === 'node-3') {
-      pool = (targetLang === 'en' ? LESSON_3_EN : LESSON_3_ES).slice();
+      pool = LESSON_3_ES.slice();
     } else if (pool.length === 0) {
       pool = [...LESSON_2_WORDS_ES, ...LESSON_2_SENTENCES_ES];
     }
