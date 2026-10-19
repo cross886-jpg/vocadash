@@ -343,48 +343,48 @@
 /* Wide Falling Card for Long Sentences & Cloze Quiz */
 /* ================================================= */
 #game-dropping-bubble.wide-falling-card {
-  max-width: 92% !important;
+  max-width: 94% !important;
   width: auto !important;
 }
 
 #game-dropping-bubble.wide-falling-card > div {
-  padding-left: 1.25rem !important; /* px-5 */
-  padding-right: 1.25rem !important;
-  padding-top: 0.75rem !important;   /* py-3 */
-  padding-bottom: 0.75rem !important;
-  white-space: nowrap !important;
+  padding-left: 1.5rem !important;  /* px-6 */
+  padding-right: 1.5rem !important;
+  padding-top: 1rem !important;     /* py-4 */
+  padding-bottom: 1rem !important;
+  line-height: 1.625 !important;    /* leading-relaxed */
 }
 
 #game-dropping-bubble.wide-falling-card #game-dropping-word {
-  white-space: nowrap !important;
   word-break: keep-all !important;
+  line-height: 1.625 !important;
 }
 
-/* Cloze [ ? ] blank badge animation */
+/* Cloze [ ? ] blank badge animation (bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-extrabold) */
 .cloze-blank-pill {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 2px 8px;
   margin: 0 4px;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: #1e293b;
-  font-weight: 900;
+  background-color: #fef3c7 !important; /* bg-amber-100 */
+  color: #b45309 !important;            /* text-amber-700 */
+  font-weight: 800 !important;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.9em;
   letter-spacing: 0.05em;
-  border-radius: 8px;
-  border: 1.5px solid #d97706;
-  box-shadow: 0 2px 4px rgba(217, 119, 6, 0.25);
+  border-radius: 6px;
+  border: 1.5px solid #fde68a;
+  box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2);
   animation: pulse-cloze 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse-cloze {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.25);
+    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2);
   }
   50% {
-    transform: scale(1.04);
-    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.45);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(217, 119, 6, 0.35);
   }
 }
 

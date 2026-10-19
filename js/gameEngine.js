@@ -905,9 +905,20 @@
           if (gemsText) gemsText.textContent = '+20 💎';
         }
 
-        // 이번 판 클리어 후 누적 횟수 계산 (최대 3, 보스전은 1회 완결 3별)
-        const newClearedCount = isBossNode ? 3 : Math.min(3, Math.max(1, curProg || 1));
-        renderModalStars(newClearedCount);
+        // 모든 노드 타입 별점 판정 전역 일원화 (100% 퍼펙트 또는 보스전 클리어 시 3별 확정)
+        const totalQ = (gameQuestions && gameQuestions.length) || 1;
+        const missed = missedWords || [];
+        const wrongCount = missed.length;
+        const accuracy = Math.round(Math.max(0, totalQ - wrongCount) / totalQ * 100);
+        const isPerfect = (accuracy === 100 || wrongCount === 0);
+        let finalStars = 1;
+
+        if (isPerfect || (currentNode && currentNode.type === 'boss') || isBossNode) {
+          finalStars = 3;
+        } else {
+          finalStars = Math.max(1, Math.min(3, (window.currentSubStageRound || curProg || 1)));
+        }
+        renderModalStars(finalStars);
 
         const resultSubtitle = document.getElementById('result-subtitle');
         if (resultSubtitle && !window.isUnitSkipTestMode && !window.isReviewGameMode) {
@@ -967,16 +978,16 @@
         const wrongWords = (Array.isArray(window.currentSessionWrongWords) && window.currentSessionWrongWords.length > 0)
           ? window.currentSessionWrongWords
           : (Array.isArray(missedWords) && missedWords.length > 0 ? missedWords : []);
-        const wrongCount = wrongWords.length;
+        const missedWordsCount = wrongWords.length;
         const btnWrongReview = document.getElementById('btn-result-wrong-review');
         const btnWrongReviewText = document.getElementById('btn-result-wrong-review-text');
 
         if (btnWrongReview) {
-          if (wrongCount > 0) {
+          if (missedWordsCount > 0) {
             btnWrongReview.classList.remove('hidden');
             btnWrongReview.style.display = 'flex';
             if (btnWrongReviewText) {
-              btnWrongReviewText.textContent = `⚠️ 헷갈린 단어 ${wrongCount}개 복습하기`;
+              btnWrongReviewText.textContent = `⚠️ 헷갈린 단어 ${missedWordsCount}개 복습하기`;
             }
             btnWrongReview.onclick = function (e) {
               if (e) {
@@ -1191,6 +1202,7 @@
           ? resolveCurrentNode(targetNodeId) 
           : { id: targetNodeId };
         const activeNodeId = currentNode?.id || targetNodeId;
+        const isBossNode = (currentNode?.type === 'boss' || String(activeNodeId).includes('boss'));
         const progressKey = `vocadash_node_progress_${activeNodeId}`;
 
         let nodeData = { clearedCount: 0, stars: 0 };
@@ -1201,10 +1213,14 @@
           nodeData.clearedCount = window.nodeProgressMap[activeNodeId];
         }
 
-        const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4' || (currentNode && currentNode.type === 'boss'));
+        const totalQ = (gameQuestions && gameQuestions.length) || 1;
+        const missed = missedWords || [];
+        const wrongCount = missed.length;
+        const accuracy = Math.round(Math.max(0, totalQ - wrongCount) / totalQ * 100);
+        const isPerfect = (accuracy === 100 || wrongCount === 0);
 
-        if (isBossNode) {
-          // 보스전 1회 완결(Single Round Master): 1회 클리어 즉시 3별 마스터로 직행
+        if (isBossNode || isPerfect) {
+          // 보스전 또는 100% 퍼펙트 클리어: 즉시 3별 마스터로 직행
           nodeData.clearedCount = 3;
           nodeData.stars = 3;
 
@@ -2078,25 +2094,23 @@
 
         const len = qTerm.length;
         if (isSentenceOrCloze) {
-          // 떨어지는 문제 박스 가로 확장: max-w-[92%] w-auto px-5 py-3 whitespace-nowrap 적용
+          // 문장/빈칸 카드 디자인 확장: max-w-[94%] w-auto px-6 py-4 적용
           if (gameDroppingBubble) {
             gameDroppingBubble.classList.add('wide-falling-card');
-            gameDroppingBubble.style.maxWidth = '92%';
+            gameDroppingBubble.style.maxWidth = '94%';
             gameDroppingBubble.style.width = 'auto';
           }
           if (innerCard) {
-            innerCard.className = 'relative flex flex-col items-center px-5 py-3 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center whitespace-nowrap';
+            innerCard.className = 'relative flex flex-col items-center px-6 py-4 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center';
           }
-          // 폰트 크기 미세 조정: 긴 문장도 줄바꿈 없이 한 줄로 시원하게 떨어지도록 개선
-          let fontSizeClass = 'text-[17px]';
+          // 폰트 크기 대폭 확대: text-lg (18px) 또는 text-xl (20px), font-bold 적용
+          let fontSizeClass = 'text-xl';
           if (len > 35) {
-            fontSizeClass = 'text-[13.5px]';
-          } else if (len > 25) {
-            fontSizeClass = 'text-[15px]';
-          } else if (len >= 12) {
             fontSizeClass = 'text-base';
+          } else if (len > 22) {
+            fontSizeClass = 'text-lg';
           }
-          gameDroppingWord.className = `font-headline-xl ${fontSizeClass} font-extrabold text-[#1E293B] tracking-tight drop-shadow-sm select-none whitespace-nowrap text-center leading-snug`;
+          gameDroppingWord.className = `font-headline-xl ${fontSizeClass} font-bold text-[#1E293B] tracking-tight drop-shadow-sm select-none break-keep text-center leading-relaxed`;
         } else {
           if (gameDroppingBubble) {
             gameDroppingBubble.classList.remove('wide-falling-card');
@@ -2283,8 +2297,10 @@
     lastFrameTimestamp = timestamp;
 
     const currentQ = gameQuestions[currentQuestionIdx];
-    const isSentence = currentQ && (currentQ.isSentence || currentQuestionIdx >= 10);
-    const sentenceMultiplier = isSentence ? 1.25 : 1.0;
+    const qTerm = String((currentQ && (currentQ.word || currentQ.term)) || '').trim();
+    const isSentenceOrCloze = Boolean(currentQ && (currentQ.type === 'sentence' || currentQ.isSentence || currentQ.isCloze || qTerm.length >= 12));
+    // 문장 퀴즈 낙하 속도 30% 감속 (duration에 1.43배 적용)
+    const sentenceMultiplier = isSentenceOrCloze ? 1.43 : 1.0;
     const duration = Math.max(5000, (dropBaseDuration * sentenceMultiplier) / speedMultiplier);
 
     const elapsed = timestamp - dropStartTime;

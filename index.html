@@ -551,11 +551,20 @@
         <!-- Node Bonus: 황금 선물상자 (🎁) 보너스 노드 (골드 3D 링 + 선물상자) -->
         <div class="roadmap-node relative z-10 flex flex-col items-center ml-7 mb-11" style="width: 170px;" data-node-id="node-bonus" data-node-type="bonus" id="node-bonus-container">
           <div id="node-bonus-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="bonus">
+            <span id="node-bonus-ping" class="hidden absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span>
+            <span id="node-bonus-pulse-ring" class="hidden absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>
             <button id="node-bonus-btn" class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80 overflow-hidden" type="button" title="보너스 선물 상자">
               <!-- Top gloss shine -->
               <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
               <span id="node-bonus-icon" class="text-3xl select-none leading-none drop-shadow-sm animate-wiggle relative z-10">🎁</span>
             </button>
+            <!-- [▶ START] 말풍선 -->
+            <div id="node-bonus-start-pill" class="hidden absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center" style="display: none;">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
+            </div>
           </div>
           <div id="node-bonus-label-card" class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-amber-200 text-center pointer-events-none">
             <span id="node-bonus-title" class="font-extrabold text-xs text-amber-950">보너스 선물</span>
@@ -572,6 +581,8 @@
         <!-- Node Review: 약점 복습 노드 (오렌지 3D 링 + 번개/느낌표 배지) -->
         <div class="roadmap-node relative z-10 flex flex-col items-center ml-auto mr-7 mb-11" style="width: 170px;" data-node-id="node-review" data-node-type="review" id="node-review-container">
           <div id="node-review-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="review">
+            <span id="node-review-ping" class="hidden absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span>
+            <span id="node-review-pulse-ring" class="hidden absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>
             <button id="node-review-btn" class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80 overflow-hidden" type="button" title="약점 복습 드릴">
               <!-- Top gloss shine -->
               <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
@@ -581,8 +592,15 @@
               </div>
             </button>
             <!-- 번개/느낌표 배지 -->
-            <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-amber-500 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none font-black text-xs leading-none">
+            <div id="node-review-excl" class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-amber-500 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none font-black text-xs leading-none">
               !
+            </div>
+            <!-- [▶ START] 말풍선 -->
+            <div id="node-review-start-pill" class="hidden absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center" style="display: none;">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
             </div>
           </div>
           <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-orange-200 text-center pointer-events-none">

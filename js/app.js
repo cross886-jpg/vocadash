@@ -2680,6 +2680,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (curUnit && Array.isArray(curUnit.nodes)) {
         const prevNode = curUnit.nodes[nodeIndex - 1];
         if (prevNode && prevNode.id) {
+          if (prevNode.type === 'bonus') {
+            return (typeof isBonusClaimed === 'function') ? isBonusClaimed(prevNode.id) : false;
+          }
+          if (prevNode.type === 'review') {
+            return (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted(prevNode.id) : false;
+          }
           const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
           const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
           return count >= 1;
@@ -2726,6 +2732,38 @@ document.addEventListener('DOMContentLoaded', () => {
   window.nodeProgressMap = loadNodeProgress();
   window.saveNodeProgress = saveNodeProgress;
   window.currentSessionQuestions = [];
+
+  // 초기 사용자 상태(DEFAULT_USER_PROGRESS) 클린 초기화
+  const DEFAULT_USER_PROGRESS = {
+    currentCourse: 'pack_football',
+    currentUnit: 0,
+    currentNode: 0,
+    stars: {},
+    clearedNodes: [],
+    unlockedNodes: ['fb_1_n1', 'es_1_n1', 'node-1'],
+    weakWords: [],
+    gems: 0,
+    hearts: 5
+  };
+  window.DEFAULT_USER_PROGRESS = DEFAULT_USER_PROGRESS;
+
+  // 전역 강제 초기화 함수 구현 (window.forceHardReset)
+  window.forceHardReset = function() {
+    window._isHardResetting = true;
+    window.onbeforeunload = null;
+    window.onunload = null;
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+      const cleanState = {
+        currentUnit: 0,
+        clearedNodes: {},
+        weakWords: []
+      };
+      localStorage.setItem('vocadash_user_data', JSON.stringify(cleanState));
+    } catch (_) {}
+    location.replace(location.pathname + '?v=' + Date.now());
+  };
 
   function getSavedLanguage() {
     try {
@@ -3087,6 +3125,124 @@ document.addEventListener('DOMContentLoaded', () => {
   window.getClaimedBonuses = getClaimedBonuses;
   window.isBonusClaimed = isBonusClaimed;
   window.markBonusClaimed = markBonusClaimed;
+
+  function isReviewNodeCompleted(nodeId = 'node-review') {
+    try {
+      if (localStorage.getItem(`vocadash_review_completed_${nodeId}`) === 'true') return true;
+    } catch (_) {}
+    const prog = getCourseProgress(window.activeCourseId);
+    return Array.isArray(prog.completedReviews) && prog.completedReviews.includes(nodeId);
+  }
+  function markReviewNodeCompleted(nodeId = 'node-review') {
+    try {
+      localStorage.setItem(`vocadash_review_completed_${nodeId}`, 'true');
+    } catch (_) {}
+    const prog = getCourseProgress(window.activeCourseId);
+    if (!prog.completedReviews) prog.completedReviews = [];
+    if (!prog.completedReviews.includes(nodeId)) {
+      prog.completedReviews.push(nodeId);
+      saveCourseProgress(prog, window.activeCourseId);
+    }
+  }
+  window.isReviewNodeCompleted = isReviewNodeCompleted;
+  window.markReviewNodeCompleted = markReviewNodeCompleted;
+
+  function handleClaimBonus(nodeId = 'node-bonus', unitNum = 1) {
+    const isUnlocked = (unitNum === 1)
+      ? (resolveNodeData('es_1_n3', 'node-2').clearedCount >= 3)
+      : isNodeUnlocked(unitNum - 1, 1, { type: 'bonus', id: nodeId });
+
+    if (!isUnlocked) {
+      if (typeof window.showToast === 'function') {
+        window.showToast('2과를 먼저 완료해야 열려요! 🔒');
+      }
+      return;
+    }
+
+    if (isBonusClaimed(nodeId)) {
+      if (typeof window.showToast === 'function') {
+        window.showToast('이미 수령한 보너스 선물입니다. 📦');
+      }
+      return;
+    }
+
+    let curGems = 120;
+    try {
+      const saved = localStorage.getItem('vocadash_gems');
+      if (saved !== null) curGems = parseInt(saved, 10) || 120;
+    } catch (_) {}
+    curGems += 15;
+    try {
+      localStorage.setItem('vocadash_gems', String(curGems));
+    } catch (_) {}
+    const gemsCountEl = el('header-gems-count');
+    if (gemsCountEl) gemsCountEl.textContent = curGems;
+
+    if (typeof window.playSound === 'function') window.playSound('gem');
+    markBonusClaimed(nodeId);
+
+    if (typeof window.showToast === 'function') {
+      window.showToast('🎁 보너스 선물 도착! 보석 +15개를 획득했습니다! 💎', '🎉');
+    }
+    if (typeof window.openBonusModal === 'function') {
+      window.openBonusModal(nodeId);
+    }
+
+    if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+    if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+  }
+  window.handleClaimBonus = handleClaimBonus;
+
+  function handleReviewNodeClick(nodeId = 'node-review', unitNum = 1) {
+    const bonusId = (unitNum === 1) ? 'node-bonus' : `u${unitNum}-bonus`;
+    const isUnlocked = isBonusClaimed(bonusId);
+
+    if (!isUnlocked) {
+      if (typeof window.showToast === 'function') {
+        window.showToast('보너스 선물상자를 먼저 수령해 주세요! 🎁');
+      }
+      return;
+    }
+
+    let weakWords = [];
+    try {
+      const savedWeak = localStorage.getItem('vocadash_weak_word_ids');
+      if (savedWeak) {
+        const parsed = JSON.parse(savedWeak);
+        if (Array.isArray(parsed)) weakWords = parsed.filter(Boolean);
+      }
+    } catch (_) {}
+
+    if (weakWords.length > 0) {
+      if (typeof openReviewSpeedrunModal === 'function') {
+        openReviewSpeedrunModal();
+      } else if (typeof startRoadmapReviewSpeedrun === 'function') {
+        startRoadmapReviewSpeedrun();
+      } else if (typeof window.showToast === 'function') {
+        window.showToast('⚡ 오답 단어 복습 세션을 시작합니다!');
+      }
+    } else {
+      markReviewNodeCompleted(nodeId);
+
+      let curXp = 0;
+      try {
+        const savedXp = localStorage.getItem('vocadash_user_xp');
+        if (savedXp) curXp = parseInt(savedXp, 10) || 0;
+        curXp += 10;
+        localStorage.setItem('vocadash_user_xp', String(curXp));
+      } catch (_) {}
+      const headerXpEl = el('header-exp-count');
+      if (headerXpEl) headerXpEl.textContent = curXp;
+
+      if (typeof window.showToast === 'function') {
+        window.showToast('멋져요! 틀린 단어가 없어 약점 복습을 패스합니다. (+10 XP) ✨', '🎉');
+      }
+
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+    }
+  }
+  window.handleReviewNodeClick = handleReviewNodeClick;
 
   // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화 함수
   function updateTopUnitBanner(activeIdx) {
@@ -3520,6 +3676,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const card3 = el('node-3-label-card');
     const startPill3 = el('node-3-start-pill');
 
+    // Unit 1 노드 완료 및 해금 판정
+    const isBonusDone = isBonusClaimed('node-bonus');
+    const isReviewDone = isReviewNodeCompleted('node-review');
+
+    const isNode1Unlocked = true;
+    const isNode2Unlocked = (prog1 >= 3);
+    const isBonusUnlocked = (prog1 >= 3);
+    const isReviewUnlocked = (prog1 >= 3 && isBonusDone);
+    const isNode3Unlocked = (prog2 >= 3 && isBonusDone && isReviewDone);
+    const isBossUnlocked = (prog3 >= 3);
+
+    const isNode1Active = (prog1 < 3);
+    const isNode2Active = (!isNode1Active && isNode2Unlocked && prog2 < 3);
+    const isBonusActive = (!isNode1Active && !isNode2Active && isBonusUnlocked && !isBonusDone);
+    const isReviewActive = (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !isReviewDone);
+    const isNode3Active = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
+    const isBossActive = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
+
     if (prog3 >= 3) {
       // 3과 완료 상태 (초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
       if (node3Container) {
@@ -3559,7 +3733,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (badge3) {
         badge3.innerHTML = renderStarsBadge(prog3, data3.stars, false);
       }
-    } else if (prog2 >= 3) {
+    } else if (isNode3Active) {
       if (node3Container) {
         node3Container.classList.remove('opacity-75', 'opacity-80');
         node3Container.classList.add('opacity-100', 'active', 'node-pulse');
@@ -3622,7 +3796,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (node3Target) {
         node3Target.dataset.nodeType = 'locked';
-        node3Target.setAttribute('data-lock-msg', '이전 레슨을 먼저 완료해야 열려요!');
+        node3Target.setAttribute('data-lock-msg', '약점 복습을 먼저 완료해야 열려요!');
         node3Target.setAttribute('data-lock-icon', '🔒');
       }
       if (btn3) {
@@ -3635,7 +3809,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card3.className = 'mt-2.5 flex flex-col items-center bg-white/90 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/60 text-center pointer-events-none opacity-80';
       }
       if (badge3) {
-        badge3.innerHTML = renderStarsBadge(0, 0, true, '2과 완료 후');
+        badge3.innerHTML = renderStarsBadge(0, 0, true, '약점 복습 완료 후');
       }
     }
 
@@ -3665,7 +3839,7 @@ document.addEventListener('DOMContentLoaded', () => {
         glowBoss.classList.add('animate-pulse');
       }
 
-      if (progBoss >= 3) {
+      if (progBoss >= 1) {
         if (nodeBossContainer) nodeBossContainer.classList.remove('active', 'node-pulse');
         if (bannerBoss) bannerBoss.classList.add('hidden');
         if (startPillBoss) {
@@ -3768,85 +3942,134 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Node Bonus 선물 상자 1회 한정 수령 비주얼 상태 동기화
-    const isBonusDone = isBonusClaimed('node-bonus');
+    const bonusContainer = el('node-bonus-container');
+    const bonusTarget = el('node-bonus-target');
     const bonusBtn = el('node-bonus-btn');
     const bonusIcon = el('node-bonus-icon');
     const bonusBadgeText = el('node-bonus-badge-text');
     const bonusBadgeIcon = el('node-bonus-badge-icon');
     const bonusLabelCard = el('node-bonus-label-card');
+    const bonusPing = el('node-bonus-ping');
+    const bonusPulseRing = el('node-bonus-pulse-ring');
+    const bonusStartPill = el('node-bonus-start-pill');
+
+    const reviewContainer = el('node-review-container');
+    const reviewTarget = el('node-review-target');
+    const reviewBtn = el('node-review-btn');
+    const reviewIcon = el('node-review-icon');
+    const reviewBadgeText = el('node-review-badge-text');
+    const reviewLabelCard = el('node-review-label-card');
+    const reviewPing = el('node-review-ping');
+    const reviewPulseRing = el('node-review-pulse-ring');
+    const reviewStartPill = el('node-review-start-pill');
+    const reviewCheckBadge = el('node-review-check-badge');
 
     if (isBonusDone) {
+      if (bonusContainer) bonusContainer.classList.remove('opacity-80', 'active', 'node-pulse');
+      if (bonusTarget) {
+        bonusTarget.dataset.nodeType = 'bonus';
+        bonusTarget.removeAttribute('data-lock-msg');
+      }
+      if (bonusPing) bonusPing.classList.add('hidden');
+      if (bonusPulseRing) bonusPulseRing.classList.add('hidden');
+      if (bonusStartPill) { bonusStartPill.classList.add('hidden'); bonusStartPill.style.display = 'none'; }
       if (bonusBtn) {
         bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 flex items-center justify-center border-b-[5px] border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-2 ring-slate-300/60 overflow-hidden';
         bonusBtn.title = '보너스 선물 (수령 완료)';
       }
-      if (bonusIcon) {
-        bonusIcon.textContent = '📦';
-        bonusIcon.classList.remove('animate-wiggle');
-      }
-      if (bonusBadgeText) {
-        bonusBadgeText.textContent = '수령 완료 ✅';
-        bonusBadgeText.className = 'font-label-sm text-[10px] text-slate-500 font-bold';
-      }
-      if (bonusBadgeIcon) {
-        bonusBadgeIcon.textContent = '📦';
-      }
-      if (bonusLabelCard) {
-        bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85';
-      }
-    } else {
-      if (bonusBtn) {
-        bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80 overflow-hidden';
-        bonusBtn.title = '보너스 선물 상자';
-      }
-      if (bonusIcon) {
-        bonusIcon.textContent = '🎁';
-        bonusIcon.classList.add('animate-wiggle');
-      }
-      if (bonusBadgeText) {
-        bonusBadgeText.textContent = '+15 💎 보너스';
-        bonusBadgeText.className = 'font-label-sm text-[10px] text-amber-600 font-bold';
-      }
-      if (bonusBadgeIcon) {
-        bonusBadgeIcon.textContent = '🎁';
-      }
-      if (bonusLabelCard) {
-        bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-amber-200 text-center pointer-events-none';
-      }
-    }
-
-    // Node Bonus & Node Review 노드 자물쇠 잠김 상태 동기화 (1과 미완료 시 잠김)
-    const bonusContainer = el('node-bonus-container');
-    const bonusTarget = el('node-bonus-target');
-    const reviewContainer = el('node-review-container');
-    const reviewTarget = el('node-review-target');
-
-    if (prog1 < 3) {
-      if (bonusContainer) bonusContainer.classList.add('opacity-80');
-      if (bonusTarget) {
-        bonusTarget.dataset.nodeType = 'locked';
-        bonusTarget.setAttribute('data-lock-msg', '이전 레슨을 먼저 완료해야 열려요!');
-        bonusTarget.setAttribute('data-lock-icon', '🔒');
-      }
-      if (reviewContainer) reviewContainer.classList.add('opacity-80');
-      if (reviewTarget) {
-        reviewTarget.dataset.nodeType = 'locked';
-        reviewTarget.setAttribute('data-lock-msg', '이전 레슨을 먼저 완료해야 열려요!');
-        reviewTarget.setAttribute('data-lock-icon', '🔒');
-      }
-    } else {
-      if (bonusContainer) bonusContainer.classList.remove('opacity-80');
+      if (bonusIcon) { bonusIcon.textContent = '📦'; bonusIcon.className = 'text-3xl select-none leading-none drop-shadow-sm relative z-10'; }
+      if (bonusBadgeText) { bonusBadgeText.textContent = '수령 완료 ✅'; bonusBadgeText.className = 'font-label-sm text-[10px] text-slate-500 font-bold'; }
+      if (bonusBadgeIcon) bonusBadgeIcon.textContent = '📦';
+      if (bonusLabelCard) bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85';
+    } else if (isBonusActive) {
+      if (bonusContainer) bonusContainer.classList.add('active', 'node-pulse');
       if (bonusTarget) {
         bonusTarget.dataset.nodeType = 'bonus';
         bonusTarget.removeAttribute('data-lock-msg');
-        bonusTarget.removeAttribute('data-lock-icon');
       }
-      if (reviewContainer) reviewContainer.classList.remove('opacity-80');
+      if (bonusPing) bonusPing.classList.remove('hidden');
+      if (bonusPulseRing) bonusPulseRing.classList.remove('hidden');
+      if (bonusStartPill) { bonusStartPill.classList.remove('hidden'); bonusStartPill.style.display = 'flex'; }
+      if (bonusBtn) {
+        bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80 overflow-hidden';
+        bonusBtn.title = '보너스 선물 상자 (열기)';
+      }
+      if (bonusIcon) { bonusIcon.textContent = '🎁'; bonusIcon.className = 'text-3xl select-none leading-none drop-shadow-sm animate-bounce relative z-10'; }
+      if (bonusBadgeText) { bonusBadgeText.textContent = '+15 💎 보너스'; bonusBadgeText.className = 'font-label-sm text-[10px] text-amber-600 font-bold'; }
+      if (bonusBadgeIcon) bonusBadgeIcon.textContent = '🎁';
+      if (bonusLabelCard) bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border-2 border-amber-400 ring-2 ring-amber-100 text-center pointer-events-none';
+    } else {
+      if (bonusContainer) bonusContainer.classList.add('opacity-80');
+      if (bonusTarget) {
+        bonusTarget.dataset.nodeType = 'locked';
+        bonusTarget.setAttribute('data-lock-msg', '2과를 먼저 완료해야 열려요!');
+        bonusTarget.setAttribute('data-lock-icon', '🔒');
+      }
+      if (bonusPing) bonusPing.classList.add('hidden');
+      if (bonusPulseRing) bonusPulseRing.classList.add('hidden');
+      if (bonusStartPill) { bonusStartPill.classList.add('hidden'); bonusStartPill.style.display = 'none'; }
+      if (bonusBtn) {
+        bonusBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center';
+        bonusBtn.title = '보너스 선물 (잠김)';
+      }
+      if (bonusIcon) { bonusIcon.textContent = '🎁'; bonusIcon.className = 'text-3xl select-none leading-none drop-shadow-sm relative z-10 opacity-60'; }
+      if (bonusBadgeText) { bonusBadgeText.textContent = '+15 💎 보너스'; bonusBadgeText.className = 'font-label-sm text-[10px] text-slate-400 font-bold'; }
+      if (bonusBadgeIcon) bonusBadgeIcon.textContent = '🎁';
+      if (bonusLabelCard) bonusLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-80';
+    }
+
+    if (isReviewDone) {
+      if (reviewContainer) reviewContainer.classList.remove('opacity-80', 'active', 'node-pulse');
+      if (reviewTarget) {
+        reviewTarget.dataset.nodeType = 'completed';
+        reviewTarget.removeAttribute('data-lock-msg');
+      }
+      if (reviewPing) reviewPing.classList.add('hidden');
+      if (reviewPulseRing) reviewPulseRing.classList.add('hidden');
+      if (reviewStartPill) { reviewStartPill.classList.add('hidden'); reviewStartPill.style.display = 'none'; }
+      if (reviewCheckBadge) { reviewCheckBadge.classList.remove('hidden'); reviewCheckBadge.style.display = 'flex'; }
+      if (reviewBtn) {
+        reviewBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 flex items-center justify-center border-b-[5px] border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-2 ring-slate-300/60 overflow-hidden';
+        reviewBtn.title = '약점 복습 (완료)';
+      }
+      if (reviewIcon) reviewIcon.textContent = '✅';
+      if (reviewBadgeText) reviewBadgeText.textContent = '복습 완료 ✅';
+      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85';
+    } else if (isReviewActive) {
+      if (reviewContainer) reviewContainer.classList.add('active', 'node-pulse');
       if (reviewTarget) {
         reviewTarget.dataset.nodeType = 'review';
         reviewTarget.removeAttribute('data-lock-msg');
-        reviewTarget.removeAttribute('data-lock-icon');
       }
+      if (reviewPing) reviewPing.classList.remove('hidden');
+      if (reviewPulseRing) reviewPulseRing.classList.remove('hidden');
+      if (reviewStartPill) { reviewStartPill.classList.remove('hidden'); reviewStartPill.style.display = 'flex'; }
+      if (reviewCheckBadge) { reviewCheckBadge.classList.add('hidden'); reviewCheckBadge.style.display = 'none'; }
+      if (reviewBtn) {
+        reviewBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80 overflow-hidden';
+        reviewBtn.title = '약점 복습 드릴 (시작)';
+      }
+      if (reviewIcon) reviewIcon.textContent = '⚡️';
+      if (reviewBadgeText) reviewBadgeText.textContent = '오답 탈출';
+      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border-2 border-orange-400 ring-2 ring-orange-100 text-center pointer-events-none';
+    } else {
+      if (reviewContainer) reviewContainer.classList.add('opacity-80');
+      if (reviewTarget) {
+        reviewTarget.dataset.nodeType = 'locked';
+        reviewTarget.setAttribute('data-lock-msg', '보너스 선물을 먼저 수령해야 열려요!');
+        reviewTarget.setAttribute('data-lock-icon', '🔒');
+      }
+      if (reviewPing) reviewPing.classList.add('hidden');
+      if (reviewPulseRing) reviewPulseRing.classList.add('hidden');
+      if (reviewStartPill) { reviewStartPill.classList.add('hidden'); reviewStartPill.style.display = 'none'; }
+      if (reviewCheckBadge) { reviewCheckBadge.classList.add('hidden'); reviewCheckBadge.style.display = 'none'; }
+      if (reviewBtn) {
+        reviewBtn.className = 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center';
+        reviewBtn.title = '약점 복습 (잠김)';
+      }
+      if (reviewIcon) reviewIcon.textContent = '⚡️';
+      if (reviewBadgeText) reviewBadgeText.textContent = '오답 탈출';
+      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-80';
     }
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
@@ -3913,20 +4136,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderUnitBonusHtml(opt) {
-    const { unitNum, align, width, isCompleted, isLocked } = opt;
+    const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
+    const resolvedId = nodeId || `u${unitNum}-bonus`;
     return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="bonus" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="bonus" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+          ${isActive ? `
+            <span class="absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span>
+            <span class="absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>
+          ` : ''}
+
           <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${
             isCompleted
               ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
-              : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80'
-          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus">
+              : (isLocked
+                ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
+                : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80')
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
-            <span class="text-3xl select-none leading-none drop-shadow-sm ${isCompleted ? '' : 'animate-wiggle'} relative z-10">${isCompleted ? '📦' : '🎁'}</span>
+            <span class="text-3xl select-none leading-none drop-shadow-sm ${isCompleted ? '' : (isActive ? 'animate-bounce' : 'animate-wiggle')} relative z-10">${isCompleted ? '📦' : '🎁'}</span>
+            ${isLocked ? `
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+              </div>
+            ` : ''}
           </button>
+
+          ${isActive ? `
+            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
+            </div>
+          ` : ''}
         </div>
-        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border ${isCompleted ? 'border-slate-200 opacity-85' : 'border-amber-200'} text-center pointer-events-none">
+        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border ${isCompleted ? 'border-slate-200 opacity-85' : (isActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200')} text-center pointer-events-none">
           <span class="font-extrabold text-xs ${isCompleted ? 'text-slate-600' : 'text-amber-950'}">보너스 선물</span>
           <div class="flex items-center gap-1 mt-0.5">
             <span class="text-xs">${isCompleted ? '📦' : '🎁'}</span>
@@ -3938,26 +4183,49 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderUnitReviewHtml(opt) {
-    const { unitNum, align, width, isLocked } = opt;
+    const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
+    const resolvedId = nodeId || `u${unitNum}-review`;
     return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="review" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="review" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80 overflow-hidden" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review">
+          ${isActive ? `
+            <span class="absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span>
+            <span class="absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>
+          ` : ''}
+
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${
+            isCompleted
+              ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
+              : (isLocked
+                ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
+                : 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80')
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
             <div class="relative flex items-center justify-center z-10">
-              <span class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
-              <span class="absolute -bottom-1 -right-1 text-sm">🩹</span>
+              <span class="text-3xl select-none leading-none drop-shadow-sm">${isCompleted ? '✅' : '⚡️'}</span>
+              ${!isCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}
             </div>
+            ${isLocked ? `
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+              </div>
+            ` : ''}
           </button>
-          <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-amber-500 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none font-black text-xs leading-none">
-            !
-          </div>
+
+          ${isActive ? `
+            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
+            </div>
+          ` : ''}
         </div>
-        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-orange-200 text-center pointer-events-none">
+        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border ${isCompleted ? 'border-slate-200 opacity-85' : (isActive ? 'border-2 border-orange-400 ring-2 ring-orange-100' : 'border-orange-200')} text-center pointer-events-none">
           <span class="font-extrabold text-xs text-orange-950">약점 복습</span>
           <div class="flex items-center gap-1 mt-0.5">
-            <span class="text-xs">⚡️</span>
-            <span class="font-label-sm text-[10px] text-orange-600 font-bold">오답 탈출</span>
+            <span class="text-xs">${isCompleted ? '✅' : '⚡️'}</span>
+            <span class="font-label-sm text-[10px] text-orange-600 font-bold">${isCompleted ? '복습 완료 ✅' : '오답 탈출'}</span>
           </div>
         </div>
       </div>
@@ -4047,26 +4315,42 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       // 유닛별 노드 정보 추출
-      // 유닛별 노드 정보 추출
       const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
       const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}-n1`, title: `1과: ${unitTitle}`, type: 'stage' };
       const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n3'))) || { id: `u${unitNum}-n2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n2')) || { id: `u${unitNum}-bonus`, title: '보너스 상자', type: 'bonus' };
+      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n5')) || { id: `u${unitNum}-review`, title: '약점 복습', type: 'review' };
       const n3 = uNodes.find(n => (n.type === 'sentence' || n.stageNumber === 3 || n.id?.endsWith('_n4'))) || { id: `u${unitNum}-n3`, title: '3과: 핵심 문장', type: 'stage' };
       const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
 
-      // 노드별 잠금 해제 판정 (isNodeUnlocked 연동)
-      const isN1Unlocked = isNodeUnlocked(idx, 0, n1, course);
-      const isN2Unlocked = isNodeUnlocked(idx, 1, n2, course);
-      const isN3Unlocked = isNodeUnlocked(idx, 2, n3, course);
-      const isBossUnlocked = isNodeUnlocked(idx, 3, nBoss, course);
+      const bonusId = nBonus.id || `u${unitNum}-bonus`;
+      const reviewId = nReview.id || `u${unitNum}-review`;
+
+      const isBonusDone = isBonusClaimed(bonusId);
+      const isReviewDone = isReviewNodeCompleted(reviewId);
 
       const n1Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n1.id || `u${unitNum}-n1`) : { clearedCount: 0, stars: 0 };
       const n2Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n2.id || `u${unitNum}-n2`) : { clearedCount: 0, stars: 0 };
       const n3Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n3.id || `u${unitNum}-n3`) : { clearedCount: 0, stars: 0 };
       const bossData = (typeof getNodeProgress === 'function') ? getNodeProgress(nBoss.id || `u${unitNum}-boss`) : { clearedCount: 0, stars: 0 };
 
+      // 노드별 잠금 해제 판정
+      const isN1Unlocked = isNodeUnlocked(idx, 0, n1, course);
+      const isN2Unlocked = isN1Unlocked && (n1Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const isBonusUnlocked = isN2Unlocked && (n2Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const isReviewUnlocked = isBonusUnlocked && (isBonusDone || unitNum < unlockedLevel);
+      const isN3Unlocked = isReviewUnlocked && (isReviewDone || unitNum < unlockedLevel);
+      const isBossUnlocked = isN3Unlocked && (n3Data.clearedCount >= 3 || unitNum < unlockedLevel);
+
+      // 활성 START 뱃지 판정 (가장 첫 번째로 미완료된 해금 노드에만 START 부여)
+      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone && unitNum >= unlockedLevel;
+      const isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone && unitNum >= unlockedLevel;
+      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
+
       const isUnitCompleted = (bossData.clearedCount >= 1 || unitNum < unlockedLevel);
-      const isUnitActive = !isUnitCompleted && (isN1Unlocked || unitNum === unlockedLevel);
       const bossTitle = nBoss.title || `Unit ${unit.unitNumber || unitNum} 보스전`;
 
       // 유닛 섹션 블록 컨테이너
@@ -4089,7 +4373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             align: 'ml-5 mb-11',
             width: '200px',
             isCompleted: n1Data.clearedCount >= 3 || unitNum < unlockedLevel,
-            isActive: isN1Unlocked && n1Data.clearedCount < 3,
+            isActive: isN1Active,
             isLocked: !isN1Unlocked
           })}
 
@@ -4104,7 +4388,7 @@ document.addEventListener('DOMContentLoaded', () => {
             align: 'ml-auto mr-5 mb-11',
             width: '210px',
             isCompleted: n2Data.clearedCount >= 3 || unitNum < unlockedLevel,
-            isActive: isN2Unlocked && n1Data.clearedCount >= 3 && n2Data.clearedCount < 3,
+            isActive: isN2Active,
             isLocked: !isN2Unlocked
           })}
 
@@ -4112,20 +4396,24 @@ document.addEventListener('DOMContentLoaded', () => {
           ${renderUnitBonusHtml({
             unitNum,
             nodeKey: `u${unitNum}-bonus`,
+            nodeId: bonusId,
             align: 'ml-7 mb-11',
             width: '170px',
-            isCompleted: isUnitCompleted,
-            isLocked: !isN1Unlocked
+            isCompleted: isBonusDone || unitNum < unlockedLevel,
+            isActive: isBonusActive,
+            isLocked: !isBonusUnlocked
           })}
 
           <!-- Node Review -->
           ${renderUnitReviewHtml({
             unitNum,
             nodeKey: `u${unitNum}-review`,
+            nodeId: reviewId,
             align: 'ml-auto mr-7 mb-11',
             width: '170px',
-            isCompleted: isUnitCompleted,
-            isLocked: !isN1Unlocked
+            isCompleted: isReviewDone || unitNum < unlockedLevel,
+            isActive: isReviewActive,
+            isLocked: !isReviewUnlocked
           })}
 
           <!-- Node 3 -->
@@ -4139,7 +4427,7 @@ document.addEventListener('DOMContentLoaded', () => {
             align: 'ml-5 mb-14',
             width: '190px',
             isCompleted: n3Data.clearedCount >= 3 || unitNum < unlockedLevel,
-            isActive: isN3Unlocked && n2Data.clearedCount >= 3 && n3Data.clearedCount < 3,
+            isActive: isN3Active,
             isLocked: !isN3Unlocked
           })}
 
@@ -4153,7 +4441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             align: 'mx-auto mb-6',
             width: '290px',
             isCompleted: bossData.clearedCount >= 1 || unitNum < unlockedLevel,
-            isActive: isBossUnlocked && n3Data.clearedCount >= 3 && bossData.clearedCount < 1,
+            isActive: isBossActive,
             isLocked: !isBossUnlocked
           })}
         </div>
@@ -4180,13 +4468,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (nType === 'bonus') {
-          if (typeof window.showToast === 'function') {
-            window.showToast(`🎁 Unit ${uNum} 보너스 선물 상자입니다!`);
-          }
+          openBonusModal(nId || `u${uNum}-bonus`);
         } else if (nType === 'review') {
-          if (typeof window.navigateToTab === 'function') {
-            window.navigateToTab('review');
-          }
+          openReviewSpeedrunModal();
         } else {
           // Unlocked node (stage or boss) -> start lesson!
           if (typeof window.openLessonModal === 'function') {
@@ -4989,7 +5273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       } else if (nid === 'node-review') {
         const btnReview = el('node-review-btn') || node;
-        if ((window.nodeProgressMap['node-1'] || 0) < 3) {
+        if ((window.nodeProgressMap['node-1'] || 0) < 3 || !isBonusClaimed('node-bonus')) {
           btnReview.classList.add('animate-lock-shake'); setTimeout(() => btnReview.classList.remove('animate-lock-shake'), 450); showLockedTooltip(btnReview);
           return;
         }
@@ -4997,7 +5281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       } else if (nid === 'node-3') {
         const btn3 = el('node-3-btn') || node;
-        if ((window.nodeProgressMap['node-2'] || 0) < 3) {
+        if ((window.nodeProgressMap['node-2'] || 0) < 3 || !isBonusClaimed('node-bonus') || !isReviewNodeCompleted('node-review')) {
           btn3.classList.add('animate-lock-shake'); setTimeout(() => btn3.classList.remove('animate-lock-shake'), 450); showLockedTooltip(btn3);
           return;
         }
@@ -5043,7 +5327,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   on('node-review-btn', 'click', (e) => {
     e.stopPropagation();
-    if ((window.nodeProgressMap['node-1'] || 0) < 3) {
+    if ((window.nodeProgressMap['node-1'] || 0) < 3 || !isBonusClaimed('node-bonus')) {
       const btnReview = el('node-review-btn');
       if (btnReview) {
         btnReview.classList.add('animate-lock-shake');
@@ -5053,6 +5337,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     openReviewSpeedrunModal();
+  });
+  on('node-3-btn', 'click', (e) => {
+    if ((window.nodeProgressMap['node-2'] || 0) < 3 || !isBonusClaimed('node-bonus') || !isReviewNodeCompleted('node-review')) {
+      e.stopPropagation();
+      const btn3 = el('node-3-btn');
+      if (btn3) {
+        btn3.classList.add('animate-lock-shake');
+        setTimeout(() => btn3.classList.remove('animate-lock-shake'), 450);
+        showLockedTooltip(btn3);
+      }
+      return;
+    }
+    window.openLessonModal('node-3');
   });
   on('btn-start-speedrun-game', 'click', () => {
     startRoadmapReviewSpeedrun();
@@ -9250,7 +9547,8 @@ document.addEventListener('DOMContentLoaded', () => {
         nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0}');
       } catch (_) {}
       const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || nodeData.clearedCount || 0;
-      const newClearedCount = isBossNode ? 3 : Math.min(3, Math.max(1, curProg || 1));
+      const isPerfect = (accuracy === 100 || missedList.length === 0);
+      const newClearedCount = (isBossNode || isPerfect) ? 3 : Math.min(3, Math.max(1, curProg || 1));
 
       if (typeof window.renderModalStars === 'function') {
         window.renderModalStars(newClearedCount);
