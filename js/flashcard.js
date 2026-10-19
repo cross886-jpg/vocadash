@@ -355,75 +355,43 @@
       deck = session.slice();
     } else if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
       deck = window.getFootballStageSession(currentFlashcardLessonId);
-    } else if (window.VOCA_DATA) {
-      if (typeof window.VOCA_DATA.generateStageSession === 'function') {
-        deck = window.VOCA_DATA.generateStageSession(currentFlashcardLessonId, currentCourse, round);
-      }
-      if ((!deck || deck.length < 10) && window.VOCA_DATA.database) {
-        const dbLesson = window.VOCA_DATA.database[currentFlashcardLessonId] || (currentFlashcardLessonId === 'node-boss' ? window.VOCA_DATA.database['node-boss'] : (currentFlashcardLessonId === 'node-3' ? window.VOCA_DATA.database['node-3'] : null));
-        if (dbLesson) {
-          deck = (dbLesson[currentCourse] || dbLesson.es || dbLesson.en || []).slice();
-        }
-      }
-      if ((!deck || deck.length < 10) && currentFlashcardLessonId === 'node-3' && window.VOCA_DATA.lesson3Words) {
-        deck = window.VOCA_DATA.lesson3Words.slice();
-      }
-      if ((!deck || deck.length < 10) && currentFlashcardLessonId === 'node-boss' && (window.VOCA_DATA.LESSON_BOSS_ES || window.VOCA_DATA.bossWords)) {
-        deck = (window.VOCA_DATA.LESSON_BOSS_ES || window.VOCA_DATA.bossWords).slice();
+    } else if (typeof window.generateStageSession === 'function') {
+      deck = window.generateStageSession(currentFlashcardLessonId, currentCourse, round);
+    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      deck = window.VOCA_DATA.generateStageSession(currentFlashcardLessonId, currentCourse, round);
+    }
+
+    if (!deck || deck.length === 0) {
+      if (currentWords && Array.isArray(currentWords) && currentWords.length > 0) {
+        deck = currentWords.map((item, idx) => ({
+          ...item,
+          id: item.id || `fc_${idx + 1}`,
+          term: item.word || item.term || '',
+          word: item.word || item.term || '',
+          meaning: item.meaning || '',
+          phonetic: item.pronunciation ? `[${item.pronunciation}]` : (item.phonetic || ''),
+          tag: item.tag || (targetUnit?.title ? targetUnit.title.split('.')[0] : '실전 학습')
+        }));
       }
     }
 
     // 견고한 세이프 폴백 (어떤 상황에서도 빈 화면이나 1개짜리 단어가 되지 않도록 레슨별 기본 13개 단어/문장 세트 보장)
     if (!deck || deck.length === 0) {
-      if (currentFlashcardLessonId === 'node-boss') {
-        deck = [
-          { id: 'fb-nb-01', type: 'word', term: 'Vuelo', word: 'Vuelo', meaning: '항공편 / 비행기', phonetic: '[부에요]', tag: '종합 복습' },
-          { id: 'fb-nb-02', type: 'word', term: 'Pasaporte', word: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', tag: '종합 복습' },
-          { id: 'fb-nb-03', type: 'word', term: 'Equipaje', word: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', tag: '종합 복습' },
-          { id: 'fb-nb-04', type: 'word', term: 'Aduana', word: 'Aduana', meaning: '세관', phonetic: '[아두아나]', tag: '종합 복습' },
-          { id: 'fb-nb-05', type: 'word', term: 'Maleta', word: 'Maleta', meaning: '여행 가방', phonetic: '[말레타]', tag: '종합 복습' },
-          { id: 'fb-nb-06', type: 'word', term: 'Embarque', word: 'Embarque', meaning: '탑승', phonetic: '[엠바르케]', tag: '종합 복습' },
-          { id: 'fb-nb-07', type: 'word', term: 'Salida', word: 'Salida', meaning: '출구 / 출발', phonetic: '[살리다]', tag: '종합 복습' },
-          { id: 'fb-nb-08', type: 'word', term: 'Llegada', word: 'Llegada', meaning: '도착', phonetic: '[예가다]', tag: '종합 복습' },
-          { id: 'fb-nb-09', type: 'word', term: 'Billete', word: 'Billete', meaning: '티켓 / 표', phonetic: '[비예테]', tag: '종합 복습' },
-          { id: 'fb-nb-10', type: 'word', term: 'Turismo', word: 'Turismo', meaning: '관광 / 여행', phonetic: '[투리스모]', tag: '종합 복습' },
-          { id: 'fb-nb-11', type: 'sentence', term: '¿Dónde está la puerta de embarque?', word: '¿Dónde está la puerta de embarque?', meaning: '탑승구가 어디인가요?', phonetic: '[돈데 에스타 라 푸에르타 데 엠바르케]', tag: '보스 도전' },
-          { id: 'fb-nb-12', type: 'sentence', term: 'Aquí está mi pasaporte y billete.', word: 'Aquí está mi pasaporte y billete.', meaning: '여기 제 여권과 항공권입니다.', phonetic: '[아키 에스타 미 파사포르테 이 비예테]', tag: '보스 도전' },
-          { id: 'fb-nb-13', type: 'sentence', term: 'Mi maleta no ha aparecido.', word: 'Mi maleta no ha aparecido.', meaning: '제 여행 가방이 안 나왔어요.', phonetic: '[미 말레타 노 아 아파레시도]', tag: '보스 도전' }
-        ];
-      } else if (currentFlashcardLessonId === 'node-3') {
-        deck = [
-          { id: 'fb-n3-01', type: 'word', term: 'Cinta de equipaje', word: 'Cinta de equipaje', meaning: '수하물 수취대', phonetic: '[신타 데 에키파헤]', example: '¿Dónde está la cinta de equipaje?', exampleKo: '수하물 수취대가 어디인가요?', tag: '공항 필수' },
-          { id: 'fb-n3-02', type: 'word', term: 'Maleta', word: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', example: 'Esta es mi maleta negra.', exampleKo: '이것이 제 검은색 캐리어입니다.', tag: '필수 어휘' },
-          { id: 'fb-n3-03', type: 'word', term: 'Pérdida', word: 'Pérdida', meaning: '분실 / 유실물', phonetic: '[페르디다]', example: 'Quiero reportar la pérdida de mi maleta.', exampleKo: '가방 분실을 신고하고 싶습니다.', tag: '위기 대처' },
-          { id: 'fb-n3-04', type: 'word', term: 'Reclamación', word: 'Reclamación', meaning: '수하물 신고 / 청구', phonetic: '[레클라마시온]', example: 'Oficina de reclamación de equipajes.', exampleKo: '수하물 분실 및 청구 사무소.', tag: '공항 필수' },
-          { id: 'fb-n3-05', type: 'word', term: 'Etiqueta', word: 'Etiqueta', meaning: '수하물 태그', phonetic: '[에티케타]', example: 'Aquí tiene la etiqueta de su maleta.', exampleKo: '여기 수하물 태그가 있습니다.', tag: '공항 필수' },
-          { id: 'fb-n3-06', type: 'word', term: 'Inspección', word: 'Inspección', meaning: '세관 검사', phonetic: '[인스펙시온]', example: 'Abra su maleta para la inspección.', exampleKo: '검사를 위해 가방을 열어주세요.', tag: '세관 필수' },
-          { id: 'fb-n3-07', type: 'word', term: 'Impuesto', word: 'Impuesto', meaning: '세금 / 관세', phonetic: '[임푸에스토]', example: 'Tiene que pagar un impuesto.', exampleKo: '관세를 납부하셔야 합니다.', tag: '세관 필수' },
-          { id: 'fb-n3-08', type: 'word', term: 'Artículos prohibidos', word: 'Artículos prohibidos', meaning: '반입 금지 물품', phonetic: '[아르티쿨로스 프로이비도스]', example: 'No llevo artículos prohibidos.', exampleKo: '반입 금지 물품은 없습니다.', tag: '세관 규정' },
-          { id: 'fb-n3-09', type: 'word', term: 'Líquidos', word: 'Líquidos', meaning: '액체류', phonetic: '[리키도스]', example: 'Los líquidos deben estar en bolsas transparentes.', exampleKo: '액체류는 투명 비닐팩에 넣어야 합니다.', tag: '보안 규정' },
-          { id: 'fb-n3-10', type: 'word', term: 'Nada que declarar', word: 'Nada que declarar', meaning: '신고 물품 없음 / 면세', phonetic: '[나다 케 데클라라르]', example: 'Pase por el canal verde de nada que declarar.', exampleKo: '신고 물품 없음 녹색 통로로 가세요.', tag: '세관 통로' },
-          { id: 'fb-n3-11', type: 'sentence', term: 'Mi maleta no ha aparecido.', word: 'Mi maleta no ha aparecido.', meaning: '제 여행 가방이 안 나왔어요.', phonetic: '[미 말레타 노 아 아파레시도]', example: 'Mi maleta no ha aparecido en la cinta.', exampleKo: '수취대에 제 여행 가방이 나오지 않았어요.', tag: '위기 대처' },
-          { id: 'fb-n3-12', type: 'sentence', term: '¿Dónde está la oficina de equipajes?', word: '¿Dónde está la oficina de equipajes?', meaning: '분실물 보관소는 어디인가요?', phonetic: '[돈데 에스타 라 오피시나 데 에키파헤스]', example: 'Disculpe, ¿dónde está la oficina de equipajes perdidos?', exampleKo: '실례합니다, 분실물 보관소는 어디인가요?', tag: '공항 안내' },
-          { id: 'fb-n3-13', type: 'sentence', term: 'Solo llevo artículos personales.', word: 'Solo llevo artículos personales.', meaning: '개인 소지품만 가지고 있습니다.', phonetic: '[솔로 예보 아르티쿨로스 페르소날레스]', example: 'No llevo nada comercial, solo artículos personales.', exampleKo: '상업용 물품은 없고 개인 소지품만 있습니다.', tag: '세관 통관' }
-        ];
-      } else {
-        deck = [
-          { id: 'fb-n2-01', type: 'word', term: 'Pasaporte', word: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', tag: '입국 심사 필수' },
-          { id: 'fb-n2-02', type: 'word', term: 'Visado', word: 'Visado', meaning: '비자 / 입국 허가', phonetic: '[비사도]', tag: '필수 서류' },
-          { id: 'fb-n2-03', type: 'word', term: 'Propósito', word: 'Propósito', meaning: '방문 목적', phonetic: '[프로포시토]', tag: '심사 인터뷰' },
-          { id: 'fb-n2-04', type: 'word', term: 'Turismo', word: 'Turismo', meaning: '관광', phonetic: '[투리스모]', tag: '방문 유형' },
-          { id: 'fb-n2-05', type: 'word', term: 'Equipaje', word: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', tag: '공항 기본' },
-          { id: 'fb-n2-06', type: 'word', term: 'Aduana', word: 'Aduana', meaning: '세관', phonetic: '[아두아나]', tag: '입국 심사' },
-          { id: 'fb-n2-07', type: 'word', term: 'Hotel', word: 'Hotel', meaning: '호텔 / 숙소', phonetic: '[오텔]', tag: '체류 정보' },
-          { id: 'fb-n2-08', type: 'word', term: 'Estancia', word: 'Estancia', meaning: '체류 기간', phonetic: '[에스탄시아]', tag: '심사 질문' },
-          { id: 'fb-n2-09', type: 'word', term: 'Billete', word: 'Billete', meaning: '항공권 / 티켓', phonetic: '[비예테]', tag: '필수 서류' },
-          { id: 'fb-n2-10', type: 'word', term: 'Declaración', word: 'Declaración', meaning: '세관 신고서', phonetic: '[데클라라시온]', tag: '세관 필수' },
-          { id: 'fb-n2-11', type: 'sentence', term: 'Vengo de vacaciones.', word: 'Vengo de vacaciones.', meaning: '휴가차 왔습니다.', phonetic: '[벵고 데 바카시오네스]', tag: '실전 회화' },
-          { id: 'fb-n2-12', type: 'sentence', term: 'Me quedo por diez días.', word: 'Me quedo por diez días.', meaning: '10일 동안 머뭅니다.', phonetic: '[메 케도 포르 디에스 디아스]', tag: '실전 회화' },
-          { id: 'fb-n2-13', type: 'sentence', term: 'Aquí está mi reserva de hotel.', word: 'Aquí está mi reserva de hotel.', meaning: '여기 제 호텔 예약 확인서가 있습니다.', phonetic: '[아키 에스타 미 레세르바 데 오텔]', tag: '실전 회화' }
-        ];
-      }
+      deck = [
+        { id: 'fb-01', type: 'word', term: '¡Hola!', word: '¡Hola!', meaning: '안녕하세요 / 안녕', phonetic: '[올라!]', tag: '일상 인사' },
+        { id: 'fb-02', type: 'word', term: 'Buenos días', word: 'Buenos días', meaning: '좋은 아침이에요', phonetic: '[부에노스 디아스]', tag: '일상 인사' },
+        { id: 'fb-03', type: 'word', term: 'Buenas tardes', word: 'Buenas tardes', meaning: '좋은 오후예요', phonetic: '[부에나스 타르데스]', tag: '일상 인사' },
+        { id: 'fb-04', type: 'word', term: 'Buenas noches', word: 'Buenas noches', meaning: '좋은 밤 되세요', phonetic: '[부에나스 노체스]', tag: '일상 인사' },
+        { id: 'fb-05', type: 'word', term: 'Gracias', word: 'Gracias', meaning: '감사합니다', phonetic: '[그라시아스]', tag: '일상 인사' },
+        { id: 'fb-06', type: 'word', term: 'Muchas gracias', word: 'Muchas gracias', meaning: '정말 감사합니다', phonetic: '[무차스 그라시아스]', tag: '일상 인사' },
+        { id: 'fb-07', type: 'word', term: 'De nada', word: 'De nada', meaning: '천만에요 / 별말씀을요', phonetic: '[데 나다]', tag: '일상 인사' },
+        { id: 'fb-08', type: 'word', term: 'Por favor', word: 'Por favor', meaning: '부탁합니다 / 제발', phonetic: '[포르 파보르]', tag: '일상 인사' },
+        { id: 'fb-09', type: 'word', term: 'Perdón', word: 'Perdón', meaning: '미안해요 / 잠시만요', phonetic: '[페르돈]', tag: '일상 인사' },
+        { id: 'fb-10', type: 'word', term: 'Lo siento', word: 'Lo siento', meaning: '죄송합니다', phonetic: '[로 시엔토]', tag: '일상 인사' },
+        { id: 'fb-11', type: 'word', term: 'Mucho gusto', word: 'Mucho gusto', meaning: '만나서 반갑습니다', phonetic: '[무초 구스토]', tag: '일상 인사' },
+        { id: 'fb-12', type: 'word', term: '¡Adiós!', word: '¡Adiós!', meaning: '안녕히 가세요', phonetic: '[아디오스!]', tag: '일상 인사' },
+        { id: 'fb-13', type: 'sentence', term: '¡Hola! ¿Cómo estás? Muy bien, gracias.', word: '¡Hola! ¿Cómo estás? Muy bien, gracias.', meaning: '안녕! 어떻게 지내? 아주 잘 지내, 고마워.', phonetic: '[올라! 코모 에스타스? 무이 비엔, 그라시아스.]', tag: '실전 회화' }
+      ];
     }
 
     // 최소 13개 보장 (부족 시 순환 패딩)

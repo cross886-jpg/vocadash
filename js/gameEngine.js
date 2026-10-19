@@ -1206,7 +1206,7 @@
       const uniqueCandidates = Array.from(new Set(candidates));
       let distractors = shuffleArray(uniqueCandidates).slice(0, 3);
       if (distractors.length < 3) {
-        const fallbacks = ['안녕하세요!', '감사합니다', '부탁합니다', '여권', '관광', '수하물', '체류 기간', '세관 신고서'];
+        const fallbacks = ['안녕하세요!', '감사합니다', '부탁합니다', '좋은 아침이에요', '미안해요', '잘 부탁해요', '얼마인가요?', '맛있어요'];
         for (const fb of fallbacks) {
           if (fb !== correctMeaning && !distractors.includes(fb)) {
             distractors.push(fb);
@@ -1218,7 +1218,7 @@
     } catch (err) {
       console.warn('generateQuestionChoices error fallback:', err);
       const fallbackAns = String(q && (q.meaning || q.answer || '정답') || '정답').trim();
-      return [fallbackAns, '여권', '관광', '감사합니다'];
+      return [fallbackAns, '감사합니다', '안녕하세요!', '좋은 아침이에요'];
     }
   }
   window.generateQuestionChoices = generateQuestionChoices;
@@ -1234,10 +1234,10 @@
         const cd = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
         const units = (cd && Array.isArray(cd.units)) ? cd.units : [];
         return {
-          'node-1': { title: units[0]?.title || '1과: 기내 기본 표현', es: units[0]?.words || [], en: units[0]?.words || [] },
-          'node-2': { title: units[1]?.title || '2과: 입국 심사', es: units[1]?.words || [], en: units[1]?.words || [], words: units[1]?.words || [], sentences: [] },
-          'node-3': { title: units[2]?.title || '3과: 수하물 찾기와 세관', es: units[2]?.words || [], en: units[2]?.words || [] },
-          'node-boss': { title: units[3]?.title || '보스전: 마스터 관문', es: units[3]?.words || (cd?.allWords || []), en: units[3]?.words || [] }
+          'node-1': { title: units[0]?.title || '1과: 첫 만남과 감사', es: units[0]?.words || [], en: units[0]?.words || [] },
+          'node-2': { title: units[1]?.title || '2과: 사과와 작별 인사', es: units[1]?.words || [], en: units[1]?.words || [], words: units[1]?.words || [], sentences: [] },
+          'node-3': { title: units[2]?.title || '3과: 핵심 문장', es: units[2]?.words || [], en: units[2]?.words || [] },
+          'node-boss': { title: units[3]?.title || 'Unit 1 보스전', es: units[3]?.words || (cd?.allWords || []), en: units[3]?.words || [] }
         };
       }
     });
