@@ -57,8 +57,8 @@
   // 2. 하단 탭 네비게이션 & 주요 화면 라우터 (switchMainTab)
   // ===================================================
   function setTabActive(activeTabEl) {
-    const activeClasses = ['w-11', 'h-11', 'bg-white', 'text-slate-900', 'shadow-md'];
-    const inactiveClasses = ['p-2', 'text-slate-400', 'hover:text-white'];
+    const activeClasses = ['bg-emerald-500', 'text-white', 'shadow-lg', 'shadow-emerald-500/30'];
+    const inactiveClasses = ['text-slate-400', 'hover:text-slate-200'];
 
     document.querySelectorAll('.nav-item').forEach((n) => {
       n.classList.remove('text-primary', 'font-bold', 'text-[#22c55e]');
@@ -67,7 +67,9 @@
       const iconContainer = n.querySelector('.nav-icon-container');
       if (iconContainer) {
         iconContainer.classList.remove(...activeClasses);
+        iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-11', 'h-11', 'p-2', 'hover:text-white', 'shadow-md');
         iconContainer.classList.add(...inactiveClasses);
+        iconContainer.classList.add('w-12', 'h-12', 'rounded-full');
       }
     });
     if (activeTabEl) {
@@ -77,7 +79,9 @@
       const iconContainer = activeTabEl.querySelector('.nav-icon-container');
       if (iconContainer) {
         iconContainer.classList.remove(...inactiveClasses);
+        iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-11', 'h-11', 'p-2', 'hover:text-white');
         iconContainer.classList.add(...activeClasses);
+        iconContainer.classList.add('w-12', 'h-12', 'rounded-full');
       }
     }
   }
