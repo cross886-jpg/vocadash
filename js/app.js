@@ -2488,7 +2488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const activeCourse = getCurrentCourseData();
     let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
-    if (activeCourse && activeCourse.units) {
+    if (activeCourse && (activeCourse.id === 'pack_football' || activeCourse.courseId === 'pack_football') && activeCourse.units) {
       if (Array.isArray(activeCourse.units)) {
         units = activeCourse.units;
       } else if (activeCourse.units[lang]) {
@@ -2640,7 +2640,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uNum = parseInt(unitNum, 10) || 2;
     const activeCourse = getCurrentCourseData();
     let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
-    if (activeCourse && activeCourse.units) {
+    if (activeCourse && (activeCourse.id === 'pack_football' || activeCourse.courseId === 'pack_football') && activeCourse.units) {
       if (Array.isArray(activeCourse.units)) {
         units = activeCourse.units;
       } else if (activeCourse.units[lang]) {
@@ -2991,7 +2991,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let session = [];
     if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
       session = getFootballStageSession(targetNodeId);
-    } else if (window.VOCA_DATA) {
+    } else if (typeof window.generateStageSession === 'function') {
+      session = window.generateStageSession(targetNodeId, window.currentActiveCourse, round);
+    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
       session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round);
     }
 
@@ -3030,7 +3032,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let session = [];
     if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
       session = getFootballStageSession(targetNodeId);
-    } else if (window.VOCA_DATA) {
+    } else if (typeof window.generateStageSession === 'function') {
+      session = window.generateStageSession(targetNodeId, window.currentActiveCourse, 0);
+    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
       session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, 0);
     }
     window.currentSessionQuestions = session;
@@ -3610,7 +3614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       }
       if (!totalWords) totalWords = 60;
-    } else if (courseData && courseData.id && courseData.id !== 'main' && Array.isArray(courseData.units)) {
+    } else if (courseData && courseData.id && courseData.id !== 'main' && courseData.id !== 'es_main' && Array.isArray(courseData.units)) {
       totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       if (!totalWords) totalWords = 120;
     } else {

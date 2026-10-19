@@ -1109,6 +1109,149 @@
   }
   window.getDistractorOptions = getDistractorOptions;
 
+  function normalizeLessonId(id) {
+    if (!id) return 'node-2';
+    const s = String(id).trim().toLowerCase();
+    if (s.includes('boss') || s.includes('4') || s === 'node-boss' || s === 'node-4') return 'node-boss';
+    if (s.includes('3') || s === 'node-3') return 'node-3';
+    if (s.includes('1') || s === 'node-1') return 'node-1';
+    return 'node-2';
+  }
+  window.normalizeLessonId = normalizeLessonId;
+
+  // 공통 스테이지 세션 문제 생성기 (getCurrentCourseData 기반)
+  function generateStageSession(lessonId = 'node-2', lang = 'es', roundIndex = 0) {
+    const normId = normalizeLessonId(lessonId);
+    const targetCourse = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : ((window.COURSES && window.COURSES[lang]) ? window.COURSES[lang] : (window.courseData_es || window.courseData));
+
+    if (!targetCourse || !Array.isArray(targetCourse.units) || targetCourse.units.length === 0) {
+      return [];
+    }
+
+    let unitIdx = 1;
+    if (normId === 'node-1') unitIdx = 0;
+    else if (normId === 'node-3') unitIdx = 2;
+    else if (normId === 'node-boss') unitIdx = (targetCourse.units.length > 3 ? 3 : targetCourse.units.length - 1);
+
+    const targetUnit = targetCourse.units[unitIdx] || targetCourse.units[0];
+    let pool = (normId === 'node-boss' && Array.isArray(targetCourse.allWords) && targetCourse.allWords.length > 0)
+      ? targetCourse.allWords.slice()
+      : (targetUnit && Array.isArray(targetUnit.words) ? targetUnit.words.slice() : []);
+
+    if (pool.length === 0 && targetCourse.units[0] && Array.isArray(targetCourse.units[0].words)) {
+      pool = targetCourse.units[0].words.slice();
+    }
+
+    if (pool.length === 0) return [];
+
+    const shuffled = shuffleArray(pool);
+    let selected = shuffled.slice(0, 13);
+    if (selected.length < 13 && pool.length > 0) {
+      let pIdx = 0;
+      while (selected.length < 13) {
+        selected.push({ ...pool[pIdx % pool.length] });
+        pIdx++;
+      }
+    }
+
+    return selected.map((item, idx) => {
+      const isSent = Boolean(item.type === 'sentence' || item.isSentence || (item.word && item.word.includes(' ') && item.word.length > 15));
+      const wordStr = item.word || item.term || '';
+      const meanStr = item.meaning || '';
+      const pronStr = item.pronunciation || item.pron || '';
+      return {
+        ...item,
+        id: item.id || `q_${unitIdx + 1}_${idx + 1}`,
+        word: wordStr,
+        term: wordStr,
+        meaning: meanStr,
+        pronunciation: pronStr,
+        pron: pronStr,
+        phonetic: item.phonetic || (pronStr ? `[${pronStr}]` : ''),
+        example: item.example || item.exampleTarget || '',
+        exampleTarget: item.example || item.exampleTarget || '',
+        exampleKo: item.exampleKo || item.exampleMeaning || meanStr,
+        exampleMeaning: item.exampleKo || item.exampleMeaning || meanStr,
+        type: isSent ? 'sentence' : 'word',
+        isSentence: isSent,
+        tag: item.tag || (isSent ? '실전 문장' : (targetUnit && targetUnit.title ? targetUnit.title.split('.')[0] : '핵심 어휘'))
+      };
+    });
+  }
+  window.generateStageSession = generateStageSession;
+
+  // 4지선다 오답 보기 생성기 (getCurrentCourseData 기반)
+  function generateQuestionChoices(q, sessionQuestions, lessonId = 'node-2', lang = 'es') {
+    try {
+      if (!q) return [];
+      const correctMeaning = String(q.meaning || q.answer || q.korean || q.ko || '').trim();
+      const currentCourse = (typeof window.getCurrentCourseData === 'function')
+        ? window.getCurrentCourseData()
+        : (window.courseData_es || window.courseData);
+      const allCourseWords = (currentCourse && Array.isArray(currentCourse.units))
+        ? currentCourse.units.flatMap(u => (Array.isArray(u.words) ? u.words : []))
+        : (Array.isArray(sessionQuestions) ? sessionQuestions : []);
+
+      const candidates = allCourseWords
+        .filter(w => {
+          if (!w) return false;
+          if (q.id && w.id === q.id) return false;
+          const m = String(w.meaning || w.korean || '').trim();
+          return m && m !== correctMeaning;
+        })
+        .map(w => String(w.meaning || w.korean || '').trim());
+
+      const uniqueCandidates = Array.from(new Set(candidates));
+      let distractors = shuffleArray(uniqueCandidates).slice(0, 3);
+      if (distractors.length < 3) {
+        const fallbacks = ['안녕하세요!', '감사합니다', '부탁합니다', '여권', '관광', '수하물', '체류 기간', '세관 신고서'];
+        for (const fb of fallbacks) {
+          if (fb !== correctMeaning && !distractors.includes(fb)) {
+            distractors.push(fb);
+            if (distractors.length >= 3) break;
+          }
+        }
+      }
+      return shuffleArray([correctMeaning, ...distractors]);
+    } catch (err) {
+      console.warn('generateQuestionChoices error fallback:', err);
+      const fallbackAns = String(q && (q.meaning || q.answer || '정답') || '정답').trim();
+      return [fallbackAns, '여권', '관광', '감사합니다'];
+    }
+  }
+  window.generateQuestionChoices = generateQuestionChoices;
+
+  // 하위 호환성 레이어 (window.VOCA_DATA)
+  if (!window.VOCA_DATA) window.VOCA_DATA = {};
+  window.VOCA_DATA.generateStageSession = generateStageSession;
+  window.VOCA_DATA.generateQuestionChoices = generateQuestionChoices;
+  if (!window.VOCA_DATA.database) {
+    Object.defineProperty(window.VOCA_DATA, 'database', {
+      configurable: true,
+      get() {
+        const cd = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
+        const units = (cd && Array.isArray(cd.units)) ? cd.units : [];
+        return {
+          'node-1': { title: units[0]?.title || '1과: 기내 기본 표현', es: units[0]?.words || [], en: units[0]?.words || [] },
+          'node-2': { title: units[1]?.title || '2과: 입국 심사', es: units[1]?.words || [], en: units[1]?.words || [], words: units[1]?.words || [], sentences: [] },
+          'node-3': { title: units[2]?.title || '3과: 수하물 찾기와 세관', es: units[2]?.words || [], en: units[2]?.words || [] },
+          'node-boss': { title: units[3]?.title || '보스전: 마스터 관문', es: units[3]?.words || (cd?.allWords || []), en: units[3]?.words || [] }
+        };
+      }
+    });
+  }
+  if (!window.VOCA_DATA.words) {
+    Object.defineProperty(window.VOCA_DATA, 'words', {
+      configurable: true,
+      get() {
+        const cd = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
+        return (cd && Array.isArray(cd.allWords)) ? cd.allWords : [];
+      }
+    });
+  }
+
   function spawnQuestion(index) {
     try {
       clearAllGameTimers();

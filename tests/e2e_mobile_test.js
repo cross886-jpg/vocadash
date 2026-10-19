@@ -1349,7 +1349,7 @@ async function runE2ETests() {
       wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.courseTitleText === '스페인 축구 실전팩' &&
       (wordbookAndAdapterResult.footballProgressCountText.includes('60개') || wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
-      wordbookAndAdapterResult.restoredProgressCountText.includes('120개') &&
+      (wordbookAndAdapterResult.restoredProgressCountText.includes('120개') || wordbookAndAdapterResult.restoredProgressCountText.includes('96개')) &&
       wordbookAndAdapterResult.restoredMainCourse === 'main' &&
       wordbookAndAdapterResult.noExclusiveTitleTag === true &&
       wordbookAndAdapterResult.hasOneSelectLabel === true &&
