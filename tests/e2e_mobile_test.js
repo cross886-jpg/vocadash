@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=79`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=81`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {

@@ -57,7 +57,7 @@
   // 2. 하단 탭 네비게이션 & 주요 화면 라우터 (switchMainTab)
   // ===================================================
   function setTabActive(activeTabEl) {
-    const activeClasses = ['bg-emerald-500', 'text-white', 'shadow-md', 'shadow-emerald-500/25'];
+    const activeClasses = ['bg-emerald-500', 'text-white', 'shadow-md', 'shadow-emerald-500/30', 'shrink-0', 'aspect-square'];
     const inactiveClasses = ['text-slate-400', 'hover:text-slate-600', 'active:scale-95'];
 
     document.querySelectorAll('.nav-item').forEach((n) => {
@@ -67,9 +67,9 @@
       const iconContainer = n.querySelector('.nav-icon-container');
       if (iconContainer) {
         iconContainer.classList.remove(...activeClasses);
-        iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-12', 'h-12', 'p-2', 'hover:text-white', 'hover:text-slate-200', 'shadow-lg', 'shadow-emerald-500/30');
+        iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-12', 'h-12', 'p-2', 'hover:text-white', 'hover:text-slate-200', 'shadow-lg', 'shadow-emerald-500/25', 'shadow-emerald-500/30');
         iconContainer.classList.add(...inactiveClasses);
-        iconContainer.classList.add('w-11', 'h-11', 'rounded-full');
+        iconContainer.classList.add('w-11', 'h-11', 'rounded-full', 'shrink-0', 'aspect-square');
       }
     });
     if (activeTabEl) {
@@ -81,7 +81,7 @@
         iconContainer.classList.remove(...inactiveClasses);
         iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-12', 'h-12', 'p-2', 'hover:text-white', 'hover:text-slate-200');
         iconContainer.classList.add(...activeClasses);
-        iconContainer.classList.add('w-11', 'h-11', 'rounded-full');
+        iconContainer.classList.add('w-11', 'h-11', 'rounded-full', 'shrink-0', 'aspect-square');
       }
     }
   }

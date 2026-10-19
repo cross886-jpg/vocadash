@@ -2108,14 +2108,49 @@
 
     const roundProg = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
     const isBoss = (currentGameLessonId === 'node-boss' || String(currentGameLessonId).includes('boss'));
-    const stageName = window.isUnitSkipTestMode ? `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`
-      : window.isRoadmapReviewSpeedrun ? '⚡ 약점 극복 스피드 런 (10문제)'
-      : currentGameLessonId === 'node-1' ? 'Stage 1: 기내 기본 표현'
-      : currentGameLessonId === 'node-3' ? 'Stage 3: 수하물과 세관'
-      : isBoss ? 'Stage 4: 일상 기초 (보스전)'
-      : 'Stage 2: 입국 심사';
-    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun || window.isUnitSkipTestMode) ? '' : ` (${Math.min(3, roundProg + 1)}/3)`;
-    if (gameStageTitle) gameStageTitle.textContent = `${stageName}${subRoundText}`;
+
+    const activeCourse = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : (currentCourseData || window.courseData));
+    const currentUnitIndex = unitIndex;
+    const currentUnit = (activeCourse && Array.isArray(activeCourse.units))
+      ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
+      : targetUnit;
+    let unitTitle = currentUnit ? (currentUnit.title || currentUnit.name) : `Unit ${currentUnitIndex + 1}`;
+    if (unitTitle) {
+      unitTitle = unitTitle.replace(/^Unit\s*\d+\.\s*/i, '').trim();
+      if (unitTitle.includes(' 필수 어휘')) {
+        unitTitle = unitTitle.replace(' 필수 어휘', '').trim();
+      }
+    }
+
+    const totalSubStages = 3;
+    const currentSubStage = Math.min(totalSubStages, (roundProg || 0) + 1);
+
+    let stageName = '';
+    if (window.isUnitSkipTestMode) {
+      stageName = `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`;
+    } else if (window.isRoadmapReviewSpeedrun) {
+      stageName = '⚡ 약점 극복 스피드 런 (10문제)';
+    } else if (isBoss) {
+      stageName = `Stage ${currentUnitIndex + 1}: ${unitTitle} (보스전)`;
+    } else {
+      stageName = `Stage ${currentUnitIndex + 1}: ${unitTitle}`;
+    }
+
+    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun || window.isUnitSkipTestMode) ? '' : ` (${currentSubStage}/${totalSubStages})`;
+
+    const stageBadgeEl = gameStageTitle || document.getElementById('game-stage-title');
+    if (stageBadgeEl) {
+      stageBadgeEl.textContent = `${stageName}${subRoundText}`;
+      const badgeContainer = stageBadgeEl.closest('.flex');
+      if (badgeContainer) {
+        const badgeIcon = badgeContainer.querySelector('.material-symbols-outlined');
+        if (badgeIcon) {
+          badgeIcon.textContent = activeCourseId === 'pack_football' ? 'inventory_2' : 'local_activity';
+        }
+      }
+    }
 
     if (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) {
       currentHearts = (typeof window.userHearts === 'number' && window.userHearts > 0) ? window.userHearts : 3;
