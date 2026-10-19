@@ -325,6 +325,16 @@
       bottomNav.style.display = 'none';
     }
 
+    let isMiniWrongReview = false;
+    if (Array.isArray(lessonId)) {
+      session = lessonId;
+      lessonId = window.currentGameLessonId || 'node-2';
+      isMiniWrongReview = true;
+      window.isWrongWordsMiniReviewActive = true;
+    } else if (window.isWrongWordsMiniReviewActive) {
+      isMiniWrongReview = true;
+    }
+
     currentFlashcardLessonId = lessonId || 'node-2';
     if (currentFlashcardLessonId === 'node-boss' || currentFlashcardLessonId === 'boss' || currentFlashcardLessonId === 'stage-boss' || currentFlashcardLessonId === 'node-4' || currentFlashcardLessonId === '4') {
       currentFlashcardLessonId = 'node-boss';
@@ -394,8 +404,8 @@
       ];
     }
 
-    // 최소 13개 보장 (부족 시 순환 패딩)
-    if (deck.length < 13) {
+    // 최소 13개 보장 (일반 예습 모드에서만 순환 패딩, 오답 집중 미니 복습은 패딩 제외)
+    if (!isMiniWrongReview && deck.length < 13) {
       const origDeck = deck.slice();
       let padIdx = 0;
       while (deck.length < 13) {
@@ -409,17 +419,17 @@
       word: item.word || item.term || '',
       term: item.term || item.word || '',
       meaning: item.meaning || item.korean || '',
-      phonetic: item.phonetic || '',
+      phonetic: item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : ''),
       exampleTarget: item.exampleTarget || item.example || '',
       exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || '',
-      isSentence: item.type === 'sentence' || item.isSentence || idx >= 10,
-      tag: item.tag || (item.type === 'sentence' ? '실전 문장' : '핵심 어휘')
+      isSentence: item.type === 'sentence' || item.isSentence || (!isMiniWrongReview && idx >= 10),
+      tag: item.tag || (isMiniWrongReview ? '오답 복습' : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
     }));
 
     window.currentSessionQuestions = activeDeck;
     console.log('📚 [Flashcard] 단어 덱 주입 완료: 레슨', currentFlashcardLessonId, '총', activeDeck.length, '개 단어');
     const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
-    currentLessonDeckTitle = `${unitTitle} · 단어 예습`;
+    currentLessonDeckTitle = isMiniWrongReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
     currentCardIndex = 0;
     isCardFlipped = false;
     isCardTransitioning = false;
@@ -498,6 +508,9 @@
   function closeFlashcardScreen(restoreRoadmap = true) {
     isCardTransitioning = false;
     stopTTS();
+    if (restoreRoadmap) {
+      window.isWrongWordsMiniReviewActive = false;
+    }
     if (flashcardContainer) {
       flashcardContainer.classList.remove('translate-y-0');
       flashcardContainer.classList.add('translate-y-full');
@@ -624,7 +637,9 @@
       flashcardNextBtn.style.minWidth = '48px';
       flashcardNextBtn.style.whiteSpace = 'nowrap';
       if (isLastCard) {
-        flashcardNextBtn.innerHTML = '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>';
+        flashcardNextBtn.innerHTML = window.isWrongWordsMiniReviewActive
+          ? '<span>학습 완료</span><span class="material-symbols-outlined text-[16px] ml-0.5">check_circle</span>'
+          : '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>';
       } else {
         flashcardNextBtn.innerHTML = '<span>다음</span><span class="material-symbols-outlined text-[16px]">chevron_right</span>';
       }
@@ -632,20 +647,22 @@
 
     if (flashcardCtaBtn) {
       if (isLastCard) {
-        flashcardCtaBtn.className = 'w-full h-14 bg-[#2563EB] hover:bg-[#1d4ed8] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#1d4ed8,0_10px_16px_-4px_rgba(37,99,235,0.4)] active:shadow-[0_2px_0_0_#1d4ed8] transition-all cursor-pointer';
+        flashcardCtaBtn.className = window.isWrongWordsMiniReviewActive
+          ? 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] active:shadow-[0_2px_0_0_#b45309] transition-all cursor-pointer'
+          : 'w-full h-14 bg-[#2563EB] hover:bg-[#1d4ed8] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#1d4ed8,0_10px_16px_-4px_rgba(37,99,235,0.4)] active:shadow-[0_2px_0_0_#1d4ed8] transition-all cursor-pointer';
       } else {
         flashcardCtaBtn.className = 'w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] active:shadow-[0_2px_0_0_#15803d] transition-all cursor-pointer';
       }
     }
     if (flashcardCtaText) {
       if (isLastCard) {
-        flashcardCtaText.textContent = '⚡ 단어 예습 완료! 게임 시작';
+        flashcardCtaText.textContent = window.isWrongWordsMiniReviewActive ? '학습 완료' : '⚡ 단어 예습 완료! 게임 시작';
       } else {
         flashcardCtaText.textContent = `다음 단어 보기 (${stepNum}/${total})`;
       }
     }
     if (flashcardCtaIcon) {
-      flashcardCtaIcon.textContent = isLastCard ? 'sports_esports' : 'chevron_right';
+      flashcardCtaIcon.textContent = isLastCard ? (window.isWrongWordsMiniReviewActive ? 'check_circle' : 'sports_esports') : 'chevron_right';
     }
 
     // Behind card teaser
@@ -694,7 +711,17 @@
     // 1) 플래시카드 화면 완전 숨김 (로드맵 복원은 하지 않음: 바로 액션 게임으로 진입)
     closeFlashcardScreen(false);
 
-    // 2) 액션 게임 화면(#game-screen)의 hidden 제거 및 안전 시작
+    // 2) 오답 복습 완료 시: 바로 다음 회차/스테이지 게임으로 직행
+    if (window.isWrongWordsMiniReviewActive) {
+      window.isWrongWordsMiniReviewActive = false;
+      if (window.showToast) window.showToast('🚀 오답 복습 완료! 게임을 시작합니다!', '✨');
+      if (typeof window.startNextRoundOrStageDirectly === 'function') {
+        window.startNextRoundOrStageDirectly();
+        return;
+      }
+    }
+
+    // 3) 액션 게임 화면(#game-screen)의 hidden 제거 및 안전 시작
     const gameScreen = document.getElementById('game-screen');
     if (gameScreen) {
       gameScreen.classList.remove('hidden');
