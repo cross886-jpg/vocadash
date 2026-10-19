@@ -305,13 +305,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.activeCourseId = activeCourseId;
 
-  // 현재 활성화된 코스 데이터를 반환하는 헬퍼 함수
+  // ===================================================
+  // 코스 데이터 레지스트리 (COURSES) 및 getCurrentCourseData() 일원화
+  // ===================================================
+  const COURSES = {
+    get 'es_main'() { return window.courseData_es || window.courseData; },
+    get 'pack_football'() { return window.packFootballData; },
+    get 'en_main'() { return window.courseData_en; },
+    get 'main'() {
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+      return (curLang === 'en' && window.courseData_en) ? window.courseData_en : (window.courseData_es || window.courseData);
+    },
+    get 'main_en'() { return window.courseData_en; },
+    get 'main_es'() { return window.courseData_es || window.courseData; }
+  };
+  window.COURSES = COURSES;
+
+  // 레거시 호환용 기본 fallback 보장
+  if (typeof window !== 'undefined' && window.courseData_es && !window.courseData) {
+    window.courseData = window.courseData_es;
+  }
+
   function getCurrentCourseData() {
-    const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
-    if (activeCourseId === 'pack_football' && window.packFootballData) {
-      return window.packFootballData;
+    let activeId = 'es_main';
+    try {
+      activeId = localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+    } catch (_) {
+      activeId = (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
     }
-    return window.courseData; // 기본 메인 코스
+    if (activeId === 'main') {
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+      activeId = (curLang === 'en' && window.courseData_en) ? 'en_main' : 'es_main';
+    }
+    return (window.COURSES && window.COURSES[activeId]) || window.courseData_es || window.courseData;
   }
   window.getCurrentCourseData = getCurrentCourseData;
 

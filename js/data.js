@@ -1116,6 +1116,7 @@
     window.COURSE_PRESETS = COURSE_PRESETS;
     window.COURSE_LESSONS = COURSE_LESSONS;
     window.courseData = courseData;
+    window.courseData_es = courseData;
     window.packFootballData = packFootballData;
     window.nodeLessonData = nodeLessonData;
     window.courseCategoryMap = courseCategoryMap;
