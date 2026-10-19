@@ -4959,15 +4959,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const activeTabEl = targetConfig ? targetConfig.tab : null;
-      document.querySelectorAll('.nav-item').forEach((n) => {
-        n.classList.remove('text-primary', 'font-bold', 'text-[#22c55e]');
-        n.classList.add('text-on-surface-variant');
-        n.removeAttribute('aria-current');
-      });
-      if (activeTabEl) {
-        activeTabEl.classList.remove('text-on-surface-variant');
-        activeTabEl.classList.add('text-primary', 'font-bold');
-        activeTabEl.setAttribute('aria-current', 'page');
+      if (typeof window.setTabActive === 'function') {
+        window.setTabActive(activeTabEl);
+      } else {
+        document.querySelectorAll('.nav-item').forEach((n) => {
+          n.classList.remove('text-primary', 'font-bold', 'text-[#22c55e]');
+          n.classList.add('text-on-surface-variant');
+          n.removeAttribute('aria-current');
+        });
+        if (activeTabEl) {
+          activeTabEl.classList.remove('text-on-surface-variant');
+          activeTabEl.classList.add('text-primary', 'font-bold');
+          activeTabEl.setAttribute('aria-current', 'page');
+        }
       }
 
       if (normTab === 'records') {

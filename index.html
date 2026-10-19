@@ -277,8 +277,27 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
 
+  <!-- Cache-Control & PWA SW Cleanup (?v=88) -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (var i = 0; i < registrations.length; i++) {
+          registrations[i].unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        names.forEach(function(name) { caches.delete(name); });
+      });
+    }
+  </script>
+
   <!-- Custom CSS & Keyframe Animations -->
-  <link rel="stylesheet" href="css/style.css?v=81">
+  <link rel="stylesheet" href="css/style.css?v=88">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -297,7 +316,7 @@
       <div class="flex flex-col items-center text-center -mt-8">
         <div class="relative w-36 h-36 flex items-center justify-center mb-5">
           <div class="absolute inset-0 bg-emerald-100/70 rounded-full blur-2xl transform scale-110 animate-pulse"></div>
-          <img id="splash-mascot-img" alt="VocaDash Cat Mascot" class="relative z-10 w-32 h-32 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)] transition-transform duration-300 transform hover:scale-105" src="assets/characters/es-idle.webp?v=81">
+          <img id="splash-mascot-img" alt="VocaDash Cat Mascot" class="relative z-10 w-32 h-32 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)] transition-transform duration-300 transform hover:scale-105" src="assets/characters/es-idle.webp?v=88">
         </div>
         <h1 class="font-headline-lg text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none flex items-center justify-center">Voca<span class="text-[#22c55e]">Dash</span></h1>
         <p class="font-body-md text-[15px] font-semibold text-slate-500 mt-2.5 tracking-tight">
@@ -366,7 +385,7 @@
             <!-- 상단 원형 프로필 고양이 아바타 버튼 (w-7 h-7, 클릭 시 프로필 선택 모달 열기) -->
             <button id="btn-header-profile" type="button" class="flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 transition-all rounded-full border-2 border-emerald-500/30 hover:border-emerald-500 shadow-xs focus:outline-none select-none" title="프로필 고양이 변경">
               <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center bg-slate-50">
-                <img id="header-mascot-img" alt="프로필 고양이" class="w-full h-full object-cover rounded-full crisp-avatar" src="assets/profiles/profile-spanish.webp?v=81">
+                <img id="header-mascot-img" alt="프로필 고양이" class="w-full h-full object-cover rounded-full crisp-avatar" src="assets/profiles/profile-spanish.webp?v=88">
               </div>
             </button>
           </div>
@@ -432,7 +451,7 @@
         <div class="absolute top-[185px] left-3 z-20 flex items-end pointer-events-none select-none animate-float-gentle">
           <div class="relative flex flex-col items-center">
             <div class="w-14 h-14 relative drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)]">
-              <img id="roadmap-runner-cat-img" src="assets/characters/es-run.webp?v=81" alt="러너 고양이" class="w-full h-full object-contain filter drop-shadow">
+              <img id="roadmap-runner-cat-img" src="assets/characters/es-run.webp?v=88" alt="러너 고양이" class="w-full h-full object-contain filter drop-shadow">
               <!-- 선글라스 데코 이모지 -->
               <span class="absolute top-1 left-2.5 text-base drop-shadow-xs">🕶️</span>
             </div>
@@ -722,7 +741,7 @@
                 <div id="review-cat-banner-tile" role="button" tabindex="0" title="1분 스피드 복습 시작" class="relative shrink-0 flex flex-col items-center justify-center pt-1 pb-1 cursor-pointer group active:scale-95 transition-transform duration-150 select-none">
                   <div class="relative w-[84px] h-[84px] flex items-center justify-center">
                     <div class="absolute inset-0 bg-primary-container/20 rounded-full blur-md transform scale-95 group-hover:scale-110 transition-transform"></div>
-                    <img alt="Determination Mascot Black Cat" class="relative z-10 w-[80px] h-[80px] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition-transform duration-300 group-hover:scale-105" src="assets/characters/es-run.webp?v=81">
+                    <img alt="Determination Mascot Black Cat" class="relative z-10 w-[80px] h-[80px] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition-transform duration-300 group-hover:scale-105" src="assets/characters/es-run.webp?v=88">
                   </div>
                   <div id="review-cat-heart-badge" class="mt-1 px-2 py-0.5 rounded-full bg-surface-container-lowest shadow-sm flex items-center gap-1 border border-outline-variant/30 group-hover:border-error/40 group-active:scale-95 transition-all cursor-pointer">
                     <span class="text-[11px] leading-none select-none">❤️</span>
@@ -1120,7 +1139,7 @@
             </div>
             <!-- Cat Mascot Sticker Badge -->
             <div class="relative shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-2xl overflow-hidden shadow-sm bg-emerald-50/50 flex items-center justify-center border border-emerald-100/60">
-              <img alt="Cute scholarly black cat mascot reading book" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-study.webp?v=81" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-2xl select-none\'>📚</div>';" />
+              <img alt="Cute scholarly black cat mascot reading book" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-study.webp?v=88" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-2xl select-none\'>📚</div>';" />
             </div>
           </div>
           <!-- [⚡ 오답 탈출 런] 액션 버튼 -->
@@ -1471,7 +1490,7 @@
           <div id="settings-streak-banner" class="mt-2 mb-2 bg-surface-container rounded-2xl p-4 flex items-center justify-between shadow-xs relative overflow-hidden">
             <div class="flex items-center gap-3 z-10">
               <div id="settings-streak-avatar-container" class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-sm bg-surface-container-lowest flex items-center justify-center ring-2 ring-primary/30 cursor-pointer hover:scale-105 active:scale-95 transition-transform" title="프로필 변경">
-                <img id="settings-streak-avatar-img" alt="프로필 고양이 아바타" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp?v=81"/>
+                <img id="settings-streak-avatar-img" alt="프로필 고양이 아바타" class="w-full h-full object-cover rounded-full" src="assets/profiles/profile-spanish.webp?v=88"/>
               </div>
               <div class="flex flex-col">
                 <div class="flex items-center gap-1.5">
@@ -1504,7 +1523,7 @@
               <!-- 1. 스페인 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-spanish.webp" data-avatar-name="스페인 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all">
-                  <img src="assets/profiles/profile-spanish.webp?v=81" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-spanish.webp?v=88" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1515,7 +1534,7 @@
               <!-- 2. 잉글리시 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-english.webp" data-avatar-name="잉글리시 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-english.webp?v=81" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-english.webp?v=88" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1526,7 +1545,7 @@
               <!-- 3. 아티스트 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-artist.webp" data-avatar-name="아티스트 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-artist.webp?v=81" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-artist.webp?v=88" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1537,7 +1556,7 @@
               <!-- 4. 탐험가 냥이 -->
               <button type="button" class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group" data-avatar-file="profile-explorer.webp" data-avatar-name="탐험가 냥이">
                 <div class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-explorer.webp?v=81" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
+                  <img src="assets/profiles/profile-explorer.webp?v=88" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
                   <div class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
                     <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                   </div>
@@ -1963,7 +1982,7 @@
               <div class="relative w-[100px] h-[100px] rounded-full p-1 bg-white shadow-lg shadow-emerald-500/10 ring-4 ring-emerald-50 flex items-center justify-center">
                 <div class="w-full h-full rounded-full overflow-hidden bg-slate-50 flex items-center justify-center">
                   <img alt="VocaDash Scholar Mascot" class="w-full h-full object-cover" 
-                    src="assets/characters/es-study.webp?v=81"
+                    src="assets/characters/es-study.webp?v=88"
                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-3xl select-none\'>🐱</div>';"/>
                 </div>
               </div>
@@ -2052,11 +2071,11 @@
     <!-- ================================================= -->
     <!-- 3. WHITE FLOATING PILL BOTTOM NAVIGATION BAR      -->
     <!-- ================================================= -->
-    <nav id="bottom-nav" class="fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-50 border border-slate-200/90 px-3 flex items-center justify-between pb-safe" style="bottom: calc(1rem + env(safe-area-inset-bottom, 0px));">
+    <nav id="bottom-nav" class="fixed inset-x-0 mx-auto w-[calc(100%-2.5rem)] max-w-sm h-16 bg-white rounded-full shadow-xl shadow-slate-300/60 z-50 border border-slate-200/90 px-3 flex items-center justify-between pb-safe" style="bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important; padding-bottom: env(safe-area-inset-bottom, 0px);">
       <div class="grid grid-cols-4 w-full h-full items-center justify-items-center">
         <!-- 1. Home / Roadmap (Active) -->
         <button id="tab-home" type="button" aria-current="page" aria-label="홈" title="홈" class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all">
-          <div class="nav-icon-container w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/30 shrink-0 aspect-square">
+          <div class="nav-icon-container w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/30 shrink-0 aspect-square" style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;">
             <span class="material-symbols-outlined text-[22px]">home</span>
           </div>
           <span class="sr-only">홈</span>
@@ -2064,7 +2083,7 @@
 
         <!-- 2. Pack Library -->
         <button id="tab-packs" type="button" aria-label="단어팩" title="단어팩" class="nav-tab nav-item nav-packs flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square" style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;">
             <span class="material-symbols-outlined text-[22px]">inventory_2</span>
           </div>
           <span class="sr-only">단어팩</span>
@@ -2072,7 +2091,7 @@
 
         <!-- 3. Wordbook -->
         <button id="tab-book" type="button" aria-label="단어장" title="단어장" class="nav-tab nav-item nav-book nav-study flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square" style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;">
             <span class="material-symbols-outlined text-[22px]">menu_book</span>
           </div>
           <span class="sr-only">단어장</span>
@@ -2080,7 +2099,7 @@
 
         <!-- 4. Records (Stats / Activity) -->
         <button id="tab-records" type="button" aria-label="내 기록" title="내 기록" class="nav-tab nav-item nav-records nav-stats flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
-          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+          <div class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square" style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;">
             <span class="material-symbols-outlined text-[22px]">bar_chart</span>
           </div>
           <span class="sr-only">내 기록</span>
@@ -2110,7 +2129,7 @@
               <div class="badge-dot w-2 h-2 rounded-full bg-transparent transition-colors"></div>
             </div>
             <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/en-study.webp?v=81" onerror="this.onerror=null; this.src='assets/characters/en-study.webp?v=81';">
+              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/en-study.webp?v=88" onerror="this.onerror=null; this.src='assets/characters/en-study.webp?v=88';">
               <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">🇺🇸</div>
             </div>
             <span class="card-lang-name font-bold text-sm text-slate-700 tracking-tight transition-colors">영어</span>
@@ -2123,7 +2142,7 @@
               <div class="badge-dot w-2 h-2 rounded-full bg-white transition-colors"></div>
             </div>
             <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/es-study.webp?v=81">
+              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl" src="assets/characters/es-study.webp?v=88">
               <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">🇪🇸</div>
             </div>
             <span class="card-lang-name font-bold text-sm text-[#15803d] tracking-tight transition-colors">스페인어</span>
@@ -2191,7 +2210,7 @@
         <div class="flex flex-col items-center text-center shrink-0">
           <div class="relative inline-block">
             <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-red-100 shadow-sm bg-white flex items-center justify-center">
-              <img alt="2D Cute Black Kitten Mascot" class="w-full h-full object-cover" src="assets/characters/es-fever.webp?v=81" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-amber-100 text-2xl select-none\'>🐱</div>';" />
+              <img alt="2D Cute Black Kitten Mascot" class="w-full h-full object-cover" src="assets/characters/es-fever.webp?v=88" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-amber-100 text-2xl select-none\'>🐱</div>';" />
             </div>
             <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm border border-red-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-[#FF9600] text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
@@ -2273,7 +2292,7 @@
         <div class="flex flex-col items-center justify-center mb-3.5">
           <div class="relative inline-block">
             <div id="current-avatar-container" class="w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-[#22c55e] p-0.5 bg-white shadow-md relative flex items-center justify-center">
-              <img id="current-avatar-img" alt="선택된 프로필 고양이" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="assets/profiles/profile-spanish.webp?v=81" />
+              <img id="current-avatar-img" alt="선택된 프로필 고양이" class="w-full h-full object-cover rounded-full transition-transform duration-200" src="assets/profiles/profile-spanish.webp?v=88" />
             </div>
             <div class="absolute bottom-0 right-0 w-7 h-7 bg-[#22c55e] text-white rounded-full flex items-center justify-center border-2 border-white shadow">
               <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">pets</span>
@@ -2285,9 +2304,9 @@
         <div class="mb-4">
           <div class="flex items-center justify-between gap-2">
             <!-- 1. 스페인 냥이 (오렌지) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spanish" data-avatar-name="스페인 냥이" data-avatar-file="profile-spanish.webp" data-avatar-src="assets/profiles/profile-spanish.webp?v=81" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="spanish" data-avatar-name="스페인 냥이" data-avatar-file="profile-spanish.webp" data-avatar-src="assets/profiles/profile-spanish.webp?v=88" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs">
-                <img src="assets/profiles/profile-spanish.webp?v=81" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-spanish.webp?v=88" alt="스페인 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -2296,9 +2315,9 @@
             </button>
 
             <!-- 2. 잉글리시 냥이 (하늘색) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="english" data-avatar-name="잉글리시 냥이" data-avatar-file="profile-english.webp" data-avatar-src="assets/profiles/profile-english.webp?v=81" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="english" data-avatar-name="잉글리시 냥이" data-avatar-file="profile-english.webp" data-avatar-src="assets/profiles/profile-english.webp?v=88" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-english.webp?v=81" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-english.webp?v=88" alt="잉글리시 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -2307,9 +2326,9 @@
             </button>
 
             <!-- 3. 아티스트 냥이 (핑크) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="artist" data-avatar-name="아티스트 냥이" data-avatar-file="profile-artist.webp" data-avatar-src="assets/profiles/profile-artist.webp?v=81" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="artist" data-avatar-name="아티스트 냥이" data-avatar-file="profile-artist.webp" data-avatar-src="assets/profiles/profile-artist.webp?v=88" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-artist.webp?v=81" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-artist.webp?v=88" alt="아티스트 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -2318,9 +2337,9 @@
             </button>
 
             <!-- 4. 탐험가 냥이 (민트) -->
-            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="explorer" data-avatar-name="탐험가 냥이" data-avatar-file="profile-explorer.webp" data-avatar-src="assets/profiles/profile-explorer.webp?v=81" type="button">
+            <button class="avatar-option flex flex-col items-center flex-1 py-1 rounded-xl cursor-pointer transition-all" data-avatar-id="explorer" data-avatar-name="탐험가 냥이" data-avatar-file="profile-explorer.webp" data-avatar-src="assets/profiles/profile-explorer.webp?v=88" type="button">
               <div class="avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                <img src="assets/profiles/profile-explorer.webp?v=81" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
+                <img src="assets/profiles/profile-explorer.webp?v=88" alt="탐험가 냥이" class="w-full h-full object-cover rounded-full">
                 <div class="avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#22c55e] text-white flex items-center justify-center shadow-xs">
                   <span class="material-symbols-outlined text-[11px] font-bold">check</span>
                 </div>
@@ -2634,7 +2653,7 @@
           <!-- 3. Cheering Mascot Micro-Interaction -->
           <div class="w-full flex items-center justify-center gap-2.5 px-3 py-1">
             <div class="w-[30px] h-[30px] rounded-full overflow-hidden ring-2 ring-[#22c55e]/30 shadow-xs flex-shrink-0 bg-[#a5b4fc]">
-              <img id="flashcard-mascot-img" alt="마스코트 고양이" class="w-full h-full object-cover" src="assets/characters/es-study.webp?v=81" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-base select-none\'>🐱</div>';" />
+              <img id="flashcard-mascot-img" alt="마스코트 고양이" class="w-full h-full object-cover" src="assets/characters/es-study.webp?v=88" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-base select-none\'>🐱</div>';" />
             </div>
             <div class="bg-emerald-50/90 border border-emerald-200/70 text-emerald-800 text-[12px] font-medium px-3.5 py-1.5 rounded-full shadow-xs flex items-center gap-1">
               <span id="flashcard-mascot-msg">잘하고 있어요! 4개 남았어요 🐾</span>
@@ -2830,7 +2849,7 @@
             <!-- Mascot Container Floating over Header -->
             <div class="relative -mt-16 flex items-center justify-center">
               <div id="result-mascot-aura" class="absolute w-36 h-36 bg-tertiary-container/30 rounded-full blur-xl -z-10 animate-pulse"></div>
-              <img id="result-mascot-img" alt="VocaDash celebrating mascot" class="w-[124px] h-[124px] rounded-2xl object-cover shadow-lg transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-victory.webp?v=81">
+              <img id="result-mascot-img" alt="VocaDash celebrating mascot" class="w-[124px] h-[124px] rounded-2xl object-cover shadow-lg transform hover:scale-105 transition-transform duration-300" src="assets/characters/es-victory.webp?v=88">
               <div id="result-mascot-badge" class="absolute -bottom-2 -right-1 bg-primary text-on-primary rounded-full px-2 py-0.5 shadow-md flex items-center gap-0.5">
                 <span id="result-badge-icon" class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
                 <span id="result-badge-text" class="font-label-sm text-[10px] uppercase tracking-wider font-extrabold">CLEAR</span>
@@ -2946,7 +2965,7 @@
             <!-- Mascot & Stat Badge -->
             <div class="relative mt-1 mb-2.5 flex items-center justify-center">
               <div class="absolute w-24 h-24 rounded-full bg-error-container/60 blur-xl"></div>
-              <img alt="Cute dizzy black kitten mascot" class="w-24 h-24 object-contain rounded-2xl drop-shadow-md relative z-10" src="assets/characters/es-sad.webp?v=81" />
+              <img alt="Cute dizzy black kitten mascot" class="w-24 h-24 object-contain rounded-2xl drop-shadow-md relative z-10" src="assets/characters/es-sad.webp?v=88" />
               <div class="absolute -bottom-2.5 z-20 flex items-center gap-1 bg-error-container text-on-error-container whitespace-nowrap px-3 py-1 text-xs font-bold rounded-full shadow-md border-0">
                 <span class="text-[12px] leading-none shrink-0">💔</span>
                 <span class="whitespace-nowrap px-0 text-xs font-bold tracking-tight">라이프 소진</span>
@@ -3269,14 +3288,14 @@
   </div>
 
   <!-- Application Data & Logic (단 하나의 유효한 스크립트 세트) -->
-  <script src="js/data.js?v=81"></script>
-  <script src="js/data_football.js?v=81"></script>
-  <script src="js/sound.js?v=81"></script>
-  <script src="js/settings.js?v=81"></script>
-  <script src="js/flashcard.js?v=81"></script>
-  <script src="js/gameEngine.js?v=81"></script>
-  <script src="js/navigation.js?v=81"></script>
-  <script src="js/app.js?v=81"></script>
+  <script src="js/data.js?v=88"></script>
+  <script src="js/data_football.js?v=88"></script>
+  <script src="js/sound.js?v=88"></script>
+  <script src="js/settings.js?v=88"></script>
+  <script src="js/flashcard.js?v=88"></script>
+  <script src="js/gameEngine.js?v=88"></script>
+  <script src="js/navigation.js?v=88"></script>
+  <script src="js/app.js?v=88"></script>
 
 </body>
 

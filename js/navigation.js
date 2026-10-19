@@ -70,6 +70,9 @@
         iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-12', 'h-12', 'p-2', 'hover:text-white', 'hover:text-slate-200', 'shadow-lg', 'shadow-emerald-500/25', 'shadow-emerald-500/30');
         iconContainer.classList.add(...inactiveClasses);
         iconContainer.classList.add('w-11', 'h-11', 'rounded-full', 'shrink-0', 'aspect-square');
+        iconContainer.style.setProperty('width', '44px', 'important');
+        iconContainer.style.setProperty('height', '44px', 'important');
+        iconContainer.style.setProperty('aspect-ratio', '1/1', 'important');
       }
     });
     if (activeTabEl) {
@@ -82,9 +85,13 @@
         iconContainer.classList.remove('bg-white', 'text-slate-900', 'w-12', 'h-12', 'p-2', 'hover:text-white', 'hover:text-slate-200');
         iconContainer.classList.add(...activeClasses);
         iconContainer.classList.add('w-11', 'h-11', 'rounded-full', 'shrink-0', 'aspect-square');
+        iconContainer.style.setProperty('width', '44px', 'important');
+        iconContainer.style.setProperty('height', '44px', 'important');
+        iconContainer.style.setProperty('aspect-ratio', '1/1', 'important');
       }
     }
   }
+  window.setTabActive = setTabActive;
 
   let isNavSwitchingTab = false;
   function switchMainTab(tabName, force = false) {
@@ -693,6 +700,12 @@
   // 8. 전역 네비게이션 이벤트 바인딩
   // ===================================================
   function initNavigationEvents() {
+    // 하단 캡슐 바 위치 강제 보장 (!important)
+    const bNav = el('bottom-nav') || document.querySelector('nav');
+    if (bNav) {
+      bNav.style.setProperty('bottom', 'calc(1.2rem + env(safe-area-inset-bottom, 0px))', 'important');
+    }
+
     // 하단 탭 버튼 클릭
     const tabHome = el('tab-home');
     if (tabHome && tabHome.dataset.bound !== 'true') {
