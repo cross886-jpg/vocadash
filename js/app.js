@@ -2544,17 +2544,92 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.setUnlockedUnitLevel = setUnlockedUnitLevel;
 
+  function getNodeProgress(nodeId) {
+    if (!nodeId) return { clearedCount: 0, stars: 0 };
+    try {
+      const key = `vocadash_node_progress_${nodeId}`;
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed.clearedCount === 'number') {
+          return {
+            clearedCount: Math.min(3, Math.max(0, parsed.clearedCount)),
+            stars: Math.min(3, Math.max(0, parsed.stars !== undefined ? parsed.stars : parsed.clearedCount))
+          };
+        }
+      }
+    } catch (_) {}
+
+    if (window.nodeProgressMap && typeof window.nodeProgressMap[nodeId] === 'number') {
+      const c = Math.min(3, Math.max(0, window.nodeProgressMap[nodeId]));
+      return { clearedCount: c, stars: c };
+    }
+    return { clearedCount: 0, stars: 0 };
+  }
+  window.getNodeProgress = getNodeProgress;
+  window.getNodeProgressData = getNodeProgress;
+
+  function setNodeProgress(nodeId, clearedCount, stars) {
+    if (!nodeId) return { clearedCount: 0, stars: 0 };
+    const c = Math.min(3, Math.max(0, clearedCount || 0));
+    const s = Math.min(3, Math.max(0, stars !== undefined ? stars : c));
+    const data = { clearedCount: c, stars: s };
+    try {
+      localStorage.setItem(`vocadash_node_progress_${nodeId}`, JSON.stringify(data));
+    } catch (_) {}
+    if (!window.nodeProgressMap) window.nodeProgressMap = {};
+    window.nodeProgressMap[nodeId] = c;
+    return data;
+  }
+  window.setNodeProgress = setNodeProgress;
+  window.saveNodeProgressData = setNodeProgress;
+
+  function renderStarsBadge(clearedCount, stars, isLocked, lockMsg) {
+    if (isLocked) {
+      return `<span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">${escapeHTML(lockMsg || '이전 레슨 완료 후')}</span>`;
+    }
+    if (clearedCount >= 3) {
+      return '<span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+    }
+    const s = Math.max(0, Math.min(3, stars !== undefined ? stars : clearedCount));
+    let starHtml = '';
+    for (let i = 1; i <= 3; i++) {
+      starHtml += (i <= s) ? '<span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span>' : '<span class="text-xs opacity-30">⭐</span>';
+    }
+    return `${starHtml}<span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${clearedCount}/3 레슨 진행중</span>`;
+  }
+  window.renderStarsBadge = renderStarsBadge;
+
+  function resolveNodeData(specificId, slotId) {
+    let d = (typeof getNodeProgress === 'function') ? getNodeProgress(specificId) : null;
+    if (d && d.clearedCount > 0) return d;
+    if (slotId && slotId !== specificId) {
+      d = (typeof getNodeProgress === 'function') ? getNodeProgress(slotId) : null;
+      if (d && d.clearedCount > 0) return d;
+    }
+    return d || { clearedCount: 0, stars: 0 };
+  }
+  window.resolveNodeData = resolveNodeData;
+
   function loadNodeProgress(targetLang) {
     const prog = getCourseProgress(window.activeCourseId);
-    if (prog && prog.nodeProgressMap) {
-      return {
-        'node-1': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-1'] === 'number' ? prog.nodeProgressMap['node-1'] : (window.activeCourseId === 'main' ? 3 : 0))),
-        'node-2': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-2'] === 'number' ? prog.nodeProgressMap['node-2'] : 0)),
-        'node-3': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-3'] === 'number' ? prog.nodeProgressMap['node-3'] : 0)),
-        'node-boss': Math.min(3, Math.max(0, typeof prog.nodeProgressMap['node-boss'] === 'number' ? prog.nodeProgressMap['node-boss'] : 0))
-      };
-    }
-    return { 'node-1': (window.activeCourseId === 'main' ? 3 : 0), 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+    const result = {
+      'node-1': (window.activeCourseId === 'main' ? 3 : 0),
+      'node-2': 0,
+      'node-3': 0,
+      'node-boss': 0
+    };
+
+    ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nid => {
+      const d = getNodeProgress(nid);
+      if (d.clearedCount > 0) {
+        result[nid] = d.clearedCount;
+      } else if (prog && prog.nodeProgressMap && typeof prog.nodeProgressMap[nid] === 'number') {
+        result[nid] = Math.min(3, Math.max(0, prog.nodeProgressMap[nid]));
+      }
+    });
+
+    return result;
   }
 
   function saveNodeProgress() {
@@ -2806,6 +2881,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isFootball = (window.activeCourseId === 'pack_football');
     const courseId = isFootball ? 'pack_football' : (window.currentCourseId || 'basic');
     let data = null;
+    let matchedNode = null;
 
     const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : (window.packFootballData || window.courseData_es || window.courseData);
     if (activeCourse && Array.isArray(activeCourse.units)) {
@@ -2813,16 +2889,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(curLang) : 1) || 1;
       const curUnit = activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0];
       if (curUnit && Array.isArray(curUnit.nodes)) {
-        let n = null;
-        if (nodeId === 'node-1') n = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
-        else if (nodeId === 'node-2') n = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && x.id.endsWith('_n3')));
-        else if (nodeId === 'node-3') n = curUnit.nodes.find(x => x.type === 'sentence' || (x.id && x.id.endsWith('_n4')));
-        else if (nodeId === 'node-boss') n = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')));
-        else n = curUnit.nodes.find(x => x.id === nodeId);
-        if (n) {
+        if (nodeId === 'node-1') matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
+        else if (nodeId === 'node-2') matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && x.id.endsWith('_n3')));
+        else if (nodeId === 'node-3') matchedNode = curUnit.nodes.find(x => x.type === 'sentence' || (x.id && x.id.endsWith('_n4')));
+        else if (nodeId === 'node-boss') matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')));
+        else matchedNode = curUnit.nodes.find(x => x.id === nodeId);
+        if (matchedNode) {
           data = {
-            title: n.title,
-            desc: n.meaning ? `${n.targetSentence || ''} (${n.meaning})` : (curUnit.desc || curUnit.subtitle || '핵심 어휘와 문장을 마스터하세요!'),
+            title: matchedNode.title,
+            desc: matchedNode.meaning ? `${matchedNode.targetSentence || ''} (${matchedNode.meaning})` : (curUnit.desc || curUnit.subtitle || '핵심 어휘와 문장을 마스터하세요!'),
             icon: curUnit.icon || activeCourse.icon || (isFootball ? '⚽' : '🌱')
           };
         }
@@ -2835,7 +2910,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS.basic);
       data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]) || { title: '학습 레슨', desc: '새로운 단어를 학습해보세요!', icon: '🌱' };
     }
-    const progress = window.nodeProgressMap[nodeId] || 0;
+    const activeNodeData = resolveNodeData(matchedNode?.id || nodeId, nodeId);
+    const progress = activeNodeData.clearedCount;
 
     setText('lesson-modal-icon', data.icon); setText('lesson-modal-title', data.title); setText('lesson-modal-desc', data.desc);
     setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : nodeId === 'node-boss' ? '4과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
@@ -3096,11 +3172,45 @@ document.addEventListener('DOMContentLoaded', () => {
       bookChapterTitle.textContent = lessons['node-1'].title + (courseId === 'basic' ? ' (기초 회화)' : '');
     }
 
-    const prog1 = window.nodeProgressMap['node-1'] !== undefined ? window.nodeProgressMap['node-1'] : 0;
-    const prog2 = window.nodeProgressMap['node-2'] || 0;
-    const prog3 = window.nodeProgressMap['node-3'] || 0;
-    const progBoss = window.nodeProgressMap['node-boss'] || 0;
+    // 현재 코스의 유닛 1(또는 활성 유닛) 노드 고유 ID 매핑
+    let n1Id = 'node-1';
+    let n2Id = 'node-2';
+    let n3Id = 'node-3';
+    let nBossId = 'node-boss';
 
+    if (activeCourse && Array.isArray(activeCourse.units)) {
+      const curUnit = activeCourse.units.find(u => (u.id === unlockedLevel || u.unitId === unlockedLevel || u.unitNumber === unlockedLevel)) || activeCourse.units[0];
+      if (curUnit && Array.isArray(curUnit.nodes)) {
+        const foundN1 = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
+        const foundN2 = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
+        const foundN3 = curUnit.nodes.find(n => n.type === 'sentence' || (n.id && n.id.endsWith('_n4')));
+        const foundNBoss = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
+        if (foundN1?.id) n1Id = foundN1.id;
+        if (foundN2?.id) n2Id = foundN2.id;
+        if (foundN3?.id) n3Id = foundN3.id;
+        if (foundNBoss?.id) nBossId = foundNBoss.id;
+      }
+    }
+
+    const data1 = resolveNodeData(n1Id, 'node-1');
+    const data2 = resolveNodeData(n2Id, 'node-2');
+    const data3 = resolveNodeData(n3Id, 'node-3');
+    const dataBoss = resolveNodeData(nBossId, 'node-boss');
+
+    const prog1 = data1.clearedCount;
+    const prog2 = data2.clearedCount;
+    const prog3 = data3.clearedCount;
+    const progBoss = dataBoss.clearedCount;
+
+    if (!window.nodeProgressMap) window.nodeProgressMap = {};
+    window.nodeProgressMap['node-1'] = prog1;
+    window.nodeProgressMap['node-2'] = prog2;
+    window.nodeProgressMap['node-3'] = prog3;
+    window.nodeProgressMap['node-boss'] = progBoss;
+    window.nodeProgressMap[n1Id] = prog1;
+    window.nodeProgressMap[n2Id] = prog2;
+    window.nodeProgressMap[n3Id] = prog3;
+    window.nodeProgressMap[nBossId] = progBoss;
 
     // Node 1 요소 레퍼런스
     const node1Container = el('node-1-container');
@@ -3141,7 +3251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none';
       }
       if (badge1) {
-        badge1.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+        badge1.innerHTML = renderStarsBadge(prog1, data1.stars, false);
       }
     } else {
       if (node1Container) node1Container.classList.add('active', 'node-pulse');
@@ -3171,8 +3281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
       }
       if (badge1) {
-        const pText = prog1 > 0 ? `${prog1}/3 레슨 진행중` : '0/3 레슨 진행중';
-        badge1.innerHTML = `<span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${pText}</span>`;
+        badge1.innerHTML = renderStarsBadge(prog1, data1.stars, false);
       }
     }
 
@@ -3229,7 +3338,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (badge2) {
-        badge2.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+        badge2.innerHTML = renderStarsBadge(prog2, data2.stars, false);
       }
     } else if (prog1 >= 3) {
       // 2과 진행 중 상태 (1과 완료 후: 스카이블루 + START 뱃지)
@@ -3271,8 +3380,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (badge2) {
-        const pText = prog2 > 0 ? `${prog2}/3 레슨 진행중` : '0/3 레슨 진행중';
-        badge2.innerHTML = `<span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${pText}</span>`;
+        badge2.innerHTML = renderStarsBadge(prog2, data2.stars, false);
       }
     } else {
       // 2과 잠김 상태 (1과 미완료 시: 자물쇠 잠김)
@@ -3315,7 +3423,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (badge2) {
-        badge2.innerHTML = '<span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">1과 완료 후</span>';
+        badge2.innerHTML = renderStarsBadge(0, 0, true, '1과 완료 후');
       }
     }
 
@@ -3369,7 +3477,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card3.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/80 text-center pointer-events-none';
       }
       if (badge3) {
-        badge3.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+        badge3.innerHTML = renderStarsBadge(prog3, data3.stars, false);
       }
     } else if (prog2 >= 3) {
       if (node3Container) {
@@ -3408,8 +3516,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card3.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
       }
       if (badge3) {
-        const pText = prog3 > 0 ? `${prog3}/3 레슨 진행중` : '지금 학습 가능! (0/3)';
-        badge3.innerHTML = `<span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${pText}</span>`;
+        badge3.innerHTML = renderStarsBadge(prog3, data3.stars, false);
       }
     } else {
       if (node3Container) {
@@ -3448,7 +3555,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card3.className = 'mt-2.5 flex flex-col items-center bg-white/90 px-3.5 py-1.5 rounded-2xl shadow-sm border border-slate-200/60 text-center pointer-events-none opacity-80';
       }
       if (badge3) {
-        badge3.innerHTML = '<span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">2과 완료 후</span>';
+        badge3.innerHTML = renderStarsBadge(0, 0, true, '2과 완료 후');
       }
     }
 
@@ -3495,7 +3602,7 @@ document.addEventListener('DOMContentLoaded', () => {
           checkBadgeBoss.style.display = 'flex';
         }
         if (badgeBoss) {
-          badgeBoss.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+          badgeBoss.innerHTML = renderStarsBadge(progBoss, dataBoss.stars, false);
         }
       } else {
         if (nodeBossContainer) nodeBossContainer.classList.add('active', 'node-pulse');
@@ -3517,7 +3624,11 @@ document.addEventListener('DOMContentLoaded', () => {
           btnBoss.title = (lessons['node-boss'] ? lessons['node-boss'].title : '4과: 보스전') + ' (도전 가능!)';
         }
         if (badgeBoss) {
-          badgeBoss.innerHTML = '<span class="font-label-sm text-[11px] text-amber-600 font-extrabold flex items-center gap-1"><span>⚡</span><span>도전 가능!</span></span>';
+          if (progBoss > 0) {
+            badgeBoss.innerHTML = renderStarsBadge(progBoss, dataBoss.stars, false);
+          } else {
+            badgeBoss.innerHTML = '<span class="font-label-sm text-[11px] text-amber-600 font-extrabold flex items-center gap-1"><span>⚡</span><span>도전 가능!</span></span>';
+          }
         }
       }
     } else {
@@ -3529,6 +3640,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (startPillBoss) {
         startPillBoss.classList.add('hidden');
         startPillBoss.style.display = 'none';
+      }
+      if (glowBoss) {
+        glowBoss.classList.add('hidden');
+        glowBoss.classList.remove('animate-pulse');
       }
       if (targetBoss) {
         targetBoss.dataset.nodeType = 'locked';
@@ -3543,8 +3658,11 @@ document.addEventListener('DOMContentLoaded', () => {
         checkBadgeBoss.classList.add('hidden');
         checkBadgeBoss.style.display = 'none';
       }
+      if (btnBoss) {
+        btnBoss.title = '보스전: 잠김';
+      }
       if (badgeBoss) {
-        badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-slate-500 font-semibold">3과 완료 후 잠금 해제</span>';
+        badgeBoss.innerHTML = '<span class="font-label-sm text-[10px] text-slate-500 font-semibold">1~3과 완료 후 잠금 해제</span>';
       }
     }
 
@@ -3657,7 +3775,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 듀오링고 스타일 전체 유닛 연속 스크롤 로드맵 & 렌더링 시스템
   // ===================================================
   function renderUnitNodeHtml(opt) {
-    const { unitNum, stageNum, title, align, width, isCompleted, isActive, isLocked } = opt;
+    const { unitNum, stageNum, title, align, width, isCompleted, isActive, isLocked, nodeKey, nodeId } = opt;
+    const resolvedId = nodeId || nodeKey || `u${unitNum}-n${stageNum}`;
+    const nodeData = (typeof getNodeProgress === 'function') ? getNodeProgress(resolvedId) : { clearedCount: 0, stars: 0 };
+    const pCount = isCompleted ? 3 : (isActive ? nodeData.clearedCount : 0);
+    const pStars = isCompleted ? 3 : (isActive ? nodeData.stars : 0);
+
     return `
       <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isCompleted ? 'completed' : (isActive ? 'active' : 'locked')}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
@@ -3702,15 +3825,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border ${isActive ? 'border-2 border-sky-400 ring-2 ring-sky-100' : 'border-slate-200/80'} text-center pointer-events-none ${isLocked ? 'opacity-80' : ''}">
           <span class="font-extrabold text-xs text-slate-900">${escapeHTML(title)}</span>
           <div class="flex items-center gap-1 mt-0.5">
-            ${isCompleted ? `
-              <span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>
-              <span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>
-            ` : (isActive ? `
-              <span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span>
-              <span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">0/3 레슨 진행중</span>
-            ` : `
-              <span class="font-label-sm text-[10px] text-slate-400 font-semibold">이전 레슨 완료 후</span>
-            `)}
+            ${renderStarsBadge(pCount, pStars, isLocked, '이전 레슨 완료 후')}
           </div>
         </div>
       </div>

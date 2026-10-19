@@ -384,6 +384,80 @@
   let missedWords = [];
   let isCurrentQuestionFailed = false;
 
+  function resolveCurrentNode(lessonId) {
+    const targetId = lessonId || window.currentGameLessonId || window.currentSelectedNodeId || 'node-2';
+    const activeCourse = (typeof window.getCurrentCourseData === 'function') 
+      ? window.getCurrentCourseData() 
+      : (window.packFootballData || window.courseData);
+    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
+    const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+      ? window.currentUnitIndex
+      : Math.max(0, unlockedLevel - 1);
+    const curUnit = (activeCourse && Array.isArray(activeCourse.units))
+      ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
+      : null;
+
+    let foundNode = null;
+    if (curUnit && Array.isArray(curUnit.nodes)) {
+      foundNode = curUnit.nodes.find(n => n.id === targetId);
+      if (!foundNode) {
+        if (targetId === 'node-1') foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
+        else if (targetId === 'node-2') foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
+        else if (targetId === 'node-3') foundNode = curUnit.nodes.find(n => n.type === 'sentence' || (n.id && n.id.endsWith('_n4')));
+        else if (targetId === 'node-boss') foundNode = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
+      }
+    }
+    if (!foundNode && activeCourse && Array.isArray(activeCourse.units)) {
+      for (const u of activeCourse.units) {
+        if (Array.isArray(u.nodes)) {
+          foundNode = u.nodes.find(n => n.id === targetId);
+          if (foundNode) break;
+        }
+      }
+    }
+    if (!foundNode) {
+      foundNode = { id: targetId, stageNumber: targetId === 'node-1' ? 1 : targetId === 'node-2' ? 2 : targetId === 'node-3' ? 3 : 4 };
+    }
+    return foundNode;
+  }
+  window.resolveCurrentNode = resolveCurrentNode;
+
+  function getSlotAlias(activeNodeId, targetNodeId) {
+    const check = (id) => {
+      if (!id) return null;
+      if (id === 'node-1' || id === 'node-2' || id === 'node-3' || id === 'node-boss') return id;
+      if (String(id).endsWith('_n1')) return 'node-1';
+      if (String(id).endsWith('_n3')) return 'node-2';
+      if (String(id).endsWith('_n4')) return 'node-3';
+      if (String(id).endsWith('_n6') || String(id).includes('boss')) return 'node-boss';
+      return null;
+    };
+    return check(targetNodeId) || check(activeNodeId) || null;
+  }
+  window.getSlotAlias = getSlotAlias;
+
+  function getNextNodeId(curNodeId, curUnit) {
+    const slot = getSlotAlias(curNodeId, curNodeId);
+    if (curUnit && Array.isArray(curUnit.nodes)) {
+      if (slot === 'node-1') {
+        const n2 = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
+        if (n2?.id) return n2.id;
+      } else if (slot === 'node-2') {
+        const n3 = curUnit.nodes.find(n => n.type === 'sentence' || (n.id && n.id.endsWith('_n4')));
+        if (n3?.id) return n3.id;
+      } else if (slot === 'node-3') {
+        const nBoss = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
+        if (nBoss?.id) return nBoss.id;
+      }
+    }
+    if (slot === 'node-1') return 'node-2';
+    if (slot === 'node-2') return 'node-3';
+    if (slot === 'node-3') return 'node-boss';
+    return 'node-1';
+  }
+  window.getNextNodeId = getNextNodeId;
+
   // 모든 게임 타이머 (requestAnimationFrame, setTimeout, setInterval) 일괄 완전 초기화
   function clearAllGameTimers() {
     cancelGameLoop();
@@ -489,7 +563,7 @@
     if (window.isRoadmapReviewSpeedrun || window.isReviewGameMode) {
       // 오답런 진행 중에는 문제를 틀려도 하트가 깎이지 않음!
       combo = 0;
-      speedMultiplier = 1.0;
+      speedMultiplier = window.currentRoundBaseSpeed || 1.0;
       updateHeartsUI();
       updateHeaderStatusUI();
       return currentHearts;
@@ -509,7 +583,7 @@
       if (typeof window.updateUserHeartsUI === 'function') window.updateUserHeartsUI();
     }
     combo = 0;
-    speedMultiplier = 1.0;
+    speedMultiplier = window.currentRoundBaseSpeed || 1.0;
     updateHeartsUI();
     updateHeaderStatusUI();
     return currentHearts;
@@ -551,7 +625,7 @@
     combo = 0;
     maxCombo = 0;
     score = 0;
-    speedMultiplier = 1.0;
+    speedMultiplier = window.currentRoundBaseSpeed || 1.0;
     currentQuestionIdx = 0;
     missedWords = [];
     isQuestionActive = false;
@@ -730,7 +804,16 @@
         if (comboText) comboText.textContent = `x${maxCombo || combo || 0}`;
 
         const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
-        const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+        const currentNode = (typeof resolveCurrentNode === 'function') 
+          ? resolveCurrentNode(targetNodeId) 
+          : { id: targetNodeId };
+        const activeNodeId = currentNode?.id || targetNodeId;
+        const progressKey = `vocadash_node_progress_${activeNodeId}`;
+        let nodeData = { clearedCount: 0, stars: 0 };
+        try {
+          nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0, "stars": 0}');
+        } catch (_) {}
+        const curProg = nodeData.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[activeNodeId]) || (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
         const btnPrimaryText = document.getElementById('btn-result-primary-text');
         const btnPrimaryIcon = document.getElementById('btn-result-primary-icon');
         if (btnPrimaryIcon) btnPrimaryIcon.style.display = 'none';
@@ -754,10 +837,15 @@
 
         const resultSubtitle = document.getElementById('result-subtitle');
         if (resultSubtitle && !window.isUnitSkipTestMode && !window.isReviewGameMode) {
-          if (isBossNode && hasNextUnit) {
+          if (curProg >= 3) {
+            resultSubtitle.textContent = '★ 3별 마스터! 노드 완벽 마스터 달성! 🏆';
+            if (typeof window.showToast === 'function') {
+              window.showToast('★ 3별 마스터 달성! 노드 완료!', '🏆');
+            }
+          } else if (isBossNode && hasNextUnit) {
             resultSubtitle.textContent = `${actualUnitTitle} 보스전 완파! Unit ${currentUnitIndex + 2} 해금 🚀`;
           } else {
-            resultSubtitle.textContent = `${actualUnitTitle} 마스터!`;
+            resultSubtitle.textContent = `${actualUnitTitle} (${curProg}/3) 클리어!`;
           }
         }
 
@@ -788,6 +876,8 @@
                   : '오답 단어 집중 훈련을 완료했습니다!';
               }
             }
+          } else if (curProg < 3) {
+            btnPrimaryText.textContent = `다음 회차 도전 (${curProg + 1}/3) ▶`;
           } else if (isBossNode) {
             if (hasNextUnit) {
               btnPrimaryText.textContent = '다음 유닛 도전하기 🚀';
@@ -994,29 +1084,52 @@
       // 스테이지 클리어(isClear = true) 시 진척도 갱신 및 영구 저장
       if (isClear) {
         const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
-        if (!window.nodeProgressMap) window.nodeProgressMap = {};
-        const curProg = window.nodeProgressMap[targetNodeId] || 0;
-        let nextProg = Math.min(3, curProg + 1);
+        const currentNode = (typeof resolveCurrentNode === 'function') 
+          ? resolveCurrentNode(targetNodeId) 
+          : { id: targetNodeId };
+        const activeNodeId = currentNode?.id || targetNodeId;
+        const progressKey = `vocadash_node_progress_${activeNodeId}`;
 
-        // 3과 완료 시 확실하게 3(완료)으로 저장하여 보스전(node-boss) 잠금 해제
-        if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
-          nextProg = 3;
-        } else if (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss')) {
-          nextProg = 3;
+        let nodeData = { clearedCount: 0, stars: 0 };
+        try {
+          nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0, "stars": 0}');
+        } catch (_) {}
+        if (!nodeData.clearedCount && window.nodeProgressMap && typeof window.nodeProgressMap[activeNodeId] === 'number') {
+          nodeData.clearedCount = window.nodeProgressMap[activeNodeId];
         }
-        window.nodeProgressMap[targetNodeId] = nextProg;
 
-        if ((targetNodeId === 'node-1' || String(targetNodeId).includes('1')) && nextProg >= 3) {
-          if (window.nodeProgressMap['node-2'] === undefined || window.nodeProgressMap['node-2'] === 0) {
-            window.nodeProgressMap['node-2'] = 0;
-          }
-        } else if ((targetNodeId === 'node-2' || String(targetNodeId).includes('2')) && nextProg >= 3) {
-          if (window.nodeProgressMap['node-3'] === undefined || window.nodeProgressMap['node-3'] === 0) {
-            window.nodeProgressMap['node-3'] = 0;
-          }
-        } else if ((targetNodeId === 'node-3' || String(targetNodeId).includes('3')) && nextProg >= 3) {
-          if (window.nodeProgressMap['node-boss'] === undefined || window.nodeProgressMap['node-boss'] === 0) {
-            window.nodeProgressMap['node-boss'] = 0;
+        // 회차 증가 (최대 3, 1회=별1개, 2회=별2개, 3회=별3개)
+        nodeData.clearedCount = Math.min(3, (nodeData.clearedCount || 0) + 1);
+        nodeData.stars = nodeData.clearedCount;
+        try {
+          localStorage.setItem(progressKey, JSON.stringify(nodeData));
+        } catch (_) {}
+
+        // 슬롯 별칭(node-1, node-2 등) 및 targetNodeId와도 상호 동기화 저장
+        const slotAlias = (typeof getSlotAlias === 'function') ? getSlotAlias(activeNodeId, targetNodeId) : null;
+        if (slotAlias && slotAlias !== activeNodeId) {
+          try {
+            localStorage.setItem(`vocadash_node_progress_${slotAlias}`, JSON.stringify(nodeData));
+          } catch (_) {}
+        }
+        if (targetNodeId && targetNodeId !== activeNodeId && targetNodeId !== slotAlias) {
+          try {
+            localStorage.setItem(`vocadash_node_progress_${targetNodeId}`, JSON.stringify(nodeData));
+          } catch (_) {}
+        }
+
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        window.nodeProgressMap[activeNodeId] = nodeData.clearedCount;
+        window.nodeProgressMap[targetNodeId] = nodeData.clearedCount;
+        if (slotAlias) window.nodeProgressMap[slotAlias] = nodeData.clearedCount;
+
+        if (nodeData.clearedCount >= 3) {
+          if (slotAlias === 'node-1') {
+            if (window.nodeProgressMap['node-2'] === undefined) window.nodeProgressMap['node-2'] = 0;
+          } else if (slotAlias === 'node-2') {
+            if (window.nodeProgressMap['node-3'] === undefined) window.nodeProgressMap['node-3'] = 0;
+          } else if (slotAlias === 'node-3') {
+            if (window.nodeProgressMap['node-boss'] === undefined) window.nodeProgressMap['node-boss'] = 0;
           }
         }
 
@@ -1981,12 +2094,17 @@
 
       combo++;
       if (combo > maxCombo) maxCombo = combo;
-      const gainedScore = 100 + (combo * 20);
+      const isMasterRound = (window.currentSubStageRound === 3);
+      const gainedScore = isMasterRound ? (150 + (combo * 40)) : (100 + (combo * 20));
       score += gainedScore;
-      speedMultiplier = Math.min(1.8, 1.0 + (combo * 0.05));
+      const baseSpd = window.currentRoundBaseSpeed || 1.0;
+      speedMultiplier = Math.min(2.4, baseSpd + (combo * 0.05));
       updateHeaderStatusUI();
 
-      showGameFloatingEffect(`정답! +${gainedScore}${combo >= 2 ? ` (🔥x${combo})` : ''}`, true);
+      const floatText = isMasterRound
+        ? `★ 마스터 정답! +${gainedScore}${combo >= 2 ? ` (🔥x${combo})` : ''}`
+        : `정답! +${gainedScore}${combo >= 2 ? ` (🔥x${combo})` : ''}`;
+      showGameFloatingEffect(floatText, true);
 
       if (gameDroppingBubble) {
         gameDroppingBubble.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
@@ -2150,6 +2268,7 @@
       }
     }
   }
+  window.handleCorrectAnswer = handleCorrectAnswer;
 
   function handleWrongAnswer(btn, selectedText) {
     try {
@@ -2552,7 +2671,17 @@
       window.currentSessionQuestions = gameQuestions;
     }
 
-    const roundProg = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentGameLessonId]) || 0;
+    const activeNode = (typeof resolveCurrentNode === 'function' ? resolveCurrentNode(currentGameLessonId) : null);
+    const activeNodeId = activeNode?.id || currentGameLessonId || 'node-2';
+    const progressKey = `vocadash_node_progress_${activeNodeId}`;
+    let nodeData = { clearedCount: 0, stars: 0 };
+    try {
+      nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0, "stars": 0}');
+    } catch (_) {}
+    if (!nodeData.clearedCount && window.nodeProgressMap && typeof window.nodeProgressMap[activeNodeId] === 'number') {
+      nodeData.clearedCount = window.nodeProgressMap[activeNodeId];
+    }
+    const roundProg = nodeData.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[currentGameLessonId]) || 0;
     const isBoss = (currentGameLessonId === 'node-boss' || String(currentGameLessonId).includes('boss'));
 
     const activeCourse = (typeof window.getCurrentCourseData === 'function')
@@ -2571,7 +2700,23 @@
     }
 
     const totalSubStages = 3;
-    const currentSubStage = Math.min(totalSubStages, (roundProg || 0) + 1);
+    const currentSubStage = Math.min(totalSubStages, Math.max(1, (roundProg || 0) + 1));
+    window.currentSubStageRound = currentSubStage;
+
+    // 회차별 기본 속도 차등 적용: 1회차 1.0x, 2회차 1.2x, 3회차(마스터) 1.35x
+    let roundBaseSpeed = 1.0;
+    if (currentSubStage === 2) {
+      roundBaseSpeed = 1.2;
+    } else if (currentSubStage === 3) {
+      roundBaseSpeed = 1.35;
+    }
+    window.currentRoundBaseSpeed = roundBaseSpeed;
+
+    // 2/3 회차 이상: 집중력 요구 문제 셔플 강화
+    if (currentSubStage >= 2 && Array.isArray(gameQuestions) && gameQuestions.length > 0) {
+      gameQuestions = shuffleArray(gameQuestions);
+      window.currentSessionQuestions = gameQuestions;
+    }
 
     let stageName = '';
     if (window.isUnitSkipTestMode) {
@@ -2610,7 +2755,7 @@
     combo = 0;
     maxCombo = 0;
     score = 0;
-    speedMultiplier = 1.0;
+    speedMultiplier = roundBaseSpeed;
     window.gameItemCounts = { pass: 2, freeze: 1, bomb: 1, heal: 1 };
     itemCounts = window.gameItemCounts;
 
@@ -2868,7 +3013,16 @@
     }
 
     const targetNodeId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-2';
-    const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+    const currentNode = (typeof resolveCurrentNode === 'function') 
+      ? resolveCurrentNode(targetNodeId) 
+      : { id: targetNodeId };
+    const activeNodeId = currentNode?.id || targetNodeId;
+    const progressKey = `vocadash_node_progress_${activeNodeId}`;
+    let nodeData = { clearedCount: 0, stars: 0 };
+    try {
+      nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0, "stars": 0}');
+    } catch (_) {}
+    const curProg = nodeData.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[activeNodeId]) || (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
     const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const activeCourse = (typeof window.getCurrentCourseData === 'function')
       ? window.getCurrentCourseData()
@@ -2877,17 +3031,29 @@
     const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
       ? window.currentUnitIndex
       : Math.max(0, unlockedLevel - 1);
+    const curUnit = (activeCourse && Array.isArray(activeCourse.units))
+      ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
+      : null;
 
-    const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
+    const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4' || String(activeNodeId).endsWith('_n6') || String(activeNodeId).includes('boss'));
     const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
+    const slotAlias = (typeof getSlotAlias === 'function') ? getSlotAlias(activeNodeId, targetNodeId) : null;
 
-    let nextNodeId = targetNodeId;
+    let nextNodeId = activeNodeId;
     let nextRound = 0;
 
     // ===================================================
-    // 유닛 완주(보스전 클리어) 시 다음 유닛 자동 연계 로직
+    // 3회 미만 (1/3, 2/3) -> 동일 노드의 다음 서브 라운드 플래시카드 예습 진입
     // ===================================================
-    if (isBossNode) {
+    if (curProg < 3) {
+      nextNodeId = activeNodeId;
+      nextRound = curProg;
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.showToast === 'function') window.showToast(`🔥 ${curProg}/3 완료! 다음 라운드 단어 예습 시작!`, '⚡');
+    } else if (isBossNode) {
+      // ===================================================
+      // 유닛 완주(보스전 클리어) 시 다음 유닛 자동 연계 로직
+      // ===================================================
       if (hasNextUnit) {
         // 다음 유닛이 존재하는 경우: 다음 유닛으로 전환 및 1번 노드로 직결
         const nextUnitIndex = currentUnitIndex + 1;
@@ -2943,54 +3109,52 @@
         }
         return false;
       }
-    } else if (targetNodeId === 'node-3' || String(targetNodeId).includes('3')) {
-      // 3과 완료 -> 4과 (보스전) 플래시카드 예습 진입
-      if (!window.nodeProgressMap) window.nodeProgressMap = {};
-      window.nodeProgressMap['node-3'] = 3;
-      if (window.nodeProgressMap['node-boss'] === undefined) {
-        window.nodeProgressMap['node-boss'] = 0;
-      }
-      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
-      window.currentSelectedNodeId = 'node-boss';
-      currentGameLessonId = 'node-boss';
-      nextNodeId = 'node-boss';
-      nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-boss']) || 0;
-      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
-      if (typeof window.showToast === 'function') window.showToast('🔥 3과 마스터 완료! 최종 4과(보스전) 단어 예습을 시작합니다!', '👑');
-    } else if ((targetNodeId === 'node-1' || String(targetNodeId).includes('1')) && curProg >= 3) {
+    } else if (slotAlias === 'node-1') {
       // 1과 완주(3/3) -> 2과 플래시카드 예습 진입
+      nextNodeId = getNextNodeId(activeNodeId, curUnit);
       if (!window.nodeProgressMap) window.nodeProgressMap = {};
       window.nodeProgressMap['node-1'] = 3;
-      if (window.nodeProgressMap['node-2'] === undefined) {
-        window.nodeProgressMap['node-2'] = 0;
+      if (window.nodeProgressMap[nextNodeId] === undefined) {
+        window.nodeProgressMap[nextNodeId] = 0;
       }
       if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
-      window.currentSelectedNodeId = 'node-2';
-      currentGameLessonId = 'node-2';
-      nextNodeId = 'node-2';
-      nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-2']) || 0;
+      window.currentSelectedNodeId = nextNodeId;
+      currentGameLessonId = nextNodeId;
+      nextRound = (window.nodeProgressMap && window.nodeProgressMap[nextNodeId]) || 0;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       if (typeof window.showToast === 'function') window.showToast('🎉 1과 마스터 완료! 2과 단어 예습을 시작합니다!', '✨');
-    } else if (curProg >= 3) {
+    } else if (slotAlias === 'node-2') {
       // 2과 완주(3/3) -> 3과 플래시카드 예습 진입
+      nextNodeId = getNextNodeId(activeNodeId, curUnit);
       if (!window.nodeProgressMap) window.nodeProgressMap = {};
       window.nodeProgressMap['node-2'] = 3;
-      if (window.nodeProgressMap['node-3'] === undefined) {
-        window.nodeProgressMap['node-3'] = 0;
+      if (window.nodeProgressMap[nextNodeId] === undefined) {
+        window.nodeProgressMap[nextNodeId] = 0;
       }
       if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
-      window.currentSelectedNodeId = 'node-3';
-      currentGameLessonId = 'node-3';
-      nextNodeId = 'node-3';
-      nextRound = (window.nodeProgressMap && window.nodeProgressMap['node-3']) || 0;
+      window.currentSelectedNodeId = nextNodeId;
+      currentGameLessonId = nextNodeId;
+      nextRound = (window.nodeProgressMap && window.nodeProgressMap[nextNodeId]) || 0;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       if (typeof window.showToast === 'function') window.showToast('🎉 2과 마스터 완료! 3과 핵심 문장 학습을 시작합니다!', '💬');
+    } else if (slotAlias === 'node-3') {
+      // 3과 완료(3/3) -> 4과 (보스전) 플래시카드 예습 진입
+      nextNodeId = getNextNodeId(activeNodeId, curUnit);
+      if (!window.nodeProgressMap) window.nodeProgressMap = {};
+      window.nodeProgressMap['node-3'] = 3;
+      if (window.nodeProgressMap[nextNodeId] === undefined) {
+        window.nodeProgressMap[nextNodeId] = 0;
+      }
+      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+      window.currentSelectedNodeId = nextNodeId;
+      currentGameLessonId = nextNodeId;
+      nextRound = (window.nodeProgressMap && window.nodeProgressMap[nextNodeId]) || 0;
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.showToast === 'function') window.showToast('🔥 3과 마스터 완료! 최종 4과(보스전) 단어 예습을 시작합니다!', '👑');
     } else {
-      // 아직 3회 미만 (1/3, 2/3) -> 동일 노드의 다음 서브 라운드 플래시카드 예습 진입
       nextNodeId = targetNodeId;
       nextRound = curProg;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
-      if (typeof window.showToast === 'function') window.showToast(`🔥 ${curProg}/3 완료! 다음 라운드 단어 예습 시작!`, '⚡');
     }
 
     // 4) 다음 스테이지 단어 세션 생성 및 플래시카드 화면으로 경유
