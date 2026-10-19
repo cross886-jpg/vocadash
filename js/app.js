@@ -2268,6 +2268,68 @@ window.playDualTTS = playDualTTS;
 
 document.addEventListener('DOMContentLoaded', () => {
   // ===================================================
+  // URL ?clean 파라미터 완전 초기화 감지 (localStorage & sessionStorage 완전 리셋)
+  // ===================================================
+  (function handleCleanParam() {
+    try {
+      if (typeof window !== 'undefined' && window.location && window.location.search) {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('clean')) {
+          console.log('🧹 [URL Clean] ?clean 파라미터 감지: localStorage 및 sessionStorage 완전 초기화 실행');
+          if (typeof localStorage !== 'undefined' && localStorage.clear) {
+            localStorage.clear();
+          }
+          if (typeof sessionStorage !== 'undefined' && sessionStorage.clear) {
+            sessionStorage.clear();
+          }
+
+          const DEFAULT_STATE = {
+            currentCourse: 'pack_football',
+            currentUnit: 0,
+            currentNode: 0,
+            stars: {},
+            clearedNodes: {},
+            unlockedNodes: ['fb_1_n1', 'node-1'],
+            weakWords: [],
+            gems: 0,
+            hearts: 5
+          };
+          try {
+            localStorage.setItem('vocadash_user_data', JSON.stringify(DEFAULT_STATE));
+            localStorage.setItem('vocadash_active_course', 'pack_football');
+            localStorage.setItem('vocadash_current_course', 'pack_football');
+            localStorage.setItem('vocadash_language', 'es');
+            localStorage.setItem('vocadash_hearts', '5');
+            localStorage.setItem('vocadash_gems', '0');
+          } catch (_) {}
+
+          window.activeCourseId = 'pack_football';
+          window.currentCourseId = 'pack_football';
+          window.currentActiveCourse = 'es';
+          window.currentLanguage = 'es';
+          window.nodeProgressMap = {
+            'fb_1_n1': 0,
+            'node-1': 0,
+            'node-2': 0,
+            'node-3': 0,
+            'node-boss': 0
+          };
+
+          urlParams.delete('clean');
+          const remainingSearch = urlParams.toString();
+          const cleanUrl = window.location.pathname + (remainingSearch ? '?' + remainingSearch : '') + window.location.hash;
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, document.title, cleanUrl);
+          }
+          console.log('✨ [URL Clean] 초기화 완료 및 URL clean 파라미터 제거됨:', cleanUrl);
+        }
+      }
+    } catch (e) {
+      console.warn('⚠️ [URL Clean] 파라미터 처리 예외 방어:', e);
+    }
+  })();
+
+  // ===================================================
   // 0. BRAND SPLASH INTRO CONTROLLER (1.2s auto + tap to skip)
   // ===================================================
   const splashScreen = document.getElementById('splash-screen');
@@ -2407,7 +2469,7 @@ document.addEventListener('DOMContentLoaded', () => {
             completedNodes: Array.isArray(parsed.completedNodes) ? parsed.completedNodes : [],
             claimedBonuses: Array.isArray(parsed.claimedBonuses) ? parsed.claimedBonuses : [],
             unlockedUnits: Array.isArray(parsed.unlockedUnits) && parsed.unlockedUnits.length > 0 ? parsed.unlockedUnits : [1],
-            nodeProgressMap: (parsed.nodeProgressMap && typeof parsed.nodeProgressMap === 'object') ? parsed.nodeProgressMap : { 'node-1': (cid === 'main' ? 3 : 0), 'node-2': 0, 'node-3': 0, 'node-boss': 0 }
+            nodeProgressMap: (parsed.nodeProgressMap && typeof parsed.nodeProgressMap === 'object') ? parsed.nodeProgressMap : { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }
           };
         }
       }
@@ -2443,14 +2505,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      let migratedNodeProg = { 'node-1': 3, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+      let migratedNodeProg = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
       try {
         const rawProg = localStorage.getItem(PROGRESS_STORAGE_KEY);
         if (rawProg) {
           const p = JSON.parse(rawProg);
           if (p && typeof p === 'object') {
             migratedNodeProg = {
-              'node-1': Math.min(3, Math.max(0, typeof p['node-1'] === 'number' ? p['node-1'] : 3)),
+              'node-1': Math.min(3, Math.max(0, typeof p['node-1'] === 'number' ? p['node-1'] : 0)),
               'node-2': Math.min(3, Math.max(0, typeof p['node-2'] === 'number' ? p['node-2'] : 0)),
               'node-3': Math.min(3, Math.max(0, typeof p['node-3'] === 'number' ? p['node-3'] : 0)),
               'node-boss': Math.min(3, Math.max(0, typeof p['node-boss'] === 'number' ? p['node-boss'] : 0))
@@ -2671,21 +2733,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Unit 1 전용 슬롯 fallback 판정
     if (currentUnitIndex === 0) {
-      if (nodeId === 'node-1' || nodeIndex === 0) return true;
-      const prog1 = (window.nodeProgressMap && window.nodeProgressMap['node-1']) || (getNodeProgress('node-1').clearedCount) || 0;
-      if (nodeId === 'node-2' || nodeIndex === 1) return prog1 >= 3;
-      if (nodeId === 'node-bonus' || nodeType === 'bonus') return prog1 >= 3;
-      const isBonusDone = (typeof isBonusClaimed === 'function') ? isBonusClaimed('node-bonus') : false;
-      if (nodeId === 'node-review' || nodeType === 'review') return prog1 >= 3 && isBonusDone;
-      const isReviewDone = (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted('node-review') : false;
-      const prog2 = (window.nodeProgressMap && window.nodeProgressMap['node-2']) || (getNodeProgress('node-2').clearedCount) || 0;
-      // 이전 노드가 review인 경우 또는 review가 완료되면 다음 3번 노드가 무조건 unlocked = true 보장
-      if (nodeId === 'node-3' || nodeIndex === 4 || nodeType === 'sentence' || nodeIndex === 2) {
-        return isReviewDone || (prog2 >= 3 && isBonusDone && isReviewDone);
+      if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeIndex === 0) return true;
+      const prog1 = (window.nodeProgressMap && (window.nodeProgressMap['node-1'] || window.nodeProgressMap['fb_1_n1'])) || (getNodeProgress('node-1').clearedCount) || (getNodeProgress('fb_1_n1').clearedCount) || 0;
+      const isBonusDone = (typeof isBonusClaimed === 'function') ? (isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n2') || isBonusClaimed('es_1_bonus')) : false;
+
+      // 1과를 1회 이상 클리어하면 선물상자가 즉시 해금되어 열림
+      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n2' || nodeType === 'bonus' || nodeIndex === 1) {
+        return prog1 >= 1;
       }
-      if (nodeId === 'node-boss' || nodeType === 'boss') {
-        const prog3 = (window.nodeProgressMap && window.nodeProgressMap['node-3']) || (getNodeProgress('node-3').clearedCount) || 0;
-        return prog3 >= 3;
+
+      // 선물상자를 수령해야만 2과(피치와 장비) 해금
+      if (nodeId === 'node-2' || nodeId === 'fb_1_n3' || (nodeIndex === 2 && (nodeType === 'stage' || !nodeType))) {
+        return (prog1 >= 1 && isBonusDone);
+      }
+
+      const prog2 = (window.nodeProgressMap && (window.nodeProgressMap['node-2'] || window.nodeProgressMap['fb_1_n3'])) || (getNodeProgress('node-2').clearedCount) || (getNodeProgress('fb_1_n3').clearedCount) || 0;
+      const isReviewDone = (typeof isReviewNodeCompleted === 'function') ? (isReviewNodeCompleted('node-review') || isReviewNodeCompleted('fb_1_n5') || isReviewNodeCompleted('es_1_review')) : false;
+
+      if (nodeId === 'node-review' || nodeId === 'fb_1_n5' || nodeType === 'review') {
+        return prog2 >= 3 && isBonusDone;
+      }
+      if (nodeId === 'node-3' || nodeId === 'fb_1_n4' || nodeType === 'sentence' || (nodeIndex === 3 && nodeType === 'sentence') || nodeIndex === 4) {
+        return (prog2 >= 3 && isBonusDone);
+      }
+      if (nodeId === 'node-boss' || nodeId === 'fb_1_n6' || nodeType === 'boss' || nodeIndex === 5) {
+        const prog3 = (window.nodeProgressMap && (window.nodeProgressMap['node-3'] || window.nodeProgressMap['fb_1_n4'])) || (getNodeProgress('node-3').clearedCount) || (getNodeProgress('fb_1_n4').clearedCount) || 0;
+        return prog3 >= 3 || (isReviewDone && prog2 >= 3);
       }
     }
 
@@ -2699,11 +2772,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (actualNodeIdx > 0) {
           const prevNode = curUnit.nodes[actualNodeIdx - 1];
           if (prevNode && prevNode.id) {
+            if (curUnit.nodes[actualNodeIdx].type === 'bonus') {
+              const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
+              const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
+              return count >= 1;
+            }
             if (prevNode.type === 'bonus') {
               return (typeof isBonusClaimed === 'function') ? isBonusClaimed(prevNode.id) : false;
             }
             if (prevNode.type === 'review') {
-              // 이전 노드가 review인 경우, 해당 review 노드가 완료되면 다음 3번 노드가 무조건 unlocked = true 보장
               return (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted(prevNode.id) : false;
             }
             const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
@@ -2720,7 +2797,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadNodeProgress(targetLang) {
     const prog = getCourseProgress(window.activeCourseId);
     const result = {
-      'node-1': (window.activeCourseId === 'main' ? 3 : 0),
+      'node-1': 0,
       'node-2': 0,
       'node-3': 0,
       'node-boss': 0
@@ -3243,12 +3320,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleClaimBonus(nodeId = 'node-bonus', unitNum = 1) {
     const isUnlocked = (unitNum === 1)
-      ? (resolveNodeData('es_1_n3', 'node-2').clearedCount >= 3)
+      ? (resolveNodeData('fb_1_n1', 'node-1').clearedCount >= 1 || (window.nodeProgressMap && window.nodeProgressMap['node-1'] >= 1))
       : isNodeUnlocked(unitNum - 1, 1, { type: 'bonus', id: nodeId });
 
     if (!isUnlocked) {
       if (typeof window.showToast === 'function') {
-        window.showToast('2과를 먼저 완료해야 열려요! 🔒');
+        window.showToast('1과를 먼저 완료해야 열려요! 🔒');
       }
       return;
     }
@@ -3542,6 +3619,24 @@ document.addEventListener('DOMContentLoaded', () => {
     window.nodeProgressMap[n3Id] = prog3;
     window.nodeProgressMap[nBossId] = progBoss;
 
+    // Unit 1 노드 완료 및 해금 판정
+    const isBonusDone = isBonusClaimed('node-bonus');
+    const isReviewDone = isReviewNodeCompleted('node-review');
+
+    const isNode1Unlocked = true;
+    const isNode2Unlocked = (prog1 >= 3);
+    const isBonusUnlocked = (prog1 >= 3);
+    const isReviewUnlocked = (prog1 >= 3 && isBonusDone);
+    const isNode3Unlocked = (prog2 >= 3 && isBonusDone && isReviewDone);
+    const isBossUnlocked = (prog3 >= 3);
+
+    const isNode1Active = (prog1 < 3);
+    const isNode2Active = (!isNode1Active && isNode2Unlocked && prog2 < 3);
+    const isBonusActive = (!isNode1Active && !isNode2Active && isBonusUnlocked && !isBonusDone);
+    const isReviewActive = (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !isReviewDone);
+    const isNode3Active = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
+    const isBossActive = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
+
     // Node 1 요소 레퍼런스
     const node1Container = el('node-1-container');
     const target1 = el('node-1-target');
@@ -3555,7 +3650,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prog1 >= 3) {
       if (node1Container) node1Container.classList.remove('active', 'node-pulse');
-      // 1과 완료 상태 (그린 톤 + 숫자 1 복원 + 우상단 체크 배지 + ⭐⭐⭐ 완료!)
       if (ping1) ping1.classList.add('hidden');
       if (pulseRing1) pulseRing1.classList.add('hidden');
       if (startPill1) {
@@ -3583,9 +3677,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (badge1) {
         badge1.innerHTML = renderStarsBadge(prog1, data1.stars, false);
       }
-    } else {
+    } else if (isNode1Active) {
+      // 1과 미시작 상태 (prog1 === 0): START 텍스트와 펄스
       if (node1Container) node1Container.classList.add('active', 'node-pulse');
-      // 1과 미시작/진행 중 상태 (스카이블루 + 원형 내부 START 텍스트 + 활성 링)
       if (ping1) ping1.classList.remove('hidden');
       if (pulseRing1) pulseRing1.classList.remove('hidden');
       if (startPill1) {
@@ -3609,6 +3703,36 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (card1) {
         card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border-2 border-sky-400 text-center pointer-events-none ring-2 ring-sky-100';
+      }
+      if (badge1) {
+        badge1.innerHTML = renderStarsBadge(prog1, data1.stars, false);
+      }
+    } else {
+      // 1과 1회 이상 완료 상태 (진행 중이지만 START 포커스는 선물상자 또는 2과로 이동)
+      if (node1Container) node1Container.classList.remove('active', 'node-pulse');
+      if (ping1) ping1.classList.add('hidden');
+      if (pulseRing1) pulseRing1.classList.add('hidden');
+      if (startPill1) {
+        startPill1.classList.add('hidden');
+        startPill1.style.display = 'none';
+      }
+      if (checkBadge1) {
+        checkBadge1.classList.add('hidden');
+        checkBadge1.style.display = 'none';
+      }
+      if (target1) target1.dataset.nodeType = 'active';
+
+      if (btn1) {
+        btn1.className = 'node-btn btn-3d relative w-[74px] h-[74px] rounded-full bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl flex items-center justify-center border-b-[5px] border-blue-800 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden';
+        btn1.title = lessons['node-1'] ? lessons['node-1'].title : '1과: 인사/안부';
+        const stageNum1 = btn1.querySelector('.node-stage-num');
+        if (stageNum1) {
+          stageNum1.textContent = '1';
+          stageNum1.className = 'node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white';
+        }
+      }
+      if (card1) {
+        card1.className = 'mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border border-sky-300 text-center pointer-events-none';
       }
       if (badge1) {
         badge1.innerHTML = renderStarsBadge(prog1, data1.stars, false);
@@ -3670,8 +3794,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (badge2) {
         badge2.innerHTML = renderStarsBadge(prog2, data2.stars, false);
       }
-    } else if (prog1 >= 3) {
-      // 2과 진행 중 상태 (1과 완료 후: 스카이블루 + START 뱃지)
+    } else if (isNode2Active) {
+      // 2과 진행 중 상태 (보너스 수령 완료 후: 스카이블루 + START 뱃지)
       if (node2Container) {
         node2Container.classList.remove('opacity-80');
         node2Container.classList.add('opacity-100', 'active', 'node-pulse');
@@ -3713,7 +3837,7 @@ document.addEventListener('DOMContentLoaded', () => {
         badge2.innerHTML = renderStarsBadge(prog2, data2.stars, false);
       }
     } else {
-      // 2과 잠김 상태 (1과 미완료 시: 자물쇠 잠김)
+      // 2과 잠김 상태 (보너스 미수령 또는 1과 미완료 시: 자물쇠 잠김)
       if (node2Container) {
         node2Container.classList.remove('opacity-100', 'active', 'node-pulse');
         node2Container.classList.add('opacity-80');
@@ -3735,9 +3859,12 @@ document.addEventListener('DOMContentLoaded', () => {
         lockBadge2.style.display = 'flex';
       }
 
+      const lockMsg2 = isBonusUnlocked ? '보너스 선물을 먼저 받아주세요!' : '1과를 먼저 완료해야 열려요!';
+      const lockBadgeText2 = isBonusUnlocked ? '선물 수령 후' : '1과 완료 후';
+
       if (target2) {
         target2.dataset.nodeType = 'locked';
-        target2.setAttribute('data-lock-msg', '이전 레슨을 먼저 완료해야 열려요!');
+        target2.setAttribute('data-lock-msg', lockMsg2);
         target2.setAttribute('data-lock-icon', '🔒');
       }
 
@@ -3753,7 +3880,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (badge2) {
-        badge2.innerHTML = renderStarsBadge(0, 0, true, '1과 완료 후');
+        badge2.innerHTML = renderStarsBadge(0, 0, true, lockBadgeText2);
       }
     }
 
@@ -3769,24 +3896,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const badge3 = el('node-3-label-badge');
     const card3 = el('node-3-label-card');
     const startPill3 = el('node-3-start-pill');
-
-    // Unit 1 노드 완료 및 해금 판정
-    const isBonusDone = isBonusClaimed('node-bonus');
-    const isReviewDone = isReviewNodeCompleted('node-review');
-
-    const isNode1Unlocked = true;
-    const isNode2Unlocked = (prog1 >= 3);
-    const isBonusUnlocked = (prog1 >= 3);
-    const isReviewUnlocked = (prog1 >= 3 && isBonusDone);
-    const isNode3Unlocked = (prog2 >= 3 && isBonusDone && isReviewDone);
-    const isBossUnlocked = (prog3 >= 3);
-
-    const isNode1Active = (prog1 < 3);
-    const isNode2Active = (!isNode1Active && isNode2Unlocked && prog2 < 3);
-    const isBonusActive = (!isNode1Active && !isNode2Active && isBonusUnlocked && !isBonusDone);
-    const isReviewActive = (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !isReviewDone);
-    const isNode3Active = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
-    const isBossActive = (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
 
     if (prog3 >= 3) {
       // 3과 완료 상태 (초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
@@ -4058,6 +4167,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewStartPill = el('node-review-start-pill');
     const reviewCheckBadge = el('node-review-check-badge');
 
+    // 보너스 선물 말풍선 표시 제어
+    const bonusGiftBubble = el('node-bonus-gift-bubble');
+    if (bonusGiftBubble) {
+      if (isBonusUnlocked && !isBonusDone) {
+        bonusGiftBubble.classList.remove('hidden');
+        bonusGiftBubble.style.display = 'flex';
+      } else {
+        bonusGiftBubble.classList.add('hidden');
+        bonusGiftBubble.style.display = 'none';
+      }
+    }
+
     if (isBonusDone) {
       if (bonusContainer) bonusContainer.classList.remove('opacity-80', 'active', 'node-pulse');
       if (bonusTarget) {
@@ -4096,7 +4217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (bonusContainer) bonusContainer.classList.add('opacity-80');
       if (bonusTarget) {
         bonusTarget.dataset.nodeType = 'locked';
-        bonusTarget.setAttribute('data-lock-msg', '2과를 먼저 완료해야 열려요!');
+        bonusTarget.setAttribute('data-lock-msg', '1과를 먼저 완료해야 열려요!');
         bonusTarget.setAttribute('data-lock-icon', '🔒');
       }
       if (bonusPing) bonusPing.classList.add('hidden');
@@ -5411,15 +5532,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   on('node-bonus-btn', 'click', (e) => {
     e.stopPropagation();
-    if ((window.nodeProgressMap['node-1'] || 0) < 3) {
-      const btnBonus = el('node-bonus-btn');
-      if (btnBonus) {
-        btnBonus.classList.add('animate-lock-shake');
-        setTimeout(() => btnBonus.classList.remove('animate-lock-shake'), 450);
-        showLockedTooltip(btnBonus);
-      }
-      return;
-    }
     openBonusModal();
   });
   on('node-review-btn', 'click', (e) => {

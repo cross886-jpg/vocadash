@@ -2304,20 +2304,20 @@
           // 문장/빈칸 카드 디자인 확장: max-w-[94%] w-auto px-6 py-4 적용
           if (gameDroppingBubble) {
             gameDroppingBubble.classList.add('wide-falling-card');
-            gameDroppingBubble.style.maxWidth = '94%';
+            gameDroppingBubble.style.maxWidth = '92%';
             gameDroppingBubble.style.width = 'auto';
           }
           if (innerCard) {
-            innerCard.className = 'relative flex flex-col items-center px-6 py-4 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center';
+            innerCard.className = 'relative flex flex-col items-center px-5 py-3 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center whitespace-nowrap';
           }
-          // 폰트 크기 대폭 확대: text-lg (18px) 또는 text-xl (20px), font-bold 적용
-          let fontSizeClass = 'text-xl';
+          // 폰트 크기 미세 조정: 긴 문장도 한 줄로 시원하게 떨어지도록 text-base 또는 text-[15px]
+          let fontSizeClass = 'text-base';
           if (len > 35) {
-            fontSizeClass = 'text-base';
-          } else if (len > 22) {
-            fontSizeClass = 'text-lg';
+            fontSizeClass = 'text-[14px]';
+          } else if (len > 25) {
+            fontSizeClass = 'text-[15px]';
           }
-          gameDroppingWord.className = `font-headline-xl ${fontSizeClass} font-bold text-[#1E293B] tracking-tight drop-shadow-sm select-none break-keep text-center leading-relaxed`;
+          gameDroppingWord.className = `font-headline-xl ${fontSizeClass} font-bold text-[#1E293B] tracking-tight drop-shadow-sm select-none whitespace-nowrap text-center leading-relaxed`;
         } else {
           if (gameDroppingBubble) {
             gameDroppingBubble.classList.remove('wide-falling-card');
