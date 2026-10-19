@@ -297,7 +297,7 @@
   </script>
 
   <!-- Custom CSS & Keyframe Animations -->
-  <link rel="stylesheet" href="css/style.css?v=88">
+  <link rel="stylesheet" href="css/style.css?v=92">
 </head>
 
 <body class="bg-slate-100 font-body-md text-body-md text-on-surface flex justify-center min-h-screen select-none antialiased">
@@ -403,10 +403,10 @@
 
           <!-- 중앙: UNIT 1 / 10 + 볼드 텍스트 + 옐로우 진행도 프로그레스 바 -->
           <div class="flex flex-col flex-grow min-w-0">
-            <div class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-200 tracking-tight leading-none">
-              <span id="unit-sub-badge">UNIT 1 / 10</span>
-              <span class="opacity-60">•</span>
-              <span id="unit-lang-badge">🇪🇸 스페인어 첫걸음</span>
+            <div class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-200 tracking-tight leading-none truncate">
+              <span id="unit-sub-badge" class="flex-shrink-0">UNIT 1 / 10</span>
+              <span class="opacity-60 flex-shrink-0">•</span>
+              <span id="unit-lang-badge" class="truncate">🇪🇸 스페인어 첫걸음</span>
             </div>
             <div id="unit-main-title" class="text-sm font-black text-white leading-snug mt-1 truncate">일상 회화 & 실전 기초 어휘 마스터</div>
             <div class="w-full bg-emerald-950/60 h-2 rounded-full mt-1.5 overflow-hidden border border-emerald-700/40">
@@ -428,6 +428,7 @@
     <!-- ================================================= -->
     <main id="roadmap-screen" class="flex flex-col relative w-full pt-[142px] pb-40 px-4 roadmap-grid-bg flex-grow" style="padding-bottom: max(160px, calc(140px + env(safe-area-inset-bottom, 20px)));">
       <div id="roadmap-nodes-container" class="relative w-full pt-1 pb-4 select-none min-h-[960px]">
+        <div class="unit-section-block relative w-full" data-unit-index="0" id="unit-section-0">
 
         <!-- Curved Running Track SVG Layer -->
         <svg id="roadmap-svg-path" class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 960">
@@ -672,9 +673,13 @@
             </div>
           </div>
         </div>
+        </div>
 
-        <!-- 하단 네비게이션 바에 마지막 노드가 가려지지 않도록 보장하는 안전 여백 스페이서 -->
-        <div class="w-full h-16 pointer-events-none" aria-hidden="true"></div>
+        <!-- Dynamic Units Container (듀오링고 방식 연속 로드맵: Unit 2 ~ N) -->
+        <div id="roadmap-subsequent-units" class="w-full"></div>
+
+        <!-- 하단 네비게이션 바에 마지막 노드가 가려지지 않도록 보장하는 안전 여백 스페이서 (pb-32 여백 확보) -->
+        <div class="w-full h-32 pb-32 pointer-events-none" aria-hidden="true"></div>
 
         <!-- Floating Reusable Lock Tooltip -->
         <div id="locked-node-tooltip" class="absolute z-30 pointer-events-none transition-all duration-200 opacity-0 scale-90 select-none whitespace-nowrap" style="display: none;">
@@ -3288,15 +3293,15 @@
   </div>
 
   <!-- Application Data & Logic (언어별/테마별 분리 모듈화) -->
-  <script src="js/data_es.js?v=91"></script>
-  <script src="js/data_football.js?v=91"></script>
-  <script src="js/data_en.js?v=91"></script>
-  <script src="js/sound.js?v=91"></script>
-  <script src="js/settings.js?v=91"></script>
-  <script src="js/flashcard.js?v=91"></script>
-  <script src="js/gameEngine.js?v=91"></script>
-  <script src="js/navigation.js?v=91"></script>
-  <script src="js/app.js?v=91"></script>
+  <script src="js/data_es.js?v=92"></script>
+  <script src="js/data_football.js?v=92"></script>
+  <script src="js/data_en.js?v=92"></script>
+  <script src="js/sound.js?v=92"></script>
+  <script src="js/settings.js?v=92"></script>
+  <script src="js/flashcard.js?v=92"></script>
+  <script src="js/gameEngine.js?v=92"></script>
+  <script src="js/navigation.js?v=92"></script>
+  <script src="js/app.js?v=92"></script>
 
 </body>
 

@@ -921,6 +921,102 @@ document.addEventListener('DOMContentLoaded', () => {
   window.isBonusClaimed = isBonusClaimed;
   window.markBonusClaimed = markBonusClaimed;
 
+  // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화 함수
+  function updateTopUnitBanner(activeIdx) {
+    const activeCourse = getCurrentCourseData();
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseId = window.currentCourseId || 'basic';
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+
+    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    if (activeCourse && Array.isArray(activeCourse.units) && activeCourse.units.length > 0) {
+      units = activeCourse.units;
+    }
+    const totalUnits = units.length || 10;
+    const targetIdx = (typeof activeIdx === 'number' && !isNaN(activeIdx))
+      ? Math.max(0, Math.min(totalUnits - 1, activeIdx))
+      : (window._currentVisibleUnitIndex !== undefined ? window._currentVisibleUnitIndex : Math.max(0, Math.min(totalUnits - 1, unlockedLevel - 1)));
+    const targetUnit = units[targetIdx] || units[0];
+
+    const unitSubBadge = el('unit-sub-badge');
+    const unitLangBadge = el('unit-lang-badge');
+    const unitMainTitle = el('unit-main-title');
+    const unitProgressBar = el('unit-progress-bar');
+    const unitThumbIcon = el('unit-thumb-icon');
+
+    const isFootball = (window.activeCourseId === 'pack_football' || (activeCourse && (activeCourse.id === 'pack_football' || activeCourse.courseId === 'pack_football')));
+
+    if (unitSubBadge) {
+      unitSubBadge.textContent = `UNIT ${targetIdx + 1} / ${totalUnits}`;
+    }
+
+    if (isFootball) {
+      const fbData = window.packFootballData;
+      const fbCourseName = (fbData && fbData.courseName) || '스페인 축구 실전팩';
+      const fbBadge = (fbData && fbData.badge) || '스페셜 팩';
+      if (unitLangBadge) unitLangBadge.textContent = `⚽ ${fbBadge}`;
+      if (unitThumbIcon) unitThumbIcon.textContent = targetUnit?.icon || '⚽';
+      if (unitMainTitle) {
+        unitMainTitle.textContent = targetUnit ? `${fbCourseName} · ${targetUnit.title}` : fbCourseName;
+      }
+    } else {
+      if (targetIdx === 0) {
+        if (unitLangBadge) {
+          unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 정규 코스' : '🇪🇸 스페인어 첫걸음';
+        }
+        if (unitThumbIcon) {
+          unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '🇪🇸')));
+        }
+        if (unitMainTitle) {
+          if (courseId === 'travel') {
+            unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
+          } else if (courseId === 'dele') {
+            unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
+          } else if (courseId === 'toeic') {
+            unitMainTitle.textContent = '토익/오픽 필수 빈출 어휘 마스터';
+          } else if (courseId === 'business') {
+            unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
+          } else {
+            unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
+          }
+        }
+      } else {
+        if (unitLangBadge) {
+          unitLangBadge.textContent = lang === 'en' ? `🇺🇸 영어 : ${targetUnit.title}` : `🇪🇸 스페인어 : ${targetUnit.title}`;
+        }
+        if (unitThumbIcon) {
+          unitThumbIcon.textContent = targetUnit.icon || (lang === 'en' ? '🗽' : '🇪🇸');
+        }
+        if (unitMainTitle) {
+          const sub = targetUnit.desc || targetUnit.subtitle || '';
+          unitMainTitle.textContent = sub ? `${targetUnit.title} (${sub.split(',')[0].trim()})` : targetUnit.title;
+        }
+      }
+    }
+
+    if (unitProgressBar) {
+      const curUnitNum = targetIdx + 1;
+      let pct = 0;
+      if (curUnitNum < unlockedLevel) {
+        pct = 100;
+      } else if (curUnitNum === unlockedLevel) {
+        const prog1 = window.nodeProgressMap['node-1'] !== undefined ? window.nodeProgressMap['node-1'] : 0;
+        const prog2 = window.nodeProgressMap['node-2'] || 0;
+        const prog3 = window.nodeProgressMap['node-3'] || 0;
+        const progBoss = window.nodeProgressMap['node-boss'] || 0;
+        if (progBoss >= 3) pct = 100;
+        else if (prog3 >= 3) pct = 85;
+        else if (prog2 >= 3) pct = 65;
+        else if (prog1 >= 3) pct = 35;
+        else pct = 10;
+      } else {
+        pct = 0;
+      }
+      unitProgressBar.style.width = `${pct}%`;
+    }
+  }
+  window.updateTopUnitBanner = updateTopUnitBanner;
+
   function updateRoadmapNodesUI() {
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
@@ -930,49 +1026,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
-    const unitIndex = Math.max(0, unlockedLevel - 1);
-    const targetUnit = (activeCourse && Array.isArray(activeCourse.units)) ? (activeCourse.units[unitIndex] || activeCourse.units[0]) : null;
-    const unitSubBadge = el('unit-sub-badge');
-    const unitLangBadge = el('unit-lang-badge');
-    const unitMainTitle = el('unit-main-title');
-    const unitProgressBar = el('unit-progress-bar');
-    const unitThumbIcon = el('unit-thumb-icon');
-
-    // getCurrentCourseData()의 units 데이터를 바라보도록 소스 참조 변경
-    let unitPresets = UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
-    if (activeCourse && activeCourse.units) {
-      if (Array.isArray(activeCourse.units)) {
-        unitPresets = activeCourse.units;
-      } else if (activeCourse.units[lang]) {
-        unitPresets = activeCourse.units[lang];
-      } else if (activeCourse.units.es) {
-        unitPresets = activeCourse.units.es;
-      }
-    }
-    const curUnitPreset = unitPresets.find(u => u.unit === unlockedLevel) || unitPresets[0];
-
-    if (unitSubBadge) {
-      unitSubBadge.textContent = `UNIT ${unlockedLevel} / ${unitPresets.length || 10}`;
-    }
+    const bannerIdx = (window._currentVisibleUnitIndex !== undefined) ? window._currentVisibleUnitIndex : (unlockedLevel - 1);
+    updateTopUnitBanner(bannerIdx);
 
     if (window.activeCourseId === 'pack_football') {
       const fbData = window.packFootballData;
-      const fbCourseName = (fbData && fbData.courseName) || '스페인 축구 실전팩';
-      const fbBadge = (fbData && fbData.badge) || '스페셜 팩';
       const curFbUnit = fbData?.units?.find(u => u.id === unlockedLevel) || fbData?.units?.[0];
-
-      if (unitLangBadge) {
-        unitLangBadge.textContent = `⚽ ${fbBadge}`;
-      }
-      if (unitThumbIcon) {
-        unitThumbIcon.textContent = '⚽';
-      }
-      if (unitMainTitle) {
-        unitMainTitle.textContent = curFbUnit ? `${fbCourseName} · ${curFbUnit.title}` : fbCourseName;
-      }
-      if (unitSubBadge) {
-        unitSubBadge.textContent = `UNIT ${unlockedLevel} / ${fbData?.units?.length || 4}`;
-      }
 
       if (curFbUnit && Array.isArray(curFbUnit.nodes)) {
         const n1 = curFbUnit.nodes.find(n => n.stageNumber === 1 || n.id.endsWith('_n1'));
@@ -985,36 +1044,6 @@ document.addEventListener('DOMContentLoaded', () => {
           'node-3': { title: n3?.title || '핵심 문장', desc: n3?.targetSentence || curFbUnit.subtitle, icon: '⚽' },
           'node-boss': { title: nBoss?.title || `${curFbUnit.title} 보스전`, desc: '축구 실전 테스트 & 챔피언 특별 보상', icon: '👑' }
         };
-      }
-    } else if (unlockedLevel === 1) {
-      if (unitLangBadge) {
-        unitLangBadge.textContent = lang === 'en' ? '🇺🇸 영어 정규 코스' : '🇪🇸 스페인어 정규 코스';
-      }
-      if (unitThumbIcon) {
-        unitThumbIcon.textContent = courseId === 'travel' ? '✈️' : (courseId === 'business' ? '💼' : (courseId === 'dele' || courseId === 'toeic' ? '🎓' : (lang === 'en' ? '🗽' : '🇪🇸')));
-      }
-      if (unitMainTitle) {
-        if (courseId === 'travel') {
-          unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
-        } else if (courseId === 'dele') {
-          unitMainTitle.textContent = 'DELE A1~B2 등급별 실전 어휘';
-        } else if (courseId === 'toeic') {
-          unitMainTitle.textContent = '토익/오픽 필수 빈출 어휘 마스터';
-        } else if (courseId === 'business') {
-          unitMainTitle.textContent = '글로벌 비즈니스 실전 커뮤니케이션';
-        } else {
-          unitMainTitle.textContent = lang === 'en' ? '일상 회화 & 실전 필수 어휘 마스터' : '일상 회화 & 실전 기초 어휘 마스터';
-        }
-      }
-    } else {
-      if (unitLangBadge) {
-        unitLangBadge.textContent = lang === 'en' ? `🇺🇸 영어 : ${curUnitPreset.title}` : `🇪🇸 스페인어 : ${curUnitPreset.title}`;
-      }
-      if (unitThumbIcon) {
-        unitThumbIcon.textContent = curUnitPreset.icon || '☕';
-      }
-      if (unitMainTitle) {
-        unitMainTitle.textContent = `${curUnitPreset.title} (${curUnitPreset.subtitle.split(',')[0].trim()})`;
       }
     }
 
@@ -1061,21 +1090,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const prog3 = window.nodeProgressMap['node-3'] || 0;
     const progBoss = window.nodeProgressMap['node-boss'] || 0;
 
-    // Unit banner progress bar
-    if (unitProgressBar) {
-      if (unlockedLevel > 1) {
-        const pct = Math.min(100, Math.max(15, (unlockedLevel - 1) * 10 + (prog1 >= 3 ? 15 : 5) + (prog2 >= 3 ? 15 : 0) + (prog3 >= 3 ? 15 : 0)));
-        unitProgressBar.style.width = pct + '%';
-      } else {
-        let pct = 35;
-        if (progBoss >= 3) pct = 100;
-        else if (prog3 >= 3) pct = 85;
-        else if (prog2 >= 3) pct = 65;
-        else if (prog1 >= 3) pct = 35;
-        else pct = 10;
-        unitProgressBar.style.width = pct + '%';
-      }
-    }
 
     // Node 1 요소 레퍼런스
     const node1Container = el('node-1-container');
@@ -1089,6 +1103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const card1 = el('node-1-label-card');
 
     if (prog1 >= 3) {
+      if (node1Container) node1Container.classList.remove('active', 'node-pulse');
       // 1과 완료 상태 (그린 톤 + 숫자 1 복원 + 우상단 체크 배지 + ⭐⭐⭐ 완료!)
       if (ping1) ping1.classList.add('hidden');
       if (pulseRing1) pulseRing1.classList.add('hidden');
@@ -1118,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         badge1.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
       }
     } else {
+      if (node1Container) node1Container.classList.add('active', 'node-pulse');
       // 1과 미시작/진행 중 상태 (스카이블루 + 원형 내부 START 텍스트 + 활성 링)
       if (ping1) ping1.classList.remove('hidden');
       if (pulseRing1) pulseRing1.classList.remove('hidden');
@@ -1165,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prog2 >= 3) {
       // 2과 완료 상태 (초록색 체크 & ⭐⭐⭐ 완료 표시)
       if (node2Container) {
-        node2Container.classList.remove('opacity-80');
+        node2Container.classList.remove('opacity-80', 'active', 'node-pulse');
         node2Container.classList.add('opacity-100');
         node2Container.style.opacity = '1';
       }
@@ -1208,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 2과 진행 중 상태 (1과 완료 후: 스카이블루 + START 뱃지)
       if (node2Container) {
         node2Container.classList.remove('opacity-80');
-        node2Container.classList.add('opacity-100');
+        node2Container.classList.add('opacity-100', 'active', 'node-pulse');
         node2Container.style.opacity = '1';
       }
       if (banner2) banner2.classList.add('hidden');
@@ -1250,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // 2과 잠김 상태 (1과 미완료 시: 자물쇠 잠김)
       if (node2Container) {
-        node2Container.classList.remove('opacity-100');
+        node2Container.classList.remove('opacity-100', 'active', 'node-pulse');
         node2Container.classList.add('opacity-80');
         node2Container.style.opacity = '0.8';
       }
@@ -1308,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prog3 >= 3) {
       // 3과 완료 상태 (초록색 완료 체크 & ⭐⭐⭐ 완료 표시)
       if (node3Container) {
-        node3Container.classList.remove('opacity-75', 'opacity-80');
+        node3Container.classList.remove('opacity-75', 'opacity-80', 'active', 'node-pulse');
         node3Container.classList.add('opacity-100');
         node3Container.style.opacity = '1';
       }
@@ -1347,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (prog2 >= 3) {
       if (node3Container) {
         node3Container.classList.remove('opacity-75', 'opacity-80');
-        node3Container.classList.add('opacity-100');
+        node3Container.classList.add('opacity-100', 'active', 'node-pulse');
         node3Container.style.opacity = '1';
       }
       if (banner3) banner3.classList.add('hidden');
@@ -1386,7 +1402,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (node3Container) {
-        node3Container.classList.remove('opacity-100');
+        node3Container.classList.remove('opacity-100', 'active', 'node-pulse');
         node3Container.classList.add('opacity-80');
         node3Container.style.opacity = '0.8';
       }
@@ -1452,6 +1468,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (progBoss >= 3) {
+        if (nodeBossContainer) nodeBossContainer.classList.remove('active', 'node-pulse');
         if (bannerBoss) bannerBoss.classList.add('hidden');
         if (startPillBoss) {
           startPillBoss.classList.add('hidden');
@@ -1470,6 +1487,7 @@ document.addEventListener('DOMContentLoaded', () => {
           badgeBoss.innerHTML = '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
         }
       } else {
+        if (nodeBossContainer) nodeBossContainer.classList.add('active', 'node-pulse');
         if (bannerBoss) bannerBoss.classList.add('hidden');
         if (startPillBoss) {
           startPillBoss.classList.remove('hidden');
@@ -1493,6 +1511,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (nodeBossContainer) {
+        nodeBossContainer.classList.remove('active', 'node-pulse');
         nodeBossContainer.classList.add('opacity-80');
       }
       if (bannerBoss) bannerBoss.classList.add('hidden');
@@ -1623,17 +1642,392 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
 
+  // ===================================================
+  // 듀오링고 스타일 전체 유닛 연속 스크롤 로드맵 & 렌더링 시스템
+  // ===================================================
+  function renderUnitNodeHtml(opt) {
+    const { unitNum, stageNum, title, align, width, isCompleted, isActive, isLocked } = opt;
+    return `
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isCompleted ? 'completed' : (isActive ? 'active' : 'locked')}" data-unit-index="${unitNum - 1}">
+        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+          ${isActive ? `
+            <span class="absolute w-[100px] h-[100px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
+            <span class="absolute w-[90px] h-[90px] rounded-full bg-sky-200/50 pointer-events-none"></span>
+          ` : ''}
+
+          <button class="subsequent-node-btn node-btn btn-3d relative ${isActive ? 'w-[76px] h-[76px]' : 'w-[68px] h-[68px]'} rounded-full ${
+            isCompleted
+              ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
+              : (isActive
+                ? 'bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70'
+                : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm')
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage">
+            <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
+            <span class="node-stage-num ${isActive ? 'text-sm font-extrabold tracking-tight' : 'font-black text-2xl'} select-none leading-none drop-shadow-xs relative z-10 text-white">${isActive ? 'START' : stageNum}</span>
+          </button>
+
+          ${isActive ? `
+            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
+            </div>
+          ` : ''}
+
+          ${isCompleted ? `
+            <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[15px] font-black">check</span>
+            </div>
+          ` : ''}
+
+          ${isLocked ? `
+            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="mt-2.5 flex flex-col items-center bg-white/95 px-3.5 py-1.5 rounded-2xl shadow-sm border ${isActive ? 'border-2 border-sky-400 ring-2 ring-sky-100' : 'border-slate-200/80'} text-center pointer-events-none ${isLocked ? 'opacity-80' : ''}">
+          <span class="font-extrabold text-xs text-slate-900">${escapeHTML(title)}</span>
+          <div class="flex items-center gap-1 mt-0.5">
+            ${isCompleted ? `
+              <span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>
+              <span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>
+            ` : (isActive ? `
+              <span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span><span class="text-xs opacity-40">⭐</span>
+              <span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">0/3 레슨 진행중</span>
+            ` : `
+              <span class="font-label-sm text-[10px] text-slate-400 font-semibold">이전 레슨 완료 후</span>
+            `)}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderUnitBonusHtml(opt) {
+    const { unitNum, align, width, isCompleted, isLocked } = opt;
+    return `
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="bonus" data-unit-index="${unitNum - 1}">
+        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${
+            isCompleted
+              ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
+              : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80'
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus">
+            <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
+            <span class="text-3xl select-none leading-none drop-shadow-sm ${isCompleted ? '' : 'animate-wiggle'} relative z-10">${isCompleted ? '📦' : '🎁'}</span>
+          </button>
+        </div>
+        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border ${isCompleted ? 'border-slate-200 opacity-85' : 'border-amber-200'} text-center pointer-events-none">
+          <span class="font-extrabold text-xs ${isCompleted ? 'text-slate-600' : 'text-amber-950'}">보너스 선물</span>
+          <div class="flex items-center gap-1 mt-0.5">
+            <span class="text-xs">${isCompleted ? '📦' : '🎁'}</span>
+            <span class="font-label-sm text-[10px] ${isCompleted ? 'text-slate-500' : 'text-amber-600'} font-bold">${isCompleted ? '수령 완료 ✅' : '+15 💎 보너스'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderUnitReviewHtml(opt) {
+    const { unitNum, align, width, isLocked } = opt;
+    return `
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="review" data-unit-index="${unitNum - 1}">
+        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80 overflow-hidden" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review">
+            <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
+            <div class="relative flex items-center justify-center z-10">
+              <span class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
+              <span class="absolute -bottom-1 -right-1 text-sm">🩹</span>
+            </div>
+          </button>
+          <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-amber-500 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none font-black text-xs leading-none">
+            !
+          </div>
+        </div>
+        <div class="mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-orange-200 text-center pointer-events-none">
+          <span class="font-extrabold text-xs text-orange-950">약점 복습</span>
+          <div class="flex items-center gap-1 mt-0.5">
+            <span class="text-xs">⚡️</span>
+            <span class="font-label-sm text-[10px] text-orange-600 font-bold">오답 탈출</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderUnitBossHtml(opt) {
+    const { unitNum, title, desc, align, width, isCompleted, isLocked } = opt;
+    return `
+      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="boss" data-unit-index="${unitNum - 1}">
+        <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full ${isCompleted ? 'bg-emerald-600' : 'bg-amber-500'} text-white shadow-[0_2px_0_0_${isCompleted ? '#065f46' : '#b45309'}] pointer-events-none font-black text-[11px] uppercase tracking-wide">
+          <span class="text-xs">🔥</span>
+          <span>FINAL BOSS EXAM</span>
+        </div>
+        <div class="relative flex items-center justify-center node-target cursor-pointer">
+          ${!isLocked && !isCompleted ? `
+            <div class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
+          ` : ''}
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[92px] h-[92px] rounded-full ${
+            isCompleted
+              ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70'
+              : (isLocked
+                ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
+                : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70')
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="boss">
+            <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
+            ${isLocked ? `
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
+                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+              </div>
+            ` : ''}
+          </button>
+          ${isCompleted ? `
+            <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none">
+              <span class="material-symbols-outlined text-[16px] font-black">check</span>
+            </div>
+          ` : ''}
+        </div>
+        <div class="mt-3.5 flex flex-col items-center bg-white/95 px-4 py-2.5 rounded-2xl shadow-md border-2 border-amber-300 text-center pointer-events-none">
+          <div class="flex items-center gap-1.5">
+            <span class="text-base">👑</span>
+            <span class="font-headline-sm text-sm text-slate-900 font-black">${escapeHTML(title)}</span>
+          </div>
+          <span class="font-label-sm text-[11px] text-amber-600 font-bold mt-0.5">${escapeHTML(desc)}</span>
+          <div class="flex items-center gap-1 mt-1">
+            <span class="font-label-sm text-[10px] ${isCompleted ? 'text-emerald-600' : 'text-slate-500'} font-semibold">${isCompleted ? '⭐ ⭐ ⭐ 보스 정복 완료!' : '이전 레슨 완료 후 잠금 해제'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderSubsequentUnits(activeCourse, unlockedLevel) {
+    const container = document.getElementById('roadmap-subsequent-units');
+    if (!container) return;
+
+    const course = activeCourse || getCurrentCourseData();
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
+    if (course && Array.isArray(course.units) && course.units.length > 0) {
+      units = course.units;
+    }
+
+    const totalUnits = units.length;
+    let html = '';
+
+    for (let idx = 1; idx < totalUnits; idx++) {
+      const unit = units[idx];
+      const unitNum = idx + 1;
+      const isCompleted = unitNum < unlockedLevel;
+      const isActive = unitNum === unlockedLevel;
+      const isLocked = unitNum > unlockedLevel;
+
+      const unitIcon = unit.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
+      const unitTitle = unit.title || `Unit ${unitNum}`;
+      const unitDesc = unit.desc || unit.subtitle || '';
+
+      // [유닛 구분 섹션 헤더 컴포넌트] (요구사항 마크업 정확히 일치)
+      html += `
+        <div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-md">
+            <span>${escapeHTML(unitIcon)}</span>
+            <span>${escapeHTML(unitTitle)}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">${escapeHTML(unitDesc)}</p>
+        </div>
+      `;
+
+      // 유닛별 노드 정보 추출
+      const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
+      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { title: `1과: ${unitTitle}`, type: 'stage' };
+      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n3'))) || { title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const n3 = uNodes.find(n => (n.type === 'sentence' || n.stageNumber === 3 || n.id?.endsWith('_n4'))) || { title: '3과: 핵심 문장', type: 'stage' };
+      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { title: `${unitTitle} 보스전`, type: 'boss' };
+
+      // 유닛 섹션 블록 컨테이너
+      html += `
+        <div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="${idx}" id="unit-section-${idx}">
+          <!-- Curved Running Track SVG Layer -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 960">
+            <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#dae2fd" stroke-linecap="round" stroke-width="14"></path>
+            <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#38bdf8" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path>
+          </svg>
+
+          <!-- Node 1 -->
+          ${renderUnitNodeHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-n1`,
+            type: 'stage',
+            stageNum: 1,
+            title: n1.title,
+            align: 'ml-5 mb-11',
+            width: '200px',
+            isCompleted,
+            isActive: isActive,
+            isLocked: isLocked
+          })}
+
+          <!-- Node 2 -->
+          ${renderUnitNodeHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-n2`,
+            type: 'stage',
+            stageNum: 2,
+            title: n2.title,
+            align: 'ml-auto mr-5 mb-11',
+            width: '210px',
+            isCompleted,
+            isActive: false,
+            isLocked: isLocked || isActive
+          })}
+
+          <!-- Node Bonus -->
+          ${renderUnitBonusHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-bonus`,
+            align: 'ml-7 mb-11',
+            width: '170px',
+            isCompleted,
+            isLocked: isLocked
+          })}
+
+          <!-- Node Review -->
+          ${renderUnitReviewHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-review`,
+            align: 'ml-auto mr-7 mb-11',
+            width: '170px',
+            isCompleted,
+            isLocked: isLocked
+          })}
+
+          <!-- Node 3 -->
+          ${renderUnitNodeHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-n3`,
+            type: 'stage',
+            stageNum: 3,
+            title: n3.title,
+            align: 'ml-5 mb-14',
+            width: '190px',
+            isCompleted,
+            isActive: false,
+            isLocked: isLocked || isActive
+          })}
+
+          <!-- Node Boss -->
+          ${renderUnitBossHtml({
+            unitNum,
+            nodeKey: `u${unitNum}-boss`,
+            title: nBoss.title,
+            desc: `${unitTitle} 총정리 & 특별 보상`,
+            align: 'mx-auto mb-6',
+            width: '290px',
+            isCompleted,
+            isActive: false,
+            isLocked: isLocked || isActive
+          })}
+        </div>
+      `;
+    }
+
+    container.innerHTML = html;
+
+    // Subsequent nodes interaction handling
+    container.querySelectorAll('.subsequent-node-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const uNum = parseInt(btn.dataset.unitNumber, 10);
+        const nType = btn.dataset.nodeType;
+        if (uNum > unlockedLevel) {
+          // Locked unit: open Unit Skip Modal
+          const targetUnitObj = units[uNum - 1];
+          if (typeof window.openUnitSkipModal === 'function') {
+            window.openUnitSkipModal(uNum, targetUnitObj?.title || `Unit ${uNum}`, lang);
+          }
+        } else if (nType === 'bonus') {
+          if (typeof window.showToast === 'function') {
+            window.showToast(`🎁 Unit ${uNum} 보너스 선물 상자입니다!`);
+          }
+        } else if (nType === 'review') {
+          if (typeof window.navigateToTab === 'function') {
+            window.navigateToTab('review');
+          }
+        } else {
+          if (typeof window.showToast === 'function') {
+            window.showToast(`🚀 Unit ${uNum} (${btn.title || '레슨'}) 시작!`);
+          }
+        }
+      });
+    });
+  }
+
+  let _hasUserScrolledRoadmap = false;
+  if (!window._scrollRoadmapListenerAttached) {
+    window._scrollRoadmapListenerAttached = true;
+    window.addEventListener('scroll', () => {
+      _hasUserScrolledRoadmap = true;
+    }, { passive: true });
+  }
+
+  // 스크롤 위치 기반 상단 배너 동적 갱신 (IntersectionObserver)
+  function setupRoadmapObserver() {
+    if (window._roadmapObserver) {
+      window._roadmapObserver.disconnect();
+      window._roadmapObserver = null;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!_hasUserScrolledRoadmap && window.scrollY < 10) return;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const activeIdx = parseInt(entry.target.dataset.unitIndex, 10);
+          if (!isNaN(activeIdx)) {
+            window._currentVisibleUnitIndex = activeIdx;
+            updateTopUnitBanner(activeIdx);
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.unit-section-block').forEach(el => observer.observe(el));
+    window._roadmapObserver = observer;
+  }
+  window.setupRoadmapObserver = setupRoadmapObserver;
+
+  // 현재 진행 중인 노드로 자동 스크롤 (Auto Scroll to Active Node)
+  function autoScrollToActiveNode() {
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const currentActiveNode = document.querySelector('.roadmap-node.active, .node-pulse');
+        if (currentActiveNode) {
+          const rect = currentActiveNode.getBoundingClientRect();
+          if (window.scrollY === 0 && rect.top >= 100 && rect.bottom <= window.innerHeight) {
+            return;
+          }
+          currentActiveNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    });
+  }
+  window.autoScrollToActiveNode = autoScrollToActiveNode;
+
   // 로드맵 전체 리렌더링 헬퍼 함수
   function renderRoadmap() {
     const activeCourse = getCurrentCourseData();
-    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(window.currentActiveCourse || 'es') : 1;
-    const unitIndex = Math.max(0, unlockedLevel - 1);
-    const targetUnit = (activeCourse && Array.isArray(activeCourse.units)) ? (activeCourse.units[unitIndex] || activeCourse.units[0]) : null;
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
 
     updateRoadmapNodesUI();
+    renderSubsequentUnits(activeCourse, unlockedLevel);
+    setupRoadmapObserver();
+
     if (typeof updateCatMarkerPosition === 'function') {
       updateCatMarkerPosition();
     }
+    autoScrollToActiveNode();
   }
   window.renderRoadmap = renderRoadmap;
 
@@ -1893,6 +2287,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.nodeProgressMap = loadNodeProgress();
 
     // 새 코스의 로드맵 화면 리렌더링
+    const activeLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curUnlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(activeLang) : 1;
+    window._currentVisibleUnitIndex = curUnlocked - 1;
     renderRoadmap();
 
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -2441,6 +2838,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentUnlocked = getUnlockedUnitLevel(lang);
     const newLevel = Math.max(currentUnlocked, Math.min(10, parseInt(targetUnit, 10) || 1));
     setUnlockedUnitLevel(newLevel, lang);
+    window._currentVisibleUnitIndex = newLevel - 1;
+    _hasUserScrolledRoadmap = false;
 
     // 목표 유닛 진입: 1번 노드만 0(active/도전 가능), 2번 노드부터 끝까지 0(locked)으로 설정
     window.nodeProgressMap = {
@@ -2592,7 +2991,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = card.dataset.status;
         if (status === 'active' || status === 'completed') {
           window.closeUnitOverviewModal();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
           if (typeof window.showToast === 'function') {
             window.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
           }
@@ -3979,6 +4383,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof loadNodeProgress === 'function') {
       window.nodeProgressMap = loadNodeProgress(lang);
     }
+    const unlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    window._currentVisibleUnitIndex = unlocked - 1;
     updateRoadmapNodesUI();
 
     // 5. 단어장 단어 갱신
@@ -6765,6 +7171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialCourse = window.currentCourseId || getSavedCourseId() || 'basic';
   const initialLang = getSavedLanguage();
   setLanguage(initialLang);
+  renderRoadmap();
   updateWrongWordsBadge();
   renderReviewWords('waiting');
   syncBookPhoneticSetting();
