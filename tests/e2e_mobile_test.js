@@ -182,7 +182,7 @@ async function runE2ETests() {
 
     let assetFailures = [];
     for (const assetPath of assetList) {
-      const assetUrl = `${baseUrl}/${assetPath}?v=78`;
+      const assetUrl = `${baseUrl}/${assetPath}?v=79`;
       try {
         const resp = await page.request.get(assetUrl);
         if (resp.status() !== 200) {
@@ -1348,7 +1348,7 @@ async function runE2ETests() {
       wordbookAndAdapterResult.activeCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.storedCourseAfterSwitch === 'pack_football' &&
       wordbookAndAdapterResult.courseTitleText === '스페인 축구 실전팩' &&
-      (wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
+      (wordbookAndAdapterResult.footballProgressCountText.includes('60개') || wordbookAndAdapterResult.footballProgressCountText.includes('49개') || wordbookAndAdapterResult.footballProgressCountText.includes('46개')) &&
       wordbookAndAdapterResult.restoredProgressCountText.includes('120개') &&
       wordbookAndAdapterResult.restoredMainCourse === 'main' &&
       wordbookAndAdapterResult.noExclusiveTitleTag === true &&

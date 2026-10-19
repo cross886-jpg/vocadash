@@ -1731,7 +1731,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (activeId === 'pack_football') {
       if (heroTitle) heroTitle.textContent = '스페인 축구 실전팩 (Official DLC)';
-      if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 40개';
+      if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 60개';
       if (heroIcon) heroIcon.textContent = '⚽';
     } else if ((window.currentLanguage || 'es') === 'en') {
       if (heroTitle) heroTitle.textContent = '영어 정규 코스 (기본 코스)';
@@ -3580,7 +3580,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (courseData && Array.isArray(courseData.units)) {
         totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       }
-      if (!totalWords) totalWords = 49;
+      if (!totalWords) totalWords = 60;
     } else if (courseData && courseData.id && courseData.id !== 'main' && Array.isArray(courseData.units)) {
       totalWords = courseData.units.reduce((sum, u) => sum + (Array.isArray(u.words) ? u.words.length : 0), 0);
       if (!totalWords) totalWords = 120;
