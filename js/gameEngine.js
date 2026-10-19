@@ -1230,10 +1230,21 @@
 
           // 다음 유닛 1번 노드 잠금 해제 연동
           const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-          const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
-            ? window.currentUnitIndex
-            : 0;
-          const nextUnitLevel = currentUnitIndex + 2;
+          const activeCourse = (typeof window.getCurrentCourseData === 'function')
+            ? window.getCurrentCourseData()
+            : (window.packFootballData || window.courseData);
+          let bossUnitIndex = -1;
+          if (activeCourse && Array.isArray(activeCourse.units)) {
+            bossUnitIndex = activeCourse.units.findIndex(u =>
+              Array.isArray(u.nodes) && u.nodes.some(n => n.id === targetNodeId || n.id === activeNodeId)
+            );
+          }
+          if (bossUnitIndex === -1) {
+            bossUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+              ? window.currentUnitIndex
+              : 0;
+          }
+          const nextUnitLevel = bossUnitIndex + 2;
           if (typeof window.setUnlockedUnitLevel === 'function') {
             window.setUnlockedUnitLevel(nextUnitLevel, currentCourseLang);
           }
@@ -3380,10 +3391,17 @@
     const activeCourse = (typeof window.getCurrentCourseData === 'function')
       ? window.getCurrentCourseData()
       : (window.packFootballData || window.courseData);
-    const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
-    const currentUnitIndex = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
-      ? window.currentUnitIndex
-      : Math.max(0, unlockedLevel - 1);
+    let matchedUnitIdx = -1;
+    if (activeCourse && Array.isArray(activeCourse.units)) {
+      matchedUnitIdx = activeCourse.units.findIndex(u =>
+        Array.isArray(u.nodes) && u.nodes.some(n => n.id === targetNodeId || n.id === activeNodeId)
+      );
+    }
+    const currentUnitIndex = matchedUnitIdx !== -1
+      ? matchedUnitIdx
+      : ((typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
+        ? window.currentUnitIndex
+        : 0);
     const curUnit = (activeCourse && Array.isArray(activeCourse.units))
       ? (activeCourse.units[currentUnitIndex] || activeCourse.units[0])
       : null;
