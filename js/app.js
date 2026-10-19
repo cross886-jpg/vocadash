@@ -9206,4 +9206,16 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('focus', () => {
     checkAndRechargeHearts();
   });
+
+  // 인게임 세션 생성 및 이전 챕터 오답 단어 복습 혼합 시스템 별칭 연동
+  window.createGameSession = window.createGameSession || function(lessonId, lang, round) {
+    if (typeof window.generateStageSession === 'function') {
+      return window.generateStageSession(lessonId, lang, round);
+    }
+    if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      return window.VOCA_DATA.generateStageSession(lessonId, lang, round);
+    }
+    return [];
+  };
+  window.initStageWords = window.initStageWords || window.createGameSession;
 });
