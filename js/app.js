@@ -2638,6 +2638,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.resolveNodeData = resolveNodeData;
 
+  // 노드 잠금 해제 판정 로직 (각 유닛 1과 및 이전 보스 클리어 연동)
+  function isNodeUnlocked(currentUnitIndex, nodeIndex, node, course) {
+    // 1) Unit 1 (index 0)의 첫 번째 노드(index 0)는 무조건 해금
+    if (currentUnitIndex === 0 && nodeIndex === 0) return true;
+
+    const targetCourse = course || (typeof getCurrentCourseData === 'function' ? getCurrentCourseData() : (window.packFootballData || window.courseData));
+
+    // 2) 각 유닛의 첫 번째 노드 (nodeIndex === 0, 예: fb_2_n1, es_2_n1)
+    if (nodeIndex === 0) {
+      if (currentUnitIndex === 0) return true;
+      // 바로 이전 유닛(currentUnitIndex - 1)의 마지막 보스 노드가 clearedCount >= 1 인지 검사
+      if (targetCourse && Array.isArray(targetCourse.units)) {
+        const prevUnit = targetCourse.units[currentUnitIndex - 1];
+        if (prevUnit && Array.isArray(prevUnit.nodes)) {
+          const prevBoss = prevUnit.nodes.find(n => n.type === 'boss' || (n.id && (n.id.endsWith('_n6') || n.id.includes('boss'))));
+          if (prevBoss && prevBoss.id) {
+            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevBoss.id) : { clearedCount: 0 };
+            const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevBoss.id]) || 0;
+            if (count >= 1) return true;
+          }
+        }
+      }
+      // Unit 1 보스 슬롯 'node-boss' fallback 확인
+      if (currentUnitIndex === 1) {
+        const pBoss = (typeof getNodeProgress === 'function') ? getNodeProgress('node-boss') : { clearedCount: 0 };
+        const bCount = pBoss.clearedCount || (window.nodeProgressMap && window.nodeProgressMap['node-boss']) || 0;
+        if (bCount >= 1) return true;
+      }
+      // unlockedLevel 확인 (unlockedLevel >= currentUnitIndex + 1 이면 해금)
+      const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
+      if (unlockedLevel >= currentUnitIndex + 1) return true;
+
+      return false;
+    }
+
+    // 3) 같은 유닛 내의 후속 노드 (nodeIndex > 0)
+    if (targetCourse && Array.isArray(targetCourse.units)) {
+      const curUnit = targetCourse.units[currentUnitIndex];
+      if (curUnit && Array.isArray(curUnit.nodes)) {
+        const prevNode = curUnit.nodes[nodeIndex - 1];
+        if (prevNode && prevNode.id) {
+          const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
+          const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
+          return count >= 1;
+        }
+      }
+    }
+    return false;
+  }
+  window.isNodeUnlocked = isNodeUnlocked;
+
   function loadNodeProgress(targetLang) {
     const prog = getCourseProgress(window.activeCourseId);
     const result = {
@@ -3144,8 +3196,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const bannerIdx = (window._currentVisibleUnitIndex !== undefined) ? window._currentVisibleUnitIndex : (unlockedLevel - 1);
     updateTopUnitBanner(bannerIdx);
 
-    if (activeCourse && Array.isArray(activeCourse.units)) {
-      const curUnit = activeCourse.units.find(u => (u.id === unlockedLevel || u.unitId === unlockedLevel || u.unitNumber === unlockedLevel)) || activeCourse.units[0];
+    if (activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[0]) {
+      const curUnit = activeCourse.units[0];
+      const unitNum = curUnit.unitNumber || 1;
 
       if (curUnit && Array.isArray(curUnit.nodes)) {
         const n1 = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
@@ -3156,7 +3209,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'node-1': { title: n1?.title || '1과 학습', desc: curUnit.subtitle || curUnit.desc, icon: curUnit.icon || '🌱' },
           'node-2': { title: n2?.title || '2과 학습', desc: curUnit.subtitle || curUnit.desc, icon: curUnit.icon || '🌱' },
           'node-3': { title: n3?.title || '핵심 문장', desc: n3?.targetSentence || curUnit.subtitle || curUnit.desc, icon: '💬' },
-          'node-boss': { title: nBoss?.title || `${curUnit.title} 보스전`, desc: '실전 테스트 & 특별 보상', icon: '👑' }
+          'node-boss': { title: nBoss?.title || `Unit ${unitNum} 보스전`, desc: '실전 테스트 & 특별 보상', icon: '👑' }
         };
       }
     }
@@ -3199,14 +3252,14 @@ document.addEventListener('DOMContentLoaded', () => {
       bookChapterTitle.textContent = lessons['node-1'].title + (courseId === 'basic' ? ' (기초 회화)' : '');
     }
 
-    // 현재 코스의 유닛 1(또는 활성 유닛) 노드 고유 ID 매핑
+    // 현재 코스의 유닛 1 노드 고유 ID 매핑 (상단 로드맵은 항상 Unit 1 고정)
     let n1Id = 'node-1';
     let n2Id = 'node-2';
     let n3Id = 'node-3';
     let nBossId = 'node-boss';
 
-    if (activeCourse && Array.isArray(activeCourse.units)) {
-      const curUnit = activeCourse.units.find(u => (u.id === unlockedLevel || u.unitId === unlockedLevel || u.unitNumber === unlockedLevel)) || activeCourse.units[0];
+    if (activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[0]) {
+      const curUnit = activeCourse.units[0];
       if (curUnit && Array.isArray(curUnit.nodes)) {
         const foundN1 = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
         const foundN2 = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
@@ -3822,7 +3875,7 @@ document.addEventListener('DOMContentLoaded', () => {
               : (isActive
                 ? 'bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70'
                 : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm')
-          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage">
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
             <span class="node-stage-num ${isActive ? 'text-sm font-extrabold tracking-tight' : 'font-black text-2xl'} select-none leading-none drop-shadow-xs relative z-10 text-white">${isActive ? 'START' : stageNum}</span>
           </button>
@@ -3912,7 +3965,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderUnitBossHtml(opt) {
-    const { unitNum, title, desc, align, width, isCompleted, isLocked } = opt;
+    const { unitNum, title, desc, align, width, isCompleted, isLocked, nodeId } = opt;
     return `
       <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="boss" data-unit-index="${unitNum - 1}">
         <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full ${isCompleted ? 'bg-emerald-600' : 'bg-amber-500'} text-white shadow-[0_2px_0_0_${isCompleted ? '#065f46' : '#b45309'}] pointer-events-none font-black text-[11px] uppercase tracking-wide">
@@ -3929,7 +3982,7 @@ document.addEventListener('DOMContentLoaded', () => {
               : (isLocked
                 ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
                 : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70')
-          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="boss">
+          } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${nodeId || `u${unitNum}-boss`}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
             ${isLocked ? `
               <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
@@ -3994,11 +4047,27 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       // 유닛별 노드 정보 추출
+      // 유닛별 노드 정보 추출
       const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
-      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { title: `1과: ${unitTitle}`, type: 'stage' };
-      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n3'))) || { title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
-      const n3 = uNodes.find(n => (n.type === 'sentence' || n.stageNumber === 3 || n.id?.endsWith('_n4'))) || { title: '3과: 핵심 문장', type: 'stage' };
-      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { title: `${unitTitle} 보스전`, type: 'boss' };
+      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}-n1`, title: `1과: ${unitTitle}`, type: 'stage' };
+      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n3'))) || { id: `u${unitNum}-n2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const n3 = uNodes.find(n => (n.type === 'sentence' || n.stageNumber === 3 || n.id?.endsWith('_n4'))) || { id: `u${unitNum}-n3`, title: '3과: 핵심 문장', type: 'stage' };
+      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
+
+      // 노드별 잠금 해제 판정 (isNodeUnlocked 연동)
+      const isN1Unlocked = isNodeUnlocked(idx, 0, n1, course);
+      const isN2Unlocked = isNodeUnlocked(idx, 1, n2, course);
+      const isN3Unlocked = isNodeUnlocked(idx, 2, n3, course);
+      const isBossUnlocked = isNodeUnlocked(idx, 3, nBoss, course);
+
+      const n1Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n1.id || `u${unitNum}-n1`) : { clearedCount: 0, stars: 0 };
+      const n2Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n2.id || `u${unitNum}-n2`) : { clearedCount: 0, stars: 0 };
+      const n3Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n3.id || `u${unitNum}-n3`) : { clearedCount: 0, stars: 0 };
+      const bossData = (typeof getNodeProgress === 'function') ? getNodeProgress(nBoss.id || `u${unitNum}-boss`) : { clearedCount: 0, stars: 0 };
+
+      const isUnitCompleted = (bossData.clearedCount >= 1 || unitNum < unlockedLevel);
+      const isUnitActive = !isUnitCompleted && (isN1Unlocked || unitNum === unlockedLevel);
+      const bossTitle = nBoss.title || `Unit ${unit.unitNumber || unitNum} 보스전`;
 
       // 유닛 섹션 블록 컨테이너
       html += `
@@ -4013,28 +4082,30 @@ document.addEventListener('DOMContentLoaded', () => {
           ${renderUnitNodeHtml({
             unitNum,
             nodeKey: `u${unitNum}-n1`,
+            nodeId: n1.id,
             type: 'stage',
             stageNum: 1,
             title: n1.title,
             align: 'ml-5 mb-11',
             width: '200px',
-            isCompleted,
-            isActive: isActive,
-            isLocked: isLocked
+            isCompleted: n1Data.clearedCount >= 3 || unitNum < unlockedLevel,
+            isActive: isN1Unlocked && n1Data.clearedCount < 3,
+            isLocked: !isN1Unlocked
           })}
 
           <!-- Node 2 -->
           ${renderUnitNodeHtml({
             unitNum,
             nodeKey: `u${unitNum}-n2`,
+            nodeId: n2.id,
             type: 'stage',
             stageNum: 2,
             title: n2.title,
             align: 'ml-auto mr-5 mb-11',
             width: '210px',
-            isCompleted,
-            isActive: false,
-            isLocked: isLocked || isActive
+            isCompleted: n2Data.clearedCount >= 3 || unitNum < unlockedLevel,
+            isActive: isN2Unlocked && n1Data.clearedCount >= 3 && n2Data.clearedCount < 3,
+            isLocked: !isN2Unlocked
           })}
 
           <!-- Node Bonus -->
@@ -4043,8 +4114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             nodeKey: `u${unitNum}-bonus`,
             align: 'ml-7 mb-11',
             width: '170px',
-            isCompleted,
-            isLocked: isLocked
+            isCompleted: isUnitCompleted,
+            isLocked: !isN1Unlocked
           })}
 
           <!-- Node Review -->
@@ -4053,35 +4124,37 @@ document.addEventListener('DOMContentLoaded', () => {
             nodeKey: `u${unitNum}-review`,
             align: 'ml-auto mr-7 mb-11',
             width: '170px',
-            isCompleted,
-            isLocked: isLocked
+            isCompleted: isUnitCompleted,
+            isLocked: !isN1Unlocked
           })}
 
           <!-- Node 3 -->
           ${renderUnitNodeHtml({
             unitNum,
             nodeKey: `u${unitNum}-n3`,
+            nodeId: n3.id,
             type: 'stage',
             stageNum: 3,
             title: n3.title,
             align: 'ml-5 mb-14',
             width: '190px',
-            isCompleted,
-            isActive: false,
-            isLocked: isLocked || isActive
+            isCompleted: n3Data.clearedCount >= 3 || unitNum < unlockedLevel,
+            isActive: isN3Unlocked && n2Data.clearedCount >= 3 && n3Data.clearedCount < 3,
+            isLocked: !isN3Unlocked
           })}
 
           <!-- Node Boss -->
           ${renderUnitBossHtml({
             unitNum,
             nodeKey: `u${unitNum}-boss`,
-            title: nBoss.title,
+            nodeId: nBoss.id,
+            title: bossTitle,
             desc: `${unitTitle} 총정리 & 특별 보상`,
             align: 'mx-auto mb-6',
             width: '290px',
-            isCompleted,
-            isActive: false,
-            isLocked: isLocked || isActive
+            isCompleted: bossData.clearedCount >= 1 || unitNum < unlockedLevel,
+            isActive: isBossUnlocked && n3Data.clearedCount >= 3 && bossData.clearedCount < 1,
+            isLocked: !isBossUnlocked
           })}
         </div>
       `;
@@ -4094,13 +4167,19 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         const uNum = parseInt(btn.dataset.unitNumber, 10);
         const nType = btn.dataset.nodeType;
-        if (uNum > unlockedLevel) {
-          // Locked unit: open Unit Skip Modal
+        const nId = btn.dataset.nodeId;
+        const isLocked = btn.dataset.isLocked === 'true';
+
+        if (isLocked) {
+          // Locked unit / node: open Unit Skip Modal
           const targetUnitObj = units[uNum - 1];
           if (typeof window.openUnitSkipModal === 'function') {
             window.openUnitSkipModal(uNum, targetUnitObj?.title || `Unit ${uNum}`, lang);
           }
-        } else if (nType === 'bonus') {
+          return;
+        }
+
+        if (nType === 'bonus') {
           if (typeof window.showToast === 'function') {
             window.showToast(`🎁 Unit ${uNum} 보너스 선물 상자입니다!`);
           }
@@ -4109,13 +4188,17 @@ document.addEventListener('DOMContentLoaded', () => {
             window.navigateToTab('review');
           }
         } else {
-          if (typeof window.showToast === 'function') {
+          // Unlocked node (stage or boss) -> start lesson!
+          if (typeof window.openLessonModal === 'function') {
+            window.openLessonModal(nId);
+          } else if (typeof window.showToast === 'function') {
             window.showToast(`🚀 Unit ${uNum} (${btn.title || '레슨'}) 시작!`);
           }
         }
       });
     });
   }
+  window.renderSubsequentUnits = renderSubsequentUnits;
 
   let _hasUserScrolledRoadmap = false;
   if (!window._scrollRoadmapListenerAttached) {
@@ -9159,10 +9242,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const confetti = el('result-confetti-container'); if (confetti) confetti.style.display = 'block';
       const charPrefix = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       const mascotImg = el('result-mascot-img'); if (mascotImg) mascotImg.src = 'assets/characters/' + charPrefix + '-victory.webp?v=68';
-      const earnedStars = stats.currentHearts >= 4 ? 3 : stats.currentHearts >= 2 ? 2 : 1;
-      [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
-        if (s) { s.style.opacity = idx < earnedStars ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= earnedStars); }
-      });
+      const targetNodeId = window.currentGameLessonId || currentSelectedNodeId || 'node-2';
+      const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
+      const progressKey = `vocadash_node_progress_${targetNodeId}`;
+      let nodeData = { clearedCount: 0 };
+      try {
+        nodeData = JSON.parse(localStorage.getItem(progressKey) || '{"clearedCount": 0}');
+      } catch (_) {}
+      const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || nodeData.clearedCount || 0;
+      const newClearedCount = isBossNode ? 3 : Math.min(3, Math.max(1, curProg || 1));
+
+      if (typeof window.renderModalStars === 'function') {
+        window.renderModalStars(newClearedCount);
+      } else {
+        [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
+          if (s) { s.style.opacity = idx < newClearedCount ? '1' : '0.3'; s.classList.toggle('grayscale', idx >= newClearedCount); }
+        });
+      }
       setText('result-accuracy-text', `${accuracy}%`); setText('result-combo-text', `x${stats.maxCombo || 0}`);
       const missedSec = el('result-missed-section');
       if (missedSec) {
@@ -9174,8 +9270,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       if (window.playSuccessChime) window.playSuccessChime();
-      const targetNodeId = window.currentGameLessonId || currentSelectedNodeId || 'node-2';
-      const curProg = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
       const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
       const activeCourse = (typeof window.getCurrentCourseData === 'function')
         ? window.getCurrentCourseData()
@@ -9185,7 +9279,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ? window.currentUnitIndex
         : Math.max(0, unlockedLevel - 1);
 
-      const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || String(targetNodeId) === 'node-4');
       const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
 
       if (window.isReviewGameMode) {
