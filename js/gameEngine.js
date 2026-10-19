@@ -951,14 +951,14 @@
                 : `정답 ${correctCount}/${totalQ}개 · 통과 기준(12문제)에 미달했습니다`;
             }
           } else if (window.isReviewGameMode) {
-            btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '로드맵으로 복귀' : '오답노트로 복귀';
+            btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '다음 스테이지 ▶' : '오답노트로 복귀';
             if (window.isRoadmapReviewSpeedrun) {
               const resultTitle = document.getElementById('result-title');
               if (resultTitle) resultTitle.textContent = '⚡ 약점 극복 완료!';
               if (resultSubtitle) {
                 resultSubtitle.textContent = window.isSpeedrunZeroWrongBonus
-                  ? '오답 없는 클린 런 완주! 보너스 보석 5개 획득 💎'
-                  : '오답 단어 집중 훈련을 완료했습니다!';
+                  ? '오답 없는 클린 런 완주! 3과가 해금되었습니다! 💎'
+                  : '약점 극복 완료! 3과 학습이 해금되었습니다! 🔓';
               }
             }
           } else if (isBossNode) {
@@ -3829,13 +3829,24 @@
         if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
         if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
       } else {
+        if (typeof window.completeReviewNode === 'function') window.completeReviewNode('node-review');
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
         if (window.isSpeedrunZeroWrongBonus) {
-          if (typeof window.showToast === 'function') window.showToast('🎉 오답 클리어 보너스! 보석 +5 획득! 💎', '🎁');
+          if (typeof window.showToast === 'function') window.showToast('🎉 약점 완벽 극복! 보석 +5개 획득! 💎', '🎁');
         } else {
-          if (typeof window.showToast === 'function') window.showToast('⚡ 약점 극복 스피드 런 완료! 로드맵으로 복귀했습니다.', '🗺️');
+          if (typeof window.showToast === 'function') window.showToast('🎉 약점 탈출 성공! 3과가 잠금 해제되었습니다! 🔓', '✨');
         }
         window.isSpeedrunZeroWrongBonus = false;
+        setTimeout(() => {
+          const n3Btn = document.getElementById('node-3-btn') || document.getElementById('node-3');
+          if (n3Btn) {
+            n3Btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (typeof window.openLessonModal === 'function') {
+              window.openLessonModal('node-3');
+            }
+          }
+        }, 300);
       }
       return false;
     }

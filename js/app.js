@@ -2666,20 +2666,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3) 같은 유닛 내의 후속 노드 (nodeIndex > 0)
+    const nodeId = node?.id || (typeof node === 'string' ? node : '');
+    const nodeType = node?.type || '';
+
+    // Unit 1 전용 슬롯 fallback 판정
+    if (currentUnitIndex === 0) {
+      if (nodeId === 'node-1' || nodeIndex === 0) return true;
+      const prog1 = (window.nodeProgressMap && window.nodeProgressMap['node-1']) || (getNodeProgress('node-1').clearedCount) || 0;
+      if (nodeId === 'node-2' || nodeIndex === 1) return prog1 >= 3;
+      if (nodeId === 'node-bonus' || nodeType === 'bonus') return prog1 >= 3;
+      const isBonusDone = (typeof isBonusClaimed === 'function') ? isBonusClaimed('node-bonus') : false;
+      if (nodeId === 'node-review' || nodeType === 'review') return prog1 >= 3 && isBonusDone;
+      const isReviewDone = (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted('node-review') : false;
+      const prog2 = (window.nodeProgressMap && window.nodeProgressMap['node-2']) || (getNodeProgress('node-2').clearedCount) || 0;
+      // 이전 노드가 review인 경우 또는 review가 완료되면 다음 3번 노드가 무조건 unlocked = true 보장
+      if (nodeId === 'node-3' || nodeIndex === 4 || nodeType === 'sentence' || nodeIndex === 2) {
+        return isReviewDone || (prog2 >= 3 && isBonusDone && isReviewDone);
+      }
+      if (nodeId === 'node-boss' || nodeType === 'boss') {
+        const prog3 = (window.nodeProgressMap && window.nodeProgressMap['node-3']) || (getNodeProgress('node-3').clearedCount) || 0;
+        return prog3 >= 3;
+      }
+    }
+
     if (targetCourse && Array.isArray(targetCourse.units)) {
       const curUnit = targetCourse.units[currentUnitIndex];
       if (curUnit && Array.isArray(curUnit.nodes)) {
-        const prevNode = curUnit.nodes[nodeIndex - 1];
-        if (prevNode && prevNode.id) {
-          if (prevNode.type === 'bonus') {
-            return (typeof isBonusClaimed === 'function') ? isBonusClaimed(prevNode.id) : false;
+        const actualNodeIdx = (typeof nodeIndex === 'number' && nodeIndex >= 0 && nodeIndex < curUnit.nodes.length)
+          ? nodeIndex
+          : curUnit.nodes.findIndex(n => n.id === nodeId);
+
+        if (actualNodeIdx > 0) {
+          const prevNode = curUnit.nodes[actualNodeIdx - 1];
+          if (prevNode && prevNode.id) {
+            if (prevNode.type === 'bonus') {
+              return (typeof isBonusClaimed === 'function') ? isBonusClaimed(prevNode.id) : false;
+            }
+            if (prevNode.type === 'review') {
+              // 이전 노드가 review인 경우, 해당 review 노드가 완료되면 다음 3번 노드가 무조건 unlocked = true 보장
+              return (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted(prevNode.id) : false;
+            }
+            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
+            const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
+            return count >= 1;
           }
-          if (prevNode.type === 'review') {
-            return (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted(prevNode.id) : false;
-          }
-          const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
-          const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
-          return count >= 1;
         }
       }
     }
@@ -3120,23 +3150,96 @@ document.addEventListener('DOMContentLoaded', () => {
   function isReviewNodeCompleted(nodeId = 'node-review') {
     try {
       if (localStorage.getItem(`vocadash_review_completed_${nodeId}`) === 'true') return true;
+      if (localStorage.getItem('vocadash_review_completed_node-review') === 'true') return true;
     } catch (_) {}
     const prog = getCourseProgress(window.activeCourseId);
-    return Array.isArray(prog.completedReviews) && prog.completedReviews.includes(nodeId);
+    if (Array.isArray(prog.completedReviews)) {
+      if (prog.completedReviews.includes(nodeId) || prog.completedReviews.includes('node-review')) return true;
+    }
+    try {
+      const rawUserData = localStorage.getItem('vocadash_user_data');
+      if (rawUserData) {
+        const u = JSON.parse(rawUserData);
+        if (u.clearedNodes && (u.clearedNodes[nodeId]?.cleared || u.clearedNodes['node-review']?.cleared)) return true;
+      }
+    } catch (_) {}
+    try {
+      const rawList = localStorage.getItem('vocadash_cleared_nodes');
+      if (rawList) {
+        const list = JSON.parse(rawList);
+        if (Array.isArray(list) && (list.includes(nodeId) || list.includes('node-review'))) return true;
+      }
+    } catch (_) {}
+    try {
+      const p = (typeof getNodeProgress === 'function') ? getNodeProgress(nodeId) : null;
+      if (p && p.clearedCount >= 1) return true;
+      const pDef = (typeof getNodeProgress === 'function') ? getNodeProgress('node-review') : null;
+      if (pDef && pDef.clearedCount >= 1) return true;
+    } catch (_) {}
+    return false;
   }
+
   function markReviewNodeCompleted(nodeId = 'node-review') {
     try {
       localStorage.setItem(`vocadash_review_completed_${nodeId}`, 'true');
+      localStorage.setItem('vocadash_review_completed_node-review', 'true');
     } catch (_) {}
     const prog = getCourseProgress(window.activeCourseId);
     if (!prog.completedReviews) prog.completedReviews = [];
     if (!prog.completedReviews.includes(nodeId)) {
       prog.completedReviews.push(nodeId);
-      saveCourseProgress(prog, window.activeCourseId);
     }
+    if (!prog.completedReviews.includes('node-review')) {
+      prog.completedReviews.push('node-review');
+    }
+    saveCourseProgress(prog, window.activeCourseId);
+  }
+
+  function completeReviewNode(nodeId = 'node-review') {
+    const targetId = nodeId || window.currentGameLessonId || 'node-review';
+    console.log('✅ [Review Node Complete] 약점 복습 완료 처리 시작:', targetId);
+
+    markReviewNodeCompleted(targetId);
+    markReviewNodeCompleted('node-review');
+
+    // 1) nodeProgress 등록 (clearedCount: 1, stars: 3)
+    const progressData = { cleared: true, clearedCount: 1, stars: 3 };
+    try {
+      localStorage.setItem(`vocadash_node_progress_${targetId}`, JSON.stringify(progressData));
+      localStorage.setItem('vocadash_node_progress_node-review', JSON.stringify(progressData));
+    } catch (_) {}
+
+    if (!window.nodeProgressMap) window.nodeProgressMap = {};
+    window.nodeProgressMap[targetId] = 1;
+    window.nodeProgressMap['node-review'] = 1;
+
+    // 2) localStorage clearedNodes 목록에 완료(cleared: true, clearedCount: 1) 상태로 즉시 등록
+    try {
+      const rawUserData = localStorage.getItem('vocadash_user_data');
+      let userData = rawUserData ? JSON.parse(rawUserData) : {};
+      if (!userData.clearedNodes) userData.clearedNodes = {};
+      userData.clearedNodes[targetId] = { cleared: true, clearedCount: 1 };
+      userData.clearedNodes['node-review'] = { cleared: true, clearedCount: 1 };
+      localStorage.setItem('vocadash_user_data', JSON.stringify(userData));
+    } catch (_) {}
+
+    try {
+      const rawList = localStorage.getItem('vocadash_cleared_nodes');
+      let list = rawList ? JSON.parse(rawList) : [];
+      if (!Array.isArray(list)) list = [];
+      if (!list.includes(targetId)) list.push(targetId);
+      if (!list.includes('node-review')) list.push('node-review');
+      localStorage.setItem('vocadash_cleared_nodes', JSON.stringify(list));
+    } catch (_) {}
+
+    // 3) 로드맵 UI 갱신 (자물쇠 🔒 제거 및 START 뱃지 갱신)
+    if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
+    if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+    if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
   }
   window.isReviewNodeCompleted = isReviewNodeCompleted;
   window.markReviewNodeCompleted = markReviewNodeCompleted;
+  window.completeReviewNode = completeReviewNode;
 
   function handleClaimBonus(nodeId = 'node-bonus', unitNum = 1) {
     const isUnlocked = (unitNum === 1)
@@ -5272,7 +5375,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       } else if (nid === 'node-3') {
         const btn3 = el('node-3-btn') || node;
-        if ((window.nodeProgressMap['node-2'] || 0) < 3 || !isBonusClaimed('node-bonus') || !isReviewNodeCompleted('node-review')) {
+        const isN3Unlocked = (typeof isNodeUnlocked === 'function')
+          ? isNodeUnlocked(0, 4, { id: 'node-3', type: 'stage' })
+          : isReviewNodeCompleted('node-review');
+        if (!isN3Unlocked) {
           btn3.classList.add('animate-lock-shake'); setTimeout(() => btn3.classList.remove('animate-lock-shake'), 450); showLockedTooltip(btn3);
           return;
         }
@@ -5330,7 +5436,10 @@ document.addEventListener('DOMContentLoaded', () => {
     openReviewSpeedrunModal();
   });
   on('node-3-btn', 'click', (e) => {
-    if ((window.nodeProgressMap['node-2'] || 0) < 3 || !isBonusClaimed('node-bonus') || !isReviewNodeCompleted('node-review')) {
+    const isN3Unlocked = (typeof isNodeUnlocked === 'function')
+      ? isNodeUnlocked(0, 4, { id: 'node-3', type: 'stage' })
+      : isReviewNodeCompleted('node-review');
+    if (!isN3Unlocked) {
       e.stopPropagation();
       const btn3 = el('node-3-btn');
       if (btn3) {
@@ -9572,12 +9681,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const hasNextUnit = Boolean(activeCourse && Array.isArray(activeCourse.units) && activeCourse.units[currentUnitIndex + 1]);
 
       if (window.isReviewGameMode) {
-        if (window.isRoadmapReviewSpeedrun) {
-          setText('btn-result-primary-text', '로드맵으로 복귀');
-          if (window.showToast) window.showToast('⚡ 약점 극복 스피드 런 완료! 보석을 획득했습니다! 💎', '🎉');
+        if (accuracy >= 80) {
+          setText('btn-result-primary-text', '다음 스테이지 ▶');
+          if (window.isRoadmapReviewSpeedrun) {
+            completeReviewNode(targetNodeId);
+            if (window.showToast) window.showToast('🎉 약점 탈출 성공! 3과가 잠금 해제되었습니다! 🔓', '✨');
+          } else {
+            if (window.showToast) window.showToast('💖 1분 스피드 복습 완료! (+1 ❤️)', '🎉');
+          }
         } else {
-          setText('btn-result-primary-text', '오답노트로 복귀');
-          if (window.showToast) window.showToast(`💖 1분 스피드 복습 완료! 하트 1개 충전 (+1 ❤️)`, '🎉');
+          setText('btn-result-primary-text', '다시 도전하기 🔄');
         }
         window.userHearts = Math.min(5, (window.userHearts || 4) + 1);
         updateHeartsUI();
