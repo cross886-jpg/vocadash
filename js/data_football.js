@@ -13,7 +13,7 @@
     title: "스페인 축구 실전팩",
     name: "스페인 축구 실전팩",
     courseName: "스페인 축구 실전팩",
-    desc: "스페인 현지 경기장, 피치 콜, 전술 및 라커룸 실전 어휘 총 120종",
+    desc: "스페인 현지 경기장, 피치 콜, 전술 및 라커룸 실전 어휘 총 180종",
     badge: "⚽ 스페셜 팩",
     icon: "⚽",
     totalUnits: 6,
@@ -45,14 +45,24 @@
           { id: "fb_117", word: "área", pronunciation: "아레아", meaning: "페널티 박스" },
           { id: "fb_118", word: "botas", pronunciation: "보타스", meaning: "축구화" },
           { id: "fb_119", word: "espinilleras", pronunciation: "에스피니예라스", meaning: "정강이 보호대" },
-          { id: "fb_120", word: "vestuario", pronunciation: "베스투아리오", meaning: "라커룸" }
+          { id: "fb_120", word: "vestuario", pronunciation: "베스투아리오", meaning: "라커룸" },
+          { id: "fb_121", word: "guantes", pronunciation: "관테스", meaning: "골키퍼 장갑" },
+          { id: "fb_122", word: "camiseta", pronunciation: "카미세타", meaning: "유니폼 상의" },
+          { id: "fb_123", word: "pantalón corto", pronunciation: "판탈론 코르토", meaning: "유니폼 하의" },
+          { id: "fb_124", word: "medias", pronunciation: "메디아스", meaning: "축구 스타킹" },
+          { id: "fb_125", word: "peto", pronunciation: "페토", meaning: "훈련용 조끼" },
+          { id: "fb_126", word: "cono", pronunciation: "코노", meaning: "훈련용 콘" },
+          { id: "fb_127", word: "círculo central", pronunciation: "시르쿨로 센트랄", meaning: "하프라인 중앙 원" },
+          { id: "fb_128", word: "banderín", pronunciation: "반데린", meaning: "코너 플래그" },
+          { id: "fb_129", word: "grada", pronunciation: "그라다", meaning: "관중석" },
+          { id: "fb_130", word: "césped", pronunciation: "세스페드", meaning: "잔디" }
         ],
         nodes: [
           { id: "fb_1_n1", type: "stage", title: "1과: 포지션 라인업", stageNumber: 1, wordIds: ["fb_101", "fb_102", "fb_103", "fb_104", "fb_105", "fb_106", "fb_107", "fb_108", "fb_109", "fb_110"] },
-          { id: "fb_1_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_1_n3", type: "stage", title: "2과: 피치와 장비", stageNumber: 2, wordIds: ["fb_111", "fb_112", "fb_113", "fb_114", "fb_115", "fb_116", "fb_117", "fb_118", "fb_119", "fb_120"] },
-          { id: "fb_1_n4", type: "sentence", title: "핵심 문장", targetSentence: "Ponte las espinilleras antes de entrar.", meaning: "들어가기 전에 정강이 보호대를 착용해." },
-          { id: "fb_1_n5", type: "review", title: "약점 복습" },
+          { id: "fb_1_n2", type: "stage", title: "2과: 피치와 기본 장비", stageNumber: 2, wordIds: ["fb_111", "fb_112", "fb_113", "fb_114", "fb_115", "fb_116", "fb_117", "fb_118", "fb_119", "fb_120"] },
+          { id: "fb_1_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_1_n4", type: "review", title: "약점 복습" },
+          { id: "fb_1_n5", type: "stage", title: "3과: 훈련 용품과 그라운드", stageNumber: 3, wordIds: ["fb_121", "fb_122", "fb_123", "fb_124", "fb_125", "fb_126", "fb_127", "fb_128", "fb_129", "fb_130"] },
           { id: "fb_1_n6", type: "boss", title: "Unit 1 보스전" }
         ]
       },
@@ -83,14 +93,24 @@
           { id: "fb_217", word: "fuera de juego", pronunciation: "푸에라 데 후에고", meaning: "오프사이드" },
           { id: "fb_218", word: "tarjeta amarilla", pronunciation: "타르헤타 아마리야", meaning: "옐로카드" },
           { id: "fb_219", word: "tarjeta roja", pronunciation: "타르헤타 로하", meaning: "레드카드" },
-          { id: "fb_220", word: "balón", pronunciation: "발론", meaning: "축구공" }
+          { id: "fb_220", word: "balón", pronunciation: "발론", meaning: "축구공" },
+          { id: "fb_221", word: "taconazo", pronunciation: "타코나소", meaning: "힐패스 / 힐킥" },
+          { id: "fb_222", word: "parada", pronunciation: "파라다", meaning: "선방 / 세이브" },
+          { id: "fb_223", word: "saque de puerta", pronunciation: "사케 데 푸에르타", meaning: "골킥" },
+          { id: "fb_224", word: "barrera", pronunciation: "바레라", meaning: "수비벽" },
+          { id: "fb_225", word: "pérdida", pronunciation: "페르디다", meaning: "턴오버 / 볼 뺏김" },
+          { id: "fb_226", word: "recuperación", pronunciation: "레쿠페라시온", meaning: "볼 탈환 / 인터셉트" },
+          { id: "fb_227", word: "asistencia", pronunciation: "아시스텐시아", meaning: "어시스트" },
+          { id: "fb_228", word: "gol en propia puerta", pronunciation: "골 엔 프로피아 푸에르타", meaning: "자책골" },
+          { id: "fb_229", word: "mano", pronunciation: "마노", meaning: "핸드볼 반칙" },
+          { id: "fb_230", word: "pisotón", pronunciation: "피소톤", meaning: "발 밟기 파울" }
         ],
         nodes: [
           { id: "fb_2_n1", type: "stage", title: "1과: 테크닉 & 슛", stageNumber: 1, wordIds: ["fb_201", "fb_202", "fb_203", "fb_204", "fb_205", "fb_206", "fb_207", "fb_208", "fb_209", "fb_210"] },
-          { id: "fb_2_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_2_n3", type: "stage", title: "2과: 판정과 세트피스", stageNumber: 2, wordIds: ["fb_211", "fb_212", "fb_213", "fb_214", "fb_215", "fb_216", "fb_217", "fb_218", "fb_219", "fb_220"] },
-          { id: "fb_2_n4", type: "sentence", title: "핵심 문장", targetSentence: "Haz un control orientado hacia adelante.", meaning: "앞쪽으로 방향을 살려 터치해." },
-          { id: "fb_2_n5", type: "review", title: "약점 복습" },
+          { id: "fb_2_n2", type: "stage", title: "2과: 판정과 세트피스", stageNumber: 2, wordIds: ["fb_211", "fb_212", "fb_213", "fb_214", "fb_215", "fb_216", "fb_217", "fb_218", "fb_219", "fb_220"] },
+          { id: "fb_2_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_2_n4", type: "review", title: "약점 복습" },
+          { id: "fb_2_n5", type: "stage", title: "3과: 실전 공격과 수비", stageNumber: 3, wordIds: ["fb_221", "fb_222", "fb_223", "fb_224", "fb_225", "fb_226", "fb_227", "fb_228", "fb_229", "fb_230"] },
           { id: "fb_2_n6", type: "boss", title: "Unit 2 보스전" }
         ]
       },
@@ -102,7 +122,7 @@
         title: "Unit 3. 피치 위 1초 긴급 콜",
         desc: "경기 중 선수들끼리 1초 만에 외치는 필수 구호",
         words: [
-          { id: "fb_301", word: "¡Solo!", pronunciation: "솔로!", meaning: "혼자야! (뒤에 수비 없어!)" },
+          { id: "fb_301", word: "¡Solo!", pronunciation: "솔로!", meaning: "혼자야! (수비 없어!)" },
           { id: "fb_302", word: "¡Voy!", pronunciation: "보이!", meaning: "내가 갈게! (내 공이야!)" },
           { id: "fb_303", word: "¡Mía!", pronunciation: "미아!", meaning: "내 거야! (골키퍼/공 처리 콜)" },
           { id: "fb_304", word: "¡Pasa!", pronunciation: "파사!", meaning: "패스해! (공 줘!)" },
@@ -121,14 +141,24 @@
           { id: "fb_317", word: "¡Llega!", pronunciation: "예가!", meaning: "끝까지 따라가!" },
           { id: "fb_318", word: "¡Déjala!", pronunciation: "데할라!", meaning: "흘려! (내버려 둬!)" },
           { id: "fb_319", word: "¡Una más!", pronunciation: "우나 마스!", meaning: "한 번 더! / 한 골 더!" },
-          { id: "fb_320", word: "¡Vamos!", pronunciation: "바모스!", meaning: "가자! / 파이팅!" }
+          { id: "fb_320", word: "¡Vamos!", pronunciation: "바모스!", meaning: "가자! / 파이팅!" },
+          { id: "fb_321", word: "¡Toca y vete!", pronunciation: "토카 이 베테!", meaning: "주고 들어가! (원투 러닝)" },
+          { id: "fb_322", word: "¡Aguanta!", pronunciation: "아관타!", meaning: "볼 지켜! / 버텨줘!" },
+          { id: "fb_323", word: "¡Pide!", pronunciation: "피데!", meaning: "콜 해! (소리 질러!)" },
+          { id: "fb_324", word: "¡Juega de cara!", pronunciation: "후에가 데 카라!", meaning: "정면 보고 바로 줘!" },
+          { id: "fb_325", word: "¡Aquí!", pronunciation: "아키!", meaning: "여기 있어! (나 봐!)" },
+          { id: "fb_326", word: "¡Atrás!", pronunciation: "아트라스!", meaning: "백패스 줘! / 뒤에 있어!" },
+          { id: "fb_327", word: "¡Mete el cuerpo!", pronunciation: "메테 엘 쿠에르포!", meaning: "몸 먼저 집어넣어!" },
+          { id: "fb_328", word: "¡No te gires!", pronunciation: "노 테 히레스!", meaning: "돌지 마! (뒤에 붙었어)" },
+          { id: "fb_329", word: "¡Pega!", pronunciation: "페가!", meaning: "슛 때려! / 차!" },
+          { id: "fb_330", word: "¡Bravo!", pronunciation: "브라보!", meaning: "나이스! / 잘했어!" }
         ],
         nodes: [
           { id: "fb_3_n1", type: "stage", title: "1과: 즉시 반응 콜", stageNumber: 1, wordIds: ["fb_301", "fb_302", "fb_303", "fb_304", "fb_305", "fb_306", "fb_307", "fb_308", "fb_309", "fb_310"] },
-          { id: "fb_3_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_3_n3", type: "stage", title: "2과: 팀 소통과 전환", stageNumber: 2, wordIds: ["fb_311", "fb_312", "fb_313", "fb_314", "fb_315", "fb_316", "fb_317", "fb_318", "fb_319", "fb_320"] },
-          { id: "fb_3_n4", type: "sentence", title: "핵심 문장", targetSentence: "¡Hombre a la espalda, juega fácil!", meaning: "뒤에 사람 있어, 쉽게 내줘!" },
-          { id: "fb_3_n5", type: "review", title: "약점 복습" },
+          { id: "fb_3_n2", type: "stage", title: "2과: 팀 소통과 전환", stageNumber: 2, wordIds: ["fb_311", "fb_312", "fb_313", "fb_314", "fb_315", "fb_316", "fb_317", "fb_318", "fb_319", "fb_320"] },
+          { id: "fb_3_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_3_n4", type: "review", title: "약점 복습" },
+          { id: "fb_3_n5", type: "stage", title: "3과: 실전 연계 콜", stageNumber: 3, wordIds: ["fb_321", "fb_322", "fb_323", "fb_324", "fb_325", "fb_326", "fb_327", "fb_328", "fb_329", "fb_330"] },
           { id: "fb_3_n6", type: "boss", title: "Unit 3 보스전" }
         ]
       },
@@ -145,7 +175,7 @@
           { id: "fb_403", word: "Balón al espacio", pronunciation: "발론 알 에스파시오", meaning: "공간으로 찔러줘" },
           { id: "fb_404", word: "Al primer toque", pronunciation: "알 프리메르 토케", meaning: "원터치로 때려/돌려" },
           { id: "fb_405", word: "Cierra la línea", pronunciation: "시에라 라 리네아", meaning: "라인 좁혀 / 틈 주지 마" },
-          { id: "fb_406", word: "Cambia el juego", pronunciation: "캄비아 엘 후에고", meaning: "반대로 벌려줘 (플레이 전환)" },
+          { id: "fb_406", word: "Cambia el juego", pronunciation: "캄비아 엘 후에고", meaning: "반대로 벌려줘 (전환)" },
           { id: "fb_407", word: "Abre el campo", pronunciation: "아브레 엘 캄포", meaning: "넓게 벌려 (측면 활용)" },
           { id: "fb_408", word: "Atento al rechace", pronunciation: "아텐토 알 레차세", meaning: "세컨드볼 집중해" },
           { id: "fb_409", word: "Gana la espalda", pronunciation: "가나 라 에스팔다", meaning: "수비 뒷공간 파고들어" },
@@ -159,14 +189,24 @@
           { id: "fb_417", word: "Segundo palo", pronunciation: "세군도 팔로", meaning: "먼 쪽 골대 (파포스트)" },
           { id: "fb_418", word: "Primer palo", pronunciation: "프리메르 팔로", meaning: "가까운 쪽 골대 (니어포스트)" },
           { id: "fb_419", word: "Tiempo de descuento", pronunciation: "티엠포 데 데스쿠엔토", meaning: "추가 시간" },
-          { id: "fb_420", word: "Calienta en la banda", pronunciation: "칼리엔타 엔 라 반다", meaning: "사이드에서 몸 풀어" }
+          { id: "fb_420", word: "Calienta en la banda", pronunciation: "칼리엔타 엔 라 반다", meaning: "사이드에서 몸 풀어" },
+          { id: "fb_421", word: "Línea de cuatro", pronunciation: "리네아 데 쿠아트 로", meaning: "포백 라인" },
+          { id: "fb_422", word: "Doblar la banda", pronunciation: "도블라르 라 반다", meaning: "측면 오버래핑 나가기" },
+          { id: "fb_423", word: "Pase entre líneas", pronunciation: "파세 엔트레 리네아스", meaning: "수비 라인 사이 찌르는 스루패스" },
+          { id: "fb_424", word: "Salida de balón", pronunciation: "살리다 데 발론", meaning: "후방 빌드업" },
+          { id: "fb_425", word: "Bloque bajo", pronunciation: "블로케 바호", meaning: "수비 라인 깊게 내린 텐백" },
+          { id: "fb_426", word: "Desmarque de ruptura", pronunciation: "데스마르케 데 룹투라", meaning: "뒷공간 침투 움직임" },
+          { id: "fb_427", word: "Desmarque de apoyo", pronunciation: "데스마르케 데 아포요", meaning: "받아주러 내려오는 움직임" },
+          { id: "fb_428", word: "Superioridad numérica", pronunciation: "수페리오리다드 누메리카", meaning: "숫자 우위 / 수적 우세" },
+          { id: "fb_429", word: "Juego directo", pronunciation: "후에고 디렉토", meaning: "다이렉트 축구 (롱볼 전술)" },
+          { id: "fb_430", word: "Balón parado", pronunciation: "발론 파라도", meaning: "세트피스 상황" }
         ],
         nodes: [
           { id: "fb_4_n1", type: "stage", title: "1과: 패스 & 공간 전술", stageNumber: 1, wordIds: ["fb_401", "fb_402", "fb_403", "fb_404", "fb_405", "fb_406", "fb_407", "fb_408", "fb_409", "fb_410"] },
-          { id: "fb_4_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_4_n3", type: "stage", title: "2과: 압박과 수비 조직", stageNumber: 2, wordIds: ["fb_411", "fb_412", "fb_413", "fb_414", "fb_415", "fb_416", "fb_417", "fb_418", "fb_419", "fb_420"] },
-          { id: "fb_4_n4", type: "sentence", title: "핵심 문장", targetSentence: "Hay que presionar alto y ganar la espalda.", meaning: "전방에서 압박하고 뒷공간을 파고들어야 해." },
-          { id: "fb_4_n5", type: "review", title: "약점 복습" },
+          { id: "fb_4_n2", type: "stage", title: "2과: 압박과 수비 조직", stageNumber: 2, wordIds: ["fb_411", "fb_412", "fb_413", "fb_414", "fb_415", "fb_416", "fb_417", "fb_418", "fb_419", "fb_420"] },
+          { id: "fb_4_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_4_n4", type: "review", title: "약점 복습" },
+          { id: "fb_4_n5", type: "stage", title: "3과: 빌드업 & 침투", stageNumber: 3, wordIds: ["fb_421", "fb_422", "fb_423", "fb_424", "fb_425", "fb_426", "fb_427", "fb_428", "fb_429", "fb_430"] },
           { id: "fb_4_n6", type: "boss", title: "Unit 4 보스전" }
         ]
       },
@@ -197,14 +237,24 @@
           { id: "fb_517", word: "venda", pronunciation: "벤다", meaning: "붕대 / 테이핑" },
           { id: "fb_518", word: "recuperación", pronunciation: "레쿠페라시온", meaning: "회복 / 재활" },
           { id: "fb_519", word: "estar en forma", pronunciation: "에스타르 엔 포르마", meaning: "컨디션이 좋다" },
-          { id: "fb_520", word: "fondo físico", pronunciation: "폰도 피시코", meaning: "기초 체력 / 지구력" }
+          { id: "fb_520", word: "fondo físico", pronunciation: "폰도 피시코", meaning: "기초 체력 / 지구력" },
+          { id: "fb_521", word: "rotura", pronunciation: "로투라", meaning: "근육 파열" },
+          { id: "fb_522", word: "menisco", pronunciation: "메니스코", meaning: "반월상 연골판" },
+          { id: "fb_523", word: "ligamento", pronunciation: "리가멘토", meaning: "인대" },
+          { id: "fb_524", word: "baja médica", pronunciation: "바하 메디카", meaning: "부상 결장 명단" },
+          { id: "fb_525", word: "alta médica", pronunciation: "알타 메디카", meaning: "부상 복귀 허가" },
+          { id: "fb_526", word: "molestia", pronunciation: "몰레스티아", meaning: "뻐근함 / 불편한 통증" },
+          { id: "fb_527", word: "hidratación", pronunciation: "이드라타시온", meaning: "수분 보충" },
+          { id: "fb_528", word: "masaje", pronunciation: "마사헤", meaning: "마사지" },
+          { id: "fb_529", word: "agujetas", pronunciation: "아구헤타스", meaning: "운동 후 근육통" },
+          { id: "fb_530", word: "vendaje funcional", pronunciation: "벤다헤 푼시오날", meaning: "압박 붕대 테이핑" }
         ],
         nodes: [
           { id: "fb_5_n1", type: "stage", title: "1과: 신체 부위와 부상", stageNumber: 1, wordIds: ["fb_501", "fb_502", "fb_503", "fb_504", "fb_505", "fb_506", "fb_507", "fb_508", "fb_509", "fb_510"] },
-          { id: "fb_5_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_5_n3", type: "stage", title: "2과: 치료와 피지컬 관리", stageNumber: 2, wordIds: ["fb_511", "fb_512", "fb_513", "fb_514", "fb_515", "fb_516", "fb_517", "fb_518", "fb_519", "fb_520"] },
-          { id: "fb_5_n4", type: "sentence", title: "핵심 문장", targetSentence: "Tengo un calambre en el gemelo.", meaning: "종아리에 쥐가 났어요." },
-          { id: "fb_5_n5", type: "review", title: "약점 복습" },
+          { id: "fb_5_n2", type: "stage", title: "2과: 치료와 피지컬 관리", stageNumber: 2, wordIds: ["fb_511", "fb_512", "fb_513", "fb_514", "fb_515", "fb_516", "fb_517", "fb_518", "fb_519", "fb_520"] },
+          { id: "fb_5_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_5_n4", type: "review", title: "약점 복습" },
+          { id: "fb_5_n5", type: "stage", title: "3과: 정밀 진단과 재활", stageNumber: 3, wordIds: ["fb_521", "fb_522", "fb_523", "fb_524", "fb_525", "fb_526", "fb_527", "fb_528", "fb_529", "fb_530"] },
           { id: "fb_5_n6", type: "boss", title: "Unit 5 보스전" }
         ]
       },
@@ -235,14 +285,24 @@
           { id: "fb_617", word: "MVP", pronunciation: "에메 우베 페", meaning: "경기 최우수 선수" },
           { id: "fb_618", word: "clasificación", pronunciation: "클라시피카시온", meaning: "리그 순위표" },
           { id: "fb_619", word: "tres puntos", pronunciation: "트레스 푼토스", meaning: "승점 3점" },
-          { id: "fb_620", word: "buen partido", pronunciation: "부에노 파르티도", meaning: "좋은 경기 / 수고했어" }
+          { id: "fb_620", word: "buen partido", pronunciation: "부엔 파르티도", meaning: "좋은 경기 / 수고했어" },
+          { id: "fb_621", word: "orgullo", pronunciation: "오르구요", meaning: "자부심 / 팀의 긍지" },
+          { id: "fb_622", word: "concentración", pronunciation: "콘센트라시온", meaning: "극도의 집중" },
+          { id: "fb_623", word: "compañerismo", pronunciation: "콤파녜리스모", meaning: "동료애 / 팀워크" },
+          { id: "fb_624", word: "autocrítica", pronunciation: "아우토크리티카", meaning: "자기반성 / 경기 피드백" },
+          { id: "fb_625", word: "entrenamiento", pronunciation: "엔트레나미엔토", meaning: "훈련 / 트레이닝" },
+          { id: "fb_626", word: "rival", pronunciation: "리발", meaning: "상대 팀 / 경쟁 상대" },
+          { id: "fb_627", word: "derbi", pronunciation: "데르비", meaning: "더비 매치 / 라이벌전" },
+          { id: "fb_628", word: "campeonato", pronunciation: "캄페오나토", meaning: "대회 / 챔피언십" },
+          { id: "fb_629", word: "trofeo", pronunciation: "트로페오", meaning: "우승컵 / 트로피" },
+          { id: "fb_630", word: "a por ellos", pronunciation: "아 포르 에요스", meaning: "잡으러 가자! / 쓸어버리자!" }
         ],
         nodes: [
           { id: "fb_6_n1", type: "stage", title: "1과: 피치 멘탈 & 격려", stageNumber: 1, wordIds: ["fb_601", "fb_602", "fb_603", "fb_604", "fb_605", "fb_606", "fb_607", "fb_608", "fb_609", "fb_610"] },
-          { id: "fb_6_n2", type: "bonus", title: "보너스 상자", rewardGems: 15 },
-          { id: "fb_6_n3", type: "stage", title: "2과: 라커룸 & 결과 리뷰", stageNumber: 2, wordIds: ["fb_611", "fb_612", "fb_613", "fb_614", "fb_615", "fb_616", "fb_617", "fb_618", "fb_619", "fb_620"] },
-          { id: "fb_6_n4", type: "sentence", title: "핵심 문장", targetSentence: "¡Cabeza arriba, nos llevamos los tres puntos!", meaning: "고개 들고 승점 3점 챙겨가자!" },
-          { id: "fb_6_n5", type: "review", title: "약점 복습" },
+          { id: "fb_6_n2", type: "stage", title: "2과: 라커룸 & 결과 리뷰", stageNumber: 2, wordIds: ["fb_611", "fb_612", "fb_613", "fb_614", "fb_615", "fb_616", "fb_617", "fb_618", "fb_619", "fb_620"] },
+          { id: "fb_6_n3", type: "bonus", title: "보너스 상자", rewardGems: 15 },
+          { id: "fb_6_n4", type: "review", title: "약점 복습" },
+          { id: "fb_6_n5", type: "stage", title: "3과: 팀 스피릿 & 승리", stageNumber: 3, wordIds: ["fb_621", "fb_622", "fb_623", "fb_624", "fb_625", "fb_626", "fb_627", "fb_628", "fb_629", "fb_630"] },
           { id: "fb_6_n6", type: "boss", title: "Unit 6 보스전" }
         ]
       }
