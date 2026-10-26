@@ -1155,6 +1155,8 @@
     } else if (currentFlashcardLessonId === 'node-2' || currentFlashcardLessonId === 'node2' || currentFlashcardLessonId === '2' || currentFlashcardLessonId === 'stage-2') {
       currentFlashcardLessonId = 'node-2';
     }
+    window.currentGameLessonId = currentFlashcardLessonId;
+    window.currentSelectedNodeId = currentFlashcardLessonId;
 
     const currentCourse = window.currentActiveCourse || 'es';
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentFlashcardLessonId]) || 0;
@@ -1169,8 +1171,6 @@
       ? (currentCourseData.units[unitIndex] || currentCourseData.units[0])
       : null;
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
-
-    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
 
     let deck = null;
     if (session && Array.isArray(session) && session.length > 0) {
@@ -1535,6 +1535,8 @@
     }
 
     if (window.showToast) window.showToast('🎉 단어 예습 완료! 단어 낙하 액션 게임을 시작합니다!', '⚡');
+    window.currentGameLessonId = currentFlashcardLessonId;
+    window.currentSelectedNodeId = currentFlashcardLessonId;
     if (typeof window.launchGame === 'function') {
       window.launchGame('falling', window.currentSessionQuestions || activeDeck, { lessonId: currentFlashcardLessonId });
     } else if (window.openGameScreen) {
@@ -2456,12 +2458,62 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.getWordById = getWordById;
 
-  // 코스별 진행도 및 해금 상태(localStorage) 분리
-  const PROGRESS_STORAGE_KEY = 'vocadash_node_progress';
+  // ===================================================
+  // 코스별 진행도 및 해금 상태(localStorage) 표준화 및 격리 시스템
+  // 키 규격:
+  // - 스테이지 진행도: vocadash_prog_${lang}_${courseId}_u${unitIndex}_n${nodeIndex}
+  // - 유닛 해금 레벨: vocadash_unlocked_${lang}_${courseId}
+  // - 현재 활성 코스: vocadash_active_course_${lang}
+  // ===================================================
 
-  function getCourseProgress(courseId) {
-    const cid = courseId || window.activeCourseId || 'main';
-    const key = `vocadash_progress_${cid}`;
+  function parseNodeCoordinates(nodeId, defaultUnit = 1) {
+    if (!nodeId) return { unitIndex: defaultUnit, nodeIndex: 1 };
+    const str = String(nodeId).trim();
+    const match1 = str.match(/^(?:fb|es|en)?[_]?(\d+)_n(\d+)$/i);
+    if (match1) {
+      return { unitIndex: parseInt(match1[1], 10) || defaultUnit, nodeIndex: parseInt(match1[2], 10) || 1 };
+    }
+    const match2 = str.match(/^u(\d+)[-_]n(\d+)$/i);
+    if (match2) {
+      return { unitIndex: parseInt(match2[1], 10) || defaultUnit, nodeIndex: parseInt(match2[2], 10) || 1 };
+    }
+    const match3 = str.match(/^node-(\d+)$/i);
+    if (match3) {
+      return { unitIndex: defaultUnit, nodeIndex: parseInt(match3[1], 10) || 1 };
+    }
+    if (str.includes('boss') || str.endsWith('_n6')) {
+      const matchU = str.match(/(?:unit|u|_)?(\d+)/i);
+      const u = matchU ? (parseInt(matchU[1], 10) || defaultUnit) : defaultUnit;
+      return { unitIndex: u, nodeIndex: 6 };
+    }
+    if (str.endsWith('_n5') || str.endsWith('-n3') || str === 'node-3') {
+      const matchU = str.match(/(?:unit|u|_)?(\d+)/i);
+      const u = matchU ? (parseInt(matchU[1], 10) || defaultUnit) : defaultUnit;
+      return { unitIndex: u, nodeIndex: 3 };
+    }
+    if (str.includes('review') || str.endsWith('_n4')) {
+      const matchU = str.match(/(?:unit|u|_)?(\d+)/i);
+      const u = matchU ? (parseInt(matchU[1], 10) || defaultUnit) : defaultUnit;
+      return { unitIndex: u, nodeIndex: 'review' };
+    }
+    if (str.includes('bonus') || str.endsWith('_n3')) {
+      const matchU = str.match(/(?:unit|u|_)?(\d+)/i);
+      const u = matchU ? (parseInt(matchU[1], 10) || defaultUnit) : defaultUnit;
+      return { unitIndex: u, nodeIndex: 'bonus' };
+    }
+    const uMatch = str.match(/(?:unit|u|_)?(\d+)/i);
+    const u = uMatch ? (parseInt(uMatch[1], 10) || defaultUnit) : defaultUnit;
+    const nMatch = str.match(/(?:node|n|-)?(\d+)$/i);
+    const n = nMatch ? (parseInt(nMatch[1], 10) || 1) : 1;
+    return { unitIndex: u, nodeIndex: n };
+  }
+  window.parseNodeCoordinates = parseNodeCoordinates;
+
+  function getCourseProgress(courseId, targetLang) {
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let cid = courseId || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
+    cid = (cid === 'pack_football') ? 'pack_football' : 'main';
+    const key = `vocadash_progress_${lang}_${cid}`;
     try {
       const raw = localStorage.getItem(key);
       if (raw) {
@@ -2477,96 +2529,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (_) { }
 
-    // 메인 코스 기존 데이터 마이그레이션 연동
-    if (cid === 'main') {
-      let migratedBonuses = [];
-      try {
-        const rawBonuses = localStorage.getItem('vocadash_claimed_bonuses');
-        if (rawBonuses) {
-          const b = JSON.parse(rawBonuses);
-          if (Array.isArray(b)) migratedBonuses = b;
-        }
-      } catch (_) { }
-
-      let migratedUnlocked = [1];
-      try {
-        const rawUnlocked = localStorage.getItem('vocadash_unlocked_units');
-        if (rawUnlocked) {
-          const u = JSON.parse(rawUnlocked);
-          if (Array.isArray(u) && u.length > 0) migratedUnlocked = u;
-        } else {
-          const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-          const rawUnit = localStorage.getItem('vocadash_unlocked_unit_' + lang);
-          if (rawUnit) {
-            const num = parseInt(rawUnit, 10);
-            if (!isNaN(num) && num >= 1) {
-              migratedUnlocked = [];
-              for (let i = 1; i <= num; i++) migratedUnlocked.push(i);
-            }
-          }
-        }
-      } catch (_) { }
-
-      let migratedNodeProg = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
-      try {
-        const rawProg = localStorage.getItem(PROGRESS_STORAGE_KEY);
-        if (rawProg) {
-          const p = JSON.parse(rawProg);
-          if (p && typeof p === 'object') {
-            migratedNodeProg = {
-              'node-1': Math.min(3, Math.max(0, typeof p['node-1'] === 'number' ? p['node-1'] : 0)),
-              'node-2': Math.min(3, Math.max(0, typeof p['node-2'] === 'number' ? p['node-2'] : 0)),
-              'node-3': Math.min(3, Math.max(0, typeof p['node-3'] === 'number' ? p['node-3'] : 0)),
-              'node-boss': Math.min(3, Math.max(0, typeof p['node-boss'] === 'number' ? p['node-boss'] : 0))
-            };
-          }
-        }
-      } catch (_) { }
-
-      let migratedCompleted = [];
-      try {
-        const rawComp = localStorage.getItem('vocadash_completed_nodes');
-        if (rawComp) {
-          const c = JSON.parse(rawComp);
-          if (Array.isArray(c)) migratedCompleted = c;
-        }
-      } catch (_) { }
-      if (migratedCompleted.length === 0) {
-        if (migratedNodeProg['node-1'] >= 3) migratedCompleted.push('node-1');
-        if (migratedNodeProg['node-2'] >= 3) migratedCompleted.push('node-2');
-        if (migratedNodeProg['node-3'] >= 3) migratedCompleted.push('node-3');
-        if (migratedNodeProg['node-boss'] >= 3) migratedCompleted.push('node-boss');
-      }
-
-      const initialMain = {
-        completedNodes: migratedCompleted,
-        claimedBonuses: migratedBonuses,
-        unlockedUnits: migratedUnlocked,
-        nodeProgressMap: migratedNodeProg
-      };
-      try {
-        localStorage.setItem('vocadash_progress_main', JSON.stringify(initialMain));
-      } catch (_) { }
-      return initialMain;
-    }
-
-    // 다른 팩(예: pack_football) 기본 진행도
-    const defaultPackProg = {
+    return {
       completedNodes: [],
       claimedBonuses: [],
       unlockedUnits: [1],
       nodeProgressMap: { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }
     };
-    try {
-      localStorage.setItem(key, JSON.stringify(defaultPackProg));
-    } catch (_) { }
-    return defaultPackProg;
   }
   window.getCourseProgress = getCourseProgress;
 
-  function saveCourseProgress(progressObj, courseId) {
-    const cid = courseId || window.activeCourseId || 'main';
-    const key = `vocadash_progress_${cid}`;
+  function saveCourseProgress(progressObj, courseId, targetLang) {
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let cid = courseId || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
+    cid = (cid === 'pack_football') ? 'pack_football' : 'main';
+    const key = `vocadash_progress_${lang}_${cid}`;
     try {
       const dataToSave = {
         completedNodes: Array.isArray(progressObj.completedNodes) ? progressObj.completedNodes : [],
@@ -2575,107 +2551,140 @@ document.addEventListener('DOMContentLoaded', () => {
         nodeProgressMap: progressObj.nodeProgressMap || window.nodeProgressMap || {}
       };
       localStorage.setItem(key, JSON.stringify(dataToSave));
-
-      // 메인 코스 하위 호환성 동기화
-      if (cid === 'main') {
-        localStorage.setItem('vocadash_completed_nodes', JSON.stringify(dataToSave.completedNodes));
-        localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(dataToSave.claimedBonuses));
-        localStorage.setItem('vocadash_unlocked_units', JSON.stringify(dataToSave.unlockedUnits));
-        const maxUnit = Math.max(1, ...dataToSave.unlockedUnits);
-        const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-        localStorage.setItem('vocadash_unlocked_unit_' + lang, String(maxUnit));
-        localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(dataToSave.nodeProgressMap));
-      }
-    } catch (e) {
-      console.warn('localStorage 저장 예외 방어:', e);
-    }
+    } catch (_) { }
   }
   window.saveCourseProgress = saveCourseProgress;
 
-  function getUnlockedUnitLevel(targetLang) {
-    const prog = getCourseProgress(window.activeCourseId);
-    if (prog && Array.isArray(prog.unlockedUnits) && prog.unlockedUnits.length > 0) {
-      return Math.max(1, Math.min(10, Math.max(...prog.unlockedUnits)));
+  function getUnlockedUnitLevel(targetLang, targetCourseId) {
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let courseId = targetCourseId;
+    if (!courseId) {
+      if (targetLang === 'pack_football' || targetLang === 'main') {
+        courseId = targetLang;
+      } else {
+        courseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || window.activeCourseId || 'main';
+      }
     }
-    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
+    const key = `vocadash_unlocked_${lang}_${courseId}`;
     try {
-      const val = localStorage.getItem('vocadash_unlocked_unit_' + lang);
+      const val = localStorage.getItem(key);
       if (val !== null) {
         const num = parseInt(val, 10);
         if (!isNaN(num) && num >= 1 && num <= 10) return num;
       }
     } catch (_) { }
+
     return 1;
   }
   window.getUnlockedUnitLevel = getUnlockedUnitLevel;
 
-  function setUnlockedUnitLevel(level, targetLang) {
+  function setUnlockedUnitLevel(level, targetLang, targetCourseId) {
     const lvl = Math.max(1, Math.min(10, parseInt(level, 10) || 1));
-    const prog = getCourseProgress(window.activeCourseId);
-    if (!prog.unlockedUnits) prog.unlockedUnits = [1];
-    for (let i = 1; i <= lvl; i++) {
-      if (!prog.unlockedUnits.includes(i)) prog.unlockedUnits.push(i);
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let courseId = targetCourseId;
+    if (!courseId) {
+      if (targetLang === 'pack_football' || targetLang === 'main') {
+        courseId = targetLang;
+      } else {
+        courseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || window.activeCourseId || 'main';
+      }
     }
-    prog.unlockedUnits.sort((a, b) => a - b);
-    saveCourseProgress(prog, window.activeCourseId);
-
-    const lang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
+    const key = `vocadash_unlocked_${lang}_${courseId}`;
     try {
-      localStorage.setItem('vocadash_unlocked_unit_' + lang, String(lvl));
+      localStorage.setItem(key, String(lvl));
     } catch (_) { }
   }
   window.setUnlockedUnitLevel = setUnlockedUnitLevel;
 
-  function getNodeProgress(nodeId) {
-    if (!nodeId) return { clearedCount: 0, stars: 0 };
-    try {
-      const key = `vocadash_node_progress_${nodeId}`;
-      const raw = localStorage.getItem(key);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (typeof parsed.clearedCount === 'number') {
-          return {
-            clearedCount: Math.min(3, Math.max(0, parsed.clearedCount)),
-            stars: Math.min(3, Math.max(0, parsed.stars !== undefined ? parsed.stars : parsed.clearedCount))
-          };
-        }
+  function getNodeProgress(nodeId, targetLang, targetCourseId) {
+    if (!nodeId) return { clearedCount: 0, stars: 0, valueOf() { return 0; }, toString() { return '0'; } };
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let courseId = targetCourseId;
+    if (!courseId) {
+      if (String(nodeId).startsWith('fb_')) {
+        courseId = 'pack_football';
+      } else {
+        courseId = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
       }
-    } catch (_) { }
-
-    if (window.nodeProgressMap && typeof window.nodeProgressMap[nodeId] === 'number') {
-      const c = Math.min(3, Math.max(0, window.nodeProgressMap[nodeId]));
-      return { clearedCount: c, stars: c };
     }
-    return { clearedCount: 0, stars: 0 };
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
+
+    const { unitIndex, nodeIndex } = parseNodeCoordinates(nodeId);
+    const key = `vocadash_prog_${lang}_${courseId}_u${unitIndex}_n${nodeIndex}`;
+
+    let count = 0;
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw !== null) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === 'number') count = parsed;
+        else if (parsed && typeof parsed.clearedCount === 'number') count = parsed.clearedCount;
+        else if (parsed && typeof parsed.stars === 'number') count = parsed.stars;
+      }
+    } catch (_) {
+      try {
+        const num = parseInt(localStorage.getItem(key), 10);
+        if (!isNaN(num)) count = num;
+      } catch (_) { }
+    }
+
+    count = Math.max(0, Math.min(3, count));
+    return {
+      clearedCount: count,
+      stars: count,
+      valueOf() { return count; },
+      toString() { return String(count); }
+    };
   }
   window.getNodeProgress = getNodeProgress;
   window.getNodeProgressData = getNodeProgress;
 
-  function setNodeProgress(nodeId, clearedCount, stars) {
-    if (!nodeId) return { clearedCount: 0, stars: 0 };
-    const c = Math.min(3, Math.max(0, clearedCount || 0));
-    const s = Math.min(3, Math.max(0, stars !== undefined ? stars : c));
-    const data = { clearedCount: c, stars: s };
-    try {
-      localStorage.setItem(`vocadash_node_progress_${nodeId}`, JSON.stringify(data));
+  function setNodeProgress(nodeId, clearedCount, stars, targetLang, targetCourseId) {
+    if (!nodeId) return { clearedCount: 0, stars: 0, valueOf() { return 0; }, toString() { return '0'; } };
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let courseId = targetCourseId;
+    if (!courseId) {
+      if (String(nodeId).startsWith('fb_')) {
+        courseId = 'pack_football';
+      } else {
+        courseId = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
+      }
+    }
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
 
-      // 🌟 축구팩 노드 ID와 화면 레거시 슬롯 ID 양방향 동기화
-      if (nodeId === 'fb_1_n1') localStorage.setItem('vocadash_node_progress_node-1', JSON.stringify(data));
-      if (nodeId === 'fb_1_n3') localStorage.setItem('vocadash_node_progress_node-2', JSON.stringify(data));
-      if (nodeId === 'node-1') localStorage.setItem('vocadash_node_progress_fb_1_n1', JSON.stringify(data));
-      if (nodeId === 'node-2') localStorage.setItem('vocadash_node_progress_fb_1_n3', JSON.stringify(data));
+    const { unitIndex, nodeIndex } = parseNodeCoordinates(nodeId);
+    const count = Math.min(3, Math.max(0, Number(clearedCount) || 0));
+    const s = Math.min(3, Math.max(0, stars !== undefined ? Number(stars) : count));
+    const data = {
+      clearedCount: count,
+      stars: s,
+      valueOf() { return count; },
+      toString() { return String(count); }
+    };
+
+    const key = `vocadash_prog_${lang}_${courseId}_u${unitIndex}_n${nodeIndex}`;
+    try {
+      localStorage.setItem(key, String(count));
+      if (courseId === 'pack_football' && String(nodeId).startsWith('fb_')) {
+        localStorage.setItem(`vocadash_node_progress_${nodeId}`, JSON.stringify({ clearedCount: count, stars: s }));
+      }
     } catch (_) { }
 
     if (!window.nodeProgressMap) window.nodeProgressMap = {};
-    window.nodeProgressMap[nodeId] = c;
-    if (nodeId === 'fb_1_n1') window.nodeProgressMap['node-1'] = c;
-    if (nodeId === 'fb_1_n3') window.nodeProgressMap['node-2'] = c;
-    if (nodeId === 'node-1') window.nodeProgressMap['fb_1_n1'] = c;
-    if (nodeId === 'node-2') window.nodeProgressMap['fb_1_n3'] = c;
+    window.nodeProgressMap[`${lang}_${courseId}_u${unitIndex}_n${nodeIndex}`] = count;
+    window.nodeProgressMap[nodeId] = count;
+    if (courseId === 'pack_football') {
+      window.nodeProgressMap[`fb_${unitIndex}_n${nodeIndex}`] = count;
+    } else {
+      window.nodeProgressMap[`${lang}_${unitIndex}_n${nodeIndex}`] = count;
+    }
 
-    // 로드맵 화면 즉시 동기화 반영
-    if (typeof window.updateRoadmapNodesUI === 'function') {
-      window.updateRoadmapNodesUI();
+    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curCourse = window.currentCourseId || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + curLang) : null) || 'main';
+    if (curLang === lang && curCourse === courseId && unitIndex === 1) {
+      window.nodeProgressMap[`node-${nodeIndex}`] = count;
     }
 
     return data;
@@ -2683,35 +2692,67 @@ document.addEventListener('DOMContentLoaded', () => {
   window.setNodeProgress = setNodeProgress;
   window.saveNodeProgressData = setNodeProgress;
 
+  // 🐾 고양이 발바닥 진행도 뱃지 렌더러 (클리어 시 주황색 발바닥 점등)
   function renderStarsBadge(clearedCount, stars, isLocked, lockMsg) {
+    const count = Math.max(0, Math.min(3, Number(clearedCount) || 0));
+
+    // 1) 잠금 상태
     if (isLocked) {
-      return `<span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="text-xs opacity-30">⭐</span><span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">${escapeHTML(lockMsg || '이전 레슨 완료 후')}</span>`;
+      return `
+        <span class="text-xs text-slate-300 opacity-30">🐾</span>
+        <span class="text-xs text-slate-300 opacity-30">🐾</span>
+        <span class="text-xs text-slate-300 opacity-30">🐾</span>
+        <span class="font-label-sm text-[10px] text-slate-400 font-semibold ml-1">${(typeof escapeHTML === 'function') ? escapeHTML(lockMsg || '이전 레슨 완료 후') : (lockMsg || '이전 레슨 완료 후')}</span>
+      `;
     }
-    if (clearedCount >= 3) {
-      return '<span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span><span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>';
+
+    // 2) 3회 완주 상태
+    if (count >= 3) {
+      return `
+        <span class="text-xs text-amber-500 text-amber-400 font-bold drop-shadow-xs" style="color: #f59e0b;">🐾</span>
+        <span class="text-xs text-amber-500 text-amber-400 font-bold drop-shadow-xs" style="color: #f59e0b;">🐾</span>
+        <span class="text-xs text-amber-500 text-amber-400 font-bold drop-shadow-xs" style="color: #f59e0b;">🐾</span>
+        <span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>
+      `;
     }
-    const s = Math.max(0, Math.min(3, stars !== undefined ? stars : clearedCount));
-    let starHtml = '';
+
+    // 3) 진행 중 상태 (count 개수만큼 주황색 불 점등!)
+    let pawHtml = '';
     for (let i = 1; i <= 3; i++) {
-      starHtml += (i <= s) ? '<span class="text-xs text-amber-400 drop-shadow-xs font-bold">⭐</span>' : '<span class="text-xs opacity-30">⭐</span>';
+      if (i <= count) {
+        // 활성화된 발바닥 (따뜻한 주황색)
+        pawHtml += '<span class="text-xs text-amber-500 text-amber-400 font-bold drop-shadow-xs transform scale-110 inline-block" style="color: #f59e0b;">🐾</span>';
+      } else {
+        // 꺼진 발바닥 (흐린 회색)
+        pawHtml += '<span class="text-xs text-slate-300 opacity-30 inline-block">🐾</span>';
+      }
     }
-    return `${starHtml}<span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${clearedCount}/3 레슨 진행중</span>`;
+    return `${pawHtml}<span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${count}/3 레슨 진행중</span>`;
   }
   window.renderStarsBadge = renderStarsBadge;
 
-  function resolveNodeData(specificId, slotId) {
-    let d = (typeof getNodeProgress === 'function') ? getNodeProgress(specificId) : null;
-    if (d && d.clearedCount > 0) return d;
-    if (slotId && slotId !== specificId) {
-      d = (typeof getNodeProgress === 'function') ? getNodeProgress(slotId) : null;
-      if (d && d.clearedCount > 0) return d;
+  // 🔍 노드 진행도 정밀 복원 함수 (언어별 격리 적용)
+  function resolveNodeData(specificId, slotId, targetLang) {
+    const curLang = targetLang || ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es');
+    if (typeof getNodeProgress === 'function') {
+      const p1 = getNodeProgress(specificId, curLang);
+      if (p1 && p1.clearedCount > 0) return p1;
+      if (slotId && slotId !== specificId) {
+        const p2 = getNodeProgress(slotId, curLang);
+        if (p2 && p2.clearedCount > 0) return p2;
+      }
     }
-    return d || { clearedCount: 0, stars: 0 };
+    return { clearedCount: 0, stars: 0 };
   }
   window.resolveNodeData = resolveNodeData;
 
+
   // 노드 잠금 해제 판정 로직 (각 유닛 1과 및 이전 보스 클리어 연동)
   function isNodeUnlocked(currentUnitIndex, nodeIndex, node, course) {
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let courseId = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
+
     // 1) Unit 1 (index 0)의 첫 번째 노드(index 0)는 무조건 해금
     if (currentUnitIndex === 0 && nodeIndex === 0) return true;
 
@@ -2726,21 +2767,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prevUnit && Array.isArray(prevUnit.nodes)) {
           const prevBoss = prevUnit.nodes.find(n => n.type === 'boss' || (n.id && (n.id.endsWith('_n6') || n.id.includes('boss'))));
           if (prevBoss && prevBoss.id) {
-            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevBoss.id) : { clearedCount: 0 };
-            const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevBoss.id]) || 0;
+            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevBoss.id, lang, courseId) : { clearedCount: 0 };
+            const count = p.clearedCount || 0;
             if (count >= 1) return true;
           }
         }
       }
-      // Unit 1 보스 슬롯 'node-boss' fallback 확인
-      if (currentUnitIndex === 1) {
-        const pBoss = (typeof getNodeProgress === 'function') ? getNodeProgress('node-boss') : { clearedCount: 0 };
-        const bCount = pBoss.clearedCount || (window.nodeProgressMap && window.nodeProgressMap['node-boss']) || 0;
-        if (bCount >= 1) return true;
-      }
       // unlockedLevel 확인 (unlockedLevel >= currentUnitIndex + 1 이면 해금)
-      const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
+      const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, courseId) : 1) || 1;
       if (unlockedLevel >= currentUnitIndex + 1) return true;
 
       return false;
@@ -2753,31 +2787,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Unit 1 전용 슬롯 fallback 판정
     if (currentUnitIndex === 0) {
       if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeIndex === 0) return true;
-      const prog1 = (window.nodeProgressMap && (window.nodeProgressMap['node-1'] || window.nodeProgressMap['fb_1_n1'])) || (getNodeProgress('node-1').clearedCount) || (getNodeProgress('fb_1_n1').clearedCount) || 0;
+
+      const p1 = (typeof getNodeProgress === 'function')
+        ? (getNodeProgress('node-1', lang, courseId)?.clearedCount || 0)
+        : (window.nodeProgressMap?.['node-1'] || 0);
+
       const isBonusDone = (typeof isBonusClaimed === 'function') ? (isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n2') || isBonusClaimed('es_1_bonus')) : false;
 
-      // 1과를 1회 이상 클리어하면 선물상자가 즉시 해금되어 열림
+      // 1과를 3회 완주(p1 >= 3)해야 2과 및 보너스 상자 해금
       if (nodeId === 'node-bonus' || nodeId === 'fb_1_n2' || nodeType === 'bonus' || nodeIndex === 1) {
-        return prog1 >= 1;
+        return p1 >= 3;
       }
-
-      // 선물상자를 수령해야만 2과(피치와 장비) 해금
       if (nodeId === 'node-2' || nodeId === 'fb_1_n3' || (nodeIndex === 2 && (nodeType === 'stage' || !nodeType))) {
-        return (prog1 >= 1 && isBonusDone);
+        return p1 >= 3;
       }
 
-      const prog2 = (window.nodeProgressMap && (window.nodeProgressMap['node-2'] || window.nodeProgressMap['fb_1_n3'])) || (getNodeProgress('node-2').clearedCount) || (getNodeProgress('fb_1_n3').clearedCount) || 0;
+      const p2 = (typeof getNodeProgress === 'function')
+        ? (getNodeProgress('node-2', lang, courseId)?.clearedCount || 0)
+        : (window.nodeProgressMap?.['node-2'] || 0);
       const isReviewDone = (typeof isReviewNodeCompleted === 'function') ? (isReviewNodeCompleted('node-review') || isReviewNodeCompleted('fb_1_n5') || isReviewNodeCompleted('es_1_review')) : false;
 
       if (nodeId === 'node-review' || nodeId === 'fb_1_n5' || nodeType === 'review') {
-        return prog2 >= 3 && isBonusDone;
+        return p2 >= 3 && isBonusDone;
       }
       if (nodeId === 'node-3' || nodeId === 'fb_1_n4' || nodeType === 'sentence' || (nodeIndex === 3 && nodeType === 'sentence') || nodeIndex === 4) {
-        return (prog2 >= 3 && isBonusDone);
+        return p2 >= 3;
       }
       if (nodeId === 'node-boss' || nodeId === 'fb_1_n6' || nodeType === 'boss' || nodeIndex === 5) {
-        const prog3 = (window.nodeProgressMap && (window.nodeProgressMap['node-3'] || window.nodeProgressMap['fb_1_n4'])) || (getNodeProgress('node-3').clearedCount) || (getNodeProgress('fb_1_n4').clearedCount) || 0;
-        return prog3 >= 3 || (isReviewDone && prog2 >= 3);
+        const p3 = (typeof getNodeProgress === 'function')
+          ? (getNodeProgress('node-3', lang, courseId)?.clearedCount || 0)
+          : (window.nodeProgressMap?.['node-3'] || 0);
+        return p3 >= 3;
       }
     }
 
@@ -2792,9 +2832,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const prevNode = curUnit.nodes[actualNodeIdx - 1];
           if (prevNode && prevNode.id) {
             if (curUnit.nodes[actualNodeIdx].type === 'bonus') {
-              const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
-              const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
-              return count >= 1;
+              const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id, lang, courseId) : { clearedCount: 0 };
+              return (p.clearedCount || 0) >= 3;
             }
             if (prevNode.type === 'bonus') {
               return (typeof isBonusClaimed === 'function') ? isBonusClaimed(prevNode.id) : false;
@@ -2802,9 +2841,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (prevNode.type === 'review') {
               return (typeof isReviewNodeCompleted === 'function') ? isReviewNodeCompleted(prevNode.id) : false;
             }
-            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id) : { clearedCount: 0 };
-            const count = p.clearedCount || (window.nodeProgressMap && window.nodeProgressMap[prevNode.id]) || 0;
-            return count >= 1;
+            const p = (typeof getNodeProgress === 'function') ? getNodeProgress(prevNode.id, lang, courseId) : { clearedCount: 0 };
+            return (p.clearedCount || 0) >= 3;
           }
         }
       }
@@ -2813,8 +2851,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.isNodeUnlocked = isNodeUnlocked;
 
-  function loadNodeProgress(targetLang) {
-    const prog = getCourseProgress(window.activeCourseId);
+  function loadNodeProgress(targetLang, targetCourseId) {
+    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : (targetLang === 'es' ? 'es' : ((window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es'));
+    let courseId = targetCourseId || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + lang) : null) || 'main';
+    courseId = (courseId === 'pack_football') ? 'pack_football' : 'main';
+
     const result = {
       'node-1': 0,
       'node-2': 0,
@@ -2822,14 +2863,71 @@ document.addEventListener('DOMContentLoaded', () => {
       'node-boss': 0
     };
 
-    ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nid => {
-      const d = getNodeProgress(nid);
-      if (d.clearedCount > 0) {
-        result[nid] = d.clearedCount;
-      } else if (prog && prog.nodeProgressMap && typeof prog.nodeProgressMap[nid] === 'number') {
-        result[nid] = Math.min(3, Math.max(0, prog.nodeProgressMap[nid]));
+    [1, 2, 3].forEach(n => {
+      const stdKey = `vocadash_prog_${lang}_${courseId}_u1_n${n}`;
+      let c = 0;
+      try {
+        const raw = localStorage.getItem(stdKey);
+        if (raw !== null) {
+          const parsed = JSON.parse(raw);
+          if (typeof parsed === 'number') c = parsed;
+          else if (parsed && typeof parsed.clearedCount === 'number') c = parsed.clearedCount;
+          else if (parsed && typeof parsed.stars === 'number') c = parsed.stars;
+        }
+      } catch (_) {
+        try {
+          const num = parseInt(localStorage.getItem(stdKey), 10);
+          if (!isNaN(num)) c = num;
+        } catch (_) { }
+      }
+      c = Math.max(0, Math.min(3, c));
+      result[`node-${n}`] = c;
+      result[`${lang}_${courseId}_u1_n${n}`] = c;
+      if (courseId === 'pack_football') {
+        result[`fb_1_n${n}`] = c;
+      } else {
+        result[`${lang}_1_n${n}`] = c;
       }
     });
+
+    // 🛑 [3번 노드 오염 방어] 복습 노드 완료 처리가 3번 노드 진행도를 침범하여 오염된 잔여 데이터 안전 정화
+    try {
+      const rawUserData = localStorage.getItem('vocadash_user_data');
+      const uData = rawUserData ? JSON.parse(rawUserData) : null;
+      const isN3ActuallyPlayed = !!(uData && uData.clearedNodes && uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed);
+      if (!isN3ActuallyPlayed && result['node-3'] > 0) {
+        // 실제로 3번 노드를 플레이하지 않고 복습 버그로 1이 남아있는 잔여 데이터 정화
+        result['node-3'] = 0;
+        result[`${lang}_${courseId}_u1_n3`] = 0;
+        if (courseId === 'pack_football') {
+          result['fb_1_n3'] = 0;
+          result['fb_1_n5'] = 0;
+        } else {
+          result[`${lang}_1_n3`] = 0;
+        }
+        try {
+          localStorage.removeItem(`vocadash_prog_${lang}_${courseId}_u1_n3`);
+          localStorage.removeItem(`node_progress_${lang}_${courseId}_node-3`);
+          localStorage.removeItem(`node_progress_${lang}_${courseId}_1_3`);
+        } catch (_) { }
+      }
+    } catch (_) { }
+
+    const bossKey = `vocadash_prog_${lang}_${courseId}_u1_n6`;
+    let bossCount = 0;
+    try {
+      const rawBoss = localStorage.getItem(bossKey);
+      if (rawBoss !== null) {
+        const parsed = JSON.parse(rawBoss);
+        if (typeof parsed === 'number') bossCount = parsed;
+        else if (parsed && typeof parsed.clearedCount === 'number') bossCount = parsed.clearedCount;
+      }
+    } catch (_) {
+      const num = parseInt(localStorage.getItem(bossKey), 10);
+      if (!isNaN(num)) bossCount = num;
+    }
+    result['node-boss'] = bossCount;
+    result[`${lang}_${courseId}_u1_n6`] = bossCount;
 
     return result;
   }
@@ -2846,6 +2944,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveCourseProgress(prog, window.activeCourseId);
   }
 
+  window.loadNodeProgress = loadNodeProgress;
   window.nodeProgressMap = loadNodeProgress();
   window.saveNodeProgress = saveNodeProgress;
   window.currentSessionQuestions = [];
@@ -3112,6 +3211,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     currentSelectedNodeId = nodeId;
+    window.currentSelectedNodeId = nodeId;
+    window.currentGameLessonId = nodeId;
+    window.currentLessonId = nodeId;
+    if (nodeId !== 'node-review') {
+      window.isReviewGameMode = false;
+      window.isRoadmapReviewSpeedrun = false;
+      window.isWrongWordsMiniReviewActive = false;
+    }
     const isFootball = (window.activeCourseId === 'pack_football');
     const courseId = isFootball ? 'pack_football' : (window.currentCourseId || 'basic');
     let data = null;
@@ -3123,15 +3230,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(curLang) : 1) || 1;
       const curUnit = activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0];
       if (curUnit && Array.isArray(curUnit.nodes)) {
-        if (nodeId === 'node-1') matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
-        else if (nodeId === 'node-2') matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && x.id.endsWith('_n3')));
-        else if (nodeId === 'node-3') matchedNode = curUnit.nodes.find(x => x.type === 'sentence' || (x.id && x.id.endsWith('_n4')));
-        else if (nodeId === 'node-boss') matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')));
-        else matchedNode = curUnit.nodes.find(x => x.id === nodeId);
+        if (nodeId === 'node-1') {
+          matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
+        } else if (nodeId === 'node-2') {
+          matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && (x.id.endsWith('_n2') || x.id.endsWith('_n3'))));
+        } else if (nodeId === 'node-3') {
+          // 💡 [핵심 버그 수정] 약점 복습(_n4, review) 절대 배제, 오직 순수 3과(stageNumber 3, _n5)만 정밀 매칭
+          matchedNode = curUnit.nodes.find(x => (x.stageNumber === 3 || (x.id && (x.id.endsWith('_n5') || x.id.endsWith('-n3')))) && x.type !== 'review' && !x.id?.includes('review'));
+          if (!matchedNode) {
+            matchedNode = curUnit.nodes.find(x => x.stageNumber === 3 && x.type !== 'review');
+          }
+        } else if (nodeId === 'node-boss') {
+          matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')));
+        } else {
+          matchedNode = curUnit.nodes.find(x => x.id === nodeId);
+        }
+
         if (matchedNode) {
+          let nodeTitle = matchedNode.title;
+          if (nodeId === 'node-3' && (!nodeTitle || nodeTitle.includes('복습') || nodeTitle.includes('Review'))) {
+            nodeTitle = `${curUnit.unitNumber || curUnitLevel || 1}과: 자기소개와 소통`;
+          }
+
+          let nodeDesc = matchedNode.meaning
+            ? `${matchedNode.targetSentence || ''} (${matchedNode.meaning})`
+            : (matchedNode.desc || curUnit.desc || curUnit.subtitle || '핵심 어휘와 문장을 마스터하세요!');
+
+          if (nodeId === 'node-3' && (nodeDesc.includes('복습') || nodeDesc.includes('오답') || !matchedNode.meaning)) {
+            // 3과 실제 어휘 주제(자기소개와 소통 등) 설명 노출
+            nodeDesc = matchedNode.desc || curUnit.desc || '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!';
+          }
+
           data = {
-            title: matchedNode.title,
-            desc: matchedNode.meaning ? `${matchedNode.targetSentence || ''} (${matchedNode.meaning})` : (curUnit.desc || curUnit.subtitle || '핵심 어휘와 문장을 마스터하세요!'),
+            title: nodeTitle,
+            desc: nodeDesc,
             icon: curUnit.icon || activeCourse.icon || (isFootball ? '⚽' : '🌱')
           };
         }
@@ -3140,42 +3272,60 @@ document.addEventListener('DOMContentLoaded', () => {
         data = activeCourse.lessons[nodeId];
       }
     }
-    if (!data) {
+
+    if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
       const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS.basic);
-      data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]) || { title: '학습 레슨', desc: '새로운 단어를 학습해보세요!', icon: '🌱' };
-    }
-    // ⭕ 언어 및 팩(스페셜팩/정규) 격리된 실제 진행도 계산
-    const modalLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const modalPack = (
-      window.activeCourseId ||
-      window.currentCourseId ||
-      window.currentSelectedCourseId ||
-      (window.isFootballMode || window.isFootballPack ? 'pack_football' : null) ||
-      'standard'
-    );
-    const modalScope = `${modalLang}_${modalPack}`;
-    const baseNodeKey = nodeId.includes('_n') ? nodeId : (nodeId.startsWith('node-') ? nodeId : `node-${nodeId}`);
-
-    let progress = 0;
-    // 1) 전용 격리 키 우선 조회 (예: vocadash_node_progress_es_pack_football_node-1)
-    try {
-      const raw = localStorage.getItem(`vocadash_node_progress_${modalScope}_${baseNodeKey}`);
-      if (raw) progress = JSON.parse(raw).clearedCount || 0;
-    } catch (_) { }
-
-    // 2) 매칭된 노드 전용 ID(예: es_pack_football_1_n1)가 있으면 해당 ID로 resolve 시도
-    if (progress === 0 && matchedNode?.id) {
-      const matchData = (typeof resolveNodeData === 'function') ? resolveNodeData(matchedNode.id, `${modalScope}_${baseNodeKey}`) : null;
-      if (matchData && matchData.clearedCount !== undefined) {
-        progress = matchData.clearedCount;
+      data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]);
+      if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
+        data = {
+          title: '3과: 자기소개와 소통',
+          desc: '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!',
+          icon: isFootball ? '⚽' : '🌱'
+        };
       }
     }
 
-    // 3) 만약 스탠다드 스페인어가 아닌데 일반 node-1 데이터가 잡히는 것 방지 (0~3 범위 제한)
+    // ⭕ 언어 및 코스 격리된 실제 진행도 계산
+    const modalLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let modalPack = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + modalLang) : null) || 'main';
+    modalPack = (modalPack === 'pack_football') ? 'pack_football' : 'main';
+
+    let progress = 0;
+    if (typeof getNodeProgress === 'function') {
+      const p = getNodeProgress(nodeId, modalLang, modalPack);
+      progress = p?.clearedCount || 0;
+    }
+
+    // 🛑 [핵심 버그 수정] 복습 노드 완료 직후 3번 노드가 실제로 플레이되지 않았는데 오염되어 1이 되어있는 경우 0으로 강제 보정
+    if (nodeId === 'node-3') {
+      let isActuallyCleared = false;
+      try {
+        const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
+        if (uData && uData.clearedNodes && uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed) {
+          isActuallyCleared = true;
+        }
+      } catch (_) { }
+
+      if (!isActuallyCleared) {
+        // 복습 완료로 인한 오염 잔여물이거나 미플레이 0회차 상태 보장
+        progress = 0;
+        try {
+          localStorage.removeItem(`vocadash_prog_${modalLang}_${modalPack}_u1_n3`);
+          localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_node-3`);
+          localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_1_3`);
+        } catch (_) { }
+        if (window.nodeProgressMap) {
+          window.nodeProgressMap['node-3'] = 0;
+          window.nodeProgressMap[`${modalLang}_${modalPack}_u1_n3`] = 0;
+        }
+      }
+    }
+
     progress = Math.max(0, Math.min(3, Number(progress) || 0));
 
-
-    setText('lesson-modal-icon', data.icon); setText('lesson-modal-title', data.title); setText('lesson-modal-desc', data.desc);
+    setText('lesson-modal-icon', data.icon);
+    setText('lesson-modal-title', data.title);
+    setText('lesson-modal-desc', data.desc);
     setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : nodeId === 'node-boss' ? '4과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
     setText('lesson-modal-progress-text', `${progress}/3`);
     setText('lesson-start-btn-text', progress >= 3 ? '복습 시작하기' : progress === 2 ? '마지막 레슨 도전!' : progress === 1 ? '다음 레슨 계속하기' : '학습 시작하기');
@@ -3260,6 +3410,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return getClaimedBonuses().includes(nodeId);
   }
   function markBonusClaimed(nodeId = 'node-bonus') {
+    try {
+      let list = [];
+      const raw = localStorage.getItem('vocadash_claimed_bonuses');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+      if (!list.includes(nodeId)) list.push(nodeId);
+      localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(list));
+    } catch (_) { }
     const prog = getCourseProgress(window.activeCourseId);
     if (!prog.claimedBonuses) prog.claimedBonuses = [];
     if (!prog.claimedBonuses.includes(nodeId)) {
@@ -3320,30 +3480,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function completeReviewNode(nodeId = 'node-review') {
-    const targetId = nodeId || window.currentGameLessonId || 'node-review';
-    console.log('✅ [Review Node Complete] 약점 복습 완료 처리 시작:', targetId);
+    // 💡 [핵심 버그 수정] currentGameLessonId에 상관없이 오직 node-review만 완료 처리
+    const targetId = 'node-review';
+    console.log('✅ [Review Node Complete] 약점 복습 완료 처리 시작: node-review');
 
-    markReviewNodeCompleted(targetId);
-    markReviewNodeCompleted('node-review');
+    if (typeof markReviewNodeCompleted === 'function') {
+      markReviewNodeCompleted('node-review');
+    }
 
-    // 1) nodeProgress 등록 (clearedCount: 1, stars: 3)
+    // 1) nodeProgress 등록 (오직 node-review만 완료 등록)
     const progressData = { cleared: true, clearedCount: 1, stars: 3 };
     try {
-      localStorage.setItem(`vocadash_node_progress_${targetId}`, JSON.stringify(progressData));
       localStorage.setItem('vocadash_node_progress_node-review', JSON.stringify(progressData));
     } catch (_) { }
 
     if (!window.nodeProgressMap) window.nodeProgressMap = {};
-    window.nodeProgressMap[targetId] = 1;
     window.nodeProgressMap['node-review'] = 1;
 
-    // 2) localStorage clearedNodes 목록에 완료(cleared: true, clearedCount: 1) 상태로 즉시 등록
+    // 🛑 [핵심 버그 수정] 3번 노드 오염 완전 방어:
+    // 복습 노드가 완료될 때 node-3의 진행도는 절대 1로 올리지 않고 순수 0회차 미클리어 상태(0/3)를 유지.
+    // 단, 유저가 이미 3번 노드를 1회 이상 정상 클리어한 상태라면 삭제하지 않음.
+    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curCourse = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + curLang) : null) || 'main';
+    const packCourse = (curCourse === 'pack_football') ? 'pack_football' : 'main';
+
+    let n3Progress = 0;
+    try {
+      const rawN3 = localStorage.getItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`) || localStorage.getItem(`node_progress_${curLang}_${packCourse}_node-3`);
+      if (rawN3) n3Progress = parseInt(rawN3, 10) || 0;
+    } catch (_) { }
+
+    if (n3Progress <= 0) {
+      try {
+        localStorage.removeItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`);
+        localStorage.removeItem(`node_progress_${curLang}_${packCourse}_node-3`);
+        localStorage.removeItem(`node_progress_${curLang}_${packCourse}_1_3`);
+        localStorage.removeItem('vocadash_prog_es_main_u1_n3');
+        localStorage.removeItem('node_progress_es_main_node-3');
+        localStorage.removeItem('node_progress_es_main_1_3');
+      } catch (_) { }
+
+      if (window.nodeProgressMap) {
+        window.nodeProgressMap['node-3'] = 0;
+        window.nodeProgressMap[`${curLang}_${packCourse}_u1_n3`] = 0;
+        if (packCourse === 'pack_football') {
+          window.nodeProgressMap['fb_1_n5'] = 0;
+        } else {
+          window.nodeProgressMap[`${curLang}_1_n3`] = 0;
+        }
+      }
+    }
+
+    // 2) localStorage clearedNodes 목록에 오직 복습 노드만 등록하고, 미완료 시 잔여 node-3 오염 삭제
     try {
       const rawUserData = localStorage.getItem('vocadash_user_data');
       let userData = rawUserData ? JSON.parse(rawUserData) : {};
       if (!userData.clearedNodes) userData.clearedNodes = {};
-      userData.clearedNodes[targetId] = { cleared: true, clearedCount: 1 };
       userData.clearedNodes['node-review'] = { cleared: true, clearedCount: 1 };
+      if (n3Progress <= 0) {
+        delete userData.clearedNodes['node-3'];
+        delete userData.clearedNodes['es_1_n5'];
+        delete userData.clearedNodes['fb_1_n5'];
+      }
       localStorage.setItem('vocadash_user_data', JSON.stringify(userData));
     } catch (_) { }
 
@@ -3351,12 +3549,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const rawList = localStorage.getItem('vocadash_cleared_nodes');
       let list = rawList ? JSON.parse(rawList) : [];
       if (!Array.isArray(list)) list = [];
-      if (!list.includes(targetId)) list.push(targetId);
       if (!list.includes('node-review')) list.push('node-review');
+      list = list.filter(item => item !== 'node-3' && item !== 'es_1_n5' && item !== 'fb_1_n5');
       localStorage.setItem('vocadash_cleared_nodes', JSON.stringify(list));
     } catch (_) { }
 
-    // 3) 로드맵 UI 갱신 (자물쇠 🔒 제거 및 START 뱃지 갱신)
+    // 3) 로드맵 UI 갱신 (복습 완료 마크 및 3번 노드 START 뱃지 정상 갱신)
     if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
     if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
     if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
@@ -3364,6 +3562,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.isReviewNodeCompleted = isReviewNodeCompleted;
   window.markReviewNodeCompleted = markReviewNodeCompleted;
   window.completeReviewNode = completeReviewNode;
+
+
 
   function handleClaimBonus(nodeId = 'node-bonus', unitNum = 1) {
     const isUnlocked = (unitNum === 1)
@@ -3566,7 +3766,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let lessons = (activeCourse && activeCourse.lessons) ? activeCourse.lessons : (langPresets[courseId] || langPresets.basic || COURSE_LESSONS.es.basic);
 
     // 상단 유닛 카드 배너 (Unit Banner) 동적 동기화
-    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let currentCoursePack = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + currentLang) : null) || 'main';
+    currentCoursePack = (currentCoursePack === 'pack_football') ? 'pack_football' : 'main';
+
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentLang, currentCoursePack) : 1;
     const bannerIdx = (window._currentVisibleUnitIndex !== undefined) ? window._currentVisibleUnitIndex : (unlockedLevel - 1);
     updateTopUnitBanner(bannerIdx);
 
@@ -3576,83 +3780,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (curUnit && Array.isArray(curUnit.nodes)) {
         const n1 = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
-        const n2 = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n3')));
-        const n3 = curUnit.nodes.find(n => n.type === 'sentence' || (n.id && n.id.endsWith('_n4')));
+        const n2 = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && (n.id.endsWith('_n2') || n.id.endsWith('_n3'))));
+        const n3 = curUnit.nodes.find(n => (n.stageNumber === 3 || (n.id && (n.id.endsWith('_n5') || n.id.endsWith('-n3'))) || n.type === 'sentence') && n.type !== 'review' && !n.id?.includes('review') && !n.id?.endsWith('_n4'));
         const nBoss = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
         lessons = {
           'node-1': { title: n1?.title || '1과 학습', desc: curUnit.subtitle || curUnit.desc, icon: curUnit.icon || '🌱' },
           'node-2': { title: n2?.title || '2과 학습', desc: curUnit.subtitle || curUnit.desc, icon: curUnit.icon || '🌱' },
-          'node-3': { title: n3?.title || '핵심 문장', desc: n3?.targetSentence || curUnit.subtitle || curUnit.desc, icon: '💬' },
+          'node-3': { title: (n3?.title && !n3.title.includes('복습')) ? n3.title : '3과: 자기소개와 소통', desc: n3?.targetSentence || curUnit.subtitle || curUnit.desc, icon: '💬' },
           'node-boss': { title: nBoss?.title || `Unit ${unitNum} 보스전`, desc: '실전 테스트 & 특별 보상', icon: '👑' }
         };
       }
     }
+
     // ----------------------------------------------------
-    // [노드 ID 및 진행도 계산 데이터 복구 - 언어 & 팩(코스)별 완전 격리]
+    // [노드 진행도 표준화 격리 조회: vocadash_prog_${lang}_${courseId}_u1_n${nodeIndex}]
     // ----------------------------------------------------
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-
-    // 현재 선택된 코스/팩 식별자 추출 (예: 'football', 'pack_football', 'basic', 'travel' 등)
-    const currentCoursePack = (
-      window.currentCourseId ||
-      window.currentSelectedCourseId ||
-      (window.isFootballMode || window.isFootballPack ? 'football' : null) ||
-      (window.currentActiveCourseId) ||
-      'standard'
-    );
-
-    // 고유 접두사: 예) es_football_ 또는 es_standard_
-    const scopePrefix = `${currentLang}_${currentCoursePack}`;
-
-    let n1Id = `${scopePrefix}_n1`;
-    let n2Id = `${scopePrefix}_n2`;
-    let n3Id = `${scopePrefix}_n3`;
-    let nBossId = `${scopePrefix}_boss`;
-
-    const clampProg = (v) => Math.max(0, Math.min(3, Number(v) || 0));
-    const emptyNodeData = { clearedCount: 0, stars: 0 };
-    const data1 = (typeof resolveNodeData === 'function') ? resolveNodeData(n1Id, `${scopePrefix}_node-1`) : emptyNodeData;
-    const data2 = (typeof resolveNodeData === 'function') ? resolveNodeData(n2Id, `${scopePrefix}_node-2`) : emptyNodeData;
-    const data3 = (typeof resolveNodeData === 'function') ? resolveNodeData(n3Id, `${scopePrefix}_node-3`) : emptyNodeData;
-    const dataBoss = (typeof resolveNodeData === 'function') ? resolveNodeData(nBossId, `${scopePrefix}_node-boss`) : emptyNodeData;
-
-    // 언어와 팩이 결합된 전용 키로 진행도 조회
-    const readSaved = (baseNodeId) => {
-      const scopedKey = `${scopePrefix}_${baseNodeId}`;
+    const readProgForNode = (nIndex) => {
+      const stdKey = `vocadash_prog_${currentLang}_${currentCoursePack}_u1_n${nIndex}`;
       let c = 0;
-      if (typeof getNodeProgress === 'function') {
-        const p = getNodeProgress(scopedKey);
-        if (p?.clearedCount !== undefined) return p.clearedCount;
-      }
       try {
-        const raw = localStorage.getItem(`vocadash_node_progress_${scopedKey}`);
-        if (raw) c = Math.max(c, JSON.parse(raw).clearedCount || 0);
-      } catch (_) { }
-
-      // 기본 스탠다드 스페인어 코스일 때만 기존 레거시(node-1) 데이터 허용
-      if (c === 0 && currentLang === 'es' && currentCoursePack === 'standard') {
-        try {
-          const rawLegacy = localStorage.getItem(`vocadash_node_progress_${baseNodeId}`);
-          if (rawLegacy) c = Math.max(c, JSON.parse(rawLegacy).clearedCount || 0);
-        } catch (_) { }
-        c = Math.max(c, window.nodeProgressMap?.[baseNodeId] || 0);
+        const raw = localStorage.getItem(stdKey);
+        if (raw !== null) {
+          const parsed = JSON.parse(raw);
+          if (typeof parsed === 'number') c = parsed;
+          else if (parsed && typeof parsed.clearedCount === 'number') c = parsed.clearedCount;
+          else if (parsed && typeof parsed.stars === 'number') c = parsed.stars;
+        }
+      } catch (_) {
+        const num = parseInt(localStorage.getItem(stdKey), 10);
+        if (!isNaN(num)) c = num;
       }
-
-      if (window.nodeProgressMap && window.nodeProgressMap[scopedKey] !== undefined) {
-        c = Math.max(c, window.nodeProgressMap[scopedKey]);
-      }
-      return c;
+      return Math.max(0, Math.min(3, c));
     };
 
-    const prog1 = clampProg(Math.max(
-      readSaved('node-1'),
-      data1?.clearedCount || 0,
-      window.nodeProgressMap?.[n1Id] || 0
-    ));
-    const prog2 = (prog1 >= 3) ? clampProg(Math.max(readSaved('node-2'), data2?.clearedCount || 0, window.nodeProgressMap?.[n2Id] || 0)) : 0;
-    const prog3 = (prog2 >= 3) ? clampProg(Math.max(readSaved('node-3'), data3?.clearedCount || 0, window.nodeProgressMap?.[n3Id] || 0)) : 0;
-    const progBoss = (prog3 >= 3) ? clampProg(Math.max(readSaved('node-boss'), dataBoss?.clearedCount || 0, window.nodeProgressMap?.[nBossId] || 0)) : 0;
+    const prog1 = readProgForNode(1);
+    const prog2 = (prog1 >= 3) ? readProgForNode(2) : 0;
+    const prog3 = (prog2 >= 3) ? readProgForNode(3) : 0;
+    const progBoss = (prog3 >= 3) ? readProgForNode(6) : 0;
 
+    // 현재 언어/코스에 격리된 진행도 맵 갱신
+    if (!window.nodeProgressMap) window.nodeProgressMap = {};
+    window.nodeProgressMap['node-1'] = prog1;
+    window.nodeProgressMap['node-2'] = prog2;
+    window.nodeProgressMap['node-3'] = prog3;
+    window.nodeProgressMap['node-boss'] = progBoss;
+    window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n1`] = prog1;
+    window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n2`] = prog2;
+    window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n3`] = prog3;
+    window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n6`] = progBoss;
+    if (currentCoursePack === 'pack_football') {
+      window.nodeProgressMap['fb_1_n1'] = prog1;
+      window.nodeProgressMap['fb_1_n2'] = prog2;
+      window.nodeProgressMap['fb_1_n3'] = prog2;
+      window.nodeProgressMap['fb_1_n5'] = prog3;
+      window.nodeProgressMap['fb_1_n6'] = progBoss;
+    } else {
+      window.nodeProgressMap[`${currentLang}_1_n1`] = prog1;
+      window.nodeProgressMap[`${currentLang}_1_n2`] = prog2;
+      window.nodeProgressMap[`${currentLang}_1_n3`] = prog3;
+    }
 
     // 노드 해금 및 활성 판정
     const isBonusDone = (typeof isBonusClaimed === 'function') && isBonusClaimed('node-bonus');
@@ -3669,33 +3855,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const isBossUnlocked = (prog3 >= 3);
     // ----------------------------------------------------
 
-    // Node 1 요소 레퍼런스
-    const node1Container = el('node-1-container');
-    const target1 = el('node-1-target');
-    const ping1 = el('node-1-ping');
-    const pulseRing1 = el('node-1-pulse-ring');
-    const checkBadge1 = el('node-1-check-badge');
-    const startPill1 = el('node-1-start-pill');
-    const badge1 = el('node-1-label-badge');
-    const btn1 = el('node-1-btn');
-    const card1 = el('node-1-label-card');
+    // Node 1 요소 레퍼런스 및 하단 둥근 뱃지 컨테이너 정밀 탐색
+    const node1Container = el('node-1-container') || document.querySelector('[data-node-id="node-1"]');
+    const target1 = el('node-1-target') || node1Container?.querySelector('#node-1-target');
+    const ping1 = el('node-1-ping') || node1Container?.querySelector('#node-1-ping');
+    const pulseRing1 = el('node-1-pulse-ring') || node1Container?.querySelector('#node-1-pulse-ring');
+    const checkBadge1 = el('node-1-check-badge') || node1Container?.querySelector('#node-1-check-badge');
+    const startPill1 = el('node-1-start-pill') || node1Container?.querySelector('#node-1-start-pill');
+    const btn1 = el('node-1-btn') || node1Container?.querySelector('#node-1-btn');
+    const card1 = el('node-1-label-card') || node1Container?.querySelector('#node-1-label-card') || node1Container?.querySelector('.rounded-full');
+    let badge1 = el('node-1-label-badge') || card1?.querySelector('#node-1-label-badge') || card1?.querySelector('.flex') || node1Container?.querySelector('#node-1-label-badge');
 
-    // 고양이 발자국 3단계 점등 함수 (1: 1개, 2: 2개, 3: 3개 완주)
+    // 🐾 3단계 발바닥 점등 함수 (주황색 점등 버전)
     const getSimpleStarsHTML = (prog) => {
       const p = Number(prog) || 0;
-      const paw1 = p >= 1
-        ? '<span class="inline-block transform scale-110 drop-shadow-xs" style="color: #f59e0b; font-size: 15px;">🐾</span>'
-        : '<span class="inline-block opacity-25 grayscale" style="font-size: 15px;">🐾</span>';
-      const paw2 = p >= 2
-        ? '<span class="inline-block transform scale-110 drop-shadow-xs" style="color: #f59e0b; font-size: 15px;">🐾</span>'
-        : '<span class="inline-block opacity-25 grayscale" style="font-size: 15px;">🐾</span>';
-      const paw3 = p >= 3
-        ? '<span class="inline-block transform scale-110 drop-shadow-xs" style="color: #f59e0b; font-size: 15px;">🐾</span>'
-        : '<span class="inline-block opacity-25 grayscale" style="font-size: 15px;">🐾</span>';
 
-      return `<div class="flex items-center justify-center gap-1.5 select-none">${paw1}${paw2}${paw3}</div>`;
+      const renderPaw = (isActive) => {
+        // 활성화 시 따뜻한 주황색(#f59e0b), 비활성화 시 연한 회색(#cbd5e1)
+        const fillColor = isActive ? '#f59e0b' : '#cbd5e1';
+        const opacity = isActive ? '1' : '0.35';
+        const glowStyle = isActive
+          ? 'filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.45)); transform: scale(1.15);'
+          : 'transform: scale(1.0);';
+
+        return `
+          <div class="inline-flex items-center justify-center p-0.5" style="width: 18px; height: 18px;">
+            <svg viewBox="0 0 44 42" class="transition-all duration-200" style="width: 100%; height: 100%; fill: ${fillColor}; opacity: ${opacity}; ${glowStyle}" xmlns="http://www.w3.org/2000/svg">
+              <!-- 4개의 타원형 발가락 젤리 -->
+              <ellipse cx="8.5" cy="13" rx="4.0" ry="5.6" transform="rotate(-26 8.5 13)"></ellipse>
+              <ellipse cx="17.2" cy="7.2" rx="4.3" ry="6.2" transform="rotate(-8 17.2 7.2)"></ellipse>
+              <ellipse cx="26.8" cy="7.2" rx="4.3" ry="6.2" transform="rotate(8 26.8 7.2)"></ellipse>
+              <ellipse cx="35.5" cy="13" rx="4.0" ry="5.6" transform="rotate(26 35.5 13)"></ellipse>
+              <!-- 하단 메인 젤리 패드 -->
+              <path d="M 22 17.5 C 17.2 17.5 13.0 19.3 9.6 22.8 C 6.5 26.0 5.6 30.5 7.4 34.6 C 9.5 39.4 15.2 42.0 22 42.0 C 28.8 42.0 34.5 39.4 36.6 34.6 C 38.4 30.5 37.5 26.0 34.4 22.8 C 31.0 19.3 26.8 17.5 22 17.5 Z"></path>
+            </svg>
+          </div>
+        `;
+      };
+
+      const paw1 = renderPaw(p >= 1);
+      const paw2 = renderPaw(p >= 2);
+      const paw3 = renderPaw(p >= 3);
+
+      return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5">${paw1}${paw2}${paw3}</div>`;
     };
 
+
+    // 1번 노드 알약 뱃지 발바닥 UI 안전 주입 함수
+    const syncNode1StarsBadge = (starsHtml) => {
+      if (badge1) {
+        badge1.innerHTML = starsHtml;
+      }
+      if (card1) {
+        const innerBadge = card1.querySelector('#node-1-label-badge') || card1.querySelector('.flex') || badge1;
+        if (innerBadge) {
+          innerBadge.innerHTML = starsHtml;
+        } else {
+          card1.innerHTML = `<span id="node-1-title" class="hidden">1과</span><div id="node-1-label-badge" class="flex items-center gap-1">${starsHtml}</div>`;
+        }
+      }
+    };
 
     if (prog1 >= 3) {
       if (node1Container) node1Container.classList.remove('active', 'node-pulse');
@@ -3723,9 +3942,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (card1) {
         card1.className = 'mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border border-emerald-300 pointer-events-none';
       }
-      if (badge1) {
-        badge1.innerHTML = getSimpleStarsHTML(prog1);
-      }
+      syncNode1StarsBadge(getSimpleStarsHTML(prog1));
     } else if (isNode1Active) {
       if (node1Container) node1Container.classList.add('active', 'node-pulse');
       if (ping1) ping1.classList.remove('hidden');
@@ -3745,16 +3962,16 @@ document.addEventListener('DOMContentLoaded', () => {
         btn1.title = '1과';
         const stageNum1 = btn1.querySelector('.node-stage-num');
         if (stageNum1) {
-          stageNum1.textContent = 'START';
-          stageNum1.className = 'node-stage-num text-sm font-extrabold tracking-tight select-none leading-none drop-shadow-xs relative z-10 text-white';
+          stageNum1.textContent = prog1 > 0 ? '1' : 'START';
+          stageNum1.className = prog1 > 0
+            ? 'node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white'
+            : 'node-stage-num text-sm font-extrabold tracking-tight select-none leading-none drop-shadow-xs relative z-10 text-white';
         }
       }
       if (card1) {
         card1.className = 'mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border-2 border-sky-400 pointer-events-none ring-2 ring-sky-100';
       }
-      if (badge1) {
-        badge1.innerHTML = getSimpleStarsHTML(prog1);
-      }
+      syncNode1StarsBadge(getSimpleStarsHTML(prog1));
     } else {
       if (node1Container) node1Container.classList.remove('active', 'node-pulse');
       if (ping1) ping1.classList.add('hidden');
@@ -3781,9 +3998,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (card1) {
         card1.className = 'mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border border-sky-300 pointer-events-none';
       }
-      if (badge1) {
-        badge1.innerHTML = getSimpleStarsHTML(prog1);
-      }
+      syncNode1StarsBadge(getSimpleStarsHTML(prog1));
     }
 
     // Node 2 요소 레퍼런스
@@ -4022,14 +4237,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // [Node Review: 오답 탈출 상태 렌더링]
+    // [Node Review: 오답 탈출 / 스피드 복습 상태 렌더링]
     // ----------------------------------------------------
     const reviewContainer = el('node-review-container');
     const reviewTarget = el('node-review-target');
     const reviewBtn = el('node-review-btn');
     const reviewIcon = el('node-review-icon');
-    const reviewBadgeText = el('node-review-badge-text');
-    const reviewLabelCard = el('node-review-label-card');
+    const reviewBadgeText = el('node-review-badge-text') || reviewContainer?.querySelector('.text-orange-600') || reviewContainer?.querySelector('span.font-extrabold');
+    const reviewLabelCard = el('node-review-label-card') || reviewContainer?.querySelector('#node-review-label-card') || reviewContainer?.querySelector('.rounded-full.border-orange-200') || reviewContainer?.querySelector('.mt-2');
+    const reviewBadgeIcon = el('node-review-badge-icon') || reviewContainer?.querySelector('.text-xs');
     const reviewPing = el('node-review-ping');
     const reviewPulseRing = el('node-review-pulse-ring');
     const reviewStartPill = el('node-review-start-pill');
@@ -4043,6 +4259,25 @@ document.addEventListener('DOMContentLoaded', () => {
       lockBadgeReview.className = 'absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20';
       lockBadgeReview.innerHTML = '<span class="material-symbols-outlined text-[13px] font-bold">lock</span>';
       reviewTarget.appendChild(lockBadgeReview);
+    }
+
+    let reviewWrongCount = 0;
+    if (typeof window.loadWrongWords === 'function') {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      reviewWrongCount = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+    } else if (Array.isArray(window.wrongWords)) {
+      reviewWrongCount = window.wrongWords.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+    } else {
+      try {
+        const storageKey = (typeof getWrongStorageKey === 'function') ? getWrongStorageKey(currentLang) : `vocadash_wrong_answers_${currentLang}`;
+        const raw = localStorage.getItem(storageKey) || localStorage.getItem(`vocadash_weakness_words_${currentLang}`) || (currentLang === 'es' ? localStorage.getItem('vocadash_wrong_words') : null);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            reviewWrongCount = parsed.filter(w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+          }
+        }
+      } catch (_) { }
     }
 
     if (isReviewDone) {
@@ -4062,29 +4297,56 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewBtn.title = '약점 복습 (완료)';
       }
       if (reviewIcon) reviewIcon.textContent = '✅';
-      if (reviewBadgeText) reviewBadgeText.textContent = '복습 완료 ✅';
-      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85';
-    } else if (isReviewActive) {
-      if (reviewContainer) reviewContainer.classList.add('active', 'node-pulse');
+      if (reviewLabelCard) {
+        reviewLabelCard.classList.remove('hidden');
+        reviewLabelCard.style.display = 'flex';
+        reviewLabelCard.className = 'mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-slate-200 pointer-events-none opacity-85';
+      }
+      if (reviewBadgeIcon) reviewBadgeIcon.textContent = reviewWrongCount > 0 ? '⚡️' : '✅';
+      if (reviewBadgeText) {
+        reviewBadgeText.textContent = reviewWrongCount > 0 ? `오답 탈출 (${reviewWrongCount})` : '복습 완료';
+      }
+    } else if (isReviewUnlocked) {
+      if (isReviewActive) {
+        if (reviewContainer) reviewContainer.classList.add('active', 'node-pulse');
+        if (reviewPing) reviewPing.classList.remove('hidden');
+        if (reviewPulseRing) reviewPulseRing.classList.remove('hidden');
+        if (reviewStartPill) { reviewStartPill.classList.remove('hidden'); reviewStartPill.style.display = 'flex'; }
+        if (reviewExcl) { reviewExcl.classList.remove('hidden'); reviewExcl.style.display = 'flex'; }
+      } else {
+        if (reviewContainer) reviewContainer.classList.remove('active', 'node-pulse');
+        if (reviewPing) reviewPing.classList.add('hidden');
+        if (reviewPulseRing) reviewPulseRing.classList.add('hidden');
+        if (reviewStartPill) { reviewStartPill.classList.add('hidden'); reviewStartPill.style.display = 'none'; }
+        if (reviewExcl) { reviewExcl.classList.add('hidden'); reviewExcl.style.display = 'none'; }
+      }
+      if (reviewContainer) reviewContainer.classList.remove('opacity-80');
       if (reviewTarget) {
         reviewTarget.dataset.nodeType = 'review';
         reviewTarget.removeAttribute('data-lock-msg');
       }
-      if (reviewPing) reviewPing.classList.remove('hidden');
-      if (reviewPulseRing) reviewPulseRing.classList.remove('hidden');
-      if (reviewStartPill) { reviewStartPill.classList.remove('hidden'); reviewStartPill.style.display = 'flex'; }
       if (reviewCheckBadge) { reviewCheckBadge.classList.add('hidden'); reviewCheckBadge.style.display = 'none'; }
       if (lockBadgeReview) { lockBadgeReview.classList.add('hidden'); lockBadgeReview.style.display = 'none'; }
-      if (reviewExcl) { reviewExcl.classList.remove('hidden'); reviewExcl.style.display = 'flex'; }
       if (reviewBtn) {
         reviewBtn.className = 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80';
         reviewBtn.title = '약점 복습 드릴 (시작)';
       }
       if (reviewIcon) reviewIcon.textContent = '⚡️';
-      if (reviewBadgeText) reviewBadgeText.textContent = '오답 탈출';
-      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border-2 border-orange-400 ring-2 ring-orange-100 text-center pointer-events-none';
+      if (reviewBadgeIcon) reviewBadgeIcon.textContent = '⚡️';
+      if (reviewBadgeText) {
+        reviewBadgeText.textContent = reviewWrongCount > 0 ? `오답 탈출 (${reviewWrongCount})` : '스피드 복습';
+      }
+      if (reviewLabelCard) {
+        reviewLabelCard.classList.remove('hidden');
+        reviewLabelCard.style.display = 'flex';
+        reviewLabelCard.className = 'mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none';
+      }
     } else {
-      if (reviewContainer) reviewContainer.classList.add('opacity-80');
+      // 1) 노드가 잠겨있는 경우: 하단 뱃지 렌더링 생략, 회색 번개 + 자물쇠만 노출
+      if (reviewContainer) {
+        reviewContainer.classList.add('opacity-80');
+        reviewContainer.classList.remove('active', 'node-pulse');
+      }
       if (reviewTarget) {
         reviewTarget.dataset.nodeType = 'locked';
         reviewTarget.setAttribute('data-lock-msg', '보너스 선물을 먼저 수령해야 열려요!');
@@ -4104,8 +4366,10 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewBtn.title = '약점 복습 (잠김)';
       }
       if (reviewIcon) reviewIcon.textContent = '⚡️';
-      if (reviewBadgeText) reviewBadgeText.textContent = '오답 탈출';
-      if (reviewLabelCard) reviewLabelCard.className = 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-80';
+      if (reviewLabelCard) {
+        reviewLabelCard.classList.add('hidden');
+        reviewLabelCard.style.display = 'none';
+      }
     }
 
     // Node 3 (오답 탈출까지 완료 시 해제, 3회 달성 시 완료 체크)
@@ -4250,17 +4514,52 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // 💡 [전 유닛 공통] Unit 1~4 모든 보스 노드 상단 배너 영구 제거 및 하단 라벨 통일
+    document.querySelectorAll('[data-node-id*="boss"], [id*="node-boss"], [id*="boss-container"]').forEach(container => {
+      // 1) 상단에 뜬 FINAL BOSS EXAM 배너 완전 삭제
+      container.querySelectorAll('div, span').forEach(el => {
+        if (el.textContent.includes('FINAL BOSS EXAM') && (el.classList.contains('absolute') || el.id.includes('banner') || el.className.includes('-top-'))) {
+          el.remove();
+        }
+      });
+
+      // 2) 하단 라벨 카드를 주황색 그라데이션 배지로 통일
+      const bottomCard = container.querySelector('[id*="label-card"], .node-label-card, .mt-2, .mt-2\\.5');
+      const bottomBadge = container.querySelector('[id*="label-badge"], .node-label-badge');
+      if (bottomCard) {
+        bottomCard.className = 'mt-2.5 flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1 rounded-full shadow-md border border-orange-400 pointer-events-none opacity-90';
+      }
+      if (bottomBadge) {
+        bottomBadge.innerHTML = '<span class="text-[11px] text-white font-black tracking-wide flex items-center gap-1 drop-shadow-sm"><span>🔥</span><span>FINAL BOSS EXAM</span></span>';
+      }
+    });
+
     // Node Boss (3과 3회 달성 시 영구 해제 & START 배너)
-    const nodeBossContainer = el('node-boss-container') || document.querySelector('[data-node-id="node-boss"]');
-    const bannerBoss = el('node-boss-start-banner');
+    const nodeBossContainer = el('node-boss-container') || document.querySelector('[data-node-id*="boss"]');
+    const bannerBoss = el('node-boss-start-banner') || el('node-boss-banner') || el('node-boss-exam-banner');
     const targetBoss = el('node-boss-target') || (nodeBossContainer && nodeBossContainer.querySelector('.node-target'));
-    const glowBoss = el('node-boss-glow');
+    const glowBoss = el('node-boss-glow') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="glow"]'));
     const btnBoss = el('node-boss-btn') || (nodeBossContainer && nodeBossContainer.querySelector('.node-btn'));
-    const lockBadgeBoss = el('node-boss-lock-badge');
-    const checkBadgeBoss = el('node-boss-check-badge');
-    const badgeBoss = el('node-boss-label-badge');
-    const cardBoss = el('node-boss-label-card');
-    const startPillBoss = el('node-boss-start-pill');
+    const lockBadgeBoss = el('node-boss-lock-badge') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="lock"]'));
+    const checkBadgeBoss = el('node-boss-check-badge') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="check"]'));
+    const badgeBoss = el('node-boss-label-badge') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="label-badge"]'));
+    const cardBoss = el('node-boss-label-card') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="label-card"]'));
+    const startPillBoss = el('node-boss-start-pill') || (nodeBossContainer && nodeBossContainer.querySelector('[id*="start-pill"]'));
+
+
+    // 💡 [핵심] 상태(클리어/도전/잠김)에 상관없이 상단 주황색 배너는 영구 무조건 완전 삭제
+    if (bannerBoss) {
+      bannerBoss.remove();
+    }
+    // 컨테이너 내부의 상단 배지 흔적 및 텍스트 강제 색출 삭제
+    if (nodeBossContainer) {
+      const topBadges = nodeBossContainer.querySelectorAll('div, span');
+      topBadges.forEach(el => {
+        if (el.textContent.includes('FINAL BOSS EXAM') && el !== badgeBoss && !cardBoss?.contains(el)) {
+          el.remove();
+        }
+      });
+    }
 
     if (prog3 >= 3) {
       if (nodeBossContainer) {
@@ -4278,8 +4577,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (progBoss >= 1) {
+        // [1] 이미 보스를 깬 완료 상태
         if (nodeBossContainer) nodeBossContainer.classList.remove('active', 'node-pulse');
-        if (bannerBoss) bannerBoss.classList.add('hidden');
         if (startPillBoss) {
           startPillBoss.classList.add('hidden');
           startPillBoss.style.display = 'none';
@@ -4300,8 +4599,10 @@ document.addEventListener('DOMContentLoaded', () => {
           badgeBoss.innerHTML = '<span class="text-[11px] text-emerald-600 font-black flex items-center gap-1"><span>👑</span><span>BOSS CLEAR!</span></span>';
         }
       } else {
+        // [2] 3과 클리어 후 보스전 도전 가능(START) 상태
         if (nodeBossContainer) nodeBossContainer.classList.add('active', 'node-pulse');
-        if (bannerBoss) bannerBoss.classList.add('hidden');
+
+        // 💡 상단에는 '▶ START' 칩만 단독 노출
         if (startPillBoss) {
           startPillBoss.classList.remove('hidden');
           startPillBoss.style.display = 'flex';
@@ -4316,21 +4617,24 @@ document.addEventListener('DOMContentLoaded', () => {
           checkBadgeBoss.style.display = 'none';
         }
         if (btnBoss) {
-          btnBoss.title = '보스전 (도전 가능!)';
+          btnBoss.title = '보스전 (FINAL BOSS EXAM)';
         }
+
+        // 💡 하단 카드: 주황색 그라데이션 스타일
         if (cardBoss) {
-          cardBoss.className = 'mt-2.5 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-md border-2 border-amber-400 pointer-events-none ring-2 ring-amber-100';
+          cardBoss.className = 'mt-2.5 flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1 rounded-full shadow-md border border-orange-400 pointer-events-none';
         }
+        // 💡 하단 라벨: 흰색 글씨 + 불꽃 + 문구
         if (badgeBoss) {
-          badgeBoss.innerHTML = '<span class="text-[11px] text-amber-600 font-black flex items-center gap-1"><span>⚡</span><span>도전 가능!</span></span>';
+          badgeBoss.innerHTML = '<span class="text-[11px] text-white font-black tracking-wide flex items-center gap-1 drop-shadow-sm"><span>🔥</span><span>FINAL BOSS EXAM</span></span>';
         }
       }
     } else {
+      // [3] 이전 스테이지 미완료로 잠겨있는 상태
       if (nodeBossContainer) {
         nodeBossContainer.classList.remove('active', 'node-pulse');
         nodeBossContainer.classList.add('opacity-80');
       }
-      if (bannerBoss) bannerBoss.classList.add('hidden');
       if (startPillBoss) {
         startPillBoss.classList.add('hidden');
         startPillBoss.style.display = 'none';
@@ -4355,11 +4659,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btnBoss) {
         btnBoss.title = '보스전: 잠김';
       }
+      // 💡 하단 카드: 주황색 그라데이션 배지
       if (cardBoss) {
-        cardBoss.className = 'mt-2.5 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80';
+        cardBoss.className = 'mt-2.5 flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1 rounded-full shadow-md border border-orange-400 pointer-events-none opacity-90';
       }
+      // 💡 하단 라벨: 흰색 볼드체 + 🔥 FINAL BOSS EXAM
       if (badgeBoss) {
-        badgeBoss.innerHTML = '<span class="text-[11px] text-slate-500 font-bold flex items-center gap-1"><span>👑</span><span>FINAL BOSS</span></span>';
+        badgeBoss.innerHTML = '<span class="text-[11px] text-white font-black tracking-wide flex items-center gap-1 drop-shadow-sm"><span>🔥</span><span>FINAL BOSS EXAM</span></span>';
       }
     }
 
@@ -4385,6 +4691,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.updateRoadmapNodesUI = updateRoadmapNodesUI;
+
 
   // ===================================================
   // 듀오링고 스타일 전체 유닛 연속 스크롤 로드맵 & 렌더링 시스템
@@ -4504,6 +4811,32 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderUnitReviewHtml(opt) {
     const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
     const resolvedId = nodeId || `u${unitNum}-review`;
+
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let reviewWrongCount = 0;
+    if (typeof window.loadWrongWords === 'function') {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      reviewWrongCount = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+    } else if (Array.isArray(window.wrongWords)) {
+      reviewWrongCount = window.wrongWords.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+    } else {
+      try {
+        const storageKey = (typeof getWrongStorageKey === 'function') ? getWrongStorageKey(currentLang) : `vocadash_wrong_answers_${currentLang}`;
+        const raw = localStorage.getItem(storageKey) || localStorage.getItem(`vocadash_weakness_words_${currentLang}`) || (currentLang === 'es' ? localStorage.getItem('vocadash_wrong_words') : null);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            reviewWrongCount = parsed.filter(w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+          }
+        }
+      } catch (_) { }
+    }
+
+    const reviewBadgeLabel = reviewWrongCount > 0
+      ? `오답 탈출 (${reviewWrongCount})`
+      : (isCompleted ? '복습 완료' : '스피드 복습');
+    const reviewBadgeIcon = (isCompleted && reviewWrongCount === 0) ? '✅' : '⚡️';
+
     return `
       <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="review" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
@@ -4542,13 +4875,15 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           ` : ''}
         </div>
-        <!-- 심플 약점 복습 캡슐 -->
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none">
+        <!-- 심플 약점 복습 캡슐 (잠김 시 렌더링 생략) -->
+        ${isLocked ? '' : `
+        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isCompleted && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200'} pointer-events-none">
           <div class="flex items-center gap-1">
-            <span class="text-xs">⚡️</span>
-            <span class="text-[11px] text-orange-600 font-extrabold">${isCompleted ? '복습 완료' : '오답 탈출'}</span>
+            <span class="text-xs">${reviewBadgeIcon}</span>
+            <span class="text-[11px] text-orange-600 font-extrabold">${reviewBadgeLabel}</span>
           </div>
         </div>
+        `}
       </div>
     `;
   }
@@ -4558,10 +4893,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const { unitNum, align, width, isCompleted, isLocked, nodeId } = opt;
     return `
       <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="boss" data-unit-index="${unitNum - 1}">
-        <div class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full ${isCompleted ? 'bg-emerald-600' : 'bg-amber-500'} text-white shadow-[0_2px_0_0_${isCompleted ? '#065f46' : '#b45309'}] pointer-events-none font-black text-[11px] uppercase tracking-wide">
-          <span class="text-xs">🔥</span>
-          <span>FINAL BOSS EXAM</span>
-        </div>
         <div class="relative flex items-center justify-center node-target cursor-pointer">
           ${!isLocked && !isCompleted ? `
             <div class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
@@ -4585,16 +4916,17 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           ` : ''}
         </div>
-        <!-- 심플 보스 캡슐 -->
-        <div class="mt-2.5 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-md border ${isCompleted ? 'border-emerald-400' : 'border-amber-300'} pointer-events-none">
-          <div class="flex items-center gap-1">
-            <span class="text-xs">👑</span>
-            <span class="text-[11px] ${isCompleted ? 'text-emerald-700' : 'text-amber-700'} font-black">${isCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS'}</span>
+        <!-- 보스전 하단 미니 캡슐 (주황색 일체형 배지) -->
+        <div class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full ${isCompleted ? 'bg-emerald-600 text-white shadow-[0_2px_0_0_#065f46]' : 'bg-amber-500 text-white shadow-[0_2px_0_0_#b45309]'} text-center pointer-events-none font-black text-[11px] uppercase tracking-wide">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs">${isCompleted ? '👑' : '🔥'}</span>
+            <span>${isCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS EXAM'}</span>
           </div>
         </div>
       </div>
     `;
   }
+
 
 
   function renderSubsequentUnits(activeCourse, unlockedLevel) {
@@ -4636,10 +4968,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // 유닛별 노드 정보 추출
       const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
       const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}-n1`, title: `1과: ${unitTitle}`, type: 'stage' };
-      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n3'))) || { id: `u${unitNum}-n2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
-      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n2')) || { id: `u${unitNum}-bonus`, title: '보너스 상자', type: 'bonus' };
-      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n5')) || { id: `u${unitNum}-review`, title: '약점 복습', type: 'review' };
-      const n3 = uNodes.find(n => (n.type === 'sentence' || n.stageNumber === 3 || n.id?.endsWith('_n4'))) || { id: `u${unitNum}-n3`, title: '3과: 핵심 문장', type: 'stage' };
+      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2'))) || { id: `u${unitNum}-n2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3')) || { id: `u${unitNum}-bonus`, title: '보너스 상자', type: 'bonus' };
+      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4')) || { id: `u${unitNum}-review`, title: '약점 복습', type: 'review' };
+      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: `u${unitNum}-n3`, title: '3과: 자기소개와 소통', type: 'stage' };
       const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
 
       const bonusId = nBonus.id || `u${unitNum}-bonus`;
@@ -4873,12 +5205,14 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => {
       setTimeout(() => {
         const currentActiveNode = document.querySelector('.roadmap-node.active, .node-pulse');
-        if (currentActiveNode) {
+        if (currentActiveNode && typeof currentActiveNode.getBoundingClientRect === 'function') {
           const rect = currentActiveNode.getBoundingClientRect();
-          if (window.scrollY === 0 && rect.top >= 100 && rect.bottom <= window.innerHeight) {
+          if (window.scrollY === 0 && rect && rect.top >= 100 && rect.bottom <= (window.innerHeight || 800)) {
             return;
           }
-          currentActiveNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (typeof currentActiveNode.scrollIntoView === 'function') {
+            currentActiveNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
       }, 100);
     });
@@ -4889,7 +5223,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderRoadmap() {
     const activeCourse = getCurrentCourseData();
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    const activeCourseId = activeCourse?.id || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : 'main') || 'main';
+
+    // getUnlockedUnitLevel에 코스 ID까지 함께 전달
+    const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function'
+      ? window.getUnlockedUnitLevel(lang, activeCourseId)
+      : 1;
 
     updateRoadmapNodesUI();
     renderSubsequentUnits(activeCourse, unlockedLevel);
@@ -4901,6 +5240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoScrollToActiveNode();
   }
   window.renderRoadmap = renderRoadmap;
+
 
   function loadUnit(unitIndexOrId) {
     const activeCourse = getCurrentCourseData();
@@ -4941,7 +5281,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function nextUnit() {
     const activeCourse = getCurrentCourseData();
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const curLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
+    const activeCourseId = activeCourse?.id || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : 'main') || 'main';
+
+    // getUnlockedUnitLevel에 activeCourseId까지 함께 전달
+    const curLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, activeCourseId) : 1) || 1;
     const nextLevel = curLevel + 1;
     if (activeCourse && Array.isArray(activeCourse.units) && nextLevel <= activeCourse.units.length) {
       return loadUnit(nextLevel);
@@ -4949,6 +5292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
   window.nextUnit = nextUnit;
+
 
   // 코스 스위처 선택 상태 동기화 (모달 & 단어장 드롭다운)
   function updateCourseSwitcherUI(selectedCourseId) {
@@ -5148,24 +5492,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    const activeLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    targetId = (targetId === 'pack_football') ? 'pack_football' : 'main';
+
     window.activeCourseId = targetId;
+    window.currentCourseId = targetId;
     window.currentBookCourseId = targetId;
     try {
+      localStorage.setItem(`vocadash_active_course_${activeLang}`, targetId);
       localStorage.setItem('vocadash_active_course', targetId);
+      localStorage.setItem('vocadash_current_course', targetId);
     } catch (_) { }
 
-    // 진행도 상태를 해당 courseId 기준으로 새로고침
-    window.nodeProgressMap = loadNodeProgress();
+    // 진행도 상태를 해당 activeLang과 targetId 기준으로 새로고침
+    window.nodeProgressMap = loadNodeProgress(activeLang, targetId);
 
     // 새 코스의 로드맵 화면 리렌더링
-    const activeLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const curUnlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(activeLang) : 1;
+    const curUnlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(activeLang, targetId) : 1;
     window._currentVisibleUnitIndex = curUnlocked - 1;
+    if (typeof updateRoadmapNodesUI === 'function') {
+      updateRoadmapNodesUI();
+    }
     renderRoadmap();
 
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     if (typeof renderUnitOverviewList === 'function') {
-      renderUnitOverviewList(lang);
+      renderUnitOverviewList(lang, targetId);
     }
     if (typeof renderBookWords === 'function') {
       renderBookWords(lang, targetId);
@@ -5182,6 +5534,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.switchCourse = switchCourse;
+
 
   // 고양이 캐릭터 아바타 바운스 위치 마커 동적 갱신 함수
   function updateCatMarkerPosition() {
@@ -5434,7 +5787,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.closeReviewSpeedrunModal = closeReviewSpeedrunModal;
 
   function startRoadmapReviewSpeedrun() {
-    closeReviewSpeedrunModal();
+    if (typeof closeReviewSpeedrunModal === 'function') closeReviewSpeedrunModal();
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
 
     let wrongList = [];
@@ -5462,50 +5815,89 @@ document.addEventListener('DOMContentLoaded', () => {
       return a;
     }
 
+    // 💡 유저가 지금까지 실제로 통과/학습한 이전 노드들의 단어만 수집하는 헬퍼 함수
+    function getLearnedWordsPool() {
+      let learnedPool = [];
+      const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+      const curCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : (window.packFootballData || window.courseData_es || window.courseData);
+
+      // 1) 코스 데이터 트리에서 이전 노드들의 단어 수집
+      if (curCourse && Array.isArray(curCourse.units)) {
+        curCourse.units.forEach(unit => {
+          if (Array.isArray(unit.nodes)) {
+            unit.nodes.forEach(node => {
+              if (Array.isArray(node.words) && node.words.length > 0) {
+                learnedPool = learnedPool.concat(node.words);
+              }
+            });
+          }
+        });
+      }
+
+      // 2) 데이터베이스(VOCA_DATA.database) 형태일 경우 (node-1, node-2 등)
+      if (learnedPool.length === 0 && db) {
+        ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nId => {
+          if (db[nId]) {
+            const words = db[nId][currentLang] || db[nId].words || db[nId].all || (Array.isArray(db[nId]) ? db[nId] : null);
+            if (Array.isArray(words)) {
+              learnedPool = learnedPool.concat(words);
+            }
+          }
+        });
+      }
+
+      // 3) 혹시 비어있을 경우 현재 코스의 기본 단어 리스트 활용
+      if (learnedPool.length === 0 && Array.isArray(window.currentCourseWordList)) {
+        learnedPool = window.currentCourseWordList;
+      }
+
+      return learnedPool;
+    }
+
     let selectedWords = [];
     window.isSpeedrunZeroWrongBonus = false;
 
     if (wrongList.length >= 10) {
-      // 오답 10개 이상: 오답 풀에서 10단어를 무작위 선정
+      // 1) 오답 10개 이상: 오답 단어 풀에서 10단어를 무작위 선정
       const shuffledWrong = shuffleArray(wrongList);
       selectedWords = shuffledWrong.slice(0, 10);
     } else if (wrongList.length >= 1) {
-      // 오답 1~9개: 남아있는 오답 단어 전원 포함 + 부족한 수량(10 - N개)은 '현재 유닛의 일반 단어'에서 무작위 추출하여 총 10문제 완성
-      const neededCount = 10 - wrongList.length;
-      const wrongTerms = new Set(wrongList.map(w => (w.term || w.word || '').trim().toLowerCase()));
-      const generalWords = getCurrentUnitGeneralWords(currentLang).filter(w => !wrongTerms.has((w.term || w.word || '').trim().toLowerCase()));
-      const shuffledGeneral = shuffleArray(generalWords);
-
-      const extraWords = [];
-      let gIdx = 0;
-      while (extraWords.length < neededCount && shuffledGeneral.length > 0) {
-        extraWords.push(shuffledGeneral[gIdx % shuffledGeneral.length]);
-        gIdx++;
+      // 2) 오답 1~9개: 오답 단어들만 반복 순환하여 10문제 완성
+      const shuffledWrong = shuffleArray(wrongList);
+      let idx = 0;
+      while (selectedWords.length < 10) {
+        selectedWords.push({ ...shuffledWrong[idx % shuffledWrong.length] });
+        idx++;
       }
-
-      selectedWords = shuffleArray([...wrongList, ...extraWords]);
+      selectedWords = shuffleArray(selectedWords);
     } else {
-      // 오답 0개 (오답 클리어 상태): 현재 유닛 핵심 단어 10문제로 세션 진행 -> 클리어 시 보석 +5 지급
+      // 🌟 3) 오답 0개 (만점자 복습 모드): 지금까지 학습한 단어들 중에서 10단어 추출
       window.isSpeedrunZeroWrongBonus = true;
-      const generalWords = getCurrentUnitGeneralWords(currentLang);
-      const shuffledGeneral = shuffleArray(generalWords);
-      let gIdx = 0;
-      while (selectedWords.length < 10 && shuffledGeneral.length > 0) {
-        selectedWords.push(shuffledGeneral[gIdx % shuffledGeneral.length]);
-        gIdx++;
+      const learnedPool = getLearnedWordsPool();
+      const shuffledLearned = shuffleArray(learnedPool);
+
+      if (shuffledLearned.length > 0) {
+        let gIdx = 0;
+        while (selectedWords.length < 10) {
+          selectedWords.push({ ...shuffledLearned[gIdx % shuffledLearned.length] });
+          gIdx++;
+        }
+        selectedWords = shuffleArray(selectedWords);
       }
     }
 
-    // fallback: 혹시라도 10문제 미만이면 일반 단어 풀에서 추가 보충하여 정확히 10문제 보장
+    // fallback: 혹시 모를 빈 배열 방지 (10개 미만일 때 이전 학습 단어로 채움)
     if (selectedWords.length < 10) {
-      const fallbackPool = getCurrentUnitGeneralWords(currentLang);
+      const fallbackPool = getLearnedWordsPool();
       let fIdx = 0;
       while (selectedWords.length < 10 && fallbackPool.length > 0) {
-        selectedWords.push(fallbackPool[fIdx % fallbackPool.length]);
+        selectedWords.push({ ...fallbackPool[fIdx % fallbackPool.length] });
         fIdx++;
       }
     }
 
+
+    // 세션 문제 데이터 객체 매핑
     const sessionQuestions = selectedWords.slice(0, 10).map((item, idx) => ({
       id: item.id || `speedrun-q-${idx}`,
       word: item.term || item.word || '',
@@ -5522,13 +5914,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.isReviewGameMode = true;
     window.isRoadmapReviewSpeedrun = true;
+    window.currentReviewSpeedrunWords = selectedWords;
     window.currentSpeedrunSessionWords = selectedWords;
     window.currentSessionQuestions = sessionQuestions;
 
-    if (window.openGameScreen) {
+    // 게임 화면 실행
+    if (typeof window.launchGameWithWords === 'function') {
+      window.launchGameWithWords('wrong_answer', selectedWords);
+    } else if (typeof window.openGameScreen === 'function') {
       window.openGameScreen('node-review', sessionQuestions);
-    } else if (window.startGameSession) {
+    } else if (typeof window.startGameSession === 'function') {
       window.startGameSession('node-review', sessionQuestions);
+    } else if (typeof window.launchGame === 'function') {
+      window.launchGame('wrong_answer');
     }
 
     const titleEl = document.getElementById('game-stage-title');
@@ -5600,6 +5998,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (_) { }
   }
   window.removeClearedWrongWords = removeClearedWrongWords;
+
 
   document.querySelectorAll('.roadmap-node').forEach((node) => {
     const nid = node.dataset.nodeId;
@@ -6192,9 +6591,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nodeId === 'node-1') {
         targetNode = targetUnit.nodes.find(n => n.stageNumber === 1 || n.id.endsWith('_n1'));
       } else if (nodeId === 'node-2') {
-        targetNode = targetUnit.nodes.find(n => n.stageNumber === 2 || n.id.endsWith('_n3'));
+        targetNode = targetUnit.nodes.find(n => n.stageNumber === 2 || n.id.endsWith('_n2'));
       } else if (nodeId === 'node-3') {
-        targetNode = targetUnit.nodes.find(n => n.type === 'sentence' || n.id.endsWith('_n4'));
+        targetNode = targetUnit.nodes.find(n => (n.stageNumber === 3 || n.id.endsWith('_n5') || n.type === 'sentence') && !n.id.endsWith('_n4') && !n.id.includes('review'));
       } else if (nodeId === 'node-boss') {
         targetNode = targetUnit.nodes.find(n => n.type === 'boss' || n.id.endsWith('_n6'));
       }
@@ -6257,7 +6656,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof openHeartRechargeModal === 'function') openHeartRechargeModal();
       return;
     }
-    const targetNodeId = currentSelectedNodeId || 'node-2';
+    const targetNodeId = currentSelectedNodeId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
+    window.currentSelectedNodeId = targetNodeId;
+    window.currentGameLessonId = targetNodeId;
+    window.currentLessonId = targetNodeId;
+    if (targetNodeId !== 'node-review') {
+      window.isReviewGameMode = false;
+      window.isRoadmapReviewSpeedrun = false;
+      window.isWrongWordsMiniReviewActive = false;
+    }
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
 
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
@@ -6270,8 +6677,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ? (activeCourse.units[unitIndex] || activeCourse.units[0])
       : null;
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
-
-    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
 
     let session = [];
     if (activeCourseId === 'pack_football' && typeof getFootballStageSession === 'function') {
@@ -6300,7 +6705,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function startLesson(nodeId) {
-    const targetNodeId = nodeId || currentSelectedNodeId || 'node-2';
+    const targetNodeId = nodeId || currentSelectedNodeId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
+    window.currentSelectedNodeId = targetNodeId;
+    window.currentGameLessonId = targetNodeId;
+    window.currentLessonId = targetNodeId;
+    if (targetNodeId !== 'node-review') {
+      window.isReviewGameMode = false;
+      window.isRoadmapReviewSpeedrun = false;
+      window.isWrongWordsMiniReviewActive = false;
+    }
     const activeCourseId = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || window.activeCourseId || 'main';
     window.activeCourseId = activeCourseId;
     const activeCourse = getCurrentCourseData();
@@ -6311,8 +6724,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ? (activeCourse.units[unitIndex] || activeCourse.units[0])
       : null;
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
-
-    console.log('현재 로드된 코스:', activeCourseId, '단어 목록:', currentWords);
 
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
     let session = [];
@@ -6404,8 +6815,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetCourseId = selectedCourseId || window.currentCourseId || getSavedCourseId() || 'basic';
     const presets = COURSE_PRESETS[lang] || COURSE_PRESETS.es;
     const currentSelected = presets.find((p) => p.id === targetCourseId) || presets[0];
-    window.currentCourseId = currentSelected.id;
+    if (selectedCourseId === 'pack_football' || window.currentCourseId === 'pack_football') {
+      window.currentCourseId = 'pack_football';
+    } else if (!window.currentCourseId || window.currentCourseId === 'basic') {
+      window.currentCourseId = 'main';
+    }
     window.currentBookCourseId = currentSelected.id;
+    window.currentCourseCategory = currentSelected.id;
     window.currentCategoryFilter = '전체';
     try {
       localStorage.setItem('vocadash_current_course', currentSelected.id);
@@ -6494,8 +6910,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCategoryChips(courseCategoryMap[courseId].categories);
       }
 
+      if (typeof loadNodeProgress === 'function') {
+        window.nodeProgressMap = loadNodeProgress(currentLang);
+      }
+
       if (typeof updateRoadmapNodesUI === 'function') {
         updateRoadmapNodesUI();
+      }
+
+      if (typeof renderRoadmap === 'function') {
+        renderRoadmap();
       }
 
       if (typeof window.renderBookCourseDropdown === 'function') {
@@ -7350,32 +7774,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3. 코스 및 단어장 드롭다운 목록 즉시 갱신 (저장소와 상태값 동기화)
-    let selectedCourse = window.currentCourseId || 'main';
+    let selectedCourse = 'main';
     try {
-      selectedCourse = localStorage.getItem('vocadash_active_course') || selectedCourse;
+      selectedCourse = localStorage.getItem(`vocadash_active_course_${lang}`) || 'main';
     } catch (_) { }
 
     // 축구팩(pack_football)인 상태에서 영어(en)로 바뀔 경우 기본 코스('main')로 안전하게 폴백
     if (lang === 'en' && selectedCourse === 'pack_football') {
       selectedCourse = 'main';
-      window.currentCourseId = 'main';
-      try {
-        localStorage.setItem('vocadash_active_course', 'main');
-      } catch (_) { }
     }
+    window.currentCourseId = selectedCourse;
+    window.activeCourseId = selectedCourse;
+    try {
+      localStorage.setItem(`vocadash_active_course_${lang}`, selectedCourse);
+      localStorage.setItem('vocadash_active_course', selectedCourse);
+    } catch (_) { }
 
     renderCourseDropdown(lang, selectedCourse);
     if (typeof window.renderBookCourseDropdown === 'function') {
       window.renderBookCourseDropdown(lang, selectedCourse);
     }
 
-    // 4. 로드맵 노드 및 스테이지 타이틀 갱신 (진행도 언어별 로드)
+    // 4. 로드맵 노드 및 스테이지 타이틀 갱신 (진행도 언어/코스별 격리 로드)
     if (typeof loadNodeProgress === 'function') {
-      window.nodeProgressMap = loadNodeProgress(lang);
+      window.nodeProgressMap = loadNodeProgress(lang, selectedCourse);
     }
-    const unlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
+    const unlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, selectedCourse) : 1;
     window._currentVisibleUnitIndex = Math.max(0, unlocked - 1);
     updateRoadmapNodesUI();
+    if (typeof renderRoadmap === 'function') {
+      renderRoadmap();
+    }
 
     // 5. 단어장 단어 갱신 (선택된 언어와 코스로 아코디언/단어 목록 리렌더링)
     if (typeof renderBookWords === 'function') {
@@ -7411,6 +7840,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.setLanguage = setLanguage;
   window.changeCourse = setLanguage;
   window.changeLanguage = setLanguage;
+  window.switchLanguage = setLanguage;
 
   function handleCardLanguageSelect(targetLang) {
     const langChanged = (modalPendingLanguage !== targetLang);
@@ -7556,19 +7986,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 현재 언어 및 팩 기준 진행도 확인
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const currentCoursePack = (
-      window.currentCourseId ||
-      window.currentSelectedCourseId ||
-      (window.isFootballMode || window.isFootballPack ? 'football' : null) ||
-      'standard'
-    );
-    const scopePrefix = `${currentLang}_${currentCoursePack}`;
+    const currentCoursePack = window.currentCourseId ||
+      window.activeCourseId ||
+      (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + currentLang) : null) ||
+      'main';
 
     let n1Prog = 0;
-    try {
-      const raw = localStorage.getItem(`vocadash_node_progress_${scopePrefix}_node-1`);
-      if (raw) n1Prog = JSON.parse(raw).clearedCount || 0;
-    } catch (_) { }
+    if (typeof getNodeProgress === 'function') {
+      n1Prog = Number(getNodeProgress('node-1', currentLang, currentCoursePack)) || 0;
+    }
 
     // 1과가 3회 미만이면 무조건 1과, 3회 이상 완료면 2과
     const targetNode = (n1Prog < 3) ? 'node-1' : 'node-2';
@@ -7932,6 +8358,18 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (_) { }
     }
 
+    // 🔥 현재 하트 개수 파악 (하트 5개 이상 여부 확인)
+    let curHearts = Number(window.userHearts) || 0;
+    try {
+      const savedHearts = localStorage.getItem('vocadash_hearts');
+      if (savedHearts !== null) curHearts = parseInt(savedHearts, 10);
+    } catch (_) { }
+    const headerHeartEl = document.getElementById('header-hearts-count');
+    if (headerHeartEl && !isNaN(parseInt(headerHeartEl.textContent, 10))) {
+      curHearts = Math.max(curHearts, parseInt(headerHeartEl.textContent, 10));
+    }
+    const isFullHearts = curHearts >= 5;
+
     const todayStr = new Date().toISOString().split('T')[0];
     const isReviewUsedToday = (localStorage.getItem('vocadash_last_heart_review_date') === todayStr);
     const hasEnoughGems = curGems >= 100;
@@ -7975,11 +8413,40 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ========================================================
-    // 2. [조건별 분기]: 4가지 상황에 맞춘 버튼 렌더링
+    // 2. [조건별 분기]: 버튼 렌더링
     // ========================================================
 
-    // 🔴 [상태 4]: 보석도 없고(<100) 오답런도 이미 완료 -> '광고 완충' 단 하나만 노출
-    if (!hasEnoughGems && isReviewUsedToday) {
+    // 💖 [상태 0]: 하트가 이미 5개 풀 충전일 때 -> 충전 버튼 대신 단일 도전 버튼 노출
+    if (isFullHearts) {
+      if (gemBtn) {
+        gemBtn.style.display = 'flex';
+        gemBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl transition active:scale-98 cursor-pointer shadow-md";
+        gemBtn.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center text-xl font-bold">🚀</div>
+            <div class="text-left">
+              <div class="text-sm font-black text-white">하트 가득! 바로 도전하기</div>
+              <div class="text-xs text-emerald-100 font-medium">실수 걱정 없이 마음껏 달려보세요!</div>
+            </div>
+          </div>
+          <span class="px-3 py-1.5 bg-white text-emerald-600 text-xs font-black rounded-xl shadow-xs">출발 →</span>
+        `;
+        gemBtn.onclick = function (e) {
+          if (e) { e.preventDefault(); e.stopPropagation(); }
+          closeHeartRechargeModal();
+          if (typeof autoScrollToActiveNode === 'function') {
+            autoScrollToActiveNode();
+          }
+        };
+      }
+
+      // 5개일 때는 불필요한 오답런 충전 버튼 숨김
+      if (reviewBtn) {
+        reviewBtn.style.display = 'none';
+      }
+
+    } else if (!hasEnoughGems && isReviewUsedToday) {
+      // 🔴 [상태 4]: 하트 부족 + 보석 부족(<100) + 오늘 무료 오답런 완료 -> '광고 완충' 단 하나만 노출
       if (gemBtn) {
         gemBtn.style.display = 'flex';
         gemBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 hover:from-emerald-100 border border-emerald-200 rounded-2xl transition active:scale-98 cursor-pointer shadow-xs";
@@ -8001,19 +8468,17 @@ document.addEventListener('DOMContentLoaded', () => {
         };
       }
 
-      // 오답런 버튼 완전히 숨김
       if (reviewBtn) {
         reviewBtn.style.display = 'none';
       }
 
     } else {
-      // 🟢 [상태 1, 2, 3]: 두 버튼 모두 노출
+      // 🟢 [상태 1, 2, 3]: 하트 부족 시 정상 충전 옵션 노출
       if (reviewBtn) reviewBtn.style.display = 'flex';
       if (gemBtn) gemBtn.style.display = 'flex';
 
       // 1) 첫 번째 버튼 (보석 충전 or 광고 완충)
       if (hasEnoughGems) {
-        // [상태 1 & 3]: 보석 100개 이상 -> 원래 보석 차감 완충
         gemBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 border border-sky-200 rounded-2xl transition active:scale-98 cursor-pointer shadow-xs";
         gemBtn.innerHTML = `
           <div class="flex items-center gap-3">
@@ -8041,7 +8506,6 @@ document.addEventListener('DOMContentLoaded', () => {
           if (typeof window.showToast === 'function') window.showToast('💖 보석 100개로 하트 5개 풀 충전 완료!', '🎉');
         };
       } else {
-        // [상태 2]: 보석 부족 -> 광고 보고 즉시 완충
         gemBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 hover:from-emerald-100 border border-emerald-200 rounded-2xl transition active:scale-98 cursor-pointer shadow-xs";
         gemBtn.innerHTML = `
           <div class="flex items-center gap-3">
@@ -8061,9 +8525,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
       }
 
-      // 2) 두 번째 버튼 (오답런: 무료 +3❤️ vs 광고 +5❤️)
+      // 2) 두 번째 버튼 (오답런)
       if (isReviewUsedToday) {
-        // [상태 3]: 오늘 무료 완료 후 보석이 남아있을 때 -> 광고 보고 오답런 완충 도전
         reviewBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 border border-purple-200 rounded-2xl transition active:scale-98 cursor-pointer shadow-xs";
         reviewBtn.innerHTML = `
           <div class="flex items-center gap-3">
@@ -8078,14 +8541,13 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewBtn.onclick = function (e) {
           if (e) { e.preventDefault(); e.stopPropagation(); }
           runAdSimulation(() => {
-            window.pendingHeartReward = 5; // 광고 오답런 성공 시 +5❤️
+            window.pendingHeartReward = 5;
             if (typeof window.startRoadmapReviewSpeedrun === 'function') {
               window.startRoadmapReviewSpeedrun();
             }
           }, '📺 광고 시청 완료! 특별 오답런 시작! 🏃‍♂️');
         };
       } else {
-        // [상태 1 & 2]: 오늘 첫 무료 오답런
         reviewBtn.className = "w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 border border-amber-200 rounded-2xl transition active:scale-98 cursor-pointer shadow-xs";
         reviewBtn.innerHTML = `
           <div class="flex items-center gap-3">
@@ -8102,7 +8564,7 @@ document.addEventListener('DOMContentLoaded', () => {
           try {
             localStorage.setItem('vocadash_last_heart_review_date', todayStr);
           } catch (_) { }
-          window.pendingHeartReward = 3; // 무료 오답런 성공 시 +3❤️
+          window.pendingHeartReward = 3;
           if (typeof closeHeartRechargeModal === 'function') closeHeartRechargeModal();
           if (typeof window.startRoadmapReviewSpeedrun === 'function') {
             window.startRoadmapReviewSpeedrun();
@@ -8118,7 +8580,6 @@ document.addEventListener('DOMContentLoaded', () => {
     card.classList.add('scale-100', 'opacity-100');
   }
   window.openHeartRechargeModal = openHeartRechargeModal;
-
 
   function closeHeartRechargeModal() {
     clearInterval(heartTimerInterval);
@@ -8364,7 +8825,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateWrongWordsBadge = updateWrongWordsBadge;
 
-  // 교재·단어장 상단 배너 내 [⚡ 오답 탈출 런] 버튼 상태 갱신 함수
+  // 교재·단어장 상단 배너 내 [⚡ 오답 탈출 런] 버튼 상태 갱신 함수 (하트 언급 제거 버전)
   function updateHeroWrongRunButton(overrideCount) {
     const heroWrongRunBtn = document.getElementById('btn-hero-wrong-run');
     if (!heroWrongRunBtn) return;
@@ -8387,10 +8848,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       count = wrongList.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
     }
+
     if (count > 0) {
       heroWrongRunBtn.disabled = false;
       heroWrongRunBtn.className = 'w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer opacity-100';
-      heroWrongRunBtn.innerHTML = '<span>⚡ 오답 탈출 런 시작 (하트 +3 회복)</span>';
+      // 💡 하트 언급 대신 오답 단어 개수와 순수 복습 문구로 변경
+      heroWrongRunBtn.innerHTML = `<span>⚡ 오답 탈출 런 시작 (${count}단어 복습)</span>`;
     } else {
       heroWrongRunBtn.disabled = true;
       heroWrongRunBtn.className = 'w-full bg-slate-200 text-slate-400 font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-none flex items-center justify-center gap-1.5 cursor-not-allowed opacity-80';
@@ -8398,6 +8861,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.updateHeroWrongRunButton = updateHeroWrongRunButton;
+
 
   // 인게임 문제 정답/오답 판정 및 연속 정답 5회(Mastery 5) 졸업 시스템
   function recordAnswerResult(question, isCorrect) {
@@ -9704,12 +10168,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 7. 오답 목록 최상단 [⚡ 약점 극복 10문제 런 달리기 🏃] 버튼 바인딩
+    // 7. 오답 목록 최상단 [⚡ 약점 극복 런 달리기 🏃] 버튼 바인딩
     const wrongRunBanner = bookScreen.querySelector('#book-wrong-run-banner');
     const wrongRunBtn = bookScreen.querySelector('#btn-book-start-wrong-run');
     const startWrongRunHandler = (e) => {
       e.preventDefault();
       e.stopPropagation();
+
+      // 💡 단어장 복습 모드 설정 (하트 충전 플래그 OFF)
+      window.isHeartRechargeRun = false;
+      window.pendingHeartReward = 0;
+
       if (typeof window.startRoadmapReviewSpeedrun === 'function') {
         window.startRoadmapReviewSpeedrun();
       } else if (typeof window.startWrongRun === 'function') {
@@ -9733,6 +10202,11 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         e.stopPropagation();
         if (heroWrongRunBtn.disabled) return;
+
+        // 💡 단어장 복습 모드 설정
+        window.isHeartRechargeRun = false;
+        window.pendingHeartReward = 0;
+
         if (typeof window.launchGame === 'function') {
           window.launchGame('wrong_answer');
         } else if (typeof window.startRoadmapReviewSpeedrun === 'function') {
@@ -9743,6 +10217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHeroWrongRunButton();
   }
   window.initBookScreenEvents = initBookScreenEvents;
+
 
   // 메뉴 바깥 영역 클릭 시 열려 있는 #book-course-dropdown-menu 자동 닫기 (Click Outside)
   document.addEventListener('click', (e) => {
@@ -10411,8 +10886,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Result Modal & Stage Progression
   window.showGameResultModal = function (status) {
     const type = (status === true || status === 'clear') ? 'clear' : 'gameover';
-    console.log('📢 결과 팝업 호출됨! 상태:', type);
     const isClear = (type === 'clear');
+    if (typeof window.finishGameStage === 'function') {
+      return window.finishGameStage(isClear);
+    }
     const modal = document.getElementById('game-result-modal'), clear = document.getElementById('game-result-clear-card'), over = document.getElementById('game-result-gameover-card');
     if (!modal) return;
 
@@ -10445,31 +10922,26 @@ document.addEventListener('DOMContentLoaded', () => {
       let targetNodeId = window.currentGameLessonId || window.currentLessonId || window.currentSelectedNodeId || 'node-1';
       const isBossNode = (targetNodeId === 'node-boss' || String(targetNodeId).includes('boss') || String(targetNodeId).endsWith('_n6') || targetNodeId === 'node-4');
 
-      // 2) 기존 진행도 읽어오기
-      let nodeData = { clearedCount: 0, stars: 0 };
-      try {
-        const key = `vocadash_node_progress_${targetNodeId}`;
-        const rawData = localStorage.getItem(key) || '{"clearedCount": 0, "stars": 0}';
-        nodeData = JSON.parse(rawData);
-      } catch (_) { }
+      const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const activeCourseId = window.currentCourseId ||
+        window.activeCourseId ||
+        (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + currentLang) : null) ||
+        'main';
 
-      const curProg = Math.max(0, Math.min(3, Number(nodeData.clearedCount) || 0));
+      let curProg = 0;
+      if (typeof getNodeProgress === 'function') {
+        curProg = Number(getNodeProgress(targetNodeId, currentLang, activeCourseId)) || 0;
+      }
 
       // 3) 누적 클리어 횟수 계산 (1회차: 1, 2회차: 2, 3회차: 3)
       const newClearedCount = isBossNode ? 3 : Math.min(3, curProg + 1);
       const finalStars = isBossNode ? 3 : newClearedCount;
 
-      // 4) 진행도 저장
-      if (typeof setNodeProgress === 'function') {
-        setNodeProgress(targetNodeId, newClearedCount, finalStars);
+      // 4) 진행도 저장 (언어/코스별 표준 격리 저장)
+      const isReviewSession = !!(window.isReviewGameMode || window.isRoadmapReviewSpeedrun || targetNodeId === 'node-review' || String(targetNodeId).includes('review'));
+      if (!isReviewSession && typeof setNodeProgress === 'function') {
+        setNodeProgress(targetNodeId, newClearedCount, finalStars, currentLang, activeCourseId);
       }
-
-      try {
-        const payload = JSON.stringify({ clearedCount: newClearedCount, stars: finalStars });
-        localStorage.setItem(`vocadash_node_progress_${targetNodeId}`, payload);
-        if (!window.nodeProgressMap) window.nodeProgressMap = {};
-        window.nodeProgressMap[targetNodeId] = newClearedCount;
-      } catch (_) { }
 
       // 5) 모달 상단 서브타이틀 동적 갱신 (예: 2/3 클리어!)
       const clearSub = el('result-clear-subtitle') || document.querySelector('#game-result-clear-card p.text-slate-600') || document.querySelector('#game-result-clear-card p');
@@ -10481,14 +10953,21 @@ document.addEventListener('DOMContentLoaded', () => {
         clearSub.textContent = `${stageName} (${newClearedCount}/3) 클리어!`;
       }
 
-      // 6) 별 아이콘 3개 갱신 (2회차 완료면 별 2개 점등)
+      // 6) 별 아이콘 3개 갱신 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 70% 미만 ⭐☆☆)
+      const modalStars = isBossNode ? 3 : (typeof window.calculateStarsByAccuracy === 'function'
+        ? window.calculateStarsByAccuracy(accuracy)
+        : (accuracy >= 90 ? 3 : (accuracy >= 70 ? 2 : 1)));
+      window.lastEarnedStars = modalStars;
       if (typeof window.renderModalStars === 'function') {
-        window.renderModalStars(finalStars);
+        window.renderModalStars(modalStars);
       } else {
         [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
           if (s) {
-            s.style.opacity = idx < finalStars ? '1' : '0.3';
-            s.classList.toggle('grayscale', idx >= finalStars);
+            const isActive = idx < modalStars;
+            s.style.opacity = isActive ? '1' : '0.25';
+            s.style.filter = isActive ? 'none' : 'grayscale(100%)';
+            s.style.boxShadow = isActive ? '' : 'none';
+            s.classList.toggle('grayscale', !isActive);
           }
         });
       }
@@ -10518,7 +10997,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (accuracy >= 80) {
           setText('btn-result-primary-text', '다음 스테이지 ▶');
           if (window.isRoadmapReviewSpeedrun) {
-            completeReviewNode(targetNodeId);
+            completeReviewNode('node-review');
           }
         } else {
           setText('btn-result-primary-text', '다시 도전하기 🔄');

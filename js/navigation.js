@@ -334,7 +334,11 @@
       }
     } else if (normTab === 'home') {
       try {
-        if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+        if (typeof window.renderRoadmap === 'function') {
+          window.renderRoadmap();
+        } else if (typeof window.updateRoadmapNodesUI === 'function') {
+          window.updateRoadmapNodesUI();
+        }
       } catch (err) {
         console.warn('[VocaDash] roadmap nodes UI update error caught:', err);
       }
@@ -998,7 +1002,15 @@
           if (typeof e.stopPropagation === 'function') e.stopPropagation();
           if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
         }
-        startStageLearningPipeline(window.currentSelectedNodeId);
+        const targetId = window.currentSelectedNodeId || (typeof currentSelectedNodeId !== 'undefined' ? currentSelectedNodeId : null) || window.currentGameLessonId || 'node-3';
+        window.currentSelectedNodeId = targetId;
+        window.currentGameLessonId = targetId;
+        if (targetId !== 'node-review') {
+          window.isReviewGameMode = false;
+          window.isRoadmapReviewSpeedrun = false;
+          window.isWrongWordsMiniReviewActive = false;
+        }
+        startStageLearningPipeline(targetId);
         return false;
       }, true);
     }
@@ -1050,8 +1062,14 @@
   // 10. 표준 3단계 파이프라인 (로드맵 -> 플래시카드 예습 -> 액션 낙하 테스트)
   // ===================================================
   function startStageLearningPipeline(nodeId, customSession = null) {
-    const targetNodeId = nodeId || window.currentSelectedNodeId || 'node-2';
+    const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
     window.currentSelectedNodeId = targetNodeId;
+    window.currentGameLessonId = targetNodeId;
+    if (targetNodeId !== 'node-review') {
+      window.isReviewGameMode = false;
+      window.isRoadmapReviewSpeedrun = false;
+      window.isWrongWordsMiniReviewActive = false;
+    }
     if (typeof window.closeLessonModal === 'function') {
       window.closeLessonModal();
     }

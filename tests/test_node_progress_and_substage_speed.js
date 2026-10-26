@@ -164,6 +164,7 @@ win.activeCourseId = 'pack_football';
 win.currentGameLessonId = 'fb_1_n1';
 
 // Round 1 Clear
+win.openGameScreen('fb_1_n1');
 win.finishGameStage(true);
 let savedData = JSON.parse(mockLocalStorage.getItem('vocadash_node_progress_fb_1_n1'));
 console.log('After 1st clear:', savedData);
@@ -172,6 +173,7 @@ assert.strictEqual(savedData.stars, 1);
 assert.strictEqual(win.nodeProgressMap['fb_1_n1'], 1);
 
 // Round 2 Clear
+win.openGameScreen('fb_1_n1');
 win.finishGameStage(true);
 savedData = JSON.parse(mockLocalStorage.getItem('vocadash_node_progress_fb_1_n1'));
 console.log('After 2nd clear:', savedData);
@@ -179,6 +181,7 @@ assert.strictEqual(savedData.clearedCount, 2);
 assert.strictEqual(savedData.stars, 2);
 
 // Round 3 Clear (Completed!)
+win.openGameScreen('fb_1_n1');
 win.finishGameStage(true);
 savedData = JSON.parse(mockLocalStorage.getItem('vocadash_node_progress_fb_1_n1'));
 console.log('After 3rd clear:', savedData);
@@ -229,15 +232,15 @@ console.log('--- Test 5: getNextNodeId ---');
 const footballUnit = win.packFootballData.units[0];
 const nextAfterN1 = win.getNextNodeId('fb_1_n1', footballUnit);
 console.log('Next after fb_1_n1:', nextAfterN1);
-assert.strictEqual(nextAfterN1, 'fb_1_n3', 'Next node after stage 1 should be stage 2 (fb_1_n3)');
+assert.strictEqual(nextAfterN1, 'fb_1_n2', 'Next node after stage 1 should be stage 2 (fb_1_n2)');
 
-const nextAfterN3 = win.getNextNodeId('fb_1_n3', footballUnit);
-console.log('Next after fb_1_n3:', nextAfterN3);
-assert.strictEqual(nextAfterN3, 'fb_1_n4', 'Next node after stage 2 should be stage 3 sentence (fb_1_n4)');
+const nextAfterN2 = win.getNextNodeId('fb_1_n2', footballUnit);
+console.log('Next after fb_1_n2:', nextAfterN2);
+assert.strictEqual(nextAfterN2, 'fb_1_n3', 'Next node after stage 2 should be bonus (fb_1_n3)');
 
-const nextAfterN4 = win.getNextNodeId('fb_1_n4', footballUnit);
-console.log('Next after fb_1_n4:', nextAfterN4);
-assert.strictEqual(nextAfterN4, 'fb_1_n6', 'Next node after stage 3 should be boss (fb_1_n6)');
+const nextAfterN5 = win.getNextNodeId('fb_1_n5', footballUnit);
+console.log('Next after fb_1_n5:', nextAfterN5);
+assert.strictEqual(nextAfterN5, 'fb_1_n6', 'Next node after stage 3 should be boss (fb_1_n6)');
 
 console.log('✅ Test 5 passed!');
 

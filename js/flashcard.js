@@ -343,6 +343,8 @@
     } else if (currentFlashcardLessonId === 'node-2' || currentFlashcardLessonId === 'node2' || currentFlashcardLessonId === '2' || currentFlashcardLessonId === 'stage-2') {
       currentFlashcardLessonId = 'node-2';
     }
+    window.currentGameLessonId = currentFlashcardLessonId;
+    window.currentSelectedNodeId = currentFlashcardLessonId;
 
     const currentCourse = window.currentActiveCourse || 'es';
     const round = (typeof window.nodeProgressMap !== 'undefined' && window.nodeProgressMap[currentFlashcardLessonId]) || 0;
@@ -721,6 +723,8 @@
     }
 
     if (window.showToast) window.showToast('🎉 단어 예습 완료! 단어 낙하 액션 게임을 시작합니다!', '⚡');
+    window.currentGameLessonId = currentFlashcardLessonId;
+    window.currentSelectedNodeId = currentFlashcardLessonId;
     if (typeof window.launchGame === 'function') {
       window.launchGame('falling', window.currentSessionQuestions || activeDeck, { lessonId: currentFlashcardLessonId });
     } else if (window.openGameScreen) {

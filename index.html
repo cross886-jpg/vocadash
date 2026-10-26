@@ -685,7 +685,7 @@
                 <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none">
                 </div>
                 <div class="relative flex items-center justify-center relative z-10">
-                  <span class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
+                  <span id="node-review-icon" class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
                   <span class="absolute -bottom-1 -right-1 text-sm">🩹</span>
                 </div>
               </button>
@@ -705,12 +705,13 @@
               </div>
             </div>
 
-            <!-- 약점 복습 하단 심플 캡슐 -->
-            <div
-              class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none">
+            <!-- 약점 복습 하단 심플 캡슐 (잠김 시 숨김) -->
+            <div id="node-review-label-card"
+              class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none hidden"
+              style="display: none;">
               <div class="flex items-center gap-1">
-                <span class="text-xs">⚡️</span>
-                <span class="text-[11px] text-orange-600 font-extrabold">오답 탈출</span>
+                <span id="node-review-badge-icon" class="text-xs">⚡️</span>
+                <span id="node-review-badge-text" class="text-[11px] text-orange-600 font-extrabold">오답 탈출</span>
               </div>
             </div>
           </div>
@@ -772,11 +773,6 @@
             data-node-id="node-boss" data-node-type="boss" id="node-boss-container">
             <div id="node-boss-start-banner" class="hidden pointer-events-none"></div>
 
-            <div
-              class="flex items-center gap-1.5 px-3.5 py-1 mb-2.5 rounded-full bg-amber-500 text-white shadow-[0_2px_0_0_#b45309] pointer-events-none font-black text-[11px] uppercase tracking-wide">
-              <span class="text-xs">🔥</span>
-              <span>FINAL BOSS EXAM</span>
-            </div>
             <div id="node-boss-target" class="relative flex items-center justify-center node-target cursor-pointer"
               data-node-type="locked" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
               <div id="node-boss-glow"
@@ -810,13 +806,14 @@
               </div>
             </div>
 
-            <!-- 보스전 하단 미니 캡슐 -->
+            <!-- 보스전 하단 미니 캡슐 (주황색 일체형 배지) -->
             <div id="node-boss-label-card"
-              class="mt-2.5 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-md border border-amber-300 text-center pointer-events-none">
+              class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full bg-amber-500 text-white shadow-[0_2px_0_0_#b45309] text-center pointer-events-none">
               <span id="node-boss-title" class="hidden">보스전</span>
-              <div id="node-boss-label-badge" class="flex items-center gap-1">
-                <span class="text-xs">👑</span>
-                <span class="text-[11px] text-amber-700 font-black">FINAL BOSS</span>
+              <div id="node-boss-label-badge"
+                class="flex items-center gap-1.5 font-black text-[11px] uppercase tracking-wide">
+                <span class="text-xs">🔥</span>
+                <span>FINAL BOSS EXAM</span>
               </div>
             </div>
           </div>
@@ -844,6 +841,7 @@
 
       </div>
     </main>
+
 
 
     <!-- ================================================= -->
@@ -1409,7 +1407,7 @@
           <div class="relative z-10 mt-3.5 w-full">
             <button id="btn-hero-wrong-run" type="button"
               class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer">
-              <span>⚡ 오답 탈출 런 시작 (하트 +3 회복)</span>
+              <span>⚡ 오답 탈출 런 시작</span>
             </button>
           </div>
         </section>
@@ -4238,6 +4236,8 @@
   <script src="js/gameEngine.js?v=125"></script>
   <script src="js/navigation.js?v=125"></script>
 
+  <!-- 테스트용 치트 패널 (출시할 땐 이 한 줄만 지우면 끝!) -->
+  <script src="js/debug.js"></script>
 </body>
 
 </html>
