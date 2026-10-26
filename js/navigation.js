@@ -1005,7 +1005,7 @@
         const targetId = window.currentSelectedNodeId || (typeof currentSelectedNodeId !== 'undefined' ? currentSelectedNodeId : null) || window.currentGameLessonId || 'node-3';
         window.currentSelectedNodeId = targetId;
         window.currentGameLessonId = targetId;
-        if (targetId !== 'node-review') {
+        if (targetId !== 'node-review' && !String(targetId).includes('review')) {
           window.isReviewGameMode = false;
           window.isRoadmapReviewSpeedrun = false;
           window.isWrongWordsMiniReviewActive = false;
@@ -1065,7 +1065,7 @@
     const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
     window.currentSelectedNodeId = targetNodeId;
     window.currentGameLessonId = targetNodeId;
-    if (targetNodeId !== 'node-review') {
+    if (targetNodeId !== 'node-review' && !String(targetNodeId).includes('review')) {
       window.isReviewGameMode = false;
       window.isRoadmapReviewSpeedrun = false;
       window.isWrongWordsMiniReviewActive = false;

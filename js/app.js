@@ -2466,9 +2466,43 @@ document.addEventListener('DOMContentLoaded', () => {
   // - 현재 활성 코스: vocadash_active_course_${lang}
   // ===================================================
 
+  // ===================================================
+  // 🔑 [복합 키(Composite Key) 네임스페이스 표준화]
+  // 모든 노드의 진행도/완료 판정 키: u${unitId}_${nodeId} 형태
+  // (예: u1_node-review, u2_node-review, u1_stage-1, u2_stage-1)
+  // ===================================================
+  function getCompositeNodeKey(nodeId, unitId = null) {
+    if (!nodeId) return `u${unitId || 1}_stage-1`;
+    const str = String(nodeId).trim();
+    let u = unitId;
+    if (!u) {
+      const matchComposite = str.match(/^u(\d+)[-_]/i) || str.match(/^(?:fb|es|en)?[_]?(\d+)_/i) || str.match(/(?:unit|u|_)?(\d+)/i);
+      u = matchComposite ? (parseInt(matchComposite[1], 10) || 1) : 1;
+    }
+    if (str.includes('review') || str.endsWith('_n4')) {
+      return `u${u}_node-review`;
+    }
+    if (str.includes('bonus') || str.endsWith('_n3')) {
+      return `u${u}_node-bonus`;
+    }
+    if (str.includes('boss') || str.endsWith('_n6')) {
+      return `u${u}_node-boss`;
+    }
+    const matchStage = str.match(/(?:stage|node|n)[-_]?(\d+)/i);
+    const n = matchStage ? parseInt(matchStage[1], 10) : 1;
+    return `u${u}_stage-${n}`;
+  }
+  window.getCompositeNodeKey = getCompositeNodeKey;
+
   function parseNodeCoordinates(nodeId, defaultUnit = 1) {
     if (!nodeId) return { unitIndex: defaultUnit, nodeIndex: 1 };
     const str = String(nodeId).trim();
+
+    // 1) u${unit}_stage-${stage} or u${unit}_node-${node} 형태 직접 정합
+    const matchComposite = str.match(/^u(\d+)[-_](?:stage|node)[-_](\d+)$/i);
+    if (matchComposite) {
+      return { unitIndex: parseInt(matchComposite[1], 10) || defaultUnit, nodeIndex: parseInt(matchComposite[2], 10) || 1 };
+    }
     const match1 = str.match(/^(?:fb|es|en)?[_]?(\d+)_n(\d+)$/i);
     if (match1) {
       return { unitIndex: parseInt(match1[1], 10) || defaultUnit, nodeIndex: parseInt(match1[2], 10) || 1 };
@@ -2503,7 +2537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const uMatch = str.match(/(?:unit|u|_)?(\d+)/i);
     const u = uMatch ? (parseInt(uMatch[1], 10) || defaultUnit) : defaultUnit;
-    const nMatch = str.match(/(?:node|n|-)?(\d+)$/i);
+    const nMatch = str.match(/(?:node|stage|n|-)?(\d+)$/i);
     const n = nMatch ? (parseInt(nMatch[1], 10) || 1) : 1;
     return { unitIndex: u, nodeIndex: n };
   }
@@ -2665,8 +2699,26 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const key = `vocadash_prog_${lang}_${courseId}_u${unitIndex}_n${nodeIndex}`;
+    const compositeStageKey = `u${unitIndex}_stage-${nodeIndex}`;
+    const compositeNodeKey = `u${unitIndex}_node-${nodeIndex}`;
+
     try {
       localStorage.setItem(key, String(count));
+      localStorage.setItem(`node_progress_${lang}_${courseId}_${compositeNodeKey}`, String(count));
+      localStorage.setItem(`node_progress_${lang}_${courseId}_${compositeStageKey}`, String(count));
+      if (courseId === 'main' && lang === 'es') {
+        localStorage.setItem(compositeNodeKey, String(count));
+        localStorage.setItem(compositeStageKey, String(count));
+      }
+      if (nodeIndex === 3 || String(nodeId).includes('node-3') || String(nodeId).includes('stage-3')) {
+        const rawUserData = localStorage.getItem('vocadash_user_data');
+        let uData = rawUserData ? JSON.parse(rawUserData) : {};
+        if (!uData.clearedNodes) uData.clearedNodes = {};
+        uData.clearedNodes['node-3'] = { cleared: count >= 3, clearedCount: count, actuallyPlayed: true };
+        uData.clearedNodes[compositeNodeKey] = { cleared: count >= 3, clearedCount: count, actuallyPlayed: true };
+        uData.clearedNodes[compositeStageKey] = { cleared: count >= 3, clearedCount: count, actuallyPlayed: true };
+        localStorage.setItem('vocadash_user_data', JSON.stringify(uData));
+      }
       if (courseId === 'pack_football' && String(nodeId).startsWith('fb_')) {
         localStorage.setItem(`vocadash_node_progress_${nodeId}`, JSON.stringify({ clearedCount: count, stars: s }));
       }
@@ -2679,6 +2731,32 @@ document.addEventListener('DOMContentLoaded', () => {
       window.nodeProgressMap[`fb_${unitIndex}_n${nodeIndex}`] = count;
     } else {
       window.nodeProgressMap[`${lang}_${unitIndex}_n${nodeIndex}`] = count;
+    }
+
+    // 🔑 복합 키(Composite Key) 네임스페이스 동기화
+    window.nodeProgressMap[compositeStageKey] = count;
+    window.nodeProgressMap[compositeNodeKey] = count;
+    window.nodeProgressMap[`u${unitIndex}_n${nodeIndex}`] = count;
+    if (String(nodeIndex) === '6' || String(nodeId).includes('boss')) {
+      window.nodeProgressMap[`u${unitIndex}_node-boss`] = count;
+    }
+    if (String(nodeIndex) === 'review' || String(nodeId).includes('review')) {
+      window.nodeProgressMap[`u${unitIndex}_node-review`] = count;
+    }
+    if (String(nodeIndex) === 'bonus' || String(nodeId).includes('bonus')) {
+      window.nodeProgressMap[`u${unitIndex}_node-bonus`] = count;
+    }
+
+    // completedStages 동기화
+    if (!window.completedStages) window.completedStages = [];
+    const isCompletedClear = (String(nodeIndex) === '6' || String(nodeId).includes('boss')) ? count >= 1 : count >= 3;
+    if (isCompletedClear) {
+      if (!window.completedStages.includes(compositeStageKey)) window.completedStages.push(compositeStageKey);
+      if (!window.completedStages.includes(compositeNodeKey)) window.completedStages.push(compositeNodeKey);
+      if (!window.completedStages.includes(nodeId)) window.completedStages.push(nodeId);
+      try {
+        localStorage.setItem('vocadash_completed_stages', JSON.stringify(window.completedStages));
+      } catch (_) { }
     }
 
     const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -2880,9 +2958,35 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!isNaN(num)) c = num;
         } catch (_) { }
       }
+      // 복합 키 및 대체 키 fallback 확인 (코스 격리 준수)
+      if (c === 0) {
+        const compNodeKey = `u1_node-${n}`;
+        const compStageKey = `u1_stage-${n}`;
+        const altKey = `node_progress_${lang}_${courseId}_node-${n}`;
+        const altCompKey = `node_progress_${lang}_${courseId}_u1_node-${n}`;
+        let rawAlt = localStorage.getItem(altKey) || localStorage.getItem(altCompKey);
+        if (!rawAlt && courseId === 'main' && lang === 'es' && n === 3) {
+          rawAlt = localStorage.getItem(compNodeKey) || localStorage.getItem(compStageKey);
+        }
+        if (rawAlt !== null && rawAlt !== undefined) {
+          try {
+            const parsedAlt = JSON.parse(rawAlt);
+            if (typeof parsedAlt === 'number') c = parsedAlt;
+            else if (parsedAlt && typeof parsedAlt.clearedCount === 'number') c = parsedAlt.clearedCount;
+            else if (parsedAlt && typeof parsedAlt.stars === 'number') c = parsedAlt.stars;
+          } catch (_) {
+            const numAlt = parseInt(rawAlt, 10);
+            if (!isNaN(numAlt)) c = numAlt;
+          }
+        }
+      }
+
       c = Math.max(0, Math.min(3, c));
       result[`node-${n}`] = c;
       result[`${lang}_${courseId}_u1_n${n}`] = c;
+      result[`u1_stage-${n}`] = c;
+      result[`u1_node-${n}`] = c;
+      result[`u1_n${n}`] = c;
       if (courseId === 'pack_football') {
         result[`fb_1_n${n}`] = c;
       } else {
@@ -2894,11 +2998,18 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const rawUserData = localStorage.getItem('vocadash_user_data');
       const uData = rawUserData ? JSON.parse(rawUserData) : null;
-      const isN3ActuallyPlayed = !!(uData && uData.clearedNodes && uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed);
+      const isN3ActuallyPlayed = !!(uData && uData.clearedNodes && (
+        (uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed) ||
+        (uData.clearedNodes['u1_node-3'] && uData.clearedNodes['u1_node-3'].actuallyPlayed) ||
+        (uData.clearedNodes['u1_stage-3'] && uData.clearedNodes['u1_stage-3'].actuallyPlayed)
+      ));
       if (!isN3ActuallyPlayed && result['node-3'] > 0) {
         // 실제로 3번 노드를 플레이하지 않고 복습 버그로 1이 남아있는 잔여 데이터 정화
         result['node-3'] = 0;
         result[`${lang}_${courseId}_u1_n3`] = 0;
+        result['u1_stage-3'] = 0;
+        result['u1_node-3'] = 0;
+        result['u1_n3'] = 0;
         if (courseId === 'pack_football') {
           result['fb_1_n3'] = 0;
           result['fb_1_n5'] = 0;
@@ -2909,6 +3020,8 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.removeItem(`vocadash_prog_${lang}_${courseId}_u1_n3`);
           localStorage.removeItem(`node_progress_${lang}_${courseId}_node-3`);
           localStorage.removeItem(`node_progress_${lang}_${courseId}_1_3`);
+          localStorage.removeItem('u1_node-3');
+          localStorage.removeItem('u1_stage-3');
         } catch (_) { }
       }
     } catch (_) { }
@@ -2928,6 +3041,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     result['node-boss'] = bossCount;
     result[`${lang}_${courseId}_u1_n6`] = bossCount;
+    result['u1_node-boss'] = bossCount;
+    result['u1_stage-6'] = bossCount;
 
     return result;
   }
@@ -3190,7 +3305,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let hasWords = false;
     const curCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
-    if (window.activeCourseId === 'pack_football' && window.packFootballData) {
+    if (nodeId === 'node-boss' || String(nodeId).includes('boss')) {
+      hasWords = true;
+    } else if (window.activeCourseId === 'pack_football' && window.packFootballData) {
       hasWords = true;
     } else if (curCourse && Array.isArray(curCourse.units) && curCourse.units.length > 0) {
       hasWords = true;
@@ -3214,7 +3331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.currentSelectedNodeId = nodeId;
     window.currentGameLessonId = nodeId;
     window.currentLessonId = nodeId;
-    if (nodeId !== 'node-review') {
+    if (nodeId !== 'node-review' && !String(nodeId).includes('review')) {
       window.isReviewGameMode = false;
       window.isRoadmapReviewSpeedrun = false;
       window.isWrongWordsMiniReviewActive = false;
@@ -3225,10 +3342,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let matchedNode = null;
 
     const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : (window.packFootballData || window.courseData_es || window.courseData);
+    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(curLang) : 1) || 1;
+    let curUnit = null;
+
     if (activeCourse && Array.isArray(activeCourse.units)) {
-      const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(curLang) : 1) || 1;
-      const curUnit = activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0];
+      curUnit = activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0];
       if (curUnit && Array.isArray(curUnit.nodes)) {
         if (nodeId === 'node-1') {
           matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
@@ -3240,8 +3359,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!matchedNode) {
             matchedNode = curUnit.nodes.find(x => x.stageNumber === 3 && x.type !== 'review');
           }
-        } else if (nodeId === 'node-boss') {
-          matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')));
+        } else if (nodeId === 'node-boss' || String(nodeId).includes('boss')) {
+          matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')) || (x.id && x.id.includes('boss')));
         } else {
           matchedNode = curUnit.nodes.find(x => x.id === nodeId);
         }
@@ -3273,17 +3392,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // 💡 [보스 판정 및 유닛 번호 추출]
+    const isBossNode = (nodeId === 'node-boss' || String(nodeId).includes('boss') || (matchedNode && matchedNode.type === 'boss'));
+    const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(nodeId) : null;
+    const unitX = (coords && coords.unitIndex) || (matchedNode && matchedNode.unitNumber) || curUnit?.unitNumber || curUnitLevel || 1;
+
+    if (isBossNode) {
+      data = {
+        title: `Unit ${unitX} 총괄 보스전`,
+        desc: '이번 유닛에서 배운 모든 단어가 총출동합니다!<br>단판 승부로 다음 유닛을 해금하세요.',
+        icon: '👑'
+      };
+    }
+
     if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
       const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS.basic);
       data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]);
       if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
         data = {
-          title: '3과: 자기소개와 소통',
-          desc: '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!',
-          icon: isFootball ? '⚽' : '🌱'
+          title: isBossNode ? `Unit ${unitX} 총괄 보스전` : '3과: 자기소개와 소통',
+          desc: isBossNode ? '이번 유닛에서 배운 모든 단어가 총출동합니다!<br>단판 승부로 다음 유닛을 해금하세요.' : '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!',
+          icon: isBossNode ? '👑' : (isFootball ? '🏆' : '🌱')
         };
       }
     }
+
 
     // ⭕ 언어 및 코스 격리된 실제 진행도 계산
     const modalLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -3297,11 +3430,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 🛑 [핵심 버그 수정] 복습 노드 완료 직후 3번 노드가 실제로 플레이되지 않았는데 오염되어 1이 되어있는 경우 0으로 강제 보정
-    if (nodeId === 'node-3') {
+    // 🛑 [핵심 버그 수정] 복습 노드 완료 직후 3번 노드가 실제로 플레이되지 않았는데 오염되어 1이 되어있는 경우 0으로 강제 보정
+    if (nodeId === 'node-3' || nodeId === 'u1_node-3' || nodeId === 'u1_stage-3') {
       let isActuallyCleared = false;
       try {
         const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
-        if (uData && uData.clearedNodes && uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed) {
+        if (uData && uData.clearedNodes && (
+          (uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed) ||
+          (uData.clearedNodes['u1_node-3'] && uData.clearedNodes['u1_node-3'].actuallyPlayed) ||
+          (uData.clearedNodes['u1_stage-3'] && uData.clearedNodes['u1_stage-3'].actuallyPlayed)
+        )) {
           isActuallyCleared = true;
         }
       } catch (_) { }
@@ -3313,9 +3451,13 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.removeItem(`vocadash_prog_${modalLang}_${modalPack}_u1_n3`);
           localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_node-3`);
           localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_1_3`);
+          localStorage.removeItem('u1_node-3');
+          localStorage.removeItem('u1_stage-3');
         } catch (_) { }
         if (window.nodeProgressMap) {
           window.nodeProgressMap['node-3'] = 0;
+          window.nodeProgressMap['u1_node-3'] = 0;
+          window.nodeProgressMap['u1_stage-3'] = 0;
           window.nodeProgressMap[`${modalLang}_${modalPack}_u1_n3`] = 0;
         }
       }
@@ -3323,17 +3465,108 @@ document.addEventListener('DOMContentLoaded', () => {
 
     progress = Math.max(0, Math.min(3, Number(progress) || 0));
 
-    setText('lesson-modal-icon', data.icon);
-    setText('lesson-modal-title', data.title);
-    setText('lesson-modal-desc', data.desc);
-    setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : nodeId === 'node-boss' ? '4과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
-    setText('lesson-modal-progress-text', `${progress}/3`);
-    setText('lesson-start-btn-text', progress >= 3 ? '복습 시작하기' : progress === 2 ? '마지막 레슨 도전!' : progress === 1 ? '다음 레슨 계속하기' : '학습 시작하기');
+    // 🎯 [UI 분기 처리] 보스 노드 전용 UI vs 일반 노드 UI
+    const iconBox = el('lesson-modal-icon-box');
+    const badgeEl = el('lesson-modal-badge');
+    const progSection = el('lesson-modal-progress-section');
+    const bossSection = el('lesson-modal-boss-section');
+    const startBtn = el('lesson-start-btn');
+    const startBtnIcon = el('lesson-start-btn-icon');
     const progBar = el('lesson-modal-progress-bar');
-    if (progBar) {
-      progBar.style.width = progress >= 3 ? '100%' : progress === 2 ? '67%' : progress === 1 ? '33%' : '0%';
-      progBar.className = `h-full rounded-full transition-all duration-300 ${progress >= 3 ? 'bg-primary' : 'bg-secondary'}`;
+
+    if (isBossNode) {
+      // 1) 아이콘 & 아이콘 박스 (강렬한 레드/로즈 톤)
+      setText('lesson-modal-icon', data.icon || '👑');
+      if (iconBox) {
+        iconBox.className = 'w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-rose-300 flex-shrink-0';
+      }
+
+      // 2) 상단 배지 (주황/빨강 배지: 🔥 FINAL BOSS EXAM)
+      setText('lesson-modal-badge', '🔥 FINAL BOSS EXAM');
+      if (badgeEl) {
+        badgeEl.className = 'font-label-sm text-[11px] text-rose-600 font-black uppercase tracking-wider';
+      }
+
+      // 3) 타이틀 & 설명
+      setText('lesson-modal-title', data.title || `Unit ${unitX} 총괄 보스전`);
+      setText('lesson-modal-desc', data.desc || '이번 유닛에서 배운 모든 단어가 총출동합니다! 단판 승부로 다음 유닛을 해금하세요.');
+
+      // 4) 진행 상태 0/3 영역 대체 -> 단판 조건 박스 노출
+      if (progSection) {
+        progSection.classList.add('hidden');
+        progSection.style.display = 'none';
+      }
+      if (bossSection) {
+        bossSection.classList.remove('hidden');
+        bossSection.classList.add('flex');
+        bossSection.style.display = 'flex';
+      }
+      setText('lesson-modal-boss-condition-badge', '🎯 단판 총괄 시험');
+      setText('lesson-modal-boss-condition-text', '통과 기준: 80% 이상');
+
+      // 5) 보상 배지 상향 (+50 XP, +30 💎)
+      setText('lesson-modal-xp', '+50 XP');
+      setText('lesson-modal-gems', '+30');
+
+      // 6) 메인 CTA 버튼 (⚔️ 보스전 도전하기 & 강렬한 그라데이션)
+      if (startBtn) {
+        startBtn.className = 'w-full h-12 rounded-2xl font-label-lg text-base bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-white font-black flex items-center justify-center gap-2 shadow-[0_4px_0_#be123c,0_8px_18px_-2px_rgba(244,63,94,0.45)] active:translate-y-1 active:shadow-none transition-all cursor-pointer';
+      }
+      if (startBtnIcon) {
+        startBtnIcon.style.display = 'none';
+      }
+      setText('lesson-start-btn-text', '⚔️ 보스전 도전하기');
+    } else {
+      // 🔄 일반 노드 복귀 처리
+      // 1) 아이콘 & 아이콘 박스 복원
+      setText('lesson-modal-icon', data.icon);
+      if (iconBox) {
+        iconBox.className = 'w-12 h-12 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-secondary-container/40 flex-shrink-0';
+      }
+
+      // 2) 상단 배지 복원
+      if (badgeEl) {
+        badgeEl.className = 'font-label-sm text-[11px] text-secondary font-extrabold uppercase tracking-wide';
+      }
+      setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
+
+      // 3) 타이틀 & 설명 복원
+      setText('lesson-modal-title', data.title);
+      const descEl = document.getElementById('lesson-modal-desc');
+      if (descEl) descEl.innerHTML = data.desc;
+
+      // 4) 진행 상태 0/3 영역 복원
+
+      if (progSection) {
+        progSection.classList.remove('hidden');
+        progSection.style.display = '';
+      }
+      if (bossSection) {
+        bossSection.classList.add('hidden');
+        bossSection.classList.remove('flex');
+        bossSection.style.display = 'none';
+      }
+      setText('lesson-modal-progress-text', `${progress}/3`);
+      if (progBar) {
+        progBar.style.width = progress >= 3 ? '100%' : progress === 2 ? '67%' : progress === 1 ? '33%' : '0%';
+        progBar.className = `h-full rounded-full transition-all duration-300 ${progress >= 3 ? 'bg-primary' : 'bg-secondary'}`;
+      }
+
+      // 5) 보상 배지 복원 (+20 XP, +10 💎)
+      setText('lesson-modal-xp', '+20 XP');
+      setText('lesson-modal-gems', '+10');
+
+      // 6) 메인 CTA 버튼 복원 (에메랄드 그린)
+      if (startBtn) {
+        startBtn.className = 'w-full h-12 rounded-2xl font-label-lg text-base bg-[#22c55e] hover:bg-[#16a34a] text-white font-extrabold flex items-center justify-center gap-2 shadow-[0_4px_0_#15803d,0_8px_16px_-2px_rgba(34,197,94,0.4)] active:translate-y-1 active:shadow-none transition-all cursor-pointer';
+      }
+      if (startBtnIcon) {
+        startBtnIcon.textContent = 'play_arrow';
+        startBtnIcon.style.display = '';
+      }
+      setText('lesson-start-btn-text', progress >= 3 ? '복습 시작하기' : progress === 2 ? '마지막 레슨 도전!' : progress === 1 ? '다음 레슨 계속하기' : '학습 시작하기');
     }
+
     if (lessonBackdrop) {
       lessonBackdrop.classList.remove('opacity-0', 'pointer-events-none');
       lessonBackdrop.classList.add('opacity-100', 'pointer-events-auto');
@@ -3431,116 +3664,274 @@ document.addEventListener('DOMContentLoaded', () => {
   window.isBonusClaimed = isBonusClaimed;
   window.markBonusClaimed = markBonusClaimed;
 
-  function isReviewNodeCompleted(nodeId = 'node-review') {
+  // ===================================================
+  // 🛡️ [복습 노드 네임스페이스 및 마이그레이션 관리]
+  // ===================================================
+  function migrateLegacyReviewData() {
     try {
-      if (localStorage.getItem(`vocadash_review_completed_${nodeId}`) === 'true') return true;
-      if (localStorage.getItem('vocadash_review_completed_node-review') === 'true') return true;
+      const legacyReview = localStorage.getItem('vocadash_review_completed_node-review');
+      if (legacyReview === 'true') {
+        localStorage.setItem('vocadash_review_completed_u1_node-review', 'true');
+        localStorage.setItem('vocadash_review_completed_u1-review', 'true');
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        window.nodeProgressMap['u1_node-review'] = 1;
+        window.nodeProgressMap['u1_review'] = 1;
+        window.nodeProgressMap['node-review'] = 1;
+      }
+      const prog = getCourseProgress(window.activeCourseId);
+      if (Array.isArray(prog.completedReviews)) {
+        if (prog.completedReviews.includes('node-review') && !prog.completedReviews.includes('u1_node-review')) {
+          prog.completedReviews.push('u1_node-review');
+          saveCourseProgress(prog, window.activeCourseId);
+        }
+      }
     } catch (_) { }
+  }
+  window.migrateLegacyReviewData = migrateLegacyReviewData;
+
+  function isReviewNodeCompleted(nodeId = 'node-review', unitId = null) {
+    let uIndex = unitId;
+    if (!uIndex) {
+      const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(nodeId) : null;
+      if (coords && coords.unitIndex) {
+        uIndex = coords.unitIndex;
+      } else {
+        uIndex = 1;
+      }
+    }
+    const compositeKey = `u${uIndex}_node-review`;
+    const specificKey = `u${uIndex}-review`;
+    const altKey = `u${uIndex}_review`;
+    const isGenericReviewId = (nodeId === 'node-review' || nodeId === 'review');
+    const allowRawNodeIdCheck = nodeId && (!isGenericReviewId || uIndex === 1);
+
+    // 1) localStorage 직접 플래그 검사 (유닛 네임스페이스 격리)
+    try {
+      if (localStorage.getItem(`vocadash_review_completed_${compositeKey}`) === 'true') return true;
+      if (allowRawNodeIdCheck && localStorage.getItem(`vocadash_review_completed_${nodeId}`) === 'true') return true;
+      if (localStorage.getItem(`vocadash_review_completed_${specificKey}`) === 'true') return true;
+      if (localStorage.getItem(`vocadash_review_completed_${altKey}`) === 'true') return true;
+      // ⚠️ Unit 1 구버전 잔여 데이터 호환 (오직 1유닛일 때만 fallback 허용!)
+      if (uIndex === 1 && localStorage.getItem('vocadash_review_completed_node-review') === 'true') return true;
+    } catch (_) { }
+
+    // 2) CourseProgress 검사
     const prog = getCourseProgress(window.activeCourseId);
     if (Array.isArray(prog.completedReviews)) {
-      if (prog.completedReviews.includes(nodeId) || prog.completedReviews.includes('node-review')) return true;
+      if (prog.completedReviews.includes(compositeKey) ||
+        prog.completedReviews.includes(specificKey) ||
+        (allowRawNodeIdCheck && prog.completedReviews.includes(nodeId)) ||
+        (uIndex === 1 && prog.completedReviews.includes('node-review'))) {
+        return true;
+      }
     }
+
+    // 3) user_data.clearedNodes 검사
     try {
       const rawUserData = localStorage.getItem('vocadash_user_data');
       if (rawUserData) {
         const u = JSON.parse(rawUserData);
-        if (u.clearedNodes && (u.clearedNodes[nodeId]?.cleared || u.clearedNodes['node-review']?.cleared)) return true;
+        if (u.clearedNodes) {
+          if (u.clearedNodes[compositeKey]?.cleared ||
+            u.clearedNodes[specificKey]?.cleared ||
+            (allowRawNodeIdCheck && u.clearedNodes[nodeId]?.cleared) ||
+            (uIndex === 1 && u.clearedNodes['node-review']?.cleared)) {
+            return true;
+          }
+        }
       }
     } catch (_) { }
+
+    // 4) cleared_nodes 리스트 검사
     try {
       const rawList = localStorage.getItem('vocadash_cleared_nodes');
       if (rawList) {
         const list = JSON.parse(rawList);
-        if (Array.isArray(list) && (list.includes(nodeId) || list.includes('node-review'))) return true;
+        if (Array.isArray(list)) {
+          if (list.includes(compositeKey) ||
+            list.includes(specificKey) ||
+            (allowRawNodeIdCheck && list.includes(nodeId)) ||
+            (uIndex === 1 && list.includes('node-review'))) {
+            return true;
+          }
+        }
       }
     } catch (_) { }
+
+    // 5) window.nodeProgressMap 검사
+    if (window.nodeProgressMap) {
+      if (window.nodeProgressMap[compositeKey] >= 1 ||
+        window.nodeProgressMap[specificKey] >= 1 ||
+        (allowRawNodeIdCheck && window.nodeProgressMap[nodeId] >= 1) ||
+        (uIndex === 1 && window.nodeProgressMap['node-review'] >= 1)) {
+        return true;
+      }
+    }
+
+    // 6) getNodeProgress 검사
     try {
-      const p = (typeof getNodeProgress === 'function') ? getNodeProgress(nodeId) : null;
-      if (p && p.clearedCount >= 1) return true;
-      const pDef = (typeof getNodeProgress === 'function') ? getNodeProgress('node-review') : null;
-      if (pDef && pDef.clearedCount >= 1) return true;
+      if (typeof getNodeProgress === 'function') {
+        const p1 = getNodeProgress(compositeKey);
+        if (p1 && p1.clearedCount >= 1) return true;
+        if (allowRawNodeIdCheck && nodeId !== compositeKey) {
+          const p2 = getNodeProgress(nodeId);
+          if (p2 && p2.clearedCount >= 1) return true;
+        }
+        if (uIndex === 1) {
+          const pDef = getNodeProgress('node-review');
+          if (pDef && pDef.clearedCount >= 1) return true;
+        }
+      }
     } catch (_) { }
+
     return false;
   }
 
-  function markReviewNodeCompleted(nodeId = 'node-review') {
+  function markReviewNodeCompleted(nodeId = 'node-review', unitId = null) {
+    let uIndex = unitId;
+    if (!uIndex) {
+      const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(nodeId) : null;
+      if (coords && coords.unitIndex) {
+        uIndex = coords.unitIndex;
+      } else {
+        uIndex = 1;
+      }
+    }
+    const compositeKey = `u${uIndex}_node-review`;
+    const isGenericReviewId = (nodeId === 'node-review' || nodeId === 'review');
+    const allowRawNodeId = nodeId && (!isGenericReviewId || uIndex === 1);
+
     try {
-      localStorage.setItem(`vocadash_review_completed_${nodeId}`, 'true');
-      localStorage.setItem('vocadash_review_completed_node-review', 'true');
+      localStorage.setItem(`vocadash_review_completed_${compositeKey}`, 'true');
+      if (allowRawNodeId && nodeId !== compositeKey) {
+        localStorage.setItem(`vocadash_review_completed_${nodeId}`, 'true');
+      }
+      if (uIndex === 1) {
+        localStorage.setItem('vocadash_review_completed_node-review', 'true');
+      }
     } catch (_) { }
+
     const prog = getCourseProgress(window.activeCourseId);
     if (!prog.completedReviews) prog.completedReviews = [];
-    if (!prog.completedReviews.includes(nodeId)) {
+    if (!prog.completedReviews.includes(compositeKey)) {
+      prog.completedReviews.push(compositeKey);
+    }
+    if (allowRawNodeId && !prog.completedReviews.includes(nodeId)) {
       prog.completedReviews.push(nodeId);
     }
-    if (!prog.completedReviews.includes('node-review')) {
+    if (uIndex === 1 && !prog.completedReviews.includes('node-review')) {
       prog.completedReviews.push('node-review');
     }
     saveCourseProgress(prog, window.activeCourseId);
   }
 
-  function completeReviewNode(nodeId = 'node-review') {
-    // 💡 [핵심 버그 수정] currentGameLessonId에 상관없이 오직 node-review만 완료 처리
-    const targetId = 'node-review';
-    console.log('✅ [Review Node Complete] 약점 복습 완료 처리 시작: node-review');
+  function completeReviewNode(nodeId = 'node-review', unitId = null) {
+    let targetId = nodeId || 'node-review';
+    let uIndex = unitId;
+    if (!uIndex) {
+      const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(targetId) : null;
+      if (coords && coords.unitIndex) {
+        uIndex = coords.unitIndex;
+      } else if (window.currentReviewUnitNumber) {
+        uIndex = window.currentReviewUnitNumber;
+      } else if (window.currentUnitNumber) {
+        uIndex = window.currentUnitNumber;
+      } else {
+        uIndex = 1;
+      }
+    }
+    const compositeKey = `u${uIndex}_node-review`;
+    const isGenericReviewId = (targetId === 'node-review' || targetId === 'review');
+    const allowRawTargetId = targetId && (!isGenericReviewId || uIndex === 1);
+    console.log(`✅ [Review Node Complete] 약점 복습 완료 처리 시작: ${compositeKey} (unit: ${uIndex}, raw: ${targetId})`);
 
     if (typeof markReviewNodeCompleted === 'function') {
-      markReviewNodeCompleted('node-review');
+      markReviewNodeCompleted(compositeKey, uIndex);
+      if (allowRawTargetId && targetId !== compositeKey) {
+        markReviewNodeCompleted(targetId, uIndex);
+      }
     }
 
-    // 1) nodeProgress 등록 (오직 node-review만 완료 등록)
+    // 1) nodeProgress 등록
     const progressData = { cleared: true, clearedCount: 1, stars: 3 };
     try {
-      localStorage.setItem('vocadash_node_progress_node-review', JSON.stringify(progressData));
+      localStorage.setItem(`vocadash_node_progress_${compositeKey}`, JSON.stringify(progressData));
+      if (uIndex === 1) {
+        localStorage.setItem('vocadash_node_progress_node-review', JSON.stringify(progressData));
+      }
     } catch (_) { }
 
     if (!window.nodeProgressMap) window.nodeProgressMap = {};
-    window.nodeProgressMap['node-review'] = 1;
+    window.nodeProgressMap[compositeKey] = 1;
+    window.nodeProgressMap[`u${uIndex}_review`] = 1;
+    if (uIndex === 1) {
+      window.nodeProgressMap['node-review'] = 1;
+    }
 
-    // 🛑 [핵심 버그 수정] 3번 노드 오염 완전 방어:
-    // 복습 노드가 완료될 때 node-3의 진행도는 절대 1로 올리지 않고 순수 0회차 미클리어 상태(0/3)를 유지.
-    // 단, 유저가 이미 3번 노드를 1회 이상 정상 클리어한 상태라면 삭제하지 않음.
-    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const curCourse = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + curLang) : null) || 'main';
-    const packCourse = (curCourse === 'pack_football') ? 'pack_football' : 'main';
-
-    let n3Progress = 0;
+    if (!window.completedStages) window.completedStages = [];
+    if (!window.completedStages.includes(compositeKey)) window.completedStages.push(compositeKey);
+    if (!window.completedStages.includes(`u${uIndex}_review`)) window.completedStages.push(`u${uIndex}_review`);
+    if (uIndex === 1 && !window.completedStages.includes('node-review')) window.completedStages.push('node-review');
     try {
-      const rawN3 = localStorage.getItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`) || localStorage.getItem(`node_progress_${curLang}_${packCourse}_node-3`);
-      if (rawN3) n3Progress = parseInt(rawN3, 10) || 0;
+      localStorage.setItem('vocadash_completed_stages', JSON.stringify(window.completedStages));
     } catch (_) { }
 
-    if (n3Progress <= 0) {
+    // 🛑 [핵심 버그 수정] 3번 노드 오염 완전 방어 (오직 유닛 1에 대해서만 실행):
+    // 복습 노드가 완료될 때 node-3의 진행도는 절대 1로 올리지 않고 순수 0회차 미클리어 상태(0/3)를 유지.
+    if (uIndex === 1) {
+      const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const curCourse = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + curLang) : null) || 'main';
+      const packCourse = (curCourse === 'pack_football') ? 'pack_football' : 'main';
+
+      let n3Progress = 0;
       try {
-        localStorage.removeItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`);
-        localStorage.removeItem(`node_progress_${curLang}_${packCourse}_node-3`);
-        localStorage.removeItem(`node_progress_${curLang}_${packCourse}_1_3`);
-        localStorage.removeItem('vocadash_prog_es_main_u1_n3');
-        localStorage.removeItem('node_progress_es_main_node-3');
-        localStorage.removeItem('node_progress_es_main_1_3');
+        const rawN3 = localStorage.getItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`) || localStorage.getItem(`node_progress_${curLang}_${packCourse}_node-3`);
+        if (rawN3) n3Progress = parseInt(rawN3, 10) || 0;
       } catch (_) { }
 
-      if (window.nodeProgressMap) {
-        window.nodeProgressMap['node-3'] = 0;
-        window.nodeProgressMap[`${curLang}_${packCourse}_u1_n3`] = 0;
-        if (packCourse === 'pack_football') {
-          window.nodeProgressMap['fb_1_n5'] = 0;
-        } else {
-          window.nodeProgressMap[`${curLang}_1_n3`] = 0;
+      if (n3Progress <= 0) {
+        try {
+          localStorage.removeItem(`vocadash_prog_${curLang}_${packCourse}_u1_n3`);
+          localStorage.removeItem(`node_progress_${curLang}_${packCourse}_node-3`);
+          localStorage.removeItem(`node_progress_${curLang}_${packCourse}_1_3`);
+          localStorage.removeItem('vocadash_prog_es_main_u1_n3');
+          localStorage.removeItem('node_progress_es_main_node-3');
+          localStorage.removeItem('node_progress_es_main_1_3');
+        } catch (_) { }
+
+        if (window.nodeProgressMap) {
+          window.nodeProgressMap['node-3'] = 0;
+          window.nodeProgressMap[`${curLang}_${packCourse}_u1_n3`] = 0;
+          window.nodeProgressMap['u1_stage-3'] = 0;
+          window.nodeProgressMap['u1_node-3'] = 0;
+          window.nodeProgressMap['u1_n3'] = 0;
+          if (packCourse === 'pack_football') {
+            window.nodeProgressMap['fb_1_n5'] = 0;
+          } else {
+            window.nodeProgressMap[`${curLang}_1_n3`] = 0;
+          }
         }
       }
     }
 
-    // 2) localStorage clearedNodes 목록에 오직 복습 노드만 등록하고, 미완료 시 잔여 node-3 오염 삭제
+    // 2) localStorage clearedNodes 목록에 등록하고, 미완료 시 잔여 node-3 오염 삭제
     try {
       const rawUserData = localStorage.getItem('vocadash_user_data');
       let userData = rawUserData ? JSON.parse(rawUserData) : {};
       if (!userData.clearedNodes) userData.clearedNodes = {};
-      userData.clearedNodes['node-review'] = { cleared: true, clearedCount: 1 };
-      if (n3Progress <= 0) {
-        delete userData.clearedNodes['node-3'];
-        delete userData.clearedNodes['es_1_n5'];
-        delete userData.clearedNodes['fb_1_n5'];
+      userData.clearedNodes[compositeKey] = { cleared: true, clearedCount: 1 };
+      if (uIndex === 1) {
+        userData.clearedNodes['node-review'] = { cleared: true, clearedCount: 1 };
+        let n3Progress = 0;
+        try {
+          const rawN3 = localStorage.getItem('vocadash_prog_es_main_u1_n3');
+          if (rawN3) n3Progress = parseInt(rawN3, 10) || 0;
+        } catch (_) { }
+        if (n3Progress <= 0) {
+          delete userData.clearedNodes['node-3'];
+          delete userData.clearedNodes['es_1_n5'];
+          delete userData.clearedNodes['fb_1_n5'];
+        }
       }
       localStorage.setItem('vocadash_user_data', JSON.stringify(userData));
     } catch (_) { }
@@ -3549,8 +3940,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const rawList = localStorage.getItem('vocadash_cleared_nodes');
       let list = rawList ? JSON.parse(rawList) : [];
       if (!Array.isArray(list)) list = [];
-      if (!list.includes('node-review')) list.push('node-review');
-      list = list.filter(item => item !== 'node-3' && item !== 'es_1_n5' && item !== 'fb_1_n5');
+      if (!list.includes(compositeKey)) list.push(compositeKey);
+      if (uIndex === 1) {
+        if (!list.includes('node-review')) list.push('node-review');
+        list = list.filter(item => item !== 'node-3' && item !== 'es_1_n5' && item !== 'fb_1_n5');
+      }
       localStorage.setItem('vocadash_cleared_nodes', JSON.stringify(list));
     } catch (_) { }
 
@@ -3759,6 +4153,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateTopUnitBanner = updateTopUnitBanner;
 
   function updateRoadmapNodesUI() {
+    if (typeof migrateLegacyReviewData === 'function') {
+      migrateLegacyReviewData();
+    }
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseId = window.currentCourseId || 'basic';
     const langPresets = COURSE_LESSONS[lang] || COURSE_LESSONS.es;
@@ -3810,6 +4207,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const num = parseInt(localStorage.getItem(stdKey), 10);
         if (!isNaN(num)) c = num;
       }
+
+      if (c === 0) {
+        // 복합 키 및 대체 키 fallback 확인 (코스 격리 준수)
+        const compNodeKey = `u1_node-${nIndex}`;
+        const compStageKey = `u1_stage-${nIndex}`;
+        const altKey = `node_progress_${currentLang}_${currentCoursePack}_node-${nIndex}`;
+        const altCompKey = `node_progress_${currentLang}_${currentCoursePack}_u1_node-${nIndex}`;
+        let rawAlt = localStorage.getItem(altKey) || localStorage.getItem(altCompKey);
+        if (!rawAlt && currentCoursePack === 'main' && currentLang === 'es' && nIndex === 3) {
+          rawAlt = localStorage.getItem(compNodeKey) || localStorage.getItem(compStageKey);
+        }
+        if (rawAlt !== null && rawAlt !== undefined) {
+          try {
+            const parsedAlt = JSON.parse(rawAlt);
+            if (typeof parsedAlt === 'number') c = parsedAlt;
+            else if (parsedAlt && typeof parsedAlt.clearedCount === 'number') c = parsedAlt.clearedCount;
+            else if (parsedAlt && typeof parsedAlt.stars === 'number') c = parsedAlt.stars;
+          } catch (_) {
+            const numAlt = parseInt(rawAlt, 10);
+            if (!isNaN(numAlt)) c = numAlt;
+          }
+        }
+        if (c === 0 && window.nodeProgressMap) {
+          c = Number(window.nodeProgressMap[altCompKey] || window.nodeProgressMap[altKey] || 0);
+          if (c === 0 && currentCoursePack === 'main' && currentLang === 'es') {
+            c = Number(window.nodeProgressMap[compNodeKey] || window.nodeProgressMap[compStageKey] || window.nodeProgressMap[`node-${nIndex}`] || 0);
+          }
+        }
+      }
+
       return Math.max(0, Math.min(3, c));
     };
 
@@ -3828,6 +4255,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n2`] = prog2;
     window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n3`] = prog3;
     window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n6`] = progBoss;
+    window.nodeProgressMap['u1_stage-1'] = prog1;
+    window.nodeProgressMap['u1_stage-2'] = prog2;
+    window.nodeProgressMap['u1_stage-3'] = prog3;
+    window.nodeProgressMap['u1_node-1'] = prog1;
+    window.nodeProgressMap['u1_node-2'] = prog2;
+    window.nodeProgressMap['u1_node-3'] = prog3;
+    window.nodeProgressMap['u1_node-boss'] = progBoss;
     if (currentCoursePack === 'pack_football') {
       window.nodeProgressMap['fb_1_n1'] = prog1;
       window.nodeProgressMap['fb_1_n2'] = prog2;
@@ -3842,7 +4276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 노드 해금 및 활성 판정
     const isBonusDone = (typeof isBonusClaimed === 'function') && isBonusClaimed('node-bonus');
-    const isReviewDone = (typeof isReviewNodeCompleted === 'function') && isReviewNodeCompleted('node-review');
+    const isReviewDone = (typeof isReviewNodeCompleted === 'function') && isReviewNodeCompleted('u1_node-review', 1);
     const isNode1Active = (prog1 < 3);
     const isNode2Unlocked = (prog1 >= 3);
     const isNode2Active = (!isNode1Active && isNode2Unlocked && prog2 < 3);
@@ -4280,7 +4714,36 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (_) { }
     }
 
-    if (isReviewDone) {
+    if (!isReviewUnlocked) {
+      // 1) 노드가 잠겨있는 경우 (최우선 방어): 하단 뱃지 렌더링 생략, 회색 번개 + 자물쇠만 노출
+      if (reviewContainer) {
+        reviewContainer.classList.add('opacity-80');
+        reviewContainer.classList.remove('active', 'node-pulse');
+      }
+      if (reviewTarget) {
+        reviewTarget.dataset.nodeType = 'locked';
+        reviewTarget.setAttribute('data-lock-msg', '보너스 선물을 먼저 수령해야 열려요!');
+        reviewTarget.setAttribute('data-lock-icon', '🔒');
+      }
+      if (reviewPing) reviewPing.classList.add('hidden');
+      if (reviewPulseRing) reviewPulseRing.classList.add('hidden');
+      if (reviewStartPill) { reviewStartPill.classList.add('hidden'); reviewStartPill.style.display = 'none'; }
+      if (reviewCheckBadge) { reviewCheckBadge.classList.add('hidden'); reviewCheckBadge.style.display = 'none'; }
+      if (reviewExcl) { reviewExcl.classList.add('hidden'); reviewExcl.style.display = 'none'; }
+      if (lockBadgeReview) {
+        lockBadgeReview.classList.remove('hidden');
+        lockBadgeReview.style.display = 'flex';
+      }
+      if (reviewBtn) {
+        reviewBtn.className = 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center';
+        reviewBtn.title = '약점 복습 (잠김)';
+      }
+      if (reviewIcon) reviewIcon.textContent = '⚡️';
+      if (reviewLabelCard) {
+        reviewLabelCard.classList.add('hidden');
+        reviewLabelCard.style.display = 'none';
+      }
+    } else if (isReviewDone) {
       if (reviewContainer) reviewContainer.classList.remove('opacity-80', 'active', 'node-pulse');
       if (reviewTarget) {
         reviewTarget.dataset.nodeType = 'completed';
@@ -4340,35 +4803,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewLabelCard.classList.remove('hidden');
         reviewLabelCard.style.display = 'flex';
         reviewLabelCard.className = 'mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none';
-      }
-    } else {
-      // 1) 노드가 잠겨있는 경우: 하단 뱃지 렌더링 생략, 회색 번개 + 자물쇠만 노출
-      if (reviewContainer) {
-        reviewContainer.classList.add('opacity-80');
-        reviewContainer.classList.remove('active', 'node-pulse');
-      }
-      if (reviewTarget) {
-        reviewTarget.dataset.nodeType = 'locked';
-        reviewTarget.setAttribute('data-lock-msg', '보너스 선물을 먼저 수령해야 열려요!');
-        reviewTarget.setAttribute('data-lock-icon', '🔒');
-      }
-      if (reviewPing) reviewPing.classList.add('hidden');
-      if (reviewPulseRing) reviewPulseRing.classList.add('hidden');
-      if (reviewStartPill) { reviewStartPill.classList.add('hidden'); reviewStartPill.style.display = 'none'; }
-      if (reviewCheckBadge) { reviewCheckBadge.classList.add('hidden'); reviewCheckBadge.style.display = 'none'; }
-      if (reviewExcl) { reviewExcl.classList.add('hidden'); reviewExcl.style.display = 'none'; }
-      if (lockBadgeReview) {
-        lockBadgeReview.classList.remove('hidden');
-        lockBadgeReview.style.display = 'flex';
-      }
-      if (reviewBtn) {
-        reviewBtn.className = 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center';
-        reviewBtn.title = '약점 복습 (잠김)';
-      }
-      if (reviewIcon) reviewIcon.textContent = '⚡️';
-      if (reviewLabelCard) {
-        reviewLabelCard.classList.add('hidden');
-        reviewLabelCard.style.display = 'none';
       }
     }
 
@@ -4698,34 +5132,42 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===================================================
   function renderUnitNodeHtml(opt) {
     const { unitNum, stageNum, title, align, width, isCompleted, isActive, isLocked, nodeKey, nodeId } = opt;
-    const resolvedId = nodeId || nodeKey || `u${unitNum}-n${stageNum}`;
+    const resolvedId = nodeId || nodeKey || `u${unitNum}_stage-${stageNum}`;
+
+    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
+    const effectiveCompleted = isLocked ? false : !!isCompleted;
+    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
+
     const nodeData = (typeof getNodeProgress === 'function') ? getNodeProgress(resolvedId) : { clearedCount: 0, stars: 0 };
-    const pCount = isCompleted ? 3 : (isActive ? nodeData.clearedCount : 0);
+    const pCount = effectiveCompleted ? 3 : (effectiveActive ? nodeData.clearedCount : 0);
 
     // 심플 별 3개 점등 생성 (글자 배제)
     const s1 = pCount >= 1 ? '⭐' : '<span class="opacity-30">⭐</span>';
     const s2 = pCount >= 2 ? '⭐' : '<span class="opacity-30">⭐</span>';
     const s3 = pCount >= 3 ? '⭐' : '<span class="opacity-30">⭐</span>';
 
+    const btnClass = isLocked
+      ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'
+      : (effectiveCompleted
+        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
+        : (effectiveActive
+          ? 'bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70'
+          : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'));
+
     return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isCompleted ? 'completed' : (isActive ? 'active' : 'locked')}" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${isActive ? `
+          ${effectiveActive ? `
             <span class="absolute w-[100px] h-[100px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
             <span class="absolute w-[90px] h-[90px] rounded-full bg-sky-200/50 pointer-events-none"></span>
           ` : ''}
 
-          <button class="subsequent-node-btn node-btn btn-3d relative ${isActive ? 'w-[76px] h-[76px]' : 'w-[68px] h-[68px]'} rounded-full ${isCompleted
-        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
-        : (isActive
-          ? 'bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70'
-          : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm')
-      } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+          <button class="subsequent-node-btn node-btn btn-3d relative ${effectiveActive ? 'w-[76px] h-[76px]' : 'w-[68px] h-[68px]'} rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
-            <span class="node-stage-num ${isActive ? 'text-sm font-extrabold tracking-tight' : 'font-black text-2xl'} select-none leading-none drop-shadow-xs relative z-10 text-white">${isActive ? 'START' : stageNum}</span>
+            <span class="node-stage-num ${effectiveActive ? 'text-sm font-extrabold tracking-tight' : 'font-black text-2xl'} select-none leading-none drop-shadow-xs relative z-10 text-white">${effectiveActive ? 'START' : stageNum}</span>
           </button>
 
-          ${isActive ? `
+          ${effectiveActive ? `
             <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
@@ -4734,7 +5176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           ` : ''}
 
-          ${isCompleted ? `
+          ${effectiveCompleted ? `
             <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
               <span class="material-symbols-outlined text-[15px] font-black">check</span>
             </div>
@@ -4748,7 +5190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <!-- 심플 별 3개 캡슐 -->
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${isCompleted ? 'border-emerald-300' : (isActive ? 'border-2 border-sky-400 ring-2 ring-sky-100' : 'border-slate-200/60')} pointer-events-none ${isLocked ? 'opacity-80' : ''}">
+        <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${effectiveCompleted ? 'border-emerald-300' : (effectiveActive ? 'border-2 border-sky-400 ring-2 ring-sky-100' : 'border-slate-200/60')} pointer-events-none ${isLocked ? 'opacity-80' : ''}">
           <div class="flex items-center gap-1">
             <span class="text-sm">${s1}</span>
             <span class="text-sm">${s2}</span>
@@ -4761,34 +5203,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderUnitBonusHtml(opt) {
     const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}-bonus`;
+    const resolvedId = nodeId || `u${unitNum}_node-bonus`;
+
+    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
+    const effectiveCompleted = isLocked ? false : !!isCompleted;
+    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
+
+    const btnClass = isLocked
+      ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
+      : (effectiveCompleted
+        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
+        : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80');
+
     return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="bonus" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'bonus')}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${isActive ? `
+          ${effectiveActive ? `
             <span class="absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span>
             <span class="absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>
           ` : ''}
 
-          <!-- overflow-hidden 제거 -->
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${isCompleted
-        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
-        : (isLocked
-          ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
-          : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80')
-      } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
-            <span class="text-3xl select-none leading-none drop-shadow-sm ${isCompleted ? '' : (isActive ? 'animate-bounce' : 'animate-wiggle')} relative z-10">${isCompleted ? '📦' : '🎁'}</span>
+            <span class="text-3xl select-none leading-none drop-shadow-sm ${isLocked ? '' : (effectiveCompleted ? '' : (effectiveActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10">${isLocked ? '🎁' : (effectiveCompleted ? '📦' : '🎁')}</span>
           </button>
 
-          <!-- 자물쇠를 버튼 바깥에 배치하여 2과처럼 테두리에 정상 노출 -->
           ${isLocked ? `
             <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20">
               <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
             </div>
           ` : ''}
 
-          ${isActive ? `
+          ${effectiveActive ? `
             <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
@@ -4798,10 +5244,10 @@ document.addEventListener('DOMContentLoaded', () => {
           ` : ''}
         </div>
         <!-- 심플 보너스 캡슐 -->
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isCompleted ? 'border-slate-200 opacity-80' : (isActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200')} pointer-events-none">
+        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : (effectiveCompleted ? 'border-slate-200 opacity-80' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none">
           <div class="flex items-center gap-1">
-            <span class="text-xs">${isCompleted ? '📦' : '🎁'}</span>
-            <span class="text-[11px] ${isCompleted ? 'text-slate-500' : 'text-amber-600'} font-extrabold">${isCompleted ? '수령 완료' : '+15 💎'}</span>
+            <span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '📦' : '🎁')}</span>
+            <span class="text-[11px] ${isLocked ? 'text-slate-400' : (effectiveCompleted ? 'text-slate-500' : 'text-amber-600')} font-extrabold">${isLocked ? '잠김' : (effectiveCompleted ? '수령 완료' : '+15 💎')}</span>
           </div>
         </div>
       </div>
@@ -4810,7 +5256,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderUnitReviewHtml(opt) {
     const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}-review`;
+    const resolvedId = nodeId || `u${unitNum}_node-review`;
+
+    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
+    // 잠겨있는 상태라면 완료(isCompleted) 플래그가 어떻게 되어 있든 절대 초록색 체크(✔/✅)를 렌더링하지 않음!
+    const effectiveCompleted = isLocked ? false : !!isCompleted;
+    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let reviewWrongCount = 0;
@@ -4834,39 +5285,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const reviewBadgeLabel = reviewWrongCount > 0
       ? `오답 탈출 (${reviewWrongCount})`
-      : (isCompleted ? '복습 완료' : '스피드 복습');
-    const reviewBadgeIcon = (isCompleted && reviewWrongCount === 0) ? '✅' : '⚡️';
+      : (effectiveCompleted ? '복습 완료' : '스피드 복습');
+    const reviewBadgeIcon = (effectiveCompleted && reviewWrongCount === 0) ? '✅' : '⚡️';
+
+    let btnClass = '';
+    let btnIcon = '⚡️';
+
+    if (isLocked) {
+      btnClass = 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm';
+      btnIcon = '⚡️';
+    } else if (effectiveCompleted) {
+      btnClass = 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60';
+      btnIcon = '✅';
+    } else if (effectiveActive) {
+      btnClass = 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80';
+      btnIcon = '⚡️';
+    } else {
+      btnClass = 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80';
+      btnIcon = '⚡️';
+    }
 
     return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${isActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="review" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'review')}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${isActive ? `
+          ${effectiveActive ? `
             <span class="absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span>
             <span class="absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>
           ` : ''}
 
-          <!-- overflow-hidden 제거 -->
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${isCompleted
-        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
-        : (isLocked
-          ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
-          : 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80')
-      } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
             <div class="relative flex items-center justify-center z-10">
-              <span class="text-3xl select-none leading-none drop-shadow-sm">${isCompleted ? '✅' : '⚡️'}</span>
-              ${!isCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}
+              <span class="text-3xl select-none leading-none drop-shadow-sm">${btnIcon}</span>
+              ${!isLocked && !effectiveCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}
             </div>
           </button>
 
-          <!-- 자물쇠를 버튼 바깥에 배치하여 2과처럼 테두리에 정상 노출 -->
           ${isLocked ? `
             <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20">
               <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
             </div>
           ` : ''}
 
-          ${isActive ? `
+          ${effectiveActive ? `
             <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
@@ -4877,7 +5338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <!-- 심플 약점 복습 캡슐 (잠김 시 렌더링 생략) -->
         ${isLocked ? '' : `
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isCompleted && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200'} pointer-events-none">
+        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${effectiveCompleted && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200'} pointer-events-none">
           <div class="flex items-center gap-1">
             <span class="text-xs">${reviewBadgeIcon}</span>
             <span class="text-[11px] text-orange-600 font-extrabold">${reviewBadgeLabel}</span>
@@ -4888,21 +5349,24 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-
   function renderUnitBossHtml(opt) {
     const { unitNum, align, width, isCompleted, isLocked, nodeId } = opt;
+    const resolvedId = nodeId || `u${unitNum}_node-boss`;
+    const effectiveCompleted = isLocked ? false : !!isCompleted;
+
+    const btnClass = isLocked
+      ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
+      : (effectiveCompleted
+        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70'
+        : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70');
+
     return `
-      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="boss" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'boss')}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center node-target cursor-pointer">
-          ${!isLocked && !isCompleted ? `
+          ${!isLocked && !effectiveCompleted ? `
             <div class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
           ` : ''}
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[92px] h-[92px] rounded-full ${isCompleted
-        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70'
-        : (isLocked
-          ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
-          : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70')
-      } flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${nodeId || `u${unitNum}-boss`}" data-is-locked="${isLocked ? 'true' : 'false'}">
+          <button class="subsequent-node-btn node-btn btn-3d relative w-[92px] h-[92px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
             ${isLocked ? `
               <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
@@ -4910,24 +5374,26 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             ` : ''}
           </button>
-          ${isCompleted ? `
+          ${effectiveCompleted ? `
             <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none">
               <span class="material-symbols-outlined text-[16px] font-black">check</span>
             </div>
           ` : ''}
         </div>
-        <!-- 보스전 하단 미니 캡슐 (주황색 일체형 배지) -->
-        <div class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full ${isCompleted ? 'bg-emerald-600 text-white shadow-[0_2px_0_0_#065f46]' : 'bg-amber-500 text-white shadow-[0_2px_0_0_#b45309]'} text-center pointer-events-none font-black text-[11px] uppercase tracking-wide">
+        <!-- 보스전 하단 미니 캡슐 -->
+        <div class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full ${isLocked ? 'bg-slate-400 text-slate-200 shadow-sm' : (effectiveCompleted ? 'bg-emerald-600 text-white shadow-[0_2px_0_0_#065f46]' : 'bg-amber-500 text-white shadow-[0_2px_0_0_#b45309]')} text-center pointer-events-none font-black text-[11px] uppercase tracking-wide">
           <div class="flex items-center gap-1.5">
-            <span class="text-xs">${isCompleted ? '👑' : '🔥'}</span>
-            <span>${isCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS EXAM'}</span>
+            <span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '👑' : '🔥')}</span>
+            <span>${isLocked ? 'LOCKED' : (effectiveCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS EXAM')}</span>
           </div>
         </div>
       </div>
     `;
   }
-
-
+  window.renderUnitNodeHtml = renderUnitNodeHtml;
+  window.renderUnitBonusHtml = renderUnitBonusHtml;
+  window.renderUnitReviewHtml = renderUnitReviewHtml;
+  window.renderUnitBossHtml = renderUnitBossHtml;
 
   function renderSubsequentUnits(activeCourse, unlockedLevel) {
     const container = document.getElementById('roadmap-subsequent-units');
@@ -4965,25 +5431,25 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      // 유닛별 노드 정보 추출
+      // 유닛별 노드 정보 추출 (표준 복합 키 네임스페이스 적용: u${unitNum}_...)
       const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
-      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}-n1`, title: `1과: ${unitTitle}`, type: 'stage' };
-      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2'))) || { id: `u${unitNum}-n2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
-      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3')) || { id: `u${unitNum}-bonus`, title: '보너스 상자', type: 'bonus' };
-      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4')) || { id: `u${unitNum}-review`, title: '약점 복습', type: 'review' };
-      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: `u${unitNum}-n3`, title: '3과: 자기소개와 소통', type: 'stage' };
-      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
+      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}_stage-1`, title: `1과: ${unitTitle}`, type: 'stage' };
+      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2'))) || { id: `u${unitNum}_stage-2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3')) || { id: `u${unitNum}_node-bonus`, title: '보너스 상자', type: 'bonus' };
+      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4')) || { id: `u${unitNum}_node-review`, title: '약점 복습', type: 'review' };
+      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: `u${unitNum}_stage-3`, title: '3과: 자기소개와 소통', type: 'stage' };
+      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}_node-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
 
-      const bonusId = nBonus.id || `u${unitNum}-bonus`;
-      const reviewId = nReview.id || `u${unitNum}-review`;
+      const bonusId = nBonus.id || `u${unitNum}_node-bonus`;
+      const reviewId = nReview.id || `u${unitNum}_node-review`;
 
       const isBonusDone = isBonusClaimed(bonusId);
-      const isReviewDone = isReviewNodeCompleted(reviewId);
+      const isReviewDone = isReviewNodeCompleted(reviewId, unitNum);
 
-      const n1Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n1.id || `u${unitNum}-n1`) : { clearedCount: 0, stars: 0 };
-      const n2Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n2.id || `u${unitNum}-n2`) : { clearedCount: 0, stars: 0 };
-      const n3Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n3.id || `u${unitNum}-n3`) : { clearedCount: 0, stars: 0 };
-      const bossData = (typeof getNodeProgress === 'function') ? getNodeProgress(nBoss.id || `u${unitNum}-boss`) : { clearedCount: 0, stars: 0 };
+      const n1Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n1.id || `u${unitNum}_stage-1`) : { clearedCount: 0, stars: 0 };
+      const n2Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n2.id || `u${unitNum}_stage-2`) : { clearedCount: 0, stars: 0 };
+      const n3Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n3.id || `u${unitNum}_stage-3`) : { clearedCount: 0, stars: 0 };
+      const bossData = (typeof getNodeProgress === 'function') ? getNodeProgress(nBoss.id || `u${unitNum}_node-boss`) : { clearedCount: 0, stars: 0 };
 
       // 노드별 잠금 해제 판정
       const isN1Unlocked = isNodeUnlocked(idx, 0, n1, course);
@@ -5001,7 +5467,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel;
       const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
 
-      const isUnitCompleted = (bossData.clearedCount >= 1 || unitNum < unlockedLevel);
       const bossTitle = nBoss.title || `Unit ${unit.unitNumber || unitNum} 보스전`;
 
       // 유닛 섹션 블록 컨테이너
@@ -5016,14 +5481,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node 1 -->
           ${renderUnitNodeHtml({
         unitNum,
-        nodeKey: `u${unitNum}-n1`,
+        nodeKey: `u${unitNum}_stage-1`,
         nodeId: n1.id,
         type: 'stage',
         stageNum: 1,
         title: n1.title,
         align: 'ml-5 mb-11',
         width: '200px',
-        isCompleted: n1Data.clearedCount >= 3 || unitNum < unlockedLevel,
+        isCompleted: (!isN1Unlocked) ? false : (n1Data.clearedCount >= 3 || unitNum < unlockedLevel),
         isActive: isN1Active,
         isLocked: !isN1Unlocked
       })}
@@ -5031,14 +5496,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node 2 -->
           ${renderUnitNodeHtml({
         unitNum,
-        nodeKey: `u${unitNum}-n2`,
+        nodeKey: `u${unitNum}_stage-2`,
         nodeId: n2.id,
         type: 'stage',
         stageNum: 2,
         title: n2.title,
         align: 'ml-auto mr-5 mb-11',
         width: '210px',
-        isCompleted: n2Data.clearedCount >= 3 || unitNum < unlockedLevel,
+        isCompleted: (!isN2Unlocked) ? false : (n2Data.clearedCount >= 3 || unitNum < unlockedLevel),
         isActive: isN2Active,
         isLocked: !isN2Unlocked
       })}
@@ -5046,11 +5511,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node Bonus -->
           ${renderUnitBonusHtml({
         unitNum,
-        nodeKey: `u${unitNum}-bonus`,
+        nodeKey: `u${unitNum}_node-bonus`,
         nodeId: bonusId,
         align: 'ml-7 mb-11',
         width: '170px',
-        isCompleted: isBonusDone || unitNum < unlockedLevel,
+        isCompleted: (!isBonusUnlocked) ? false : (isBonusDone || unitNum < unlockedLevel),
         isActive: isBonusActive,
         isLocked: !isBonusUnlocked
       })}
@@ -5058,11 +5523,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node Review -->
           ${renderUnitReviewHtml({
         unitNum,
-        nodeKey: `u${unitNum}-review`,
+        nodeKey: `u${unitNum}_node-review`,
         nodeId: reviewId,
         align: 'ml-auto mr-7 mb-11',
         width: '170px',
-        isCompleted: isReviewDone || unitNum < unlockedLevel,
+        isCompleted: (!isReviewUnlocked) ? false : (isReviewDone || unitNum < unlockedLevel),
         isActive: isReviewActive,
         isLocked: !isReviewUnlocked
       })}
@@ -5070,14 +5535,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node 3 -->
           ${renderUnitNodeHtml({
         unitNum,
-        nodeKey: `u${unitNum}-n3`,
+        nodeKey: `u${unitNum}_stage-3`,
         nodeId: n3.id,
         type: 'stage',
         stageNum: 3,
         title: n3.title,
         align: 'ml-5 mb-14',
         width: '190px',
-        isCompleted: n3Data.clearedCount >= 3 || unitNum < unlockedLevel,
+        isCompleted: (!isN3Unlocked) ? false : (n3Data.clearedCount >= 3 || unitNum < unlockedLevel),
         isActive: isN3Active,
         isLocked: !isN3Unlocked
       })}
@@ -5085,13 +5550,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Node Boss -->
           ${renderUnitBossHtml({
         unitNum,
-        nodeKey: `u${unitNum}-boss`,
+        nodeKey: `u${unitNum}_node-boss`,
         nodeId: nBoss.id,
         title: bossTitle,
         desc: `${unitTitle} 총정리 & 특별 보상`,
         align: 'mx-auto mb-6',
         width: '290px',
-        isCompleted: bossData.clearedCount >= 1 || unitNum < unlockedLevel,
+        isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel),
         isActive: isBossActive,
         isLocked: !isBossUnlocked
       })}
@@ -5128,9 +5593,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (nType === 'bonus') {
-          openBonusModal(nId || `u${uNum}-bonus`);
+          openBonusModal(nId || `u${uNum}_node-bonus`);
         } else if (nType === 'review') {
-          openReviewSpeedrunModal();
+          openReviewSpeedrunModal(uNum, nId || `u${uNum}_node-review`);
         } else {
           // Unlocked node (stage or boss) -> start lesson!
           if (typeof window.openLessonModal === 'function') {
@@ -5703,10 +6168,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===================================================
   // SPEED RUN REVIEW MODAL (약점 극복 스피드 런 모달) 로직
   // ===================================================
-  function openReviewSpeedrunModal() {
+  function openReviewSpeedrunModal(unitNum = null, nodeId = null) {
     const backdrop = el('review-speedrun-modal-backdrop');
     const card = el('review-speedrun-modal-card');
     if (!backdrop || !card) return;
+
+    const resolvedUnit = unitNum || (nodeId ? parseNodeCoordinates(nodeId).unitIndex : null) || window.currentUnitNumber || 1;
+    const resolvedNodeId = nodeId || (typeof getCompositeNodeKey === 'function' ? getCompositeNodeKey('node-review', resolvedUnit) : `u${resolvedUnit}_node-review`);
+    window.currentReviewUnitNumber = resolvedUnit;
+    window.currentReviewNodeId = resolvedNodeId;
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let wrongList = [];
@@ -5912,6 +6382,9 @@ document.addEventListener('DOMContentLoaded', () => {
       lang: item.lang || currentLang
     }));
 
+    const targetReviewUnit = window.currentReviewUnitNumber || window.currentUnitNumber || 1;
+    const targetReviewId = window.currentReviewNodeId || (typeof getCompositeNodeKey === 'function' ? getCompositeNodeKey('node-review', targetReviewUnit) : `u${targetReviewUnit}_node-review`);
+
     window.isReviewGameMode = true;
     window.isRoadmapReviewSpeedrun = true;
     window.currentReviewSpeedrunWords = selectedWords;
@@ -5920,11 +6393,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 게임 화면 실행
     if (typeof window.launchGameWithWords === 'function') {
-      window.launchGameWithWords('wrong_answer', selectedWords);
+      window.launchGameWithWords('wrong_answer', selectedWords, targetReviewId);
     } else if (typeof window.openGameScreen === 'function') {
-      window.openGameScreen('node-review', sessionQuestions);
+      window.openGameScreen(targetReviewId, sessionQuestions);
     } else if (typeof window.startGameSession === 'function') {
-      window.startGameSession('node-review', sessionQuestions);
+      window.startGameSession(targetReviewId, sessionQuestions);
     } else if (typeof window.launchGame === 'function') {
       window.launchGame('wrong_answer');
     }
@@ -6560,7 +7033,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nodeBossBtn) {
     nodeBossBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if ((window.nodeProgressMap['node-3'] || 0) < 3) {
+      const p3 = (typeof getNodeProgress === 'function')
+        ? (getNodeProgress('node-3')?.clearedCount || 0)
+        : (window.nodeProgressMap?.['node-3'] || window.nodeProgressMap?.['u1_node-3'] || 0);
+      if (p3 < 3) {
         nodeBossBtn.classList.add('animate-lock-shake'); setTimeout(() => nodeBossBtn.classList.remove('animate-lock-shake'), 450); showLockedTooltip(nodeBossBtn);
       } else { window.openLessonModal('node-boss'); }
     });

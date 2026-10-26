@@ -235,5 +235,18 @@
     document.addEventListener(evt, unlockAudio, { capture: true, passive: true });
   });
 
+  // 음성 및 Web Speech API 강제 중단 헬퍼
+  function stopTTS() {
+    try {
+      if (typeof window.speechSynthesis !== 'undefined' && window.speechSynthesis && window.speechSynthesis.cancel) {
+        window.speechSynthesis.cancel();
+      }
+    } catch (_) {}
+  }
+  window.stopSpeechSynthesis = stopTTS;
+  if (typeof window.stopTTS !== 'function') {
+    window.stopTTS = stopTTS;
+  }
+
   // 메뉴/탭 클릭 비프음 제거 완료 (게임 내 정답/오답/보석 사운드만 재생)
 })();

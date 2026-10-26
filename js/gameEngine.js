@@ -204,7 +204,13 @@
     buttonEl.classList.remove('tts-speaking', 'text-emerald-500', 'animate-pulse');
   }
 
+  let ttsTimer = null;
+
   function stopTTS() {
+    if (ttsTimer) {
+      clearTimeout(ttsTimer);
+      ttsTimer = null;
+    }
     if (currentPlayingAudio) {
       try {
         currentPlayingAudio.pause();
@@ -212,9 +218,14 @@
       } catch (_) { }
       currentPlayingAudio = null;
     }
-    if ('speechSynthesis' in window) {
+    if (typeof window.speechSynthesis !== 'undefined' && window.speechSynthesis) {
       try {
         window.speechSynthesis.cancel();
+      } catch (_) { }
+    }
+    if (typeof window.stopAllTTS === 'function' && window.stopAllTTS !== stopTTS) {
+      try {
+        window.stopAllTTS();
       } catch (_) { }
     }
     document.querySelectorAll('.tts-speaking').forEach(el => {
@@ -934,14 +945,14 @@
         let rawTarget = (typeof currentGameLessonId !== 'undefined' && currentGameLessonId) || window.currentGameLessonId || window.currentSelectedNodeId || 'node-1';
 
         // 💡 [핵심 보정] 유저가 3번 노드 플레이 중이거나 3번 노드가 선택된 상태인데 rawTarget이 node-review로 남아있는 경우 원천 차단
-        if (rawTarget === 'node-review' || rawTarget === 'review') {
-          if (window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId?.includes('n3') || window.currentSelectedNodeId?.includes('3') || window.currentLessonId === 'node-3') {
-            console.log('🔄 [finishGameStage] 3번 노드 플레이 중 node-review 잔여값 감지 -> node-3으로 정규화 복원');
-            rawTarget = 'node-3';
-            currentGameLessonId = 'node-3';
-            window.currentGameLessonId = 'node-3';
-            window.currentSelectedNodeId = 'node-3';
-          }
+        const isTargetReview = rawTarget === 'node-review' || rawTarget === 'review' || String(rawTarget).includes('review');
+        const isNode3Selected = window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId === 'u1_stage-3' || /(^|_)stage-?3$/.test(window.currentSelectedNodeId || '') || /(^|_)node-?3$/.test(window.currentSelectedNodeId || '') || window.currentLessonId === 'node-3';
+        if (isTargetReview && isNode3Selected) {
+          console.log('🔄 [finishGameStage] 3번 노드 플레이 중 node-review 잔여값 감지 -> node-3으로 정규화 복원');
+          rawTarget = 'node-3';
+          currentGameLessonId = 'node-3';
+          window.currentGameLessonId = 'node-3';
+          window.currentSelectedNodeId = 'node-3';
         }
 
         let activeCourseId = (String(rawTarget).startsWith('fb_') || String(window.currentGameLessonId || '').startsWith('fb_'))
@@ -1177,47 +1188,139 @@
         }
 
         // 🌟 [12] 노드 진행도 동기화 (언어/코스별 표준 격리 저장)
-        // 💡 [수정] 오직 activeNodeId가 진짜 'node-review'이고 복습 모드일 때만 복습 격리 처리하고, 
-        // 3번 노드나 일반 노드는 절대 복습 분기로 빠지지 않고 정상 진행도 저장 및 발바닥 점등을 실행하도록 엄격화!
-        const isStrictReviewNode = (activeNodeId === 'node-review' || activeNodeId === 'review')
-          && (targetNodeId === 'node-review' || targetNodeId === 'review')
-          && (window.isReviewGameMode || window.isRoadmapReviewSpeedrun);
+        // 🌟 [12] 노드 진행도 동기화 (언어/코스별 표준 격리 저장)
+        const isReviewNodeIdentifier = (id) => {
+          if (!id) return false;
+          const s = String(id);
+          return s === 'node-review' || s === 'review' || s.includes('review');
+        };
+        const isStrictReviewNode = (isReviewNodeIdentifier(activeNodeId) || isReviewNodeIdentifier(targetNodeId))
+          && (window.isReviewGameMode || window.isRoadmapReviewSpeedrun || isReviewNodeIdentifier(activeNodeId));
 
         if (isStrictReviewNode) {
           console.log('🛡️ [finishGameStage] 복습 노드 완료 격리 처리: 일반 노드 진행도 저장 차단');
-          if (typeof window.completeReviewNode === 'function') {
-            window.completeReviewNode('node-review');
+          const coords = (typeof window.parseNodeCoordinates === 'function')
+            ? window.parseNodeCoordinates(activeNodeId || targetNodeId)
+            : { unitIndex: 1, nodeIndex: 4 };
+          const uNum = coords.unitIndex || window.currentReviewUnitNumber || window.currentUnitNumber || 1;
+          const reviewKey = (typeof window.getCompositeNodeKey === 'function')
+            ? window.getCompositeNodeKey(activeNodeId || targetNodeId || 'node-review', uNum)
+            : `u${uNum}_node-review`;
+
+          if (!window.nodeProgressMap) window.nodeProgressMap = {};
+          window.nodeProgressMap[reviewKey] = 1;
+          if (uNum === 1) {
+            window.nodeProgressMap['node-review'] = 1;
           }
+
+          try {
+            if (!Array.isArray(window.completedStages)) window.completedStages = [];
+            if (!window.completedStages.includes(reviewKey)) window.completedStages.push(reviewKey);
+            const savedStages = JSON.parse(localStorage.getItem('vocadash_completed_stages') || '[]');
+            if (Array.isArray(savedStages) && !savedStages.includes(reviewKey)) {
+              savedStages.push(reviewKey);
+              localStorage.setItem('vocadash_completed_stages', JSON.stringify(savedStages));
+            }
+          } catch (_) { }
+
+          if (typeof window.completeReviewNode === 'function') {
+            window.completeReviewNode(reviewKey, uNum);
+          }
+          if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+          if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
         } else {
           const coords = (typeof window.parseNodeCoordinates === 'function')
             ? window.parseNodeCoordinates(activeNodeId)
             : { unitIndex: 1, nodeIndex: 1 };
+          const uNum = coords.unitIndex || window.currentUnitNumber || 1;
+          const nIdx = coords.nodeIndex || 1;
+          const compositeStageKey = `u${uNum}_stage-${nIdx}`;
+          const compositeNodeKey = `u${uNum}_node-${nIdx}`;
 
-          // 1) 기본 저장 (기존 좌표 방식)
+          // 1) 기본 저장 (기존 좌표 방식 및 복합 키 영구 저장)
           try {
             const progKey = `vocadash_prog_${currentCourseLang}_${activeCourseId}_u${coords.unitIndex}_n${coords.nodeIndex}`;
             localStorage.setItem(progKey, String(nextCount));
+            localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_${compositeNodeKey}`, String(nextCount));
+            localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_${compositeStageKey}`, String(nextCount));
+            if (activeCourseId === 'main' && currentCourseLang === 'es') {
+              localStorage.setItem(compositeNodeKey, String(nextCount));
+              localStorage.setItem(compositeStageKey, String(nextCount));
+            }
 
             if (!window.nodeProgressMap) window.nodeProgressMap = {};
             window.nodeProgressMap[activeNodeId] = nextCount;
+            window.nodeProgressMap[compositeStageKey] = nextCount;
+            window.nodeProgressMap[compositeNodeKey] = nextCount;
+            if (uNum === 1) {
+              window.nodeProgressMap[`node-${nIdx}`] = nextCount;
+            }
 
-            // 💡 [핵심] 3번 노드 매핑 보정: 실제 3과 노드일 때만 u1_n3 및 node-3 키에 저장 (복습 노드 오염 완전 차단)
-            const isActualNode3 = (activeNodeId === 'node-3' || (String(activeNodeId).endsWith('_n5') && !String(activeNodeId).includes('review')));
+            // completedStages 동기화
+            if (!Array.isArray(window.completedStages)) window.completedStages = [];
+            if (!window.completedStages.includes(compositeStageKey)) window.completedStages.push(compositeStageKey);
+            if (!window.completedStages.includes(compositeNodeKey)) window.completedStages.push(compositeNodeKey);
+            const savedStages = JSON.parse(localStorage.getItem('vocadash_completed_stages') || '[]');
+            if (Array.isArray(savedStages)) {
+              let updated = false;
+              if (!savedStages.includes(compositeStageKey)) { savedStages.push(compositeStageKey); updated = true; }
+              if (!savedStages.includes(compositeNodeKey)) { savedStages.push(compositeNodeKey); updated = true; }
+              if (updated) localStorage.setItem('vocadash_completed_stages', JSON.stringify(savedStages));
+            }
+
+            // 💡 [핵심] 3번 노드 매핑 보정: 실제 3과 노드 완주 시 복합 키 규격 u${unitId}_node-3 및 actuallyPlayed 영구 저장
+            const isActualNode3 = (
+              nIdx === 3 ||
+              activeNodeId === 'node-3' ||
+              activeNodeId === `u${uNum}_node-3` ||
+              activeNodeId === `u${uNum}_stage-3` ||
+              String(activeNodeId).includes('node-3') ||
+              String(activeNodeId).includes('stage-3') ||
+              (String(activeNodeId).endsWith('_n5') && !String(activeNodeId).includes('review'))
+            );
             if (isActualNode3) {
-              localStorage.setItem(`vocadash_prog_${currentCourseLang}_${activeCourseId}_u${coords.unitIndex}_n3`, String(nextCount));
+              localStorage.setItem(`vocadash_prog_${currentCourseLang}_${activeCourseId}_u${uNum}_n3`, String(nextCount));
               localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_node-3`, String(nextCount));
-              localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_${coords.unitIndex}_3`, String(nextCount));
+              localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_${uNum}_3`, String(nextCount));
+              localStorage.setItem(`u${uNum}_node-3`, String(nextCount));
+              localStorage.setItem(`u${uNum}_stage-3`, String(nextCount));
+              localStorage.setItem(`node_progress_${currentCourseLang}_${activeCourseId}_u${uNum}_node-3`, String(nextCount));
+
+              // vocadash_user_data에 actuallyPlayed: true 영구 저장 (새로고침 시 정화 방지)
+              try {
+                const rawUserData = localStorage.getItem('vocadash_user_data');
+                let uData = rawUserData ? JSON.parse(rawUserData) : {};
+                if (!uData.clearedNodes) uData.clearedNodes = {};
+                uData.clearedNodes['node-3'] = { cleared: nextCount >= 3, clearedCount: nextCount, actuallyPlayed: true };
+                uData.clearedNodes[`u${uNum}_node-3`] = { cleared: nextCount >= 3, clearedCount: nextCount, actuallyPlayed: true };
+                uData.clearedNodes[`u${uNum}_stage-3`] = { cleared: nextCount >= 3, clearedCount: nextCount, actuallyPlayed: true };
+                localStorage.setItem('vocadash_user_data', JSON.stringify(uData));
+              } catch (_) { }
+
               window.nodeProgressMap['node-3'] = nextCount;
-              window.nodeProgressMap[`${currentCourseLang}_${activeCourseId}_u${coords.unitIndex}_n3`] = nextCount;
+              window.nodeProgressMap[`u${uNum}_node-3`] = nextCount;
+              window.nodeProgressMap[`u${uNum}_stage-3`] = nextCount;
+              window.nodeProgressMap[`${currentCourseLang}_${activeCourseId}_u${uNum}_n3`] = nextCount;
             }
           } catch (_) { }
 
           // 2) setNodeProgress 함수가 지원되는 경우 호출
           if (typeof window.setNodeProgress === 'function') {
             window.setNodeProgress(activeNodeId, nextCount, nextCount, currentCourseLang, activeCourseId);
-            const isActualNode3 = (activeNodeId === 'node-3' || (String(activeNodeId).endsWith('_n5') && !String(activeNodeId).includes('review')));
+            window.setNodeProgress(compositeStageKey, nextCount, nextCount, currentCourseLang, activeCourseId);
+            window.setNodeProgress(compositeNodeKey, nextCount, nextCount, currentCourseLang, activeCourseId);
+            const isActualNode3 = (
+              nIdx === 3 ||
+              activeNodeId === 'node-3' ||
+              activeNodeId === `u${uNum}_node-3` ||
+              activeNodeId === `u${uNum}_stage-3` ||
+              String(activeNodeId).includes('node-3') ||
+              String(activeNodeId).includes('stage-3') ||
+              (String(activeNodeId).endsWith('_n5') && !String(activeNodeId).includes('review'))
+            );
             if (isActualNode3) {
               window.setNodeProgress('node-3', nextCount, nextCount, currentCourseLang, activeCourseId);
+              window.setNodeProgress(`u${uNum}_node-3`, nextCount, nextCount, currentCourseLang, activeCourseId);
             }
           }
 
@@ -2373,6 +2476,8 @@
         if (q) {
           const canAutoPlay = !window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false;
           if (canAutoPlay) {
+            // 💡 [다음 문제 낙하 시 음성 동기화] 이전 음성 및 Web Speech API 큐 완전 컷 후 이번 단어만 1회 발화
+            stopTTS();
             const speechText = q.targetSentence || q.example || qTerm.replace(/\[\s*\?\s*\]/g, '...');
             if (currentCourse === 'es' || !currentCourse) {
               if (typeof window.playSpanishTTS === 'function') {
@@ -2686,25 +2791,7 @@
         }
       } catch (_) { }
 
-      // 정답 판정 시 해당 스페인어 단어/문장 자동 발음 재생
-      try {
-        const canAutoPlay = !window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false;
-        if (canAutoPlay && currentQ) {
-          const wordToSpeak = currentQ.targetSentence || currentQ.example || currentQ.targetWord || currentQ.word || currentQ.term || '';
-          if (wordToSpeak) {
-            const currentCourse = window.currentActiveCourse || 'es';
-            if (currentCourse === 'es' || !currentCourse) {
-              if (typeof window.playSpanishTTS === 'function') {
-                window.playSpanishTTS(wordToSpeak);
-              } else if (typeof window.safePlayTTS === 'function') {
-                window.safePlayTTS(wordToSpeak, 'es-ES');
-              }
-            } else if (typeof window.safePlayTTS === 'function') {
-              window.safePlayTTS(wordToSpeak, currentCourse);
-            }
-          }
-        }
-      } catch (_) { }
+      // 🚨 [정답 맞힘 시 2차 TTS 발화 완전 제거] 정답 효과음(correct SFX)만 재생하고 단어 재발화는 수행하지 않음
 
       if (typeof window.triggerHaptic === 'function') {
         window.triggerHaptic(40);
@@ -2836,6 +2923,10 @@
 
   function handleWrongAnswer(btn, selectedText) {
     try {
+      // 🛑 [오답 판정 시에도 잔여 음성 즉시 컷]
+      if (typeof stopTTS === 'function') stopTTS();
+      else if (typeof window.stopTTS === 'function') window.stopTTS();
+
       if (!isActive || !isGameActive || window.isActive === false || window.isGameActive === false || !isQuestionActive) return;
 
       const currentQ = gameQuestions[currentQuestionIdx];
@@ -2940,6 +3031,11 @@
       if (typeof btn.stopPropagation === 'function') btn.stopPropagation();
       if (typeof btn.stopImmediatePropagation === 'function') btn.stopImmediatePropagation();
     }
+
+    // 🛑 [보기 클릭 즉시 잔여 음성 강제 컷 & Web Speech API 대기열 큐 즉각 취소]
+    if (typeof stopTTS === 'function') stopTTS();
+    else if (typeof window.stopTTS === 'function') window.stopTTS();
+
     try {
       if (!btn || btn.disabled) return false;
       if (isStageFinishing || window.isStageFinishing) return false;
@@ -2989,6 +3085,10 @@
       if (typeof btn.stopPropagation === 'function') btn.stopPropagation();
       if (typeof btn.stopImmediatePropagation === 'function') btn.stopImmediatePropagation();
     }
+
+    // 🛑 [보기 클릭 즉시 잔여 음성 강제 컷 & Web Speech API 대기열 큐 즉각 취소]
+    if (typeof stopTTS === 'function') stopTTS();
+    else if (typeof window.stopTTS === 'function') window.stopTTS();
     if (btn && btn.currentTarget) {
       btn = btn.currentTarget;
     } else if (btn && btn.target && btn.target.closest) {
@@ -3175,7 +3275,8 @@
     }
 
     // 0하트 검사: 약점 극복 오답런(node-review, window.isRoadmapReviewSpeedrun)을 제외하고는 하트 0개 시 게임 진입 불가
-    if (!window.isRoadmapReviewSpeedrun && lessonId !== 'node-review' && !window.isUnitSkipTestMode) {
+    const isReviewModeCheck = window.isRoadmapReviewSpeedrun || lessonId === 'node-review' || String(lessonId).includes('review');
+    if (!isReviewModeCheck && !window.isUnitSkipTestMode) {
       if (typeof window.checkAndRechargeHearts === 'function') {
         window.checkAndRechargeHearts();
       }
@@ -3200,12 +3301,13 @@
         targetLesson = window.currentGameLessonId;
       }
     }
-    if (targetLesson === 'node-review' && (window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId?.includes('3'))) {
+    const isNode3Selected = window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId === 'u1_stage-3' || /(^|_)stage-?3$/.test(window.currentSelectedNodeId || '') || /(^|_)node-?3$/.test(window.currentSelectedNodeId || '') || window.currentLessonId === 'node-3';
+    if ((targetLesson === 'node-review' || targetLesson === 'review') && isNode3Selected) {
       console.log('🔄 [openGameScreen] 3번 노드 선택 중 node-review 감지 -> node-3으로 정규화');
       targetLesson = 'node-3';
     }
 
-    if (targetLesson !== 'node-review') {
+    if (targetLesson !== 'node-review' && !String(targetLesson).includes('review')) {
       window.isReviewGameMode = false;
       window.isRoadmapReviewSpeedrun = false;
       window.isWrongWordsMiniReviewActive = false;
@@ -3804,24 +3906,32 @@
         if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
         if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
       } else {
-        if (typeof window.completeReviewNode === 'function') window.completeReviewNode('node-review');
+        const targetReviewUnit = window.currentReviewUnitNumber || window.currentUnitNumber || 1;
+        const targetReviewId = window.currentReviewNodeId || (typeof window.getCompositeNodeKey === 'function' ? window.getCompositeNodeKey('node-review', targetReviewUnit) : `u${targetReviewUnit}_node-review`);
+        if (typeof window.completeReviewNode === 'function') window.completeReviewNode(targetReviewId, targetReviewUnit);
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
         if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
         if (window.isSpeedrunZeroWrongBonus) {
           if (typeof window.showToast === 'function') window.showToast('🎉 약점 완벽 극복! 보석 +5개 획득! 💎', '🎁');
         } else {
-          if (typeof window.showToast === 'function') window.showToast('🎉 약점 탈출 성공! 3과가 잠금 해제되었습니다! 🔓', '✨');
+          if (targetReviewUnit === 1) {
+            if (typeof window.showToast === 'function') window.showToast('🎉 약점 탈출 성공! 3과가 잠금 해제되었습니다! 🔓', '✨');
+          } else {
+            if (typeof window.showToast === 'function') window.showToast(`🎉 Unit ${targetReviewUnit} 약점 탈출 성공! 🔓`, '✨');
+          }
         }
         window.isSpeedrunZeroWrongBonus = false;
-        setTimeout(() => {
-          const n3Btn = document.getElementById('node-3-btn') || document.getElementById('node-3');
-          if (n3Btn) {
-            n3Btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (typeof window.openLessonModal === 'function') {
-              window.openLessonModal('node-3');
+        if (targetReviewUnit === 1) {
+          setTimeout(() => {
+            const n3Btn = document.getElementById('node-3-btn') || document.getElementById('node-3');
+            if (n3Btn) {
+              n3Btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              if (typeof window.openLessonModal === 'function') {
+                window.openLessonModal('node-3');
+              }
             }
-          }
-        }, 300);
+          }, 300);
+        }
       }
       return false;
     }
