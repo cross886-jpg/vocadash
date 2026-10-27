@@ -3262,6 +3262,10 @@
   }
 
   function openGameScreen(lessonId = 'node-2', session = null) {
+    if (lessonId && typeof lessonId === 'object' && !Array.isArray(lessonId)) {
+      session = lessonId.session || lessonId.words || session;
+      lessonId = lessonId.lessonId || lessonId.nodeId || lessonId.id || 'node-2';
+    }
     if (!gameScreen) initDOMElements();
     isStageFinishing = false;
     window.isStageFinishing = false;
@@ -4190,8 +4194,7 @@
       gScreen.style.display = 'none';
     }
 
-    // 3) 오답 복습 플래그 설정 및 플래시카드 화면 오픈
-    window.isWrongWordsMiniReviewActive = true;
+    // 3) 플래시카드 화면 오픈 및 완료 시 화면 닫기 콜백 주입
     const flashcardScreen = document.getElementById('flashcard-screen');
     if (flashcardScreen) {
       flashcardScreen.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
@@ -4201,7 +4204,14 @@
     }
 
     if (typeof window.openFlashcardScreen === 'function') {
-      window.openFlashcardScreen(wrongWords);
+      window.openFlashcardScreen({
+        words: wrongWords,
+        onComplete: () => {
+          if (typeof window.closeFlashcardScreen === 'function') {
+            window.closeFlashcardScreen(true);
+          }
+        }
+      });
     } else if (typeof window.initFlashcardDeck === 'function') {
       window.initFlashcardDeck(wrongWords);
     }

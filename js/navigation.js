@@ -1181,14 +1181,30 @@
       bottomNav.style.display = 'none';
     }
 
+    const nodeData = {
+      nodeId: targetNodeId,
+      lessonId: targetNodeId,
+      session: session,
+      words: session
+    };
+
     if (typeof window.openFlashcardScreen === 'function') {
-      window.openFlashcardScreen(targetNodeId, session);
+      window.openFlashcardScreen({
+        words: session,
+        lessonId: targetNodeId,
+        nodeData: nodeData,
+        onComplete: () => {
+          if (typeof window.openGameScreen === 'function') {
+            window.openGameScreen(nodeData);
+          }
+        }
+      });
     } else if (typeof window.initFlashcardDeck === 'function') {
       window.initFlashcardDeck(targetNodeId, session);
     } else if (typeof window.loadFlashcards === 'function') {
       window.loadFlashcards(targetNodeId, session);
     } else if (typeof window.openGameScreen === 'function') {
-      window.openGameScreen(targetNodeId, session);
+      window.openGameScreen(nodeData);
     }
   }
   window.startStageLearningPipeline = startStageLearningPipeline;

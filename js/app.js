@@ -1033,6 +1033,8 @@
   let activeDeck = [];
   let currentLessonDeckTitle = '2과: 입국 심사 · 단어 예습';
   let currentFlashcardLessonId = 'node-2';
+  let activeFlashcardOnComplete = null;
+  let activeFlashcardOptions = {};
 
   // DOM Elements
   let flashcardScreen;
@@ -1103,9 +1105,46 @@
     flashcardCtaIcon = document.getElementById('flashcard-cta-icon');
   }
 
-  function openFlashcardScreen(lessonId = 'node-2', session = null) {
+  function openFlashcardScreen(lessonIdOrConfig = 'node-2', session = null, options = null) {
     initDOMElements();
     stopTTS();
+
+    // 0) 파라미터 유연화 및 onComplete 콜백 분리
+    let lessonId = 'node-2';
+    let words = null;
+    let onComplete = null;
+    let configOptions = {};
+
+    if (lessonIdOrConfig && typeof lessonIdOrConfig === 'object' && !Array.isArray(lessonIdOrConfig)) {
+      // 객체 파라미터 패턴: { words, session, lessonId, nodeId, onComplete, ... }
+      words = lessonIdOrConfig.words || lessonIdOrConfig.session || null;
+      lessonId = lessonIdOrConfig.lessonId || lessonIdOrConfig.nodeId || window.currentGameLessonId || 'node-2';
+      onComplete = lessonIdOrConfig.onComplete || null;
+      configOptions = lessonIdOrConfig;
+    } else if (Array.isArray(lessonIdOrConfig)) {
+      // 배열 단독 전달: openFlashcardScreen(words, onComplete) 또는 openFlashcardScreen(words)
+      words = lessonIdOrConfig;
+      lessonId = window.currentGameLessonId || 'node-2';
+      if (typeof session === 'function') {
+        onComplete = session;
+      } else if (session && typeof session === 'object') {
+        onComplete = session.onComplete || null;
+        configOptions = session;
+      }
+    } else {
+      // 기존 위치 인자 패턴: openFlashcardScreen(lessonId, session, optionsOrOnComplete)
+      lessonId = lessonIdOrConfig || 'node-2';
+      words = session;
+      if (typeof options === 'function') {
+        onComplete = options;
+      } else if (options && typeof options === 'object') {
+        onComplete = options.onComplete || null;
+        configOptions = options;
+      }
+    }
+
+    activeFlashcardOnComplete = onComplete;
+    activeFlashcardOptions = configOptions;
 
     // 메뉴/모달 열려있으면 안전하게 닫기
     if (window.closeCourseDropdown) window.closeCourseDropdown();
@@ -1137,16 +1176,6 @@
       bottomNav.style.display = 'none';
     }
 
-    let isMiniWrongReview = false;
-    if (Array.isArray(lessonId)) {
-      session = lessonId;
-      lessonId = window.currentGameLessonId || 'node-2';
-      isMiniWrongReview = true;
-      window.isWrongWordsMiniReviewActive = true;
-    } else if (window.isWrongWordsMiniReviewActive) {
-      isMiniWrongReview = true;
-    }
-
     currentFlashcardLessonId = lessonId || 'node-2';
     if (currentFlashcardLessonId === 'node-boss' || currentFlashcardLessonId === 'boss' || currentFlashcardLessonId === 'stage-boss' || currentFlashcardLessonId === 'node-4' || currentFlashcardLessonId === '4') {
       currentFlashcardLessonId = 'node-boss';
@@ -1173,7 +1202,9 @@
     const currentWords = (targetUnit && Array.isArray(targetUnit.words)) ? targetUnit.words : [];
 
     let deck = null;
-    if (session && Array.isArray(session) && session.length > 0) {
+    if (words && Array.isArray(words) && words.length > 0) {
+      deck = words.slice();
+    } else if (session && Array.isArray(session) && session.length > 0) {
       deck = session.slice();
     } else if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
       deck = window.getFootballStageSession(currentFlashcardLessonId);
@@ -1217,6 +1248,7 @@
     }
 
     // 회차별 단어 수 보장: 1회차 기본 10개 단어만 1:1 주입 (더미/패딩 제거), 2회차 13개, 3회차 15개
+    const isReview = Boolean(activeFlashcardOptions.isReview || (activeFlashcardOnComplete && String(activeFlashcardOnComplete).includes('closeFlashcardScreen')));
     activeDeck = deck.map((item, idx) => ({
       ...item,
       word: item.word || item.term || '',
@@ -1226,13 +1258,13 @@
       exampleTarget: item.exampleTarget || item.example || '',
       exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || '',
       isSentence: Boolean(item.type === 'sentence' || item.isSentence || (item.word && item.word.includes(' ') && item.word.length > 20)),
-      tag: item.tag || (isMiniWrongReview ? '오답 복습' : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
+      tag: item.tag || (isReview ? '오답 복습' : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
     }));
 
     window.currentSessionQuestions = activeDeck;
     console.log('📚 [Flashcard] 단어 덱 주입 완료: 레슨', currentFlashcardLessonId, '총', activeDeck.length, '개 단어');
     const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
-    currentLessonDeckTitle = isMiniWrongReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
+    currentLessonDeckTitle = isReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
     currentCardIndex = 0;
     isCardFlipped = false;
     isCardTransitioning = false;
@@ -1435,14 +1467,23 @@
       }
     }
     const isLastCard = currentCardIndex >= total - 1;
+    const isGameFollowup = Boolean(
+      activeFlashcardOnComplete && (
+        activeFlashcardOptions.mode === 'stage' ||
+        activeFlashcardOptions.action === 'game' ||
+        String(activeFlashcardOnComplete).includes('openGameScreen') ||
+        String(activeFlashcardOnComplete).includes('launchGame')
+      )
+    );
+
     if (flashcardNextBtn) {
       flashcardNextBtn.classList.add('whitespace-nowrap', 'shrink-0', 'flex', 'items-center', 'justify-center', 'font-bold', 'text-sm');
       flashcardNextBtn.style.minWidth = '48px';
       flashcardNextBtn.style.whiteSpace = 'nowrap';
       if (isLastCard) {
-        flashcardNextBtn.innerHTML = window.isWrongWordsMiniReviewActive
-          ? '<span>학습 완료</span><span class="material-symbols-outlined text-[16px] ml-0.5">check_circle</span>'
-          : '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>';
+        flashcardNextBtn.innerHTML = isGameFollowup
+          ? '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>'
+          : '<span>완료</span><span class="material-symbols-outlined text-[16px] ml-0.5">check_circle</span>';
       } else {
         flashcardNextBtn.innerHTML = '<span>다음</span><span class="material-symbols-outlined text-[16px]">chevron_right</span>';
       }
@@ -1450,22 +1491,22 @@
 
     if (flashcardCtaBtn) {
       if (isLastCard) {
-        flashcardCtaBtn.className = window.isWrongWordsMiniReviewActive
-          ? 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] active:shadow-[0_2px_0_0_#b45309] transition-all cursor-pointer'
-          : 'w-full h-14 bg-[#2563EB] hover:bg-[#1d4ed8] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#1d4ed8,0_10px_16px_-4px_rgba(37,99,235,0.4)] active:shadow-[0_2px_0_0_#1d4ed8] transition-all cursor-pointer';
+        flashcardCtaBtn.className = isGameFollowup
+          ? 'w-full h-14 bg-[#2563EB] hover:bg-[#1d4ed8] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#1d4ed8,0_10px_16px_-4px_rgba(37,99,235,0.4)] active:shadow-[0_2px_0_0_#1d4ed8] transition-all cursor-pointer'
+          : 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] active:shadow-[0_2px_0_0_#b45309] transition-all cursor-pointer';
       } else {
         flashcardCtaBtn.className = 'w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] active:shadow-[0_2px_0_0_#15803d] transition-all cursor-pointer';
       }
     }
     if (flashcardCtaText) {
       if (isLastCard) {
-        flashcardCtaText.textContent = window.isWrongWordsMiniReviewActive ? '학습 완료' : '⚡ 단어 예습 완료! 게임 시작';
+        flashcardCtaText.textContent = isGameFollowup ? '⚡ 단어 예습 완료! 게임 시작' : '학습 완료';
       } else {
         flashcardCtaText.textContent = `다음 단어 보기 (${stepNum}/${total})`;
       }
     }
     if (flashcardCtaIcon) {
-      flashcardCtaIcon.textContent = isLastCard ? (window.isWrongWordsMiniReviewActive ? 'check_circle' : 'sports_esports') : 'chevron_right';
+      flashcardCtaIcon.textContent = isLastCard ? (isGameFollowup ? 'sports_esports' : 'check_circle') : 'chevron_right';
     }
 
     // Behind card teaser
@@ -1492,7 +1533,7 @@
     } else {
       if (flashcardBehindTag) flashcardBehindTag.textContent = '단어 예습';
       if (flashcardBehindWord) flashcardBehindWord.textContent = '🎉 완료!';
-      if (flashcardBehindPhonetic) flashcardBehindPhonetic.textContent = '[퀴즈로 이동]';
+      if (flashcardBehindPhonetic) flashcardBehindPhonetic.textContent = isGameFollowup ? '[퀴즈로 이동]' : '[학습 완료]';
       if (flashcardBehind) {
         flashcardBehind.style.display = 'flex';
         flashcardBehind.style.opacity = '0.5';
@@ -1504,45 +1545,29 @@
     }
   }
 
-  function launchGameDirectly(e) {
+  function finishFlashcards(e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     stopTTS();
-    window.currentGameLessonId = currentFlashcardLessonId || 'node-1';
 
-
-    // 1) 플래시카드 화면 완전 숨김 (로드맵 복원은 하지 않음: 바로 액션 게임으로 진입)
+    // 1) 플래시카드 화면 완전 숨김 (로드맵 복원은 콜백 의도에 따라 처리)
     closeFlashcardScreen(false);
 
-    // 2) 오답 복습 완료 시: 바로 다음 회차/스테이지 게임으로 직행
-    if (window.isWrongWordsMiniReviewActive) {
-      window.isWrongWordsMiniReviewActive = false;
-      if (window.showToast) window.showToast('🚀 오답 복습 완료! 게임을 시작합니다!', '✨');
-      if (typeof window.startNextRoundOrStageDirectly === 'function') {
-        window.startNextRoundOrStageDirectly();
-        return;
-      }
+    // 2) 주입받은 동적 완료 콜백(onComplete) 실행
+    const callback = activeFlashcardOnComplete;
+    activeFlashcardOnComplete = null;
+
+    if (typeof callback === 'function') {
+      callback();
+      return;
     }
 
-    // 3) 액션 게임 화면(#game-screen)의 hidden 제거 및 안전 시작
-    const gameScreen = document.getElementById('game-screen');
-    if (gameScreen) {
-      gameScreen.classList.remove('hidden');
-      gameScreen.style.removeProperty('display');
-      gameScreen.style.display = 'flex';
-    }
-
-    if (window.showToast) window.showToast('🎉 단어 예습 완료! 단어 낙하 액션 게임을 시작합니다!', '⚡');
-    window.currentGameLessonId = currentFlashcardLessonId;
-    window.currentSelectedNodeId = currentFlashcardLessonId;
-    if (typeof window.launchGame === 'function') {
-      window.launchGame('falling', window.currentSessionQuestions || activeDeck, { lessonId: currentFlashcardLessonId });
-    } else if (window.openGameScreen) {
-      window.openGameScreen(currentFlashcardLessonId, window.currentSessionQuestions || activeDeck);
-    }
+    // 3) 콜백 미주입 시 기본 안전 동작: 로드맵 복귀
+    closeFlashcardScreen(true);
   }
+  const launchGameDirectly = finishFlashcards;
 
   function toggleCardFlip() {
     isCardFlipped = !isCardFlipped;
@@ -2016,6 +2041,8 @@
   window.startFlashcard = openFlashcardScreen;
   window.showFlashcardScreen = openFlashcardScreen;
   window.closeFlashcardScreen = closeFlashcardScreen;
+  window.finishFlashcards = finishFlashcards;
+  window.launchGameDirectly = launchGameDirectly;
   window.initFlashcardDeck = openFlashcardScreen;
   window.loadFlashcards = openFlashcardScreen;
   window.toggleCardFlip = toggleCardFlip;
@@ -7429,12 +7456,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
     window.currentSessionQuestions = session;
+    const nodeData = { nodeId: targetNodeId, lessonId: targetNodeId, session, words: session };
     if (typeof window.openFlashcardScreen === 'function') {
-      window.openFlashcardScreen(targetNodeId, session);
+      window.openFlashcardScreen({
+        words: session,
+        lessonId: targetNodeId,
+        nodeData: nodeData,
+        onComplete: () => {
+          if (typeof window.openGameScreen === 'function') {
+            window.openGameScreen(nodeData);
+          }
+        }
+      });
     } else if (typeof window.launchGame === 'function') {
       window.launchGame('falling', session, { lessonId: targetNodeId });
     } else if (typeof window.openGameScreen === 'function') {
-      window.openGameScreen(targetNodeId, session);
+      window.openGameScreen(nodeData);
     }
   });
 
@@ -7469,10 +7506,22 @@ document.addEventListener('DOMContentLoaded', () => {
       session = window.VOCA_DATA.generateStageSession(targetNodeId, window.currentActiveCourse, round);
     }
     window.currentSessionQuestions = session;
+    const lessonNodeData = { nodeId: targetNodeId, lessonId: targetNodeId, session, words: session };
     if (typeof window.openFlashcardScreen === 'function') {
-      window.openFlashcardScreen(targetNodeId, session);
+      window.openFlashcardScreen({
+        words: session,
+        lessonId: targetNodeId,
+        nodeData: lessonNodeData,
+        onComplete: () => {
+          if (typeof window.openGameScreen === 'function') {
+            window.openGameScreen(lessonNodeData);
+          }
+        }
+      });
     } else if (typeof window.launchGame === 'function') {
       window.launchGame('falling', session, { lessonId: targetNodeId });
+    } else if (typeof window.openGameScreen === 'function') {
+      window.openGameScreen(lessonNodeData);
     }
     return session;
   }
