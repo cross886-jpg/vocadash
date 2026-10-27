@@ -413,10 +413,10 @@
     if (curUnit && Array.isArray(curUnit.nodes)) {
       foundNode = curUnit.nodes.find(n => n.id === targetId);
       if (!foundNode) {
-        if (targetId === 'node-1') foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
-        else if (targetId === 'node-2') foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n2')));
-        else if (targetId === 'node-3') foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || (n.id && n.id.endsWith('_n5')));
-        else if (targetId === 'node-boss') foundNode = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
+        if (targetId === 'node-1' || String(targetId).endsWith('node-1') || String(targetId).endsWith('stage-1')) foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')));
+        else if (targetId === 'node-2' || String(targetId).endsWith('node-2') || String(targetId).endsWith('stage-2')) foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n2')));
+        else if (targetId === 'node-3' || String(targetId).endsWith('node-3') || String(targetId).endsWith('stage-3')) foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || (n.id && n.id.endsWith('_n5')));
+        else if (targetId === 'node-boss' || String(targetId).includes('boss')) foundNode = curUnit.nodes.find(n => n.type === 'boss' || (n.id && n.id.endsWith('_n6')));
       }
     }
     if (!foundNode && activeCourse && Array.isArray(activeCourse.units)) {
@@ -428,7 +428,9 @@
       }
     }
     if (!foundNode) {
-      foundNode = { id: targetId, stageNumber: targetId === 'node-1' ? 1 : targetId === 'node-2' ? 2 : targetId === 'node-3' ? 3 : 4 };
+      const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(targetId) : null;
+      const sNum = (coords && coords.nodeIndex === 'boss') ? 4 : (Number(coords?.nodeIndex) || (String(targetId).includes('1') ? 1 : String(targetId).includes('2') ? 2 : String(targetId).includes('3') ? 3 : 2));
+      foundNode = { id: targetId, stageNumber: sNum, type: (sNum === 4 || String(targetId).includes('boss')) ? 'boss' : 'stage' };
     }
     return foundNode;
   }
@@ -440,10 +442,10 @@
       const s = String(id).toLowerCase();
       if (s === 'node-1' || s === 'node-2' || s === 'node-3' || s === 'node-boss') return s;
 
-      // 언더바(_)와 하이픈(-) 둘 다 허용
-      if (s.endsWith('_n1') || s.endsWith('-n1')) return 'node-1';
-      if (s.endsWith('_n2') || s.endsWith('-n2')) return 'node-2';
-      if (s.endsWith('_n5') || s.endsWith('-n5')) return 'node-3';
+      // 언더바(_)와 하이픈(-) 둘 다 허용 및 복합 키 지원
+      if (s.endsWith('_n1') || s.endsWith('-n1') || s.endsWith('node-1') || s.endsWith('stage-1')) return 'node-1';
+      if (s.endsWith('_n2') || s.endsWith('-n2') || s.endsWith('node-2') || s.endsWith('stage-2')) return 'node-2';
+      if (s.endsWith('_n5') || s.endsWith('-n5') || s.endsWith('node-3') || s.endsWith('stage-3')) return 'node-3';
       if (s.endsWith('_n6') || s.endsWith('-n6') || s.includes('boss')) return 'node-boss';
 
       return null;
@@ -766,18 +768,19 @@
     gameFloatingEffect.classList.add('animate-float-pop');
   }
 
-  // 별점 계산 함수 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 70% 미만 ⭐☆☆)
+  // 별점 계산 함수 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 50~69% ⭐☆☆, 50% 미만 별 0개)
   function calculateStarsByAccuracy(accuracy) {
     const acc = Math.max(0, Math.min(100, Math.round(Number(accuracy) || 0)));
     if (acc >= 90) return 3;
     if (acc >= 70) return 2;
-    return 1;
+    if (acc >= 50) return 1;
+    return 0;
   }
   window.calculateStarsByAccuracy = calculateStarsByAccuracy;
 
-  // 클리어 모달 별점(1~3개) 렌더링 함수
+  // 클리어 모달 별점(0~3개) 렌더링 함수
   function renderModalStars(starCount) {
-    const count = Math.max(1, Math.min(3, Number(starCount) || 1));
+    const count = Math.max(0, Math.min(3, Number(starCount) || 0));
     const starIds = ['result-star-1', 'result-star-2', 'result-star-3'];
 
     starIds.forEach((id, idx) => {
@@ -786,16 +789,24 @@
       const isActive = idx < count;
       const icon = starEl.querySelector('span');
 
+      // DOM의 active 별 아이콘 클래스 정확히 토글
+      starEl.classList.toggle('active', isActive);
+
       if (isActive) {
         starEl.style.opacity = '1';
         starEl.style.filter = 'none';
-        starEl.style.boxShadow = '';
-        starEl.classList.remove('grayscale', 'opacity-30', 'ring-slate-300/30');
+        starEl.classList.remove('grayscale', 'opacity-25', 'opacity-30', 'ring-slate-300/30');
         starEl.classList.add('opacity-100');
+        if (idx === 1) {
+          starEl.style.boxShadow = '0 0 18px rgba(245, 158, 11, 0.7)';
+        } else {
+          starEl.style.boxShadow = '0 0 12px rgba(251, 191, 36, 0.5)';
+        }
         if (icon) {
           icon.style.color = '#b45309';
-          icon.classList.remove('text-slate-400');
-          icon.classList.add('text-amber-500');
+          icon.style.setProperty('font-variation-settings', "'FILL' 1");
+          icon.classList.remove('text-slate-400', 'text-slate-300');
+          icon.classList.add('text-amber-500', 'active');
         }
         if (idx === 2 && count === 3) {
           starEl.classList.add('scale-110', 'animate-bounce');
@@ -810,7 +821,8 @@
         starEl.classList.remove('opacity-100', 'scale-110', 'animate-bounce');
         if (icon) {
           icon.style.color = '#94a3b8';
-          icon.classList.remove('text-amber-500');
+          icon.style.setProperty('font-variation-settings', "'FILL' 0");
+          icon.classList.remove('text-amber-500', 'active');
           icon.classList.add('text-slate-400');
         }
       }
@@ -826,14 +838,16 @@
 
   let isStageFinishing = false;
   window.isStageFinishing = false;
+  let isHandlingResultPrimary = false;
 
   // 💡 플래그를 외부(치트 패널 등)에서도 언제든 풀 수 있도록 전역 헬퍼 제공
   window.resetStageFinishingFlag = function () {
     isStageFinishing = false;
     window.isStageFinishing = false;
+    isHandlingResultPrimary = false;
   };
 
-  function finishGameStage(isClear = true) {
+  function finishGameStage(isClear = true, customAccuracy = null) {
     if (isStageFinishing) {
       console.warn('🛑 [finishGameStage] 중복 호출 차단됨 (이미 완주 처리 진행 중)');
       return false;
@@ -942,7 +956,7 @@
 
         // 1) 현재 언어 및 코스 식별
         const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-        let rawTarget = (typeof currentGameLessonId !== 'undefined' && currentGameLessonId) || window.currentGameLessonId || window.currentSelectedNodeId || 'node-1';
+        let rawTarget = window.currentGameLessonId || (typeof currentGameLessonId !== 'undefined' && currentGameLessonId) || window.currentSelectedNodeId || 'node-1';
 
         // 💡 [핵심 보정] 유저가 3번 노드 플레이 중이거나 3번 노드가 선택된 상태인데 rawTarget이 node-review로 남아있는 경우 원천 차단
         const isTargetReview = rawTarget === 'node-review' || rawTarget === 'review' || String(rawTarget).includes('review');
@@ -974,8 +988,8 @@
           n1Saved = Number(window.getNodeProgress('node-1', currentCourseLang, activeCourseId)) || 0;
         } else {
           try {
-            const raw1 = localStorage.getItem(`vocadash_prog_${currentCourseLang}_${activeCourseId}_u1_n1`);
-            if (raw1) n1Saved = parseInt(raw1, 10) || 0;
+            const raw = localStorage.getItem(`vocadash_prog_${currentCourseLang}_${activeCourseId}_u1_n1`);
+            if (raw) n1Saved = parseInt(raw, 10) || 0;
           } catch (_) { }
         }
 
@@ -1021,8 +1035,13 @@
         const wrongCount = currentMissedList.length;
         const totalQ = (typeof gameQuestions !== 'undefined' && gameQuestions && gameQuestions.length) || (typeof window.gameQuestions !== 'undefined' && window.gameQuestions && window.gameQuestions.length) || 10;
 
-        // 이번 게임 오답이 0개면 정확도 100% 보장
-        const calculatedAccuracy = wrongCount === 0 ? 100 : Math.max(0, Math.min(100, Math.round(((totalQ - wrongCount) / totalQ) * 100)));
+        // 이번 게임 오답이 0개면 정확도 100% 보장 (customAccuracy 파라미터 지정 시 우선 반영)
+        let calculatedAccuracy = 100;
+        if (customAccuracy !== null && customAccuracy !== undefined && !isNaN(Number(customAccuracy))) {
+          calculatedAccuracy = Math.max(0, Math.min(100, Math.round(Number(customAccuracy))));
+        } else {
+          calculatedAccuracy = wrongCount === 0 ? 100 : Math.max(0, Math.min(100, Math.round(((totalQ - wrongCount) / totalQ) * 100)));
+        }
 
         const applyAccuracyUI = () => {
           const accEl = document.getElementById('result-accuracy-text') ||
@@ -1041,8 +1060,8 @@
         };
         applyAccuracyUI();
 
-        // 🌟 [6] 별점 판정 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 70% 미만 ⭐☆☆)
-        const modalScoreStars = isBossNode ? 3 : calculateStarsByAccuracy(calculatedAccuracy);
+        // 🌟 [6] 별점 판정 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 50~69% ⭐☆☆, 50% 미만 별 0개)
+        const modalScoreStars = calculateStarsByAccuracy(calculatedAccuracy);
         window.lastEarnedStars = modalScoreStars;
 
         renderModalStars(modalScoreStars);
@@ -1080,24 +1099,32 @@
             btnPrimaryText.textContent = window.isRoadmapReviewSpeedrun ? '다음 스테이지 ▶' : '오답노트로 복귀';
           }
         } else if (isBossNode) {
-          if (resultTitle) resultTitle.textContent = '¡STAGE CLEAR!';
+          if (resultTitle) resultTitle.textContent = modalScoreStars === 0 ? '클리어 실패' : '¡STAGE CLEAR!';
           if (resultSubtitle) {
-            resultSubtitle.textContent = `${actualUnitTitle} 보스전 완파! 🏆`;
+            resultSubtitle.textContent = modalScoreStars === 0
+              ? `${actualUnitTitle} 보스전 도전 실패 · 다시 도전하세요! 💪`
+              : `${actualUnitTitle} 보스전 완파! 🏆`;
           }
           if (btnPrimaryText) {
-            btnPrimaryText.textContent = '다음 유닛 도전하기 🚀';
+            btnPrimaryText.textContent = modalScoreStars === 0 ? '다시 도전하기 🔄' : '다음 유닛 도전하기 🚀';
           }
         } else {
-          if (resultTitle) resultTitle.textContent = '¡STAGE CLEAR!';
+          if (resultTitle) resultTitle.textContent = modalScoreStars === 0 ? '클리어 실패' : '¡STAGE CLEAR!';
           if (resultSubtitle) {
-            if (nextCount >= 3) {
-              resultSubtitle.textContent = `${actualUnitTitle} (3/3) 클리어! ★ 3별 마스터!`;
+            if (modalScoreStars === 0) {
+              resultSubtitle.textContent = `${actualUnitTitle} 정확도 ${calculatedAccuracy}% · 아쉬워요! 다시 도전해 보세요 💪`;
+            } else if (nextCount >= 3) {
+              resultSubtitle.textContent = modalScoreStars === 3
+                ? `${actualUnitTitle} (3/3) 클리어! ★ 3별 마스터!`
+                : `${actualUnitTitle} (3/3) 클리어!`;
             } else {
               resultSubtitle.textContent = `${actualUnitTitle} (${nextCount}/3) 클리어!`;
             }
           }
           if (btnPrimaryText) {
-            if (nextCount < 3) {
+            if (modalScoreStars === 0) {
+              btnPrimaryText.textContent = '다시 도전하기 🔄';
+            } else if (nextCount < 3) {
               btnPrimaryText.textContent = `다음 라운드 (${nextCount + 1}/3) ▶`;
             } else {
               btnPrimaryText.textContent = '다음 스테이지 ▶';
@@ -3601,6 +3628,7 @@
     }
     if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
     if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+    if (typeof window.autoScrollToActiveNode === 'function') window.autoScrollToActiveNode('instant');
   }
   window.exitGameToRoadmap = exitGameToRoadmap;
 
@@ -3835,7 +3863,7 @@
 
   window.getNextStageInfo = getNextStageInfo;
 
-  let isHandlingResultPrimary = false;
+  isHandlingResultPrimary = false;
   function handleResultPrimary(e) {
     if (e) {
       if (typeof e.preventDefault === 'function') e.preventDefault();
@@ -3925,7 +3953,7 @@
           setTimeout(() => {
             const n3Btn = document.getElementById('node-3-btn') || document.getElementById('node-3');
             if (n3Btn) {
-              n3Btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              n3Btn.scrollIntoView({ behavior: 'instant', block: 'center' });
               if (typeof window.openLessonModal === 'function') {
                 window.openLessonModal('node-3');
               }
@@ -3938,39 +3966,120 @@
 
     // 4) 다음 스테이지 정보 획득 및 정밀 타겟팅
     // 🛑 현재 플레이한 노드 ID 확보 (1순위: 현재 실행 중인 레슨 ID)
-    const currentPlayingId = currentGameLessonId || window.currentGameLessonId || window.currentSelectedNodeId || 'node-1';
+    const currentPlayingId = window.currentGameLessonId || currentGameLessonId || window.currentSelectedNodeId || 'node-1';
 
-    // 현재 노드의 실제 저장된 클리어 횟수 확인 (0~3)
+    const coords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(currentPlayingId)
+      : { unitIndex: 1, nodeIndex: 1 };
+    const currentUnitId = coords.unitIndex || window.currentUnitNumber || 1;
+    const currentNodeIdx = coords.nodeIndex;
+
     const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const activeCourseId = window.currentCourseId ||
       (window.isFootballMode || window.isFootballPack ? 'pack_football' : null) ||
       (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + currentCourseLang) : null) ||
       'main';
+
     let curCount = 0;
     if (typeof window.getNodeProgress === 'function') {
-      curCount = Number(window.getNodeProgress(currentPlayingId, currentCourseLang, activeCourseId)) || 0;
+      const p = window.getNodeProgress(currentPlayingId, currentCourseLang, activeCourseId);
+      curCount = (typeof p === 'object' && p !== null) ? Number(p.clearedCount || 0) : Number(p) || 0;
     } else if (window.nodeProgressMap) {
       curCount = window.nodeProgressMap[currentPlayingId] || 0;
     }
-
-    // 🛑 3회 미만이면 무조건 "현재 노드의 다음 회차"로 유지 (노드 튐 원천 차단)
-    let nextNodeId = currentPlayingId;
-    let nextRound = Math.min(3, curCount + 1);
-
-    // 3회 완주 시에만 순차적으로 다음 노드로 승급
-    if (curCount >= 3) {
-      if (currentPlayingId === 'node-1' || currentPlayingId.endsWith('_n1')) {
-        nextNodeId = 'node-2';
-      } else if (currentPlayingId === 'node-2' || currentPlayingId.endsWith('_n3')) {
-        nextNodeId = 'node-3';
-      } else if (currentPlayingId === 'node-3' || currentPlayingId.endsWith('_n4')) {
-        nextNodeId = 'node-boss';
-      }
-      nextRound = 1;
+    if (window.nodeProgressMap && window.nodeProgressMap[currentPlayingId] !== undefined) {
+      curCount = Math.max(curCount, Number(window.nodeProgressMap[currentPlayingId]) || 0);
     }
 
-    // 3회 완주하여 다음 노드로 넘어갈 때, 혹시 로드맵으로 바로 돌아가야 하는 경우 방어
-    if (curCount >= 3 && (nextNodeId === 'node-boss' || String(nextNodeId).includes('bonus'))) {
+    const isCurrentBoss = (
+      currentNodeIdx === 'boss' ||
+      currentNodeIdx === 6 ||
+      currentNodeIdx === 4 ||
+      String(currentPlayingId).includes('boss') ||
+      String(currentPlayingId).endsWith('_n6') ||
+      currentPlayingId === 'node-boss'
+    );
+
+    // 복합 키 u${unitId}_node-${nextStage} 형식 유지
+    let nextNodeId = `u${currentUnitId}_node-${currentNodeIdx}`;
+    let nextRound = Math.min(3, curCount + 1);
+
+    // 정확도 50% 미만으로 별 0개인 경우: 현재 라운드 재도전
+    if (window.lastEarnedStars === 0) {
+      nextNodeId = `u${currentUnitId}_node-${currentNodeIdx}`;
+      nextRound = curCount;
+    } else if (isCurrentBoss || curCount >= 3) {
+      // 3회 완주 또는 보스전 클리어 시에만 순차적으로 다음 노드로 승급
+      nextRound = 1;
+
+      if (isCurrentBoss) {
+        // 보스전 클리어 -> 다음 유닛 1번 노드로 진입
+        const nextUnitId = currentUnitId + 1;
+        nextNodeId = `u${nextUnitId}_node-1`;
+
+        // 다음 유닛 잠금 상태 해제 및 활성화
+        window.currentUnitIndex = nextUnitId - 1;
+        window.currentUnitNumber = nextUnitId;
+        if (typeof window.setUnlockedUnitLevel === 'function') {
+          window.setUnlockedUnitLevel(nextUnitId, currentCourseLang, activeCourseId);
+        }
+        if (typeof window.unlockUnitsUpTo === 'function') {
+          window.unlockUnitsUpTo(nextUnitId, currentCourseLang, activeCourseId);
+        }
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        if (window.nodeProgressMap[nextNodeId] === undefined) window.nodeProgressMap[nextNodeId] = 0;
+        if (!Array.isArray(window.unlockedNodes)) window.unlockedNodes = [];
+        if (!window.unlockedNodes.includes(nextNodeId)) {
+          window.unlockedNodes.push(nextNodeId);
+        }
+        try {
+          const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
+          if (!uData.unlockedNodes) uData.unlockedNodes = [];
+          if (!uData.unlockedNodes.includes(nextNodeId)) uData.unlockedNodes.push(nextNodeId);
+          localStorage.setItem('vocadash_user_data', JSON.stringify(uData));
+        } catch (_) { }
+        if (typeof window.updateTopUnitBanner === 'function') {
+          window.updateTopUnitBanner(nextUnitId - 1);
+        }
+      } else if (currentNodeIdx === 1 || String(currentPlayingId).endsWith('1') || String(currentPlayingId).endsWith('_n1')) {
+        nextNodeId = `u${currentUnitId}_node-2`;
+      } else if (currentNodeIdx === 2 || String(currentPlayingId).endsWith('2') || String(currentPlayingId).endsWith('_n2')) {
+        nextNodeId = `u${currentUnitId}_node-3`;
+      } else if (currentNodeIdx === 3 || String(currentPlayingId).endsWith('3') || String(currentPlayingId).endsWith('_n5')) {
+        // 3번 노드 완주 시 보스 노드로 진입 및 보스 잠금 해제
+        nextNodeId = `u${currentUnitId}_node-boss`;
+
+        if (!window.nodeProgressMap) window.nodeProgressMap = {};
+        if (window.nodeProgressMap[nextNodeId] === undefined) window.nodeProgressMap[nextNodeId] = 0;
+        if (currentUnitId === 1) {
+          window.nodeProgressMap['node-boss'] = window.nodeProgressMap['node-boss'] || 0;
+        }
+        if (!Array.isArray(window.unlockedNodes)) window.unlockedNodes = [];
+        if (!window.unlockedNodes.includes(nextNodeId)) window.unlockedNodes.push(nextNodeId);
+        if (currentUnitId === 1 && !window.unlockedNodes.includes('node-boss')) window.unlockedNodes.push('node-boss');
+        try {
+          const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
+          if (!uData.unlockedNodes) uData.unlockedNodes = [];
+          if (!uData.unlockedNodes.includes(nextNodeId)) uData.unlockedNodes.push(nextNodeId);
+          if (currentUnitId === 1 && !uData.unlockedNodes.includes('node-boss')) uData.unlockedNodes.push('node-boss');
+          localStorage.setItem('vocadash_user_data', JSON.stringify(uData));
+        } catch (_) { }
+      }
+    }
+
+    // 모든 코스 유닛 완주 확인
+    const activeCourse = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : (window.packFootballData || window.courseData);
+    const parsedNextCoords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(nextNodeId)
+      : { unitIndex: currentUnitId, nodeIndex: 1 };
+    const nextUnitIdx = (parsedNextCoords.unitIndex || 1) - 1;
+
+    if (isCurrentBoss && activeCourse?.units && Array.isArray(activeCourse.units) && nextUnitIdx >= activeCourse.units.length) {
+      if (!window.nodeProgressMap) window.nodeProgressMap = {};
+      window.nodeProgressMap[currentPlayingId] = 3;
+      if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
       isExplicitExitRequested = true;
       window.isExplicitExitRequested = true;
       exitGameToRoadmap(true);
@@ -3978,10 +4087,30 @@
       window.isExplicitExitRequested = false;
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+      if (typeof window.showCourseCompletionModal === 'function') {
+        window.showCourseCompletionModal();
+      } else if (typeof window.showToast === 'function') {
+        window.showToast('🏆 축하합니다! 모든 코스 유닛을 완벽 마스터했습니다!', '🎉');
+      }
       return false;
     }
 
-    console.log(`📚 [Flow] 다음 스테이지(${nextNodeId}) 플래시카드 화면으로 진입 (라운드: ${nextRound})`);
+    // 다음 스테이지 세션 데이터 생성 (ReferenceError 방어)
+    let nextSession = null;
+    if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
+      nextSession = window.getFootballStageSession(nextNodeId);
+    } else if (typeof window.generateStageSession === 'function') {
+      nextSession = window.generateStageSession(nextNodeId, currentCourseLang, nextRound);
+    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      nextSession = window.VOCA_DATA.generateStageSession(nextNodeId, currentCourseLang, nextRound);
+    }
+
+    window.currentSelectedNodeId = nextNodeId;
+    window.currentGameLessonId = nextNodeId;
+    window.currentLessonId = nextNodeId;
+    currentGameLessonId = nextNodeId;
+
+    console.log(`📚 [Flow] 다음 스테이지(${nextNodeId}) 학습 파이프라인 진입 (라운드: ${nextRound})`);
 
     // 🛑 배경 화면(로드맵, 로드맵 헤더, 게임 화면, 하단 네비) 완전 숨김 (화면 겹침 및 이탈 방어)
     const roadmapScreen = document.getElementById('roadmap-screen');
@@ -4015,14 +4144,15 @@
       flashcardScreen.style.display = '';
     }
 
-    if (typeof window.openFlashcardScreen === 'function') {
+    // 3단계 학습 파이프라인(startStageLearningPipeline) 우선 호출 및 방어 처리
+    if (typeof window.startStageLearningPipeline === 'function') {
+      window.startStageLearningPipeline(nextNodeId, nextSession);
+    } else if (typeof window.openFlashcardScreen === 'function') {
       window.openFlashcardScreen(nextNodeId, nextSession);
     } else if (typeof window.initFlashcardDeck === 'function') {
       window.initFlashcardDeck(nextNodeId, nextSession);
     } else if (typeof window.loadFlashcards === 'function') {
       window.loadFlashcards(nextNodeId, nextSession);
-    } else if (typeof window.startStageLearningPipeline === 'function') {
-      window.startStageLearningPipeline(nextNodeId, nextSession);
     } else {
       openGameScreen(nextNodeId, nextSession);
     }

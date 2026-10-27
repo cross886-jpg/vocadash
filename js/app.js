@@ -4076,7 +4076,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const unitSubBadge = el('unit-sub-badge');
     const unitLangBadge = el('unit-lang-badge');
     const unitMainTitle = el('unit-main-title');
-    const unitProgressBar = el('unit-progress-bar');
     const unitThumbIcon = el('unit-thumb-icon');
 
     const isFootball = (window.activeCourseId === 'pack_football' || (activeCourse && (activeCourse.id === 'pack_football' || activeCourse.courseId === 'pack_football')));
@@ -4127,27 +4126,6 @@ document.addEventListener('DOMContentLoaded', () => {
           unitMainTitle.textContent = sub ? `${targetUnit.title} (${sub.split(',')[0].trim()})` : targetUnit.title;
         }
       }
-    }
-
-    if (unitProgressBar) {
-      const curUnitNum = targetIdx + 1;
-      let pct = 0;
-      if (curUnitNum < unlockedLevel) {
-        pct = 100;
-      } else if (curUnitNum === unlockedLevel) {
-        const prog1 = window.nodeProgressMap['node-1'] !== undefined ? window.nodeProgressMap['node-1'] : 0;
-        const prog2 = window.nodeProgressMap['node-2'] || 0;
-        const prog3 = window.nodeProgressMap['node-3'] || 0;
-        const progBoss = window.nodeProgressMap['node-boss'] || 0;
-        if (progBoss >= 3) pct = 100;
-        else if (prog3 >= 3) pct = 85;
-        else if (prog2 >= 3) pct = 65;
-        else if (prog1 >= 3) pct = 35;
-        else pct = 10;
-      } else {
-        pct = 0;
-      }
-      unitProgressBar.style.width = `${pct}%`;
     }
   }
   window.updateTopUnitBanner = updateTopUnitBanner;
@@ -5665,22 +5643,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.setupRoadmapObserver = setupRoadmapObserver;
 
-  // 현재 진행 중인 노드로 자동 스크롤 (Auto Scroll to Active Node)
-  function autoScrollToActiveNode() {
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        const currentActiveNode = document.querySelector('.roadmap-node.active, .node-pulse');
-        if (currentActiveNode && typeof currentActiveNode.getBoundingClientRect === 'function') {
-          const rect = currentActiveNode.getBoundingClientRect();
-          if (window.scrollY === 0 && rect && rect.top >= 100 && rect.bottom <= (window.innerHeight || 800)) {
-            return;
-          }
-          if (typeof currentActiveNode.scrollIntoView === 'function') {
-            currentActiveNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // 현재 진행 중인 노드 엘리먼트 탐색 헬퍼 (Auto Scroll Target Resolver)
+  function getActiveRoadmapNodeElement() {
+    // 1순위: window.currentSelectedNodeId 또는 window.currentGameLessonId 기반 매핑
+    const targetId = window.currentSelectedNodeId || window.currentGameLessonId || window.currentLessonId;
+    if (targetId) {
+      const byDataId = document.querySelector(`[data-node-id="${targetId}"]`);
+      if (byDataId) {
+        return (typeof byDataId.closest === 'function' ? byDataId.closest('.roadmap-node, .node-item') : null) || byDataId;
+      }
+      const byContainer = document.getElementById(`${targetId}-container`) || document.getElementById(targetId) || document.getElementById(`${targetId}-btn`);
+      if (byContainer) {
+        return (typeof byContainer.closest === 'function' ? byContainer.closest('.roadmap-node, .node-item') : null) || byContainer;
+      }
+    }
+
+    // 2순위: .node-item.active, .roadmap-node.active, .node-pulse, [data-node-type="active"]
+    const activeEl = document.querySelector('.node-item.active, .roadmap-node.active, .node-pulse, [data-node-type="active"]');
+    if (activeEl) return activeEl;
+
+    return null;
+  }
+  window.getActiveRoadmapNodeElement = getActiveRoadmapNodeElement;
+
+  // 현재 진행 중인 노드로 즉시 자동 스크롤 (Auto Scroll to Active Node - instant)
+  function autoScrollToActiveNode(options = {}) {
+    const behavior = (typeof options === 'string' ? options : (options && options.behavior)) || 'instant';
+    const performScroll = () => {
+      const currentActiveNode = getActiveRoadmapNodeElement();
+      if (currentActiveNode && typeof currentActiveNode.scrollIntoView === 'function') {
+        try {
+          currentActiveNode.scrollIntoView({ behavior, block: 'center' });
+        } catch (_) {
+          try {
+            currentActiveNode.scrollIntoView({ behavior: 'auto', block: 'center' });
+          } catch (_) {
+            currentActiveNode.scrollIntoView(true);
           }
         }
-      }, 100);
-    });
+      }
+    };
+
+    // 불필요한 setTimeout(100ms) 대기 및 긴 롤링 애니메이션 없이 즉시 동기 스크롤
+    performScroll();
+
+    // DOM 렌더링/레이아웃 지연 방어를 위해 RAF로 1회 즉시 보장
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(performScroll);
+    }
   }
   window.autoScrollToActiveNode = autoScrollToActiveNode;
 
@@ -5802,7 +5812,229 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateCourseSwitcherUI = updateCourseSwitcherUI;
 
-  // 단어팩 보관함 화면 UI 렌더링 함수
+  // 🌐 [구조 확장] 다국어 및 코스/테마 팩 레지스트리 (Extensible Language & Pack Registry)
+  const SUPPORTED_LANGUAGES = [
+    { code: 'es', label: '스페인어(ES)', flag: '🇪🇸', active: true },
+    { code: 'en', label: '영어(EN)', flag: '🇺🇸', active: true },
+    { code: 'ja', label: '일본어(JA)', flag: '🇯🇵', active: false, badge: '오픈 예정' },
+    { code: 'fr', label: '프랑스어(FR)', flag: '🇫🇷', active: false, badge: '오픈 예정' },
+    { code: 'de', label: '독일어(DE)', flag: '🇩🇪', active: false, badge: '오픈 예정' }
+  ];
+  window.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
+
+  const PACK_CATALOG = {
+    es: [
+      {
+        id: 'pack_football',
+        title: '스페인 축구 실전',
+        category: '스페셜 팩',
+        badge: 'Official DLC',
+        desc: '스페인 현지 경기장 & 피치 콜 필수 어휘',
+        icon: '⚽',
+        wordsCount: 120,
+        unitsCount: 6,
+        lang: 'es',
+        isComingSoon: false
+      },
+      {
+        id: 'main',
+        title: '스페인어 정규 코스',
+        category: '정규 코스',
+        badge: '기본 정규 코스',
+        desc: '일상 회화 & 실전 기초 어휘 마스터',
+        icon: '🇪🇸',
+        wordsCount: 40,
+        unitsCount: 4,
+        lang: 'es',
+        isComingSoon: false
+      },
+      {
+        id: 'pack_business',
+        title: '비즈니스 & 무역 실전',
+        category: '비즈니스',
+        badge: '출시 예정',
+        desc: '바이어 미팅, 이메일, 계약 실무 비즈니스 어휘',
+        icon: '💼',
+        wordsCount: 80,
+        unitsCount: 4,
+        lang: 'es',
+        isComingSoon: true
+      },
+      {
+        id: 'pack_food',
+        title: '스페인 미식 & 타파스 투어',
+        category: '테마 여행',
+        badge: '출시 예정',
+        desc: '현지 맛집 주문부터 식재료, 와인 테이스팅',
+        icon: '🥘',
+        wordsCount: 80,
+        unitsCount: 4,
+        lang: 'es',
+        isComingSoon: true
+      }
+    ],
+    en: [
+      {
+        id: 'main_en',
+        title: '영어 정규 코스',
+        category: '정규 코스',
+        badge: '기본 정규 코스',
+        desc: '일상 회화 & 실전 필수 어휘 마스터',
+        icon: '🇺🇸',
+        wordsCount: 40,
+        unitsCount: 4,
+        lang: 'en',
+        isComingSoon: false
+      },
+      {
+        id: 'pack_en_opic',
+        title: '오픽/토스 실전 비즈니스 영어',
+        category: '시험 & 취업',
+        badge: '출시 예정',
+        desc: '외국계 기업 면접, 오피스 커뮤니케이션, 프레젠테이션',
+        icon: '💼',
+        wordsCount: 100,
+        unitsCount: 5,
+        lang: 'en',
+        isComingSoon: true
+      },
+      {
+        id: 'pack_en_travel',
+        title: '여행영어 필수 서바이벌',
+        category: '여행 & 회화',
+        badge: '출시 예정',
+        desc: '공항 입국심사, 호텔 체크인, 긴급상황 대처',
+        icon: '✈️',
+        wordsCount: 80,
+        unitsCount: 4,
+        lang: 'en',
+        isComingSoon: true
+      }
+    ],
+    ja: [
+      {
+        id: 'main_ja',
+        title: '일본어 기초 회화',
+        category: '정규 코스',
+        badge: '오픈 예정',
+        desc: '히라가나/가타카나 및 현지 여행 필수 어휘',
+        icon: '🇯🇵',
+        wordsCount: 40,
+        unitsCount: 4,
+        lang: 'ja',
+        isComingSoon: true
+      }
+    ],
+    fr: [
+      {
+        id: 'main_fr',
+        title: '프랑스어 기초 회화',
+        category: '정규 코스',
+        badge: '오픈 예정',
+        desc: '파리 여행 & 일상 에티켓 필수 어휘',
+        icon: '🇫🇷',
+        wordsCount: 40,
+        unitsCount: 4,
+        lang: 'fr',
+        isComingSoon: true
+      }
+    ],
+    de: [
+      {
+        id: 'main_de',
+        title: '독일어 기초 회화',
+        category: '정규 코스',
+        badge: '오픈 예정',
+        desc: '기초 문법 및 독일 현지 실전 회화',
+        icon: '🇩🇪',
+        wordsCount: 40,
+        unitsCount: 4,
+        lang: 'de',
+        isComingSoon: true
+      }
+    ]
+  };
+  window.PACK_CATALOG = PACK_CATALOG;
+
+  // 단어팩/코스 카드 동적 템플릿 생성 헬퍼
+  function renderPackCardHtml(pack, isEquipped) {
+    const isComingSoon = !!pack.isComingSoon;
+    if (isComingSoon) {
+      return `
+        <article class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80" data-pack-id="${pack.id}" data-pack-lang="${pack.lang}">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                ${pack.icon}
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">${escapeHTML(pack.title)}</h3>
+                  <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">${escapeHTML(pack.badge || '출시 예정')}</span>
+                </div>
+                <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">${escapeHTML(pack.desc)}</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+            <span class="font-medium">${pack.unitsCount ? `Unit 1~${pack.unitsCount} 제작 중` : '오픈 준비 중'}</span>
+            <span class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+              <span class="material-symbols-outlined text-[14px]">lock</span> 준비 중
+            </span>
+          </div>
+        </article>
+      `;
+    }
+
+    const borderClass = isEquipped
+      ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/20'
+      : 'border-slate-200/90 hover:shadow-md';
+
+    const btnClass = isEquipped
+      ? 'btn-pack-equip px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center gap-1 bg-emerald-500 text-white shadow-xs cursor-default pointer-events-none'
+      : 'btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1 bg-slate-900 hover:bg-emerald-600 text-white shadow-xs';
+
+    const btnContent = isEquipped
+      ? '<span class="material-symbols-outlined text-[16px]">check_circle</span> 장착 중'
+      : '<span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기';
+
+    const badgeClass = isEquipped ? 'bg-emerald-100 text-emerald-800' : 'bg-emerald-100 text-emerald-800';
+
+    return `
+      <article class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border ${borderClass} flex flex-col gap-3 transition-all" data-pack-id="${pack.id}" data-pack-lang="${pack.lang}">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-2xl flex items-center justify-center border border-emerald-100 flex-shrink-0 shadow-2xs">
+              ${pack.icon}
+            </div>
+            <div class="flex flex-col min-w-0">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">${escapeHTML(pack.title)}</h3>
+                ${pack.badge ? `<span class="px-2 py-0.5 rounded-full ${badgeClass} text-[10px] font-black">${escapeHTML(pack.badge)}</span>` : ''}
+              </div>
+              <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">${escapeHTML(pack.desc)}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+          <div class="flex items-center gap-2">
+            <span class="flex items-center gap-1 font-semibold text-slate-600">
+              <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
+              총 ${pack.wordsCount}단어 (${pack.unitsCount} Units)
+            </span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" class="${btnClass}" data-pack-id="${pack.id}" ${isEquipped ? 'disabled' : ''}>
+              ${btnContent}
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+  window.renderPackCardHtml = renderPackCardHtml;
+
+  // 단어팩/코스 보관함 화면 UI 렌더링 함수
   function renderPacksScreenUI(lang) {
     const packsScreen = document.getElementById('packs-screen');
     if (!packsScreen) return;
@@ -5811,29 +6043,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentLang = lang || window.currentPacksLang || (window.currentLanguage === 'en' ? 'en' : 'es');
     window.currentPacksLang = currentLang;
 
-    // 0) 언어 세그먼트 탭 UI 갱신
-    const tabEs = document.getElementById('packs-tab-es');
-    const tabEn = document.getElementById('packs-tab-en');
-    if (tabEs && tabEn) {
-      if (currentLang === 'es') {
-        tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black';
-        tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold';
-      } else {
-        tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-blue-800 shadow-xs font-black';
-        tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold';
+    // 0) 언어 세그먼트 탭 동적 렌더링 (또는 클래스 갱신)
+    const langTabsContainer = document.getElementById('packs-lang-tabs');
+    if (langTabsContainer) {
+      langTabsContainer.innerHTML = SUPPORTED_LANGUAGES.map(item => {
+        const isSelected = item.code === currentLang;
+        const activeClass = isSelected
+          ? (item.code === 'en' ? 'bg-white text-blue-800 shadow-xs font-black' : 'bg-white text-emerald-800 shadow-xs font-black')
+          : 'text-slate-600 hover:text-slate-900 font-bold';
+        return `
+          <button id="packs-tab-${item.code}" type="button"
+            class="packs-lang-tab flex-1 py-2 px-3 rounded-xl text-center transition-all cursor-pointer ${activeClass} shrink-0 whitespace-nowrap"
+            data-pack-lang="${item.code}">
+            ${item.flag} ${item.label}
+          </button>
+        `;
+      }).join('');
+    } else {
+      const tabEs = document.getElementById('packs-tab-es');
+      const tabEn = document.getElementById('packs-tab-en');
+      if (tabEs && tabEn) {
+        if (currentLang === 'es') {
+          tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black shrink-0';
+          tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold shrink-0';
+        } else {
+          tabEn.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-blue-800 shadow-xs font-black shrink-0';
+          tabEs.className = 'packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold shrink-0';
+        }
       }
     }
 
-    const activeId = window.activeCourseId || localStorage.getItem('vocadash_active_course') || 'main';
+    const activeId = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null) || 'main';
 
     // 1) Active Hero Banner
     const heroTitle = document.getElementById('packs-hero-title');
     const heroDesc = document.getElementById('packs-hero-desc');
     const heroIcon = document.getElementById('packs-hero-icon');
-    const heroStatusPill = document.getElementById('packs-hero-status-pill');
 
     if (activeId === 'pack_football') {
-      if (heroTitle) heroTitle.textContent = '스페인 축구 실전팩 (Official DLC)';
+      if (heroTitle) heroTitle.textContent = '스페인 축구 실전 (Official DLC)';
       if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 60개';
       if (heroIcon) heroIcon.textContent = '⚽';
     } else if ((window.currentLanguage || 'es') === 'en') {
@@ -5846,23 +6094,36 @@ document.addEventListener('DOMContentLoaded', () => {
       if (heroIcon) heroIcon.textContent = '🇪🇸';
     }
 
-    // 2) Pack Cards Status & Buttons
-    const packCards = packsScreen.querySelectorAll('.pack-card[data-pack-id]');
+    // 2) 동적 코스/테마 팩 카드 렌더링
+    const packCardsContainer = document.getElementById('packs-card-list');
+    const catalog = PACK_CATALOG[currentLang] || [];
     let visibleCount = 0;
-    packCards.forEach(card => {
-      const cardLang = card.dataset.packLang || 'es';
-      if (cardLang === currentLang) {
-        card.classList.remove('hidden');
+
+    if (packCardsContainer) {
+      packCardsContainer.innerHTML = catalog.map(pack => {
+        const isEquipped = !pack.isComingSoon && (
+          (pack.id === activeId) ||
+          (pack.id === 'main_en' && activeId === 'main' && (window.currentLanguage || 'es') === 'en') ||
+          (pack.id === 'main' && activeId === 'main' && (window.currentLanguage || 'es') === 'es')
+        );
         visibleCount++;
-      } else {
-        card.classList.add('hidden');
-      }
+        return renderPackCardHtml(pack, isEquipped);
+      }).join('');
+    } else {
+      const packCards = packsScreen.querySelectorAll('.pack-card[data-pack-id]');
+      packCards.forEach(card => {
+        const cardLang = card.dataset.packLang || 'es';
+        if (cardLang === currentLang) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
 
-      const pid = card.dataset.packId;
-      const isEquipped = (pid === activeId) || (pid === 'main_en' && activeId === 'main' && (window.currentLanguage || 'es') === 'en') || (pid === 'main' && activeId === 'main' && (window.currentLanguage || 'es') === 'es');
-      const equipBtn = card.querySelector('.btn-pack-equip');
+        const pid = card.dataset.packId;
+        const isEquipped = (pid === activeId) || (pid === 'main_en' && activeId === 'main' && (window.currentLanguage || 'es') === 'en') || (pid === 'main' && activeId === 'main' && (window.currentLanguage || 'es') === 'es');
+        const equipBtn = card.querySelector('.btn-pack-equip');
 
-      if (pid === 'pack_football' || pid === 'main' || pid === 'main_en') {
         if (isEquipped) {
           card.classList.remove('border-slate-200/90', 'border-slate-200');
           card.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/20', 'bg-emerald-50/20');
@@ -5880,8 +6141,8 @@ document.addEventListener('DOMContentLoaded', () => {
             equipBtn.disabled = false;
           }
         }
-      }
-    });
+      });
+    }
 
     const countLabel = document.getElementById('packs-count-label');
     if (countLabel) {
@@ -5897,23 +6158,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!packsScreen || packsScreen.dataset.eventsBound === 'true') return;
     packsScreen.dataset.eventsBound = 'true';
 
-    // 언어 세그먼트 탭 클릭 이벤트
-    const tabEs = document.getElementById('packs-tab-es');
-    const tabEn = document.getElementById('packs-tab-en');
-    if (tabEs) {
-      tabEs.addEventListener('click', () => {
-        renderPacksScreenUI('es');
-        if (typeof window.triggerHaptic === 'function') window.triggerHaptic(15);
-      });
-    }
-    if (tabEn) {
-      tabEn.addEventListener('click', () => {
-        renderPacksScreenUI('en');
-        if (typeof window.triggerHaptic === 'function') window.triggerHaptic(15);
-      });
-    }
-
+    // 이벤트 위임(Event Delegation)으로 동적 언어 탭 및 장착 버튼 모두 안전 바인딩
     packsScreen.addEventListener('click', (e) => {
+      // 1) 언어 탭 클릭
+      const langTab = e.target.closest('.packs-lang-tab');
+      if (langTab) {
+        const targetLang = langTab.dataset.packLang;
+        if (targetLang) {
+          renderPacksScreenUI(targetLang);
+          if (typeof window.triggerHaptic === 'function') window.triggerHaptic(15);
+        }
+        return;
+      }
+
+      // 2) 코스/팩 장착 버튼 클릭
       const btn = e.target.closest('.btn-pack-equip');
       if (!btn || btn.disabled) return;
       const packId = btn.dataset.packId;
@@ -6623,9 +6881,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 시험 통과 후 모달을 닫고, 목표 유닛의 1번 노드 위치로 로드맵 스크롤 뷰 이동
     const targetNodeEl = document.getElementById('node-1-btn') || document.querySelector('[data-node-id="node-1"]');
-    if (targetNodeEl) {
+    if (targetNodeEl && typeof targetNodeEl.scrollIntoView === 'function') {
       targetNodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
+    } else if (typeof window.scrollTo === 'function') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
@@ -11429,10 +11687,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearSub.textContent = `${stageName} (${newClearedCount}/3) 클리어!`;
       }
 
-      // 6) 별 아이콘 3개 갱신 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 70% 미만 ⭐☆☆)
-      const modalStars = isBossNode ? 3 : (typeof window.calculateStarsByAccuracy === 'function'
+      // 6) 별 아이콘 3개 갱신 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 50~69% ⭐☆☆, 50% 미만 별 0개)
+      const modalStars = (typeof window.calculateStarsByAccuracy === 'function')
         ? window.calculateStarsByAccuracy(accuracy)
-        : (accuracy >= 90 ? 3 : (accuracy >= 70 ? 2 : 1)));
+        : (accuracy >= 90 ? 3 : (accuracy >= 70 ? 2 : (accuracy >= 50 ? 1 : 0)));
       window.lastEarnedStars = modalStars;
       if (typeof window.renderModalStars === 'function') {
         window.renderModalStars(modalStars);
@@ -11440,10 +11698,17 @@ document.addEventListener('DOMContentLoaded', () => {
         [el('result-star-1'), el('result-star-2'), el('result-star-3')].forEach((s, idx) => {
           if (s) {
             const isActive = idx < modalStars;
+            s.classList.toggle('active', isActive);
             s.style.opacity = isActive ? '1' : '0.25';
             s.style.filter = isActive ? 'none' : 'grayscale(100%)';
-            s.style.boxShadow = isActive ? '' : 'none';
+            s.style.boxShadow = isActive ? (idx === 1 ? '0 0 18px rgba(245, 158, 11, 0.7)' : '0 0 12px rgba(251, 191, 36, 0.5)') : 'none';
             s.classList.toggle('grayscale', !isActive);
+            const icon = s.querySelector('span');
+            if (icon) {
+              icon.classList.toggle('active', isActive);
+              icon.style.color = isActive ? '#b45309' : '#94a3b8';
+              icon.style.setProperty('font-variation-settings', isActive ? "'FILL' 1" : "'FILL' 0");
+            }
           }
         });
       }

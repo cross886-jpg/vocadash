@@ -1,7 +1,6 @@
 게임화면에서 음성이 반복 재생됨
 [해결 완료] 게임 완료후 90%이상 정확도인데 별이 1개 나옴 -> 정확도 기반 표준 별점 기준 확립 (90% 이상 3별 ⭐⭐⭐, 70~89% 2별 ⭐⭐☆, 70% 미만 1별 ⭐☆☆) 및 결과 모달 UI 완전 동기화, 레거시 중복 코드 정리 완료
-한게임당 문제가 15개가 되는데 13개가 넘지 않도록 설계필요
-마지막은 문장빈칸 채우기로 글자를 키우고 속도는 10분의1수준으로 엄청 천천히 내려오도록 설계필요
+
 2과 완료후 선물 챕터로 넘어갔을때 선물이 색상이 변하지 않음 회색에서 다른색상으로 변경필요 
 2과 완료시 다시 클릭하면 복습으로 넘어가야하는데 클릭이 되지 않음
 1과 2과 다 클리어 했는데 1과는 레슨진행중이라고 나옴 
@@ -25,3 +24,8 @@ unit3 2과정상작동해
 [해결 완료] 1과 1스테이지 클리어 시 타 코스(축구 실전팩, 영어 정규 코스 등) 동시 해금 및 발바닥 점등 공유 버그 해결 -> 진행도(vocadash_prog_${lang}_${courseId}_u${unitIndex}_n${nodeIndex}), 유닛 해금(vocadash_unlocked_${lang}_${courseId}), 활성 코스(vocadash_active_course_${lang}) 완전 격리 및 레거시 키/콘솔 정리 완료
 [해결 완료] 3번 노드 플레이 완주 시 이전 복습 노드('node-review')로 오인식되어 진행도 저장이 차단되고 4중 중복 호출되던 현상 해결 -> 전역 노드 ID 동기화, activeNodeId 3번 노드 정규화 복원, 복습 격리 조건 엄격화, isStageFinishing 중복 실행 방어 및 세션 클린업 완료
 [해결 완료] 보스전 하단 미니 캡슐 배지 UI 일체형 디자인 적용 및 디버그 패널 치트 실행 편의성 강화
+[해결 완료] 결과창 정확도별 별점(별 3개) 판정 및 렌더링 로직 수정 -> 90% 이상(⭐⭐⭐), 70%~89%(⭐⭐), 50%~69%(⭐, 60% 시 1별 정상 부여), 50% 미만(0별/다시 도전하기) 4단계 차등 확립 및 DOM active 클래스/opacity 토글 연동
+[해결 완료] [다음 스테이지] 버튼 진행 오류 및 파이프라인 진입 에러 해결 -> 복합 키 `u${unitId}_node-${nextStage}` 형식 유지, 미정의 `nextSession` 방어 및 세션 생성, 3회 미만 동일 노드 다음 라운드/3회 완주 시 다음 노드/보스 클리어 시 다음 유닛 자동 승급 및 `startStageLearningPipeline` 직행 처리
+[해결 완료] 게임 종료 후 로드맵 복귀 시 긴 롤링 애니메이션 제거 및 현재 스테이지 즉시 스크롤(instant) 고정 -> autoScrollToActiveNode의 setTimeout 100ms 지연 및 smooth 제거, switchMainTab('home') 시 상단(top: 0) 강제 리셋 방지, window.currentSelectedNodeId 및 .node-item.active 타겟 매핑 후 scrollIntoView({ behavior: 'instant', block: 'center' }) 즉시 실행
+[해결 완료] 상단 유닛 진행 상황 게이지 바(Bar) 제거 -> index.html 헤더 #unit-banner 내부 #unit-progress-bar 요소 및 래퍼 div 삭제, app.js 내 updateTopUnitBanner의 임의 퍼센트(style.width) 계산 잔여 로직 완전 정리
+[해결 완료] '단어팩' 명칭 통일 및 다국어 확장 대비 구조 개편 -> '스페인어 단어팩' 등 고정 명칭을 '스페인어(ES)', '영어(EN)'로 간결화, SUPPORTED_LANGUAGES 메타데이터 레지스트리 및 PACK_CATALOG 구축, renderPackCardHtml 동적 템플릿과 이벤트 위임 바인딩으로 일본어(JA), 프랑스어(FR), 독일어(DE) 등 다국어 무한 확장 구조 확립

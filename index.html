@@ -445,11 +445,6 @@
             </div>
             <div id="unit-main-title" class="text-sm font-black text-white leading-snug mt-1 truncate">일상 회화 & 실전 기초 어휘
               마스터</div>
-            <div class="w-full bg-emerald-950/60 h-2 rounded-full mt-1.5 overflow-hidden border border-emerald-700/40">
-              <div id="unit-progress-bar"
-                class="h-full bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(251,191,36,0.5)]"
-                style="width: 35%;"></div>
-            </div>
           </div>
 
           <!-- 우측: 화살표 드롭다운 버튼 (v) -->
@@ -1006,18 +1001,18 @@
 
       <!-- Main Container -->
       <div class="px-4 flex flex-col gap-4">
-        <!-- Packs Language Segmented Tab (🇪🇸 스페인어 단어팩 | 🇺🇸 영어 단어팩) -->
+        <!-- Packs Language Segmented Tab (🇪🇸 스페인어(ES) | 🇺🇸 영어(EN)) -->
         <div class="w-full">
-          <div class="flex items-center bg-slate-200/80 p-1 rounded-2xl gap-1 text-xs font-bold select-none">
+          <div id="packs-lang-tabs" class="flex items-center bg-slate-200/80 p-1 rounded-2xl gap-1 text-xs font-bold select-none overflow-x-auto no-scrollbar">
             <button id="packs-tab-es" type="button"
-              class="packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black"
+              class="packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black shrink-0"
               data-pack-lang="es">
-              🇪🇸 스페인어 단어팩
+              🇪🇸 스페인어(ES)
             </button>
             <button id="packs-tab-en" type="button"
-              class="packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold"
+              class="packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer text-slate-600 hover:text-slate-900 font-bold shrink-0"
               data-pack-lang="en">
-              🇺🇸 영어 단어팩
+              🇺🇸 영어(EN)
             </button>
           </div>
         </div>
@@ -1055,11 +1050,12 @@
         <!-- Pack Cards List Section -->
         <section class="flex flex-col gap-3">
           <div class="flex items-center justify-between px-1">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">공식 테마 팩 목록</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">공식 학습 코스 & 테마 목록</span>
             <span id="packs-count-label" class="text-[11px] text-slate-400 font-semibold">2개 사용 가능</span>
           </div>
 
-          <!-- [Spanish Packs] -->
+          <div id="packs-card-list" class="flex flex-col gap-3">
+            <!-- [Spanish Packs] -->
           <!-- Pack Card 1: ⚽ 스페인 축구 실전팩 -->
           <article
             class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md"
@@ -1324,6 +1320,7 @@
               </span>
             </div>
           </article>
+          </div>
         </section>
       </div>
     </div>

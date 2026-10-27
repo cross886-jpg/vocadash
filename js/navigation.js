@@ -342,9 +342,15 @@
       } catch (err) {
         console.warn('[VocaDash] roadmap nodes UI update error caught:', err);
       }
+      if (typeof window.autoScrollToActiveNode === 'function') {
+        window.autoScrollToActiveNode('instant');
+      }
     }
 
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    // ⚡ [UX 개선] 로드맵(home) 화면 진입 시에는 top: 0 리셋을 배제하여 긴 롤링 애니메이션을 방지하고, 타 탭 진입 시에만 상단 리셋 수행
+    if (normTab !== 'home') {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
     } finally {
       isNavSwitchingTab = false;
     }
@@ -1081,8 +1087,53 @@
     window.activeCourseId = activeCourseId;
     const currentCourseData = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : window.courseData;
 
+    const coords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(targetNodeId)
+      : { unitIndex: 1, nodeIndex: 1 };
+    const targetUnitNum = coords?.unitIndex || 1;
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourse) : 1) || 1;
-    const unitIndex = Math.max(0, unlockedLevel - 1);
+
+    // 다음 유닛으로 넘어갈 때 잠금 상태 해제 방어
+    if (targetUnitNum > unlockedLevel) {
+      if (typeof window.setUnlockedUnitLevel === 'function') {
+        window.setUnlockedUnitLevel(targetUnitNum, currentCourse, activeCourseId);
+      }
+      if (typeof window.unlockUnitsUpTo === 'function') {
+        window.unlockUnitsUpTo(targetUnitNum, currentCourse, activeCourseId);
+      }
+    }
+
+    // 보스 노드일 경우 보스 노드 잠금 상태 해제 방어
+    const isBoss = (
+      coords?.nodeIndex === 'boss' ||
+      coords?.nodeIndex === 6 ||
+      coords?.nodeIndex === 4 ||
+      String(targetNodeId).includes('boss') ||
+      targetNodeId === 'node-boss'
+    );
+    if (isBoss) {
+      if (!window.nodeProgressMap) window.nodeProgressMap = {};
+      if (window.nodeProgressMap[targetNodeId] === undefined) window.nodeProgressMap[targetNodeId] = 0;
+      if (targetUnitNum === 1) {
+        window.nodeProgressMap['node-boss'] = window.nodeProgressMap['node-boss'] || 0;
+      }
+      if (Array.isArray(window.unlockedNodes)) {
+        if (!window.unlockedNodes.includes(targetNodeId)) window.unlockedNodes.push(targetNodeId);
+        if (targetUnitNum === 1 && !window.unlockedNodes.includes('node-boss')) window.unlockedNodes.push('node-boss');
+      }
+      try {
+        const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
+        if (!uData.unlockedNodes) uData.unlockedNodes = [];
+        if (!uData.unlockedNodes.includes(targetNodeId)) uData.unlockedNodes.push(targetNodeId);
+        if (targetUnitNum === 1 && !uData.unlockedNodes.includes('node-boss')) uData.unlockedNodes.push('node-boss');
+        localStorage.setItem('vocadash_user_data', JSON.stringify(uData));
+      } catch (_) { }
+    }
+
+    const unitIndex = Math.max(0, targetUnitNum - 1);
+    window.currentUnitIndex = unitIndex;
+    window.currentUnitNumber = targetUnitNum;
+
     const targetUnit = (currentCourseData && Array.isArray(currentCourseData.units)) 
       ? (currentCourseData.units[unitIndex] || currentCourseData.units[0]) 
       : null;
@@ -1094,9 +1145,14 @@
     if (!session || !Array.isArray(session) || session.length === 0) {
       if (activeCourseId === 'pack_football' && typeof window.getFootballStageSession === 'function') {
         session = window.getFootballStageSession(targetNodeId);
+      } else if (typeof window.generateStageSession === 'function') {
+        session = window.generateStageSession(targetNodeId, currentCourse, round);
       } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
         session = window.VOCA_DATA.generateStageSession(targetNodeId, currentCourse, round);
       }
+    }
+    if ((!session || session.length === 0) && targetUnit && Array.isArray(targetUnit.words) && targetUnit.words.length > 0) {
+      session = targetUnit.words.slice(0, 10);
     }
     window.currentSessionQuestions = session || [];
 
