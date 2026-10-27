@@ -811,206 +811,265 @@
 
 
 // =================================================
+// [고품질 듀얼 사운드 재생 엔진 (Dual TTS Player)]
+// 1순위: Google Translate 고음질 원어민 CDN 오디오 스트림 재생
+// 2순위: 네트워크 차단/에러 시 Web Speech API 고음질 보이스 선별 폴백
+// =================================================
+let currentPlayingAudio = null;
+let cachedSynthesisVoices = [];
+
+function loadSynthesisVoices() {
+  if ('speechSynthesis' in window) {
+    try {
+      cachedSynthesisVoices = window.speechSynthesis.getVoices() || [];
+    } catch (_) { }
+  }
+}
+if ('speechSynthesis' in window) {
+  loadSynthesisVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = loadSynthesisVoices;
+  }
+}
+
+function getBestNaturalVoice(targetLang = 'es') {
+  if (!('speechSynthesis' in window)) return null;
+  if (cachedSynthesisVoices.length === 0) loadSynthesisVoices();
+
+  const isEn = (targetLang === 'en' || targetLang === 'en-US');
+  const langPrefix = isEn ? 'en' : 'es';
+
+  // 1) 사용자 지정 고음질 자연어 보이스 우선순위 키워드
+  const priorityKeywords = isEn
+    ? ['Google US English', 'Natural', 'Samantha', 'Alex', 'Victoria', 'Karen']
+    : ['Google español', 'Natural', 'Monica', 'Jorge', 'Paulina', 'Elvira', 'Mónica', 'Diego'];
+
+  for (const kw of priorityKeywords) {
+    const found = cachedSynthesisVoices.find(v =>
+      v.lang && v.lang.toLowerCase().startsWith(langPrefix) &&
+      v.name && v.name.toLowerCase().includes(kw.toLowerCase())
+    );
+    if (found) return found;
+  }
+
+  // 2) 언어 접두사 매칭 중 natural / google 포함 보이스 또는 첫 번째 매칭
+  const langMatches = cachedSynthesisVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+  if (langMatches.length > 0) {
+    const naturalVoice = langMatches.find(v =>
+      v.name && (v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('google'))
+    );
+    return naturalVoice || langMatches[0];
+  }
+  return null;
+}
+
+function sanitizeTTSText(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/[¡!¿?"'\[\]()“”‘’]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function setUiSpeakerActive(buttonEl) {
+  if (!buttonEl) return;
+  buttonEl.classList.add('tts-speaking', 'text-emerald-500', 'animate-pulse');
+  buttonEl.classList.remove('text-slate-400', 'text-slate-500', 'text-on-surface-variant');
+}
+
+function resetUiSpeakerActive(buttonEl) {
+  if (!buttonEl) return;
+  buttonEl.classList.remove('tts-speaking', 'text-emerald-500', 'animate-pulse');
+}
+
+function stopAllTTS() {
+  if (currentPlayingAudio) {
+    try {
+      currentPlayingAudio.pause();
+      currentPlayingAudio.currentTime = 0;
+    } catch (_) { }
+    currentPlayingAudio = null;
+  }
+  if ('speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch (_) { }
+  }
+  document.querySelectorAll('.tts-speaking').forEach(el => {
+    resetUiSpeakerActive(el);
+  });
+}
+window.stopTTS = stopAllTTS;
+
+function speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl) {
+  if (!('speechSynthesis' in window)) {
+    if (buttonEl) resetUiSpeakerActive(buttonEl);
+    return;
+  }
+  try {
+    window.speechSynthesis.cancel();
+    const isEn = (targetLangCode === 'en' || targetLangCode === 'en-US');
+    const utterance = new SpeechSynthesisUtterance(cleanWord);
+    utterance.lang = isEn ? 'en-US' : 'es-ES';
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+
+    const bestVoice = getBestNaturalVoice(targetLangCode);
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
+
+    utterance.onend = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    };
+    utterance.onerror = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  } catch (err) {
+    if (buttonEl) resetUiSpeakerActive(buttonEl);
+  }
+}
+
+// =================================================
+// 스페인어 원어민 TTS 엔진 (es-ES 강제 지정, pitch: 1.0, rate: 0.95)
+// =================================================
+function playSpanishTTS(text, buttonEl = null) {
+  stopAllTTS();
+
+  const cleanWord = sanitizeTTSText(text);
+  if (!cleanWord) return;
+
+  if (buttonEl) {
+    setUiSpeakerActive(buttonEl);
+  }
+
+  if (!('speechSynthesis' in window)) {
+    if (typeof playDualTTS === 'function') {
+      playDualTTS(cleanWord, 'es', buttonEl);
+    } else if (buttonEl) {
+      resetUiSpeakerActive(buttonEl);
+    }
+    return;
+  }
+
+  try {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanWord);
+    utterance.lang = 'es-ES'; // 스페인 본토 발음 강제 지정
+    utterance.pitch = 1.0;
+    utterance.rate = 0.95; // 자연스럽고 명확한 전달 속도 설정
+
+    const bestVoice = getBestNaturalVoice('es');
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
+
+    utterance.onend = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    };
+    utterance.onerror = () => {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+      if (typeof playDualTTS === 'function') {
+        playDualTTS(cleanWord, 'es', buttonEl);
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  } catch (err) {
+    if (buttonEl) resetUiSpeakerActive(buttonEl);
+    if (typeof playDualTTS === 'function') {
+      playDualTTS(cleanWord, 'es', buttonEl);
+    }
+  }
+}
+window.playSpanishTTS = playSpanishTTS;
+
+function playDualTTS(text, lang = 'es', buttonEl = null) {
+  stopAllTTS();
+
+  const cleanWord = sanitizeTTSText(text);
+  if (!cleanWord) return;
+
+  const isEn = (lang === 'en' || lang === 'en-US');
+  const targetLangCode = isEn ? 'en' : 'es';
+
+  if (buttonEl) {
+    setUiSpeakerActive(buttonEl);
+  }
+
+  // 1순위: Google Translate 고음질 CDN 오디오 스트림 재생
+  const cdnUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${targetLangCode}&q=${encodeURIComponent(cleanWord)}`;
+
+  let fallbackTriggered = false;
+  const triggerFallback = () => {
+    if (fallbackTriggered) return;
+    fallbackTriggered = true;
+    speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl);
+  };
+
+  try {
+    const audio = new Audio();
+    currentPlayingAudio = audio;
+    audio.playbackRate = 0.98;
+    audio.src = cdnUrl;
+
+    audio.onended = () => {
+      if (currentPlayingAudio === audio) currentPlayingAudio = null;
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    };
+
+    audio.onerror = () => {
+      if (currentPlayingAudio === audio) currentPlayingAudio = null;
+      triggerFallback();
+    };
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((err) => {
+        if (currentPlayingAudio === audio) currentPlayingAudio = null;
+        triggerFallback();
+      });
+    }
+  } catch (err) {
+    triggerFallback();
+  }
+}
+
+function safePlayTTS(text, lang = 'es', buttonEl = null) {
+  const isEs = !lang || lang === 'es' || lang === 'es-ES';
+  if (isEs) {
+    return playSpanishTTS(text, buttonEl);
+  }
+  return playDualTTS(text, lang, buttonEl);
+}
+
+window.speakWord = safePlayTTS;
+window.playTTS = safePlayTTS;
+window.safePlayTTS = safePlayTTS;
+window.playDualTTS = playDualTTS;
+
+
+
+// =================================================
 // VocaDash Flashcard Module (js/flashcard.js)
 // 단어 예습 플래시카드 넘기기, 카드 덱 스택 제어, 제스처, TTS 음성 재생
 // =================================================
 
 (function () {
-  // 브라우저 새로고침 및 강제 내비게이션 방어
-  try {
-    if (typeof history !== 'undefined') {
-      if (history.go) history.go = function (delta) { console.warn('🛑 history.go() 호출 차단됨'); };
-      if (history.back) history.back = function () { console.warn('🛑 history.back() 호출 차단됨'); };
-      if (history.forward) history.forward = function () { console.warn('🛑 history.forward() 호출 차단됨'); };
-    }
-    if (typeof HTMLFormElement !== 'undefined' && HTMLFormElement.prototype) {
-      HTMLFormElement.prototype.submit = function () {
-        console.warn('🛑 HTMLFormElement.submit() 호출 차단됨');
-        return false;
-      };
-    }
-  } catch (_) { }
-
-  // =================================================
-  // [고품질 듀얼 사운드 재생 엔진 (Dual TTS Player)]
-  // 1순위: Google Translate 고음질 원어민 CDN 오디오 스트림 재생
-  // 2순위: 네트워크 차단/에러 시 Web Speech API 고음질 보이스 선별 폴백
-  // =================================================
-  let currentPlayingAudio = null;
-  let cachedSynthesisVoices = [];
-
-  function loadSynthesisVoices() {
-    if ('speechSynthesis' in window) {
-      try {
-        cachedSynthesisVoices = window.speechSynthesis.getVoices() || [];
-      } catch (_) { }
-    }
-  }
-  if ('speechSynthesis' in window) {
-    loadSynthesisVoices();
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = loadSynthesisVoices;
-    }
-  }
-
-  function getBestNaturalVoice(targetLang = 'es') {
-    if (!('speechSynthesis' in window)) return null;
-    if (cachedSynthesisVoices.length === 0) loadSynthesisVoices();
-
-    const isEn = (targetLang === 'en' || targetLang === 'en-US');
-    const langPrefix = isEn ? 'en' : 'es';
-
-    const priorityKeywords = isEn
-      ? ['Google US English', 'Natural', 'Samantha', 'Alex', 'Victoria', 'Karen']
-      : ['Google español', 'Natural', 'Monica', 'Jorge', 'Paulina', 'Elvira', 'Mónica', 'Diego'];
-
-    for (const kw of priorityKeywords) {
-      const found = cachedSynthesisVoices.find(v =>
-        v.lang && v.lang.toLowerCase().startsWith(langPrefix) &&
-        v.name && v.name.toLowerCase().includes(kw.toLowerCase())
-      );
-      if (found) return found;
-    }
-
-    const langMatches = cachedSynthesisVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
-    if (langMatches.length > 0) {
-      const naturalVoice = langMatches.find(v =>
-        v.name && (v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('google'))
-      );
-      return naturalVoice || langMatches[0];
-    }
-    return null;
-  }
-
-  function sanitizeTTSText(text) {
-    if (!text) return '';
-    return String(text)
-      .replace(/[¡!¿?"'\[\]()“”‘’]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function setUiSpeakerActive(buttonEl) {
-    if (!buttonEl) return;
-    buttonEl.classList.add('tts-speaking', 'text-emerald-500', 'animate-pulse');
-    buttonEl.classList.remove('text-slate-400', 'text-slate-500', 'text-on-surface-variant');
-  }
-
-  function resetUiSpeakerActive(buttonEl) {
-    if (!buttonEl) return;
-    buttonEl.classList.remove('tts-speaking', 'text-emerald-500', 'animate-pulse');
-  }
-
+  // [Flashcard TTS 연동]: 최상단에 선언된 정규 듀얼 사운드 재생 엔진(window.stopTTS / window.speakWord)으로 단일화 위임
   function stopTTS() {
-    if (currentPlayingAudio) {
-      try {
-        currentPlayingAudio.pause();
-        currentPlayingAudio.currentTime = 0;
-      } catch (_) { }
-      currentPlayingAudio = null;
-    }
-    if ('speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-      } catch (_) { }
-    }
-    document.querySelectorAll('.tts-speaking').forEach(el => {
-      resetUiSpeakerActive(el);
-    });
-  }
-  window.stopTTS = stopTTS;
-
-  function speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl) {
-    if (!('speechSynthesis' in window)) {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-      return;
-    }
-    try {
-      window.speechSynthesis.cancel();
-      const isEn = (targetLangCode === 'en' || targetLangCode === 'en-US');
-      const utterance = new SpeechSynthesisUtterance(cleanWord);
-      utterance.lang = isEn ? 'en-US' : 'es-ES';
-      utterance.rate = 0.9;
-      utterance.pitch = 1.0;
-
-      const bestVoice = getBestNaturalVoice(targetLangCode);
-      if (bestVoice) {
-        utterance.voice = bestVoice;
-      }
-
-      utterance.onend = () => {
-        if (buttonEl) resetUiSpeakerActive(buttonEl);
-      };
-      utterance.onerror = () => {
-        if (buttonEl) resetUiSpeakerActive(buttonEl);
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } catch (err) {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-    }
-  }
-
-  function safePlayTTS(text, lang = 'es-ES', buttonEl = null) {
-    stopTTS();
-
-    const cleanWord = sanitizeTTSText(text);
-    if (!cleanWord) return;
-
-    const isEn = (lang === 'en' || lang === 'en-US');
-    const targetLangCode = isEn ? 'en' : 'es';
-
-    if (buttonEl) {
-      setUiSpeakerActive(buttonEl);
-    }
-
-    // 1순위: Google Translate 고음질 CDN 오디오 스트림 재생
-    const cdnUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${targetLangCode}&q=${encodeURIComponent(cleanWord)}`;
-
-    let fallbackTriggered = false;
-    const triggerFallback = () => {
-      if (fallbackTriggered) return;
-      fallbackTriggered = true;
-      speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl);
-    };
-
-    try {
-      const audio = new Audio();
-      currentPlayingAudio = audio;
-      audio.playbackRate = 0.98;
-      audio.src = cdnUrl;
-
-      audio.onended = () => {
-        if (currentPlayingAudio === audio) currentPlayingAudio = null;
-        if (buttonEl) resetUiSpeakerActive(buttonEl);
-      };
-
-      audio.onerror = () => {
-        if (currentPlayingAudio === audio) currentPlayingAudio = null;
-        triggerFallback();
-      };
-
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          if (currentPlayingAudio === audio) currentPlayingAudio = null;
-          triggerFallback();
-        });
-      }
-    } catch (err) {
-      triggerFallback();
+    if (typeof window.stopTTS === 'function') {
+      window.stopTTS();
     }
   }
 
   function speakWord(word, lang = 'es', buttonEl = null) {
-    safePlayTTS(word, lang, buttonEl);
+    if (typeof window.speakWord === 'function') {
+      window.speakWord(word, lang, buttonEl);
+    }
   }
-
-  window.stopTTS = stopTTS;
-  window.speakWord = safePlayTTS;
-  window.safePlayTTS = safePlayTTS;
-  window.playTTS = safePlayTTS;
-
   const cheerMessages = [
     '첫 단어부터 신나게 질주해볼까요? 🐾',
     '좋은 페이스예요! 귀에 쏙쏙 들어오네요 🐱',
@@ -1262,7 +1321,6 @@
     }));
 
     window.currentSessionQuestions = activeDeck;
-    console.log('📚 [Flashcard] 단어 덱 주입 완료: 레슨', currentFlashcardLessonId, '총', activeDeck.length, '개 단어');
     const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
     currentLessonDeckTitle = isReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
     currentCardIndex = 0;
@@ -2056,248 +2114,21 @@
   }
 })();
 
-
-// =================================================
-// [고품질 듀얼 사운드 재생 엔진 (Dual TTS Player)]
-// 1순위: Google Translate 고음질 원어민 CDN 오디오 스트림 재생
-// 2순위: 네트워크 차단/에러 시 Web Speech API 고음질 보이스 선별 폴백
-// =================================================
-let currentPlayingAudio = null;
-let cachedSynthesisVoices = [];
-
-function loadSynthesisVoices() {
-  if ('speechSynthesis' in window) {
-    try {
-      cachedSynthesisVoices = window.speechSynthesis.getVoices() || [];
-    } catch (_) { }
-  }
-}
-if ('speechSynthesis' in window) {
-  loadSynthesisVoices();
-  if (window.speechSynthesis.onvoiceschanged !== undefined) {
-    window.speechSynthesis.onvoiceschanged = loadSynthesisVoices;
-  }
-}
-
-function getBestNaturalVoice(targetLang = 'es') {
-  if (!('speechSynthesis' in window)) return null;
-  if (cachedSynthesisVoices.length === 0) loadSynthesisVoices();
-
-  const isEn = (targetLang === 'en' || targetLang === 'en-US');
-  const langPrefix = isEn ? 'en' : 'es';
-
-  // 1) 사용자 지정 고음질 자연어 보이스 우선순위 키워드
-  const priorityKeywords = isEn
-    ? ['Google US English', 'Natural', 'Samantha', 'Alex', 'Victoria', 'Karen']
-    : ['Google español', 'Natural', 'Monica', 'Jorge', 'Paulina', 'Elvira', 'Mónica', 'Diego'];
-
-  for (const kw of priorityKeywords) {
-    const found = cachedSynthesisVoices.find(v =>
-      v.lang && v.lang.toLowerCase().startsWith(langPrefix) &&
-      v.name && v.name.toLowerCase().includes(kw.toLowerCase())
-    );
-    if (found) return found;
-  }
-
-  // 2) 언어 접두사 매칭 중 natural / google 포함 보이스 또는 첫 번째 매칭
-  const langMatches = cachedSynthesisVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
-  if (langMatches.length > 0) {
-    const naturalVoice = langMatches.find(v =>
-      v.name && (v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('google'))
-    );
-    return naturalVoice || langMatches[0];
-  }
-  return null;
-}
-
-function sanitizeTTSText(text) {
-  if (!text) return '';
-  return String(text)
-    .replace(/[¡!¿?"'\[\]()“”‘’]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function setUiSpeakerActive(buttonEl) {
-  if (!buttonEl) return;
-  buttonEl.classList.add('tts-speaking', 'text-emerald-500', 'animate-pulse');
-  buttonEl.classList.remove('text-slate-400', 'text-slate-500', 'text-on-surface-variant');
-}
-
-function resetUiSpeakerActive(buttonEl) {
-  if (!buttonEl) return;
-  buttonEl.classList.remove('tts-speaking', 'text-emerald-500', 'animate-pulse');
-}
-
-function stopAllTTS() {
-  if (currentPlayingAudio) {
-    try {
-      currentPlayingAudio.pause();
-      currentPlayingAudio.currentTime = 0;
-    } catch (_) { }
-    currentPlayingAudio = null;
-  }
-  if ('speechSynthesis' in window) {
-    try {
-      window.speechSynthesis.cancel();
-    } catch (_) { }
-  }
-  document.querySelectorAll('.tts-speaking').forEach(el => {
-    resetUiSpeakerActive(el);
-  });
-}
-window.stopTTS = stopAllTTS;
-
-function speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl) {
-  if (!('speechSynthesis' in window)) {
-    if (buttonEl) resetUiSpeakerActive(buttonEl);
-    return;
-  }
-  try {
-    window.speechSynthesis.cancel();
-    const isEn = (targetLangCode === 'en' || targetLangCode === 'en-US');
-    const utterance = new SpeechSynthesisUtterance(cleanWord);
-    utterance.lang = isEn ? 'en-US' : 'es-ES';
-    utterance.rate = 0.9;
-    utterance.pitch = 1.0;
-
-    const bestVoice = getBestNaturalVoice(targetLangCode);
-    if (bestVoice) {
-      utterance.voice = bestVoice;
-    }
-
-    utterance.onend = () => {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-    };
-    utterance.onerror = () => {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-    };
-
-    window.speechSynthesis.speak(utterance);
-  } catch (err) {
-    if (buttonEl) resetUiSpeakerActive(buttonEl);
-  }
-}
-
-// =================================================
-// 스페인어 원어민 TTS 엔진 (es-ES 강제 지정, pitch: 1.0, rate: 0.95)
-// =================================================
-function playSpanishTTS(text, buttonEl = null) {
-  stopAllTTS();
-
-  const cleanWord = sanitizeTTSText(text);
-  if (!cleanWord) return;
-
-  if (buttonEl) {
-    setUiSpeakerActive(buttonEl);
-  }
-
-  if (!('speechSynthesis' in window)) {
-    if (typeof playDualTTS === 'function') {
-      playDualTTS(cleanWord, 'es', buttonEl);
-    } else if (buttonEl) {
-      resetUiSpeakerActive(buttonEl);
-    }
-    return;
-  }
-
-  try {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(cleanWord);
-    utterance.lang = 'es-ES'; // 스페인 본토 발음 강제 지정
-    utterance.pitch = 1.0;
-    utterance.rate = 0.95; // 자연스럽고 명확한 전달 속도 설정
-
-    const bestVoice = getBestNaturalVoice('es');
-    if (bestVoice) {
-      utterance.voice = bestVoice;
-    }
-
-    utterance.onend = () => {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-    };
-    utterance.onerror = () => {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-      if (typeof playDualTTS === 'function') {
-        playDualTTS(cleanWord, 'es', buttonEl);
-      }
-    };
-
-    window.speechSynthesis.speak(utterance);
-  } catch (err) {
-    if (buttonEl) resetUiSpeakerActive(buttonEl);
-    if (typeof playDualTTS === 'function') {
-      playDualTTS(cleanWord, 'es', buttonEl);
-    }
-  }
-}
-window.playSpanishTTS = playSpanishTTS;
-
-function playDualTTS(text, lang = 'es', buttonEl = null) {
-  stopAllTTS();
-
-  const cleanWord = sanitizeTTSText(text);
-  if (!cleanWord) return;
-
-  const isEn = (lang === 'en' || lang === 'en-US');
-  const targetLangCode = isEn ? 'en' : 'es';
-
-  if (buttonEl) {
-    setUiSpeakerActive(buttonEl);
-  }
-
-  // 1순위: Google Translate 고음질 CDN 오디오 스트림 재생
-  const cdnUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${targetLangCode}&q=${encodeURIComponent(cleanWord)}`;
-
-  let fallbackTriggered = false;
-  const triggerFallback = () => {
-    if (fallbackTriggered) return;
-    fallbackTriggered = true;
-    speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl);
-  };
-
-  try {
-    const audio = new Audio();
-    currentPlayingAudio = audio;
-    audio.playbackRate = 0.98;
-    audio.src = cdnUrl;
-
-    audio.onended = () => {
-      if (currentPlayingAudio === audio) currentPlayingAudio = null;
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
-    };
-
-    audio.onerror = () => {
-      if (currentPlayingAudio === audio) currentPlayingAudio = null;
-      triggerFallback();
-    };
-
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((err) => {
-        if (currentPlayingAudio === audio) currentPlayingAudio = null;
-        triggerFallback();
-      });
-    }
-  } catch (err) {
-    triggerFallback();
-  }
-}
-
-function safePlayTTS(text, lang = 'es', buttonEl = null) {
-  const isEs = !lang || lang === 'es' || lang === 'es-ES';
-  if (isEs) {
-    return playSpanishTTS(text, buttonEl);
-  }
-  return playDualTTS(text, lang, buttonEl);
-}
-
-window.speakWord = safePlayTTS;
-window.playTTS = safePlayTTS;
-window.safePlayTTS = safePlayTTS;
-window.playDualTTS = playDualTTS;
-
 document.addEventListener('DOMContentLoaded', () => {
+  // ===================================================
+  // [courseConfig.js 전역 설정 및 프리셋 바인딩]
+  // ===================================================
+  const DEFAULT_USER_PROGRESS = window.DEFAULT_USER_PROGRESS || {};
+  const COURSE_PRESETS = window.COURSE_PRESETS || { es: [], en: [] };
+  const COURSE_LESSONS = window.COURSE_LESSONS || { es: {}, en: {} };
+  const nodeLessonData = window.nodeLessonData || {};
+  const courseCategoryMap = window.courseCategoryMap || {};
+  const UNIT_LIST_PRESETS = window.UNIT_LIST_PRESETS || {};
+  const SUPPORTED_LANGUAGES = window.SUPPORTED_LANGUAGES || {};
+  const PACK_CATALOG = window.PACK_CATALOG || {};
+  const MODAL_COURSES = window.MODAL_COURSES || {};
+  const SIGNPOST_PRESETS = window.SIGNPOST_PRESETS || {};
+  const BOOK_COURSE_PRESETS = window.BOOK_COURSE_PRESETS || {};
   // ===================================================
   // URL ?clean 파라미터 완전 초기화 감지 (localStorage & sessionStorage 완전 리셋)
   // ===================================================
@@ -3091,19 +2922,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.saveNodeProgress = saveNodeProgress;
   window.currentSessionQuestions = [];
 
-  // 초기 사용자 상태(DEFAULT_USER_PROGRESS) 클린 초기화
-  const DEFAULT_USER_PROGRESS = {
-    currentCourse: 'pack_football',
-    currentUnit: 0,
-    currentNode: 0,
-    stars: {},
-    clearedNodes: [],
-    unlockedNodes: ['fb_1_n1', 'es_1_n1', 'node-1'],
-    weakWords: [],
-    gems: 0,
-    hearts: 5
-  };
-  window.DEFAULT_USER_PROGRESS = DEFAULT_USER_PROGRESS;
 
   // 전역 강제 초기화 함수 구현 (window.forceHardReset)
   window.forceHardReset = function () {
@@ -3148,21 +2966,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.currentCourseId = getSavedCourseId();
   window.currentBookCourseId = window.currentCourseId;
 
-  const COURSE_PRESETS = {
-    es: [
-      { id: 'basic', icon: '🌱', title: '기초 회화', desc: '인사, 감사, 숫자 등 매일 쓰는 첫걸음' },
-      { id: 'travel', icon: '✈️', title: '여행 스페인어', desc: '공항, 숙소, 식당 필수 회화' },
-      { id: 'dele', icon: '🎓', title: 'DELE 준비과정', desc: 'A1~B2 등급별 어휘 및 실전 대비' },
-      { id: 'business', icon: '💼', title: '비즈니스 스페인어', desc: '오피스 일상, 미팅, 이메일' }
-    ],
-    en: [
-      { id: 'basic', icon: '🌱', title: '기초 회화', desc: '인사, 감사, 숫자 등 매일 쓰는 첫걸음' },
-      { id: 'travel', icon: '✈️', title: '여행 영어', desc: '공항, 호텔, 카페 실전 회화' },
-      { id: 'toeic', icon: '🎓', title: '토익/오픽 대비', desc: '필수 기출 어휘 및 빈출 표현' },
-      { id: 'business', icon: '💼', title: '비즈니스 영어', desc: '오피스 실무, 미팅, 이메일' }
-    ]
-  };
-  window.COURSE_PRESETS = COURSE_PRESETS;
 
   window.courseData = {
     es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=68', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
@@ -3180,71 +2983,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const COURSE_LESSONS = {
-    es: {
-      basic: {
-        'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱', level: '기초', category: '인사/안부', tags: ['인사/안부', '인사', '안부'] },
-        'node-2': { title: '2과: 감사/사과', desc: 'Gracias, Por favor, Lo siento 등 필수 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏', level: '기초', category: '감사/사과', tags: ['감사/사과', '감사', '사과'] },
-        'node-3': { title: '3과: 숫자/시간', desc: '1부터 100까지의 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰', level: '기초', category: '숫자/시간', tags: ['숫자/시간', '숫자', '시간'] },
-        'node-boss': { title: '4과: 일상 기초 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '일상 기초', tags: ['일상 기초', '일상', '기초', '보스전'] }
-      },
-      travel: {
-        'node-1': { title: '1과: 기내 기본 표현', desc: '좌석 요청, 음료 주문, 착륙 안내 등 비행기 탑승 필수 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️', level: '초급', category: '공항/기내', tags: ['공항/기내', '공항', '기내', '비행기'] },
-        'node-2': { title: '2과: 입국 심사', desc: '입국 목적, 체류 기간, 숙소 위치 등 필수 공항 인터뷰 질문과 핵심 어휘 10개 및 실전 문장 3개를 마스터하세요!', icon: '🛂', level: '초중급', category: '교통/길찾기', tags: ['교통/길찾기', '입국 심사', '인터뷰', '심사'] },
-        'node-3': { title: '3과: 수하물 찾기와 세관', desc: '수하물 수취대 찾기, 분실물 신고, 세관 검사 필수 표현과 실전문장 13개를 마스터해보세요!', icon: '🧳', level: '중급', category: '호텔/숙소', tags: ['호텔/숙소', '수하물 찾기와 세관', '수하물', '세관'] },
-        'node-boss': { title: '보스전: 공항 마스터 관문', desc: '입국 심사 완벽 통과 & 특별 보상', icon: '👑', level: '보스전', category: '식당/카페', tags: ['식당/카페', '공항 마스터', '보스전'] }
-      },
-      dele: {
-        'node-1': { title: '1과: DELE A1 (우리 몸 1)', desc: '신체 기본 부위 및 A1 기초 어휘 50선', icon: '📝', level: 'DELE A1', category: 'DELE A1', tags: ['DELE A1', 'A1', '우리 몸 1', '우리 몸'] },
-        'node-2': { title: '2과: DELE A1 (우리 몸 2)', desc: '얼굴 및 감각 기관 핵심 어휘', icon: '👀', level: 'DELE A1', category: 'DELE A1', tags: ['DELE A1', 'A1', '우리 몸 2', '우리 몸'] },
-        'node-3': { title: '3과: DELE A2 (세부 부위/장기)', desc: '세부 신체 부위 및 A2 실전 독해 어휘', icon: '🫀', level: 'DELE A2', category: 'DELE A2', tags: ['DELE A2', 'A2', '세부 부위/장기', '장기'] },
-        'node-boss': { title: '4과: DELE 실전 모의테스트', desc: 'DELE B1/B2 실전 모의테스트 & 최종 관문', icon: '👑', level: 'DELE B2', category: 'DELE B2', tags: ['DELE B1', 'DELE B2', 'B1', 'B2', '모의테스트', '실전 모의테스트'] }
-      },
-      business: {
-        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝', level: '실무', category: '오피스 일상', tags: ['오피스 일상', '출근', '인사'] },
-        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼', level: '실무', category: '이메일/문서', tags: ['이메일/문서', '회의', '보고'] },
-        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧', level: '실무', category: '미팅/협상', tags: ['미팅/협상', '이메일', '전화'] },
-        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '비자/행정', tags: ['비자/행정', '협상', '보스전'] }
-      }
-    },
-    en: {
-      basic: {
-        'node-1': { title: '1과: 인사/기초 표현', desc: 'Hello, Thank you, Please 등 매일 쓰는 첫인사와 필수 기초 회화를 마스터하세요!', icon: '🌱', level: '기초', category: '인사/안부', tags: ['인사/안부', '인사'] },
-        'node-2': { title: '2과: 감사/사과 표현', desc: 'Thank you, Sorry, Excuse me 등 필수 영어 예절 표현과 핵심 어휘를 완벽하게 학습해보세요!', icon: '🙏', level: '기초', category: '감사/사과', tags: ['감사/사과', '감사'] },
-        'node-3': { title: '3과: 숫자와 시간', desc: '1부터 100까지의 영어 숫자와 시각 표현, 요일을 쉽고 빠르게 익혀보세요!', icon: '⏰', level: '기초', category: '숫자/시간', tags: ['숫자/시간', '숫자'] },
-        'node-boss': { title: '4과: 필수 회화 (보스전)', desc: '기초 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '일상 기초', tags: ['일상 기초', '보스전'] }
-      },
-      travel: {
-        'node-1': { title: '1과: 기내 필수 영어', desc: 'Water, Blanket, Aisle seat 등 비행기 탑승 필수 영어 단어와 표현을 완벽하게 복습해보세요!', icon: '✈️', level: '초급', category: '공항/기내', tags: ['공항/기내', '공항'] },
-        'node-2': { title: '2과: 공항 & 입국 심사', desc: 'Passport, Purpose of visit 등 입국 심사 핵심 영어 어휘와 문장 마스터!', icon: '🛂', level: '초중급', category: '교통/길찾기', tags: ['교통/길찾기', '입국 심사'] },
-        'node-3': { title: '3과: 수하물 찾기와 세관', desc: 'Baggage claim, Customs 등 수하물 분실 신고와 세관 통관 표현 마스터!', icon: '🧳', level: '중급', category: '호텔/숙소', tags: ['호텔/숙소', '수하물'] },
-        'node-boss': { title: '보스전: 여행 영어 마스터', desc: '여행 영어 완벽 마스터 & 특별 보상', icon: '👑', level: '보스전', category: '식당/카페', tags: ['식당/카페', '보스전'] }
-      },
-      toeic: {
-        'node-1': { title: '1과: Part 1/2 빈출 어휘', desc: '사진 묘사 및 질의응답 핵심 단어', icon: '🎧', level: '초급', category: 'Part 1/2', tags: ['Part 1/2', 'Part 1', 'Part 2'] },
-        'node-2': { title: '2과: Part 3/4 비즈니스 회화', desc: '대화 및 설명문 빈출 표현', icon: '💬', level: '중급', category: 'Part 3/4', tags: ['Part 3/4', 'Part 3', 'Part 4'] },
-        'node-3': { title: '3과: Part 5/6 문법/어휘', desc: '단문 및 장문 공란 메우기 핵심 단어', icon: '📄', level: '중상급', category: 'Part 5/6', tags: ['Part 5/6', 'Part 5', 'Part 6'] },
-        'node-boss': { title: '4과: Part 7 독해 실전 마스터', desc: '장문 독해 및 이메일/기사 지문 완성', icon: '👑', level: '실전', category: 'Part 7', tags: ['Part 7', '독해', '보스전'] }
-      },
-      business: {
-        'node-1': { title: '1과: 첫 출근과 인사', desc: '비즈니스 자기소개와 명함 교환, 직급 호칭', icon: '🤝', level: '실무', category: '오피스 일상', tags: ['오피스 일상', '출근'] },
-        'node-2': { title: '2과: 오피스 일상과 회의', desc: '회의 일정 잡기, 업무 협업 및 보고 표현', icon: '💼', level: '실무', category: '이메일/문서', tags: ['이메일/문서', '회의'] },
-        'node-3': { title: '3과: 이메일과 전화 응대', desc: '비즈니스 이메일 작성 및 바이어 통화 표현', icon: '📧', level: '실무', category: '미팅/협상', tags: ['미팅/협상', '이메일'] },
-        'node-boss': { title: '4과: 비즈니스 협상 마스터', desc: '비즈니스 회화 총정리 & 특별 보상', icon: '👑', level: '보스전', category: '비자/행정', tags: ['비자/행정', '협상'] }
-      }
-    }
-  };
-  Object.assign(COURSE_LESSONS, COURSE_LESSONS.es);
-  window.COURSE_LESSONS = COURSE_LESSONS;
-  window.nodeLessonData = COURSE_LESSONS.basic;
 
-  const courseCategoryMap = {
-    basic: { icon: '🌱', titles: { es: '기초 회화', en: '기초 회화' }, categories: ['전체', '인사/안부', '감사/사과', '숫자/시간', '일상 기초'] },
-    travel: { icon: '✈️', titles: { es: '여행 스페인어', en: '여행 영어' }, categories: ['전체', '공항/기내', '교통/길찾기', '호텔/숙소', '식당/카페'] },
-    dele: { icon: '🎓', titles: { es: 'DELE 준비과정', en: 'DELE 준비과정' }, categories: ['전체', 'DELE A1', 'DELE A2', 'DELE B1', 'DELE B2'] },
-    business: { icon: '💼', titles: { es: '비즈니스 스페인어', en: '비즈니스 영어' }, categories: ['전체', '오피스 일상', '이메일/문서', '미팅/협상', '비자/행정'] },
-    toeic: { icon: '🎓', titles: { es: '토익/오픽 대비', en: '토익/오픽 대비' }, categories: ['전체', 'Part 1/2', 'Part 3/4', 'Part 5/6', 'Part 7'] }
-  };
 
   let currentSelectedNodeId = 'node-2', modalSelectedCourse = 'es', lockedTooltipTimer = null;
 
@@ -3309,342 +3048,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Roadmap Nodes & Lesson Bottom Sheet
-  const lessonBackdrop = el('lesson-modal-backdrop') || el('stage-modal-backdrop'), lessonSheet = el('lesson-card-sheet') || el('stage-modal') || el('node-detail-modal'), lockedTooltip = el('locked-node-tooltip');
+  // 3. Roadmap Nodes & Lesson Bottom Sheet (상세 모달 제어 로직은 js/lessonModal.js로 분리됨)
+  const lockedTooltip = el('locked-node-tooltip');
+  const lessonBackdrop = el('lesson-modal-backdrop') || el('stage-modal-backdrop');
+  const openLessonModal = (nodeId) => { if (typeof window.openLessonModal === 'function') return window.openLessonModal(nodeId); };
+  const closeLessonModal = () => { if (typeof window.closeLessonModal === 'function') return window.closeLessonModal(); };
 
-  window.openLessonModal = function (nodeId) {
-    if (typeof checkAndRechargeHearts === 'function') checkAndRechargeHearts();
-    if (window.userHearts <= 0) {
-      console.warn(`[VocaDash] 하트 0개 상태에서 스테이지(${nodeId}) 클릭 차단 -> 하트 충전 모달 팝업`);
-      if (typeof openHeartRechargeModal === 'function') openHeartRechargeModal();
-      return;
-    }
-
-    const gScreen = document.getElementById('game-screen');
-    if (gScreen && gScreen.classList.contains('opacity-100') && !gScreen.classList.contains('pointer-events-none')) {
-      console.warn('🛑 게임 화면 활성 중 openLessonModal 호출 차단됨!');
-      return;
-    }
-
-    // 데이터 미등록 스테이지 방어 (Empty State Check)
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const db = (window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
-
-    let hasWords = false;
-    const curCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
-    if (nodeId === 'node-boss' || String(nodeId).includes('boss')) {
-      hasWords = true;
-    } else if (window.activeCourseId === 'pack_football' && window.packFootballData) {
-      hasWords = true;
-    } else if (curCourse && Array.isArray(curCourse.units) && curCourse.units.length > 0) {
-      hasWords = true;
-    } else if (db && Object.prototype.hasOwnProperty.call(db, nodeId)) {
-      const entry = db[nodeId];
-      if (entry) {
-        const words = entry[lang] || entry.words || entry.all || (Array.isArray(entry) ? entry : null);
-        if (Array.isArray(words) && words.length > 0) {
-          hasWords = true;
-        }
-      }
-    }
-
-    if (!hasWords) {
-      console.warn(`[VocaDash] 미등록 또는 빈 스테이지(${nodeId}) 탭 감지됨 -> 안내 모달 표시`);
-      window.showEmptyStageModal('🚧 단어장 준비 중! 곧 업데이트될 스테이지입니다.');
-      return;
-    }
-
-    currentSelectedNodeId = nodeId;
-    window.currentSelectedNodeId = nodeId;
-    window.currentGameLessonId = nodeId;
-    window.currentLessonId = nodeId;
-    if (nodeId !== 'node-review' && !String(nodeId).includes('review')) {
-      window.isReviewGameMode = false;
-      window.isRoadmapReviewSpeedrun = false;
-      window.isWrongWordsMiniReviewActive = false;
-    }
-    const isFootball = (window.activeCourseId === 'pack_football');
-    const courseId = isFootball ? 'pack_football' : (window.currentCourseId || 'basic');
-    let data = null;
-    let matchedNode = null;
-
-    const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : (window.packFootballData || window.courseData_es || window.courseData);
-    const curLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const curUnitLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(curLang) : 1) || 1;
-    let curUnit = null;
-
-    if (activeCourse && Array.isArray(activeCourse.units)) {
-      curUnit = activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0];
-      if (curUnit && Array.isArray(curUnit.nodes)) {
-        if (nodeId === 'node-1') {
-          matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith('_n1')));
-        } else if (nodeId === 'node-2') {
-          matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && (x.id.endsWith('_n2') || x.id.endsWith('_n3'))));
-        } else if (nodeId === 'node-3') {
-          // 💡 [핵심 버그 수정] 약점 복습(_n4, review) 절대 배제, 오직 순수 3과(stageNumber 3, _n5)만 정밀 매칭
-          matchedNode = curUnit.nodes.find(x => (x.stageNumber === 3 || (x.id && (x.id.endsWith('_n5') || x.id.endsWith('-n3')))) && x.type !== 'review' && !x.id?.includes('review'));
-          if (!matchedNode) {
-            matchedNode = curUnit.nodes.find(x => x.stageNumber === 3 && x.type !== 'review');
-          }
-        } else if (nodeId === 'node-boss' || String(nodeId).includes('boss')) {
-          matchedNode = curUnit.nodes.find(x => x.type === 'boss' || (x.id && x.id.endsWith('_n6')) || (x.id && x.id.includes('boss')));
-        } else {
-          matchedNode = curUnit.nodes.find(x => x.id === nodeId);
-        }
-
-        if (matchedNode) {
-          let nodeTitle = matchedNode.title;
-          if (nodeId === 'node-3' && (!nodeTitle || nodeTitle.includes('복습') || nodeTitle.includes('Review'))) {
-            nodeTitle = `${curUnit.unitNumber || curUnitLevel || 1}과: 자기소개와 소통`;
-          }
-
-          let nodeDesc = matchedNode.meaning
-            ? `${matchedNode.targetSentence || ''} (${matchedNode.meaning})`
-            : (matchedNode.desc || curUnit.desc || curUnit.subtitle || '핵심 어휘와 문장을 마스터하세요!');
-
-          if (nodeId === 'node-3' && (nodeDesc.includes('복습') || nodeDesc.includes('오답') || !matchedNode.meaning)) {
-            // 3과 실제 어휘 주제(자기소개와 소통 등) 설명 노출
-            nodeDesc = matchedNode.desc || curUnit.desc || '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!';
-          }
-
-          data = {
-            title: nodeTitle,
-            desc: nodeDesc,
-            icon: curUnit.icon || activeCourse.icon || (isFootball ? '⚽' : '🌱')
-          };
-        }
-      }
-      if (!data && activeCourse.lessons && activeCourse.lessons[nodeId]) {
-        data = activeCourse.lessons[nodeId];
-      }
-    }
-
-    // 💡 [보스 판정 및 유닛 번호 추출]
-    const isBossNode = (nodeId === 'node-boss' || String(nodeId).includes('boss') || (matchedNode && matchedNode.type === 'boss'));
-    const coords = (typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(nodeId) : null;
-    const unitX = (coords && coords.unitIndex) || (matchedNode && matchedNode.unitNumber) || curUnit?.unitNumber || curUnitLevel || 1;
-
-    if (isBossNode) {
-      data = {
-        title: `Unit ${unitX} 총괄 보스전`,
-        desc: '이번 유닛에서 배운 모든 단어가 총출동합니다!<br>단판 승부로 다음 유닛을 해금하세요.',
-        icon: '👑'
-      };
-    }
-
-    if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
-      const lessons = (window.COURSE_LESSONS && window.COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS[courseId]) || (COURSE_LESSONS && COURSE_LESSONS.basic);
-      data = (lessons && lessons[nodeId]) || (window.nodeLessonData && window.nodeLessonData[nodeId]);
-      if (!data || (nodeId === 'node-3' && (data.title?.includes('복습') || data.title?.includes('Review')))) {
-        data = {
-          title: isBossNode ? `Unit ${unitX} 총괄 보스전` : '3과: 자기소개와 소통',
-          desc: isBossNode ? '이번 유닛에서 배운 모든 단어가 총출동합니다!<br>단판 승부로 다음 유닛을 해금하세요.' : '자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!',
-          icon: isBossNode ? '👑' : (isFootball ? '🏆' : '🌱')
-        };
-      }
-    }
-
-
-    // ⭕ 언어 및 코스 격리된 실제 진행도 계산
-    const modalLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    let modalPack = window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + modalLang) : null) || 'main';
-    modalPack = (modalPack === 'pack_football') ? 'pack_football' : 'main';
-
-    let progress = 0;
-    if (typeof getNodeProgress === 'function') {
-      const p = getNodeProgress(nodeId, modalLang, modalPack);
-      progress = p?.clearedCount || 0;
-    }
-
-    // 🛑 [핵심 버그 수정] 복습 노드 완료 직후 3번 노드가 실제로 플레이되지 않았는데 오염되어 1이 되어있는 경우 0으로 강제 보정
-    // 🛑 [핵심 버그 수정] 복습 노드 완료 직후 3번 노드가 실제로 플레이되지 않았는데 오염되어 1이 되어있는 경우 0으로 강제 보정
-    if (nodeId === 'node-3' || nodeId === 'u1_node-3' || nodeId === 'u1_stage-3') {
-      let isActuallyCleared = false;
-      try {
-        const uData = JSON.parse(localStorage.getItem('vocadash_user_data') || '{}');
-        if (uData && uData.clearedNodes && (
-          (uData.clearedNodes['node-3'] && uData.clearedNodes['node-3'].actuallyPlayed) ||
-          (uData.clearedNodes['u1_node-3'] && uData.clearedNodes['u1_node-3'].actuallyPlayed) ||
-          (uData.clearedNodes['u1_stage-3'] && uData.clearedNodes['u1_stage-3'].actuallyPlayed)
-        )) {
-          isActuallyCleared = true;
-        }
-      } catch (_) { }
-
-      if (!isActuallyCleared) {
-        // 복습 완료로 인한 오염 잔여물이거나 미플레이 0회차 상태 보장
-        progress = 0;
-        try {
-          localStorage.removeItem(`vocadash_prog_${modalLang}_${modalPack}_u1_n3`);
-          localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_node-3`);
-          localStorage.removeItem(`node_progress_${modalLang}_${modalPack}_1_3`);
-          localStorage.removeItem('u1_node-3');
-          localStorage.removeItem('u1_stage-3');
-        } catch (_) { }
-        if (window.nodeProgressMap) {
-          window.nodeProgressMap['node-3'] = 0;
-          window.nodeProgressMap['u1_node-3'] = 0;
-          window.nodeProgressMap['u1_stage-3'] = 0;
-          window.nodeProgressMap[`${modalLang}_${modalPack}_u1_n3`] = 0;
-        }
-      }
-    }
-
-    progress = Math.max(0, Math.min(3, Number(progress) || 0));
-
-    // 🎯 [UI 분기 처리] 보스 노드 전용 UI vs 일반 노드 UI
-    const iconBox = el('lesson-modal-icon-box');
-    const badgeEl = el('lesson-modal-badge');
-    const progSection = el('lesson-modal-progress-section');
-    const bossSection = el('lesson-modal-boss-section');
-    const startBtn = el('lesson-start-btn');
-    const startBtnIcon = el('lesson-start-btn-icon');
-    const progBar = el('lesson-modal-progress-bar');
-
-    if (isBossNode) {
-      // 1) 아이콘 & 아이콘 박스 (강렬한 레드/로즈 톤)
-      setText('lesson-modal-icon', data.icon || '👑');
-      if (iconBox) {
-        iconBox.className = 'w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-rose-300 flex-shrink-0';
-      }
-
-      // 2) 상단 배지 (주황/빨강 배지: 🔥 FINAL BOSS EXAM)
-      setText('lesson-modal-badge', '🔥 FINAL BOSS EXAM');
-      if (badgeEl) {
-        badgeEl.className = 'font-label-sm text-[11px] text-rose-600 font-black uppercase tracking-wider';
-      }
-
-      // 3) 타이틀 & 설명
-      setText('lesson-modal-title', data.title || `Unit ${unitX} 총괄 보스전`);
-      setText('lesson-modal-desc', data.desc || '이번 유닛에서 배운 모든 단어가 총출동합니다! 단판 승부로 다음 유닛을 해금하세요.');
-
-      // 4) 진행 상태 0/3 영역 대체 -> 단판 조건 박스 노출
-      if (progSection) {
-        progSection.classList.add('hidden');
-        progSection.style.display = 'none';
-      }
-      if (bossSection) {
-        bossSection.classList.remove('hidden');
-        bossSection.classList.add('flex');
-        bossSection.style.display = 'flex';
-      }
-      setText('lesson-modal-boss-condition-badge', '🎯 단판 총괄 시험');
-      setText('lesson-modal-boss-condition-text', '통과 기준: 80% 이상');
-
-      // 5) 보상 배지 상향 (+50 XP, +30 💎)
-      setText('lesson-modal-xp', '+50 XP');
-      setText('lesson-modal-gems', '+30');
-
-      // 6) 메인 CTA 버튼 (⚔️ 보스전 도전하기 & 강렬한 그라데이션)
-      if (startBtn) {
-        startBtn.className = 'w-full h-12 rounded-2xl font-label-lg text-base bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-white font-black flex items-center justify-center gap-2 shadow-[0_4px_0_#be123c,0_8px_18px_-2px_rgba(244,63,94,0.45)] active:translate-y-1 active:shadow-none transition-all cursor-pointer';
-      }
-      if (startBtnIcon) {
-        startBtnIcon.style.display = 'none';
-      }
-      setText('lesson-start-btn-text', '⚔️ 보스전 도전하기');
-    } else {
-      // 🔄 일반 노드 복귀 처리
-      // 1) 아이콘 & 아이콘 박스 복원
-      setText('lesson-modal-icon', data.icon);
-      if (iconBox) {
-        iconBox.className = 'w-12 h-12 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-secondary-container/40 flex-shrink-0';
-      }
-
-      // 2) 상단 배지 복원
-      if (badgeEl) {
-        badgeEl.className = 'font-label-sm text-[11px] text-secondary font-extrabold uppercase tracking-wide';
-      }
-      setText('lesson-modal-badge', `${nodeId === 'node-1' ? '1과' : nodeId === 'node-3' ? '3과' : '2과'} · ${progress >= 3 ? '레슨 완료' : '현재 도전 중'}`);
-
-      // 3) 타이틀 & 설명 복원
-      setText('lesson-modal-title', data.title);
-      const descEl = document.getElementById('lesson-modal-desc');
-      if (descEl) descEl.innerHTML = data.desc;
-
-      // 4) 진행 상태 0/3 영역 복원
-
-      if (progSection) {
-        progSection.classList.remove('hidden');
-        progSection.style.display = '';
-      }
-      if (bossSection) {
-        bossSection.classList.add('hidden');
-        bossSection.classList.remove('flex');
-        bossSection.style.display = 'none';
-      }
-      setText('lesson-modal-progress-text', `${progress}/3`);
-      if (progBar) {
-        progBar.style.width = progress >= 3 ? '100%' : progress === 2 ? '67%' : progress === 1 ? '33%' : '0%';
-        progBar.className = `h-full rounded-full transition-all duration-300 ${progress >= 3 ? 'bg-primary' : 'bg-secondary'}`;
-      }
-
-      // 5) 보상 배지 복원 (+20 XP, +10 💎)
-      setText('lesson-modal-xp', '+20 XP');
-      setText('lesson-modal-gems', '+10');
-
-      // 6) 메인 CTA 버튼 복원 (에메랄드 그린)
-      if (startBtn) {
-        startBtn.className = 'w-full h-12 rounded-2xl font-label-lg text-base bg-[#22c55e] hover:bg-[#16a34a] text-white font-extrabold flex items-center justify-center gap-2 shadow-[0_4px_0_#15803d,0_8px_16px_-2px_rgba(34,197,94,0.4)] active:translate-y-1 active:shadow-none transition-all cursor-pointer';
-      }
-      if (startBtnIcon) {
-        startBtnIcon.textContent = 'play_arrow';
-        startBtnIcon.style.display = '';
-      }
-      setText('lesson-start-btn-text', progress >= 3 ? '복습 시작하기' : progress === 2 ? '마지막 레슨 도전!' : progress === 1 ? '다음 레슨 계속하기' : '학습 시작하기');
-    }
-
-    if (lessonBackdrop) {
-      lessonBackdrop.classList.remove('opacity-0', 'pointer-events-none');
-      lessonBackdrop.classList.add('opacity-100', 'pointer-events-auto');
-    }
-    if (lessonSheet) {
-      lessonSheet.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', 'scale-95');
-      lessonSheet.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto', 'scale-100');
-    }
-  };
-  window.showLessonModal = window.openLessonModal;
-  window.openLessonPreview = window.openLessonModal;
-
-  window.closeLessonModal = function () {
-    if (lessonBackdrop) {
-      lessonBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
-      lessonBackdrop.classList.add('opacity-0', 'pointer-events-none');
-    }
-    if (lessonSheet) {
-      lessonSheet.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto', 'scale-100');
-      lessonSheet.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none', 'scale-95');
-    }
-  };
-
-  // 전체 코스 맵 유닛 프리셋 정의 (1~10 유닛)
-  const UNIT_LIST_PRESETS = {
-    es: [
-      { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
-      { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
-      { unit: 3, title: '길찾기 & 교통', subtitle: '지하철, 버스, 택시 & 위치 묻기', progress: 0, status: 'locked', icon: '🧭' },
-      { unit: 4, title: '쇼핑 & 환전', subtitle: '가격 흥정, 사이즈 & 결제 표현', progress: 0, status: 'locked', icon: '🛍️' },
-      { unit: 5, title: '호텔 & 숙소', subtitle: '체크인, 룸서비스 & 어메니티 요청', progress: 0, status: 'locked', icon: '🏨' },
-      { unit: 6, title: '병원 & 약국', subtitle: '증상 설명, 응급처치 & 분실물 신고', progress: 0, status: 'locked', icon: '🏥' },
-      { unit: 7, title: '친구 사귀기 & 취미', subtitle: '자기소개, 취향 & 주말 약속', progress: 0, status: 'locked', icon: '🎉' },
-      { unit: 8, title: '날씨 & 일상 대화', subtitle: '사계절, 감정 표현 & 스몰토크', progress: 0, status: 'locked', icon: '☀️' },
-      { unit: 9, title: '비즈니스 기초', subtitle: '이메일, 오피스 미팅 & 명함 교환', progress: 0, status: 'locked', icon: '💼' },
-      { unit: 10, title: '현지 문화 & 관용구', subtitle: '스페인 속담, 슬랭 & 마스터 시험', progress: 0, status: 'locked', icon: '👑' }
-    ],
-    en: [
-      { unit: 1, title: '생존 첫걸음', subtitle: 'Greeting, Thanks & Numbers Master', progress: 60, status: 'active', icon: '🇺🇸' },
-      { unit: 2, title: '카페 & 주문', subtitle: 'Cafe, Food Ordering & The Check', progress: 0, status: 'locked', icon: '☕' },
-      { unit: 3, title: '길찾기 & 교통', subtitle: 'Subway, Taxi & Asking Directions', progress: 0, status: 'locked', icon: '🧭' },
-      { unit: 4, title: '쇼핑 & 환전', subtitle: 'Prices, Sizing & Credit Card', progress: 0, status: 'locked', icon: '🛍️' },
-      { unit: 5, title: '호텔 & 숙소', subtitle: 'Check-in, Amenities & Front Desk', progress: 0, status: 'locked', icon: '🏨' },
-      { unit: 6, title: '병원 & 약국', subtitle: 'Symptoms, Pharmacy & Emergencies', progress: 0, status: 'locked', icon: '🏥' },
-      { unit: 7, title: '친구 사귀기 & 취미', subtitle: 'Small Talk, Hobbies & Weekend', progress: 0, status: 'locked', icon: '🎉' },
-      { unit: 8, title: '날씨 & 일상 대화', subtitle: 'Weather, Mood & Daily Life', progress: 0, status: 'locked', icon: '☀️' },
-      { unit: 9, title: '비즈니스 기초', subtitle: 'Emails, Business Meetings & Office', progress: 0, status: 'locked', icon: '💼' },
-      { unit: 10, title: '현지 문화 & 관용구', subtitle: 'Native Idioms, Slang & Master Exam', progress: 0, status: 'locked', icon: '👑' }
-    ]
-  };
-  window.UNIT_LIST_PRESETS = UNIT_LIST_PRESETS;
 
   // ===================================================
   // 보너스 선물(type: bonus) 1회 한정 수령 및 재수령 방지 상태 관리
@@ -5135,484 +4544,49 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===================================================
   // 듀오링고 스타일 전체 유닛 연속 스크롤 로드맵 & 렌더링 시스템
   // ===================================================
-  function renderUnitNodeHtml(opt) {
-    const { unitNum, stageNum, title, align, width, isCompleted, isActive, isLocked, nodeKey, nodeId } = opt;
-    const resolvedId = nodeId || nodeKey || `u${unitNum}_stage-${stageNum}`;
-
-    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
-    const effectiveCompleted = isLocked ? false : !!isCompleted;
-    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
-
-    const nodeData = (typeof getNodeProgress === 'function') ? getNodeProgress(resolvedId) : { clearedCount: 0, stars: 0 };
-    const pCount = effectiveCompleted ? 3 : (effectiveActive ? nodeData.clearedCount : 0);
-
-    // 심플 별 3개 점등 생성 (글자 배제)
-    const s1 = pCount >= 1 ? '⭐' : '<span class="opacity-30">⭐</span>';
-    const s2 = pCount >= 2 ? '⭐' : '<span class="opacity-30">⭐</span>';
-    const s3 = pCount >= 3 ? '⭐' : '<span class="opacity-30">⭐</span>';
-
-    const btnClass = isLocked
-      ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'
-      : (effectiveCompleted
-        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
-        : (effectiveActive
-          ? 'bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70'
-          : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'));
-
-    return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}">
-        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${effectiveActive ? `
-            <span class="absolute w-[100px] h-[100px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
-            <span class="absolute w-[90px] h-[90px] rounded-full bg-sky-200/50 pointer-events-none"></span>
-          ` : ''}
-
-          <button class="subsequent-node-btn node-btn btn-3d relative ${effectiveActive ? 'w-[76px] h-[76px]' : 'w-[68px] h-[68px]'} rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${escapeHTML(title)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-            <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
-            <span class="node-stage-num ${effectiveActive ? 'text-sm font-extrabold tracking-tight' : 'font-black text-2xl'} select-none leading-none drop-shadow-xs relative z-10 text-white">${effectiveActive ? 'START' : stageNum}</span>
-          </button>
-
-          ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
-              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
-                <span>▶</span><span>START</span>
-                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
-              </div>
-            </div>
-          ` : ''}
-
-          ${effectiveCompleted ? `
-            <div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none">
-              <span class="material-symbols-outlined text-[15px] font-black">check</span>
-            </div>
-          ` : ''}
-
-          ${isLocked ? `
-            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
-              <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
-            </div>
-          ` : ''}
-        </div>
-
-        <!-- 심플 별 3개 캡슐 -->
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${effectiveCompleted ? 'border-emerald-300' : (effectiveActive ? 'border-2 border-sky-400 ring-2 ring-sky-100' : 'border-slate-200/60')} pointer-events-none ${isLocked ? 'opacity-80' : ''}">
-          <div class="flex items-center gap-1">
-            <span class="text-sm">${s1}</span>
-            <span class="text-sm">${s2}</span>
-            <span class="text-sm">${s3}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderUnitBonusHtml(opt) {
-    const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}_node-bonus`;
-
-    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
-    const effectiveCompleted = isLocked ? false : !!isCompleted;
-    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
-
-    const btnClass = isLocked
-      ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm'
-      : (effectiveCompleted
-        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60'
-        : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80');
-
-    return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'bonus')}" data-unit-index="${unitNum - 1}">
-        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${effectiveActive ? `
-            <span class="absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span>
-            <span class="absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>
-          ` : ''}
-
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-            <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
-            <span class="text-3xl select-none leading-none drop-shadow-sm ${isLocked ? '' : (effectiveCompleted ? '' : (effectiveActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10">${isLocked ? '🎁' : (effectiveCompleted ? '📦' : '🎁')}</span>
-          </button>
-
-          ${isLocked ? `
-            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20">
-              <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
-            </div>
-          ` : ''}
-
-          ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
-              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
-                <span>▶</span><span>START</span>
-                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
-              </div>
-            </div>
-          ` : ''}
-        </div>
-        <!-- 심플 보너스 캡슐 -->
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : (effectiveCompleted ? 'border-slate-200 opacity-80' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none">
-          <div class="flex items-center gap-1">
-            <span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '📦' : '🎁')}</span>
-            <span class="text-[11px] ${isLocked ? 'text-slate-400' : (effectiveCompleted ? 'text-slate-500' : 'text-amber-600')} font-extrabold">${isLocked ? '잠김' : (effectiveCompleted ? '수령 완료' : '+15 💎')}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderUnitReviewHtml(opt) {
-    const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}_node-review`;
-
-    // 🛡️ [우선순위 방어] 잠금(isLocked)을 최우선으로 판정!
-    // 잠겨있는 상태라면 완료(isCompleted) 플래그가 어떻게 되어 있든 절대 초록색 체크(✔/✅)를 렌더링하지 않음!
-    const effectiveCompleted = isLocked ? false : !!isCompleted;
-    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
-
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    let reviewWrongCount = 0;
-    if (typeof window.loadWrongWords === 'function') {
-      const loaded = window.loadWrongWords(currentLang) || [];
-      reviewWrongCount = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
-    } else if (Array.isArray(window.wrongWords)) {
-      reviewWrongCount = window.wrongWords.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
-    } else {
-      try {
-        const storageKey = (typeof getWrongStorageKey === 'function') ? getWrongStorageKey(currentLang) : `vocadash_wrong_answers_${currentLang}`;
-        const raw = localStorage.getItem(storageKey) || localStorage.getItem(`vocadash_weakness_words_${currentLang}`) || (currentLang === 'es' ? localStorage.getItem('vocadash_wrong_words') : null);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            reviewWrongCount = parsed.filter(w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
-          }
-        }
-      } catch (_) { }
+  // 백틱 템플릿 렌더러 함수들은 js/roadmapRenderer.js로 분리되어 전역(window)에 등록됨
+  function renderSubsequentUnits(...args) {
+    if (typeof window.renderSubsequentUnits === 'function' && window.renderSubsequentUnits !== renderSubsequentUnits) {
+      return window.renderSubsequentUnits(...args);
     }
-
-    const reviewBadgeLabel = reviewWrongCount > 0
-      ? `오답 탈출 (${reviewWrongCount})`
-      : (effectiveCompleted ? '복습 완료' : '스피드 복습');
-    const reviewBadgeIcon = (effectiveCompleted && reviewWrongCount === 0) ? '✅' : '⚡️';
-
-    let btnClass = '';
-    let btnIcon = '⚡️';
-
-    if (isLocked) {
-      btnClass = 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm';
-      btnIcon = '⚡️';
-    } else if (effectiveCompleted) {
-      btnClass = 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60';
-      btnIcon = '✅';
-    } else if (effectiveActive) {
-      btnClass = 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80';
-      btnIcon = '⚡️';
-    } else {
-      btnClass = 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80';
-      btnIcon = '⚡️';
+  }
+  function renderUnitNodeHtml(...args) {
+    if (typeof window.renderUnitNodeHtml === 'function' && window.renderUnitNodeHtml !== renderUnitNodeHtml) {
+      return window.renderUnitNodeHtml(...args);
     }
-
-    return `
-      <div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'review')}" data-unit-index="${unitNum - 1}">
-        <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-          ${effectiveActive ? `
-            <span class="absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span>
-            <span class="absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>
-          ` : ''}
-
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-            <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
-            <div class="relative flex items-center justify-center z-10">
-              <span class="text-3xl select-none leading-none drop-shadow-sm">${btnIcon}</span>
-              ${!isLocked && !effectiveCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}
-            </div>
-          </button>
-
-          ${isLocked ? `
-            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20">
-              <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
-            </div>
-          ` : ''}
-
-          ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
-              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
-                <span>▶</span><span>START</span>
-                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
-              </div>
-            </div>
-          ` : ''}
-        </div>
-        <!-- 심플 약점 복습 캡슐 (잠김 시 렌더링 생략) -->
-        ${isLocked ? '' : `
-        <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${effectiveCompleted && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200'} pointer-events-none">
-          <div class="flex items-center gap-1">
-            <span class="text-xs">${reviewBadgeIcon}</span>
-            <span class="text-[11px] text-orange-600 font-extrabold">${reviewBadgeLabel}</span>
-          </div>
-        </div>
-        `}
-      </div>
-    `;
+    return '';
+  }
+  function renderUnitBonusHtml(...args) {
+    if (typeof window.renderUnitBonusHtml === 'function' && window.renderUnitBonusHtml !== renderUnitBonusHtml) {
+      return window.renderUnitBonusHtml(...args);
+    }
+    return '';
+  }
+  function renderUnitReviewHtml(...args) {
+    if (typeof window.renderUnitReviewHtml === 'function' && window.renderUnitReviewHtml !== renderUnitReviewHtml) {
+      return window.renderUnitReviewHtml(...args);
+    }
+    return '';
+  }
+  function renderUnitBossHtml(...args) {
+    if (typeof window.renderUnitBossHtml === 'function' && window.renderUnitBossHtml !== renderUnitBossHtml) {
+      return window.renderUnitBossHtml(...args);
+    }
+    return '';
+  }
+  function renderUnitTrackSvgHtml(...args) {
+    if (typeof window.renderUnitTrackSvgHtml === 'function' && window.renderUnitTrackSvgHtml !== renderUnitTrackSvgHtml) {
+      return window.renderUnitTrackSvgHtml(...args);
+    }
+    return '';
   }
 
-  function renderUnitBossHtml(opt) {
-    const { unitNum, align, width, isCompleted, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}_node-boss`;
-    const effectiveCompleted = isLocked ? false : !!isCompleted;
-
-    const btnClass = isLocked
-      ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
-      : (effectiveCompleted
-        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70'
-        : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70');
-
-    return `
-      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'boss')}" data-unit-index="${unitNum - 1}">
-        <div class="relative flex items-center justify-center node-target cursor-pointer">
-          ${!isLocked && !effectiveCompleted ? `
-            <div class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
-          ` : ''}
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[92px] h-[92px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-            <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
-            ${isLocked ? `
-              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
-                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
-              </div>
-            ` : ''}
-          </button>
-          ${effectiveCompleted ? `
-            <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none">
-              <span class="material-symbols-outlined text-[16px] font-black">check</span>
-            </div>
-          ` : ''}
-        </div>
-        <!-- 보스전 하단 미니 캡슐 -->
-        <div class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full ${isLocked ? 'bg-slate-400 text-slate-200 shadow-sm' : (effectiveCompleted ? 'bg-emerald-600 text-white shadow-[0_2px_0_0_#065f46]' : 'bg-amber-500 text-white shadow-[0_2px_0_0_#b45309]')} text-center pointer-events-none font-black text-[11px] uppercase tracking-wide">
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '👑' : '🔥')}</span>
-            <span>${isLocked ? 'LOCKED' : (effectiveCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS EXAM')}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-  window.renderUnitNodeHtml = renderUnitNodeHtml;
-  window.renderUnitBonusHtml = renderUnitBonusHtml;
-  window.renderUnitReviewHtml = renderUnitReviewHtml;
-  window.renderUnitBossHtml = renderUnitBossHtml;
-
-  function renderSubsequentUnits(activeCourse, unlockedLevel) {
-    const container = document.getElementById('roadmap-subsequent-units');
-    if (!container) return;
-
-    const course = activeCourse || getCurrentCourseData();
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || UNIT_LIST_PRESETS.es;
-    if (course && Array.isArray(course.units) && course.units.length > 0) {
-      units = course.units;
-    }
-
-    const totalUnits = units.length;
-    let html = '';
-
-    for (let idx = 1; idx < totalUnits; idx++) {
-      const unit = units[idx];
-      const unitNum = idx + 1;
-      const isCompleted = unitNum < unlockedLevel;
-      const isActive = unitNum === unlockedLevel;
-      const isLocked = unitNum > unlockedLevel;
-
-      const unitIcon = unit.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
-      const unitTitle = unit.title || `Unit ${unitNum}`;
-      const unitDesc = unit.desc || unit.subtitle || '';
-
-      // [유닛 구분 섹션 헤더 컴포넌트] (요구사항 마크업 정확히 일치)
-      html += `
-        <div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-md">
-            <span>${escapeHTML(unitIcon)}</span>
-            <span>${escapeHTML(unitTitle)}</span>
-          </div>
-          <p class="text-xs text-slate-500 mt-1">${escapeHTML(unitDesc)}</p>
-        </div>
-      `;
-
-      // 유닛별 노드 정보 추출 (표준 복합 키 네임스페이스 적용: u${unitNum}_...)
-      const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
-      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}_stage-1`, title: `1과: ${unitTitle}`, type: 'stage' };
-      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2'))) || { id: `u${unitNum}_stage-2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
-      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3')) || { id: `u${unitNum}_node-bonus`, title: '보너스 상자', type: 'bonus' };
-      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4')) || { id: `u${unitNum}_node-review`, title: '약점 복습', type: 'review' };
-      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: `u${unitNum}_stage-3`, title: '3과: 자기소개와 소통', type: 'stage' };
-      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}_node-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
-
-      const bonusId = nBonus.id || `u${unitNum}_node-bonus`;
-      const reviewId = nReview.id || `u${unitNum}_node-review`;
-
-      const isBonusDone = isBonusClaimed(bonusId);
-      const isReviewDone = isReviewNodeCompleted(reviewId, unitNum);
-
-      const n1Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n1.id || `u${unitNum}_stage-1`) : { clearedCount: 0, stars: 0 };
-      const n2Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n2.id || `u${unitNum}_stage-2`) : { clearedCount: 0, stars: 0 };
-      const n3Data = (typeof getNodeProgress === 'function') ? getNodeProgress(n3.id || `u${unitNum}_stage-3`) : { clearedCount: 0, stars: 0 };
-      const bossData = (typeof getNodeProgress === 'function') ? getNodeProgress(nBoss.id || `u${unitNum}_node-boss`) : { clearedCount: 0, stars: 0 };
-
-      // 노드별 잠금 해제 판정
-      const isN1Unlocked = isNodeUnlocked(idx, 0, n1, course);
-      const isN2Unlocked = isN1Unlocked && (n1Data.clearedCount >= 3 || unitNum < unlockedLevel);
-      const isBonusUnlocked = isN2Unlocked && (n2Data.clearedCount >= 3 || unitNum < unlockedLevel);
-      const isReviewUnlocked = isBonusUnlocked && (isBonusDone || unitNum < unlockedLevel);
-      const isN3Unlocked = isReviewUnlocked && (isReviewDone || unitNum < unlockedLevel);
-      const isBossUnlocked = isN3Unlocked && (n3Data.clearedCount >= 3 || unitNum < unlockedLevel);
-
-      // 활성 START 뱃지 판정 (가장 첫 번째로 미완료된 해금 노드에만 START 부여)
-      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone && unitNum >= unlockedLevel;
-      const isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone && unitNum >= unlockedLevel;
-      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
-
-      const bossTitle = nBoss.title || `Unit ${unit.unitNumber || unitNum} 보스전`;
-
-      // 유닛 섹션 블록 컨테이너
-      html += `
-        <div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="${idx}" id="unit-section-${idx}">
-          <!-- Curved Running Track SVG Layer -->
-          <svg class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 960">
-            <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#dae2fd" stroke-linecap="round" stroke-width="14"></path>
-            <path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#38bdf8" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path>
-          </svg>
-
-          <!-- Node 1 -->
-          ${renderUnitNodeHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_stage-1`,
-        nodeId: n1.id,
-        type: 'stage',
-        stageNum: 1,
-        title: n1.title,
-        align: 'ml-5 mb-11',
-        width: '200px',
-        isCompleted: (!isN1Unlocked) ? false : (n1Data.clearedCount >= 3 || unitNum < unlockedLevel),
-        isActive: isN1Active,
-        isLocked: !isN1Unlocked
-      })}
-
-          <!-- Node 2 -->
-          ${renderUnitNodeHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_stage-2`,
-        nodeId: n2.id,
-        type: 'stage',
-        stageNum: 2,
-        title: n2.title,
-        align: 'ml-auto mr-5 mb-11',
-        width: '210px',
-        isCompleted: (!isN2Unlocked) ? false : (n2Data.clearedCount >= 3 || unitNum < unlockedLevel),
-        isActive: isN2Active,
-        isLocked: !isN2Unlocked
-      })}
-
-          <!-- Node Bonus -->
-          ${renderUnitBonusHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_node-bonus`,
-        nodeId: bonusId,
-        align: 'ml-7 mb-11',
-        width: '170px',
-        isCompleted: (!isBonusUnlocked) ? false : (isBonusDone || unitNum < unlockedLevel),
-        isActive: isBonusActive,
-        isLocked: !isBonusUnlocked
-      })}
-
-          <!-- Node Review -->
-          ${renderUnitReviewHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_node-review`,
-        nodeId: reviewId,
-        align: 'ml-auto mr-7 mb-11',
-        width: '170px',
-        isCompleted: (!isReviewUnlocked) ? false : (isReviewDone || unitNum < unlockedLevel),
-        isActive: isReviewActive,
-        isLocked: !isReviewUnlocked
-      })}
-
-          <!-- Node 3 -->
-          ${renderUnitNodeHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_stage-3`,
-        nodeId: n3.id,
-        type: 'stage',
-        stageNum: 3,
-        title: n3.title,
-        align: 'ml-5 mb-14',
-        width: '190px',
-        isCompleted: (!isN3Unlocked) ? false : (n3Data.clearedCount >= 3 || unitNum < unlockedLevel),
-        isActive: isN3Active,
-        isLocked: !isN3Unlocked
-      })}
-
-          <!-- Node Boss -->
-          ${renderUnitBossHtml({
-        unitNum,
-        nodeKey: `u${unitNum}_node-boss`,
-        nodeId: nBoss.id,
-        title: bossTitle,
-        desc: `${unitTitle} 총정리 & 특별 보상`,
-        align: 'mx-auto mb-6',
-        width: '290px',
-        isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel),
-        isActive: isBossActive,
-        isLocked: !isBossUnlocked
-      })}
-        </div>
-      `;
-    }
-
-    container.innerHTML = html;
-
-    // Subsequent nodes interaction handling
-    container.querySelectorAll('.subsequent-node-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const uNum = parseInt(btn.dataset.unitNumber, 10);
-        const nType = btn.dataset.nodeType;
-        const nId = btn.dataset.nodeId;
-        const isLocked = btn.dataset.isLocked === 'true' || btn.getAttribute('data-is-locked') === 'true';
-
-        // 🛑 잠겨있는 노드 클릭 차단
-        if (isLocked) {
-          if (nType === 'bonus') {
-            if (typeof window.showToast === 'function') {
-              window.showToast('🔒 1과와 2과를 모두 마스터해야 보너스 상자를 열 수 있어요! 🎁');
-            } else {
-              alert('1과와 2과를 모두 마스터해야 보너스 상자를 열 수 있어요! 🎁');
-            }
-            return;
-          }
-          // 일반 스테이지 잠김 -> Unit Skip Modal
-          const targetUnitObj = units[uNum - 1];
-          if (typeof window.openUnitSkipModal === 'function') {
-            window.openUnitSkipModal(uNum, targetUnitObj?.title || `Unit ${uNum}`, lang);
-          }
-          return;
-        }
-
-        if (nType === 'bonus') {
-          openBonusModal(nId || `u${uNum}_node-bonus`);
-        } else if (nType === 'review') {
-          openReviewSpeedrunModal(uNum, nId || `u${uNum}_node-review`);
-        } else {
-          // Unlocked node (stage or boss) -> start lesson!
-          if (typeof window.openLessonModal === 'function') {
-            window.openLessonModal(nId);
-          } else if (typeof window.showToast === 'function') {
-            window.showToast(`🚀 Unit ${uNum} (${btn.title || '레슨'}) 시작!`);
-          }
-        }
-      });
-    });
-  }
-  window.renderSubsequentUnits = renderSubsequentUnits;
+  if (!window.renderSubsequentUnits) window.renderSubsequentUnits = renderSubsequentUnits;
+  if (!window.renderUnitNodeHtml) window.renderUnitNodeHtml = renderUnitNodeHtml;
+  if (!window.renderUnitBonusHtml) window.renderUnitBonusHtml = renderUnitBonusHtml;
+  if (!window.renderUnitReviewHtml) window.renderUnitReviewHtml = renderUnitReviewHtml;
+  if (!window.renderUnitBossHtml) window.renderUnitBossHtml = renderUnitBossHtml;
+  if (!window.renderUnitTrackSvgHtml) window.renderUnitTrackSvgHtml = renderUnitTrackSvgHtml;
 
   // 🛑 [Unit 1 보너스 상자 잠금 가드 추가]
   // Unit 1의 선물 상자 클릭 시 1과, 2과 완료 여부(clearedCount >= 3) 강제 검증 후 미달 시 차단
@@ -5839,149 +4813,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateCourseSwitcherUI = updateCourseSwitcherUI;
 
-  // 🌐 [구조 확장] 다국어 및 코스/테마 팩 레지스트리 (Extensible Language & Pack Registry)
-  const SUPPORTED_LANGUAGES = [
-    { code: 'es', label: '스페인어(ES)', flag: '🇪🇸', active: true },
-    { code: 'en', label: '영어(EN)', flag: '🇺🇸', active: true },
-    { code: 'ja', label: '일본어(JA)', flag: '🇯🇵', active: false, badge: '오픈 예정' },
-    { code: 'fr', label: '프랑스어(FR)', flag: '🇫🇷', active: false, badge: '오픈 예정' },
-    { code: 'de', label: '독일어(DE)', flag: '🇩🇪', active: false, badge: '오픈 예정' }
-  ];
-  window.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
-
-  const PACK_CATALOG = {
-    es: [
-      {
-        id: 'pack_football',
-        title: '스페인 축구 실전',
-        category: '스페셜 팩',
-        badge: 'Official DLC',
-        desc: '스페인 현지 경기장 & 피치 콜 필수 어휘',
-        icon: '⚽',
-        wordsCount: 120,
-        unitsCount: 6,
-        lang: 'es',
-        isComingSoon: false
-      },
-      {
-        id: 'main',
-        title: '스페인어 정규 코스',
-        category: '정규 코스',
-        badge: '기본 정규 코스',
-        desc: '일상 회화 & 실전 기초 어휘 마스터',
-        icon: '🇪🇸',
-        wordsCount: 40,
-        unitsCount: 4,
-        lang: 'es',
-        isComingSoon: false
-      },
-      {
-        id: 'pack_business',
-        title: '비즈니스 & 무역 실전',
-        category: '비즈니스',
-        badge: '출시 예정',
-        desc: '바이어 미팅, 이메일, 계약 실무 비즈니스 어휘',
-        icon: '💼',
-        wordsCount: 80,
-        unitsCount: 4,
-        lang: 'es',
-        isComingSoon: true
-      },
-      {
-        id: 'pack_food',
-        title: '스페인 미식 & 타파스 투어',
-        category: '테마 여행',
-        badge: '출시 예정',
-        desc: '현지 맛집 주문부터 식재료, 와인 테이스팅',
-        icon: '🥘',
-        wordsCount: 80,
-        unitsCount: 4,
-        lang: 'es',
-        isComingSoon: true
-      }
-    ],
-    en: [
-      {
-        id: 'main_en',
-        title: '영어 정규 코스',
-        category: '정규 코스',
-        badge: '기본 정규 코스',
-        desc: '일상 회화 & 실전 필수 어휘 마스터',
-        icon: '🇺🇸',
-        wordsCount: 40,
-        unitsCount: 4,
-        lang: 'en',
-        isComingSoon: false
-      },
-      {
-        id: 'pack_en_opic',
-        title: '오픽/토스 실전 비즈니스 영어',
-        category: '시험 & 취업',
-        badge: '출시 예정',
-        desc: '외국계 기업 면접, 오피스 커뮤니케이션, 프레젠테이션',
-        icon: '💼',
-        wordsCount: 100,
-        unitsCount: 5,
-        lang: 'en',
-        isComingSoon: true
-      },
-      {
-        id: 'pack_en_travel',
-        title: '여행영어 필수 서바이벌',
-        category: '여행 & 회화',
-        badge: '출시 예정',
-        desc: '공항 입국심사, 호텔 체크인, 긴급상황 대처',
-        icon: '✈️',
-        wordsCount: 80,
-        unitsCount: 4,
-        lang: 'en',
-        isComingSoon: true
-      }
-    ],
-    ja: [
-      {
-        id: 'main_ja',
-        title: '일본어 기초 회화',
-        category: '정규 코스',
-        badge: '오픈 예정',
-        desc: '히라가나/가타카나 및 현지 여행 필수 어휘',
-        icon: '🇯🇵',
-        wordsCount: 40,
-        unitsCount: 4,
-        lang: 'ja',
-        isComingSoon: true
-      }
-    ],
-    fr: [
-      {
-        id: 'main_fr',
-        title: '프랑스어 기초 회화',
-        category: '정규 코스',
-        badge: '오픈 예정',
-        desc: '파리 여행 & 일상 에티켓 필수 어휘',
-        icon: '🇫🇷',
-        wordsCount: 40,
-        unitsCount: 4,
-        lang: 'fr',
-        isComingSoon: true
-      }
-    ],
-    de: [
-      {
-        id: 'main_de',
-        title: '독일어 기초 회화',
-        category: '정규 코스',
-        badge: '오픈 예정',
-        desc: '기초 문법 및 독일 현지 실전 회화',
-        icon: '🇩🇪',
-        wordsCount: 40,
-        unitsCount: 4,
-        lang: 'de',
-        isComingSoon: true
-      }
-    ]
-  };
-  window.PACK_CATALOG = PACK_CATALOG;
 
   // 단어팩/코스 카드 동적 템플릿 생성 헬퍼
   function renderPackCardHtml(pack, isEquipped) {
@@ -6541,6 +5372,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.closeReviewSpeedrunModal = closeReviewSpeedrunModal;
 
+  function shuffleArray(arr) {
+    if (!Array.isArray(arr)) return [];
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   function startRoadmapReviewSpeedrun() {
     if (typeof closeReviewSpeedrunModal === 'function') closeReviewSpeedrunModal();
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -6561,14 +5402,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (_) { }
     }
 
-    function shuffleArray(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
 
     // 💡 유저가 지금까지 실제로 통과/학습한 이전 노드들의 단어만 수집하는 헬퍼 함수
     function getLearnedWordsPool() {
@@ -7174,15 +6007,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 3) Shuffle and pick exactly 15 questions
-    function shuffleArray(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
+    // 3) Shuffle and pick exactly 15 questions (shared helper shuffleArray)
 
     const shuffled = shuffleArray(rawPool);
     const selected = shuffled.slice(0, 15);
@@ -7327,8 +6152,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  on('lesson-modal-close-btn', 'click', window.closeLessonModal);
-  if (lessonBackdrop) lessonBackdrop.addEventListener('click', (e) => { if (e.target === lessonBackdrop) window.closeLessonModal(); });
+  on('lesson-modal-close-btn', 'click', () => {
+    if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
+  });
+  if (lessonBackdrop) {
+    lessonBackdrop.addEventListener('click', (e) => {
+      if (e.target === lessonBackdrop && typeof window.closeLessonModal === 'function') {
+        window.closeLessonModal();
+      }
+    });
+  }
 
   // 스페인 축구 실전팩 스테이지 세션 문제 생성기 (Unit 1~4 1:1 정밀 매칭)
   function getFootballStageSession(nodeId) {
@@ -7725,33 +6558,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let modalPendingLanguage = 'es';
   let modalPendingCourseId = 'main';
 
-  const MODAL_COURSES = {
-    es: [
-      {
-        id: 'main',
-        icon: '🇪🇸',
-        title: '스페인어 정규 코스',
-        desc: '일상 회화 & 실전 기초 어휘 마스터',
-        badge: ''
-      },
-      {
-        id: 'pack_football',
-        icon: '⚽',
-        title: '스페인 축구 실전팩',
-        desc: '스페셜 팩 · 경기장 어휘 & 피치 콜',
-        badge: 'Official DLC'
-      }
-    ],
-    en: [
-      {
-        id: 'main',
-        icon: '🇺🇸',
-        title: '영어 정규 코스',
-        desc: '일상 회화 & 실전 필수 어휘 마스터',
-        badge: ''
-      }
-    ]
-  };
 
   function renderModalCourseList(targetLang, selectedCourseId) {
     const list = document.getElementById('course-switcher-list');
@@ -7985,53 +6791,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.updateMascotCharacters = updateMascotCharacters;
 
-  // ===================================================
-  // 로드맵 이정표 표지판 언어별 프리셋 & 동적 업데이트
-  // ===================================================
-  const SIGNPOST_PRESETS = {
-    es: {
-      icon: '🏛️',
-      text: 'MADRID 2.4km',
-      code: 'ES',
-      codeClass: 'bg-red-600 text-yellow-300',
-      flag: '🇪🇸'
-    },
-    en: {
-      icon: '🗽',
-      text: 'NEW YORK 2.4km',
-      code: 'US',
-      codeClass: 'bg-blue-600 text-white',
-      flag: '🇺🇸'
-    },
-    fr: {
-      icon: '🗼',
-      text: 'PARIS 2.4km',
-      code: 'FR',
-      codeClass: 'bg-blue-700 text-white',
-      flag: '🇫🇷'
-    },
-    ja: {
-      icon: '⛩️',
-      text: 'TOKYO 2.4km',
-      code: 'JP',
-      codeClass: 'bg-red-600 text-white',
-      flag: '🇯🇵'
-    },
-    zh: {
-      icon: '🏮',
-      text: 'BEIJING 2.4km',
-      code: 'CN',
-      codeClass: 'bg-red-600 text-yellow-300',
-      flag: '🇨🇳'
-    },
-    de: {
-      icon: '🏰',
-      text: 'BERLIN 2.4km',
-      code: 'DE',
-      codeClass: 'bg-slate-900 text-yellow-300',
-      flag: '🇩🇪'
-    }
-  };
 
   function updateRoadmapSignpost(targetLang) {
     const lang = targetLang === 'en' ? 'en' : (targetLang || 'es');
@@ -8849,6 +7608,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const curLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     return `vocadash_wrong_answers_${curLang}`;
   }
+  window.getWrongStorageKey = getWrongStorageKey;
 
   function migrateLegacyWrongWords() {
     try {
@@ -9669,7 +8429,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (itemIdx !== -1) {
           const item = list[itemIdx];
           item.correctStreak = (Number(item.correctStreak) || 0) + 1;
-          console.log(`✅ [Weakness Review] '${item.term}' 정답! 연속 정답수: ${item.correctStreak}/5`);
           if (item.correctStreak >= 5) {
             // 5회 연속 정답 시 오답 목록에서 완전히 삭제 (마스터 졸업)
             list.splice(itemIdx, 1);
@@ -9694,7 +8453,6 @@ document.addEventListener('DOMContentLoaded', () => {
           item.correctStreak = 0;
           item.wrongCount = (Number(item.wrongCount) || 1) + 1;
           item.escaped = false;
-          console.log(`❌ [Weakness Review] '${item.term}' 오답! 연속 정답수 리셋 (0/5)`);
         } else {
           list.unshift({
             id: qId || ('w_' + lang + '_' + Date.now()),
@@ -9706,7 +8464,6 @@ document.addEventListener('DOMContentLoaded', () => {
             escaped: false,
             lang: lang
           });
-          console.log(`📝 [Weakness Review] '${qTerm}' 신규 오답 등록`);
         }
         saveWrongWords(list, lang);
         const currentActiveLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
@@ -10579,21 +9336,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.sortBookWords = sortBookWords;
 
-  const BOOK_COURSE_PRESETS = {
-    es: [
-      { id: 'main', icon: '🇪🇸', title: '스페인어 정규 코스' },
-      { id: 'pack_football', icon: '⚽', title: '스페인 축구 실전팩' },
-      { id: 'dele', icon: '🎓', title: 'DELE 준비과정' },
-      { id: 'business', icon: '💼', title: '비즈니스 스페인어' }
-    ],
-    en: [
-      { id: 'main', icon: '🇺🇸', title: '영어 정규 코스' },
-      { id: 'pack_football', icon: '⚽', title: '축구 실전팩 (DLC)' },
-      { id: 'toeic', icon: '🎓', title: '토익/오픽 대비' },
-      { id: 'business', icon: '💼', title: '비즈니스 영어' }
-    ]
-  };
-  window.BOOK_COURSE_PRESETS = BOOK_COURSE_PRESETS;
   window.currentBookCourseId = window.activeCourseId || window.currentCourseId || 'main';
 
   function renderBookCourseDropdown(lang = (window.currentLanguage || window.currentActiveCourse || 'es'), selectedCourseId) {
@@ -11158,341 +9900,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 프로필 편집 및 고양이 아바타 연동 로직
-  const VALID_AVATAR_FILES = [
-    'profile-spanish.webp',
-    'profile-english.webp',
-    'profile-artist.webp',
-    'profile-explorer.webp'
-  ];
+  // ===================================================
+  // [Profile & Avatar Manager (js/profileManager.js)]
+  // ===================================================
+  const applyProfileAvatar = (src) => { if (typeof window.applyProfileAvatar === 'function') window.applyProfileAvatar(src); };
+  const syncHallOfFameAvatar = () => { if (typeof window.syncHallOfFameAvatar === 'function') window.syncHallOfFameAvatar(); };
 
-  function resolveAvatarFile(val) {
-    if (!val) return 'profile-spanish.webp';
-    const clean = String(val).split('?')[0];
-    const filename = clean.split('/').pop();
-    if (VALID_AVATAR_FILES.includes(filename)) return filename;
-    if (clean.includes('english') || clean.includes('sunglass')) return 'profile-english.webp';
-    if (clean.includes('artist') || clean.includes('scholar')) return 'profile-artist.webp';
-    if (clean.includes('explorer') || clean.includes('relax')) return 'profile-explorer.webp';
-    return 'profile-spanish.webp';
-  }
-
-  function resolveAvatarSrc(val) {
-    const file = resolveAvatarFile(val);
-    return `assets/profiles/${file}?v=68`;
-  }
-
-  let selectedAvatarFile = 'profile-spanish.webp';
-  try {
-    const savedProfile = localStorage.getItem('vocadash_profile');
-    if (savedProfile) {
-      selectedAvatarFile = resolveAvatarFile(savedProfile);
-    } else {
-      const savedAvatar = localStorage.getItem('vocadash_profile_avatar');
-      if (savedAvatar && !savedAvatar.includes('lh3.googleusercontent.com/aida/')) {
-        selectedAvatarFile = resolveAvatarFile(savedAvatar);
-      } else {
-        const userProfileStr = localStorage.getItem('userProfile');
-        if (userProfileStr) {
-          const parsed = JSON.parse(userProfileStr);
-          if (parsed && (parsed.profile || parsed.avatar)) {
-            selectedAvatarFile = resolveAvatarFile(parsed.profile || parsed.avatar);
-          }
-        }
-      }
-    }
-  } catch (_) { }
-
-  let selectedAvatarSrc = resolveAvatarSrc(selectedAvatarFile);
-
-  let selectedTitle = '초급 마스터';
-  try {
-    const userProfileStr = localStorage.getItem('userProfile');
-    if (userProfileStr) {
-      const parsed = JSON.parse(userProfileStr);
-      if (parsed && parsed.title) selectedTitle = parsed.title;
-      if (parsed && parsed.nickname) {
-        const statsNickname = document.getElementById('stats-nickname');
-        if (statsNickname) statsNickname.textContent = parsed.nickname;
-        const nicknameInput = document.getElementById('nickname-input');
-        if (nicknameInput) nicknameInput.value = parsed.nickname;
-      }
-    }
-  } catch (_) { }
-  try {
-    const savedTitle = localStorage.getItem('vocadash_profile_title');
-    if (savedTitle) selectedTitle = savedTitle;
-    const savedNick = localStorage.getItem('vocadash_profile_nickname');
-    if (savedNick) {
-      const statsNickname = document.getElementById('stats-nickname');
-      if (statsNickname) statsNickname.textContent = savedNick;
-      const nicknameInput = document.getElementById('nickname-input');
-      if (nicknameInput) nicknameInput.value = savedNick;
-    }
-    const statsTitleBadge = document.getElementById('stats-title-badge');
-    if (statsTitleBadge) statsTitleBadge.textContent = selectedTitle;
-  } catch (_) { }
-
-  function applyProfileAvatar(srcOrFile) {
-    if (!srcOrFile) return;
-    const file = resolveAvatarFile(srcOrFile);
-    const src = resolveAvatarSrc(file);
-    selectedAvatarFile = file;
-    selectedAvatarSrc = src;
-
-    // 1. 헤더 아바타
-    const headerMascotImg = document.getElementById('header-mascot-img');
-    if (headerMascotImg) {
-      headerMascotImg.src = src;
-      headerMascotImg.className = 'w-full h-full object-cover rounded-full';
-    }
-
-    // 1-B. 로드맵 최신 활성 노드 바운스 고양이 마커
-    const catMarkerImg = document.getElementById('cat-marker-img');
-    if (catMarkerImg) {
-      catMarkerImg.src = src;
-    }
-
-    // 2. 모달 내 메인 프리뷰
-    const currentAvatarImg = document.getElementById('current-avatar-img');
-    if (currentAvatarImg) {
-      currentAvatarImg.src = src;
-      currentAvatarImg.className = 'w-full h-full object-cover rounded-full transition-transform duration-200';
-    }
-
-    // 3. 통계 화면 아바타
-    const statsAvatarImg = document.getElementById('stats-avatar-img');
-    if (statsAvatarImg) statsAvatarImg.src = src;
-
-    // 4. 설정 화면 배너 아바타
-    const settingsAvatarImg = document.getElementById('settings-streak-avatar-img') || document.getElementById('settings-avatar-img');
-    if (settingsAvatarImg) settingsAvatarImg.src = src;
-
-    const settingsStreakBanner = document.getElementById('settings-streak-banner');
-    if (settingsStreakBanner) {
-      const bannerImg = settingsStreakBanner.querySelector('img');
-      if (bannerImg) bannerImg.src = src;
-    }
-
-    // 5. 명예의 전당 아바타 동기화
-    const hallUserAvatar = document.getElementById('hall-user-avatar');
-    if (hallUserAvatar) hallUserAvatar.src = src;
-    const hallHeaderAvatar = document.getElementById('hall-header-avatar');
-    if (hallHeaderAvatar) hallHeaderAvatar.src = src;
-
-    // 6. 설정 화면 빠른 선택 그리드 UI 동기화
-    document.querySelectorAll('.quick-avatar-btn').forEach((btn) => {
-      const btnFile = btn.dataset.avatarFile;
-      const isSelected = (btnFile === file);
-      const ring = btn.querySelector('.quick-avatar-ring');
-      const chk = btn.querySelector('.quick-avatar-check');
-      const lbl = btn.querySelector('.quick-avatar-label');
-      if (ring) {
-        ring.className = isSelected
-          ? 'quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all ring-2 ring-primary/20'
-          : 'quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
-      }
-      if (chk) chk.classList.toggle('hidden', !isSelected);
-      if (lbl) {
-        lbl.className = isSelected
-          ? 'quick-avatar-label text-[11px] font-bold text-primary mt-1.5 truncate max-w-[64px]'
-          : 'quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]';
-      }
-    });
-
-    // 7. 모달 내 아바타 선택 그리드 UI 동기화
-    document.querySelectorAll('.avatar-option').forEach((opt) => {
-      const optFile = resolveAvatarFile(opt.dataset.avatarFile || opt.dataset.avatarSrc);
-      const isSelected = (optFile === file);
-      const ring = opt.querySelector('.avatar-ring') || opt.querySelector('div');
-      const chk = opt.querySelector('.avatar-check');
-      const lbl = opt.querySelector('.avatar-label');
-      if (ring) {
-        ring.className = isSelected
-          ? 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs ring-2 ring-emerald-400/20'
-          : 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
-      }
-      if (chk) chk.classList.toggle('hidden', !isSelected);
-      if (lbl) {
-        lbl.className = isSelected
-          ? 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]'
-          : 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
-      }
-    });
-  }
-
-  function syncHallOfFameAvatar() {
-    let avatarSrc = null;
-    try {
-      const savedProfile = localStorage.getItem('vocadash_profile');
-      if (savedProfile) {
-        avatarSrc = resolveAvatarSrc(savedProfile);
-      }
-    } catch (_) { }
-    if (!avatarSrc) {
-      try {
-        const saved = localStorage.getItem('vocadash_profile_avatar');
-        if (saved && !saved.includes('lh3.googleusercontent.com/aida/')) {
-          avatarSrc = resolveAvatarSrc(saved);
-        }
-      } catch (_) { }
-    }
-    if (!avatarSrc && typeof selectedAvatarSrc !== 'undefined' && selectedAvatarSrc) {
-      avatarSrc = selectedAvatarSrc;
-    }
-    if (avatarSrc) {
-      const hallUserAvatar = document.getElementById('hall-user-avatar');
-      if (hallUserAvatar) hallUserAvatar.src = avatarSrc;
-      const hallHeaderAvatar = document.getElementById('hall-header-avatar');
-      if (hallHeaderAvatar) hallHeaderAvatar.src = avatarSrc;
-    }
-  }
-  window.syncHallOfFameAvatar = syncHallOfFameAvatar;
-  window.applyProfileAvatar = applyProfileAvatar;
-
-  // 초기 렌더링 시 아바타 및 UI 동기화
-  applyProfileAvatar(selectedAvatarFile);
-
-  // 상단 헤더 프로필 버튼 클릭 이벤트 (프로필 선택 모달 열기)
-  const headerProfileBtn = document.getElementById('btn-header-profile');
-  if (headerProfileBtn) {
-    headerProfileBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (typeof window.openProfileModal === 'function') {
-        window.openProfileModal();
-      }
-    });
-  }
-
-  // 설정 화면 스트릭 배너 아바타 클릭 이벤트
-  const settingsStreakAvatarContainer = document.getElementById('settings-streak-avatar-container');
-  if (settingsStreakAvatarContainer) {
-    settingsStreakAvatarContainer.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (typeof window.openProfileModal === 'function') {
-        window.openProfileModal();
-      }
-    });
-  }
-
-  // 설정 화면 내 4종 고양이 즉시 변경 버튼 이벤트 바인딩
-  document.querySelectorAll('.quick-avatar-btn').forEach((btn) => {
-    btn.addEventListener('click', function () {
-      const targetFile = this.dataset.avatarFile || 'profile-spanish.webp';
-      const targetName = this.dataset.avatarName || '프로필 고양이';
-      selectedAvatarFile = targetFile;
-      selectedAvatarSrc = resolveAvatarSrc(targetFile);
-
-      try {
-        localStorage.setItem('vocadash_profile', selectedAvatarFile);
-        localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
-        const userProfileStr = localStorage.getItem('userProfile');
-        const parsed = userProfileStr ? JSON.parse(userProfileStr) : {};
-        parsed.profile = selectedAvatarFile;
-        parsed.avatar = selectedAvatarSrc;
-        localStorage.setItem('userProfile', JSON.stringify(parsed));
-      } catch (_) { }
-
-      applyProfileAvatar(selectedAvatarFile);
-      syncHallOfFameAvatar();
-    });
-  });
-
-  // 프로필 모달 내 아바타 선택 상태 및 클릭 이벤트 바인딩
-  document.querySelectorAll('.avatar-option').forEach((opt) => {
-    opt.addEventListener('click', function () {
-      const targetFile = this.dataset.avatarFile || resolveAvatarFile(this.dataset.avatarSrc);
-      selectedAvatarFile = targetFile;
-      selectedAvatarSrc = resolveAvatarSrc(targetFile);
-
-      document.querySelectorAll('.avatar-option').forEach((o) => {
-        const oFile = o.dataset.avatarFile || resolveAvatarFile(o.dataset.avatarSrc);
-        const isCur = (oFile === targetFile);
-        const oRing = o.querySelector('.avatar-ring') || o.querySelector('div');
-        const oChk = o.querySelector('.avatar-check');
-        const oLbl = o.querySelector('.avatar-label');
-        if (oRing) {
-          oRing.className = isCur
-            ? 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border-2 border-[#22c55e] bg-white transition-all shadow-xs ring-2 ring-emerald-400/20'
-            : 'avatar-ring relative w-[52px] h-[52px] rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all';
-        }
-        if (oChk) oChk.classList.toggle('hidden', !isCur);
-        if (oLbl) {
-          oLbl.className = isCur
-            ? 'avatar-label text-xs font-bold text-[#22c55e] mt-1.5 truncate max-w-[68px]'
-            : 'avatar-label text-xs font-medium text-slate-500 mt-1.5 truncate max-w-[68px]';
-        }
-      });
-
-      const currentAvatarImg = document.getElementById('current-avatar-img');
-      if (currentAvatarImg) currentAvatarImg.src = selectedAvatarSrc;
-
-      // 즉시 상단 헤더 및 통계 아바타 동기화 & 로컬스토리지 즉시 영구 저장
-      if (typeof applyProfileAvatar === 'function') {
-        applyProfileAvatar(targetFile);
-      }
-      try {
-        localStorage.setItem('vocadash_profile', targetFile);
-        localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
-      } catch (_) { }
-    });
-  });
-
-  document.querySelectorAll('.title-pill').forEach((pill) => {
-    pill.addEventListener('click', function () {
-      document.querySelectorAll('.title-pill').forEach((p) => {
-        p.className = 'title-pill bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-sm py-2.5 px-3 rounded-xl border-b-4 border-slate-200 flex items-center justify-center gap-1.5 active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full';
-        const check = p.querySelector('.material-symbols-outlined');
-        if (check) check.classList.add('hidden');
-      });
-
-      this.className = 'title-pill bg-[#22c55e] text-white font-bold text-sm py-2.5 px-3 rounded-xl border-b-4 border-[#16a34a] flex items-center justify-center gap-1.5 shadow-sm active:border-b-0 active:translate-y-1 transition-all cursor-pointer w-full';
-      const check = this.querySelector('.material-symbols-outlined');
-      if (check) check.classList.remove('hidden');
-
-      selectedTitle = this.dataset.title || selectedTitle;
-    });
-  });
-
-  const saveProfileBtn = document.getElementById('save-profile-btn');
-  if (saveProfileBtn) {
-    saveProfileBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const nicknameInput = document.getElementById('nickname-input');
-      const newNickname = nicknameInput ? nicknameInput.value.trim() : '스페인어 질주러';
-
-      const statsNickname = document.getElementById('stats-nickname');
-      if (statsNickname && newNickname) statsNickname.textContent = newNickname;
-
-      const statsTitleBadge = document.getElementById('stats-title-badge');
-      if (statsTitleBadge) statsTitleBadge.textContent = selectedTitle;
-
-      applyProfileAvatar(selectedAvatarFile);
-
-      const settingsStreakBanner = document.getElementById('settings-streak-banner');
-      if (settingsStreakBanner) {
-        const bannerNick = document.getElementById('settings-streak-nickname') || settingsStreakBanner.querySelector('.font-headline-sm');
-        if (bannerNick && newNickname) bannerNick.textContent = newNickname;
-        const bannerTitle = document.getElementById('settings-streak-level') || settingsStreakBanner.querySelector('.font-body-sm');
-        if (bannerTitle && selectedTitle) bannerTitle.textContent = `레벨 12 · ${selectedTitle}`;
-      }
-
-      try {
-        localStorage.setItem('vocadash_profile', selectedAvatarFile);
-        localStorage.setItem('vocadash_profile_avatar', selectedAvatarSrc);
-        localStorage.setItem('vocadash_profile_nickname', newNickname);
-        localStorage.setItem('vocadash_profile_title', selectedTitle);
-        localStorage.setItem('userProfile', JSON.stringify({
-          profile: selectedAvatarFile,
-          avatar: selectedAvatarSrc,
-          nickname: newNickname,
-          title: selectedTitle
-        }));
-      } catch (_) { }
-      syncHallOfFameAvatar();
-
-      window.closeProfileModal();
-    });
+  if (typeof window.initProfileManager === 'function') {
+    window.initProfileManager();
   }
 
   // 필터 버튼 이벤트

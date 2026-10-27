@@ -109,6 +109,10 @@ const engineCode = fs.readFileSync(path.join(__dirname, '../js/gameEngine.js'), 
 
 vm.runInContext(footballCode, context);
 vm.runInContext(esCode, context);
+const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8');
+vm.runInContext(courseConfigCode, context);
+const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
+vm.runInContext(profileManagerCode, context);
 vm.runInContext(appCode, context);
 if (domContentLoadedHandler) {
   domContentLoadedHandler();

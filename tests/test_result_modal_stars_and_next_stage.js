@@ -147,6 +147,10 @@ const dataEnCode = fs.readFileSync(path.join(__dirname, '../js/data_en.js'), 'ut
 vm.runInContext(dataEnCode, context);
 
 const appJsCode = fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8');
+const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8');
+vm.runInContext(courseConfigCode, context);
+const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
+vm.runInContext(profileManagerCode, context);
 vm.runInContext(appJsCode, context);
 
 if (domContentLoadedHandler) {

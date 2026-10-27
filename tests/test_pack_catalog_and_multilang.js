@@ -129,6 +129,8 @@ vm.createContext(context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_football.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_es.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_en.js'), 'utf-8'), context);
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8'), context);
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/profileManager.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8'), context);
 
 if (domContentLoadedHandler) {

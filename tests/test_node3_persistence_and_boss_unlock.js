@@ -143,6 +143,14 @@ vm.runInContext(dataEsCode, context);
 const dataEnCode = fs.readFileSync(path.join(__dirname, '../js/data_en.js'), 'utf-8');
 vm.runInContext(dataEnCode, context);
 
+const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8');
+vm.runInContext(courseConfigCode, context);
+const roadmapRendererCode = fs.readFileSync(path.join(__dirname, '../js/roadmapRenderer.js'), 'utf-8');
+vm.runInContext(roadmapRendererCode, context);
+const lessonModalCode = fs.readFileSync(path.join(__dirname, '../js/lessonModal.js'), 'utf-8');
+vm.runInContext(lessonModalCode, context);
+const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
+vm.runInContext(profileManagerCode, context);
 const appJsCode = fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8');
 vm.runInContext(appJsCode, context);
 
