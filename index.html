@@ -2,170 +2,55 @@
 <html lang="ko">
 
 <head>
+  <!-- Global Error Boundary & Crash Recovery -->
+  <script src="js/errorBoundary.js?v=126"></script>
   <script>
-    // 1. Live Server의 자동 새로고침(WebSocket reload/refreshcss) 차단
-    if (window.WebSocket) {
+    // [개발 임시] Live Server 무한 자동 리로드 강제 차단 (출시 전 삭제 필수)
+    (function () {
+      // 1. Live Server 새로고침 가로채기
+      const originalReload = location.reload;
+      window.__disableReload = true;
+
+      window.addEventListener('beforeunload', function (e) {
+        if (window.__disableReload) {
+          // 브라우저 unload 이벤트 가로챔 방지
+        }
+      });
+
+      // 2. Live Server WebSocket 주입 차단
       const OriginalWebSocket = window.WebSocket;
-      window.WebSocket = function (...args) {
-        const ws = new OriginalWebSocket(...args);
-        let origHandler = null;
-
-        Object.defineProperty(ws, 'onmessage', {
-          get: function () {
-            return origHandler;
-          },
-          set: function (fn) {
-            origHandler = fn;
-            const wrappedHandler = function (e) {
-              if (e && (e.data === 'reload' || e.data === 'refreshcss')) {
-                console.warn('🛡️ [Live Server 리로드 차단됨] reload/refreshcss 메시지 무시:', e.data);
-                return;
-              }
-              if (typeof fn === 'function') {
-                return fn.call(this, e);
-              }
-            };
-
-            try {
-              const protoDesc = Object.getOwnPropertyDescriptor(OriginalWebSocket.prototype, 'onmessage');
-              if (protoDesc && protoDesc.set) {
-                protoDesc.set.call(ws, wrappedHandler);
-              } else {
-                ws.addEventListener('message', wrappedHandler);
-              }
-            } catch (_) {
-              ws.addEventListener('message', wrappedHandler);
-            }
-          },
-          configurable: true,
-          enumerable: true
-        });
-
-        // addEventListener('message') 방식도 이중 방어
-        const origAddEvent = ws.addEventListener;
-        if (typeof origAddEvent === 'function') {
-          ws.addEventListener = function (type, listener, ...opts) {
-            if (type === 'message' && typeof listener === 'function') {
-              const wrapped = function (e) {
-                if (e && (e.data === 'reload' || e.data === 'refreshcss')) {
-                  console.warn('🛡️ [Live Server 리로드 차단됨] addEventListener message 무시:', e.data);
-                  return;
-                }
-                return listener.call(this, e);
-              };
-              return origAddEvent.call(this, type, wrapped, ...opts);
-            }
-            return origAddEvent.call(this, type, listener, ...opts);
+      window.WebSocket = function (url, protocols) {
+        if (typeof url === 'string' && (url.includes(':5500') || url.includes('/ws'))) {
+          console.warn('🛡️ [개발 임시]: Live Server 자동 새로고침(WebSocket)이 차단되었습니다.');
+          return {
+            close: function () { },
+            send: function () { },
+            addEventListener: function () { },
+            removeEventListener: function () { }
           };
         }
-
-        return ws;
+        return new OriginalWebSocket(url, protocols);
       };
-      window.WebSocket.prototype = OriginalWebSocket.prototype;
-      window.WebSocket.CONNECTING = OriginalWebSocket.CONNECTING;
-      window.WebSocket.OPEN = OriginalWebSocket.OPEN;
-      window.WebSocket.CLOSING = OriginalWebSocket.CLOSING;
-      window.WebSocket.CLOSED = OriginalWebSocket.CLOSED;
-    }
 
-    // 2. 모든 폼(form) 기본 submit 전역 캡처 차단
-    document.addEventListener('submit', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.warn('🛡️ [Form Submit 차단됨] 폼 제출로 인한 리로드를 방지했습니다.');
-    }, true);
+      // 3. 모든 폼(form) 기본 submit 전역 캡처 차단
+      document.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.warn('🛡️ [Form Submit 차단됨] 폼 제출로 인한 리로드를 방지했습니다.');
+      }, true);
 
-    // 3. 빈 앵커(a) 태그 클릭으로 인한 상단 점프 및 리로드 차단
-    document.addEventListener('click', function (e) {
-      const anchor = e.target.closest('a');
-      if (anchor) {
-        const href = anchor.getAttribute('href');
-        if (!href || href === '#' || href === 'index.html' || href === '') {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }
-    }, true);
-
-    // 4. 전역 에러 바운더리 (Global Error Boundary & Emergency Recovery)
-    function showEmergencyRecoveryModal(err) {
-      try {
-        let modal = document.getElementById('global-crash-recovery');
-        if (!modal) {
-          modal = document.createElement('div');
-          modal.id = 'global-crash-recovery';
-          modal.className = 'fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 select-none';
-          modal.innerHTML = `
-            <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-xs w-full shadow-2xl border border-slate-100 flex flex-col items-center text-center">
-              <div class="w-16 h-16 rounded-2xl bg-rose-50 border border-rose-200/70 flex items-center justify-center text-3xl mb-3 shadow-xs">
-                ⚠️
-              </div>
-              <h3 class="font-bold text-base text-slate-800 mb-1">일시적인 오류가 발생했습니다.</h3>
-              <p class="text-xs text-slate-500 leading-relaxed mb-5 font-medium">
-                예기치 않은 문제가 발생했습니다.<br>페이지를 새로고침하거나 캐시를 초기화해 보세요.
-              </p>
-              <div class="w-full flex flex-col gap-2">
-                <button id="crash-reload-btn" type="button" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
-                  <span class="material-symbols-outlined text-[16px]">refresh</span>
-                  <span>새로고침</span>
-                </button>
-                <button id="crash-reset-btn" type="button" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5">
-                  <span class="material-symbols-outlined text-[16px]">delete_sweep</span>
-                  <span>캐시 비우고 다시 시작</span>
-                </button>
-              </div>
-            </div>
-          `;
-          if (document.body) {
-            document.body.appendChild(modal);
-          } else {
-            document.documentElement.appendChild(modal);
+      // 4. 빈 앵커(a) 태그 클릭으로 인한 상단 점프 및 리로드 차단
+      document.addEventListener('click', function (e) {
+        const anchor = e.target.closest('a');
+        if (anchor) {
+          const href = anchor.getAttribute('href');
+          if (!href || href === '#' || href === 'index.html' || href === '') {
+            e.preventDefault();
+            e.stopPropagation();
           }
-        } else {
-          modal.classList.remove('hidden');
-          modal.style.display = 'flex';
         }
-
-        const reloadBtn = document.getElementById('crash-reload-btn');
-        if (reloadBtn) {
-          reloadBtn.onclick = function () {
-            window.location.reload();
-          };
-        }
-        const resetBtn = document.getElementById('crash-reset-btn');
-        if (resetBtn) {
-          resetBtn.onclick = function () {
-            try {
-              localStorage.clear();
-              sessionStorage.clear();
-              if ('caches' in window) {
-                caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
-              }
-            } catch (_) { }
-            window.location.href = window.location.pathname + '?v=' + Date.now();
-          };
-        }
-      } catch (e) {
-        console.error('Fatal crash recovery error:', e);
-      }
-    }
-    window.showCrashRecoveryModal = showEmergencyRecoveryModal;
-
-    window.addEventListener('error', function (event) {
-      if (event.target && event.target !== window && (event.target.tagName === 'IMG' || event.target.tagName === 'LINK' || event.target.tagName === 'SCRIPT' || event.target.tagName === 'AUDIO' || event.target.tagName === 'VIDEO')) {
-        return;
-      }
-      if (event.message && (event.message.includes('ResizeObserver') || event.message.includes('Script error.'))) {
-        return;
-      }
-      console.error('🚨 [VocaDash Global Error Boundary Caught]:', event.error || event.message);
-      showEmergencyRecoveryModal(event.error || event.message);
-    });
-
-    window.addEventListener('unhandledrejection', function (event) {
-      console.error('🚨 [VocaDash Unhandled Promise Rejection]:', event.reason);
-      showEmergencyRecoveryModal(event.reason);
-    });
+      }, true);
+    })();
   </script>
   <meta charset="utf-8">
   <meta name="viewport"
@@ -429,12 +314,6 @@
           <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none">
           </div>
 
-          <!-- 좌측: 미니 썸네일 아이콘 -->
-          <div
-            class="w-11 h-11 rounded-xl bg-emerald-700/60 border border-emerald-500/40 flex items-center justify-center text-2xl shadow-inner flex-shrink-0 select-none mr-3">
-            <span id="unit-thumb-icon">✈️</span>
-          </div>
-
           <!-- 중앙: UNIT 1 / 10 + 볼드 텍스트 + 옐로우 진행도 프로그레스 바 -->
           <div class="flex flex-col flex-grow min-w-0">
             <div
@@ -642,7 +521,6 @@
                 class="hidden absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span>
               <span id="node-bonus-pulse-ring"
                 class="hidden absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>
-              <!-- ⭐️ overflow-hidden 제거 완료 -->
               <button id="node-bonus-btn"
                 class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80"
                 type="button" title="보너스 선물 상자">
@@ -683,7 +561,6 @@
                 class="hidden absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span>
               <span id="node-review-pulse-ring"
                 class="hidden absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>
-              <!-- ⭐️ overflow-hidden 제거 완료 -->
               <button id="node-review-btn"
                 class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80"
                 type="button" title="약점 복습 드릴">
@@ -1013,7 +890,8 @@
       <div class="px-4 flex flex-col gap-4">
         <!-- Packs Language Segmented Tab (🇪🇸 스페인어(ES) | 🇺🇸 영어(EN)) -->
         <div class="w-full">
-          <div id="packs-lang-tabs" class="flex items-center bg-slate-200/80 p-1 rounded-2xl gap-1 text-xs font-bold select-none overflow-x-auto no-scrollbar">
+          <div id="packs-lang-tabs"
+            class="flex items-center bg-slate-200/80 p-1 rounded-2xl gap-1 text-xs font-bold select-none overflow-x-auto no-scrollbar">
             <button id="packs-tab-es" type="button"
               class="packs-lang-tab flex-1 py-2 rounded-xl text-center transition-all cursor-pointer bg-white text-emerald-800 shadow-xs font-black shrink-0"
               data-pack-lang="es">
@@ -1066,270 +944,275 @@
 
           <div id="packs-card-list" class="flex flex-col gap-3">
             <!-- [Spanish Packs] -->
-          <!-- Pack Card 1: ⚽ 스페인 축구 실전팩 -->
-          <article
-            class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md"
-            data-pack-id="pack_football" data-pack-lang="es">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-12 h-12 rounded-2xl bg-emerald-50 text-2xl flex items-center justify-center border border-emerald-100 flex-shrink-0 shadow-2xs">
-                  ⚽
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">스페인 축구 실전팩</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black">스페셜
-                      팩</span>
+            <!-- Pack Card 1: ⚽ 스페인 축구 실전팩 -->
+            <article
+              class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md"
+              data-pack-id="pack_football" data-pack-lang="es">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-emerald-50 text-2xl flex items-center justify-center border border-emerald-100 flex-shrink-0 shadow-2xs">
+                    ⚽
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">스페인 현지 경기장 & 피치 콜 필수 어휘</p>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">스페인 축구 실전팩</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black">스페셜
+                        팩</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">스페인 현지 경기장 & 피치 콜 필수 어휘</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
-              <div class="flex items-center gap-2">
-                <span class="flex items-center gap-1 font-semibold text-slate-600">
-                  <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
-                  총 120단어/문장 (6 Units)
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+                <div class="flex items-center gap-2">
+                  <span class="flex items-center gap-1 font-semibold text-slate-600">
+                    <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
+                    총 120단어/문장 (6 Units)
+                  </span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button type="button"
+                    class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                    data-pack-id="pack_football">
+                    <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pack Card 2: 🇪🇸 스페인어 정규 코스 -->
+            <article
+              class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md"
+              data-pack-id="main" data-pack-lang="es">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-amber-50 text-2xl flex items-center justify-center border border-amber-100 flex-shrink-0 shadow-2xs">
+                    🇪🇸
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">스페인어 정규 코스</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black">기본 정규
+                        코스</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">일상 회화 & 실전 기초 어휘 마스터</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+                <div class="flex items-center gap-2">
+                  <span class="flex items-center gap-1 font-semibold text-slate-600">
+                    <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
+                    총 40단어 (4 Units)
+                  </span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button type="button"
+                    class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                    data-pack-id="main">
+                    <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pack Card 3: 💼 비즈니스 & 무역 실전팩 (출시 예정) -->
+            <article
+              class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80"
+              data-pack-id="pack_business" data-pack-lang="es">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                    💼
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">비즈니스 & 무역 실전팩</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
+                        예정</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">바이어 미팅, 이메일, 계약 실무 비즈니스 어휘</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+                <span class="font-medium">Unit 1~4 제작 중</span>
+                <span
+                  class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-[14px]">lock</span>
+                  준비 중
                 </span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <button type="button"
-                  class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
-                  data-pack-id="pack_football">
-                  <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
-                </button>
-              </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- Pack Card 2: 🇪🇸 스페인어 정규 코스 -->
-          <article
-            class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md"
-            data-pack-id="main" data-pack-lang="es">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-12 h-12 rounded-2xl bg-amber-50 text-2xl flex items-center justify-center border border-amber-100 flex-shrink-0 shadow-2xs">
-                  🇪🇸
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">스페인어 정규 코스</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black">기본 정규
-                      코스</span>
+            <!-- Pack Card 4: 🥘 스페인 미식 & 타파스 투어 (출시 예정) -->
+            <article
+              class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80"
+              data-pack-id="pack_food" data-pack-lang="es">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                    🥘
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">일상 회화 & 실전 기초 어휘 마스터</p>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">스페인 미식 & 타파스 투어</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
+                        예정</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">현지 맛집 주문부터 식재료, 와인 테이스팅</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
-              <div class="flex items-center gap-2">
-                <span class="flex items-center gap-1 font-semibold text-slate-600">
-                  <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
-                  총 40단어 (4 Units)
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+                <span class="font-medium">Unit 1~4 제작 중</span>
+                <span
+                  class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-[14px]">lock</span>
+                  준비 중
                 </span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <button type="button"
-                  class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
-                  data-pack-id="main">
-                  <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
-                </button>
-              </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- Pack Card 3: 💼 비즈니스 & 무역 실전팩 (출시 예정) -->
-          <article
-            class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80"
-            data-pack-id="pack_business" data-pack-lang="es">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
-                  💼
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">비즈니스 & 무역 실전팩</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
-                      예정</span>
+            <!-- [English Packs] -->
+            <!-- Pack Card En 1: 🇺🇸 영어 정규 코스 (기초 회화 마스터) -->
+            <article
+              class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md hidden"
+              data-pack-id="main_en" data-pack-lang="en">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-blue-50 text-2xl flex items-center justify-center border border-blue-100 flex-shrink-0 shadow-2xs">
+                    🇺🇸
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">바이어 미팅, 이메일, 계약 실무 비즈니스 어휘</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
-              <span class="font-medium">Unit 1~4 제작 중</span>
-              <span
-                class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
-                준비 중
-              </span>
-            </div>
-          </article>
-
-          <!-- Pack Card 4: 🥘 스페인 미식 & 타파스 투어 (출시 예정) -->
-          <article
-            class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80"
-            data-pack-id="pack_food" data-pack-lang="es">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
-                  🥘
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">스페인 미식 & 타파스 투어</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
-                      예정</span>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">영어 정규 코스</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-black">기본 정규
+                        코스</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">일상 회화 & 실전 기초 어휘 마스터</p>
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">현지 맛집 주문부터 식재료, 와인 테이스팅</p>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
-              <span class="font-medium">Unit 1~4 제작 중</span>
-              <span
-                class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
-                준비 중
-              </span>
-            </div>
-          </article>
-
-          <!-- [English Packs] -->
-          <!-- Pack Card En 1: 🇺🇸 영어 정규 코스 (기초 회화 마스터) -->
-          <article
-            class="pack-card relative bg-white rounded-2xl p-4 shadow-sm border border-slate-200/90 flex flex-col gap-3 transition-all hover:shadow-md hidden"
-            data-pack-id="main_en" data-pack-lang="en">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-12 h-12 rounded-2xl bg-blue-50 text-2xl flex items-center justify-center border border-blue-100 flex-shrink-0 shadow-2xs">
-                  🇺🇸
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+                <div class="flex items-center gap-2">
+                  <span class="flex items-center gap-1 font-semibold text-slate-600">
+                    <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
+                    총 40단어 (4 Units)
+                  </span>
                 </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">영어 정규 코스</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-black">기본 정규
-                      코스</span>
+                <div class="flex items-center gap-1.5">
+                  <button type="button"
+                    class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                    data-pack-id="main_en">
+                    <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pack Card En 2: 💼 비즈니스 영어 실무 회화 (출시 예정) -->
+            <article
+              class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
+              data-pack-id="pack_business_en" data-pack-lang="en">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                    💼
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">일상 회화 & 실전 기초 어휘 마스터</p>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">비즈니스 영어 실무 회화</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
+                        예정</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">화상 회의, 이메일, 협상 실무 비즈니스 어휘</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
-              <div class="flex items-center gap-2">
-                <span class="flex items-center gap-1 font-semibold text-slate-600">
-                  <span class="material-symbols-outlined text-[15px] text-slate-400">layers</span>
-                  총 40단어 (4 Units)
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+                <span class="font-medium">Unit 1~4 제작 중</span>
+                <span
+                  class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-[14px]">lock</span>
+                  준비 중
                 </span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <button type="button"
-                  class="btn-pack-equip px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
-                  data-pack-id="main_en">
-                  <span class="material-symbols-outlined text-[16px]">bolt</span> 장착하기
-                </button>
-              </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- Pack Card En 2: 💼 비즈니스 영어 실무 회화 (출시 예정) -->
-          <article
-            class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
-            data-pack-id="pack_business_en" data-pack-lang="en">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
-                  💼
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">비즈니스 영어 실무 회화</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
-                      예정</span>
+            <!-- Pack Card En 3: 🎓 토익/오픽 필수 빈출팩 (출시 예정) -->
+            <article
+              class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
+              data-pack-id="pack_toeic" data-pack-lang="en">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                    🎓
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">화상 회의, 이메일, 협상 실무 비즈니스 어휘</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
-              <span class="font-medium">Unit 1~4 제작 중</span>
-              <span
-                class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
-                준비 중
-              </span>
-            </div>
-          </article>
-
-          <!-- Pack Card En 3: 🎓 토익/오픽 필수 빈출팩 (출시 예정) -->
-          <article
-            class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
-            data-pack-id="pack_toeic" data-pack-lang="en">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
-                  🎓
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">토익/오픽 필수 빈출팩</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
-                      예정</span>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">토익/오픽 필수 빈출팩</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
+                        예정</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">시험 직전 핵심 빈출 어휘 & 패턴 마스터</p>
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">시험 직전 핵심 빈출 어휘 & 패턴 마스터</p>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
-              <span class="font-medium">Unit 1~4 제작 중</span>
-              <span
-                class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
-                준비 중
-              </span>
-            </div>
-          </article>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+                <span class="font-medium">Unit 1~4 제작 중</span>
+                <span
+                  class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-[14px]">lock</span>
+                  준비 중
+                </span>
+              </div>
+            </article>
 
-          <!-- Pack Card En 4: ✈️ 해외여행 & 공항 실전 영어 (출시 예정) -->
-          <article
-            class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
-            data-pack-id="pack_travel_en" data-pack-lang="en">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
-                  ✈️
-                </div>
-                <div class="flex flex-col min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">해외여행 & 공항 실전 영어</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
-                      예정</span>
+            <!-- Pack Card En 4: ✈️ 해외여행 & 공항 실전 영어 (출시 예정) -->
+            <article
+              class="pack-card relative bg-slate-50/80 rounded-2xl p-4 border border-dashed border-slate-300 flex flex-col gap-3 opacity-80 hidden"
+              data-pack-id="pack_travel_en" data-pack-lang="en">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-slate-200 text-2xl flex items-center justify-center flex-shrink-0">
+                    ✈️
                   </div>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">공항 입국, 호텔 체크인, 길찾기 필수 어휘</p>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <h3 class="text-sm font-extrabold text-slate-700 tracking-tight">해외여행 & 공항 실전 영어</h3>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-black">출시
+                        예정</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">공항 입국, 호텔 체크인, 길찾기 필수 어휘</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
-              <span class="font-medium">Unit 1~4 제작 중</span>
-              <span
-                class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
-                <span class="material-symbols-outlined text-[14px]">lock</span>
-                준비 중
-              </span>
-            </div>
-          </article>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs text-slate-400">
+                <span class="font-medium">Unit 1~4 제작 중</span>
+                <span
+                  class="px-3 py-1 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-[14px]">lock</span>
+                  준비 중
+                </span>
+              </div>
+            </article>
           </div>
         </section>
       </div>
@@ -1895,87 +1778,6 @@
               <span class="material-symbols-outlined text-[16px]">chevron_right</span>
             </button>
             <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-primary/10 pointer-events-none"></div>
-          </div>
-
-          <!-- Quick 4-Cat Avatar Picker Card (터치 즉시 변경) -->
-          <div class="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant/30 shadow-xs mb-2">
-            <div class="flex items-center justify-between mb-3 px-1">
-              <div class="flex items-center gap-1.5">
-                <span class="text-base leading-none">🐱</span>
-                <span class="text-xs font-bold text-on-surface tracking-tight">프로필 고양이 아바타</span>
-              </div>
-              <span class="text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">터치 시 즉시
-                변경</span>
-            </div>
-            <div id="settings-quick-avatar-grid" class="grid grid-cols-4 gap-2">
-              <!-- 1. 스페인 냥이 -->
-              <button type="button"
-                class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group"
-                data-avatar-file="profile-spanish.webp" data-avatar-name="스페인 냥이">
-                <div
-                  class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border-2 border-primary bg-white shadow-xs transition-all">
-                  <img src="assets/profiles/profile-spanish.webp?v=88" alt="스페인 냥이"
-                    class="w-full h-full object-cover rounded-full">
-                  <div
-                    class="quick-avatar-check absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
-                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
-                  </div>
-                </div>
-                <span
-                  class="quick-avatar-label text-[11px] font-bold text-primary mt-1.5 truncate max-w-[64px]">스페인</span>
-              </button>
-
-              <!-- 2. 잉글리시 냥이 -->
-              <button type="button"
-                class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group"
-                data-avatar-file="profile-english.webp" data-avatar-name="잉글리시 냥이">
-                <div
-                  class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-english.webp?v=88" alt="잉글리시 냥이"
-                    class="w-full h-full object-cover rounded-full">
-                  <div
-                    class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
-                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
-                  </div>
-                </div>
-                <span
-                  class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">잉글리시</span>
-              </button>
-
-              <!-- 3. 아티스트 냥이 -->
-              <button type="button"
-                class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group"
-                data-avatar-file="profile-artist.webp" data-avatar-name="아티스트 냥이">
-                <div
-                  class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-artist.webp?v=88" alt="아티스트 냥이"
-                    class="w-full h-full object-cover rounded-full">
-                  <div
-                    class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
-                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
-                  </div>
-                </div>
-                <span
-                  class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">아티스트</span>
-              </button>
-
-              <!-- 4. 탐험가 냥이 -->
-              <button type="button"
-                class="quick-avatar-btn flex flex-col items-center p-1.5 rounded-xl cursor-pointer hover:bg-slate-50 active:scale-95 transition-all text-center group"
-                data-avatar-file="profile-explorer.webp" data-avatar-name="탐험가 냥이">
-                <div
-                  class="quick-avatar-ring relative w-12 h-12 rounded-full p-0.5 border border-slate-200 bg-slate-50 transition-all">
-                  <img src="assets/profiles/profile-explorer.webp?v=88" alt="탐험가 냥이"
-                    class="w-full h-full object-cover rounded-full">
-                  <div
-                    class="quick-avatar-check hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center shadow-xs">
-                    <span class="material-symbols-outlined text-[11px] font-bold">check</span>
-                  </div>
-                </div>
-                <span
-                  class="quick-avatar-label text-[11px] font-medium text-slate-500 mt-1.5 truncate max-w-[64px]">탐험가</span>
-              </button>
-            </div>
           </div>
 
           <!-- SECTION 1: 학습 및 게임 환경 -->
@@ -2657,9 +2459,9 @@
     <!-- 4. LANGUAGE SELECTION MODAL                       -->
     <!-- ================================================= -->
     <div id="language-modal-backdrop"
-      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-center justify-center p-4">
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-start justify-center p-4 pt-16 sm:pt-20 overflow-y-auto">
       <div id="language-modal-card"
-        class="relative w-full max-w-[360px] bg-white rounded-3xl p-5 shadow-2xl flex flex-col items-center transform transition-all duration-300 scale-95 opacity-0 pointer-events-none select-none"
+        class="relative w-full max-w-[360px] bg-white rounded-3xl p-5 shadow-2xl flex flex-col items-center transform transition-all duration-300 scale-95 opacity-0 select-none"
         role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <button id="close-modal-btn" type="button" aria-label="닫기"
           class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors active:scale-95 cursor-pointer">
@@ -2671,6 +2473,7 @@
         <p class="text-xs text-slate-500 mb-3.5 text-center">원하는 언어와 코스를 선택해 주세요</p>
 
         <div id="language-grid" class="grid grid-cols-2 gap-3 w-full" role="radiogroup" aria-label="도전할 언어 선택">
+
           <!-- Card: 영어 -->
           <div id="card-en" role="radio" aria-checked="false" tabindex="0"
             class="course-card relative p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 hover:bg-slate-100/70 hover:border-slate-200 transition-all duration-150 flex flex-col items-center cursor-pointer active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#22c55e]">
@@ -2756,6 +2559,7 @@
         </div>
       </div>
     </div>
+
 
     <!-- ================================================= -->
     <!-- 5. STREAK CELEBRATION MODAL                       -->
@@ -3245,10 +3049,12 @@
         </div>
         <!-- ⚔️ 보스전 전용 단판 조건 섹션 -->
         <div id="lesson-modal-boss-section" class="hidden flex-col gap-0.5 w-[48%]">
-          <span id="lesson-modal-boss-condition-badge" class="font-label-sm text-[10px] text-rose-600 font-extrabold tracking-tight flex items-center gap-0.5">
+          <span id="lesson-modal-boss-condition-badge"
+            class="font-label-sm text-[10px] text-rose-600 font-extrabold tracking-tight flex items-center gap-0.5">
             <span>🎯</span><span>단판 총괄 시험</span>
           </span>
-          <span id="lesson-modal-boss-condition-text" class="font-label-sm text-[11px] text-slate-800 font-black tracking-tight">통과 기준: 80% 이상</span>
+          <span id="lesson-modal-boss-condition-text"
+            class="font-label-sm text-[11px] text-slate-800 font-black tracking-tight">통과 기준: 80% 이상</span>
         </div>
         <div id="lesson-modal-divider" class="h-7 w-[1px] bg-outline-variant/50"></div>
         <div class="flex items-center gap-1.5 pl-1">
@@ -3267,7 +3073,8 @@
 
       <button id="lesson-start-btn" type="button"
         class="w-full h-12 rounded-2xl font-label-lg text-base bg-[#22c55e] hover:bg-[#16a34a] text-white font-extrabold flex items-center justify-center gap-2 shadow-[0_4px_0_#15803d,0_8px_16px_-2px_rgba(34,197,94,0.4)] active:translate-y-1 active:shadow-none transition-all cursor-pointer">
-        <span id="lesson-start-btn-icon" class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        <span id="lesson-start-btn-icon" class="material-symbols-outlined text-[20px]"
+          style="font-variation-settings: 'FILL' 1;">play_arrow</span>
         <span id="lesson-start-btn-text">학습 시작하기</span>
       </button>
     </div>

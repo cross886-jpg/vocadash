@@ -445,26 +445,92 @@
     if (!listEl) return;
     listEl.innerHTML = units.map(item => {
       const isCompleted = item.unit < unlockedLevel, isCur = item.unit === unlockedLevel;
-      return `<div class="unit-item-card p-3.5 rounded-2xl border-2 ${isCompleted ? 'border-emerald-500/80 bg-emerald-50/50' : (isCur ? 'border-sky-500 bg-sky-50/60' : 'border-slate-200 bg-white opacity-70')} flex items-center justify-between" data-unit="${item.unit}"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl ${isCompleted ? 'bg-emerald-600' : (isCur ? 'bg-sky-500' : 'bg-slate-300')} text-white flex items-center justify-center font-black text-sm">U${item.unit}</div><div><div class="text-xs font-black">${item.title}</div><span class="text-[11px] text-slate-500">${item.subtitle || ''}</span></div></div><span>${isCompleted ? '✅' : (isCur ? '▶' : '🔒')}</span></div>`;
+      const status = isCompleted ? 'completed' : (isCur ? 'active' : 'locked');
+      const badgeText = isCompleted ? '완료됨' : (isCur ? '진행 중' : '잠김');
+      const badgeClass = isCompleted ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : (isCur ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500 border-slate-200');
+      const icon = isCompleted ? 'check_circle' : (isCur ? 'chevron_right' : 'lock');
+      return `<div class="unit-item-card p-3.5 rounded-2xl border-2 ${isCompleted ? 'border-emerald-500/80 bg-emerald-50/50' : (isCur ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200/80 bg-white/90 hover:bg-slate-50 opacity-85 hover:opacity-100')} flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all" data-unit="${item.unit}" data-title="${item.title || ''}" data-status="${status}">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl ${isCompleted || isCur ? 'bg-emerald-600' : 'bg-slate-100 text-slate-500'} text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">U${item.unit}</div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black ${isCompleted || isCur ? 'text-emerald-950' : 'text-slate-800'} leading-tight">Unit ${item.unit} : ${item.title}</span>
+              <span class="px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tight leading-none border ${badgeClass}">${badgeText}</span>
+            </div>
+            <span class="text-[11px] font-semibold ${isCompleted || isCur ? 'text-emerald-700' : 'text-slate-400'} mt-0.5 truncate">${item.subtitle || ''}</span>
+          </div>
+        </div>
+        <div class="flex items-center text-emerald-700 font-extrabold flex-shrink-0 ml-2">
+          <span class="material-symbols-outlined text-[20px] ${isCompleted ? 'text-emerald-600' : (isCur ? 'text-emerald-700' : 'text-slate-400')} font-bold">${icon}</span>
+        </div>
+      </div>`;
     }).join('');
   }
+
+  function handleUnitOverviewListClick(e) {
+    const card = e.target.closest('.unit-item-card');
+    if (!card) return;
+    const uNum = parseInt(card.dataset.unit, 10);
+    const uTitle = card.dataset.title || '';
+    const status = card.dataset.status;
+
+    if (status === 'active' || status === 'completed') {
+      closeUnitOverviewModal();
+      const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'instant', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+      if (typeof target.showToast === 'function') {
+        target.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
+      }
+    } else {
+      // 🔒 잠긴 유닛 카드 클릭 시 '건너뛰기 시험 안내 모달' 즉시 노출
+      openUnitSkipModal(uNum, uTitle);
+    }
+  }
+
   function openUnitOverviewModal() {
     renderUnitOverviewList();
     const bd = document.getElementById('unit-overview-modal-backdrop'), card = document.getElementById('unit-overview-modal-card');
-    if (bd && card) { bd.classList.remove('pointer-events-none', 'opacity-0'); card.classList.remove('pointer-events-none', 'translate-y-full', 'opacity-0'); }
+    if (bd && card) {
+      bd.classList.remove('pointer-events-none', 'opacity-0');
+      bd.classList.add('opacity-100');
+      card.classList.remove('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
+      card.classList.add('translate-y-0', 'sm:scale-100', 'opacity-100');
+    }
   }
   function closeUnitOverviewModal() {
     const bd = document.getElementById('unit-overview-modal-backdrop'), card = document.getElementById('unit-overview-modal-card');
-    if (bd && card) { bd.classList.add('pointer-events-none', 'opacity-0'); card.classList.add('pointer-events-none', 'translate-y-full', 'opacity-0'); }
+    if (bd && card) {
+      bd.classList.remove('opacity-100');
+      bd.classList.add('pointer-events-none', 'opacity-0');
+      card.classList.remove('translate-y-0', 'sm:scale-100', 'opacity-100');
+      card.classList.add('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
+    }
   }
-  function openUnitSkipModal(unitNum) {
+  function openUnitSkipModal(unitNum, unitTitle) {
     target.currentSkipTestUnit = parseInt(unitNum, 10) || 2;
+    target.currentSkipTestUnitTitle = unitTitle || `Unit ${target.currentSkipTestUnit}`;
+    const titleEl = document.getElementById('unit-skip-modal-title');
+    if (titleEl) titleEl.textContent = `⚡ Unit ${target.currentSkipTestUnit} 건너뛰기 시험`;
     const bd = document.getElementById('unit-skip-modal-backdrop'), card = document.getElementById('unit-skip-modal-card');
-    if (bd && card) { bd.classList.remove('pointer-events-none', 'opacity-0'); card.classList.remove('pointer-events-none', 'opacity-0'); }
+    if (bd && card) {
+      bd.classList.remove('pointer-events-none', 'opacity-0');
+      bd.classList.add('opacity-100');
+      card.classList.remove('pointer-events-none', 'scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }
   }
   function closeUnitSkipModal() {
     const bd = document.getElementById('unit-skip-modal-backdrop'), card = document.getElementById('unit-skip-modal-card');
-    if (bd && card) { bd.classList.add('pointer-events-none', 'opacity-0'); card.classList.add('pointer-events-none', 'opacity-0'); }
+    if (bd && card) {
+      bd.classList.remove('opacity-100');
+      bd.classList.add('pointer-events-none', 'opacity-0');
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('pointer-events-none', 'scale-95', 'opacity-0');
+    }
   }
   function startUnitSkipTest(targetUnit = 2) {
     target.isUnitSkipTestMode = true; target.currentSkipTestUnit = targetUnit;
@@ -478,6 +544,12 @@
     on('close-unit-overview-btn', closeUnitOverviewModal); on('unit-overview-confirm-btn', closeUnitOverviewModal);
     on('btn-close-unit-skip-modal', closeUnitSkipModal);
     on('btn-start-unit-skip-test', () => { closeUnitSkipModal(); closeUnitOverviewModal(); startUnitSkipTest(target.currentSkipTestUnit || 2); });
+    const listEl = document.getElementById('unit-overview-list');
+    if (listEl && !listEl._bound) { listEl.addEventListener('click', handleUnitOverviewListClick); listEl._bound = true; }
+    const overviewBd = document.getElementById('unit-overview-modal-backdrop');
+    if (overviewBd && !overviewBd._bound) { overviewBd.addEventListener('click', (e) => { if (e.target === overviewBd) closeUnitOverviewModal(); }); overviewBd._bound = true; }
+    const skipBd = document.getElementById('unit-skip-modal-backdrop');
+    if (skipBd && !skipBd._bound) { skipBd.addEventListener('click', (e) => { if (e.target === skipBd) closeUnitSkipModal(); }); skipBd._bound = true; }
   }
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initUnitOverviewEvents);

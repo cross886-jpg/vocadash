@@ -129,18 +129,12 @@
   }
 
   function openLanguageModal() {
-    if (typeof window.closeCourseDropdown === 'function') {
-      window.closeCourseDropdown();
-    }
-    const savedLang = (typeof localStorage !== 'undefined' ? (localStorage.getItem('vocadash_selected_lang') || localStorage.getItem('vocadash_language')) : null);
+    window.closeCourseDropdown?.();
+    const savedLang = localStorage?.getItem('vocadash_selected_lang') || localStorage?.getItem('vocadash_language');
     modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || savedLang || 'es';
+    modalPendingCourseId = window.activeCourseId || localStorage?.getItem('vocadash_active_course') || 'main';
 
-    const savedCourse = (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : null);
-    modalPendingCourseId = window.activeCourseId || savedCourse || 'main';
-
-    if (modalPendingLanguage === 'en' && modalPendingCourseId !== 'main') {
-      modalPendingCourseId = 'main';
-    }
+    if (modalPendingLanguage === 'en') modalPendingCourseId = 'main';
 
     updateModalCardsUI(modalPendingLanguage);
     renderModalCourseList(modalPendingLanguage, modalPendingCourseId);
@@ -149,9 +143,7 @@
     const card = el('language-modal-card');
     if (backdrop && card) {
       backdrop.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
-      backdrop.classList.add('opacity-100', 'pointer-events-auto');
       card.classList.remove('scale-95', 'opacity-0');
-      card.classList.add('scale-100', 'opacity-100');
     }
   }
 
@@ -159,9 +151,7 @@
     const backdrop = el('language-modal-backdrop');
     const card = el('language-modal-card');
     if (backdrop && card) {
-      backdrop.classList.remove('opacity-100', 'pointer-events-auto');
       backdrop.classList.add('opacity-0', 'pointer-events-none');
-      card.classList.remove('scale-100', 'opacity-100');
       card.classList.add('scale-95', 'opacity-0');
       setTimeout(() => {
         if (backdrop.classList.contains('opacity-0')) {
@@ -170,6 +160,7 @@
       }, 200);
     }
   }
+
 
   function handleCardLanguageSelect(targetLang) {
     const langChanged = (modalPendingLanguage !== targetLang);

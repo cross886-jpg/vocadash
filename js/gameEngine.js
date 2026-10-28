@@ -27,7 +27,8 @@
   function initDOMElements() {
     const el = id => document.getElementById(id);
     gameScreen = el("game-screen"); gameContainer = el("game-container");
-    gameHeartsContainer = el("game-hearts-container"); gameStageTitle = el("game-stage-title");
+    gameHeartsContainer = el("game-hearts"); gameStageTitle = el("game-stage-title");
+
     gameProgressBar = el("game-progress-bar"); gameProgressText = el("game-progress-text");
     gameComboBadge = el("game-combo-badge"); gameComboText = el("game-combo-text"); gameSpeedText = el("game-speed-text");
     gameArena = el("game-arena"); gameFreezeOverlay = el("game-freeze-overlay");
@@ -56,6 +57,7 @@
     });
     window.userHearts = currentHearts;
   }
+
 
   function decreaseHeart() {
     if (currentHearts <= 0) return 0;

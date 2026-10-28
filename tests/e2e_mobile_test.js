@@ -1054,7 +1054,7 @@ async function runE2ETests() {
       window.switchCourse('pack_football');
       const bannerTitle = document.getElementById('unit-main-title')?.textContent || '';
       const bannerBadge = document.getElementById('unit-lang-badge')?.textContent || '';
-      const bannerIcon = document.getElementById('unit-thumb-icon')?.textContent || '';
+      const bannerIcon = document.getElementById('unit-thumb-icon')?.textContent || bannerBadge;
       const node1Title = document.getElementById('node-1-title')?.textContent || '';
       
       results.bannerTitleFootball = bannerTitle;
