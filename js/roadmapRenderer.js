@@ -58,7 +58,7 @@
           </button>
 
           ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+            <div class="node-badge-start absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
                 <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
@@ -125,7 +125,7 @@
           ` : ''}
 
           ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+            <div class="node-badge-start absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
                 <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
@@ -221,7 +221,7 @@
           ` : ''}
 
           ${effectiveActive ? `
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+            <div class="node-badge-start absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
               <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
                 <span>▶</span><span>START</span>
                 <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
@@ -243,23 +243,29 @@
   }
 
   function renderUnitBossHtml(opt) {
-    const { unitNum, align, width, isCompleted, isLocked, nodeId } = opt;
+    const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
     const resolvedId = nodeId || `u${unitNum}_node-boss`;
     const effectiveCompleted = isLocked ? false : !!isCompleted;
+    const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
 
     const btnClass = isLocked
       ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300'
       : (effectiveCompleted
         ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70'
-        : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70');
+        : (effectiveActive
+          ? 'bg-gradient-to-b from-amber-400 via-yellow-500 to-amber-600 hover:from-amber-300 hover:to-yellow-400 text-white border-b-[6px] border-amber-800 shadow-[0_8px_24px_rgba(245,158,11,0.5)] ring-4 ring-amber-300/90'
+          : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70'));
 
     return `
-      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'boss')}" data-unit-index="${unitNum - 1}">
+      <div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'boss'))}" data-unit-index="${unitNum - 1}">
         <div class="relative flex items-center justify-center node-target cursor-pointer">
-          ${!isLocked && !effectiveCompleted ? `
+          ${effectiveActive ? `
+            <span class="absolute w-[116px] h-[116px] rounded-full bg-amber-400/30 animate-ping pointer-events-none"></span>
+            <span class="absolute w-[104px] h-[104px] rounded-full bg-amber-200/50 pointer-events-none"></span>
+          ` : (!isLocked && !effectiveCompleted ? `
             <div class="absolute w-[104px] h-[104px] rounded-full bg-amber-400 blur-md opacity-80 animate-pulse pointer-events-none"></div>
-          ` : ''}
-          <button class="subsequent-node-btn node-btn btn-3d relative w-[92px] h-[92px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+          ` : '')}
+          <button class="subsequent-node-btn node-btn btn-3d relative ${effectiveActive ? 'w-[96px] h-[96px]' : 'w-[92px] h-[92px]'} rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
             <span class="text-[44px] select-none leading-none drop-shadow-md">👑</span>
             ${isLocked ? `
               <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-900/80 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none">
@@ -267,6 +273,14 @@
               </div>
             ` : ''}
           </button>
+          ${effectiveActive ? `
+            <div class="node-badge-start absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center">
+              <div class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                <span>▶</span><span>START</span>
+                <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute" style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+              </div>
+            </div>
+          ` : ''}
           ${effectiveCompleted ? `
             <div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none">
               <span class="material-symbols-outlined text-[16px] font-black">check</span>
@@ -277,7 +291,7 @@
         <div class="mt-2.5 flex items-center justify-center px-3.5 py-1 rounded-full ${isLocked ? 'bg-slate-400 text-slate-200 shadow-sm' : (effectiveCompleted ? 'bg-emerald-600 text-white shadow-[0_2px_0_0_#065f46]' : 'bg-amber-500 text-white shadow-[0_2px_0_0_#b45309]')} text-center pointer-events-none font-black text-[11px] uppercase tracking-wide">
           <div class="flex items-center gap-1.5">
             <span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '👑' : '🔥')}</span>
-            <span>${isLocked ? 'LOCKED' : (effectiveCompleted ? 'BOSS CLEAR!' : 'FINAL BOSS EXAM')}</span>
+            <span>${isLocked ? 'LOCKED' : (effectiveCompleted ? 'BOSS CLEAR!' : (effectiveActive ? 'START EXAM' : 'FINAL BOSS EXAM'))}</span>
           </div>
         </div>
       </div>
@@ -529,6 +543,145 @@
     });
   }
 
+  // =========================================================================
+  // 🎯 활성 노드(START 노드) 정밀 탐색 및 즉각 중앙 배치 (Instant Snap Focus)
+  // =========================================================================
+
+  function isElementVisible(el) {
+    if (!el) return false;
+    if (el.classList && el.classList.contains('hidden')) return false;
+    if (el.style && (el.style.display === 'none' || el.style.visibility === 'hidden')) return false;
+    return true;
+  }
+
+  function isNodeCompleted(node) {
+    if (!node) return false;
+    if (node.dataset && node.dataset.nodeType === 'completed') return true;
+    const checkBadge = node.querySelector ? (node.querySelector('[id$="-check-badge"]') || node.querySelector('.material-symbols-outlined')) : null;
+    if (checkBadge && isElementVisible(checkBadge)) {
+      const text = (checkBadge.textContent || '').trim();
+      if (text === 'check' || checkBadge.id?.includes('check-badge')) return true;
+    }
+    const btn = node.querySelector ? node.querySelector('.node-btn') : null;
+    if (btn && btn.title && (btn.title.includes('완료') || btn.classList.contains('from-emerald-400'))) {
+      return true;
+    }
+    return false;
+  }
+
+  function isNodeLocked(node) {
+    if (!node) return false;
+    if (node.dataset && node.dataset.nodeType === 'locked' && !node.classList.contains('active')) return true;
+    return false;
+  }
+
+  function getActiveRoadmapNodeElement() {
+    const roadmapScreen = document.getElementById('roadmap-screen') || document;
+    // ⚠️ [중요] 반드시 개별 노드 엘리먼트(.roadmap-node)만 탐색해야 함!
+    const allNodes = Array.from(roadmapScreen.querySelectorAll('.roadmap-node'));
+
+    // 1순위: '▶ START' 뱃지가 실제로 표시되어 있는 미완료 활성 노드
+    // ⚠️ 절대 "방금 클리어한 노드"나 "초록색 체크(완료)된 노드"는 스크롤 타겟으로 삼지 않음!
+    for (const node of allNodes) {
+      if (isNodeCompleted(node) || isNodeLocked(node)) continue;
+
+      // A) .node-badge-start 또는 [id$="-start-pill"] 뱃지가 가시 상태인 경우
+      const startBadge = node.querySelector('.node-badge-start, [id$="-start-pill"]');
+      if (startBadge && isElementVisible(startBadge)) {
+        return node;
+      }
+
+      // B) .animate-pulse 내에 'START' 텍스트를 가진 뱃지가 가시 상태인 경우
+      const pulseEl = node.querySelector('.animate-pulse');
+      if (pulseEl && isElementVisible(pulseEl) && pulseEl.textContent.includes('START')) {
+        return node;
+      }
+
+      // C) 버튼 안의 stage-num에 'START' 텍스트가 가시 상태인 경우 (예: 1번 노드)
+      const stageNumEl = node.querySelector('.node-stage-num');
+      if (stageNumEl && isElementVisible(stageNumEl) && stageNumEl.textContent.trim().toUpperCase() === 'START') {
+        return node;
+      }
+
+      // D) .active 또는 .node-pulse 클래스를 보유하고 미완료인 경우
+      if (node.classList.contains('active') || node.classList.contains('node-pulse') || node.dataset.nodeType === 'active') {
+        return node;
+      }
+    }
+
+    // 2순위: 1순위가 없을 경우 (전체 코스 완주/클리어 시), 가장 마지막 열린 노드 (잠기지 않은 노드 중 맨 뒤)
+    const openNodes = allNodes.filter(n => !isNodeLocked(n));
+    if (openNodes.length > 0) {
+      return openNodes[openNodes.length - 1];
+    }
+
+    // 3순위: 신규 시작 시 첫 번째 노드 (u1_node-1 / node-1-container)
+    return document.getElementById('u1_node-1') ||
+      document.getElementById('node-1-container') ||
+      (allNodes.length > 0 ? allNodes[0] : null);
+  }
+
+  function focusActiveRoadmapNode(explicitTarget) {
+    const roadmapScreen = document.getElementById('roadmap-screen');
+    // 로드맵 화면이 존재하지 않거나 숨겨져(hidden) 있다면 스크롤 스냅 생략
+    if (roadmapScreen && (roadmapScreen.classList.contains('hidden') || roadmapScreen.style.display === 'none')) {
+      return;
+    }
+
+    let targetNode = null;
+    if (explicitTarget && typeof explicitTarget === 'object' && explicitTarget.nodeType) {
+      targetNode = explicitTarget;
+    } else {
+      targetNode = getActiveRoadmapNodeElement();
+    }
+    if (!targetNode) return;
+
+    const performSnap = () => {
+      // 1) scrollIntoView (instant + center)
+      try {
+        if (typeof targetNode.scrollIntoView === 'function') {
+          targetNode.scrollIntoView({ behavior: 'instant', block: 'center' });
+        }
+      } catch (_) {
+        try {
+          targetNode.scrollIntoView(true);
+        } catch (_) {}
+      }
+
+      // 2) 고정 상단 헤더(roadmap-header) 및 하단 탭바(bottom-nav)를 고려한 정밀 가용 영역 중앙 정렬
+      try {
+        if (typeof targetNode.getBoundingClientRect === 'function') {
+          const rect = targetNode.getBoundingClientRect();
+          const header = document.getElementById('roadmap-header');
+          const headerHeight = header ? (header.offsetHeight || 140) : 140;
+          const nav = document.getElementById('bottom-nav') || document.querySelector('nav');
+          const navHeight = nav ? (nav.offsetHeight || 70) : 70;
+          const viewportHeight = window.innerHeight || 800;
+
+          const visibleCenterY = headerHeight + ((viewportHeight - headerHeight - navHeight) / 2);
+          const currentY = (typeof window.scrollY === 'number') ? window.scrollY : 0;
+          const nodeCenterY = currentY + rect.top + (rect.height / 2);
+          const scrollTargetY = Math.max(0, Math.round(nodeCenterY - visibleCenterY));
+
+          if (typeof window.scrollTo === 'function') {
+            window.scrollTo({
+              top: scrollTargetY,
+              behavior: 'instant'
+            });
+          }
+        }
+      } catch (_) {}
+    };
+
+    // 롤링 애니메이션 없이 0ms 즉각 배치
+    performSnap();
+
+    // 레이아웃 지연 대비 RAF 1회 보장
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(performSnap);
+    }
+  }
+
   // 전역 노출 바인딩
   window.renderUnitTrackSvgHtml = renderUnitTrackSvgHtml;
   window.renderUnitNodeHtml = renderUnitNodeHtml;
@@ -536,4 +689,8 @@
   window.renderUnitReviewHtml = renderUnitReviewHtml;
   window.renderUnitBossHtml = renderUnitBossHtml;
   window.renderSubsequentUnits = renderSubsequentUnits;
+  window.getActiveRoadmapNodeElement = getActiveRoadmapNodeElement;
+  window.focusActiveRoadmapNode = focusActiveRoadmapNode;
+  window.autoScrollToActiveNode = focusActiveRoadmapNode;
 })();
+

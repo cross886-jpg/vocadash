@@ -349,6 +349,142 @@
         }
       });
     }
+
+    // 초기 통계 UI 렌더링
+    updateProfileStats();
+  }
+
+  // 외운 단어(vocadash_mastered_words) 단일 추가
+  function addMasteredWord(item) {
+    if (!item) return;
+    const wordId = String(item.id || item.word || item.term || '').trim();
+    if (!wordId) return;
+    try {
+      let list = [];
+      const raw = localStorage.getItem('vocadash_mastered_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+      if (!list.includes(wordId)) {
+        list.push(wordId);
+        localStorage.setItem('vocadash_mastered_words', JSON.stringify(list));
+      }
+    } catch (e) {
+      console.warn('[VocaDash] addMasteredWord error:', e);
+    }
+  }
+
+  // 외운 단어(vocadash_mastered_words) 복수 일괄 추가
+  function addMasteredWords(items) {
+    if (!Array.isArray(items) || items.length === 0) return;
+    try {
+      let list = [];
+      const raw = localStorage.getItem('vocadash_mastered_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+      const set = new Set(list);
+      items.forEach(item => {
+        if (!item) return;
+        const wordId = String(item.id || item.word || item.term || '').trim();
+        if (wordId) set.add(wordId);
+      });
+      localStorage.setItem('vocadash_mastered_words', JSON.stringify(Array.from(set)));
+    } catch (e) {
+      console.warn('[VocaDash] addMasteredWords error:', e);
+    }
+  }
+
+  // 내 기록 탭 통계(외운 단어 수, 정답률, 보유 보석, XP) 실시간 바인딩
+  function updateProfileStats() {
+    try {
+      // 1) 외운 단어 수: vocadash_mastered_words에 저장된 고유 단어 개수(중복 제외)
+      let masteredCount = 0;
+      try {
+        const rawMastered = localStorage.getItem('vocadash_mastered_words') ||
+          localStorage.getItem('vocadash_learned_words') ||
+          localStorage.getItem('vocadash_completed_words');
+        if (rawMastered) {
+          const parsed = JSON.parse(rawMastered);
+          if (Array.isArray(parsed)) {
+            masteredCount = new Set(parsed).size;
+          } else if (typeof parsed === 'number') {
+            masteredCount = parsed;
+          }
+        }
+      } catch (_) { }
+
+      const wordsCountEl = document.getElementById('stats-words-count');
+      if (wordsCountEl) {
+        wordsCountEl.textContent = `${masteredCount}개`;
+      }
+
+      // 2) 정답률: (누적 정답 수 / 누적 시도 문제 수) * 100을 반올림하여 X%로 계산 (시도 문제 수 0일 때 0%)
+      let totalQuestions = 0;
+      let correctAnswers = 0;
+      try {
+        const totalRaw = localStorage.getItem('vocadash_total_questions');
+        if (totalRaw !== null) totalQuestions = parseInt(totalRaw, 10) || 0;
+        const correctRaw = localStorage.getItem('vocadash_correct_answers');
+        if (correctRaw !== null) correctAnswers = parseInt(correctRaw, 10) || 0;
+      } catch (_) { }
+
+      let accuracy = 0;
+      if (totalQuestions > 0) {
+        accuracy = Math.round((Math.min(correctAnswers, totalQuestions) / totalQuestions) * 100);
+      } else {
+        try {
+          const savedAcc = localStorage.getItem('vocadash_overall_accuracy');
+          if (savedAcc !== null) accuracy = parseInt(savedAcc, 10) || 0;
+        } catch (_) { }
+      }
+      accuracy = Math.max(0, Math.min(100, accuracy));
+
+      const accuracyEl = document.getElementById('stats-accuracy-rate');
+      if (accuracyEl) {
+        accuracyEl.textContent = `${accuracy}%`;
+      }
+
+      // 3) 보유 보석 수치 반영
+      const gemsCountEl = document.getElementById('stats-gems-count');
+      if (gemsCountEl) {
+        let gems = 0;
+        try {
+          const savedGems = localStorage.getItem('vocadash_gems');
+          if (savedGems !== null) gems = parseInt(savedGems, 10) || 0;
+        } catch (_) { }
+        gemsCountEl.textContent = `${gems}개`;
+      }
+
+      // 4) 레벨 및 XP 진행도 카드 동기화
+      let currentXp = 0;
+      try {
+        currentXp = Number(localStorage.getItem('vocadash_xp') || localStorage.getItem('vocadash_user_xp') || 0);
+      } catch (_) { }
+      const currentLevel = Math.max(1, Math.floor(currentXp / 100) + 1);
+      const levelTitle = currentLevel >= 5 ? '실전 마스터 🚀' : (currentLevel >= 3 ? '열정 러너 🏃' : '비기너 🌱');
+
+      const statsLevelBadge = document.getElementById('stats-level-badge');
+      if (statsLevelBadge) {
+        statsLevelBadge.textContent = `Lv.${currentLevel} ${levelTitle}`;
+      }
+
+      const currentXpEl = document.getElementById('stats-current-xp');
+      const maxXpEl = document.getElementById('stats-max-xp');
+      const xpPercentEl = document.getElementById('stats-xp-percent');
+      const xpBarEl = document.getElementById('stats-xp-bar');
+      const levelProgressXp = currentXp % 100;
+      const levelPercent = Math.min(100, Math.round((levelProgressXp / 100) * 100));
+
+      if (currentXpEl) currentXpEl.textContent = String(levelProgressXp);
+      if (maxXpEl) maxXpEl.textContent = '100';
+      if (xpPercentEl) xpPercentEl.textContent = `${levelPercent}%`;
+      if (xpBarEl) xpBarEl.style.width = `${levelPercent}%`;
+    } catch (err) {
+      console.warn('[VocaDash] updateProfileStats error:', err);
+    }
   }
 
   target.applyProfileAvatar = applyProfileAvatar;
@@ -356,6 +492,10 @@
   target.resolveAvatarFile = resolveAvatarFile;
   target.resolveAvatarSrc = resolveAvatarSrc;
   target.initProfileManager = initProfileManager;
+  target.updateProfileStats = updateProfileStats;
+  target.renderRecordStats = updateProfileStats;
+  target.addMasteredWord = addMasteredWord;
+  target.addMasteredWords = addMasteredWords;
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -363,7 +503,11 @@
       syncHallOfFameAvatar,
       resolveAvatarFile,
       resolveAvatarSrc,
-      initProfileManager
+      initProfileManager,
+      updateProfileStats,
+      renderRecordStats: updateProfileStats,
+      addMasteredWord,
+      addMasteredWords
     };
   }
 })(typeof window !== 'undefined' ? window : this);

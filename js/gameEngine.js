@@ -371,7 +371,40 @@
   let maxCombo = 0;
   let score = 0;
   let speedMultiplier = 1.0;
-  window.gameItemCounts = { pass: 2, freeze: 1, bomb: 1, heal: 1 };
+
+  const DEFAULT_INVENTORY_VALS = Object.freeze({ pass: 2, freeze: 1, bomb: 1, heal: 1 });
+  function loadInventoryFromStorage() {
+    if (typeof window.getVocaInventory === 'function') {
+      return window.getVocaInventory();
+    }
+    try {
+      const raw = localStorage.getItem('vocadash_inventory');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          return {
+            pass: Math.max(0, Math.min(5, Number(parsed.pass ?? DEFAULT_INVENTORY_VALS.pass))),
+            freeze: Math.max(0, Math.min(5, Number(parsed.freeze ?? DEFAULT_INVENTORY_VALS.freeze))),
+            bomb: Math.max(0, Math.min(5, Number(parsed.bomb ?? DEFAULT_INVENTORY_VALS.bomb))),
+            heal: Math.max(0, Math.min(5, Number(parsed.heal ?? DEFAULT_INVENTORY_VALS.heal)))
+          };
+        }
+      }
+    } catch (_) { }
+    return { ...DEFAULT_INVENTORY_VALS };
+  }
+
+  function syncInventoryToStorage(inv) {
+    if (typeof window.saveVocaInventory === 'function') {
+      window.saveVocaInventory(inv);
+      return;
+    }
+    try {
+      localStorage.setItem('vocadash_inventory', JSON.stringify(inv));
+    } catch (_) { }
+  }
+
+  window.gameItemCounts = loadInventoryFromStorage();
   let itemCounts = window.gameItemCounts;
 
   let isActive = false;
@@ -488,6 +521,7 @@
     if (freezeTimer) {
       clearTimeout(freezeTimer);
       freezeTimer = null;
+      isFrozen = false;
     }
     if (gameTimer) {
       clearInterval(gameTimer);
@@ -648,6 +682,82 @@
   }
   window.recordSessionWrongWord = recordSessionWrongWord;
 
+  // 외운 단어(vocadash_mastered_words) 등록 헬퍼
+  function addMasteredWord(item) {
+    if (typeof window.addMasteredWord === 'function' && window.addMasteredWord !== addMasteredWord) {
+      return window.addMasteredWord(item);
+    }
+    if (!item) return;
+    const wordId = String(item.id || item.word || item.term || '').trim();
+    if (!wordId) return;
+    try {
+      let list = [];
+      const raw = localStorage.getItem('vocadash_mastered_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+      if (!list.includes(wordId)) {
+        list.push(wordId);
+        localStorage.setItem('vocadash_mastered_words', JSON.stringify(list));
+      }
+    } catch (_) { }
+  }
+  window.addMasteredWord = addMasteredWord;
+
+  function addMasteredWords(items) {
+    if (typeof window.addMasteredWords === 'function' && window.addMasteredWords !== addMasteredWords) {
+      return window.addMasteredWords(items);
+    }
+    if (!Array.isArray(items) || items.length === 0) return;
+    try {
+      let list = [];
+      const raw = localStorage.getItem('vocadash_mastered_words');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+      const set = new Set(list);
+      items.forEach(item => {
+        if (!item) return;
+        const wordId = String(item.id || item.word || item.term || '').trim();
+        if (wordId) set.add(wordId);
+      });
+      localStorage.setItem('vocadash_mastered_words', JSON.stringify(Array.from(set)));
+    } catch (_) { }
+  }
+  window.addMasteredWords = addMasteredWords;
+
+  // 문제 채점 시 통계 누적: vocadash_total_questions, vocadash_correct_answers, vocadash_mastered_words
+  function recordQuizAttempt(isCorrect, question) {
+    try {
+      let total = parseInt(localStorage.getItem('vocadash_total_questions') || '0', 10);
+      if (isNaN(total) || total < 0) total = 0;
+      total += 1;
+      localStorage.setItem('vocadash_total_questions', String(total));
+
+      let correct = parseInt(localStorage.getItem('vocadash_correct_answers') || '0', 10);
+      if (isNaN(correct) || correct < 0) correct = 0;
+      if (isCorrect) {
+        correct += 1;
+        localStorage.setItem('vocadash_correct_answers', String(correct));
+        addMasteredWord(question);
+      }
+
+      const accuracy = total > 0 ? Math.round((Math.min(correct, total) / total) * 100) : 0;
+      localStorage.setItem('vocadash_overall_accuracy', String(accuracy));
+
+      if (typeof window.updateProfileStats === 'function') {
+        window.updateProfileStats();
+      } else if (typeof window.updateStatsScreenUI === 'function') {
+        window.updateStatsScreenUI();
+      }
+    } catch (e) {
+      console.warn('[VocaDash] recordQuizAttempt error:', e);
+    }
+  }
+  window.recordQuizAttempt = recordQuizAttempt;
+
   function triggerGameOver() {
     console.log('💀 triggerGameOver: 게임오버 처리 시작 (순수 SPA 모달 표출, 리로드/퇴장 완전 금지)');
     // ① 모든 게임 타이머 정지 (clearInterval, clearTimeout)
@@ -701,7 +811,7 @@
   window.resetGame = resetGame;
 
   function updateItemCountUI() {
-    const counts = window.gameItemCounts || itemCounts;
+    const counts = window.gameItemCounts || itemCounts || loadInventoryFromStorage();
     if (gameItemPassCount) gameItemPassCount.textContent = `x${counts.pass}`;
     if (gameItemPass) {
       gameItemPass.disabled = counts.pass <= 0;
@@ -710,9 +820,10 @@
     }
     if (gameItemFreezeCount) gameItemFreezeCount.textContent = `x${counts.freeze}`;
     if (gameItemFreeze) {
-      gameItemFreeze.disabled = counts.freeze <= 0;
-      gameItemFreeze.classList.toggle('opacity-40', counts.freeze <= 0);
-      gameItemFreeze.classList.toggle('cursor-not-allowed', counts.freeze <= 0);
+      const isFreezeDisabled = counts.freeze <= 0 || isFrozen;
+      gameItemFreeze.disabled = isFreezeDisabled;
+      gameItemFreeze.classList.toggle('opacity-40', isFreezeDisabled);
+      gameItemFreeze.classList.toggle('cursor-not-allowed', isFreezeDisabled);
     }
     if (gameItemBombCount) gameItemBombCount.textContent = `x${counts.bomb}`;
     if (gameItemBomb) {
@@ -961,7 +1072,7 @@
         // 💡 [핵심 보정] 유저가 3번 노드 플레이 중이거나 3번 노드가 선택된 상태인데 rawTarget이 node-review로 남아있는 경우 원천 차단
         const isTargetReview = rawTarget === 'node-review' || rawTarget === 'review' || String(rawTarget).includes('review');
         const isNode3Selected = window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId === 'u1_stage-3' || /(^|_)stage-?3$/.test(window.currentSelectedNodeId || '') || /(^|_)node-?3$/.test(window.currentSelectedNodeId || '') || window.currentLessonId === 'node-3';
-        if (isTargetReview && isNode3Selected) {
+        if (isTargetReview && isNode3Selected && !window.isReviewGameMode && !window.isRoadmapReviewSpeedrun) {
           console.log('🔄 [finishGameStage] 3번 노드 플레이 중 node-review 잔여값 감지 -> node-3으로 정규화 복원');
           rawTarget = 'node-3';
           currentGameLessonId = 'node-3';
@@ -1059,6 +1170,16 @@
           });
         };
         applyAccuracyUI();
+
+        // 🌟 스테이지 완주 시 출제 단어들을 외운 단어(vocadash_mastered_words)에 추가 & 통계 UI 실시간 동기화
+        if (Array.isArray(gameQuestions) && gameQuestions.length > 0) {
+          addMasteredWords(gameQuestions);
+        }
+        if (typeof window.updateProfileStats === 'function') {
+          window.updateProfileStats();
+        } else if (typeof window.updateStatsScreenUI === 'function') {
+          window.updateStatsScreenUI();
+        }
 
         // 🌟 [6] 별점 판정 (표준 기준: 정확도 90% 이상 ⭐⭐⭐, 70~89% ⭐⭐☆, 50~69% ⭐☆☆, 50% 미만 별 0개)
         const modalScoreStars = calculateStarsByAccuracy(calculatedAccuracy);
@@ -2757,6 +2878,13 @@
         try { window.recordAnswerResult(currentQ, true); } catch (_) { }
       }
 
+      // 통계 누적: 이번 문제 최초 시도에 바로 맞혔다면 정답 수 누적 및 외운 단어 추가
+      if (!isCurrentQuestionFailed && currentQ) {
+        recordQuizAttempt(true, currentQ);
+      } else if (currentQ) {
+        addMasteredWord(currentQ);
+      }
+
       // 이전 챕터 오답 단어를 맞혔을 경우: vocadash_weak_word_ids 목록에서 삭제하여 완전 마스터 처리
       if (currentQ && currentQ.id) {
         removeWeakWordId(String(currentQ.id));
@@ -2963,6 +3091,8 @@
         if (!missedWords.some(item => (item.id && item.id === currentQ.id) || item.term === (currentQ.term || currentQ.word))) {
           missedWords.push(currentQ);
         }
+        // 문제 최초 시도 오답 통계 누적
+        recordQuizAttempt(false, currentQ);
       }
 
       // 오답 발생 시 연속 정답(correctStreak) 리셋 및 로컬스토리지 오답노트에 즉시 영구 저장
@@ -3136,16 +3266,18 @@
   };
 
   // 4대 아이템 로직 (패스, 빙결, 폭탄, 회복)
-  function triggerFreezeEffect(duration = 3500) {
-    if (!isQuestionActive || isPaused) return;
+  function triggerFreezeEffect(duration = 5000) {
+    if ((!isQuestionActive && !window.isQuestionActive) || isPaused) return;
     isFrozen = true;
+    updateItemCountUI(); // 5초간 빙결 버튼 비활성화 (중복 소모 방지)
     if (gameFreezeOverlay) gameFreezeOverlay.classList.remove('hidden');
-    showGameFloatingEffect('❄️ 3.5초 빙결!', true);
+    showGameFloatingEffect('❄️ 5초 빙결!', true);
 
     clearTimeout(freezeTimer);
     freezeTimer = setTimeout(() => {
       isFrozen = false;
       if (gameFreezeOverlay) gameFreezeOverlay.classList.add('hidden');
+      updateItemCountUI(); // 5초 후 버튼 상태 재평가 (남은 수량에 따라 해제)
     }, duration);
   }
 
@@ -3191,46 +3323,52 @@
     if (now - lastItemUseTimestamp < 250) return;
     lastItemUseTimestamp = now;
 
-    if (!isGameActive || isPaused || currentHearts <= 0) return;
+    const gameActive = isGameActive || window.isGameActive;
+    if (!gameActive || isPaused || currentHearts <= 0) return;
     if (!window.gameItemCounts || window.gameItemCounts[itemType] <= 0) {
-      if (window.showToast) window.showToast('⚠️ 아이템을 모두 사용했습니다!');
+      if (typeof window.showToast === 'function') window.showToast('⚠️ 아이템을 모두 사용했습니다!', '⚠️');
       return;
     }
 
     switch (itemType) {
       case 'pass':
         window.gameItemCounts.pass--;
-        if (window.showToast) window.showToast('⚡ 패스 사용! 다음 단어로 넘어갑니다.');
-        showGameFloatingEffect('⚡ 단어 패스!', true);
+        syncInventoryToStorage(window.gameItemCounts);
+        if (typeof window.showToast === 'function') window.showToast('⚡ 번개 패스 사용! 다음 단어로 넘어갑니다.', '⚡');
+        showGameFloatingEffect('⚡ 번개 패스!', true);
         handleCorrectAnswer();
         break;
 
       case 'freeze':
         if (isFrozen) {
-          if (window.showToast) window.showToast('이미 빙결 효과가 적용 중입니다! ❄️');
+          if (typeof window.showToast === 'function') window.showToast('이미 빙결 효과가 적용 중입니다! ❄️', '❄️');
           return;
         }
         window.gameItemCounts.freeze--;
-        if (window.showToast) window.showToast('❄️ 빙결! 3.5초간 단어가 멈춥니다.');
-        triggerFreezeEffect(3500);
+        syncInventoryToStorage(window.gameItemCounts);
+        if (typeof window.showToast === 'function') window.showToast('❄️ 절대 빙결! 5초간 단어가 멈춥니다.', '❄️');
+        triggerFreezeEffect(5000);
         break;
 
       case 'bomb':
         window.gameItemCounts.bomb--;
-        if (window.showToast) window.showToast('💣 폭탄 사용! 오답 2개 제거!');
+        syncInventoryToStorage(window.gameItemCounts);
+        if (typeof window.showToast === 'function') window.showToast('💣 단어 폭탄 사용! 오답 2개 제거!', '💣');
         triggerBombEffect();
         break;
 
       case 'heal':
         if (currentHearts >= 5) {
-          if (window.showToast) window.showToast('이미 하트가 가득 차 있습니다! ❤️');
+          showGameFloatingEffect('이미 체력이 가득 차 있습니다!', false);
+          if (typeof window.showToast === 'function') window.showToast('이미 체력이 가득 차 있습니다!', '💖');
           return;
         }
         currentHearts = Math.min(5, currentHearts + 1);
         window.gameItemCounts.heal--;
+        syncInventoryToStorage(window.gameItemCounts);
         updateHeartsUI();
         updateItemCountUI();
-        if (window.showToast) window.showToast(`💖 하트 회복 완료! (현재 하트: ${currentHearts}/5)`);
+        if (typeof window.showToast === 'function') window.showToast(`💖 하트 회복 완료! (현재 하트: ${currentHearts}/5)`, '💖');
         showGameFloatingEffect('💖 하트 +1 회복!', true);
         break;
     }
@@ -3333,7 +3471,7 @@
       }
     }
     const isNode3Selected = window.currentSelectedNodeId === 'node-3' || window.currentSelectedNodeId === 'u1_stage-3' || /(^|_)stage-?3$/.test(window.currentSelectedNodeId || '') || /(^|_)node-?3$/.test(window.currentSelectedNodeId || '') || window.currentLessonId === 'node-3';
-    if ((targetLesson === 'node-review' || targetLesson === 'review') && isNode3Selected) {
+    if ((targetLesson === 'node-review' || targetLesson === 'review') && isNode3Selected && !window.isReviewGameMode && !window.isRoadmapReviewSpeedrun) {
       console.log('🔄 [openGameScreen] 3번 노드 선택 중 node-review 감지 -> node-3으로 정규화');
       targetLesson = 'node-3';
     }
@@ -3462,27 +3600,63 @@
 
     // [수정] 3회차/보스전에서도 문장(Cloze) 삽입 없이 순수 단어로만 13문제 완주 보장
 
-    let stageName = '';
-    if (window.isUnitSkipTestMode) {
-      stageName = `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`;
-    } else if (window.isRoadmapReviewSpeedrun) {
-      stageName = '⚡ 약점 극복 스피드 런 (10문제)';
-    } else if (isBoss) {
-      stageName = `Stage ${currentUnitIndex + 1}: ${unitTitle} (보스전)`;
-    } else {
-      stageName = `Stage ${currentUnitIndex + 1}: ${unitTitle}`;
+    const coords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(activeNodeId)
+      : ((typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(activeNodeId) : null);
+
+    let resolvedUnitId = (coords && coords.unitIndex) || window.currentUnitNumber || (currentUnitIndex + 1) || 1;
+    const uMatch = String(activeNodeId).match(/^u(\d+)/i);
+    if (uMatch) {
+      resolvedUnitId = parseInt(uMatch[1], 10) || resolvedUnitId;
     }
 
-    const subRoundText = (isBoss || window.isRoadmapReviewSpeedrun || window.isUnitSkipTestMode) ? '' : ` (${currentSubStage}/${totalSubStages})`;
+    const isReview = (
+      !isBoss && (
+        activeNodeId === 'node-review' ||
+        currentGameLessonId === 'node-review' ||
+        String(activeNodeId).includes('review') ||
+        String(activeNodeId).endsWith('_n4') ||
+        (coords && coords.nodeIndex === 'review') ||
+        (activeNode && activeNode.type === 'review') ||
+        Boolean(window.isRoadmapReviewSpeedrun) ||
+        Boolean(window.isReviewGameMode)
+      )
+    );
+
+    let stageIndex = 1;
+    if (coords && typeof coords.nodeIndex === 'number' && coords.nodeIndex !== 6) {
+      stageIndex = coords.nodeIndex;
+    } else {
+      const match = String(activeNodeId).match(/(?:stage|node)[-_]?(\d+)/i);
+      if (match) {
+        stageIndex = parseInt(match[1], 10) || 1;
+      }
+    }
+
+    let stageBadgeText = '';
+    if (window.isUnitSkipTestMode) {
+      stageBadgeText = `⚡ Unit ${window.currentSkipTestUnit || 2} 건너뛰기 실전 시험`;
+    } else if (isBoss) {
+      stageBadgeText = `Unit ${resolvedUnitId} · 🔥 FINAL BOSS`;
+    } else if (isReview) {
+      stageBadgeText = `Unit ${resolvedUnitId} · 🔄 약점 복습`;
+    } else {
+      stageBadgeText = `Unit ${resolvedUnitId} · Stage ${stageIndex} (${currentSubStage}/3)`;
+    }
 
     const stageBadgeEl = gameStageTitle || document.getElementById('game-stage-title');
     if (stageBadgeEl) {
-      stageBadgeEl.textContent = `${stageName}${subRoundText}`;
+      stageBadgeEl.textContent = stageBadgeText;
       const badgeContainer = stageBadgeEl.closest('.flex');
       if (badgeContainer) {
         const badgeIcon = badgeContainer.querySelector('.material-symbols-outlined');
         if (badgeIcon) {
-          badgeIcon.textContent = activeCourseId === 'pack_football' ? 'inventory_2' : 'local_activity';
+          if (isBoss || isReview) {
+            badgeIcon.style.display = 'none';
+          } else {
+            badgeIcon.style.display = '';
+            badgeIcon.textContent = activeCourseId === 'pack_football' ? 'inventory_2' : 'local_activity';
+          }
         }
       }
     }
@@ -3500,7 +3674,7 @@
     maxCombo = 0;
     score = 0;
     speedMultiplier = roundBaseSpeed;
-    window.gameItemCounts = { pass: 2, freeze: 1, bomb: 1, heal: 1 };
+    window.gameItemCounts = loadInventoryFromStorage();
     itemCounts = window.gameItemCounts;
 
     isActive = true;
@@ -3625,6 +3799,16 @@
 
     closeGameScreen(true);
 
+    if (typeof window.updateProfileStats === 'function') {
+      window.updateProfileStats();
+    } else if (typeof window.updateStatsScreenUI === 'function') {
+      window.updateStatsScreenUI();
+    }
+
+    // 활성 노드 탐색 오염 방지: 이전 플레이 레슨 ID 리셋
+    window.currentGameLessonId = null;
+    window.currentSelectedNodeId = null;
+
     if (typeof window.switchScreen === 'function') {
       window.switchScreen('home', true);
     } else if (typeof window.switchMainTab === 'function') {
@@ -3632,7 +3816,11 @@
     }
     if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
     if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
-    if (typeof window.autoScrollToActiveNode === 'function') window.autoScrollToActiveNode('instant');
+    if (typeof window.focusActiveRoadmapNode === 'function') {
+      window.focusActiveRoadmapNode();
+    } else if (typeof window.autoScrollToActiveNode === 'function') {
+      window.autoScrollToActiveNode('instant');
+    }
   }
   window.exitGameToRoadmap = exitGameToRoadmap;
 
@@ -3929,20 +4117,36 @@
       const isRoadmapSpeedrun = !!window.isRoadmapReviewSpeedrun;
       window.isReviewGameMode = false;
       window.isRoadmapReviewSpeedrun = false;
-      isExplicitExitRequested = true;
-      window.isExplicitExitRequested = true;
-      exitGameToRoadmap(true);
-      isExplicitExitRequested = false;
-      window.isExplicitExitRequested = false;
+
       if (!isRoadmapSpeedrun) {
+        isExplicitExitRequested = true;
+        window.isExplicitExitRequested = true;
+        exitGameToRoadmap(true);
+        isExplicitExitRequested = false;
+        window.isExplicitExitRequested = false;
         if (typeof window.switchMainTab === 'function') window.switchMainTab('review', true);
         if (typeof window.showToast === 'function') window.showToast('🎉 오답 복습 완료! 오답노트로 복귀했습니다.', '✨');
       } else {
         const targetReviewUnit = window.currentReviewUnitNumber || window.currentUnitNumber || 1;
         const targetReviewId = window.currentReviewNodeId || (typeof window.getCompositeNodeKey === 'function' ? window.getCompositeNodeKey('node-review', targetReviewUnit) : `u${targetReviewUnit}_node-review`);
-        if (typeof window.completeReviewNode === 'function') window.completeReviewNode(targetReviewId, targetReviewUnit);
+
+        // ⚠️ [중요] exitGameToRoadmap 호출 전에 복습 노드를 먼저 완료 처리해야 로드맵 DOM에서 3과에 START 뱃지가 켜지고 즉각 중앙 스냅됨!
+        if (typeof window.completeReviewNode === 'function') {
+          window.completeReviewNode(targetReviewId, targetReviewUnit);
+        }
+
+        window.currentGameLessonId = null;
+        window.currentSelectedNodeId = null;
+
+        isExplicitExitRequested = true;
+        window.isExplicitExitRequested = true;
+        exitGameToRoadmap(true);
+        isExplicitExitRequested = false;
+        window.isExplicitExitRequested = false;
+
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
         if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+
         if (window.isSpeedrunZeroWrongBonus) {
           if (typeof window.showToast === 'function') window.showToast('🎉 약점 완벽 극복! 보석 +5개 획득! 💎', '🎁');
         } else {
@@ -3953,16 +4157,9 @@
           }
         }
         window.isSpeedrunZeroWrongBonus = false;
-        if (targetReviewUnit === 1) {
-          setTimeout(() => {
-            const n3Btn = document.getElementById('node-3-btn') || document.getElementById('node-3');
-            if (n3Btn) {
-              n3Btn.scrollIntoView({ behavior: 'instant', block: 'center' });
-              if (typeof window.openLessonModal === 'function') {
-                window.openLessonModal('node-3');
-              }
-            }
-          }, 300);
+
+        if (typeof window.focusActiveRoadmapNode === 'function') {
+          window.focusActiveRoadmapNode();
         }
       }
       return false;
@@ -4311,6 +4508,9 @@
     }
     closeResultModal();
 
+    window.currentGameLessonId = null;
+    window.currentSelectedNodeId = null;
+
     isExplicitExitRequested = true;
     window.isExplicitExitRequested = true;
     exitGameToRoadmap(true);
@@ -4326,11 +4526,13 @@
       } else {
         if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
         if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+        if (typeof window.focusActiveRoadmapNode === 'function') window.focusActiveRoadmapNode();
         if (typeof window.showToast === 'function') window.showToast('로드맵으로 돌아왔습니다.', '🗺️');
       }
     } else {
       if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
       if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+      if (typeof window.focusActiveRoadmapNode === 'function') window.focusActiveRoadmapNode();
       if (typeof window.showToast === 'function') window.showToast('로드맵으로 돌아왔습니다.', '🗺️');
     }
   }

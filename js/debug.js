@@ -38,6 +38,12 @@
     <button id="dbg-unlock-next" style="background:#6366f1; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
       🔓 다음 유닛(Unit) 강제 해금
     </button>
+    <button id="dbg-add-gems" style="background:#0284c7; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
+      [치트] 💎 보석 +100개 지급
+    </button>
+    <button id="dbg-max-items" style="background:#8b5cf6; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
+      [치트] 🎒 아이템 풀충전 (전부 5개)
+    </button>
     <button id="dbg-reset-course" style="background:#f59e0b; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
       🔄 현재 코스 데이터만 리셋
     </button>
@@ -145,6 +151,58 @@
         }
     };
 
+    // [치트] 💎 보석 +100개 지급
+    document.getElementById('dbg-add-gems').onclick = () => {
+        let cur = 120;
+        try {
+            const saved = localStorage.getItem('vocadash_gems');
+            if (saved !== null) {
+                const parsed = parseInt(saved, 10);
+                if (!isNaN(parsed)) cur = parsed;
+            }
+        } catch (_) { }
+        cur += 100;
+        if (typeof window.setStoredGems === 'function') {
+            window.setStoredGems(cur);
+        } else {
+            localStorage.setItem('vocadash_gems', String(cur));
+            const el = document.getElementById('header-gems-count');
+            if (el) el.textContent = String(cur);
+            const statsEl = document.getElementById('stats-gems-count');
+            if (statsEl) statsEl.textContent = `${cur}개`;
+        }
+        if (typeof window.renderShopItems === 'function') {
+            window.renderShopItems();
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast(`[치트] 💎 보석 +100개 지급 완료! (현재: ${cur}개)`, '💎');
+        }
+    };
+
+    // [치트] 🎒 아이템 풀충전 (전부 5개)
+    document.getElementById('dbg-max-items').onclick = () => {
+        const fullInventory = { pass: 5, freeze: 5, bomb: 5, heal: 5 };
+        if (typeof window.saveVocaInventory === 'function') {
+            window.saveVocaInventory(fullInventory);
+        } else {
+            try {
+                localStorage.setItem('vocadash_inventory', JSON.stringify(fullInventory));
+            } catch (_) { }
+        }
+        if (typeof window.gameItemCounts !== 'undefined') {
+            window.gameItemCounts = { ...fullInventory };
+        }
+        if (typeof updateItemCountUI === 'function') {
+            updateItemCountUI();
+        }
+        if (typeof window.renderShopItems === 'function') {
+            window.renderShopItems();
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast('[치트] 🎒 모든 아이템이 풀충전(5개) 되었습니다!', '🎒');
+        }
+    };
+
     // 4. 현재 코스 진행도만 초기화
     document.getElementById('dbg-reset-course').onclick = () => {
         const lang = window.currentLanguage || 'es';
@@ -159,11 +217,39 @@
         }
     };
 
+    function resetAllLearningStats() {
+        try {
+            localStorage.removeItem('vocadash_total_questions');
+            localStorage.removeItem('vocadash_correct_answers');
+            localStorage.removeItem('vocadash_mastered_words');
+            localStorage.removeItem('vocadash_overall_accuracy');
+            if (typeof window.updateProfileStats === 'function') {
+                window.updateProfileStats();
+            } else if (typeof window.updateStatsScreenUI === 'function') {
+                window.updateStatsScreenUI();
+            }
+        } catch (_) { }
+    }
+    window.resetAllLearningStats = resetAllLearningStats;
+
     // 5. 앱 전체 데이터 완전 공장초기화
     document.getElementById('dbg-factory-reset').onclick = () => {
-        if (confirm("⚠️ 경고: 모든 진행도, 하트, 보석 데이터가 완전히 삭제됩니다. 계속할까요?")) {
-            localStorage.clear();
-            sessionStorage.clear();
+        if (confirm("⚠️ 경고: 모든 진행도, 하트, 보석 데이터가 완전히 삭제되고 Unit 1로 초기화됩니다. 계속할까요?")) {
+            if (typeof window.resetAllData === 'function') {
+                window.resetAllData();
+            } else if (typeof window.handleFactoryReset === 'function') {
+                window.handleFactoryReset();
+            } else {
+                resetAllLearningStats();
+                localStorage.clear();
+                sessionStorage.clear();
+            }
+            try {
+                localStorage.setItem('vocadash_inventory', JSON.stringify({ pass: 2, freeze: 1, bomb: 1, heal: 1 }));
+            } catch (_) { }
+            if (typeof window.saveVocaInventory === 'function') {
+                window.saveVocaInventory({ pass: 2, freeze: 1, bomb: 1, heal: 1 });
+            }
             location.href = location.pathname;
         }
     };

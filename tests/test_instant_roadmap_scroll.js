@@ -149,6 +149,7 @@ vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_football.js'), 
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_es.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_en.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8'), context);
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/roadmapRenderer.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/profileManager.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8'), context);
 
@@ -159,10 +160,29 @@ if (domContentLoadedHandler) {
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/navigation.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/gameEngine.js'), 'utf-8'), context);
 
-console.log('\n--- TEST 1: autoScrollToActiveNode instant behavior with currentSelectedNodeId ---');
+console.log('\n--- TEST 1: autoScrollToActiveNode instant behavior prioritizing START node over completed/legacy nodes ---');
+const node2Container = createMockElement('node-2-container', ['roadmap-node']);
+node2Container.dataset.nodeType = 'completed';
+const node2Check = createMockElement('node-2-check-badge');
+node2Container.querySelector = (sel) => sel.includes('check-badge') ? node2Check : null;
+
 const node3Container = createMockElement('node-3-container', ['roadmap-node']);
+node3Container.dataset.nodeType = 'stage';
+const node3StartBadge = createMockElement('node-3-start-pill', ['node-badge-start']);
+node3Container.querySelector = (sel) => sel.includes('node-badge-start') || sel.includes('start-pill') ? node3StartBadge : null;
+
+const roadmapScreen = elementsById['roadmap-screen'] || createMockElement('roadmap-screen');
+roadmapScreen.querySelectorAll = (sel) => {
+  if (sel.includes('.roadmap-node')) return [node2Container, node3Container];
+  return [];
+};
+elementsById['roadmap-screen'] = roadmapScreen;
+mockDocument.querySelectorAll = roadmapScreen.querySelectorAll;
+elementsById['node-2-container'] = node2Container;
 elementsById['node-3-container'] = node3Container;
-win.currentSelectedNodeId = 'node-3';
+
+// 레거시 변수가 완료된 node-2를 가리키더라도 무시되어야 함!
+win.currentSelectedNodeId = 'node-2';
 
 lastScrollIntoViewCall = null;
 win.autoScrollToActiveNode();
@@ -170,24 +190,20 @@ win.autoScrollToActiveNode();
 assert.ok(lastScrollIntoViewCall, 'scrollIntoView must be called');
 assert.strictEqual(lastScrollIntoViewCall.opts.behavior, 'instant', 'behavior must be instant');
 assert.strictEqual(lastScrollIntoViewCall.opts.block, 'center', 'block must be center');
-assert.strictEqual(lastScrollIntoViewCall.elementId, 'node-3-container', 'element must be node-3-container');
-console.log('✅ PASS: autoScrollToActiveNode scrolls instantly to currentSelectedNodeId');
+assert.strictEqual(lastScrollIntoViewCall.elementId, 'node-3-container', 'element must be active START node (node-3-container), not completed node-2');
+console.log('✅ PASS: autoScrollToActiveNode ignores completed node-2 and scrolls instantly to START node-3');
 
-console.log('\n--- TEST 2: autoScrollToActiveNode instant fallback to .node-item.active ---');
-win.currentSelectedNodeId = null;
-win.currentGameLessonId = null;
-win.currentLessonId = null;
-
-const activeNodeItem = createMockElement('active-node-item', ['node-item', 'active']);
-querySelectorMap['.node-item.active, .roadmap-node.active, .node-pulse, [data-node-type="active"]'] = activeNodeItem;
+console.log('\n--- TEST 2: autoScrollToActiveNode falls back to last open node when all completed ---');
+node3Container.dataset.nodeType = 'completed';
+node3Container.querySelector = (sel) => null;
 
 lastScrollIntoViewCall = null;
 win.autoScrollToActiveNode();
 
-assert.ok(lastScrollIntoViewCall, 'scrollIntoView must be called on active node element');
+assert.ok(lastScrollIntoViewCall, 'scrollIntoView must be called on last open node');
 assert.strictEqual(lastScrollIntoViewCall.opts.behavior, 'instant', 'behavior must be instant');
-assert.strictEqual(lastScrollIntoViewCall.elementId, 'active-node-item', 'element must be active-node-item');
-console.log('✅ PASS: autoScrollToActiveNode falls back to .node-item.active with instant behavior');
+assert.strictEqual(lastScrollIntoViewCall.elementId, 'node-3-container', 'element must be last open node (node-3-container)');
+console.log('✅ PASS: autoScrollToActiveNode falls back to last open node when all completed');
 
 console.log('\n--- TEST 3: switchMainTab(home) does NOT reset window.scrollTo top 0 ---');
 lastScrollToCall = null;

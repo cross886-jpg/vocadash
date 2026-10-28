@@ -299,6 +299,7 @@
     // 5) 각 탭별 전용 데이터 갱신 hook (try-catch 방어)
     if (normTab === 'records') {
       try {
+        if (typeof window.updateProfileStats === 'function') window.updateProfileStats();
         if (typeof window.updateStatsScreenUI === 'function') window.updateStatsScreenUI();
         if (typeof window.updateStatsUI === 'function' && window.updateStatsUI !== window.updateStatsScreenUI) window.updateStatsUI();
         if (typeof window.renderUserStats === 'function' && window.renderUserStats !== window.updateStatsScreenUI) window.renderUserStats();
@@ -342,7 +343,9 @@
       } catch (err) {
         console.warn('[VocaDash] roadmap nodes UI update error caught:', err);
       }
-      if (typeof window.autoScrollToActiveNode === 'function') {
+      if (typeof window.focusActiveRoadmapNode === 'function') {
+        window.focusActiveRoadmapNode();
+      } else if (typeof window.autoScrollToActiveNode === 'function') {
         window.autoScrollToActiveNode('instant');
       }
     }

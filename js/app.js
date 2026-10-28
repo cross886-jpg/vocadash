@@ -1321,8 +1321,66 @@ window.playDualTTS = playDualTTS;
     }));
 
     window.currentSessionQuestions = activeDeck;
-    const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
-    currentLessonDeckTitle = isReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
+    const targetId = currentFlashcardLessonId || lessonId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
+    const coords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(targetId)
+      : ((typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(targetId) : null);
+
+    let resolvedUnitId = (coords && coords.unitIndex) || window.currentUnitNumber || (unitIndex + 1) || 1;
+    const uMatch = String(targetId).match(/^u(\d+)/i);
+    if (uMatch) {
+      resolvedUnitId = parseInt(uMatch[1], 10) || resolvedUnitId;
+    }
+
+    const isBossNode = (
+      targetId === 'node-boss' ||
+      String(targetId).includes('boss') ||
+      String(targetId).endsWith('_n6') ||
+      (coords && (coords.nodeIndex === 'boss' || coords.nodeIndex === 6))
+    );
+
+    const isReviewNode = (
+      !isBossNode && (
+        targetId === 'node-review' ||
+        String(targetId).includes('review') ||
+        String(targetId).endsWith('_n4') ||
+        (coords && coords.nodeIndex === 'review') ||
+        Boolean(activeFlashcardOptions.isReview) ||
+        Boolean(window.isWrongWordsMiniReviewActive) ||
+        Boolean(window.isRoadmapReviewSpeedrun)
+      )
+    );
+
+    let stageIndex = 1;
+    if (coords && typeof coords.nodeIndex === 'number' && coords.nodeIndex !== 6) {
+      stageIndex = coords.nodeIndex;
+    } else {
+      const match = String(targetId).match(/(?:stage|node)[-_]?(\d+)/i);
+      if (match) {
+        stageIndex = parseInt(match[1], 10) || 1;
+      }
+    }
+
+    let clearedCount = 0;
+    if (typeof window.getNodeProgress === 'function') {
+      clearedCount = Number(window.getNodeProgress(targetId, currentCourse, activeCourseId)?.clearedCount ?? window.getNodeProgress(targetId, currentCourse, activeCourseId)) || 0;
+    } else if (window.nodeProgressMap && typeof window.nodeProgressMap[targetId] === 'number') {
+      clearedCount = window.nodeProgressMap[targetId];
+    }
+    let currentRound = Math.min(3, Math.max(1, (clearedCount || 0) + 1));
+    if (typeof activeFlashcardOptions.round === 'number' && activeFlashcardOptions.round >= 1 && activeFlashcardOptions.round <= 3) {
+      currentRound = activeFlashcardOptions.round;
+    } else if (typeof activeFlashcardOptions.subStage === 'number' && activeFlashcardOptions.subStage >= 1 && activeFlashcardOptions.subStage <= 3) {
+      currentRound = activeFlashcardOptions.subStage;
+    }
+
+    if (isBossNode) {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔥 FINAL BOSS · 단어 예습`;
+    } else if (isReviewNode) {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔄 약점 극복 · 단어 예습`;
+    } else {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · Stage ${stageIndex} (${currentRound}/3) · 단어 예습`;
+    }
     currentCardIndex = 0;
     isCardFlipped = false;
     isCardTransitioning = false;
@@ -2990,9 +3048,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM Helpers
   const el = (id) => document.getElementById(id), setText = (id, txt) => { const node = el(id); if (node) node.textContent = txt; }, on = (id, evt, fn) => { const node = el(id); if (node) node.addEventListener(evt, fn); };
 
-  // 2. Global Toast & Notifications completely disabled per requirements
-  window.showToast = function () { };
-  window.showNotification = function () { };
+  // 2. Global Toast & Notifications (preserved if registered by shopModal)
+  if (typeof window.showToast !== 'function') {
+    window.showToast = function () { };
+  }
+  if (typeof window.showNotification !== 'function') {
+    window.showNotification = function () { };
+  }
 
   function toggleModal(backdrop, card, open, anim = 'fade') {
     if (backdrop) {
@@ -3783,8 +3845,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btn1.title = '1과 (완료)';
         const stageNum1 = btn1.querySelector('.node-stage-num');
         if (stageNum1) {
-          stageNum1.textContent = '1';
-          stageNum1.className = 'node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white';
+          stageNum1.textContent = prog1 > 0 ? '1' : 'START';
+          stageNum1.className = prog1 > 0
+            ? 'node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white'
+            : 'node-stage-num text-sm font-extrabold tracking-tight select-none leading-none drop-shadow-xs relative z-10 text-white';
         }
       }
       if (card1) {
@@ -3796,8 +3860,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ping1) ping1.classList.remove('hidden');
       if (pulseRing1) pulseRing1.classList.remove('hidden');
       if (startPill1) {
-        startPill1.classList.add('hidden');
-        startPill1.style.display = 'none';
+        startPill1.classList.remove('hidden');
+        startPill1.style.display = 'flex';
       }
       if (checkBadge1) {
         checkBadge1.classList.add('hidden');
@@ -4627,70 +4691,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const observer = new IntersectionObserver((entries) => {
-      if (!_hasUserScrolledRoadmap && window.scrollY < 10) return;
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const activeIdx = parseInt(entry.target.dataset.unitIndex, 10);
-          if (!isNaN(activeIdx)) {
-            window._currentVisibleUnitIndex = activeIdx;
-            updateTopUnitBanner(activeIdx);
-          }
+      if (!_hasUserScrolledRoadmap && window.scrollY < 50) return;
+      const visibleEntries = entries.filter(e => e.isIntersecting);
+      if (visibleEntries.length > 0) {
+        visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const topEntry = visibleEntries[0];
+        const activeIdx = parseInt(topEntry.target.dataset.unitIndex, 10);
+        if (!isNaN(activeIdx)) {
+          window._currentVisibleUnitIndex = activeIdx;
+          updateTopUnitBanner(activeIdx);
         }
-      });
-    }, { threshold: 0.3 });
+      }
+    }, { threshold: [0.2, 0.4, 0.6] });
 
     document.querySelectorAll('.unit-section-block').forEach(el => observer.observe(el));
     window._roadmapObserver = observer;
   }
   window.setupRoadmapObserver = setupRoadmapObserver;
 
-  // 현재 진행 중인 노드 엘리먼트 탐색 헬퍼 (Auto Scroll Target Resolver)
-  function getActiveRoadmapNodeElement() {
-    // 1순위: window.currentSelectedNodeId 또는 window.currentGameLessonId 기반 매핑
-    const targetId = window.currentSelectedNodeId || window.currentGameLessonId || window.currentLessonId;
-    if (targetId) {
-      const byDataId = document.querySelector(`[data-node-id="${targetId}"]`);
-      if (byDataId) {
-        return (typeof byDataId.closest === 'function' ? byDataId.closest('.roadmap-node, .node-item') : null) || byDataId;
+  // =========================================================================
+  // 💣 [공장초기화] 앱 전체 데이터 완전 리셋 및 Unit 1 무결성 복구
+  // =========================================================================
+  function resetAllData() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.clear();
+        localStorage.setItem('vocadash_unlocked_es_main', '1');
+        localStorage.setItem('vocadash_unlocked_en_main', '1');
+        localStorage.setItem('vocadash_language', 'es');
+        localStorage.setItem('vocadash_selected_lang', 'es');
+        localStorage.setItem('vocadash_active_course', 'main');
+        localStorage.setItem('vocadash_active_course_es', 'main');
+        localStorage.setItem('vocadash_active_course_en', 'main');
+        localStorage.setItem('vocadash_current_unit', '1');
+        localStorage.setItem('vocadash_active_unit', '1');
+        localStorage.setItem('currentUnitLevel', '1');
+        localStorage.setItem('currentUnitIndex', '0');
+        localStorage.setItem('vocadash_inventory', JSON.stringify({ pass: 2, freeze: 1, bomb: 1, heal: 1 }));
       }
-      const byContainer = document.getElementById(`${targetId}-container`) || document.getElementById(targetId) || document.getElementById(`${targetId}-btn`);
-      if (byContainer) {
-        return (typeof byContainer.closest === 'function' ? byContainer.closest('.roadmap-node, .node-item') : null) || byContainer;
+      if (typeof window.saveVocaInventory === 'function') {
+        window.saveVocaInventory({ pass: 2, freeze: 1, bomb: 1, heal: 1 });
       }
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.clear();
+      }
+    } catch (_) {}
+
+    window.currentLanguage = 'es';
+    window.currentActiveCourse = 'es';
+    window.activeCourseId = 'main';
+    window.currentCourseId = 'main';
+    window.currentUnitNumber = 1;
+    window.currentUnitLevel = 1;
+    window.activeUnit = 1;
+    window._currentVisibleUnitIndex = 0;
+    _hasUserScrolledRoadmap = false;
+    window.currentSelectedNodeId = null;
+    window.currentGameLessonId = null;
+    window.currentLessonId = null;
+    window.nodeProgressMap = {};
+    window.wrongWords = [];
+
+    if (typeof setUnlockedUnitLevel === 'function') {
+      setUnlockedUnitLevel(1, 'es', 'main');
     }
-
-    // 2순위: .node-item.active, .roadmap-node.active, .node-pulse, [data-node-type="active"]
-    const activeEl = document.querySelector('.node-item.active, .roadmap-node.active, .node-pulse, [data-node-type="active"]');
-    if (activeEl) return activeEl;
-
-    return null;
+    if (typeof updateRoadmapNodesUI === 'function') {
+      updateRoadmapNodesUI();
+    }
+    if (typeof updateTopUnitBanner === 'function') {
+      updateTopUnitBanner(0);
+    }
+    if (typeof renderRoadmap === 'function') {
+      renderRoadmap();
+    }
+    if (typeof window.focusActiveRoadmapNode === 'function') {
+      window.focusActiveRoadmapNode();
+    }
+    if (typeof window.updateWrongWordsBadge === 'function') {
+      window.updateWrongWordsBadge();
+    }
+    if (typeof window.updateProfileStats === 'function') {
+      window.updateProfileStats();
+    }
   }
-  window.getActiveRoadmapNodeElement = getActiveRoadmapNodeElement;
+  window.resetAllData = resetAllData;
+  window.handleFactoryReset = resetAllData;
 
-  // 현재 진행 중인 노드로 즉시 자동 스크롤 (Auto Scroll to Active Node - instant)
+  // 활성 노드 탐색 및 포커싱 파이프라인 일원화 (js/roadmapRenderer.js의 focusActiveRoadmapNode 참조)
+  const getActiveRoadmapNodeElement = (hint) => {
+    if (typeof window.getActiveRoadmapNodeElement === 'function' && window.getActiveRoadmapNodeElement !== getActiveRoadmapNodeElement) {
+      return window.getActiveRoadmapNodeElement(hint);
+    }
+    return document.getElementById('node-1-container') || document.querySelector('.roadmap-node');
+  };
+
   function autoScrollToActiveNode(options = {}) {
-    const behavior = (typeof options === 'string' ? options : (options && options.behavior)) || 'instant';
-    const performScroll = () => {
-      const currentActiveNode = getActiveRoadmapNodeElement();
-      if (currentActiveNode && typeof currentActiveNode.scrollIntoView === 'function') {
-        try {
-          currentActiveNode.scrollIntoView({ behavior, block: 'center' });
-        } catch (_) {
-          try {
-            currentActiveNode.scrollIntoView({ behavior: 'auto', block: 'center' });
-          } catch (_) {
-            currentActiveNode.scrollIntoView(true);
-          }
-        }
-      }
-    };
-
-    // 불필요한 setTimeout(100ms) 대기 및 긴 롤링 애니메이션 없이 즉시 동기 스크롤
-    performScroll();
-
-    // DOM 렌더링/레이아웃 지연 방어를 위해 RAF로 1회 즉시 보장
-    if (typeof requestAnimationFrame === 'function') {
-      requestAnimationFrame(performScroll);
+    if (typeof window.focusActiveRoadmapNode === 'function') {
+      window.focusActiveRoadmapNode(options);
     }
   }
   window.autoScrollToActiveNode = autoScrollToActiveNode;
@@ -5522,7 +5619,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const titleEl = document.getElementById('game-stage-title');
     if (titleEl) {
-      titleEl.textContent = '⚡ 약점 극복 스피드 런 (10문제)';
+      titleEl.textContent = `Unit ${targetReviewUnit} · 🔄 약점 복습`;
     }
   }
   window.startRoadmapReviewSpeedrun = startRoadmapReviewSpeedrun;
@@ -5739,12 +5836,9 @@ document.addEventListener('DOMContentLoaded', () => {
       renderUnitOverviewList(lang);
     }
 
-    // 시험 통과 후 모달을 닫고, 목표 유닛의 1번 노드 위치로 로드맵 스크롤 뷰 이동
-    const targetNodeEl = document.getElementById('node-1-btn') || document.querySelector('[data-node-id="node-1"]');
-    if (targetNodeEl && typeof targetNodeEl.scrollIntoView === 'function') {
-      targetNodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else if (typeof window.scrollTo === 'function') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 시험 통과 후 모달을 닫고, 목표 유닛의 활성 노드 위치로 로드맵 즉각 포커싱
+    if (typeof window.focusActiveRoadmapNode === 'function') {
+      window.focusActiveRoadmapNode();
     }
   }
   window.unlockUnitsUpTo = unlockUnitsUpTo;
@@ -5782,7 +5876,6 @@ document.addEventListener('DOMContentLoaded', () => {
     units.forEach((item) => {
       const isCompleted = item.unit < unlockedLevel;
       const isActive = item.unit === unlockedLevel;
-      const progress = isCompleted ? 100 : (isActive ? 35 : 0);
 
       if (isCompleted) {
         html += `
@@ -5797,13 +5890,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase tracking-tight leading-none border border-emerald-300">완료됨</span>
                 </div>
                 <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
-                <div class="w-36 bg-emerald-200/80 h-1.5 rounded-full mt-1.5 overflow-hidden">
-                  <div class="h-full bg-emerald-600 rounded-full" style="width: 100%;"></div>
-                </div>
               </div>
             </div>
-            <div class="flex items-center gap-1 text-emerald-700 font-extrabold text-xs flex-shrink-0 ml-2">
-              <span class="material-symbols-outlined text-base text-emerald-600 font-bold">check_circle</span>
+            <div class="flex items-center text-emerald-700 font-extrabold flex-shrink-0 ml-2">
+              <span class="material-symbols-outlined text-[20px] text-emerald-600 font-bold">check_circle</span>
             </div>
           </div>
         `;
@@ -5820,14 +5910,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight leading-none">진행 중</span>
                 </div>
                 <span class="text-[11px] font-semibold text-emerald-700 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
-                <div class="w-36 bg-emerald-200/80 h-1.5 rounded-full mt-1.5 overflow-hidden">
-                  <div class="h-full bg-emerald-600 rounded-full" style="width: ${progress}%;"></div>
-                </div>
               </div>
             </div>
-            <div class="flex items-center gap-1 text-emerald-700 font-extrabold text-xs flex-shrink-0 ml-2">
-              <span>${progress}%</span>
-              <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+            <div class="flex items-center text-emerald-700 font-extrabold flex-shrink-0 ml-2">
+              <span class="material-symbols-outlined text-[20px]">chevron_right</span>
             </div>
           </div>
         `;
@@ -5841,6 +5927,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="flex flex-col min-w-0">
                 <div class="flex items-center gap-1.5">
                   <span class="text-xs font-bold text-slate-800 leading-tight">Unit ${item.unit} : ${escapeHTML(item.title)}</span>
+                  <span class="px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[9px] font-bold uppercase tracking-tight leading-none border border-slate-200">잠김</span>
                 </div>
                 <span class="text-[11px] font-medium text-slate-400 mt-0.5 truncate">${escapeHTML(item.subtitle)}</span>
               </div>
@@ -5864,9 +5951,9 @@ document.addEventListener('DOMContentLoaded', () => {
           window.closeUnitOverviewModal();
           const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
           if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            targetSection.scrollIntoView({ behavior: 'instant', block: 'start' });
           } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'instant' });
           }
           if (typeof window.showToast === 'function') {
             window.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
@@ -7034,7 +7121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 단어 카드들을 담는 컨테이너
         const wordsListContainer = document.createElement('div');
-        wordsListContainer.className = 'book-unit-words-wrap flex flex-col gap-3 mt-2.5';
+        wordsListContainer.className = 'book-unit-words-wrap unit-word-list flex flex-col gap-3 mt-2.5';
 
         (u.words || []).forEach((w, wIdx) => {
           const termStr = w.word || w.term || '';
@@ -7189,10 +7276,16 @@ document.addEventListener('DOMContentLoaded', () => {
       wrongBanner.classList.remove('hidden');
     }
 
-    const cards = container.querySelectorAll('.book-word-card');
-    cards.forEach(c => c.remove());
-    const oldEmpty = container.querySelector('#book-wrong-empty-state');
-    if (oldEmpty) oldEmpty.remove();
+    // 기존 단어 카드, 챕터 헤더, 유닛 컨테이너 및 empty state 모두 제거
+    const oldItems = container.querySelectorAll('.book-word-card, .book-category-header, .book-unit-container, #book-wrong-empty-state');
+    oldItems.forEach(c => c.remove());
+
+    const ch1Header = document.getElementById('book-chapter-header');
+    const ch2Toggle = document.getElementById('book-chapter-2-toggle');
+    const ch3Locked = document.getElementById('book-chapter-3-locked');
+    if (ch1Header) { ch1Header.style.display = 'none'; ch1Header.classList.add('hidden'); }
+    if (ch2Toggle) { ch2Toggle.style.display = 'none'; ch2Toggle.classList.add('hidden'); }
+    if (ch3Locked) { ch3Locked.style.display = 'none'; ch3Locked.classList.add('hidden'); }
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let wrongList = [];
@@ -7234,55 +7327,181 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const activeCourse = (typeof getCurrentCourseData === 'function') ? getCurrentCourseData() : null;
+    let storedCourse = 'main';
+    try {
+      storedCourse = localStorage.getItem('vocadash_active_course') || 'main';
+    } catch (_) { }
+    const isFootball = (window.activeCourseId === 'pack_football' || storedCourse === 'pack_football' || (activeCourse && activeCourse.id === 'pack_football'));
+    const iconPrefix = isFootball ? '⚽' : (activeCourse && activeCourse.icon ? activeCourse.icon : (currentLang === 'en' ? '🇺🇸' : '🇪🇸'));
+
+    const rawUnits = (activeCourse && Array.isArray(activeCourse.units) && activeCourse.units.length > 0)
+      ? activeCourse.units
+      : [
+          { title: 'Unit 1. 취약 단어 집중 복습', desc: '틀렸던 단어들을 완벽히 정복하세요.', words: [] }
+        ];
+
+    const cleanStr = (s) => String(s || '').replace(/[¡!¿?.,]/g, '').trim().toLowerCase();
+
+    // 오답 단어들을 해당 유닛에 배분
+    const unitWrongMap = rawUnits.map(() => []);
+    const unmatchedList = [];
+
+    wrongList.forEach(item => {
+      const term = cleanStr(item.word || item.term);
+      const id = item.id ? String(item.id).trim() : '';
+
+      let targetIdx = -1;
+      for (let i = 0; i < rawUnits.length; i++) {
+        const uWords = rawUnits[i].words || [];
+        const matched = uWords.some(w => {
+          const wId = w.id ? String(w.id).trim() : '';
+          const wTerm = cleanStr(w.word || w.term);
+          if (id && wId && id === wId) return true;
+          if (term && wTerm && term === wTerm) return true;
+          return false;
+        });
+        if (matched) {
+          targetIdx = i;
+          break;
+        }
+      }
+
+      if (targetIdx !== -1) {
+        unitWrongMap[targetIdx].push(item);
+      } else {
+        unmatchedList.push(item);
+      }
+    });
+
+    // 코스 내 특정 유닛에 직접 매칭되지 않은 단어는 첫 번째 유닛에 귀속
+    if (unmatchedList.length > 0 && unitWrongMap.length > 0) {
+      unitWrongMap[0].push(...unmatchedList);
+    }
 
     const isPhoneticVisible = window.vocadashSettings ? !!window.vocadashSettings.showPhonetic : true;
     const phoneticStyle = isPhoneticVisible ? '' : 'style="display: none;"';
 
-    wrongList.forEach(item => {
-      const term = item.word || item.term || '';
-      const meaning = item.meaning || item.kor || item.ko || '';
-      const phonetic = item.phonetic || '';
-      const streak = Number(item.correctStreak) || 0;
+    rawUnits.forEach((u, uIdx) => {
+      const unitWrongs = unitWrongMap[uIdx] || [];
+      const hasWrongs = unitWrongs.length > 0;
+      const wrongCount = unitWrongs.length;
 
-      const art = document.createElement('article');
-      art.className = 'book-word-card book-word-card-wrong bg-white rounded-2xl p-4 shadow-sm border border-rose-100/90 flex items-center justify-between mb-3 transition-all hover:shadow-md';
-      art.dataset.term = term;
-      art.dataset.meaning = meaning;
-      art.dataset.streak = String(streak);
-      art.innerHTML = `
-        <div class="flex flex-col min-w-0 pr-2">
-          <div class="flex items-center gap-2">
-            <span class="text-xl font-bold text-slate-800 tracking-tight">${escapeHTML(term)}</span>
-            <button aria-label="발음 듣기" class="book-audio-btn text-slate-400 hover:text-emerald-500 p-0.5 transition-colors cursor-pointer" type="button">
-              <span class="material-symbols-outlined text-[20px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">volume_up</span>
-            </button>
+      // 유닛 전체를 묶어줄 컨테이너 생성
+      const unitContainer = document.createElement('div');
+      unitContainer.className = 'book-unit-container mb-4';
+      unitContainer.dataset.unit = String(u.unitId || u.unit || (uIdx + 1));
+
+      const subtitleText = u.subtitle || u.desc || '';
+      const safeSubtitle = typeof escapeHTML === 'function' ? escapeHTML(subtitleText) : subtitleText;
+      const subtitleHtml = subtitleText ? `<p class="mt-1 pl-0.5 text-xs text-slate-500 font-medium leading-relaxed">${safeSubtitle}</p>` : '';
+      const safeUnitTitle = typeof escapeHTML === 'function' ? escapeHTML(u.title) : u.title;
+
+      // 클릭 가능한 아코디언 헤더
+      const catHeader = document.createElement('div');
+      catHeader.className = 'book-category-header flex flex-col mt-4 mb-2 px-1 pt-1 border-t border-slate-100 first:border-0 first:mt-1 cursor-pointer select-none group';
+
+      const badgeClass = hasWrongs
+        ? 'text-rose-700 bg-rose-50 border-rose-200 group-hover:bg-rose-100'
+        : 'text-slate-600 bg-slate-50 border-slate-200 group-hover:bg-slate-100';
+      const countClass = hasWrongs
+        ? 'text-rose-600 font-bold'
+        : 'text-slate-400 font-semibold';
+      const toggleIcon = hasWrongs ? 'expand_less' : 'expand_more';
+
+      catHeader.innerHTML = `
+        <div class="flex items-center justify-between w-full">
+          <span class="text-xs font-black ${badgeClass} px-2.5 py-1 rounded-full border shadow-2xs transition-colors">${iconPrefix} ${safeUnitTitle}</span>
+          <div class="flex items-center gap-1.5 text-slate-400">
+            <span class="text-xs ${countClass}">오답 ${wrongCount}단어</span>
+            <span class="material-symbols-outlined text-[18px] unit-toggle-icon transition-transform duration-200">${toggleIcon}</span>
           </div>
-          <span class="text-xs text-slate-400 font-medium mt-0.5">
-            <span class="book-phonetic phonetic-hint" ${phoneticStyle}>${escapeHTML(phonetic)}</span>
-            <span class="book-phonetic-dot text-slate-300 font-bold mx-0.5" ${phoneticStyle}>·</span>
-            <span class="text-slate-700 font-semibold text-[13px]">${escapeHTML(meaning)}</span>
-          </span>
         </div>
-        <div class="flex items-center gap-1.5 flex-shrink-0">
-          <span class="px-2.5 py-1 rounded-full bg-rose-50 text-rose-600 font-extrabold text-xs border border-rose-200 flex items-center gap-1 shadow-2xs">
-            <span>🔥</span>
-            <span>${streak}/5</span>
-          </span>
-        </div>
+        ${subtitleHtml}
       `;
 
-      const audioBtn = art.querySelector('.book-audio-btn');
-      if (audioBtn) {
-        audioBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (typeof safePlayTTS === 'function') {
-            safePlayTTS(term, currentLang, audioBtn);
+      // 단어 카드들을 담는 컨테이너: Unit X 아코디언 컨테이너 내부 자식 요소로 삽입
+      // 오답이 있는 유닛만 열리고(hasWrongs), 오답이 0개인 유닛은 접힌 상태(hidden) 유지
+      const wordsListContainer = document.createElement('div');
+      wordsListContainer.className = `book-unit-words-wrap unit-word-list flex flex-col gap-3 mt-2.5 ${hasWrongs ? '' : 'hidden'}`;
+
+      if (hasWrongs) {
+        unitWrongs.forEach(item => {
+          const term = item.word || item.term || '';
+          const meaning = item.meaning || item.kor || item.ko || '';
+          const phonetic = item.phonetic || '';
+          const streak = Number(item.correctStreak) || 0;
+
+          const safeTerm = typeof escapeHTML === 'function' ? escapeHTML(term) : term;
+          const safePhonetic = typeof escapeHTML === 'function' ? escapeHTML(phonetic) : phonetic;
+          const safeMeaning = typeof escapeHTML === 'function' ? escapeHTML(meaning) : meaning;
+
+          const art = document.createElement('article');
+          art.className = 'book-word-card book-word-card-wrong bg-white rounded-2xl p-4 shadow-sm border border-rose-100/90 flex items-center justify-between transition-all hover:shadow-md';
+          art.dataset.term = term;
+          art.dataset.meaning = meaning;
+          art.dataset.streak = String(streak);
+          art.dataset.category = u.title;
+          art.innerHTML = `
+            <div class="flex flex-col min-w-0 pr-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-slate-800 tracking-tight">${safeTerm}</span>
+                <button aria-label="발음 듣기" class="book-audio-btn text-slate-400 hover:text-emerald-500 p-0.5 transition-colors cursor-pointer" type="button">
+                  <span class="material-symbols-outlined text-[20px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+                </button>
+              </div>
+              <span class="text-xs text-slate-400 font-medium mt-0.5">
+                <span class="book-phonetic phonetic-hint" ${phoneticStyle}>${safePhonetic}</span>
+                <span class="book-phonetic-dot text-slate-300 font-bold mx-0.5" ${phoneticStyle}>·</span>
+                <span class="text-slate-700 font-semibold text-[13px]">${safeMeaning}</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <span class="px-2.5 py-1 rounded-full bg-rose-50 text-rose-600 font-extrabold text-xs border border-rose-200 flex items-center gap-1 shadow-2xs">
+                <span>🔥</span>
+                <span>${streak}/5</span>
+              </span>
+            </div>
+          `;
+
+          const audioBtn = art.querySelector('.book-audio-btn');
+          if (audioBtn) {
+            audioBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (typeof safePlayTTS === 'function') {
+                safePlayTTS(term, currentLang, audioBtn);
+              }
+            });
           }
+
+          wordsListContainer.appendChild(art);
         });
+      } else {
+        const emptyUnitNotice = document.createElement('div');
+        emptyUnitNotice.className = 'py-3 px-4 text-center text-xs text-slate-400 font-medium bg-slate-50/70 rounded-xl border border-dashed border-slate-200';
+        emptyUnitNotice.textContent = '이 유닛에는 틀린 단어가 없습니다 ✨';
+        wordsListContainer.appendChild(emptyUnitNotice);
       }
 
-      container.appendChild(art);
+      // 헤더 클릭 시 단어 목록 열고 닫는 토글 핸들러
+      catHeader.addEventListener('click', () => {
+        const isCollapsed = wordsListContainer.classList.contains('hidden');
+        const arrowIcon = catHeader.querySelector('.unit-toggle-icon');
+        if (isCollapsed) {
+          wordsListContainer.classList.remove('hidden');
+          if (arrowIcon) arrowIcon.textContent = 'expand_less';
+        } else {
+          wordsListContainer.classList.add('hidden');
+          if (arrowIcon) arrowIcon.textContent = 'expand_more';
+        }
+      });
+
+      unitContainer.appendChild(catHeader);
+      unitContainer.appendChild(wordsListContainer);
+      container.appendChild(unitContainer);
     });
+
+    if (typeof initBookScreenEvents === 'function') initBookScreenEvents();
   }
   window.renderBookWrongWords = renderBookWrongWords;
 
@@ -8316,6 +8535,23 @@ document.addEventListener('DOMContentLoaded', () => {
         openHeartRechargeModal();
       };
     }
+
+    // 상단 헤더 보석 칩 터치 이벤트 -> 상점 모달 오픈 (단, 인게임 도중 제외)
+    const headerGemsBadge = document.getElementById('header-gems-badge');
+    if (headerGemsBadge) {
+      headerGemsBadge.onclick = function (e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        if (window.isGameActive || window.isActive) return;
+        const gameScreen = document.getElementById('game-screen');
+        if (gameScreen && !gameScreen.classList.contains('hidden')) return;
+        if (typeof window.openShopModal === 'function') {
+          window.openShopModal();
+        }
+      };
+    }
   }
   window.initHeartModalEvents = initHeartModalEvents;
 
@@ -8715,7 +8951,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statsLevelBadge.textContent = `Lv.${currentLevel} ${levelTitle}`;
       }
 
-      // 2) 외운 단어 수 계산 (localStorage에 저장된 실제 단어 수)
+      // 2) 외운 단어 수 계산 (localStorage에 저장된 실제 단어 수, 중복 제외)
       let masteredCount = 0;
       try {
         const rawMastered = localStorage.getItem('vocadash_mastered_words') ||
@@ -8723,7 +8959,7 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.getItem('vocadash_completed_words');
         if (rawMastered) {
           const parsed = JSON.parse(rawMastered);
-          masteredCount = Array.isArray(parsed) ? parsed.length : (Number(parsed) || 0);
+          masteredCount = Array.isArray(parsed) ? new Set(parsed).size : (Number(parsed) || 0);
         }
       } catch (_) { }
 
@@ -8732,13 +8968,19 @@ document.addEventListener('DOMContentLoaded', () => {
         statsWordsCount.textContent = `${masteredCount}개`;
       }
 
-      // 3) 정답률 (저장된 값 없으면 0%)
+      // 3) 정답률: (누적 정답 수 / 누적 시도 문제 수) * 100 반올림 (시도 수 0일 때 0%)
       const statsAccuracyRate = document.getElementById('stats-accuracy-rate');
       if (statsAccuracyRate) {
         let accuracyRate = 0;
         try {
-          const savedAcc = localStorage.getItem('vocadash_overall_accuracy');
-          if (savedAcc !== null) accuracyRate = parseInt(savedAcc, 10) || 0;
+          const totalQ = parseInt(localStorage.getItem('vocadash_total_questions') || '0', 10) || 0;
+          const correctA = parseInt(localStorage.getItem('vocadash_correct_answers') || '0', 10) || 0;
+          if (totalQ > 0) {
+            accuracyRate = Math.round((Math.min(correctA, totalQ) / totalQ) * 100);
+          } else {
+            const savedAcc = localStorage.getItem('vocadash_overall_accuracy');
+            if (savedAcc !== null) accuracyRate = parseInt(savedAcc, 10) || 0;
+          }
         } catch (_) { }
         statsAccuracyRate.textContent = `${accuracyRate}%`;
       }
@@ -8846,6 +9088,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (normTab === 'records') {
         try {
+          if (typeof window.updateProfileStats === 'function') window.updateProfileStats();
           updateStatsScreenUI();
         } catch (_) { }
       } else if (normTab === 'packs') {
@@ -10043,7 +10286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const titleEl = document.getElementById('game-stage-title');
     if (titleEl) {
-      titleEl.textContent = '⚡ 1분 스피드 오답 복습';
+      titleEl.textContent = `Unit ${window.currentUnitNumber || 1} · 🔄 약점 복습`;
     }
   }
   window.startGameWithWords = startGameWithWords;
@@ -10321,6 +10564,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialLang = getSavedLanguage();
   setLanguage(initialLang);
   renderRoadmap();
+  if (typeof window.focusActiveRoadmapNode === 'function') {
+    window.focusActiveRoadmapNode();
+  }
   updateWrongWordsBadge();
   renderReviewWords('waiting');
   syncBookPhoneticSetting();

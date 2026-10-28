@@ -453,8 +453,66 @@
 
     window.currentSessionQuestions = activeDeck;
     console.log('📚 [Flashcard] 단어 덱 주입 완료: 레슨', currentFlashcardLessonId, '총', activeDeck.length, '개 단어');
-    const unitTitle = targetUnit ? (targetUnit.title || targetUnit.name) : `Unit ${unitIndex + 1}`;
-    currentLessonDeckTitle = isReview ? `오답 집중 복습 (${deck.length}개)` : `${unitTitle} · 단어 예습`;
+    const targetId = currentFlashcardLessonId || lessonId || window.currentSelectedNodeId || window.currentGameLessonId || 'node-2';
+    const coords = (typeof window.parseNodeCoordinates === 'function')
+      ? window.parseNodeCoordinates(targetId)
+      : ((typeof parseNodeCoordinates === 'function') ? parseNodeCoordinates(targetId) : null);
+
+    let resolvedUnitId = (coords && coords.unitIndex) || window.currentUnitNumber || (unitIndex + 1) || 1;
+    const uMatch = String(targetId).match(/^u(\d+)/i);
+    if (uMatch) {
+      resolvedUnitId = parseInt(uMatch[1], 10) || resolvedUnitId;
+    }
+
+    const isBossNode = (
+      targetId === 'node-boss' ||
+      String(targetId).includes('boss') ||
+      String(targetId).endsWith('_n6') ||
+      (coords && (coords.nodeIndex === 'boss' || coords.nodeIndex === 6))
+    );
+
+    const isReviewNode = (
+      !isBossNode && (
+        targetId === 'node-review' ||
+        String(targetId).includes('review') ||
+        String(targetId).endsWith('_n4') ||
+        (coords && coords.nodeIndex === 'review') ||
+        Boolean(activeFlashcardOptions.isReview) ||
+        Boolean(window.isWrongWordsMiniReviewActive) ||
+        Boolean(window.isRoadmapReviewSpeedrun)
+      )
+    );
+
+    let stageIndex = 1;
+    if (coords && typeof coords.nodeIndex === 'number' && coords.nodeIndex !== 6) {
+      stageIndex = coords.nodeIndex;
+    } else {
+      const match = String(targetId).match(/(?:stage|node)[-_]?(\d+)/i);
+      if (match) {
+        stageIndex = parseInt(match[1], 10) || 1;
+      }
+    }
+
+    let clearedCount = 0;
+    if (typeof window.getNodeProgress === 'function') {
+      clearedCount = Number(window.getNodeProgress(targetId, currentCourse, activeCourseId)?.clearedCount ?? window.getNodeProgress(targetId, currentCourse, activeCourseId)) || 0;
+    } else if (window.nodeProgressMap && typeof window.nodeProgressMap[targetId] === 'number') {
+      clearedCount = window.nodeProgressMap[targetId];
+    }
+    let currentRound = Math.min(3, Math.max(1, (clearedCount || 0) + 1));
+    if (typeof activeFlashcardOptions.round === 'number' && activeFlashcardOptions.round >= 1 && activeFlashcardOptions.round <= 3) {
+      currentRound = activeFlashcardOptions.round;
+    } else if (typeof activeFlashcardOptions.subStage === 'number' && activeFlashcardOptions.subStage >= 1 && activeFlashcardOptions.subStage <= 3) {
+      currentRound = activeFlashcardOptions.subStage;
+    }
+
+    if (isBossNode) {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔥 FINAL BOSS · 단어 예습`;
+    } else if (isReviewNode) {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔄 약점 극복 · 단어 예습`;
+    } else {
+      currentLessonDeckTitle = `Unit ${resolvedUnitId} · Stage ${stageIndex} (${currentRound}/3) · 단어 예습`;
+    }
     currentCardIndex = 0;
     isCardFlipped = false;
     isCardTransitioning = false;
@@ -744,6 +802,16 @@
 
     // 1) 플래시카드 화면 완전 숨김 (로드맵 복원은 콜백 의도에 따라 처리)
     closeFlashcardScreen(false);
+
+    // 플래시카드 예습 단어들을 외운 단어(vocadash_mastered_words)에 누적
+    if (Array.isArray(activeDeck) && activeDeck.length > 0) {
+      if (typeof window.addMasteredWords === 'function') {
+        window.addMasteredWords(activeDeck);
+      }
+      if (typeof window.updateProfileStats === 'function') {
+        window.updateProfileStats();
+      }
+    }
 
     // 2) 주입받은 동적 완료 콜백(onComplete) 실행
     const callback = activeFlashcardOnComplete;
