@@ -235,18 +235,274 @@
     document.addEventListener(evt, unlockAudio, { capture: true, passive: true });
   });
 
-  // 음성 및 Web Speech API 강제 중단 헬퍼
-  function stopTTS() {
-    try {
-      if (typeof window.speechSynthesis !== 'undefined' && window.speechSynthesis && window.speechSynthesis.cancel) {
-        window.speechSynthesis.cancel();
-      }
-    } catch (_) {}
+  // =================================================
+  // [고품질 듀얼 사운드 재생 엔진 (Dual TTS Player)]
+  // 1순위: Google Translate 고음질 원어민 CDN 오디오 스트림 재생
+  // 2순위: 네트워크 차단/에러 시 Web Speech API 고음질 보이스 선별 폴백
+  // =================================================
+  let currentPlayingAudio = null;
+  let cachedSynthesisVoices = [];
+
+  function loadSynthesisVoices() {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        cachedSynthesisVoices = window.speechSynthesis.getVoices() || [];
+      } catch (_) { }
+    }
   }
-  window.stopSpeechSynthesis = stopTTS;
-  if (typeof window.stopTTS !== 'function') {
-    window.stopTTS = stopTTS;
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    loadSynthesisVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadSynthesisVoices;
+    }
   }
 
-  // 메뉴/탭 클릭 비프음 제거 완료 (게임 내 정답/오답/보석 사운드만 재생)
+  function getBestNaturalVoice(targetLang = 'es') {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
+    if (cachedSynthesisVoices.length === 0) loadSynthesisVoices();
+
+    const isEn = (targetLang === 'en' || targetLang === 'en-US');
+    const langPrefix = isEn ? 'en' : 'es';
+
+    // 1) 사용자 지정 고음질 자연어 보이스 우선순위 키워드
+    const priorityKeywords = isEn
+      ? ['Google US English', 'Natural', 'Samantha', 'Alex', 'Victoria', 'Karen']
+      : ['Google español', 'Natural', 'Monica', 'Jorge', 'Paulina', 'Elvira', 'Mónica', 'Diego'];
+
+    for (const kw of priorityKeywords) {
+      const found = cachedSynthesisVoices.find(v =>
+        v.lang && v.lang.toLowerCase().startsWith(langPrefix) &&
+        v.name && v.name.toLowerCase().includes(kw.toLowerCase())
+      );
+      if (found) return found;
+    }
+
+    // 2) 언어 접두사 매칭 중 natural / google 포함 보이스 또는 첫 번째 매칭
+    const langMatches = cachedSynthesisVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+    if (langMatches.length > 0) {
+      const naturalVoice = langMatches.find(v =>
+        v.name && (v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('google'))
+      );
+      return naturalVoice || langMatches[0];
+    }
+    return null;
+  }
+
+  function sanitizeTTSText(text) {
+    if (!text) return '';
+    return String(text)
+      .replace(/[¡!¿?"'\[\]()“”‘’]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function setUiSpeakerActive(buttonEl) {
+    if (!buttonEl) return;
+    buttonEl.classList.add('tts-speaking', 'text-emerald-500', 'animate-pulse');
+    buttonEl.classList.remove('text-slate-400', 'text-slate-500', 'text-on-surface-variant');
+  }
+
+  function resetUiSpeakerActive(buttonEl) {
+    if (!buttonEl) return;
+    buttonEl.classList.remove('tts-speaking', 'text-emerald-500', 'animate-pulse');
+  }
+
+  function stopAllTTS() {
+    if (currentPlayingAudio || window.currentPlayingAudio) {
+      try {
+        const a = currentPlayingAudio || window.currentPlayingAudio;
+        a.pause();
+        a.currentTime = 0;
+      } catch (_) { }
+      currentPlayingAudio = null;
+      window.currentPlayingAudio = null;
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch (_) { }
+    }
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll('.tts-speaking').forEach(el => {
+        resetUiSpeakerActive(el);
+      });
+    }
+  }
+
+  function speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      const isEn = (targetLangCode === 'en' || targetLangCode === 'en-US');
+      const utterance = new SpeechSynthesisUtterance(cleanWord);
+      utterance.lang = isEn ? 'en-US' : 'es-ES';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
+
+      const bestVoice = getBestNaturalVoice(targetLangCode);
+      if (bestVoice) {
+        utterance.voice = bestVoice;
+      }
+
+      utterance.onend = () => {
+        if (buttonEl) resetUiSpeakerActive(buttonEl);
+      };
+      utterance.onerror = () => {
+        if (buttonEl) resetUiSpeakerActive(buttonEl);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (err) {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+    }
+  }
+
+  // =================================================
+  // 스페인어 원어민 TTS 엔진 (es-ES 강제 지정, pitch: 1.0, rate: 0.95)
+  // =================================================
+  function playSpanishTTS(text, arg2 = null, arg3 = null) {
+    stopAllTTS();
+
+    let buttonEl = null;
+    if (arg2 && typeof arg2 === 'object' && (arg2.nodeType || arg2.tagName || arg2.classList)) {
+      buttonEl = arg2;
+    } else if (arg3 && typeof arg3 === 'object' && (arg3.nodeType || arg3.tagName || arg3.classList)) {
+      buttonEl = arg3;
+    }
+
+    const cleanWord = sanitizeTTSText(text);
+    if (!cleanWord) return;
+
+    if (buttonEl) {
+      setUiSpeakerActive(buttonEl);
+    }
+
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      if (typeof playDualTTS === 'function') {
+        playDualTTS(cleanWord, 'es', buttonEl);
+      } else if (buttonEl) {
+        resetUiSpeakerActive(buttonEl);
+      }
+      return;
+    }
+
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(cleanWord);
+      utterance.lang = 'es-ES'; // 스페인 본토 발음 강제 지정
+      utterance.pitch = 1.0;
+      utterance.rate = 0.95; // 자연스럽고 명확한 전달 속도 설정
+
+      const bestVoice = getBestNaturalVoice('es');
+      if (bestVoice) {
+        utterance.voice = bestVoice;
+      }
+
+      utterance.onend = () => {
+        if (buttonEl) resetUiSpeakerActive(buttonEl);
+      };
+      utterance.onerror = () => {
+        if (buttonEl) resetUiSpeakerActive(buttonEl);
+        if (typeof playDualTTS === 'function') {
+          playDualTTS(cleanWord, 'es', buttonEl);
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (err) {
+      if (buttonEl) resetUiSpeakerActive(buttonEl);
+      if (typeof playDualTTS === 'function') {
+        playDualTTS(cleanWord, 'es', buttonEl);
+      }
+    }
+  }
+
+  function playDualTTS(text, lang = 'es', buttonEl = null) {
+    stopAllTTS();
+
+    const cleanWord = sanitizeTTSText(text);
+    if (!cleanWord) return;
+
+    const isEn = (lang === 'en' || lang === 'en-US');
+    const targetLangCode = isEn ? 'en' : 'es';
+
+    if (buttonEl) {
+      setUiSpeakerActive(buttonEl);
+    }
+
+    // 1순위: Google Translate 고음질 CDN 오디오 스트림 재생
+    const cdnUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${targetLangCode}&q=${encodeURIComponent(cleanWord)}`;
+
+    let fallbackTriggered = false;
+    const triggerFallback = () => {
+      if (fallbackTriggered) return;
+      fallbackTriggered = true;
+      speakWithWebSpeechFallback(cleanWord, targetLangCode, buttonEl);
+    };
+
+    try {
+      if (typeof Audio === 'undefined') {
+        triggerFallback();
+        return;
+      }
+      const audio = new Audio();
+      currentPlayingAudio = audio;
+      window.currentPlayingAudio = audio;
+      audio.playbackRate = 0.98;
+      audio.src = cdnUrl;
+
+      audio.onended = () => {
+        if (currentPlayingAudio === audio) currentPlayingAudio = null;
+        if (window.currentPlayingAudio === audio) window.currentPlayingAudio = null;
+        if (buttonEl) resetUiSpeakerActive(buttonEl);
+      };
+
+      audio.onerror = () => {
+        if (currentPlayingAudio === audio) currentPlayingAudio = null;
+        if (window.currentPlayingAudio === audio) window.currentPlayingAudio = null;
+        triggerFallback();
+      };
+
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          if (currentPlayingAudio === audio) currentPlayingAudio = null;
+          if (window.currentPlayingAudio === audio) window.currentPlayingAudio = null;
+          triggerFallback();
+        });
+      }
+    } catch (err) {
+      triggerFallback();
+    }
+  }
+
+  function safePlayTTS(text, lang = 'es', buttonEl = null) {
+    if (lang && typeof lang === 'object' && (lang.nodeType || lang.tagName || lang.classList)) {
+      buttonEl = lang;
+      lang = 'es';
+    }
+    const cleanLang = (typeof lang === 'string') ? lang.toLowerCase() : 'es';
+    const isEs = !cleanLang || cleanLang === 'es' || cleanLang === 'es-es';
+    if (isEs) {
+      return playSpanishTTS(text, buttonEl);
+    }
+    return playDualTTS(text, cleanLang, buttonEl);
+  }
+
+  // Global Exports (단일 진실 공급원: 전역 바인딩 보장)
+  window.speakWord = safePlayTTS;
+  window.playTTS = safePlayTTS;
+  window.safePlayTTS = safePlayTTS;
+  window.playSpanishTTS = playSpanishTTS;
+  window.playDualTTS = playDualTTS;
+  window.stopAllTTS = stopAllTTS;
+  window.stopTTS = stopAllTTS;
+  window.stopSpeechSynthesis = stopAllTTS;
+  window.playSound = playSound;
+  window.getAudioContext = getAudioContext;
+  window.isSoundEnabled = isSoundEnabled;
+  window.setSoundEnabled = setSoundEnabled;
 })();

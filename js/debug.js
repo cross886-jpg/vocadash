@@ -217,6 +217,84 @@
         }
     };
 
+    // =========================================================================
+    // 💣 [공장초기화] 앱 전체 데이터 완전 리셋 및 Unit 1 무결성 복구
+    // =========================================================================
+    function resetAllData() {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.clear();
+                localStorage.setItem('vocadash_unlocked_es_main', '1');
+                localStorage.setItem('vocadash_unlocked_en_main', '1');
+                localStorage.setItem('vocadash_language', 'es');
+                localStorage.setItem('vocadash_selected_lang', 'es');
+                localStorage.setItem('vocadash_active_course', 'main');
+                localStorage.setItem('vocadash_active_course_es', 'main');
+                localStorage.setItem('vocadash_active_course_en', 'main');
+                localStorage.setItem('vocadash_current_unit', '1');
+                localStorage.setItem('vocadash_active_unit', '1');
+                localStorage.setItem('currentUnitLevel', '1');
+                localStorage.setItem('currentUnitIndex', '0');
+                localStorage.setItem('vocadash_inventory', JSON.stringify({ pass: 2, freeze: 1, bomb: 1, heal: 1 }));
+            }
+            if (typeof window.saveVocaInventory === 'function') {
+                window.saveVocaInventory({ pass: 2, freeze: 1, bomb: 1, heal: 1 });
+            }
+            if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.clear();
+            }
+        } catch (_) {}
+
+        window.currentLanguage = 'es';
+        window.currentActiveCourse = 'es';
+        window.activeCourseId = 'main';
+        window.currentCourseId = 'main';
+        window.currentUnitNumber = 1;
+        window.currentUnitLevel = 1;
+        window.activeUnit = 1;
+        window._currentVisibleUnitIndex = 0;
+        if (typeof _hasUserScrolledRoadmap !== 'undefined') {
+            _hasUserScrolledRoadmap = false;
+        }
+        window.currentSelectedNodeId = null;
+        window.currentGameLessonId = null;
+        window.currentLessonId = null;
+        window.nodeProgressMap = {};
+        window.wrongWords = [];
+
+        if (typeof setUnlockedUnitLevel === 'function') {
+            setUnlockedUnitLevel(1, 'es', 'main');
+        } else if (typeof window.setUnlockedUnitLevel === 'function') {
+            window.setUnlockedUnitLevel(1, 'es', 'main');
+        }
+        if (typeof updateRoadmapNodesUI === 'function') {
+            updateRoadmapNodesUI();
+        } else if (typeof window.updateRoadmapNodesUI === 'function') {
+            window.updateRoadmapNodesUI();
+        }
+        if (typeof updateTopUnitBanner === 'function') {
+            updateTopUnitBanner(0);
+        } else if (typeof window.updateTopUnitBanner === 'function') {
+            window.updateTopUnitBanner(0);
+        }
+        if (typeof renderRoadmap === 'function') {
+            renderRoadmap();
+        } else if (typeof window.renderRoadmap === 'function') {
+            window.renderRoadmap();
+        }
+        if (typeof window.focusActiveRoadmapNode === 'function') {
+            window.focusActiveRoadmapNode();
+        }
+        if (typeof window.updateWrongWordsBadge === 'function') {
+            window.updateWrongWordsBadge();
+        }
+        if (typeof window.updateProfileStats === 'function') {
+            window.updateProfileStats();
+        }
+    }
+    window.resetAllData = resetAllData;
+    window.handleFactoryReset = resetAllData;
+
     function resetAllLearningStats() {
         try {
             localStorage.removeItem('vocadash_total_questions');

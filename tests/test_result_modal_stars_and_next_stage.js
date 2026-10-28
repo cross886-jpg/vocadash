@@ -151,6 +151,8 @@ const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfi
 vm.runInContext(courseConfigCode, context);
 const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
 vm.runInContext(profileManagerCode, context);
+const progressManagerCode = fs.readFileSync(path.join(__dirname, "../js/progressManager.js"), "utf-8");
+vm.runInContext(progressManagerCode, context);
 vm.runInContext(appJsCode, context);
 
 if (domContentLoadedHandler) {
@@ -159,6 +161,12 @@ if (domContentLoadedHandler) {
 
 const navJsCode = fs.readFileSync(path.join(__dirname, '../js/navigation.js'), 'utf-8');
 vm.runInContext(navJsCode, context);
+
+const gameResultModalCode = fs.readFileSync(path.join(__dirname, '../js/gameResultModal.js'), 'utf-8');
+vm.runInContext(gameResultModalCode, context);
+
+const quizSessionGeneratorCode = fs.readFileSync(path.join(__dirname, '../js/quizSessionGenerator.js'), 'utf-8');
+vm.runInContext(quizSessionGeneratorCode, context);
 
 const gameEngineCode = fs.readFileSync(path.join(__dirname, '../js/gameEngine.js'), 'utf-8');
 vm.runInContext(gameEngineCode, context);

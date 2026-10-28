@@ -117,8 +117,20 @@ const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfi
 vm.runInContext(courseConfigCode, context);
 const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
 vm.runInContext(profileManagerCode, context);
+const progressManagerCode = fs.readFileSync(path.join(__dirname, '../js/progressManager.js'), 'utf-8');
+vm.runInContext(progressManagerCode, context);
 const roadmapRendererCode = fs.readFileSync(path.join(__dirname, '../js/roadmapRenderer.js'), 'utf-8');
 vm.runInContext(roadmapRendererCode, context);
+const heartManagerCode = fs.readFileSync(path.join(__dirname, "../js/heartManager.js"), "utf-8");
+vm.runInContext(heartManagerCode, context);
+const languageModalCode = fs.readFileSync(path.join(__dirname, "../js/languageModal.js"), "utf-8");
+vm.runInContext(languageModalCode, context);
+const bookRendererCode = fs.readFileSync(path.join(__dirname, "../js/bookRenderer.js"), "utf-8");
+vm.runInContext(bookRendererCode, context);
+const packsManagerCode = fs.readFileSync(path.join(__dirname, "../js/packsManager.js"), "utf-8");
+vm.runInContext(packsManagerCode, context);
+const reviewManagerCode = fs.readFileSync(path.join(__dirname, "../js/reviewManager.js"), "utf-8");
+vm.runInContext(reviewManagerCode, context);
 vm.runInContext(appCode, context);
 if (domContentLoadedHandler) {
   domContentLoadedHandler();

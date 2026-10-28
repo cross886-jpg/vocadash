@@ -100,6 +100,11 @@ vm.createContext(context);
 // Load data_football.js, app.js, and gameEngine.js
 const footballCode = fs.readFileSync(path.join(__dirname, '../js/data_football.js'), 'utf8');
 const appCode = fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf8');
+const gameResultModalCode = fs.readFileSync(path.join(__dirname, '../js/gameResultModal.js'), 'utf8');
+vm.runInContext(gameResultModalCode, context);
+
+const quizSessionGeneratorCode = fs.readFileSync(path.join(__dirname, '../js/quizSessionGenerator.js'), 'utf8');
+vm.runInContext(quizSessionGeneratorCode, context);
 const engineCode = fs.readFileSync(path.join(__dirname, '../js/gameEngine.js'), 'utf8');
 
 vm.runInContext(footballCode, context);
@@ -107,6 +112,14 @@ const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfi
 vm.runInContext(courseConfigCode, context);
 const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
 vm.runInContext(profileManagerCode, context);
+const heartManagerCode = fs.readFileSync(path.join(__dirname, "../js/heartManager.js"), "utf-8");
+vm.runInContext(heartManagerCode, context);
+const progressManagerCode = fs.readFileSync(path.join(__dirname, "../js/progressManager.js"), "utf-8");
+vm.runInContext(progressManagerCode, context);
+const roadmapRendererCode = fs.readFileSync(path.join(__dirname, "../js/roadmapRenderer.js"), "utf-8");
+vm.runInContext(roadmapRendererCode, context);
+const reviewManagerCode = fs.readFileSync(path.join(__dirname, "../js/reviewManager.js"), "utf-8");
+vm.runInContext(reviewManagerCode, context);
 vm.runInContext(appCode, context);
 if (domContentLoadedHandler) {
   domContentLoadedHandler();

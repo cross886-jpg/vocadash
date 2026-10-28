@@ -169,13 +169,22 @@ vm.runInContext(soundCode, context);
 
 const dataEsCode = fs.readFileSync(path.join(__dirname, '../js/data_es.js'), 'utf-8');
 vm.runInContext(dataEsCode, context);
-
+const heartManagerCode = fs.readFileSync(path.join(__dirname, '../js/heartManager.js'), 'utf-8');
+vm.runInContext(heartManagerCode, context);
 const appJsCode = fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8');
 const courseConfigCode = fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8');
 vm.runInContext(courseConfigCode, context);
 const profileManagerCode = fs.readFileSync(path.join(__dirname, "../js/profileManager.js"), "utf-8");
 vm.runInContext(profileManagerCode, context);
+const progressManagerCode = fs.readFileSync(path.join(__dirname, "../js/progressManager.js"), "utf-8");
+vm.runInContext(progressManagerCode, context);
 vm.runInContext(appJsCode, context);
+
+const gameResultModalCode = fs.readFileSync(path.join(__dirname, "../js/gameResultModal.js"), "utf-8");
+vm.runInContext(gameResultModalCode, context);
+
+const quizSessionGeneratorCode = fs.readFileSync(path.join(__dirname, "../js/quizSessionGenerator.js"), "utf-8");
+vm.runInContext(quizSessionGeneratorCode, context);
 
 const gameEngineCode = fs.readFileSync(path.join(__dirname, '../js/gameEngine.js'), 'utf-8');
 vm.runInContext(gameEngineCode, context);

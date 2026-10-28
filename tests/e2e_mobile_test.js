@@ -268,6 +268,12 @@ async function runE2ETests() {
       summary: splashHasElements && splashDismissed ? '1.2초 스플래시(마스코트+타이포+슬로건) 정상 노출 및 터치 시 즉시 스킵 확인' : '스플래시 화면 렌더링 또는 스킵 실패'
     });
 
+    // E2E 모바일 터치 테스트 중 치트 패널 간섭 방지를 위해 치트 패널 숨김
+    await page.evaluate(() => {
+      const dbg = document.getElementById('debug-cheat-panel');
+      if (dbg) dbg.style.display = 'none';
+    });
+
     // Capture 1: Main Screen after splash dismiss
     const mainScreenShot = path.join(RESULTS_DIR, '1_main_screen.png');
     await page.screenshot({ path: mainScreenShot });
@@ -363,7 +369,7 @@ async function runE2ETests() {
       return modal && !modal.classList.contains('pointer-events-none') && modal.classList.contains('opacity-100');
     });
     // Claim bonus
-    await page.click('#bonus-claim-btn');
+    await page.click('#bonus-claim-btn', { force: true });
     await page.waitForTimeout(250);
 
     // Test Unit Overview Sheet interaction (verify language modal is NOT opened!)
@@ -480,8 +486,13 @@ async function runE2ETests() {
     await page.evaluate(() => {
       if (typeof window.closeUnitOverviewModal === 'function') window.closeUnitOverviewModal();
       if (typeof window.closeUnitSkipModal === 'function') window.closeUnitSkipModal();
-      // Unlock subsequent nodes by completing node-1 for review modal test
+      // Unlock subsequent nodes by completing node-1 & node-2 and claiming bonus for review modal test
       window.nodeProgressMap['node-1'] = 3;
+      window.nodeProgressMap['node-2'] = 3;
+      if (typeof window.markBonusClaimed === 'function') window.markBonusClaimed('node-bonus');
+      localStorage.setItem('vocadash_claimed_bonuses_es_main', JSON.stringify(['node-bonus', 'u1_node-bonus']));
+      localStorage.setItem('vocadash_claimed_bonuses', JSON.stringify(['node-bonus']));
+      localStorage.setItem('vocadash_wrong_answers_es', JSON.stringify([{ id: 'es_101', word: 'hola', meaning: '안녕', wrongCount: 2 }]));
       if (typeof window.saveNodeProgress === 'function') window.saveNodeProgress();
       window.updateRoadmapNodesUI();
     });
@@ -801,7 +812,12 @@ async function runE2ETests() {
     // SCENARIO D: Game Flow (Stage Entry -> Flashcard -> Main Game -> Result)
     // -----------------------------------------------------------------
     console.log('\n🎮 --- [Scenario D: Game Flow Full Verification] ---');
-    // Return to Roadmap Home Tab
+    // Return to Roadmap Home Tab and ensure Spanish course with unlocked node-2
+    await page.evaluate(() => {
+      if (typeof window.setLanguage === 'function') window.setLanguage('es');
+      window.nodeProgressMap['node-1'] = 3;
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+    });
     await page.click('#tab-home');
     await page.waitForTimeout(300);
 

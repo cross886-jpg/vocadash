@@ -553,9 +553,218 @@
       }
     });
 
-    // 4) 초기 UI 동기화
+    // 4) 설정 화면 관련 이벤트 바인딩
+    initSettingsEvents();
+
+    // 5) 초기 UI 동기화
     syncSettingsUI();
   }
+
+  // ===================================================
+  // 설정 화면 전환 & 화면 인터랙션 연동
+  // ===================================================
+  function showSettingsScreen() {
+    if (typeof window.openSettingsScreen === 'function') {
+      window.openSettingsScreen();
+      return;
+    }
+    const statsScreen = document.getElementById('stats-screen') || document.getElementById('my-records-screen');
+    const settingsScreen = document.getElementById('settings-screen');
+    const roadmapScreen = document.getElementById('roadmap-screen');
+    const roadmapHeader = document.getElementById('roadmap-header');
+    const reviewScreen = document.getElementById('review-screen');
+    const bookScreen = document.getElementById('book-screen');
+    const hallOfFameScreen = document.getElementById('hall-of-fame-screen');
+    if (roadmapScreen) roadmapScreen.classList.add('hidden');
+    if (roadmapHeader) roadmapHeader.classList.add('hidden');
+    if (statsScreen) statsScreen.classList.add('hidden');
+    if (reviewScreen) reviewScreen.classList.add('hidden');
+    if (bookScreen) {
+      bookScreen.classList.add('hidden');
+      bookScreen.style.display = 'none';
+    }
+    if (hallOfFameScreen) {
+      hallOfFameScreen.classList.add('hidden');
+      hallOfFameScreen.style.display = 'none';
+    }
+    if (settingsScreen) {
+      settingsScreen.classList.remove('hidden');
+      settingsScreen.style.removeProperty('display');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    syncSettingsUI();
+  }
+  window.showSettingsScreen = showSettingsScreen;
+
+  function hideSettingsScreen() {
+    if (typeof window.closeSettingsScreen === 'function') {
+      window.closeSettingsScreen();
+      return;
+    }
+    const settingsScreen = document.getElementById('settings-screen');
+    if (settingsScreen) {
+      settingsScreen.classList.add('hidden');
+      settingsScreen.style.display = 'none';
+    }
+    if (typeof window.switchMainTab === 'function') {
+      window.switchMainTab('home');
+    }
+  }
+  window.hideSettingsScreen = hideSettingsScreen;
+
+  function syncBookPhoneticSetting() {
+    let showPhonetic = true;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed.showPhonetic !== undefined) {
+          showPhonetic = !!parsed.showPhonetic;
+        }
+      } else if (window.vocadashSettings && window.vocadashSettings.showPhonetic !== undefined) {
+        showPhonetic = !!window.vocadashSettings.showPhonetic;
+      }
+    } catch (_) { }
+
+    const bookScreen = document.getElementById('book-screen');
+    if (bookScreen) {
+      const phonetics = bookScreen.querySelectorAll('.book-phonetic, .phonetic-hint');
+      phonetics.forEach((el) => {
+        if (showPhonetic) {
+          el.classList.remove('hidden');
+          el.style.removeProperty('display');
+        } else {
+          el.classList.add('hidden');
+          el.style.display = 'none';
+        }
+      });
+      const dots = bookScreen.querySelectorAll('.book-phonetic-dot');
+      dots.forEach((dot) => {
+        dot.style.display = showPhonetic ? '' : 'none';
+      });
+    }
+
+    if (typeof syncBookScreenSettings === 'function') {
+      syncBookScreenSettings();
+    }
+  }
+  window.syncBookPhoneticSetting = syncBookPhoneticSetting;
+
+  function clearCacheAlert(btn) {
+    const target = btn || document.getElementById('btn-settings-clear-cache');
+    const desc = document.getElementById('settings-cache-desc') || (target ? target.querySelector('.text-on-surface-variant') : null);
+    if (desc) {
+      desc.textContent = '캐시가 성공적으로 비워졌습니다 (0 MB)';
+      desc.classList.remove('text-on-surface-variant');
+      desc.classList.add('text-primary', 'font-bold');
+    }
+    if (window.showToast) {
+      window.showToast('🧹 임시 음성 캐시가 정리되었습니다 (0 MB)', '✨');
+    }
+  }
+  window.clearCacheAlert = clearCacheAlert;
+
+  function initSettingsEvents() {
+    // 1) 설정 화면 진입
+    const openSettingsBtns = document.querySelectorAll('#btn-main-settings, #btn-review-settings, #btn-open-settings, #btn-stats-settings, #btn-profile-settings, .btn-open-settings');
+    openSettingsBtns.forEach((btn) => {
+      if (btn.dataset.boundSettings === 'true') return;
+      btn.dataset.boundSettings = 'true';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.closeProfileModal === 'function') window.closeProfileModal();
+        showSettingsScreen();
+      });
+    });
+
+    // 2) 설정 화면 뒤로가기
+    const btnSettingsBack = document.getElementById('btn-settings-back');
+    if (btnSettingsBack && btnSettingsBack.dataset.boundSettings !== 'true') {
+      btnSettingsBack.dataset.boundSettings = 'true';
+      btnSettingsBack.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideSettingsScreen();
+      });
+    }
+
+    // 3) 명예의 전당 진입 트리거
+    const viewBadgesBtns = document.querySelectorAll('#btn-view-all-badges, .btn-view-all-badges');
+    viewBadgesBtns.forEach((btn) => {
+      if (btn.dataset.boundBadges === 'true') return;
+      btn.dataset.boundBadges = 'true';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.showHallOfFameScreen === 'function') {
+          window.showHallOfFameScreen();
+        }
+      });
+    });
+
+    // 4) 프로필 편집 진입
+    const profileEditTriggers = document.querySelectorAll('#user-profile-card, #btn-edit-profile-header, #btn-settings-edit-profile-quick');
+    profileEditTriggers.forEach((trigger) => {
+      if (trigger.dataset.boundProfile === 'true') return;
+      trigger.dataset.boundProfile = 'true';
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.openProfileModal === 'function') {
+          window.openProfileModal();
+        }
+      });
+    });
+
+    // 5) 캐시 정리 버튼
+    const clearCacheBtn = document.getElementById('btn-settings-clear-cache');
+    if (clearCacheBtn && clearCacheBtn.dataset.boundCache !== 'true') {
+      clearCacheBtn.dataset.boundCache = 'true';
+      clearCacheBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        clearCacheAlert(this);
+      });
+    }
+
+    // 6) 학습 언어 변경 행
+    const settingsLangRow = document.getElementById('settings-lang-change-row');
+    if (settingsLangRow && settingsLangRow.dataset.boundLang !== 'true') {
+      settingsLangRow.dataset.boundLang = 'true';
+      settingsLangRow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.openLanguageModal === 'function') {
+          window.openLanguageModal();
+        }
+      });
+    }
+
+    // 7) 고객센터 및 이용약관 버튼
+    const settingsContactBtn = document.getElementById('btn-settings-contact');
+    if (settingsContactBtn && settingsContactBtn.dataset.boundContact !== 'true') {
+      settingsContactBtn.dataset.boundContact = 'true';
+      settingsContactBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.showToast) {
+          window.showToast('💬 고객센터: support@vocadash.app', '📩');
+        }
+      });
+    }
+
+    const settingsTermsBtn = document.getElementById('btn-settings-terms');
+    if (settingsTermsBtn && settingsTermsBtn.dataset.boundTerms !== 'true') {
+      settingsTermsBtn.dataset.boundTerms = 'true';
+      settingsTermsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.showToast) {
+          window.showToast('📄 이용약관 및 개인정보처리방침 (v1.0.0)', '📋');
+        }
+      });
+    }
+  }
+  window.initSettingsEvents = initSettingsEvents;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSettings);

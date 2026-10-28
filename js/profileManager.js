@@ -487,6 +487,320 @@
     }
   }
 
+  // ===================================================
+  // 명예의 전당 (Hall of Fame) 화면 전환 & 인터랙션 연동
+  // ===================================================
+  function showHallOfFameScreen() {
+    if (typeof document === 'undefined') return;
+    const statsScreen = document.getElementById('stats-screen') || document.getElementById('my-records-screen');
+    const hallOfFameScreen = document.getElementById('hall-of-fame-screen');
+    const roadmapScreen = document.getElementById('roadmap-screen');
+    const roadmapHeader = document.getElementById('roadmap-header');
+    const reviewScreen = document.getElementById('review-screen');
+    const bookScreen = document.getElementById('book-screen');
+    const settingsScreen = document.getElementById('settings-screen');
+
+    if (statsScreen) {
+      statsScreen.classList.add('hidden');
+      statsScreen.style.display = 'none';
+    }
+    if (roadmapScreen) roadmapScreen.classList.add('hidden');
+    if (roadmapHeader) roadmapHeader.classList.add('hidden');
+    if (reviewScreen) reviewScreen.classList.add('hidden');
+    if (bookScreen) {
+      bookScreen.classList.add('hidden');
+      bookScreen.style.display = 'none';
+    }
+    if (settingsScreen) {
+      settingsScreen.classList.add('hidden');
+      settingsScreen.style.display = 'none';
+    }
+
+    if (hallOfFameScreen) {
+      hallOfFameScreen.classList.remove('hidden');
+      hallOfFameScreen.style.removeProperty('display');
+      if (typeof window !== 'undefined' && window.scrollTo) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+
+    syncHallOfFameAvatar();
+    initHallOfFameEvents();
+  }
+
+  function hideHallOfFameScreen() {
+    if (typeof document === 'undefined') return;
+    const hallOfFameScreen = document.getElementById('hall-of-fame-screen');
+    if (hallOfFameScreen) {
+      hallOfFameScreen.classList.add('hidden');
+      hallOfFameScreen.style.display = 'none';
+    }
+
+    const statsScreen = document.getElementById('stats-screen') || document.getElementById('my-records-screen');
+    if (statsScreen) {
+      statsScreen.classList.remove('hidden');
+      statsScreen.style.removeProperty('display');
+      if (typeof window !== 'undefined' && window.scrollTo) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    } else if (typeof target.switchMainTab === 'function') {
+      target.switchMainTab('records');
+    }
+  }
+
+  function initHallOfFameEvents() {
+    if (typeof document === 'undefined') return;
+    const screen = document.getElementById('hall-of-fame-screen');
+    if (!screen) return;
+
+    // 1. 상단 좌측 뒤로가기 화살표(←) 클릭 시 #stats-screen 복귀
+    const backBtn = screen.querySelector('#btn-hall-of-fame-back');
+    if (backBtn && backBtn.dataset.bound !== 'true') {
+      backBtn.dataset.bound = 'true';
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideHallOfFameScreen();
+      });
+    }
+
+    // 2. 상단 공유 아이콘 클릭 핸들러
+    const shareBtn = screen.querySelector('#btn-hall-of-fame-share');
+    if (shareBtn && shareBtn.dataset.bound !== 'true') {
+      shareBtn.dataset.bound = 'true';
+      shareBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof navigator !== 'undefined' && navigator.share) {
+          navigator.share({
+            title: 'VocaDash 명예의 전당',
+            text: 'VocaDash에서 달성한 멋진 배지들을 확인해보세요!',
+            url: (typeof document !== 'undefined' && document.URL) || 'https://vocadash.app'
+          }).catch(() => { });
+        } else if (typeof target.showToast === 'function') {
+          target.showToast('🏆 명예의 전당 배지 링크가 복사되었습니다!', '✨');
+        }
+        if (typeof target.triggerHaptic === 'function') {
+          target.triggerHaptic(20);
+        }
+      });
+    }
+
+    // 3. 상단 우측 프로필 아이콘 클릭 시 프로필 편집 또는 내 기록으로 복귀
+    const profileBtn = screen.querySelector('#btn-hall-of-fame-profile');
+    if (profileBtn && profileBtn.dataset.bound !== 'true') {
+      profileBtn.dataset.bound = 'true';
+      profileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof target.openProfileEditModal === 'function') {
+          target.openProfileEditModal();
+        } else if (typeof target.openProfileModal === 'function') {
+          target.openProfileModal();
+        } else {
+          hideHallOfFameScreen();
+        }
+      });
+    }
+
+    // 4. 배지 분류 탭 필터 인터랙션 (전체 보기 8 / 달성 완료 2 / 도전 중 6)
+    const filterBtns = screen.querySelectorAll('.badge-filter-btn');
+    const cards = screen.querySelectorAll('.badge-card');
+
+    filterBtns.forEach((btn) => {
+      if (btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // 활성 스타일(다크 네이비 배경 & 볼드 텍스트) 이동
+        filterBtns.forEach((b) => {
+          b.className = 'badge-filter-btn flex-shrink-0 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 font-medium text-xs hover:bg-slate-200 hover:text-slate-800 active:scale-95 transition-all cursor-pointer';
+        });
+        btn.className = 'badge-filter-btn flex-shrink-0 px-3.5 py-1.5 rounded-full bg-slate-900 text-white font-bold text-xs shadow-sm active:scale-95 transition-transform flex items-center gap-1 cursor-pointer';
+
+        // 해당하는 배지 카드들만 보이도록 가벼운 필터링 처리
+        const filter = btn.dataset.badgeFilter || 'all';
+        cards.forEach((card) => {
+          const status = card.dataset.badgeStatus;
+          if (filter === 'all') {
+            card.classList.remove('hidden');
+          } else if (filter === 'completed') {
+            if (status === 'completed') card.classList.remove('hidden');
+            else card.classList.add('hidden');
+          } else if (filter === 'in-progress') {
+            if (status === 'in-progress') card.classList.remove('hidden');
+            else card.classList.add('hidden');
+          }
+        });
+
+        if (typeof target.triggerHaptic === 'function') {
+          target.triggerHaptic(15);
+        }
+      });
+    });
+
+    // 5. 배지 카드 클릭 마이크로 피드백
+    cards.forEach((card) => {
+      if (card.dataset.cardBound === 'true') return;
+      card.dataset.cardBound = 'true';
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h2')?.textContent?.trim() || '배지';
+        const isCompleted = card.dataset.badgeStatus === 'completed';
+        if (typeof target.showToast === 'function') {
+          if (isCompleted) {
+            target.showToast(`✨ '${title}' 배지를 획득하셨습니다!`, '🎖️');
+          } else {
+            target.showToast(`🎯 '${title}' 배지를 향해 도전 중입니다!`, '🔥');
+          }
+        }
+        if (typeof target.triggerHaptic === 'function') {
+          target.triggerHaptic(20);
+        }
+      });
+    });
+  }
+
+  // 🌟 [Karpathy 원칙] 스트릭(연속 출석) 모달 및 동기화 전담
+  function syncStreakUI() {
+    let streakCount = 0;
+    try {
+      const raw = localStorage.getItem('vocadash_streak') ||
+        localStorage.getItem('vocadash_user_streak') ||
+        localStorage.getItem('streakData');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        streakCount = typeof parsed === 'object' ? (parsed.count || parsed.currentStreak || 0) : Number(parsed) || 0;
+      }
+    } catch (_) { }
+
+    const headerCount = document.getElementById('header-streak-count');
+    if (headerCount) headerCount.textContent = streakCount;
+
+    const streakCard = document.getElementById('streak-modal-card');
+    const modalStreakText = streakCard?.querySelector('h3') ||
+      document.querySelector('#streak-modal-card h3') ||
+      document.getElementById('modal-streak-count');
+    if (modalStreakText) {
+      modalStreakText.innerHTML = `🔥 ${streakCount}일 연속 질주 중!`;
+    }
+  }
+
+  function openStreakModal() {
+    syncStreakUI();
+    const sModal = document.getElementById('streak-modal');
+    const streakBackdrop = document.getElementById('streak-modal-backdrop') || sModal;
+    const streakCard = document.getElementById('streak-modal-card');
+
+    if (sModal) sModal.classList.remove('hidden');
+    if (streakBackdrop) {
+      streakBackdrop.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+      streakBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+    }
+    if (streakCard) {
+      streakCard.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-full');
+      streakCard.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    }
+    if (typeof target.toggleModal === 'function') {
+      target.toggleModal(streakBackdrop, streakCard, true, 'slide');
+    }
+  }
+
+  function closeStreakModal() {
+    const sModal = document.getElementById('streak-modal');
+    const streakBackdrop = document.getElementById('streak-modal-backdrop') || sModal;
+    const streakCard = document.getElementById('streak-modal-card');
+    if (typeof target.toggleModal === 'function') {
+      target.toggleModal(streakBackdrop, streakCard, false, 'slide');
+    } else {
+      if (streakBackdrop) streakBackdrop.classList.add('opacity-0', 'pointer-events-none');
+      if (streakCard) streakCard.classList.add('opacity-0', 'pointer-events-none', 'translate-y-full');
+    }
+    setTimeout(() => {
+      if (sModal && streakBackdrop && streakBackdrop.classList.contains('opacity-0')) {
+        sModal.classList.add('hidden');
+      }
+    }, 220);
+  }
+
+  function showStreakModal() {
+    const sModal = document.getElementById('streak-modal');
+    if (sModal) sModal.classList.remove('hidden');
+    openStreakModal();
+  }
+
+  function handleOpenStreakModal(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    showStreakModal();
+  }
+
+  function handleStartTodaySprint(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    closeStreakModal();
+
+    const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const currentCoursePack = target.currentCourseId ||
+      target.activeCourseId ||
+      (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course_' + currentLang) : null) ||
+      'main';
+
+    let n1Prog = 0;
+    if (typeof target.getNodeProgress === 'function') {
+      n1Prog = Number(target.getNodeProgress('node-1', currentLang, currentCoursePack)) || 0;
+    }
+
+    const targetNode = (n1Prog < 3) ? 'node-1' : 'node-2';
+    target.currentSelectedNodeId = targetNode;
+
+    setTimeout(() => {
+      if (typeof target.openLessonModal === 'function') {
+        target.openLessonModal(targetNode);
+      } else {
+        const targetBtn = document.getElementById(`${targetNode}-btn`) || document.getElementById(targetNode);
+        if (targetBtn) targetBtn.click();
+      }
+    }, 220);
+  }
+
+  function initStreakEvents() {
+    const on = (id, event, handler) => {
+      const node = document.getElementById(id);
+      if (node && !node._streakBound) {
+        node.addEventListener(event, handler);
+        node._streakBound = true;
+      }
+    };
+    on('streak-trigger', 'click', handleOpenStreakModal);
+    on('streak-badge', 'click', handleOpenStreakModal);
+    on('btn-open-streak', 'click', handleOpenStreakModal);
+    on('close-streak-modal-btn', 'click', (e) => {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      closeStreakModal();
+    });
+    on('btn-streak-modal-close', 'click', (e) => {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      closeStreakModal();
+    });
+    on('btn-streak-modal-action', 'click', handleStartTodaySprint);
+    const backdrop = document.getElementById('streak-modal-backdrop') || document.getElementById('streak-modal');
+    if (backdrop && !backdrop._streakBackdropBound) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeStreakModal();
+      });
+      backdrop._streakBackdropBound = true;
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initStreakEvents);
+    } else {
+      initStreakEvents();
+    }
+  }
+
   target.applyProfileAvatar = applyProfileAvatar;
   target.syncHallOfFameAvatar = syncHallOfFameAvatar;
   target.resolveAvatarFile = resolveAvatarFile;
@@ -496,6 +810,15 @@
   target.renderRecordStats = updateProfileStats;
   target.addMasteredWord = addMasteredWord;
   target.addMasteredWords = addMasteredWords;
+  target.showHallOfFameScreen = showHallOfFameScreen;
+  target.hideHallOfFameScreen = hideHallOfFameScreen;
+  target.initHallOfFameEvents = initHallOfFameEvents;
+  target.syncStreakUI = syncStreakUI;
+  target.openStreakModal = openStreakModal;
+  target.closeStreakModal = closeStreakModal;
+  target.showStreakModal = showStreakModal;
+  target.handleOpenStreakModal = handleOpenStreakModal;
+  target.handleStartTodaySprint = handleStartTodaySprint;
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -507,7 +830,10 @@
       updateProfileStats,
       renderRecordStats: updateProfileStats,
       addMasteredWord,
-      addMasteredWords
+      addMasteredWords,
+      showHallOfFameScreen,
+      hideHallOfFameScreen,
+      initHallOfFameEvents
     };
   }
 })(typeof window !== 'undefined' ? window : this);

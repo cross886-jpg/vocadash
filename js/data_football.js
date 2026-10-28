@@ -322,11 +322,86 @@
       wordMap[w.id] = w;
     });
   });
-  packFootballData.wordMap = wordMap;
-  packFootballData.allWords = packFootballData.units.flatMap(u => u.words);
+  // 스페인 축구 실전팩 스테이지 세션 문제 생성기 (Unit 1~4 1:1 정밀 매칭)
+  function getFootballStageSession(nodeId) {
+    const fb = (typeof window !== 'undefined' && window.packFootballData) || packFootballData;
+    if (!fb || !Array.isArray(fb.units) || fb.units.length === 0) return [];
+
+    const unlockedLevel = (typeof window !== 'undefined' && typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel('es') : 1) || 1;
+    let targetUnit = fb.units.find(u => u.id === unlockedLevel) || fb.units[0];
+
+    let targetNode = null;
+    for (const u of fb.units) {
+      const found = Array.isArray(u.nodes) ? u.nodes.find(n => n.id === nodeId) : null;
+      if (found) {
+        targetUnit = u;
+        targetNode = found;
+        break;
+      }
+    }
+
+    if (!targetNode && targetUnit && Array.isArray(targetUnit.nodes)) {
+      if (nodeId === 'node-1') {
+        targetNode = targetUnit.nodes.find(n => n.stageNumber === 1 || n.id.endsWith('_n1'));
+      } else if (nodeId === 'node-2') {
+        targetNode = targetUnit.nodes.find(n => n.stageNumber === 2 || n.id.endsWith('_n2'));
+      } else if (nodeId === 'node-3') {
+        targetNode = targetUnit.nodes.find(n => (n.stageNumber === 3 || n.id.endsWith('_n5') || n.type === 'sentence') && !n.id.endsWith('_n4') && !n.id.includes('review'));
+      } else if (nodeId === 'node-boss') {
+        targetNode = targetUnit.nodes.find(n => n.type === 'boss' || n.id.endsWith('_n6'));
+      }
+    }
+
+    let words = [];
+    if (targetNode && Array.isArray(targetNode.wordIds) && targetNode.wordIds.length > 0) {
+      const idSet = new Set(targetNode.wordIds);
+      words = (targetUnit.words || []).filter(w => idSet.has(w.id));
+    } else if (targetNode && (targetNode.targetSentence || targetNode.type === 'sentence')) {
+      const sentObj = {
+        id: targetNode.id || `fb_${targetUnit.id}_sent`,
+        term: targetNode.targetSentence || '¡Vamos al partido!',
+        meaning: targetNode.meaning || '경기를 시작하자!',
+        pron: targetNode.pron || '',
+        phonetic: targetNode.pron ? `[${targetNode.pron}]` : '',
+        type: 'sentence',
+        isSentence: true
+      };
+      words = [sentObj, ...(targetUnit.words || []).slice(0, 5)];
+    } else if (nodeId === 'node-boss' || (targetNode && targetNode.type === 'boss')) {
+      words = (targetUnit.words || []).slice();
+    } else {
+      words = (targetUnit.words || []).slice(0, 6);
+    }
+
+    if (!words || words.length === 0) return [];
+
+    let session = [];
+    const count = Math.max(10, words.length);
+    for (let i = 0; i < count; i++) {
+      const w = words[i % words.length];
+      const isSent = Boolean(w.type === 'sentence' || w.isSentence);
+      session.push({
+        id: w.id || `fb-q-${i + 1}`,
+        term: w.term,
+        word: w.term,
+        meaning: w.meaning,
+        pron: w.pron || '',
+        phonetic: w.phonetic || (w.pron ? `[${w.pron}]` : ''),
+        exampleTarget: isSent ? w.term : `El ${w.term} está en el campo.`,
+        exampleMeaning: isSent ? w.meaning : `${w.meaning}가 경기장에 있다.`,
+        type: isSent ? 'sentence' : 'word',
+        isSentence: isSent,
+        tag: `⚽ ${targetUnit.title ? targetUnit.title.split('.')[0] : '축구 실전'}`
+      });
+    }
+    return session;
+  }
+
+  packFootballData.getFootballStageSession = getFootballStageSession;
 
   if (typeof window !== 'undefined') {
     window.packFootballData = packFootballData;
+    window.getFootballStageSession = getFootballStageSession;
     if (window.COURSES) {
       window.COURSES['pack_football'] = packFootballData;
     }
@@ -334,3 +409,4 @@
 
   return packFootballData;
 }));
+

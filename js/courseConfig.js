@@ -382,6 +382,235 @@ const BOOK_COURSE_PRESETS = {
   window.BOOK_COURSE_PRESETS = BOOK_COURSE_PRESETS;
   target.BOOK_COURSE_PRESETS = BOOK_COURSE_PRESETS;
 
+  // 현재 유닛 및 코스의 일반 단어 풀 추출 헬퍼 함수
+  function getCurrentUnitGeneralWords(currentLang) {
+    const lang = (currentLang || (typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'es') === 'en' ? 'en' : 'es';
+    let pool = [];
+
+    const db = (typeof window !== 'undefined' && window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+    if (db) {
+      ['node-1', 'node-2', 'node-3', 'node-boss'].forEach(nid => {
+        if (db[nid]) {
+          const arr = db[nid][lang] || db[nid].words || db[nid].all || (Array.isArray(db[nid]) ? db[nid] : []);
+          if (Array.isArray(arr)) {
+            arr.forEach(w => {
+              if (w && (w.term || w.word)) {
+                pool.push({
+                  id: w.id || `gen_${w.term || w.word}`,
+                  term: w.term || w.word || '',
+                  meaning: w.meaning || w.kor || w.ko || '',
+                  phonetic: w.phonetic || '',
+                  lang: lang
+                });
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (pool.length < 10 && typeof window !== 'undefined' && window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === 'function') {
+      const s1 = window.VOCA_DATA.generateStageSession('node-1', lang) || [];
+      const s2 = window.VOCA_DATA.generateStageSession('node-2', lang) || [];
+      [...s1, ...s2].forEach(w => {
+        if (w && (w.term || w.word)) {
+          pool.push({
+            id: w.id || `sess_${w.term || w.word}`,
+            term: w.term || w.word || '',
+            meaning: w.meaning || w.kor || w.ko || '',
+            phonetic: w.phonetic || '',
+            lang: lang
+          });
+        }
+      });
+    }
+
+    if (pool.length < 10 && typeof window !== 'undefined' && window.VOCA_DATA && Array.isArray(window.VOCA_DATA.words)) {
+      window.VOCA_DATA.words.forEach(w => {
+        if (w && (w.term || w.word)) {
+          pool.push({
+            id: w.id || `voca_${w.term || w.word}`,
+            term: w.term || w.word || '',
+            meaning: w.meaning || w.kor || w.ko || '',
+            phonetic: w.phonetic || '',
+            lang: lang
+          });
+        }
+      });
+    }
+
+    const seen = new Set();
+    const deduped = [];
+    for (const item of pool) {
+      const key = (item.term || '').trim().toLowerCase();
+      if (key && !seen.has(key)) {
+        seen.add(key);
+        deduped.push(item);
+      }
+    }
+    return deduped;
+  }
+  if (typeof window !== 'undefined') {
+    window.getCurrentUnitGeneralWords = getCurrentUnitGeneralWords;
+  }
+  target.getCurrentUnitGeneralWords = getCurrentUnitGeneralWords;
+
+  // 보안 유틸: HTML 특수문자 이스케이프 (XSS 취약점 원천 차단)
+  function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  target.escapeHTML = escapeHTML;
+  if (typeof window !== 'undefined') window.escapeHTML = escapeHTML;
+
+  // 언어 및 코스 ID 헬퍼
+  function getSavedLanguage() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const val = localStorage.getItem('vocadash_language');
+        if (val === 'en' || val === 'es') return val;
+      }
+    } catch (_) { }
+    return 'es';
+  }
+  target.getSavedLanguage = getSavedLanguage;
+  if (typeof window !== 'undefined') {
+    window.getSavedLanguage = getSavedLanguage;
+    window.currentActiveCourse = getSavedLanguage();
+    window.currentLanguage = window.currentActiveCourse;
+  }
+
+  function getSavedCourseId() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const val = localStorage.getItem('vocadash_current_course');
+        if (val && typeof val === 'string' && /^[a-zA-Z0-9_-]+$/.test(val)) {
+          return val;
+        }
+      }
+      return 'basic';
+    } catch (_) {
+      return 'basic';
+    }
+  }
+  target.getSavedCourseId = getSavedCourseId;
+  if (typeof window !== 'undefined') {
+    window.getSavedCourseId = getSavedCourseId;
+    window.currentCourseId = getSavedCourseId();
+    window.currentBookCourseId = window.currentCourseId;
+  }
+
+  // 코스 데이터 레지스트리 (COURSES)
+  const COURSES = {
+    get 'es_main'() { return (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null); },
+    get 'pack_football'() { return (typeof window !== 'undefined' ? window.packFootballData : null); },
+    get 'en_main'() { return (typeof window !== 'undefined' ? window.courseData_en : null); },
+    get 'main'() {
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+      return (curLang === 'en' && typeof window !== 'undefined' && window.courseData_en)
+        ? window.courseData_en
+        : (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null);
+    },
+    get 'main_en'() { return (typeof window !== 'undefined' ? window.courseData_en : null); },
+    get 'main_es'() { return (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null); }
+  };
+  target.COURSES = COURSES;
+  if (typeof window !== 'undefined') window.COURSES = COURSES;
+
+  // courseData 정의
+  const courseData = {
+    es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=68', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
+    en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=68', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
+    get units() {
+      const lang = ((typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'es') === 'en' ? 'en' : 'es';
+      const baseUnits = ((typeof window !== 'undefined' ? window.UNIT_LIST_PRESETS : null) && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || [];
+      const db = (typeof window !== 'undefined' && window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
+      return baseUnits.map((u, idx) => {
+        if (Array.isArray(u.words) && u.words.length > 0) return u;
+        const dbKey = idx === 0 ? 'node-1' : idx === 1 ? 'node-2' : idx === 2 ? 'node-3' : 'node-boss';
+        const wList = (db && db[dbKey] && (db[dbKey][lang] || db[dbKey].es || [])) || [];
+        return { ...u, words: wList };
+      });
+    }
+  };
+  target.courseData = courseData;
+  if (typeof window !== 'undefined') {
+    if (!window.courseData) window.courseData = courseData;
+  }
+
+  function getCurrentCourseData() {
+    let activeId = 'es_main';
+    try {
+      if (typeof localStorage !== 'undefined') {
+        activeId = localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+      } else {
+        activeId = (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+      }
+    } catch (_) {
+      activeId = (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+    }
+    if (activeId === 'main') {
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+      activeId = (curLang === 'en' && typeof window !== 'undefined' && window.courseData_en) ? 'en_main' : 'es_main';
+    }
+    return (COURSES && COURSES[activeId]) || (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null) || courseData;
+  }
+  target.getCurrentCourseData = getCurrentCourseData;
+  if (typeof window !== 'undefined') window.getCurrentCourseData = getCurrentCourseData;
+
+  function getWordById(wordId) {
+    const course = getCurrentCourseData();
+    if (course && Array.isArray(course.units)) {
+      for (const unit of course.units) {
+        if (unit && Array.isArray(unit.words)) {
+          const found = unit.words.find(w => w.id === wordId);
+          if (found) return found;
+        }
+      }
+    }
+    if (typeof window !== 'undefined' && window.packFootballData && Array.isArray(window.packFootballData.units)) {
+      for (const unit of window.packFootballData.units) {
+        if (unit && Array.isArray(unit.words)) {
+          const found = unit.words.find(w => w.id === wordId);
+          if (found) return found;
+        }
+      }
+    }
+    return null;
+  }
+  target.getWordById = getWordById;
+  if (typeof window !== 'undefined') window.getWordById = getWordById;
+
+  function forceHardReset() {
+    if (typeof window !== 'undefined') {
+      window._isHardResetting = true;
+      window.onbeforeunload = null;
+      window.onunload = null;
+    }
+    try {
+      if (typeof localStorage !== 'undefined') localStorage.clear();
+      if (typeof sessionStorage !== 'undefined') sessionStorage.clear();
+      const cleanState = {
+        currentUnit: 0,
+        clearedNodes: {},
+        weakWords: []
+      };
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('vocadash_user_data', JSON.stringify(cleanState));
+      }
+    } catch (_) { }
+    if (typeof location !== 'undefined') {
+      location.replace(location.pathname + '?v=' + Date.now());
+    }
+  }
+  target.forceHardReset = forceHardReset;
+  if (typeof window !== 'undefined') window.forceHardReset = forceHardReset;
+
   // CommonJS 모듈 지원 (Node / 테스트 환경)
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -395,7 +624,16 @@ const BOOK_COURSE_PRESETS = {
       PACK_CATALOG,
       MODAL_COURSES,
       SIGNPOST_PRESETS,
-      BOOK_COURSE_PRESETS
+      BOOK_COURSE_PRESETS,
+      getCurrentUnitGeneralWords,
+      escapeHTML,
+      getSavedLanguage,
+      getSavedCourseId,
+      COURSES,
+      courseData,
+      getCurrentCourseData,
+      getWordById,
+      forceHardReset
     };
   }
 })(typeof window !== 'undefined' ? window : this);
@@ -412,3 +650,12 @@ var PACK_CATALOG = (typeof window !== 'undefined' ? window.PACK_CATALOG : undefi
 var MODAL_COURSES = (typeof window !== 'undefined' ? window.MODAL_COURSES : undefined);
 var SIGNPOST_PRESETS = (typeof window !== 'undefined' ? window.SIGNPOST_PRESETS : undefined);
 var BOOK_COURSE_PRESETS = (typeof window !== 'undefined' ? window.BOOK_COURSE_PRESETS : undefined);
+var getCurrentUnitGeneralWords = (typeof window !== 'undefined' ? window.getCurrentUnitGeneralWords : undefined);
+var escapeHTML = (typeof window !== 'undefined' ? window.escapeHTML : undefined);
+var getSavedLanguage = (typeof window !== 'undefined' ? window.getSavedLanguage : undefined);
+var getSavedCourseId = (typeof window !== 'undefined' ? window.getSavedCourseId : undefined);
+var COURSES = (typeof window !== 'undefined' ? window.COURSES : undefined);
+var courseData = (typeof window !== 'undefined' ? window.courseData : undefined);
+var getCurrentCourseData = (typeof window !== 'undefined' ? window.getCurrentCourseData : undefined);
+var getWordById = (typeof window !== 'undefined' ? window.getWordById : undefined);
+var forceHardReset = (typeof window !== 'undefined' ? window.forceHardReset : undefined);

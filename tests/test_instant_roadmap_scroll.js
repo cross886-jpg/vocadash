@@ -149,6 +149,7 @@ vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_football.js'), 
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_es.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/data_en.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/courseConfig.js'), 'utf-8'), context);
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/progressManager.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/roadmapRenderer.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/profileManager.js'), 'utf-8'), context);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf-8'), context);
