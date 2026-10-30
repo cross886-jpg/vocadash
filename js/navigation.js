@@ -290,3 +290,36 @@
     initNavigationEvents
   });
 })();
+
+// 📱 모바일 뒤로가기 가드 (초경량 최적화)
+(() => {
+  let lastPress = 0;
+  history.pushState({ page: 'home' }, '');
+
+  window.addEventListener('popstate', () => {
+    // 1. 열려 있는 모달이 있으면 최상단 모달 1개 닫기
+    const activeModal = document.querySelector(
+      '#lesson-modal:not(.hidden), #language-modal:not(.hidden), #shop-modal:not(.hidden), #streak-modal:not(.hidden), #hall-of-fame-screen:not(.hidden), #course-map-modal:not(.hidden)'
+    );
+    if (activeModal) {
+      activeModal.classList.add('hidden');
+      activeModal.style.display = 'none';
+      return history.pushState({ page: 'home' }, '');
+    }
+
+    // 2. 홈 탭이 아니면 홈으로 복귀
+    const roadmap = document.getElementById('roadmap-screen');
+    if (roadmap?.classList.contains('hidden')) {
+      (window.switchTab || window.switchMainTab)?.('home');
+      return history.pushState({ page: 'home' }, '');
+    }
+
+    // 3. 홈 화면에서 2초 내 재클릭 시 종료, 아니면 안내
+    const now = Date.now();
+    if (now - lastPress < 2000) return history.back();
+
+    lastPress = now;
+    history.pushState({ page: 'home' }, '');
+    (window.showToast || alert)('뒤로가기 버튼을 한 번 더 누르면 종료됩니다.');
+  });
+})();
