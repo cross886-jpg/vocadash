@@ -230,10 +230,11 @@
   function renderSubsequentUnits(activeCourse, unlockedLevel) {
     const container = document.getElementById('roadmap-subsequent-units');
     if (!container) return;
-    const course = activeCourse || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null);
+    const course = activeCourse
+      || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
+      || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (course?.units) || [];
-    if (course && Array.isArray(course.units) && course.units.length > 0) units = course.units;
+    const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
 
     let html = '';
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
@@ -364,12 +365,17 @@
   let _bannerFadeTimeout = null;
 
   function updateTopUnitBanner(activeIdx, force = false) {
-    const activeCourse = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : null;
+    const course = (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
+      || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+
+    // 💡 코스 객체의 units가 있으면 1순위, 없을 때만 프리셋 사용 (단 1줄로 통합)
+    const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
+    const totalUnits = units.length || 1;
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
-    let units = (window.UNIT_LIST_PRESETS && window.UNIT_LIST_PRESETS[lang]) || (activeCourse?.units) || [];
-    const totalUnits = units.length || 10;
-    const targetIdx = (typeof activeIdx === 'number' && !isNaN(activeIdx)) ? Math.max(0, Math.min(totalUnits - 1, activeIdx)) : (window._currentVisibleUnitIndex !== undefined ? window._currentVisibleUnitIndex : Math.max(0, Math.min(totalUnits - 1, unlockedLevel - 1)));
+    const targetIdx = (typeof activeIdx === 'number' && !isNaN(activeIdx))
+      ? Math.max(0, Math.min(totalUnits - 1, activeIdx))
+      : (window._currentVisibleUnitIndex ?? Math.max(0, Math.min(totalUnits - 1, unlockedLevel - 1)));
 
     // [최적화 1] 동일한 유닛 인덱스일 경우 불필요한 DOM 리플로우 및 재연산 완전 차단 (Early Return)
     if (!force && _lastRenderedBannerUnitIndex === targetIdx) {

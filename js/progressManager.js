@@ -496,28 +496,49 @@
   }
 
   function renderUnitOverviewList(targetLang) {
-    const lang = getLang(targetLang), listEl = document.getElementById('unit-overview-list'), unlockedLevel = getUnlockedUnitLevel(lang);
-    const activeCourse = (typeof target.getCurrentCourseData === 'function') ? target.getCurrentCourseData() : null;
-    const presets = target.UNIT_LIST_PRESETS || null, units = (presets && presets[lang]) || activeCourse?.units || [];
-    const titleEl = document.getElementById('unit-overview-title'), subEl = document.getElementById('unit-overview-subtitle');
-    if (titleEl) titleEl.textContent = (target.activeCourseId === 'pack_football') ? '⚽ 축구 단어팩 코스 맵' : (lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵');
+    const targetObj = (typeof target !== 'undefined' ? target : window);
+    const isFootball = (targetObj.activeCourseId || window.activeCourseId || window.currentLanguage) === 'pack_football';
+    const activeCourse = (targetObj.getCurrentCourseData?.() || window.getCurrentCourseData?.())
+      || (isFootball ? window.packFootballData : null);
+
+    const lang = isFootball ? 'pack_football' : getLang(targetLang);
+    const unlockedLevel = typeof getUnlockedUnitLevel === 'function' ? getUnlockedUnitLevel(lang) : 1;
+
+    // 💡 최우선 순위: 현재 활성 코스 units -> 프리셋 순으로 단일화
+    const units = activeCourse?.units || (!isFootball && targetObj.UNIT_LIST_PRESETS?.[lang]) || [];
+
+    const listEl = document.getElementById('unit-overview-list');
+    const titleEl = document.getElementById('unit-overview-title');
+    const subEl = document.getElementById('unit-overview-subtitle');
+
+    if (titleEl) titleEl.textContent = isFootball ? '⚽ 축구 단어팩 코스 맵' : (lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵');
     if (subEl) subEl.textContent = `총 ${units.length}개 유닛 중 Unit ${unlockedLevel} 진행 중`;
     if (!listEl) return;
-    listEl.innerHTML = units.map(item => {
-      const isCompleted = item.unit < unlockedLevel, isCur = item.unit === unlockedLevel;
+
+    listEl.innerHTML = units.map((item, idx) => {
+      const uNum = item.unit || item.unitNumber || (idx + 1);
+      const isCompleted = uNum < unlockedLevel;
+      const isCur = uNum === unlockedLevel;
       const status = isCompleted ? 'completed' : (isCur ? 'active' : 'locked');
       const badgeText = isCompleted ? '완료됨' : (isCur ? '진행 중' : '잠김');
-      const badgeClass = isCompleted ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : (isCur ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500 border-slate-200');
+      const badgeClass = isCompleted
+        ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+        : (isCur ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500 border-slate-200');
       const icon = isCompleted ? 'check_circle' : (isCur ? 'chevron_right' : 'lock');
-      return `<div class="unit-item-card p-3.5 rounded-2xl border-2 ${isCompleted ? 'border-emerald-500/80 bg-emerald-50/50' : (isCur ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200/80 bg-white/90 hover:bg-slate-50 opacity-85 hover:opacity-100')} flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all" data-unit="${item.unit}" data-title="${item.title || ''}" data-status="${status}">
+
+      const rawTitle = item.title || `Unit ${uNum}`;
+      const displayTitle = rawTitle.includes('Unit') ? rawTitle : `Unit ${uNum} : ${rawTitle}`;
+      const subText = item.desc || item.subtitle || '';
+
+      return `<div class="unit-item-card p-3.5 rounded-2xl border-2 ${isCompleted ? 'border-emerald-500/80 bg-emerald-50/50' : (isCur ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200/80 bg-white/90 hover:bg-slate-50 opacity-85 hover:opacity-100')} flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all" data-unit="${uNum}" data-title="${rawTitle}" data-status="${status}">
         <div class="flex items-center gap-3 min-w-0">
-          <div class="w-10 h-10 rounded-xl ${isCompleted || isCur ? 'bg-emerald-600' : 'bg-slate-100 text-slate-500'} text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">U${item.unit}</div>
+          <div class="w-10 h-10 rounded-xl ${isCompleted || isCur ? 'bg-emerald-600' : 'bg-slate-100 text-slate-500'} text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">U${uNum}</div>
           <div class="flex flex-col min-w-0">
             <div class="flex items-center gap-1.5">
-              <span class="text-xs font-black ${isCompleted || isCur ? 'text-emerald-950' : 'text-slate-800'} leading-tight">Unit ${item.unit} : ${item.title}</span>
+              <span class="text-xs font-black ${isCompleted || isCur ? 'text-emerald-950' : 'text-slate-800'} leading-tight">${displayTitle}</span>
               <span class="px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tight leading-none border ${badgeClass}">${badgeText}</span>
             </div>
-            <span class="text-[11px] font-semibold ${isCompleted || isCur ? 'text-emerald-700' : 'text-slate-400'} mt-0.5 truncate">${item.subtitle || ''}</span>
+            <span class="text-[11px] font-semibold ${isCompleted || isCur ? 'text-emerald-700' : 'text-slate-400'} mt-0.5 truncate">${subText}</span>
           </div>
         </div>
         <div class="flex items-center text-emerald-700 font-extrabold flex-shrink-0 ml-2">
