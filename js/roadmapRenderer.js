@@ -519,26 +519,44 @@
     const isBonusDone = isUnit1Completed || ((typeof window.isBonusClaimed === 'function') && (window.isBonusClaimed('node-bonus') || window.isBonusClaimed('u1_node-bonus')));
     const isReviewDone = isUnit1Completed || ((typeof window.isReviewNodeCompleted === 'function') && (window.isReviewNodeCompleted('u1_node-review', 1) || window.isReviewNodeCompleted('node-review', 1)));
 
-    // 엄격한 순차 해금 파이프라인 (Strict Sequential Dependency)
-    // 1. Stage 1: 항상 해금
-    // 2. Stage 2: Stage 1이 3회 완주(prog1 >= 3) 시 해금
-    // 3. 보너스 상자(Bonus): Stage 2가 3회 완주(prog2 >= 3) 시 비로소 해금
-    // 4. 약점 복습(Review): 보너스 상자 수령 완료(isBonusDone) 시 해금
-    // 5. Stage 3: 약점 복습 완료(isReviewDone) 시 해금
-    // 6. 보스전(Boss): Stage 3이 3회 완주(prog3 >= 3) 시 해금
-    const isNode1Unlocked = true;
-    const isNode2Unlocked = isUnit1Completed || (prog1 >= 3);
-    const isBonusUnlocked = isUnit1Completed || (isNode2Unlocked && prog2 >= 3);
-    const isReviewUnlocked = isUnit1Completed || (isBonusUnlocked && isBonusDone);
-    const isNode3Unlocked = isUnit1Completed || (isReviewUnlocked && isReviewDone);
-    const isBossUnlocked = isUnit1Completed || (prog3 >= 3);
+    // 🌐 현재 활성화된 코스 언어 감지 (언어별 진행도 완벽 격리)
+    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const unitIndex = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
+    const currentTheme = (typeof UNIT_THEMES !== 'undefined' && UNIT_THEMES[unitIndex])
+      ? UNIT_THEMES[unitIndex]
+      : { activeBtn: 'bg-emerald-500', activeBorder: 'border-emerald-400' };
 
-    const isNode1Active = !isUnit1Completed && (prog1 < 3);
-    const isNode2Active = !isUnit1Completed && (!isNode1Active && isNode2Unlocked && prog2 < 3);
-    const isBonusActive = !isUnit1Completed && (!isNode1Active && !isNode2Active && isBonusUnlocked && !isBonusDone);
-    const isReviewActive = !isUnit1Completed && (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !isReviewDone);
-    const isNode3Active = !isUnit1Completed && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
-    const isBossActive = !isUnit1Completed && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
+    // 언어별 독립 완료 여부 검증 (스페인어 기록이 영어 1과에 오염되는 현상 차단)
+    const safeUnitCompleted = typeof isUnit1Completed === 'boolean'
+      ? (isUnit1Completed && (window.lastCompletedCourseLang === currentCourseLang))
+      : false;
+    const safeBonusDone = typeof isBonusDone === 'boolean'
+      ? (isBonusDone && (localStorage.getItem(`vocadash_${currentCourseLang}_bonus_u${unitIndex + 1}`) === 'done'))
+      : false;
+    const safeReviewDone = typeof isReviewDone === 'boolean'
+      ? (isReviewDone && (localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done'))
+      : false;
+
+    // 💡 선물 상자 수령 여부 및 복습 완료 여부 명확한 단일화
+    // (기존 isBonusDone 플래그 또는 스토리지 기록 중 하나라도 완료면 수령 완료로 판정)
+    const bonusClaimed = Boolean(isBonusDone || safeBonusDone || localStorage.getItem(`vocadash_${currentCourseLang}_bonus_u${unitIndex + 1}`) === 'done');
+    const reviewCompleted = Boolean(isReviewDone || safeReviewDone || localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done');
+
+    // 엄격한 순차 해금 파이프라인 (Strict Sequential Dependency)
+    const isNode1Unlocked = true;
+    const isNode2Unlocked = safeUnitCompleted || (prog1 >= 3);
+    const isBonusUnlocked = safeUnitCompleted || (prog2 >= 3);
+    const isReviewUnlocked = safeUnitCompleted || (isBonusUnlocked && bonusClaimed);
+    const isNode3Unlocked = safeUnitCompleted || (isReviewUnlocked && reviewCompleted);
+    const isBossUnlocked = safeUnitCompleted || (prog3 >= 3);
+
+    // 활성화(START 배지)는 오직 미완료된 첫 번째 타깃에만 1개 부여
+    const isNode1Active = !safeUnitCompleted && (prog1 < 3);
+    const isNode2Active = !safeUnitCompleted && (!isNode1Active && prog2 < 3);
+    const isBonusActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && isBonusUnlocked && !bonusClaimed);
+    const isReviewActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !reviewCompleted);
+    const isNode3Active = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
+    const isBossActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
 
     const el = (id) => (typeof document !== 'undefined' ? document.getElementById(id) : null);
     const setVis = (node, isVisible) => {
@@ -548,33 +566,53 @@
     };
 
     [
-      { n: 1, c: prog1, isL: false, isC: isUnit1Completed || prog1 >= 3, isA: isNode1Active },
-      { n: 2, c: prog2, isL: !isNode2Unlocked, isC: isUnit1Completed || prog2 >= 3, isA: isNode2Active },
-      { n: 3, c: prog3, isL: !isNode3Unlocked, isC: isUnit1Completed || prog3 >= 3, isA: isNode3Active }
+      { n: 1, c: prog1, isL: false, isC: safeUnitCompleted || prog1 >= 3, isA: isNode1Active },
+      { n: 2, c: prog2, isL: !isNode2Unlocked, isC: safeUnitCompleted || prog2 >= 3, isA: isNode2Active },
+      { n: 3, c: prog3, isL: !isNode3Unlocked, isC: safeUnitCompleted || prog3 >= 3, isA: isNode3Active }
     ].forEach(({ n, c, isL, isC, isA }) => {
-      const nid = `node-${n}`, container = el(`${nid}-container`) || document.querySelector(`[data-node-id="${nid}"]`);
-      const target = el(`${nid}-target`) || container?.querySelector('.node-target'), ping = el(`${nid}-ping`) || container?.querySelector(`[id$="-ping"]`), pulseRing = el(`${nid}-pulse-ring`) || container?.querySelector(`[id$="-pulse-ring"]`);
-      const startPill = el(`${nid}-start-pill`) || container?.querySelector(`[id$="-start-pill"]`), checkBadge = el(`${nid}-check-badge`) || container?.querySelector(`[id$="-check-badge"]`), lockBadge = el(`${nid}-lock-badge`) || container?.querySelector(`[id$="-lock-badge"]`);
-      const btn = el(`${nid}-btn`) || container?.querySelector('.node-btn'), card = el(`${nid}-label-card`) || container?.querySelector(`[id$="-label-card"]`), badge = el(`${nid}-label-badge`) || card?.querySelector(`[id$="-label-badge"]`);
+      const nid = `node-${n}`;
+      const container = el(`${nid}-container`) || document.querySelector(`[data-node-id="${nid}"]`);
+      const target = el(`${nid}-target`) || container?.querySelector('.node-target');
+      const ping = el(`${nid}-ping`) || container?.querySelector(`[id$="-ping"]`);
+      const pulseRing = el(`${nid}-pulse-ring`) || container?.querySelector(`[id$="-pulse-ring"]`);
+      const startPill = el(`${nid}-start-pill`) || container?.querySelector(`[id$="-start-pill"]`);
+      const checkBadge = el(`${nid}-check-badge`) || container?.querySelector(`[id$="-check-badge"]`);
+      const lockBadge = el(`${nid}-lock-badge`) || container?.querySelector(`[id$="-lock-badge"]`);
+      const btn = el(`${nid}-btn`) || container?.querySelector('.node-btn');
+      const card = el(`${nid}-label-card`) || container?.querySelector(`[id$="-label-card"]`);
+      const badge = el(`${nid}-label-badge`) || card?.querySelector(`[id$="-label-badge"]`);
 
-      if (container) { container.classList.toggle('active', isA); container.classList.toggle('node-pulse', isA); container.classList.toggle('opacity-80', isL); }
+      if (container) {
+        container.classList.toggle('active', isA);
+        container.classList.toggle('node-pulse', isA);
+        container.classList.toggle('opacity-80', isL);
+      }
       if (ping) ping.classList.toggle('hidden', !isA);
       if (pulseRing) pulseRing.classList.toggle('hidden', !isA);
       setVis(startPill, isA);
       setVis(checkBadge, isC);
       setVis(lockBadge, isL);
+
       if (target) target.dataset.nodeType = isL ? 'locked' : (isC ? 'completed' : (isA ? 'active' : 'unlocked'));
+
+      // 🎨 완료 시에도 챕터 고유 테마 유지 (초록색 일괄 덮어쓰기 방지)
       if (btn) {
-        btn.className = isL ? 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer'
-          : (isC ? 'node-btn btn-3d relative w-[74px] h-[74px] rounded-full bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl flex items-center justify-center border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden'
-            : `node-btn btn-3d relative w-[76px] h-[76px] rounded-full ${UNIT_THEMES[0].activeBtn} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`);
+        btn.className = isL
+          ? 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer'
+          : (isC
+            ? `node-btn btn-3d relative w-[74px] h-[74px] rounded-full ${currentTheme.activeBtn || 'bg-emerald-500'} opacity-95 text-white font-black text-2xl flex items-center justify-center border-b-[5px] border-black/20 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`
+            : `node-btn btn-3d relative w-[76px] h-[76px] rounded-full ${currentTheme.activeBtn || 'bg-emerald-500'} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`);
         btn.title = isL ? `${n}과: 잠김` : (isC ? `${n}과 (완료)` : `${n}과`);
       }
+
       if (card) {
-        card.className = isC ? 'mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border border-emerald-300 pointer-events-none'
-          : (isA ? `mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border-2 ${UNIT_THEMES[0].activeBorder} pointer-events-none`
+        card.className = isC
+          ? `mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${currentTheme.activeBorder || 'border-emerald-300'} pointer-events-none`
+          : (isA
+            ? `mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border-2 ${currentTheme.activeBorder || 'border-emerald-400'} pointer-events-none`
             : 'mt-2 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80');
       }
+
       if (badge) badge.innerHTML = renderPawBadge(c);
     });
 
