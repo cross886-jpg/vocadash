@@ -9,10 +9,15 @@
 
   const el = id => document.getElementById(id);
   const setText = (id, text) => { const node = el(id); if (node) node.textContent = text; };
-  const getLessonBackdrop = () => el("lesson-card-backdrop");
-  const getLessonSheet = () => el("lesson-card-sheet");
+  const getLessonBackdrop = () => el("lesson-modal-backdrop") || el("stage-modal-backdrop") || el("lesson-card-backdrop");
+  const getLessonSheet = () => el("lesson-card-sheet") || el("stage-modal");
 
   function openLessonModal(nodeId) {
+    if (typeof window.closeUnitOverviewModal === "function") window.closeUnitOverviewModal();
+    if (typeof window.closeUnitSkipModal === "function") window.closeUnitSkipModal();
+    if (typeof window.closeBonusModal === "function") window.closeBonusModal();
+    if (typeof window.closeReviewSpeedrunModal === "function") window.closeReviewSpeedrunModal();
+
     if (typeof window.checkAndRechargeHearts === "function") window.checkAndRechargeHearts();
     if (window.userHearts <= 0) {
       if (typeof window.openHeartRechargeModal === "function") window.openHeartRechargeModal();
@@ -175,6 +180,12 @@
       backdrop.classList.remove("opacity-0", "pointer-events-none");
       backdrop.classList.add("opacity-100", "pointer-events-auto");
       backdrop.style.pointerEvents = "auto";
+      if (!backdrop._backdropBound) {
+        backdrop.addEventListener("click", (e) => {
+          if (e.target === backdrop) closeLessonModal();
+        });
+        backdrop._backdropBound = true;
+      }
     }
     if (sheet) {
       sheet.classList.remove("opacity-0", "translate-y-8", "pointer-events-none", "scale-95");
@@ -199,6 +210,11 @@
   }
 
   function openBonusModal(nodeId = "node-bonus") {
+    closeLessonModal();
+    if (typeof window.closeUnitOverviewModal === "function") window.closeUnitOverviewModal();
+    if (typeof window.closeUnitSkipModal === "function") window.closeUnitSkipModal();
+    if (typeof window.closeReviewSpeedrunModal === "function") window.closeReviewSpeedrunModal();
+
     window.currentBonusNodeId = nodeId;
     const backdrop = el("bonus-modal-backdrop");
     const card = el("bonus-modal-card");
@@ -246,6 +262,11 @@
 
   // 💡 약점 복습 스피드런 모달 제어 함수
   function openReviewSpeedrunModal(unitNum = null, nodeId = null) {
+    closeLessonModal();
+    if (typeof window.closeUnitOverviewModal === "function") window.closeUnitOverviewModal();
+    if (typeof window.closeUnitSkipModal === "function") window.closeUnitSkipModal();
+    if (typeof closeBonusModal === "function") closeBonusModal();
+
     const backdrop = el("review-speedrun-modal-backdrop");
     const card = el("review-speedrun-modal-card");
     if (!backdrop || !card) return;
@@ -449,6 +470,8 @@
 
   window.openLessonModal = openLessonModal;
   window.closeLessonModal = closeLessonModal;
+  window.openStageModal = openLessonModal;
+  window.closeStageModal = closeLessonModal;
   window.openBonusModal = openBonusModal;
   window.closeBonusModal = closeBonusModal;
   window.openReviewSpeedrunModal = openReviewSpeedrunModal;

@@ -457,6 +457,40 @@
   z-index: 100 !important;
 }
 
+#bottom-nav {
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+#bottom-nav button,
+#bottom-nav .nav-tab,
+#bottom-nav .nav-item {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+#bottom-nav button:focus,
+#bottom-nav button:active,
+#bottom-nav .nav-tab:focus,
+#bottom-nav .nav-tab:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Accessibility: Show keyboard navigation focus ring only when focused via Tab */
+#bottom-nav button:focus-visible {
+  outline: 2px solid #10b981 !important;
+  outline-offset: 2px !important;
+}
+
+#bottom-nav button:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 #bottom-nav .nav-icon-container {
   width: 44px !important;
   height: 44px !important;

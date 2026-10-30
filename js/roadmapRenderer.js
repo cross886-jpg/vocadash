@@ -810,7 +810,7 @@
     document.addEventListener('click', (e) => {
       const targetBtn = e.target.closest('[data-node-id], .roadmap-node, .node-btn, .subsequent-node-btn');
       if (!targetBtn) return;
-      if (e.target.closest('#lesson-modal, #bonus-modal, #review-speedrun-modal, #unit-skip-modal, #unit-overview-modal')) return;
+      if (e.target.closest('#lesson-modal, #lesson-card-sheet, #lesson-modal-backdrop, #bonus-modal, #review-speedrun-modal, #unit-skip-modal, #unit-overview-modal')) return;
 
       const nodeContainer = targetBtn.closest('.roadmap-node') || targetBtn;
       const rawNodeId = targetBtn.dataset.nodeId || targetBtn.id?.replace('-btn', '') || targetBtn.id?.replace('-container', '') || nodeContainer.dataset?.nodeId;

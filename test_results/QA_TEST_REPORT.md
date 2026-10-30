@@ -1,6 +1,6 @@
 # VocaDash 모바일 E2E 자동화 QA 최종 점검 리포트
 
-- **테스트 일시**: 2026-10-29T22:08:43.592Z
+- **테스트 일시**: 2026-10-30T12:36:31.564Z
 - **테스트 디바이스 규격**: Mobile Emulation (390 x 844 px, DPR=3, Touch Support, Chrome Headless)
 - **종합 결과**: **8/15 전원 통과 (53.3%)**
 
@@ -17,7 +17,7 @@
 | 5 | **Scenario B: Profile Avatar Change & Persistence** | 🟢 PASS | 4개 아바타 순차 변경 시 상단 헤더 즉시 전환 및 localStorage 완벽 유지, 모달 내 설정 아이콘 포함 확인 |
 | 6 | **Scenario C-1: Language Switch to English (Flag & Mascot & Signpost & Modal Dynamic Filtering & Top Clearance)** | 🔴 FAIL | 검증 불일치 |
 | 7 | **Scenario C-2: Wrong Answer Notes Storage Isolation** | 🟢 PASS | 영어 오답 0개 빈 화면(Empty State) 표시 및 스페인어 단어 0건 완전 격리 확인 |
-| 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(10회) 및 결과 모달까지 막힘없이 완주 |
+| 8 | **Scenario D: Game Flow (Stage -> Flashcard -> In-Game -> Result)** | 🟢 PASS | 플래시카드 진입, 본 게임 시작, 4지선다 인터랙션(6회) 및 결과 모달까지 막힘없이 완주 |
 | 9 | **Scenario E: Zero-Popup UX Validation** | 🟢 PASS | 진행 중 방해되는 네이티브 alert/confirm 팝업 0건 (원활한 UX 보장) |
 | 10 | **Scenario F: Bonus 1-Time Limit & Weakness Review 10-Questions/Graduation** | 🔴 FAIL | 검증 실패 세부사항: {"initialClaimed":true,"isClaimedNow":true,"gemsIncremented":false,"badgeText":"수령 완료 ✅","iconText":"📦","modalTitleClaimed":"보너스 선물 (수령 완료)","duplicateBlocked":true,"speedrunTitle":"⚡ 약점 극복 스피드 런 (10문제)","questionsCount":10,"isSpeedrunMode":true,"streakInitZero":true,"streakFour":true,"streakResetZero":true,"graduatedDeleted":true} |
 | 11 | **Scenario G: Course Management & Progress Isolation (DLC / Pack Expansion)** | 🔴 FAIL | 검증 실패 세부사항: {"defaultActiveCourse":"main","mainCourseHasUnits":true,"mainHasCompletedNodes":false,"mainHasClaimedBonuses":false,"mainHasUnlockedUnits":false,"mainUnitLevel":2,"switchedCourseId":"pack_football","storedActiveCourse":"pack_football","footballPackId":"pack_football","footballPackUnitsCount":6,"mainProgUntouched":null,"bannerTitleFootball":"생존 첫걸음","bannerBadgeFootball":"인사, 감사, 숫자 등 기초 표현 마스터","bannerIconFootball":"인사, 감사, 숫자 등 기초 표현 마스터","node1TitleFootball":"1과","bookHasPortero":true,"bookHasDelantero":true,"bookHasArbitro":true,"bookCardCount":180,"footballSessionHasWord":true,"footballSessionCount":10,"restoredActiveCourse":"main","restoredMainUnitLevel":2,"bannerTitleMain":"생존 첫걸음","bannerBadgeMain":"인사, 감사, 숫자 등 기초 표현 마스터","hasRenderRoadmap":true,"hasFootballUnits":true,"unit1HasWords":false,"unit1HasNodes":true,"unit1HasSentence":false} |

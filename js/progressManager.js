@@ -556,6 +556,10 @@
   }
 
   function openUnitOverviewModal() {
+    if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
+    if (typeof target.closeLessonModal === 'function') target.closeLessonModal();
+    if (typeof window.closeBonusModal === 'function') window.closeBonusModal();
+    if (typeof window.closeReviewSpeedrunModal === 'function') window.closeReviewSpeedrunModal();
     renderUnitOverviewList();
     const bd = document.getElementById('unit-overview-modal-backdrop'), card = document.getElementById('unit-overview-modal-card');
     if (bd && card) {
@@ -575,6 +579,8 @@
     }
   }
   function openUnitSkipModal(unitNum, unitTitle) {
+    if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
+    if (typeof target.closeLessonModal === 'function') target.closeLessonModal();
     target.currentSkipTestUnit = parseInt(unitNum, 10) || 2;
     target.currentSkipTestUnitTitle = unitTitle || `Unit ${target.currentSkipTestUnit}`;
     const titleEl = document.getElementById('unit-skip-modal-title');

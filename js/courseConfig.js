@@ -8,7 +8,7 @@
   const target = (typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : global));
 
   // 1. 초기 사용자 상태 기본값
-const DEFAULT_USER_PROGRESS = {
+  const DEFAULT_USER_PROGRESS = {
     currentCourse: 'pack_football',
     currentUnit: 0,
     currentNode: 0,
@@ -16,14 +16,14 @@ const DEFAULT_USER_PROGRESS = {
     clearedNodes: [],
     unlockedNodes: ['fb_1_n1', 'es_1_n1', 'node-1'],
     weakWords: [],
-    gems: 0,
+    gems: 120,
     hearts: 5
   };
   window.DEFAULT_USER_PROGRESS = DEFAULT_USER_PROGRESS;
   target.DEFAULT_USER_PROGRESS = DEFAULT_USER_PROGRESS;
 
   // 2. 코스 프리셋 (스페인어, 영어)
-const COURSE_PRESETS = {
+  const COURSE_PRESETS = {
     es: [
       { id: 'basic', icon: '🌱', title: '기초 회화', desc: '인사, 감사, 숫자 등 매일 쓰는 첫걸음' },
       { id: 'travel', icon: '✈️', title: '여행 스페인어', desc: '공항, 숙소, 식당 필수 회화' },
@@ -41,7 +41,7 @@ const COURSE_PRESETS = {
   target.COURSE_PRESETS = COURSE_PRESETS;
 
   // 3. 레슨 세부 메타데이터 (타이틀, 설명, 아이콘, 난이도 등)
-const COURSE_LESSONS = {
+  const COURSE_LESSONS = {
     es: {
       basic: {
         'node-1': { title: '1과: 인사/안부', desc: '¡Hola!, ¿Cómo estás? 등 매일 쓰는 첫인사와 안부 표현을 마스터하세요!', icon: '🌱', level: '기초', category: '인사/안부', tags: ['인사/안부', '인사', '안부'] },
@@ -102,7 +102,7 @@ const COURSE_LESSONS = {
   target.nodeLessonData = nodeLessonData;
 
   // 4. 코스 카테고리 맵
-const courseCategoryMap = {
+  const courseCategoryMap = {
     basic: { icon: '🌱', titles: { es: '기초 회화', en: '기초 회화' }, categories: ['전체', '인사/안부', '감사/사과', '숫자/시간', '일상 기초'] },
     travel: { icon: '✈️', titles: { es: '여행 스페인어', en: '여행 영어' }, categories: ['전체', '공항/기내', '교통/길찾기', '호텔/숙소', '식당/카페'] },
     dele: { icon: '🎓', titles: { es: 'DELE 준비과정', en: 'DELE 준비과정' }, categories: ['전체', 'DELE A1', 'DELE A2', 'DELE B1', 'DELE B2'] },
@@ -112,7 +112,7 @@ const courseCategoryMap = {
   target.courseCategoryMap = courseCategoryMap;
 
   // 5. 전체 코스 맵 유닛 프리셋 정의 (1~10 유닛)
-const UNIT_LIST_PRESETS = {
+  const UNIT_LIST_PRESETS = {
     es: [
       { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
       { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
@@ -142,7 +142,7 @@ const UNIT_LIST_PRESETS = {
   target.UNIT_LIST_PRESETS = UNIT_LIST_PRESETS;
 
   // 6. 다국어 및 코스/테마 팩 레지스트리
-const SUPPORTED_LANGUAGES = [
+  const SUPPORTED_LANGUAGES = [
     { code: 'es', label: '스페인어(ES)', flag: '🇪🇸', active: true },
     { code: 'en', label: '영어(EN)', flag: '🇺🇸', active: true },
     { code: 'ja', label: '일본어(JA)', flag: '🇯🇵', active: false, badge: '오픈 예정' },
@@ -288,7 +288,7 @@ const SUPPORTED_LANGUAGES = [
   target.PACK_CATALOG = PACK_CATALOG;
 
   // 7. 언어/코스 변경 모달 코스 목록
-const MODAL_COURSES = {
+  const MODAL_COURSES = {
     es: [
       {
         id: 'main',
@@ -318,7 +318,7 @@ const MODAL_COURSES = {
   target.MODAL_COURSES = MODAL_COURSES;
 
   // 8. 로드맵 이정표 표지판 언어별 프리셋
-const SIGNPOST_PRESETS = {
+  const SIGNPOST_PRESETS = {
     es: {
       icon: '🏛️',
       text: 'MADRID 2.4km',
@@ -365,7 +365,7 @@ const SIGNPOST_PRESETS = {
   target.SIGNPOST_PRESETS = SIGNPOST_PRESETS;
 
   // 9. 교재/단어장 화면 코스 프리셋
-const BOOK_COURSE_PRESETS = {
+  const BOOK_COURSE_PRESETS = {
     es: [
       { id: 'main', icon: '🇪🇸', title: '스페인어 정규 코스' },
       { id: 'pack_football', icon: '⚽', title: '스페인 축구 실전팩' },

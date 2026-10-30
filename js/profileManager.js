@@ -234,8 +234,13 @@
       const accEl = document.getElementById('stats-accuracy-rate');
       if (accEl) accEl.textContent = `${acc}%`;
 
+      // 💎 보유 보석: 스토리지 값이 없으면 기본 120개 보장 및 전역 상태 동기화
+      const rawGems = getStorage('vocadash_gems');
+      const gems = rawGems !== null && rawGems !== undefined && rawGems !== ''
+        ? Number(rawGems)
+        : (window.userData?.gems ?? 120);
       const gemsEl = document.getElementById('stats-gems-count');
-      if (gemsEl) gemsEl.textContent = `${getStorage('vocadash_gems') || 0}개`;
+      if (gemsEl) gemsEl.textContent = `${gems}개`;
 
       const xp = Number(getStorage('vocadash_xp') || 0);
       const lv = Math.max(1, Math.floor(xp / 100) + 1);
@@ -252,6 +257,7 @@
     } catch (_) { }
   }
 
+
   function showHallOfFameScreen() {
     ['stats-screen', 'my-records-screen', 'roadmap-screen', 'roadmap-header', 'review-screen', 'book-screen', 'settings-screen'].forEach(id => {
       const el = document.getElementById(id);
@@ -259,16 +265,31 @@
     });
     const hall = document.getElementById('hall-of-fame-screen');
     if (hall) { hall.classList.remove('hidden'); hall.style.removeProperty('display'); }
+
+    // SPA 히스토리 스택 추가 (페이지 이탈 방지)
+    try {
+      history.pushState({ screen: 'hall-of-fame' }, '');
+    } catch (_) { }
+
     syncHallOfFameAvatar();
     initHallOfFameEvents();
   }
 
-  function hideHallOfFameScreen() {
+  function hideHallOfFameScreen(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
+
     const hall = document.getElementById('hall-of-fame-screen');
     if (hall) { hall.classList.add('hidden'); hall.style.display = 'none'; }
+
+    // 내 기록 화면 정상 복귀
     const stats = document.getElementById('stats-screen') || document.getElementById('my-records-screen');
-    if (stats) { stats.classList.remove('hidden'); stats.style.removeProperty('display'); }
-    else target.switchMainTab?.('records');
+    if (stats) {
+      stats.classList.remove('hidden');
+      stats.style.removeProperty('display');
+    } else if (typeof window.switchMainTab === 'function') {
+      window.switchMainTab('records');
+    }
   }
 
   function initHallOfFameEvents() {
@@ -276,7 +297,12 @@
     if (!screen || screen._bound) return;
     screen._bound = true;
 
-    screen.querySelector('#btn-hall-of-fame-back')?.addEventListener('click', hideHallOfFameScreen);
+    // 뒤로가기 버튼 클릭 시 이탈 방지 및 내부 화면 복귀
+    const backBtn = screen.querySelector('#btn-hall-of-fame-back');
+    if (backBtn) {
+      backBtn.addEventListener('click', hideHallOfFameScreen);
+    }
+
     screen.querySelector('#btn-hall-of-fame-profile')?.addEventListener('click', () => toggleProfileModal(true));
 
     screen.querySelectorAll('.badge-filter-btn').forEach(btn => {
@@ -288,6 +314,14 @@
           card.classList.toggle('hidden', filter !== 'all' && card.dataset.badgeStatus !== filter);
         });
       });
+    });
+
+    // 브라우저 뒤로가기(하드웨어/제스처) 시에도 외부 이탈 대신 내 기록으로 복귀
+    window.addEventListener('popstate', (e) => {
+      const hallEl = document.getElementById('hall-of-fame-screen');
+      if (hallEl && !hallEl.classList.contains('hidden') && hallEl.style.display !== 'none') {
+        hideHallOfFameScreen();
+      }
     });
   }
 
@@ -318,9 +352,18 @@
 
     if (!show) setTimeout(() => { if (backdrop?.classList.contains('opacity-0')) modal?.classList.add('hidden'); }, 200);
   };
+
   function initStreakEvents() {
-    ['streak-trigger', 'streak-badge', 'btn-open-streak'].forEach(id => {
-      document.getElementById(id)?.addEventListener('click', () => toggleStreakModal(true));
+    // 📅 'btn-open-streak-modal'과 'stats-streak-card' 추가 바인딩으로 달력 보기 즉시 작동
+    ['streak-trigger', 'streak-badge', 'btn-open-streak', 'btn-open-streak-modal', 'stats-streak-card'].forEach(id => {
+      const targetEl = document.getElementById(id);
+      if (targetEl && !targetEl._streakBound) {
+        targetEl._streakBound = true;
+        targetEl.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleStreakModal(true);
+        });
+      }
     });
 
     ['close-streak-modal-btn', 'btn-streak-modal-close'].forEach(id => {
@@ -343,7 +386,6 @@
   } else {
     initStreakEvents();
   }
-
 
   // 모바일 뒤로가기(스와이프/하드웨어 버튼) 시 창만 닫기
   const pushState = () => history.pushState?.({ modal: true }, '');
