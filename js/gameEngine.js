@@ -539,7 +539,8 @@
   // --- 8. 이벤트 바인딩 및 전역 익스포트 ---
   function bindChoiceDelegation() {
     const c = document.getElementById("game-choices-container");
-    if (!c || c._bound) return; c._bound = true;
+    if (!c || c._bound) return;
+    c._bound = true;
     c.addEventListener("click", e => {
       const btn = e.target.closest(".game-choice-btn");
       if (btn && !btn.disabled) window.handleChoiceClick(btn, btn.dataset.choice || btn.textContent);
@@ -548,17 +549,63 @@
   window.handleChoiceClick = (btn, selectedText) => { window.stopTTS?.(); judgeAnswerDirectly(btn, selectedText); };
 
   function bindEvents() {
-    initDOMElements(); bindChoiceDelegation();
+    initDOMElements();
+    bindChoiceDelegation();
+
+    const exitModal = document.getElementById("game-exit-confirm-modal");
+    const btnResume = document.getElementById("btnResume");
+    const btnExit = document.getElementById("btnExit");
     const closeBtn = document.getElementById("game-close-btn");
-    if (closeBtn) closeBtn.onclick = () => {
-      if (isActive && isGameActive && !confirm("게임을 중단하고 나갈까요?")) return;
-      exitGameToRoadmap();
+
+    const toggleExitModal = (show) => {
+      if (!exitModal) return;
+      if (show) {
+        exitModal.classList.remove("hidden");
+        exitModal.style.display = "flex";
+      } else {
+        exitModal.classList.add("hidden");
+        exitModal.style.display = "none";
+      }
     };
 
+    // 1. 상단 X 버튼 탭 시: 게임/음성 일시정지 & 스티치 모달 노출
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        if (!isActive || !isGameActive) {
+          exitGameToRoadmap();
+          return;
+        }
+        isPaused = true;
+        window.stopTTS?.();
+        toggleExitModal(true);
+      };
+    }
 
+    // 2. [계속하기] 탭 시: 모달 닫기 & 단어 낙하 루프 자연스럽게 재개
+    if (btnResume) {
+      btnResume.onclick = () => {
+        toggleExitModal(false);
+        isPaused = false;
+        dropStartTime = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+        dropRafId = requestAnimationFrame(dropLoop);
+      };
+    }
+
+    // 3. [나가기] 탭 시: 모달 닫고 로드맵으로 복귀
+    if (btnExit) {
+      btnExit.onclick = () => {
+        toggleExitModal(false);
+        exitGameToRoadmap();
+      };
+    }
 
     const itemBar = document.getElementById("game-item-bar");
-    if (itemBar) itemBar.onclick = e => { const btn = e.target.closest("button[data-item]"); if (btn?.dataset.item) useGameItem(btn.dataset.item); };
+    if (itemBar) {
+      itemBar.onclick = e => {
+        const btn = e.target.closest("button[data-item]");
+        if (btn?.dataset.item) useGameItem(btn.dataset.item);
+      };
+    }
   }
 
   // Public Exports

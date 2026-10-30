@@ -110,6 +110,30 @@
     return UNIT_THEMES[idx];
   }
 
+  // 🐾 [핵심 일원화] 1과와 100% 동일한 전용 고양이 발바닥 벡터 SVG 렌더러
+  function renderSinglePawSvg(isActive) {
+    const fill = isActive ? '#f59e0b' : '#cbd5e1';
+    const op = isActive ? '1' : '0.35';
+    const glow = isActive ? 'filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.45)); transform: scale(1.15);' : 'transform: scale(1.0);';
+    return `<div class="inline-flex items-center justify-center p-0.5" style="width: 18px; height: 18px;"><svg viewBox="0 0 44 42" class="transition-all duration-200" style="width: 100%; height: 100%; fill: ${fill}; opacity: ${op}; ${glow}" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8.5" cy="13" rx="4.0" ry="5.6" transform="rotate(-26 8.5 13)"></ellipse><ellipse cx="17.2" cy="7.2" rx="4.3" ry="6.2" transform="rotate(-8 17.2 7.2)"></ellipse><ellipse cx="26.8" cy="7.2" rx="4.3" ry="6.2" transform="rotate(8 26.8 7.2)"></ellipse><ellipse cx="35.5" cy="13" rx="4.0" ry="5.6" transform="rotate(26 35.5 13)"></ellipse><path d="M 22 17.5 C 17.2 17.5 13.0 19.3 9.6 22.8 C 6.5 26.0 5.6 30.5 7.4 34.6 C 9.5 39.4 15.2 42.0 22 42.0 C 28.8 42.0 34.5 39.4 36.6 34.6 C 38.4 30.5 37.5 26.0 34.4 22.8 C 31.0 19.3 26.8 17.5 22 17.5 Z"></path></svg></div>`;
+  }
+
+  function renderPawBadge(prog) {
+    const p = Math.max(0, Math.min(3, Number(prog) || 0));
+    return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5">${renderSinglePawSvg(p >= 1)}${renderSinglePawSvg(p >= 2)}${renderSinglePawSvg(p >= 3)}</div>`;
+  }
+
+  function renderStarsBadge(clearedCount, stars, isLocked) {
+    if (isLocked) {
+      return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5 opacity-40">${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}</div>`;
+    }
+    const c = Math.max(0, Math.min(3, Number(clearedCount) || 0));
+    const label = c >= 3
+      ? '<span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>'
+      : (c > 0 ? `<span class="font-label-sm text-[10px] text-amber-600 font-black ml-1">${c}/3</span>` : '');
+    return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5">${renderSinglePawSvg(c >= 1)}${renderSinglePawSvg(c >= 2)}${renderSinglePawSvg(c >= 3)}${label}</div>`;
+  }
+
   function renderUnitTrackSvgHtml() {
     return `<svg class="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200" fill="none" preserveAspectRatio="none" viewBox="0 0 380 960"><path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#dae2fd" stroke-linecap="round" stroke-width="14"></path><path d="M 110 70 C 110 160, 270 140, 270 230 C 270 320, 120 300, 120 390 C 120 480, 260 460, 260 550 C 260 640, 110 620, 110 710 C 110 805, 190 795, 190 880" stroke="#38bdf8" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path></svg>`;
   }
@@ -128,8 +152,12 @@
     const getNodeProg = (typeof window.getNodeProgress === 'function') ? window.getNodeProgress : null;
     const nodeData = getNodeProg ? getNodeProg(resolvedId) : { clearedCount: 0, stars: 0 };
     const pCount = effectiveCompleted ? 3 : (effectiveActive ? (nodeData.clearedCount || 0) : 0);
-    const s1 = pCount >= 1 ? '⭐' : '<span class="opacity-30">⭐</span>', s2 = pCount >= 2 ? '⭐' : '<span class="opacity-30">⭐</span>', s3 = pCount >= 3 ? '⭐' : '<span class="opacity-30">⭐</span>';
-    const btnClass = isLocked ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm' : (effectiveCompleted ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40' : (effectiveActive ? theme.activeBtn : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'));
+
+    const btnClass = isLocked
+      ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'
+      : (effectiveCompleted
+        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
+        : (effectiveActive ? theme.activeBtn : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'));
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
 
     return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}">
@@ -144,7 +172,7 @@
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
       <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : (effectiveCompleted ? 'border-emerald-300' : theme.activeBorder)} pointer-events-none">
-        <div class="flex items-center gap-1">${s1}${s2}${s3}</div>
+        ${renderPawBadge(pCount)}
       </div>
     </div>`;
   }
@@ -243,13 +271,12 @@
     const getNodeProgFn = (typeof window.getNodeProgress === 'function') ? window.getNodeProgress : () => ({ clearedCount: 0, stars: 0 });
     const isUnlockedFn = (typeof window.isNodeUnlocked === 'function') ? window.isNodeUnlocked : () => true;
 
-    // 💡 Unit 1은 위쪽 메인 화면에 이미 그려져 있으므로, Unit 2(idx = 1)부터 그림
+    // Unit 1은 위쪽 메인 화면에 이미 그려져 있으므로, Unit 2(idx = 1)부터 렌더링
     for (let idx = 1; idx < units.length; idx++) {
       const unit = units[idx], unitNum = idx + 1;
       const unitIcon = unit.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
       const unitTitle = unit.title || `Unit ${unitNum}`, unitDesc = unit.desc || unit.subtitle || '';
       const theme = getUnitTheme(unitNum);
-
 
       if (idx > 0) {
         html += `<div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}"><div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${theme.dividerBadge} text-xs font-bold shadow-md"><span>${esc(unitIcon)}</span><span>${esc(unitTitle)}</span></div><p class="text-xs text-slate-500 mt-1">${esc(unitDesc)}</p></div>`;
@@ -281,7 +308,6 @@
       container.innerHTML = html;
     }
   }
-
 
   function isElementVisible(el) {
     return !!(el && !el.classList?.contains('hidden') && el.style?.display !== 'none' && el.style?.visibility !== 'hidden');
@@ -342,25 +368,6 @@
     if (typeof requestAnimationFrame === 'function') requestAnimationFrame(performSnap);
   }
 
-  function renderPawBadge(prog) {
-    const p = Number(prog) || 0;
-    const renderPaw = (isActive) => {
-      const fill = isActive ? '#f59e0b' : '#cbd5e1';
-      const op = isActive ? '1' : '0.35';
-      const glow = isActive ? 'filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.45)); transform: scale(1.15);' : 'transform: scale(1.0);';
-      return `<div class="inline-flex items-center justify-center p-0.5" style="width: 18px; height: 18px;"><svg viewBox="0 0 44 42" class="transition-all duration-200" style="width: 100%; height: 100%; fill: ${fill}; opacity: ${op}; ${glow}" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8.5" cy="13" rx="4.0" ry="5.6" transform="rotate(-26 8.5 13)"></ellipse><ellipse cx="17.2" cy="7.2" rx="4.3" ry="6.2" transform="rotate(-8 17.2 7.2)"></ellipse><ellipse cx="26.8" cy="7.2" rx="4.3" ry="6.2" transform="rotate(8 26.8 7.2)"></ellipse><ellipse cx="35.5" cy="13" rx="4.0" ry="5.6" transform="rotate(26 35.5 13)"></ellipse><path d="M 22 17.5 C 17.2 17.5 13.0 19.3 9.6 22.8 C 6.5 26.0 5.6 30.5 7.4 34.6 C 9.5 39.4 15.2 42.0 22 42.0 C 28.8 42.0 34.5 39.4 36.6 34.6 C 38.4 30.5 37.5 26.0 34.4 22.8 C 31.0 19.3 26.8 17.5 22 17.5 Z"></path></svg></div>`;
-    };
-    return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5">${renderPaw(p >= 1)}${renderPaw(p >= 2)}${renderPaw(p >= 3)}</div>`;
-  }
-
-  function renderStarsBadge(clearedCount, stars, isLocked, lockMsg = '이전 레슨 완료 후') {
-    if (isLocked) return `<span class="font-label-sm text-[10px] text-slate-400 font-semibold">${lockMsg}</span>`;
-    const c = Math.max(0, Math.min(3, Number(clearedCount) || 0));
-    const s1 = c >= 1 ? '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>' : '<span class="text-xs opacity-30">⭐</span>', s2 = c >= 2 ? '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>' : '<span class="text-xs opacity-30">⭐</span>', s3 = c >= 3 ? '<span class="text-xs text-amber-400 drop-shadow-xs">⭐</span>' : '<span class="text-xs opacity-30">⭐</span>';
-    const label = c >= 3 ? '<span class="font-label-sm text-[10px] text-emerald-600 font-bold ml-1">완료!</span>' : `<span class="font-label-sm text-[10px] text-sky-600 font-black ml-1">${c}/3 레슨 진행중</span>`;
-    return `${s1}${s2}${s3}${label}`;
-  }
-
   let _lastRenderedBannerUnitIndex = null;
   let _bannerFadeTimeout = null;
 
@@ -369,7 +376,6 @@
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
 
-    // 💡 코스 객체의 units가 있으면 1순위, 없을 때만 프리셋 사용 (단 1줄로 통합)
     const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
     const totalUnits = units.length || 1;
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
@@ -377,7 +383,6 @@
       ? Math.max(0, Math.min(totalUnits - 1, activeIdx))
       : (window._currentVisibleUnitIndex ?? Math.max(0, Math.min(totalUnits - 1, unlockedLevel - 1)));
 
-    // [최적화 1] 동일한 유닛 인덱스일 경우 불필요한 DOM 리플로우 및 재연산 완전 차단 (Early Return)
     if (!force && _lastRenderedBannerUnitIndex === targetIdx) {
       return;
     }
@@ -402,7 +407,6 @@
       const titleEl = document.getElementById('top-unit-title'); if (titleEl) titleEl.textContent = targetUnit.title || `Unit ${unitNum}`;
       const descEl = document.getElementById('top-unit-desc'); if (descEl) descEl.textContent = targetUnit.desc || targetUnit.subtitle || '';
 
-      // 유닛별 테마 컬러를 상단 유닛 카드 배너에 동적 적용
       if (bannerEl) {
         const theme = getUnitTheme(unitNum);
         UNIT_THEMES.forEach(t => {
@@ -433,7 +437,6 @@
       }
     };
 
-    // [최적화 2] 유닛 배너 내용 교체 시 150ms 페이드 전환 적용 (텍스트 깜빡임 및 툭 튐 방지)
     if (bannerContent && !force) {
       bannerContent.style.opacity = '0.4';
       if (_bannerFadeTimeout) clearTimeout(_bannerFadeTimeout);
@@ -506,7 +509,6 @@
 
     const isUnit1Completed = unlockedLevel > 1 || (typeof window.isUnitCompleted === 'function' && window.isUnitCompleted(1)) || (Array.isArray(window.completedUnits) && window.completedUnits.includes(1));
 
-
     const prog1 = isUnit1Completed ? Math.max(3, readProgForNode(1)) : readProgForNode(1);
     const prog2 = isUnit1Completed ? Math.max(3, readProgForNode(2)) : ((prog1 >= 3) ? readProgForNode(2) : 0);
     const prog3 = isUnit1Completed ? Math.max(3, readProgForNode(3)) : ((prog2 >= 3) ? readProgForNode(3) : 0);
@@ -525,14 +527,12 @@
     const isBonusDone = isUnit1Completed || ((typeof window.isBonusClaimed === 'function') && (window.isBonusClaimed('node-bonus') || window.isBonusClaimed('u1_node-bonus')));
     const isReviewDone = isUnit1Completed || ((typeof window.isReviewNodeCompleted === 'function') && (window.isReviewNodeCompleted('u1_node-review', 1) || window.isReviewNodeCompleted('node-review', 1)));
 
-    // 🌐 현재 활성화된 코스 언어 감지 (언어별 진행도 완벽 격리)
     const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const unitIndex = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
     const currentTheme = (typeof UNIT_THEMES !== 'undefined' && UNIT_THEMES[unitIndex])
       ? UNIT_THEMES[unitIndex]
       : { activeBtn: 'bg-emerald-500', activeBorder: 'border-emerald-400' };
 
-    // 언어별 독립 완료 여부 검증 (스페인어 기록이 영어 1과에 오염되는 현상 차단)
     const safeUnitCompleted = typeof isUnit1Completed === 'boolean'
       ? (isUnit1Completed && (window.lastCompletedCourseLang === currentCourseLang))
       : false;
@@ -543,12 +543,9 @@
       ? (isReviewDone && (localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done'))
       : false;
 
-    // 💡 선물 상자 수령 여부 및 복습 완료 여부 명확한 단일화
-    // (기존 isBonusDone 플래그 또는 스토리지 기록 중 하나라도 완료면 수령 완료로 판정)
     const bonusClaimed = Boolean(isBonusDone || safeBonusDone || localStorage.getItem(`vocadash_${currentCourseLang}_bonus_u${unitIndex + 1}`) === 'done');
     const reviewCompleted = Boolean(isReviewDone || safeReviewDone || localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done');
 
-    // 엄격한 순차 해금 파이프라인 (Strict Sequential Dependency)
     const isNode1Unlocked = true;
     const isNode2Unlocked = safeUnitCompleted || (prog1 >= 3);
     const isBonusUnlocked = safeUnitCompleted || (prog2 >= 3);
@@ -556,7 +553,6 @@
     const isNode3Unlocked = safeUnitCompleted || (isReviewUnlocked && reviewCompleted);
     const isBossUnlocked = safeUnitCompleted || (prog3 >= 3);
 
-    // 활성화(START 배지)는 오직 미완료된 첫 번째 타깃에만 1개 부여
     const isNode1Active = !safeUnitCompleted && (prog1 < 3);
     const isNode2Active = !safeUnitCompleted && (!isNode1Active && prog2 < 3);
     const isBonusActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && isBonusUnlocked && !bonusClaimed);
@@ -601,7 +597,6 @@
 
       if (target) target.dataset.nodeType = isL ? 'locked' : (isC ? 'completed' : (isA ? 'active' : 'unlocked'));
 
-      // 🎨 완료 시에도 챕터 고유 테마 유지 (초록색 일괄 덮어쓰기 방지)
       if (btn) {
         btn.className = isL
           ? 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer'
@@ -619,6 +614,7 @@
             : 'mt-2 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80');
       }
 
+      // 🐾 Unit 1 노드 하단 뱃지 렌더링
       if (badge) badge.innerHTML = renderPawBadge(c);
     });
 
@@ -706,7 +702,6 @@
     if (_scrollRafId) return;
     _scrollRafId = requestAnimationFrame(() => {
       _scrollRafId = null;
-      // IntersectionObserver가 비활성화된 환경이거나 최상단 도달 시 안전 보정
       if (window.scrollY < 60) {
         window._currentVisibleUnitIndex = 0;
         updateTopUnitBanner(0);
@@ -723,7 +718,6 @@
     if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') return;
     if (window._roadmapObserver) { window._roadmapObserver.disconnect(); window._roadmapObserver = null; }
 
-    // [최적화 3] 상단 고정 헤더 높이(약 140px)를 고려한 rootMargin 및 안정적 threshold
     const observer = new IntersectionObserver((entries) => {
       if (!_hasUserScrolledRoadmap && window.scrollY < 60) {
         window._currentVisibleUnitIndex = 0;
@@ -733,7 +727,6 @@
 
       const visibleEntries = entries.filter(e => e.isIntersecting);
       if (visibleEntries.length > 0) {
-        // 화면 중심 영역과 가장 많이 겹치는 섹션 블록 선택
         visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         const topEntry = visibleEntries[0];
         const activeIdx = parseInt(topEntry.target.dataset.unitIndex, 10);
