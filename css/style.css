@@ -470,13 +470,23 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
-#bottom-nav .nav-item[aria-current="page"] .nav-icon-container {
+#bottom-nav .nav-item[aria-current="page"] .nav-icon-container,
+#bottom-nav button[aria-current="page"] .nav-icon-container {
   background-color: #10b981 !important;
   /* bg-emerald-500 */
   color: #ffffff !important;
   box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -2px rgba(16, 185, 129, 0.3) !important;
+}
+
+#bottom-nav .nav-item:not([aria-current="page"]) .nav-icon-container,
+#bottom-nav button:not([aria-current="page"]) .nav-icon-container {
+  background-color: transparent !important;
+  color: #94a3b8 !important;
+  /* text-slate-400 */
+  box-shadow: none !important;
 }
 
 /* ================================================= */

@@ -12,7 +12,7 @@
   let isActive = false, isGameActive = false, isPaused = false, isFrozen = false;
   let isQuestionActive = false, isStageFinishing = false, isCurrentQuestionFailed = false;
   let dropRafId = null, dropStartTime = 0, freezeTimer = null, gameNextQuestionTimer = null;
-  let currentCorrectChoiceIdx = -1, missedWords = [];
+  let currentCorrectChoiceIdx = -1, missedWords = [], correctWords = [], totalAttemptCount = 0, sessionStartTime = 0;
   const dropBaseDuration = 11500;
 
   const getInventory = () => (typeof window.getVocaInventory === "function" ? window.getVocaInventory() : { pass: 2, freeze: 1, bomb: 1, heal: 1 });
@@ -97,7 +97,15 @@
     if (typeof speechSynthesis !== "undefined") { try { speechSynthesis.cancel(); } catch (_) { } }
 
     if (!isActive || !isGameActive) return;
-    if (!gameQuestions || index >= gameQuestions.length) {
+    if (!Array.isArray(gameQuestions) || gameQuestions.length === 0) {
+      console.warn("[GameEngine] spawnQuestion: gameQuestions is empty. Safely returning to roadmap.");
+      if (typeof window.showToast === "function") {
+        window.showToast("학습할 단어가 없습니다. 로드맵으로 돌아갑니다.", "⚠️");
+      }
+      (typeof window.exitGameToRoadmap === "function" ? window.exitGameToRoadmap : exitGameToRoadmap)(true);
+      return;
+    }
+    if (index >= gameQuestions.length) {
       finishGameStage(true);
       return;
     }
@@ -196,10 +204,12 @@
   function handleDeadlineBreached() {
     if (isStageFinishing || !isQuestionActive) return;
     isQuestionActive = false; cancelGameLoop(); window.stopTTS?.();
+    totalAttemptCount++;
     combo = 0; speedMultiplier = 1.0;
     const q = gameQuestions[currentQuestionIdx];
     if (q) missedWords.push(q);
     window.missedWords = missedWords;
+    window.totalAttemptCount = totalAttemptCount;
     const remaining = decreaseHeart();
     if (gameArena) { gameArena.classList.add("animate-game-shake"); setTimeout(() => gameArena?.classList.remove("animate-game-shake"), 400); }
     showGameFloatingEffect("위험선 도달! -1 ❤️", false);
@@ -214,7 +224,21 @@
     cancelGameLoop();
     if (window.stopTTS) window.stopTTS();
 
+    // ⚡ [핵심] 내려오던 타일을 즉시 화면에서 제거/숨김
+    const bubble = document.getElementById("game-dropping-bubble") || document.getElementById("dropping-word");
+    if (bubble) {
+      bubble.classList.add("hidden");
+      bubble.style.display = "none";
+    }
+
     const currentQ = (gameQuestions && gameQuestions[currentQuestionIdx]) || (window.gameQuestions && window.gameQuestions[currentQuestionIdx]);
+    if (currentQ) {
+      correctWords.push(currentQ);
+      window.correctWords = correctWords;
+    }
+    totalAttemptCount++;
+    window.totalAttemptCount = totalAttemptCount;
+
     if (currentQ && typeof window.recordAnswerResult === "function") {
       try { window.recordAnswerResult(currentQ, true); } catch (_) { }
     }
@@ -238,15 +262,20 @@
     showGameFloatingEffect(combo >= 3 ? `🔥 ${combo} 콤보!` : "정답!", true);
     if (typeof window.playSound === "function") window.playSound("correct");
 
-    gameNextQuestionTimer = setTimeout(nextQuestion, 600);
+    // ⚡ [핵심] 600ms 대기 제거: 버튼 초록색 피드백만 스치듯 보여주고(70ms) 바로 다음 문제 생성
+    if (gameNextQuestionTimer) clearTimeout(gameNextQuestionTimer);
+    gameNextQuestionTimer = setTimeout(nextQuestion, 70);
   }
+
 
   function handleWrongAnswer(btn, selectedText) {
     if (isStageFinishing || !isQuestionActive) return;
     isCurrentQuestionFailed = true; combo = 0; speedMultiplier = 1.0; updateHeaderStatusUI();
+    totalAttemptCount++;
     const currentQ = gameQuestions[currentQuestionIdx];
     if (currentQ) missedWords.push(currentQ);
     window.missedWords = missedWords;
+    window.totalAttemptCount = totalAttemptCount;
     if (btn) { btn.classList.add("!bg-red-500", "!text-white", "!border-red-600"); setTimeout(() => btn?.classList.remove("!bg-red-500", "!text-white", "!border-red-600"), 500); }
     const remaining = decreaseHeart();
     showGameFloatingEffect("오답! -1 ❤️", false);
@@ -340,9 +369,29 @@
 
   // --- 7. 화면 라이프사이클 & 모달 위임 ---
   function openGameScreen(lessonId = "node-2", session = null) {
+    // 💡 1. Pre-flight Clean: 이전 결과 모달 즉시 닫기 및 스타일 완전 초기화
+    if (typeof window.closeResultModal === "function") {
+      window.closeResultModal();
+    }
+    const resultModal = document.getElementById("game-result-modal");
+    if (resultModal) {
+      resultModal.classList.add("hidden", "opacity-0", "pointer-events-none");
+      resultModal.classList.remove("opacity-100", "pointer-events-auto");
+      resultModal.style.display = "none";
+      resultModal.style.pointerEvents = "none";
+    }
+
+    // 💡 2. 타이머 & 종료 플래그 완전 초기화
     initDOMElements();
     clearAllGameTimers();
+    cancelGameLoop();
     if (window.stopTTS) window.stopTTS();
+    try { window.speechSynthesis?.cancel(); } catch (_) { }
+    isStageFinishing = false;
+    window.isStageFinishing = false;
+    if (typeof window.resetStageFinishingFlag === "function") window.resetStageFinishingFlag();
+    sessionStartTime = Date.now();
+    window.currentSessionStartTime = sessionStartTime;
 
     // 💡 화면부터 최우선으로 복구하여 display none 상태 탈출
     if (gameScreen) {
@@ -359,6 +408,8 @@
 
     currentGameLessonId = (typeof lessonId === "object" && lessonId ? (lessonId.lessonId || lessonId.id) : lessonId) || "node-2";
     window.currentGameLessonId = currentGameLessonId;
+    if (currentGameLessonId !== "node-skip-test") window.isUnitSkipTestMode = false;
+
 
 
     const currentLang = window.currentActiveCourse || "es";
@@ -368,8 +419,38 @@
       gameQuestions = window.currentSessionQuestions.slice();
     } else if (window.quizSessionGenerator?.generateStageSession) {
       gameQuestions = window.quizSessionGenerator.generateStageSession(currentGameLessonId, currentLang, 0) || [];
+    } else if (typeof window.generateStageSession === "function") {
+      gameQuestions = window.generateStageSession(currentGameLessonId, currentLang, 0) || [];
     } else {
-      gameQuestions = [];
+      const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
+      const curUnit = course?.units?.[0];
+      if (curUnit && Array.isArray(curUnit.words)) {
+        gameQuestions = curUnit.words.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || '', term: w.word || '', meaning: w.meaning || '' }));
+      } else {
+        gameQuestions = [];
+      }
+    }
+
+    // 💡 약점 복습 진입 시 빈 배열 방어: fallback 데이터(해당 유닛 1·2과 핵심 단어) 자동 보충
+    const isReview = (currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun || window.isReviewGameMode);
+    if (isReview && (!Array.isArray(gameQuestions) || gameQuestions.length === 0)) {
+      const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(currentGameLessonId) : null;
+      const uNum = (coords && coords.unitIndex) ? coords.unitIndex : ((typeof window.currentUnitNumber === "number" ? window.currentUnitNumber : 1) || 1);
+      if (typeof window.generateReviewSession === "function") {
+        gameQuestions = window.generateReviewSession(uNum, currentLang);
+      } else if (window.quizSessionGenerator?.generateReviewSession) {
+        gameQuestions = window.quizSessionGenerator.generateReviewSession(uNum, currentLang);
+      }
+    }
+
+    // 💡 게임 엔진 최종 가드: 단어 데이터가 유효하지 않을 경우 결과 화면으로 직행하지 않고 안전하게 로드맵 복귀
+    if (!Array.isArray(gameQuestions) || gameQuestions.length === 0) {
+      console.warn("[GameEngine] No valid questions for:", currentGameLessonId, "Returning to roadmap.");
+      if (typeof window.showToast === "function") {
+        window.showToast("학습할 단어가 없습니다. 로드맵으로 돌아갑니다.", "⚠️");
+      }
+      (typeof window.exitGameToRoadmap === "function" ? window.exitGameToRoadmap : exitGameToRoadmap)(true);
+      return;
     }
 
 
@@ -380,6 +461,8 @@
     score = 0;
     speedMultiplier = 1.0;
     missedWords = [];
+    correctWords = [];
+    totalAttemptCount = 0;
     isActive = true;
     isGameActive = true;
     isPaused = false;
@@ -394,6 +477,8 @@
     window.score = 0;
     window.maxCombo = 0;
     window.missedWords = missedWords;
+    window.correctWords = correctWords;
+    window.totalAttemptCount = totalAttemptCount;
     const clearedCount = (window.nodeProgressMap?.[currentGameLessonId] || (typeof window.getNodeProgress === "function" ? window.getNodeProgress(currentGameLessonId)?.clearedCount : 0) || 0);
     const currentSubStage = Math.max(1, Math.min(3, clearedCount + 1));
     window.currentSubStageRound = currentSubStage;
@@ -403,11 +488,16 @@
 
     // 헤더 타이틀 동기화 규격
     if (gameStageTitle) {
+      const isSkipTest = window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test";
       const isBoss = (currentGameLessonId === "node-boss" || String(currentGameLessonId).includes("boss"));
       const isReview = (currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun);
       const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(currentGameLessonId) : null;
       const uNum = (coords && coords.unitIndex) ? coords.unitIndex : ((typeof window.currentUnitNumber === "number" ? window.currentUnitNumber : 1) || 1);
-      if (isBoss) {
+
+      if (isSkipTest) {
+        const targetUnit = window.currentSkipTestUnit || (uNum + 1);
+        gameStageTitle.textContent = `⚡ Unit ${targetUnit} 건너뛰기 시험`;
+      } else if (isBoss) {
         gameStageTitle.textContent = `Unit ${uNum} · 🔥 FINAL BOSS`;
       } else if (isReview) {
         gameStageTitle.textContent = `Unit ${uNum} · 🔄 약점 복습`;
@@ -419,6 +509,7 @@
         gameStageTitle.textContent = `Unit ${uNum} · Stage ${stageNum} (${roundStr}/3)`;
       }
     }
+
 
     if (gameScreen) {
       gameScreen.classList.remove("hidden", "opacity-0", "pointer-events-none");
@@ -435,7 +526,8 @@
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false; isQuestionActive = false;
     window.currentGameLessonId = currentGameLessonId; window.gameQuestions = gameQuestions;
-    window.currentQuestionIdx = currentQuestionIdx; window.score = score; window.maxCombo = maxCombo; window.missedWords = missedWords;
+    window.currentQuestionIdx = currentQuestionIdx; window.score = score; window.maxCombo = maxCombo;
+    window.missedWords = missedWords; window.correctWords = correctWords; window.totalAttemptCount = totalAttemptCount;
     return window.gameResultModal?.finishGameStage?.(isClear, customAccuracy);
   }
 
@@ -450,8 +542,103 @@
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false;
     if (gameScreen) { gameScreen.classList.add("hidden", "opacity-0", "pointer-events-none"); gameScreen.style.display = "none"; }
   }
-  function exitGameToRoadmap(force = false) { closeGameScreen(force); window.switchMainTab?.("home"); }
-  function restartStageInMemory() { clearAllGameTimers(); cancelGameLoop(); openGameScreen(currentGameLessonId, gameQuestions); }
+  function exitGameToRoadmap(force = false) {
+    closeGameScreen(force);
+    window.switchMainTab?.("home");
+
+    if (window._shouldOpenAdRechargeOnRoadmap) {
+      window._shouldOpenAdRechargeOnRoadmap = false;
+
+      const runDummyAd = () => {
+        let sec = 3;
+        const ad = document.createElement("div");
+        ad.className = "fixed inset-0 z-[10000] bg-slate-950 flex flex-col items-center justify-center text-white select-none";
+        ad.innerHTML = `
+          <div class="absolute top-5 right-5 px-3 py-1 bg-black/60 rounded-full text-xs font-bold text-slate-300">
+            광고 <span id="ad-sec" class="text-amber-400 font-extrabold text-sm ml-1">${sec}</span>초 후 완료
+          </div>
+          <div class="text-6xl mb-4 animate-pulse">🎬</div>
+          <div class="text-xl font-black mb-1">스폰서 광고 재생 중</div>
+          <p class="text-xs text-slate-400 mb-6">시청 완료 시 하트 5개가 즉시 충전됩니다</p>
+          <div class="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="ad-bar" class="h-full bg-amber-400 transition-all duration-1000 ease-linear" style="width: 0%"></div>
+          </div>
+        `;
+        document.body.appendChild(ad);
+
+        const timer = setInterval(() => {
+          sec--;
+          const secEl = ad.querySelector("#ad-sec");
+          const barEl = ad.querySelector("#ad-bar");
+          if (secEl) secEl.textContent = sec;
+          if (barEl) barEl.style.width = `${((3 - sec) / 3) * 100}%`;
+
+          if (sec <= 0) {
+            clearInterval(timer);
+            ad.remove();
+            window.setUserHearts?.(5);
+          }
+        }, 1000);
+      };
+
+      if (typeof window.showRewardAd === "function") {
+        window.showRewardAd({ onReward: () => window.setUserHearts?.(5) });
+      } else {
+        setTimeout(runDummyAd, 300);
+      }
+    }
+  }
+
+
+
+  function restartStageInMemory() {
+    clearAllGameTimers();
+    cancelGameLoop();
+    if (typeof window.closeResultModal === "function") window.closeResultModal();
+    openGameScreen(currentGameLessonId, gameQuestions);
+  }
+
+  // 💡 [단일 책임] 광고 보고 하트 채워 이어하기 (부활 전용 함수)
+  function reviveGameWithAd() {
+    clearAllGameTimers();
+    cancelGameLoop();
+
+    // 1. 인게임 코어 생명 수치 = 3으로 강제 설정 및 UI 즉시 동기화
+    currentHearts = 3;
+    updateHeartsUI();
+    if (typeof window.setUserHearts === "function") window.setUserHearts(3);
+    if (typeof window.updateHeaderHearts === "function") window.updateHeaderHearts(3);
+    window.hearts = 3;
+
+    // 2. 게임오버 및 일시정지 플래그 해제, 게임 활성화
+    isActive = true;
+    isGameActive = true;
+    isPaused = false;
+    isFrozen = false;
+    isStageFinishing = false;
+    if (typeof window.resetStageFinishingFlag === "function") window.resetStageFinishingFlag();
+
+    window.isActive = true;
+    window.isGameActive = true;
+    window.isPaused = false;
+    window.isStageFinishing = false;
+
+    // 3. 기존 잔여 버블 DOM 및 화면 상태 클린업
+    if (gameDroppingBubble) {
+      gameDroppingBubble.style.transition = "none";
+      gameDroppingBubble.style.transform = "translate3d(0, 0px, 0)";
+      gameDroppingBubble.classList.remove("hidden");
+      gameDroppingBubble.style.display = "flex";
+      gameDroppingBubble.style.opacity = "1";
+    }
+    if (gameFreezeOverlay) gameFreezeOverlay.classList.add("hidden");
+
+    // 4. 현재 진행 중이던 문제 번호로 즉시 단어 버블 재생성 및 낙하 루프 재가동
+    const targetQIdx = Math.max(0, Math.min((gameQuestions.length || 1) - 1, currentQuestionIdx));
+    spawnQuestion(targetQIdx);
+
+    showGameFloatingEffect("❤️ 부활! 하트 3개 충전!", true);
+  }
 
   // startWrongWordsMiniReview: onComplete: () => closeFlashcardScreen()
   function startWrongWordsMiniReview() {
@@ -481,13 +668,13 @@
   // Public Exports
   Object.assign(window, {
     openGameScreen, closeGameScreen, exitGameToRoadmap,
-    restartGame: restartStageInMemory, restartStageInMemory,
+    restartGame: restartStageInMemory, restartStageInMemory, reviveGameWithAd,
     finishGameStage, triggerGameOver, renderResultModal: isClear => finishGameStage(isClear),
     decreaseHeart, updateHeartsUI, updateItemCountUI,
     handleCorrectAnswer, judgeAnswerDirectly, spawnQuestion, startWrongWordsMiniReview,
     startFallingGame: (lessonId, session) => openGameScreen(lessonId, session),
     launchGame: (type, list, opt) => openGameScreen(opt?.lessonId || "node-2", list),
-    getGameEngineState: () => ({ currentGameLessonId, currentHearts, score, combo, maxCombo, missedWords, totalQ: gameQuestions.length, currentQuestionIdx })
+    getGameEngineState: () => ({ currentGameLessonId, currentHearts, score, combo, maxCombo, missedWords, correctWords, totalAttemptCount, totalQ: gameQuestions.length, currentQuestionIdx })
   });
 
   if (document.readyState === "loading") {

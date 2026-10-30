@@ -228,6 +228,15 @@
   function generateStageSession(lessonId = 'node-2', lang = 'es', roundIndex = 0) {
     const rawLessonId = lessonId || 'node-2';
     const normId = normalizeLessonId(rawLessonId);
+    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || lang || 'es') === 'en' ? 'en' : 'es';
+
+    // 💡 약점 복습 노드 인입 시 전용 복습 세션 생성기로 즉시 라우팅
+    if (normId === 'node-review' || String(rawLessonId).includes('review') || String(rawLessonId).endsWith('_n4')) {
+      const coords = (typeof window.parseNodeCoordinates === 'function') ? window.parseNodeCoordinates(rawLessonId) : null;
+      const uNum = (coords && coords.unitIndex) ? coords.unitIndex : ((typeof window.currentUnitNumber === 'number' ? window.currentUnitNumber : 1) || 1);
+      return generateReviewSession(uNum, currentCourseLang);
+    }
+
     const targetCourse = (typeof window.getCurrentCourseData === 'function')
       ? window.getCurrentCourseData()
       : ((window.COURSES && window.COURSES[lang]) ? window.COURSES[lang] : (window.courseData_es || window.courseData));
@@ -236,7 +245,6 @@
       return [];
     }
 
-    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || lang || 'es') === 'en' ? 'en' : 'es';
     const unlockedLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentCourseLang) : 1) || 1;
     const currentUnitIdx = (typeof window.currentUnitIndex === 'number' && !isNaN(window.currentUnitIndex))
       ? window.currentUnitIndex
@@ -365,26 +373,28 @@
         subStage = window.currentSubStageRound;
       }
 
-      // 1) 기본 단어(baseWords, 10개)
+      // 1) 기본 단어(baseWords)
       let baseWords = pool.slice();
-      if (baseWords.length < 10 && targetUnit && Array.isArray(targetUnit.words)) {
+      if (baseWords.length < 15 && targetUnit && Array.isArray(targetUnit.words)) {
         for (const w of targetUnit.words) {
           if (!baseWords.some(bw => bw.id === w.id || (bw.word || bw.term || '').toLowerCase() === (w.word || w.term || '').toLowerCase())) {
             baseWords.push(w);
-            if (baseWords.length >= 10) break;
+            if (baseWords.length >= 15) break;
           }
         }
       }
-      if (baseWords.length < 10 && pool.length > 0) {
+      if (baseWords.length < 15 && pool.length > 0) {
         let pIdx = 0;
         const origBase = baseWords.slice();
-        while (baseWords.length < 10) {
+        while (baseWords.length < 15) {
           baseWords.push({ ...origBase[pIdx % origBase.length] });
           pIdx++;
         }
       }
-      if (baseWords.length > 10) {
-        baseWords = baseWords.slice(0, 10);
+
+      const maxCount = window.isUnitSkipTestMode ? 15 : 10;
+      if (baseWords.length > maxCount) {
+        baseWords = baseWords.slice(0, maxCount);
       }
       const baseWordIds = new Set(baseWords.map(w => w.id).filter(Boolean));
       const baseWordTerms = new Set(baseWords.map(w => (w.word || w.term || '').toLowerCase()).filter(Boolean));
@@ -494,7 +504,9 @@
       }
 
       // 회차별 분기 처리
-      if (subStage === 1) {
+      if (window.isUnitSkipTestMode) {
+        selected = shuffleArray([...baseWords]).slice(0, 15);
+      } else if (subStage === 1) {
         if (currentUnitIdx >= 1 && eligibleWeakWords.length > 0) {
           const numWeak = Math.min(eligibleWeakWords.length, 3);
           const weakSlice = eligibleWeakWords.slice(0, numWeak).map(w => ({
@@ -502,6 +514,7 @@
             isWeakReview: true,
             tag: '이전 챕터 오답 복습'
           }));
+
           const numBase = 10 - weakSlice.length;
           const baseSlice = shuffleArray(baseWords).slice(0, numBase);
           selected = shuffleArray([...baseSlice, ...weakSlice]);
@@ -865,6 +878,110 @@
   }
 
 
+  // 해당 유닛(Unit)의 1과·2과 학습 단어 풀 추출 헬퍼 (퍼펙트 유저 복습 Fallback 전용)
+  function getReviewFallbackWords(unitNum = 1, lang = 'es') {
+    const currentLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const course = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : ((window.COURSES && window.COURSES[currentLang]) ? window.COURSES[currentLang] : (window.courseData_es || window.courseData));
+
+    const targetUnit = course?.units?.find(u => (u.unitId || u.unitNumber || u.id) === unitNum)
+      || course?.units?.[unitNum - 1]
+      || course?.units?.[0];
+
+    let pool = [];
+    if (targetUnit) {
+      const unitWords = Array.isArray(targetUnit.words) ? targetUnit.words : [];
+      const stage1And2WordIds = [];
+      if (Array.isArray(targetUnit.nodes)) {
+        const s1 = targetUnit.nodes.find(n => n.stageNumber === 1 || (n.id && n.id.endsWith('_n1')) || (n.id && n.id.includes('stage-1')) || (n.id && n.id.includes('node-1')));
+        const s2 = targetUnit.nodes.find(n => n.stageNumber === 2 || (n.id && n.id.endsWith('_n2')) || (n.id && n.id.includes('stage-2')) || (n.id && n.id.includes('node-2')));
+        if (s1 && Array.isArray(s1.wordIds)) stage1And2WordIds.push(...s1.wordIds);
+        if (s2 && Array.isArray(s2.wordIds)) stage1And2WordIds.push(...s2.wordIds);
+      }
+      if (stage1And2WordIds.length > 0) {
+        pool = unitWords.filter(w => stage1And2WordIds.includes(w.id));
+      }
+      if (pool.length === 0) {
+        pool = unitWords.slice(0, 20);
+      }
+    }
+
+    if (pool.length === 0 && course && Array.isArray(course.allWords)) {
+      pool = course.allWords.slice(0, 20);
+    }
+    return pool;
+  }
+
+  // 약점(오답) 복습 세션 전용 문제 생성기 (오답 우선 + 오답 0개 시 유닛 1·2과 핵심 단어 10개 완벽 주입)
+  function generateReviewSession(unitNum = 1, lang = 'es') {
+    const currentLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let wrongList = [];
+    if (typeof window.loadWrongWords === 'function') {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      wrongList = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
+    } else {
+      try {
+        const raw = localStorage.getItem('vocadash_wrong_words');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            wrongList = parsed.filter(w => (w.lang || 'es') === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
+          }
+        }
+      } catch (_) { }
+    }
+
+    let selected = [];
+    if (wrongList.length >= 10) {
+      selected = shuffleArray([...wrongList]).slice(0, 10);
+    } else if (wrongList.length >= 1) {
+      const shuffledWrong = shuffleArray([...wrongList]);
+      selected = [...shuffledWrong];
+      const fallbackPool = shuffleArray(getReviewFallbackWords(unitNum, currentLang));
+      let fIdx = 0;
+      while (selected.length < 10 && fallbackPool.length > 0) {
+        const candidate = fallbackPool[fIdx % fallbackPool.length];
+        if (!selected.some(w => (w.word || w.term || '').toLowerCase() === (candidate.word || candidate.term || '').toLowerCase())) {
+          selected.push(candidate);
+        } else if (fallbackPool.length < 10) {
+          selected.push({ ...candidate });
+        }
+        fIdx++;
+        if (fIdx > 40) break;
+      }
+      let wIdx = 0;
+      while (selected.length < 10 && wrongList.length > 0) {
+        selected.push({ ...shuffledWrong[wIdx % shuffledWrong.length] });
+        wIdx++;
+      }
+      selected = shuffleArray(selected);
+    } else {
+      // 🌟 오답 단어가 0개인 경우(퍼펙트 클리어 유저): 해당 유닛 1과·2과 핵심 단어 10개 추출
+      const fallbackPool = shuffleArray(getReviewFallbackWords(unitNum, currentLang));
+      let fIdx = 0;
+      while (selected.length < 10 && fallbackPool.length > 0) {
+        selected.push({ ...fallbackPool[fIdx % fallbackPool.length] });
+        fIdx++;
+      }
+      selected = shuffleArray(selected);
+    }
+
+    return selected.slice(0, 10).map((item, idx) => ({
+      id: item.id || `speedrun-q-${idx}`,
+      word: item.term || item.word || '',
+      term: item.term || item.word || '',
+      meaning: item.meaning || item.kor || item.ko || '',
+      phonetic: item.pronunciation || item.phonetic || '',
+      correctStreak: Number(item.correctStreak) || 0,
+      type: 'word',
+      isSentence: false,
+      tag: '약점 복습',
+      isReviewMode: true,
+      lang: item.lang || currentLang
+    }));
+  }
+
   // Window Exports
   window.shuffleArray = shuffleArray;
   window.getWeakWordIds = getWeakWordIds;
@@ -874,6 +991,8 @@
   window.normalizeLessonId = normalizeLessonId;
   window.getStageWordPool = getStageWordPool;
   window.getDistractorOptions = getDistractorOptions;
+  window.getReviewFallbackWords = getReviewFallbackWords;
+  window.generateReviewSession = generateReviewSession;
   window.generateStageSession = generateStageSession;
   window.generateClozeQuestionsForUnit = generateClozeQuestionsForUnit;
   window.generateQuestionChoices = generateQuestionChoices;
@@ -887,7 +1006,10 @@
     normalizeLessonId,
     getStageWordPool,
     getDistractorOptions,
+    getReviewFallbackWords,
+    generateReviewSession,
     generateStageSession,
+    generateDeckForStage: generateStageSession,
     generateClozeQuestionsForUnit,
     generateQuestionChoices
   };

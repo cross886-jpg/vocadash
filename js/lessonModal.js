@@ -19,6 +19,14 @@
       return;
     }
 
+    // 💡 약점 복습 노드 인입 시 전용 스피드런 모달로 안전하게 전환
+    if (nodeId === "node-review" || String(nodeId).includes("review")) {
+      const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(nodeId) : null;
+      const uNum = (coords && coords.unitIndex) ? coords.unitIndex : (window.currentUnitNumber || 1);
+      openReviewSpeedrunModal(uNum, nodeId);
+      return;
+    }
+
     const gScreen = el("game-screen");
     if (gScreen && gScreen.classList.contains("opacity-100") && !gScreen.classList.contains("pointer-events-none")) return;
 
@@ -236,7 +244,97 @@
     card.classList.add("opacity-0", "scale-95");
   }
 
+  // 💡 약점 복습 스피드런 모달 제어 함수
+  function openReviewSpeedrunModal(unitNum = null, nodeId = null) {
+    const backdrop = el("review-speedrun-modal-backdrop");
+    const card = el("review-speedrun-modal-card");
+    if (!backdrop || !card) return;
+
+    const resolvedUnit = unitNum || (nodeId && typeof window.parseNodeCoordinates === "function" ? window.parseNodeCoordinates(nodeId).unitIndex : null) || window.currentUnitNumber || 1;
+    const resolvedNodeId = nodeId || (typeof window.getCompositeNodeKey === "function" ? window.getCompositeNodeKey("node-review", resolvedUnit) : `u${resolvedUnit}_node-review`);
+    window.currentReviewUnitNumber = resolvedUnit;
+    window.currentReviewNodeId = resolvedNodeId;
+
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    let wrongList = [];
+    if (typeof window.loadWrongWords === "function") {
+      const loaded = window.loadWrongWords(currentLang) || [];
+      wrongList = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
+    } else {
+      try {
+        const raw = localStorage.getItem("vocadash_wrong_words");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            wrongList = parsed.filter(w => (w.lang || "es") === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
+          }
+        }
+      } catch (_) { }
+    }
+
+    const titleEl = el("review-speedrun-modal-title");
+    const descEl = el("review-speedrun-modal-desc");
+    const countText = el("review-speedrun-target-count");
+    if (titleEl) titleEl.textContent = "⚡ 약점 극복 스피드 런 (10문제)";
+
+    const wrongCount = wrongList.length;
+    if (wrongCount === 0) {
+      if (descEl) descEl.textContent = "오답 노트가 깨끗합니다! 👏 현재 유닛의 핵심 단어 전체 복습 런으로 진행됩니다.";
+      if (countText) countText.textContent = "유닛 핵심 단어 10개 코스";
+    } else {
+      if (descEl) descEl.textContent = "틀렸던 약점 단어를 포함해 총 10문제를 달립니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)";
+      if (countText) countText.textContent = `오답 단어 ${Math.min(10, wrongCount)}개 코스`;
+    }
+
+    backdrop.classList.remove("opacity-0", "pointer-events-none");
+    backdrop.classList.add("opacity-100", "pointer-events-auto");
+    card.classList.remove("opacity-0", "scale-95");
+    card.classList.add("opacity-100", "scale-100");
+  }
+
+  function closeReviewSpeedrunModal() {
+    const backdrop = el("review-speedrun-modal-backdrop");
+    const card = el("review-speedrun-modal-card");
+    if (!backdrop || !card) return;
+    backdrop.classList.remove("opacity-100", "pointer-events-auto");
+    backdrop.classList.add("opacity-0", "pointer-events-none");
+    card.classList.remove("opacity-100", "scale-100");
+    card.classList.add("opacity-0", "scale-95");
+  }
+
+  function startRoadmapReviewSpeedrun() {
+    closeReviewSpeedrunModal();
+    if (typeof window.closeResultModal === "function") window.closeResultModal();
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    const targetReviewUnit = window.currentReviewUnitNumber || window.currentUnitNumber || 1;
+    const targetReviewId = window.currentReviewNodeId || (typeof window.getCompositeNodeKey === "function" ? window.getCompositeNodeKey("node-review", targetReviewUnit) : `u${targetReviewUnit}_node-review`);
+
+    let sessionQuestions = [];
+    if (typeof window.generateReviewSession === "function") {
+      sessionQuestions = window.generateReviewSession(targetReviewUnit, currentLang);
+    } else if (window.quizSessionGenerator?.generateReviewSession) {
+      sessionQuestions = window.quizSessionGenerator.generateReviewSession(targetReviewUnit, currentLang);
+    }
+
+    window.isReviewGameMode = true;
+    window.isRoadmapReviewSpeedrun = true;
+    window.currentReviewSpeedrunWords = sessionQuestions;
+    window.currentSpeedrunSessionWords = sessionQuestions;
+    window.currentSessionQuestions = sessionQuestions;
+
+    if (typeof window.openGameScreen === "function") {
+      window.openGameScreen(targetReviewId, sessionQuestions);
+    }
+
+    const titleEl = document.getElementById("game-stage-title");
+    if (titleEl) {
+      titleEl.textContent = `Unit ${targetReviewUnit} · 🔄 약점 복습`;
+    }
+  }
+
   function startLesson(nodeId) {
+    closeLessonModal();
+    if (typeof window.closeResultModal === "function") window.closeResultModal();
     const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || "node-2";
     window.currentSelectedNodeId = targetNodeId;
     window.currentGameLessonId = targetNodeId;
@@ -328,6 +426,17 @@
       bonusBackdrop._bonusBackdropBound = true;
     }
     on("btn-close-bonus-modal", "click", closeBonusModal);
+
+    // 약점 극복 스피드런 모달 이벤트 바인딩
+    on("btn-start-speedrun-game", "click", startRoadmapReviewSpeedrun);
+    on("btn-close-speedrun-modal", "click", closeReviewSpeedrunModal);
+    const speedrunBackdrop = el("review-speedrun-modal-backdrop");
+    if (speedrunBackdrop && !speedrunBackdrop._speedrunBound) {
+      speedrunBackdrop.addEventListener("click", (e) => {
+        if (e.target === speedrunBackdrop) closeReviewSpeedrunModal();
+      });
+      speedrunBackdrop._speedrunBound = true;
+    }
   }
 
   if (typeof document !== "undefined") {
@@ -342,6 +451,9 @@
   window.closeLessonModal = closeLessonModal;
   window.openBonusModal = openBonusModal;
   window.closeBonusModal = closeBonusModal;
+  window.openReviewSpeedrunModal = openReviewSpeedrunModal;
+  window.closeReviewSpeedrunModal = closeReviewSpeedrunModal;
+  window.startRoadmapReviewSpeedrun = startRoadmapReviewSpeedrun;
   window.startLesson = startLesson;
   window.initLessonModalEvents = initLessonModalEvents;
   window.setupLessonModalEvents = initLessonModalEvents;

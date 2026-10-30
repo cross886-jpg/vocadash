@@ -482,6 +482,7 @@
 
   // 1분 스피드 복습 시작 로직
   function startGameWithWords(words, options = {}) {
+    if (typeof target.closeResultModal === 'function') target.closeResultModal();
     const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const fallbackList = (Array.isArray(target.wrongWords) ? target.wrongWords : []).filter(
       (item) => (item.lang || currentLang) === currentLang

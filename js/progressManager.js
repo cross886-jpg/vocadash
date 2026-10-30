@@ -56,11 +56,29 @@
     const prog = getCourseProgress(cid, lang);
     if (!prog.unlockedUnits) prog.unlockedUnits = [1];
     for (let u = 1; u <= lvl; u++) if (!prog.unlockedUnits.includes(u)) prog.unlockedUnits.push(u);
+    prog.currentUnit = lvl;
+    target.currentUnitNumber = lvl;
     saveCourseProgress(prog, cid, lang);
     return lvl;
   }
+
   function unlockUnitsUpTo(maxLevel, targetLang, targetCourseId) {
-    return setUnlockedUnitLevel(maxLevel, targetLang, targetCourseId);
+    const lvl = setUnlockedUnitLevel(maxLevel, targetLang, targetCourseId);
+    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    for (let u = 1; u < lvl; u++) {
+      [1, 2, 3].forEach(n => {
+        const stdKey = `vocadash_prog_${lang}_${cid}_u${u}_n${n}`;
+        if (!storage.get(stdKey)) storage.set(stdKey, '3');
+        if (u === 1) storage.set(`node_progress_${lang}_${cid}_node-${n}`, '3');
+      });
+      const bossKey = `vocadash_prog_${lang}_${cid}_u${u}_n6`;
+      if (!storage.get(bossKey)) storage.set(bossKey, '1');
+      if (u === 1) storage.set(`node_progress_${lang}_${cid}_node-boss`, '1');
+    }
+    target.currentUnitNumber = lvl;
+    target._currentVisibleUnitIndex = lvl - 1;
+    target.renderRoadmap?.();
+    return lvl;
   }
 
   function getNodeProgress(nodeId, targetLang, targetCourseId) {
@@ -123,6 +141,9 @@
 
   function isNodeUnlocked(currentUnitIndex, nodeIndex, node, course) {
     const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
+    const unitNum = currentUnitIndex + 1;
+    const unlockedLevel = (typeof target.getUnlockedUnitLevel === 'function' ? target.getUnlockedUnitLevel(lang, courseId) : 1) || 1;
+    if (unitNum < unlockedLevel) return true;
     if (currentUnitIndex === 0 && nodeIndex === 0) return true;
     const targetCourse = course || (typeof target.getCurrentCourseData === 'function' ? target.getCurrentCourseData() : (target.packFootballData || target.courseData));
     if (nodeIndex === 0) {
@@ -134,12 +155,14 @@
     const nodeId = node?.id || (typeof node === 'string' ? node : ''), nodeType = node?.type || '';
     if (currentUnitIndex === 0) {
       if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeIndex === 0) return true;
-      const p1 = (getNodeProgress('node-1', lang, courseId)?.clearedCount || 0), isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n2');
-      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n2' || nodeType === 'bonus' || nodeIndex === 1) return p1 >= 3;
-      if (nodeId === 'node-2' || nodeId === 'fb_1_n3' || (nodeIndex === 2 && (nodeType === 'stage' || !nodeType))) return p1 >= 3;
+      const p1 = (getNodeProgress('node-1', lang, courseId)?.clearedCount || 0);
+      if (nodeId === 'node-2' || nodeId === 'fb_1_n2' || (nodeIndex === 1 && (nodeType === 'stage' || !nodeType))) return p1 >= 3;
       const p2 = (getNodeProgress('node-2', lang, courseId)?.clearedCount || 0);
-      if (nodeId === 'node-review' || nodeId === 'fb_1_n5' || nodeType === 'review') return p2 >= 3 && isBonusDone;
-      if (nodeId === 'node-3' || nodeId === 'fb_1_n4' || nodeType === 'sentence' || (nodeIndex === 3 && nodeType === 'sentence') || nodeIndex === 4) return p2 >= 3;
+      const isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n3');
+      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n3' || nodeType === 'bonus' || nodeIndex === 2) return p2 >= 3;
+      if (nodeId === 'node-review' || nodeId === 'fb_1_n4' || nodeType === 'review' || nodeIndex === 3) return p2 >= 3 && isBonusDone;
+      const isReviewDone = isReviewNodeCompleted('node-review', 1) || isReviewNodeCompleted('fb_1_n4', 1);
+      if (nodeId === 'node-3' || nodeId === 'fb_1_n5' || nodeType === 'sentence' || (nodeIndex === 4 && nodeType === 'sentence') || nodeIndex === 4) return isReviewDone;
       if (nodeId === 'node-boss' || nodeId === 'fb_1_n6' || nodeType === 'boss' || nodeIndex === 5) return (getNodeProgress('node-3', lang, courseId)?.clearedCount || 0) >= 3;
     }
     if (targetCourse?.units?.[currentUnitIndex]?.nodes) {
@@ -175,7 +198,7 @@
     });
     try {
       const uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-      if (!(uData.clearedNodes?.[ 'node-3']?.actuallyPlayed || uData.clearedNodes?.[ 'u1_node-3']?.actuallyPlayed) && result['node-3'] > 0) {
+      if (!(uData.clearedNodes?.['node-3']?.actuallyPlayed || uData.clearedNodes?.['u1_node-3']?.actuallyPlayed) && result['node-3'] > 0) {
         result['node-3'] = result[`${lang}_${courseId}_u1_n3`] = result['u1_stage-3'] = result['u1_node-3'] = 0;
         storage.remove(`vocadash_prog_${lang}_${courseId}_u1_n3`); storage.remove('u1_node-3');
       }
@@ -290,7 +313,7 @@
     target.saveNodeProgress?.(); target.updateRoadmapNodesUI?.(); target.renderRoadmap?.();
   }
   function handleClaimBonus(nodeId = 'node-bonus', unitNum = 1) {
-    if (!isNodeUnlocked(unitNum - 1, 1, { type: 'bonus', id: nodeId })) return target.showToast?.('1과를 먼저 완료해야 열려요! 🔒');
+    if (!isNodeUnlocked(unitNum - 1, 2, { type: 'bonus', id: nodeId })) return target.showToast?.('2과를 먼저 완료해야 열려요! 🔒');
     if (isBonusClaimed(nodeId)) return target.showToast?.('이미 수령한 보너스 선물입니다. 📦');
     let curGems = (parseInt(storage.get('vocadash_gems'), 10) || 120) + 15;
     storage.set('vocadash_gems', String(curGems));
@@ -300,18 +323,45 @@
     target.showToast?.('🎁 보너스 선물 도착! 보석 +15개를 획득했습니다! 💎', '🎉');
     target.openBonusModal?.(nodeId); target.updateRoadmapNodesUI?.(); target.renderRoadmap?.();
   }
+
+  // 💡 [단일 책임] 보너스 상자 모달 '보상 받기' 클릭 시 전용 수령 처리 함수
+  function claimBonusReward(nodeId = 'node-bonus') {
+    if (!nodeId) nodeId = 'node-bonus';
+    if (isBonusClaimed(nodeId)) {
+      target.showToast?.('이미 수령한 보너스 선물입니다. 📦');
+      return false;
+    }
+
+    // 1. 보석 +15개 합산 및 로컬스토리지 / 상단 헤더 UI 즉시 갱신
+    let curGems = (parseInt(storage.get('vocadash_gems'), 10) || 120) + 15;
+    storage.set('vocadash_gems', String(curGems));
+    const gemsEl = document.getElementById('header-gems-count');
+    if (gemsEl) gemsEl.textContent = curGems;
+
+    // 2. 수령 완료 상태 확정 저장 (isBonusClaimed(nodeId) -> true)
+    markBonusClaimed(nodeId);
+    target.playSound?.('gem');
+
+    // 3. 로드맵 노드 UI 및 순차 해금 파이프라인(약점 복습 해금) 즉시 재렌더링
+    target.updateRoadmapNodesUI?.();
+    target.renderRoadmap?.();
+
+    target.showToast?.('🎁 보너스 선물 수령 완료! 💎 +15 다이아몬드 획득!', '🎉');
+    return true;
+  }
   function handleReviewNodeClick(nodeId = 'node-review', unitNum = 1) {
     const bonusId = (unitNum === 1) ? 'node-bonus' : `u${unitNum}-bonus`;
     if (!isBonusClaimed(bonusId)) return target.showToast?.('보너스 선물상자를 먼저 수령해 주세요! 🎁');
-    let weakWords = [];
-    try { const saved = JSON.parse(storage.get('vocadash_weak_word_ids') || '[]'); if (Array.isArray(saved)) weakWords = saved.filter(Boolean); } catch (_) { }
-    if (weakWords.length > 0) {
-      if (typeof target.openReviewSpeedrunModal === 'function') target.openReviewSpeedrunModal();
-      else target.showToast?.('⚡ 오답 단어 복습 세션을 시작합니다!');
+
+    if (typeof target.openReviewSpeedrunModal === 'function') {
+      target.openReviewSpeedrunModal(unitNum, nodeId);
+    } else if (typeof target.startRoadmapReviewSpeedrun === 'function') {
+      target.startRoadmapReviewSpeedrun();
     } else {
-      markReviewNodeCompleted(nodeId, unitNum);
-      target.showToast?.('멋져요! 틀린 단어가 없어 약점 복습을 패스합니다. (+10 XP) ✨', '🎉');
-      target.updateRoadmapNodesUI?.(); target.renderRoadmap?.();
+      const session = (typeof target.generateReviewSession === 'function') ? target.generateReviewSession(unitNum, getLang()) : [];
+      target.isReviewGameMode = true;
+      target.isRoadmapReviewSpeedrun = true;
+      target.openGameScreen?.(nodeId, session);
     }
   }
 
@@ -377,9 +427,19 @@
     let calculatedAccuracy = 100;
     if (accuracy !== null && !isNaN(Number(accuracy))) calculatedAccuracy = Math.max(0, Math.min(100, Math.round(Number(accuracy))));
     else {
-      const wrongCount = Array.isArray(missedWords) ? missedWords.length : 0, totalQ = (Array.isArray(questions) && questions.length) || 10;
-      calculatedAccuracy = wrongCount === 0 ? 100 : Math.max(0, Math.min(100, Math.round(((totalQ - wrongCount) / totalQ) * 100)));
+      const attempts = Number(target.totalAttemptCount) || 0;
+      const correct = Array.isArray(target.correctWords) ? target.correctWords.length : 0;
+      if (attempts > 0 && correct > 0) {
+        calculatedAccuracy = Math.max(0, Math.min(100, Math.round((correct / attempts) * 100)));
+      } else if (attempts > 0 && correct === 0) {
+        calculatedAccuracy = 0;
+      } else {
+        const wrongCount = Array.isArray(missedWords) ? missedWords.length : 0, totalQ = (Array.isArray(questions) && questions.length) || 10;
+        calculatedAccuracy = wrongCount === 0 ? 100 : Math.max(0, Math.min(100, Math.round(((totalQ - wrongCount) / totalQ) * 100)));
+      }
     }
+    // 💡 완주(saveStageClearResult 호출) 시 최소 50% 정확도 보장 (부활 후 완주 판정 정합성)
+    if (calculatedAccuracy < 50) calculatedAccuracy = 50;
     const stars = calculatedAccuracy >= 90 ? 3 : (calculatedAccuracy >= 70 ? 2 : (calculatedAccuracy >= 50 ? 1 : 0));
     target.lastEarnedStars = stars;
     if (Array.isArray(questions) && questions.length > 0) target.addMasteredWords?.(questions);
@@ -476,11 +536,15 @@
 
     if (status === 'active' || status === 'completed') {
       closeUnitOverviewModal();
-      const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (typeof target.switchToUnit === 'function') {
+        target.switchToUnit(uNum);
       } else {
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        target.currentUnitNumber = uNum;
+        target._currentVisibleUnitIndex = uNum - 1;
+        target.updateTopUnitBanner?.(uNum - 1);
+        const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
+        if (targetSection) targetSection.scrollIntoView({ behavior: 'instant', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'instant' });
       }
       if (typeof target.showToast === 'function') {
         target.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
@@ -533,15 +597,29 @@
     }
   }
   function startUnitSkipTest(targetUnit = 2) {
-    target.isUnitSkipTestMode = true; target.currentSkipTestUnit = targetUnit;
+    if (typeof target.closeResultModal === 'function') target.closeResultModal();
+    target.isUnitSkipTestMode = true;
+    target.currentSkipTestUnit = targetUnit;
+    window.skipTestOriginalHearts = typeof window.userHearts === 'number' ? window.userHearts : 5;
     const questions = (target.quizSessionGenerator?.generateDeckForStage?.('node-boss', getLang(), 1) || []).slice(0, 15);
     target.currentSessionQuestions = questions;
     target.openGameScreen?.('node-skip-test', questions);
   }
+
   function initUnitOverviewEvents() {
     const on = (id, fn) => { const el = document.getElementById(id); if (el && !el._bound) { el.addEventListener('click', fn); el._bound = true; } };
     on('unit-banner', openUnitOverviewModal); on('unit-dropdown-btn', openUnitOverviewModal);
-    on('close-unit-overview-btn', closeUnitOverviewModal); on('unit-overview-confirm-btn', closeUnitOverviewModal);
+    on('close-unit-overview-btn', closeUnitOverviewModal);
+    on('unit-overview-confirm-btn', () => {
+      closeUnitOverviewModal();
+      const lang = getLang();
+      const unlockedLvl = getUnlockedUnitLevel(lang);
+      if (typeof target.switchToUnit === 'function') {
+        target.switchToUnit(unlockedLvl);
+      } else if (typeof target.focusActiveRoadmapNode === 'function') {
+        target.focusActiveRoadmapNode();
+      }
+    });
     on('btn-close-unit-skip-modal', closeUnitSkipModal);
     on('btn-start-unit-skip-test', () => { closeUnitSkipModal(); closeUnitOverviewModal(); startUnitSkipTest(target.currentSkipTestUnit || 2); });
     const listEl = document.getElementById('unit-overview-list');
@@ -560,7 +638,7 @@
     getCompositeNodeKey, parseNodeCoordinates, getCourseProgress, saveCourseProgress, getUnlockedUnitLevel, setUnlockedUnitLevel,
     unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
     resolveNodeData, isNodeUnlocked, getNodeStatus, loadNodeProgress, saveNodeProgress, getClaimedBonuses, isBonusClaimed,
-    markBonusClaimed, handleClaimBonus, migrateLegacyReviewData, isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
+    markBonusClaimed, handleClaimBonus, claimBonusReward, claimBonus: claimBonusReward, migrateLegacyReviewData, isReviewNodeCompleted, isReviewCompleted: isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
     handleReviewNodeClick, resolveCurrentNode, getSlotAlias, getNextNodeId, saveStageClearResult, getNextStageStep,
     renderUnitOverviewList, openUnitOverviewModal, closeUnitOverviewModal, openUnitSkipModal, closeUnitSkipModal, startUnitSkipTest
   });

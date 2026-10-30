@@ -318,14 +318,21 @@
 
     if (!show) setTimeout(() => { if (backdrop?.classList.contains('opacity-0')) modal?.classList.add('hidden'); }, 200);
   };
-
   function initStreakEvents() {
     ['streak-trigger', 'streak-badge', 'btn-open-streak'].forEach(id => {
       document.getElementById(id)?.addEventListener('click', () => toggleStreakModal(true));
     });
+
     ['close-streak-modal-btn', 'btn-streak-modal-close'].forEach(id => {
       document.getElementById(id)?.addEventListener('click', () => toggleStreakModal(false));
     });
+
+    document.getElementById('continueStreakBtn')?.addEventListener('click', () => {
+      toggleStreakModal(false);
+      const target = window.currentSelectedNodeId || window.activeRoadmapNodeId || 'node-1';
+      (window.startStageLearningPipeline || window.openGameScreen || window.focusActiveRoadmapNode)?.(target, 1);
+    });
+
     document.getElementById('streak-modal-backdrop')?.addEventListener('click', (e) => {
       if (e.target.id === 'streak-modal-backdrop') toggleStreakModal(false);
     });
@@ -336,6 +343,7 @@
   } else {
     initStreakEvents();
   }
+
 
   // 모바일 뒤로가기(스와이프/하드웨어 버튼) 시 창만 닫기
   const pushState = () => history.pushState?.({ modal: true }, '');

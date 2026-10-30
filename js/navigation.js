@@ -41,38 +41,38 @@
   function setTabActive(activeTabEl) {
     if (!activeTabEl) return;
     const allTabBtns = document.querySelectorAll(
-      "#tab-home, #tab-packs, #tab-book, #tab-review, #tab-records, .nav-tab-btn, [data-tab-name]"
+      "#tab-home, #tab-packs, #tab-book, #tab-review, #tab-records, .nav-tab, .nav-item, .nav-tab-btn, [data-tab-name]"
     );
     allTabBtns.forEach((tab) => {
       tab.classList.remove("active", "text-emerald-700", "font-black");
-      tab.classList.add("text-slate-400", "font-medium");
+      tab.classList.add("text-slate-400");
+      tab.removeAttribute("aria-current");
+
+      const iconContainer = tab.querySelector(".nav-icon-container");
+      if (iconContainer) {
+        iconContainer.classList.remove("bg-emerald-500", "text-white", "shadow-md");
+        iconContainer.classList.add("text-slate-400");
+      }
       const icon = tab.querySelector(".nav-icon, span.material-symbols-outlined, span:first-child");
       if (icon) {
-        icon.classList.remove("text-emerald-700", "scale-110", "font-black");
-        icon.classList.add("text-slate-400");
+        icon.classList.remove("text-emerald-700", "text-white", "scale-110", "font-black");
         icon.style.color = "";
-      }
-      const label = tab.querySelector(".nav-label, span.text-xs, span:last-child");
-      if (label) {
-        label.classList.remove("text-emerald-700", "font-black");
-        label.classList.add("text-slate-400", "font-medium");
-        label.style.color = "";
       }
     });
 
-    activeTabEl.classList.remove("text-slate-400", "font-medium");
-    activeTabEl.classList.add("active", "text-emerald-700", "font-black");
+    activeTabEl.classList.remove("text-slate-400");
+    activeTabEl.classList.add("active", "font-black");
+    activeTabEl.setAttribute("aria-current", "page");
+
+    const activeIconContainer = activeTabEl.querySelector(".nav-icon-container");
+    if (activeIconContainer) {
+      activeIconContainer.classList.remove("text-slate-400");
+      activeIconContainer.classList.add("bg-emerald-500", "text-white", "shadow-md");
+    }
     const activeIcon = activeTabEl.querySelector(".nav-icon, span.material-symbols-outlined, span:first-child");
     if (activeIcon) {
       activeIcon.classList.remove("text-slate-400");
-      activeIcon.classList.add("text-emerald-700", "scale-110", "font-black");
-      activeIcon.style.color = "#047857";
-    }
-    const activeLabel = activeTabEl.querySelector(".nav-label, span.text-xs, span:last-child");
-    if (activeLabel) {
-      activeLabel.classList.remove("text-slate-400", "font-medium");
-      activeLabel.classList.add("text-emerald-700", "font-black");
-      activeLabel.style.color = "#047857";
+      activeIcon.classList.add("text-white", "font-black");
     }
   }
 

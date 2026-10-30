@@ -207,7 +207,10 @@
     const isGameFollowup = Boolean(activeFlashcardOnComplete && (activeFlashcardOptions.mode === 'stage' || activeFlashcardOptions.action === 'game' || String(activeFlashcardOnComplete).includes('openGameScreen') || String(activeFlashcardOptions.onComplete).includes('openGameScreen')));
 
     if (els.nextBtn) els.nextBtn.innerHTML = isLastCard ? (isGameFollowup ? '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>' : '<span>완료</span><span class="material-symbols-outlined text-[16px] ml-0.5">check_circle</span>') : '<span>다음</span><span class="material-symbols-outlined text-[16px]">chevron_right</span>';
-    if (els.ctaBtn) els.ctaBtn.className = isLastCard ? (isGameFollowup ? 'w-full h-14 bg-[#2563EB] hover:bg-[#1d4ed8] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#1d4ed8,0_10px_16px_-4px_rgba(37,99,235,0.4)] transition-all cursor-pointer' : 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] transition-all cursor-pointer') : 'w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] transition-all cursor-pointer';
+
+    // ⚡ 파란색(#2563EB 계열) -> 에메랄드 그린(#10B981, 입체 테두리 #047857)으로 교체 완료
+    if (els.ctaBtn) els.ctaBtn.className = isLastCard ? (isGameFollowup ? 'w-full h-14 bg-[#10B981] hover:bg-[#059669] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#047857,0_10px_16px_-4px_rgba(16,185,129,0.4)] transition-all cursor-pointer' : 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] transition-all cursor-pointer') : 'w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] transition-all cursor-pointer';
+
     if (els.ctaText) els.ctaText.textContent = isLastCard ? (isGameFollowup ? '⚡ 단어 예습 완료! 게임 시작' : '학습 완료') : `다음 단어 보기 (${stepNum}/${total})`;
     if (els.ctaIcon) els.ctaIcon.textContent = isLastCard ? (isGameFollowup ? 'sports_esports' : 'check_circle') : 'chevron_right';
 
@@ -230,6 +233,7 @@
   function finishFlashcards(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     if (typeof window.stopTTS === 'function') window.stopTTS();
+    if (typeof window.closeResultModal === 'function') window.closeResultModal();
     closeFlashcardScreen(false);
     if (Array.isArray(activeDeck) && activeDeck.length > 0) {
       if (typeof window.addMasteredWords === 'function') window.addMasteredWords(activeDeck);

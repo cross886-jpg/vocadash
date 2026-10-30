@@ -7,39 +7,51 @@
   <script>
     // [개발 임시] Live Server 무한 자동 리로드 강제 차단 (출시 전 삭제 필수)
     (function () {
-      // 1. Live Server 새로고침 가로채기
-      const originalReload = location.reload;
       window.__disableReload = true;
 
-      window.addEventListener('beforeunload', function (e) {
-        if (window.__disableReload) {
-          // 브라우저 unload 이벤트 가로챔 방지
-        }
-      });
+      // 1. Live Server WebSocket 주입 차단 (안전한 Mock 인터페이스 제공)
+      if (typeof window.WebSocket !== 'undefined') {
+        const OriginalWebSocket = window.WebSocket;
+        const SafeMockSocket = function (url, protocols) {
+          const urlStr = String(url || '');
+          if (urlStr.includes(':5500') || urlStr.includes('/ws') || urlStr.includes('live-server')) {
+            console.warn('🛡️ [개발 임시]: Live Server 자동 새로고침(WebSocket)이 차단되었습니다.');
+            return {
+              url: urlStr,
+              readyState: 3,
+              bufferedAmount: 0,
+              protocol: '',
+              extensions: '',
+              binaryType: 'blob',
+              close() { },
+              send() { },
+              addEventListener() { },
+              removeEventListener() { },
+              dispatchEvent() { return true; },
+              onopen: null,
+              onclose: null,
+              onmessage: null,
+              onerror: null
+            };
+          }
+          return new OriginalWebSocket(url, protocols);
+        };
+        SafeMockSocket.prototype = OriginalWebSocket.prototype;
+        SafeMockSocket.CONNECTING = 0;
+        SafeMockSocket.OPEN = 1;
+        SafeMockSocket.CLOSING = 2;
+        SafeMockSocket.CLOSED = 3;
+        window.WebSocket = SafeMockSocket;
+      }
 
-      // 2. Live Server WebSocket 주입 차단
-      const OriginalWebSocket = window.WebSocket;
-      window.WebSocket = function (url, protocols) {
-        if (typeof url === 'string' && (url.includes(':5500') || url.includes('/ws'))) {
-          console.warn('🛡️ [개발 임시]: Live Server 자동 새로고침(WebSocket)이 차단되었습니다.');
-          return {
-            close: function () { },
-            send: function () { },
-            addEventListener: function () { },
-            removeEventListener: function () { }
-          };
-        }
-        return new OriginalWebSocket(url, protocols);
-      };
-
-      // 3. 모든 폼(form) 기본 submit 전역 캡처 차단
+      // 2. 모든 폼(form) 기본 submit 전역 캡처 차단
       document.addEventListener('submit', function (e) {
         e.preventDefault();
         e.stopPropagation();
         console.warn('🛡️ [Form Submit 차단됨] 폼 제출로 인한 리로드를 방지했습니다.');
       }, true);
 
-      // 4. 빈 앵커(a) 태그 클릭으로 인한 상단 점프 및 리로드 차단
+      // 3. 빈 앵커(a) 태그 클릭으로 인한 상단 점프 및 리로드 차단
       document.addEventListener('click', function (e) {
         const anchor = e.target.closest('a');
         if (anchor) {
@@ -308,27 +320,27 @@
 
         <!-- 1-B. 상단 유닛 카드 배너 (Unit Banner) -->
         <div id="unit-banner"
-          class="w-full bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-2xl p-3.5 shadow-md flex items-center justify-between border border-emerald-700/50 relative overflow-hidden select-none cursor-pointer hover:border-emerald-500/80 active:scale-[0.99] transition-all"
+          class="w-full bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-2xl p-3.5 shadow-md flex items-center justify-between border border-emerald-700/50 relative overflow-hidden select-none cursor-pointer hover:border-emerald-500/80 active:scale-[0.99] transition-all duration-200"
           title="🗺️ 전체 유닛 코스 맵 보기">
           <!-- Subtle decorative radial background glow -->
-          <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none">
+          <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none transition-all duration-300">
           </div>
 
           <!-- 중앙: UNIT 1 / 10 + 볼드 텍스트 + 옐로우 진행도 프로그레스 바 -->
-          <div class="flex flex-col flex-grow min-w-0">
+          <div id="unit-banner-content" class="flex flex-col flex-grow min-w-0 transition-opacity duration-150">
             <div
               class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-200 tracking-tight leading-none truncate">
-              <span id="unit-sub-badge" class="flex-shrink-0">UNIT 1 / 10</span>
+              <span id="unit-sub-badge" class="flex-shrink-0 transition-colors duration-150">UNIT 1 / 10</span>
               <span class="opacity-60 flex-shrink-0">•</span>
-              <span id="unit-lang-badge" class="truncate">🇪🇸 스페인어 첫걸음</span>
+              <span id="unit-lang-badge" class="truncate transition-colors duration-150">🇪🇸 스페인어 첫걸음</span>
             </div>
-            <div id="unit-main-title" class="text-sm font-black text-white leading-snug mt-1 truncate">일상 회화 & 실전 기초 어휘
+            <div id="unit-main-title" class="text-sm font-black text-white leading-snug mt-1 truncate transition-opacity duration-150">일상 회화 & 실전 기초 어휘
               마스터</div>
           </div>
 
           <!-- 우측: 화살표 드롭다운 버튼 (v) -->
           <button id="unit-dropdown-btn" type="button"
-            class="w-8 h-8 rounded-full bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-emerald-100 flex items-center justify-center transition-all cursor-pointer border border-emerald-600/50 shadow-xs flex-shrink-0 ml-2"
+            class="w-8 h-8 rounded-full bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-emerald-100 flex items-center justify-center transition-all duration-200 cursor-pointer border border-emerald-600/50 shadow-xs flex-shrink-0 ml-2"
             title="🗺️ 전체 유닛 코스 맵 보기">
             <span class="material-symbols-outlined text-lg leading-none">expand_more</span>
           </button>
@@ -402,12 +414,12 @@
             <div id="node-1-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer"
               data-node-type="active">
               <span id="node-1-ping"
-                class="absolute w-[100px] h-[100px] rounded-full bg-sky-400/25 animate-ping pointer-events-none"></span>
+                class="absolute w-[100px] h-[100px] rounded-full bg-emerald-400/25 animate-ping pointer-events-none"></span>
               <span id="node-1-pulse-ring"
-                class="absolute w-[90px] h-[90px] rounded-full bg-sky-200/50 pointer-events-none"></span>
+                class="absolute w-[90px] h-[90px] rounded-full bg-emerald-200/50 pointer-events-none"></span>
 
               <button id="node-1-btn"
-                class="node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black text-2xl flex items-center justify-center border-b-[6px] border-blue-800 shadow-[0_8px_20px_rgba(2,132,199,0.45)] ring-4 ring-sky-300/70 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden"
+                class="node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl flex items-center justify-center border-b-[6px] border-emerald-800 shadow-[0_8px_20px_rgba(16,185,129,0.45)] ring-4 ring-emerald-300/70 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden"
                 type="button" title="1과">
                 <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none">
                 </div>
@@ -513,8 +525,9 @@
           </div>
 
           <!-- Node Bonus: 황금 선물상자 (🎁) 보너스 노드 -->
-          <div class="roadmap-node relative z-10 flex flex-col items-center ml-7 mb-11" style="width: 170px;"
+          <div class="roadmap-node relative z-10 flex flex-col items-center ml-6 mb-11" style="width: 170px;"
             data-node-id="node-bonus" data-node-type="bonus" id="node-bonus-container">
+
             <div id="node-bonus-target"
               class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="bonus">
               <span id="node-bonus-ping"
@@ -2410,10 +2423,9 @@
       <div class="grid grid-cols-4 w-full h-full items-center justify-items-center">
         <!-- 1. Home / Roadmap (Active) -->
         <button id="tab-home" type="button" aria-current="page" aria-label="홈" title="홈"
-          class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all">
-          <div
-            style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important; box-sizing: border-box !important;"
-            class="nav-icon-container rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
+          class="nav-tab nav-item nav-home flex items-center justify-center w-full h-full cursor-pointer transition-all focus:outline-none">
+          <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;"
+            class="nav-icon-container rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md transition-all">
             <span class="material-symbols-outlined text-[22px]">home</span>
           </div>
           <span class="sr-only">홈</span>
@@ -2421,9 +2433,9 @@
 
         <!-- 2. Pack Library -->
         <button id="tab-packs" type="button" aria-label="단어팩" title="단어팩"
-          class="nav-tab nav-item nav-packs flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+          class="nav-tab nav-item nav-packs flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-all cursor-pointer focus:outline-none">
           <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;"
-            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square rounded-full transition-all">
             <span class="material-symbols-outlined text-[22px]">inventory_2</span>
           </div>
           <span class="sr-only">단어팩</span>
@@ -2431,9 +2443,9 @@
 
         <!-- 3. Wordbook -->
         <button id="tab-book" type="button" aria-label="단어장" title="단어장"
-          class="nav-tab nav-item nav-book nav-study flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+          class="nav-tab nav-item nav-book nav-study flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-all cursor-pointer focus:outline-none">
           <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;"
-            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square rounded-full transition-all">
             <span class="material-symbols-outlined text-[22px]">menu_book</span>
           </div>
           <span class="sr-only">단어장</span>
@@ -2441,9 +2453,9 @@
 
         <!-- 4. Records (Stats / Activity) -->
         <button id="tab-records" type="button" aria-label="내 기록" title="내 기록"
-          class="nav-tab nav-item nav-records nav-stats flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+          class="nav-tab nav-item nav-records nav-stats flex items-center justify-center w-full h-full text-slate-400 hover:text-slate-600 transition-all cursor-pointer focus:outline-none">
           <div style="width: 44px !important; height: 44px !important; aspect-ratio: 1/1 !important;"
-            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square">
+            class="nav-icon-container w-11 h-11 flex items-center justify-center shrink-0 aspect-square rounded-full transition-all">
             <span class="material-symbols-outlined text-[22px]">bar_chart</span>
           </div>
           <span class="sr-only">내 기록</span>
@@ -3361,12 +3373,12 @@
 
             <!-- Dynamic Dropping Word Bubble -->
             <div id="game-dropping-bubble"
-              class="absolute left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-center transition-all cursor-pointer select-none max-w-[85%] w-auto"
+              class="absolute left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-center transition-all cursor-pointer select-none max-w-[80%] w-auto"
               style="top: 3%;">
               <div
-                class="relative flex flex-col items-center px-5 py-2.5 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,110,47,0.15),0_3px_6px_rgba(0,0,0,0.06)] active:scale-95 transition-all group justify-center max-w-full text-center">
+                class="relative flex flex-col items-center px-4 py-1.5 bg-white border-2 border-slate-100 rounded-2xl shadow-[0_4px_12px_-2px_rgba(0,110,47,0.12),0_2px_4px_rgba(0,0,0,0.05)] active:scale-95 transition-all group justify-center max-w-full text-center">
                 <span id="game-dropping-word"
-                  class="font-headline-xl text-[24px] font-extrabold text-[#1E293B] tracking-tight drop-shadow-sm select-none break-keep text-center leading-snug"></span>
+                  class="font-headline-xl text-[19px] font-extrabold text-[#1E293B] tracking-tight drop-shadow-sm select-none break-keep text-center leading-snug"></span>
               </div>
             </div>
             <div id="dropping-word" class="hidden"></div>
@@ -3869,50 +3881,53 @@
     class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-center justify-center p-4 select-none"
     role="dialog" aria-modal="true" aria-labelledby="unit-skip-modal-title">
     <div id="unit-skip-modal-card"
-      class="bg-white rounded-3xl p-6 sm:p-7 max-w-xs w-full shadow-2xl border border-indigo-200/80 flex flex-col items-center text-center transition-all duration-200 transform scale-95 opacity-0">
+      class="bg-white rounded-3xl p-5 max-w-xs w-full shadow-2xl border border-indigo-100 flex flex-col items-center text-center transition-all duration-200 transform scale-95 opacity-0">
+
+      <!-- 상단 아이콘 -->
       <div
-        class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-sky-100 border border-indigo-200 flex items-center justify-center text-3xl mb-3 shadow-inner ring-4 ring-indigo-200/50">
-        <span class="animate-bounce">⚡</span>
-        <span class="absolute -bottom-1 -right-1 text-base">🔓</span>
+        class="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-xl mb-2.5 shadow-md shadow-emerald-200">
+        <span class="drop-shadow-sm">⚡</span>
+        <span class="absolute -bottom-1 -right-1 text-xs bg-white rounded-full p-0.5 shadow-sm">🔓</span>
       </div>
-      <h3 id="unit-skip-modal-title" class="font-black text-base text-slate-900 mb-1.5 leading-tight break-keep">⚡ Unit
-        2 건너뛰기 시험</h3>
-      <p id="unit-skip-modal-desc" class="text-sm text-gray-600 leading-relaxed mb-4 font-medium break-keep">
-        앞선 과정을 건너뛰고 이 유닛을 바로 해금할까요?<br>실전 테스트 통과 시 이전 유닛들이 모두 오픈됩니다!
+
+      <!-- 타이틀 -->
+      <h3 id="unit-skip-modal-title" class="font-extrabold text-base text-slate-800 mb-1 leading-tight">
+        Unit 건너뛰기 시험
+      </h3>
+
+      <!-- 한 줄 요약 -->
+      <p class="text-[12px] font-bold text-emerald-600 mb-3.5 tracking-tight">
+        통과 시 이전 모든 유닛이 즉시 해금됩니다!
       </p>
 
-      <!-- 조건 안내 2단 그리드/컬럼 카드 영역 (하늘색/인디고 박스 영역) -->
+      <!-- 조건 안내 2단 카드 (15문제 / 12개 이상) -->
       <div class="w-full grid grid-cols-2 gap-2 mb-4">
-        <!-- 좌측 카드: 문제 구성 -->
         <div
-          class="bg-indigo-50/80 border border-indigo-200/80 rounded-2xl p-2.5 flex flex-col items-center justify-center text-center whitespace-nowrap break-keep">
-          <span class="text-xs text-gray-500 font-semibold mb-1 flex items-center gap-1">
-            <span>🎯</span><span>문제 구성</span>
-          </span>
-          <span class="text-sm font-bold text-gray-800">총 15문제 (직행)</span>
+          class="bg-emerald-50/70 border border-emerald-100 rounded-xl py-2 px-1 flex flex-col items-center justify-center">
+          <span class="text-[11px] text-slate-500 font-medium mb-0.5">문제 수</span>
+          <span class="text-[14px] font-black text-emerald-950">15문제</span>
         </div>
-        <!-- 우측 카드: 통과 기준 -->
         <div
-          class="bg-indigo-50/80 border border-indigo-200/80 rounded-2xl p-2.5 flex flex-col items-center justify-center text-center whitespace-nowrap break-keep">
-          <span class="text-xs text-gray-500 font-semibold mb-1 flex items-center gap-1">
-            <span>🏆</span><span>통과 기준</span>
-          </span>
-          <span class="text-sm font-bold text-gray-800">80% 이상 (12개)</span>
+          class="bg-emerald-50/70 border border-emerald-100 rounded-xl py-2 px-1 flex flex-col items-center justify-center">
+          <span class="text-[11px] text-slate-500 font-medium mb-0.5">합격 기준</span>
+          <span class="text-[14px] font-black text-emerald-950">12개 이상 (80%)</span>
         </div>
       </div>
 
-      <div class="w-full flex flex-col gap-2">
+      <!-- 액션 버튼 -->
+      <div class="w-full flex flex-col gap-1.5">
         <button id="btn-start-unit-skip-test" type="button"
-          class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-sky-500 hover:from-indigo-500 hover:to-sky-400 active:scale-95 text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+          class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 active:scale-95 text-white font-black text-xs shadow-md shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center gap-1.5 border-b-[3px] border-emerald-700">
           <span>⚡ 바로 시험 달리기 🏃</span>
         </button>
         <button id="btn-close-unit-skip-modal" type="button"
-          class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-600 font-bold text-xs transition-all cursor-pointer">
+          class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-500 font-bold text-xs transition-all cursor-pointer">
           다음에 하기
         </button>
       </div>
     </div>
   </div>
+
 
   <!-- ================================================= -->
   <!-- HEART RECHARGE MODAL (하트 소진 및 충전 안내 모달)      -->
