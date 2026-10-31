@@ -81,7 +81,7 @@
       deck = window.courseData.units[uIdx]?.words || [];
     }
 
-    activeDeck = (deck || []).map((item, idx) => ({
+    activeDeck = (deck || []).map((item) => ({
       ...item, word: item.word || item.term || '', term: item.term || item.word || '', meaning: item.meaning || item.korean || '',
       phonetic: item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : ''), exampleTarget: item.exampleTarget || item.example || '',
       exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || '', isSentence: Boolean(item.type === 'sentence' || item.isSentence || (item.word && item.word.includes(' ') && item.word.length > 20)),
@@ -120,8 +120,9 @@
     const topEl = els.wrapper || els.card;
     if (topEl) { topEl.style.transition = ''; topEl.style.transform = 'translate(0px, 0px) rotate(0deg)'; topEl.style.opacity = '1'; }
     if (els.front) els.front.classList.remove('hidden'); if (els.back) els.back.classList.add('hidden');
-    if (els.behind) { els.behind.style.transition = ''; els.behind.style.transform = 'translateY(-8px) scale(0.95)'; els.behind.style.opacity = '0.7'; els.behind.style.display = 'flex'; }
-    if (els.deckLayer2) { els.deckLayer2.style.transition = ''; els.deckLayer2.style.transform = 'translateY(-16px) scale(0.90)'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.display = 'block'; }
+    // scale 제거: translateY 오프셋과 opacity만 사용
+    if (els.behind) { els.behind.style.transition = ''; els.behind.style.transform = 'translateY(-8px)'; els.behind.style.opacity = '0.7'; els.behind.style.display = 'flex'; }
+    if (els.deckLayer2) { els.deckLayer2.style.transition = ''; els.deckLayer2.style.transform = 'translateY(-16px)'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.display = 'block'; }
     if (els.mascotImg) els.mascotImg.src = `assets/characters/${(window.currentLanguage || window.currentActiveCourse || currentCourse || 'es') === 'en' ? 'en' : 'es'}-study.webp?v=88`;
 
     renderCurrentCard();
@@ -138,7 +139,6 @@
       }, 350);
     }
   }
-
 
   function closeFlashcardScreen(restoreRoadmap = true) {
     isCardTransitioning = false;
@@ -168,10 +168,12 @@
     const isSentence = cardData.type === 'sentence' || cardData.isSentence || currentCardIndex >= 10;
     if (els.tag) els.tag.textContent = cardData.tag || (isSentence ? '실전 문장' : '핵심 어휘');
     if (els.word) {
-      const termText = cardData.word || cardData.term || '', tLen = termText.length;
+      const termText = cardData.word || cardData.term || '';
       els.word.textContent = termText;
-      els.word.className = `font-headline-xl text-[${tLen > 22 ? '20' : (tLen > 14 ? '24' : '30')}px] font-extrabold text-[#1E293B] tracking-tight ${tLen > 14 ? 'leading-snug' : 'leading-none'} break-keep text-center select-none`;
+      const isLong = termText.length > 16;
+      els.word.className = `font-headline-xl ${isLong ? 'text-2xl leading-snug' : 'text-3xl leading-none'} font-extrabold text-[#0F172A] tracking-tight mb-2 break-keep text-center select-none`;
     }
+
     if (els.phonetic) {
       const isPhoneticVisible = !window.vocadashSettings || window.vocadashSettings.showPhonetic !== false;
       els.phonetic.textContent = cardData.phonetic || '';
@@ -208,7 +210,6 @@
 
     if (els.nextBtn) els.nextBtn.innerHTML = isLastCard ? (isGameFollowup ? '<span>게임 시작</span><span class="material-symbols-outlined text-[16px] ml-0.5">sports_esports</span>' : '<span>완료</span><span class="material-symbols-outlined text-[16px] ml-0.5">check_circle</span>') : '<span>다음</span><span class="material-symbols-outlined text-[16px]">chevron_right</span>';
 
-    // ⚡ 파란색(#2563EB 계열) -> 에메랄드 그린(#10B981, 입체 테두리 #047857)으로 교체 완료
     if (els.ctaBtn) els.ctaBtn.className = isLastCard ? (isGameFollowup ? 'w-full h-14 bg-[#10B981] hover:bg-[#059669] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#047857,0_10px_16px_-4px_rgba(16,185,129,0.4)] transition-all cursor-pointer' : 'w-full h-14 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-2 shadow-[0_6px_0_0_#b45309,0_10px_16px_-4px_rgba(245,158,11,0.4)] transition-all cursor-pointer') : 'w-full h-14 bg-[#22C55E] hover:bg-[#16a34a] active:translate-y-0.5 text-white font-extrabold text-base tracking-wide rounded-2xl flex items-center justify-center gap-1.5 shadow-[0_6px_0_0_#15803d,0_10px_16px_-4px_rgba(34,197,94,0.4)] transition-all cursor-pointer';
 
     if (els.ctaText) els.ctaText.textContent = isLastCard ? (isGameFollowup ? '⚡ 단어 예습 완료! 게임 시작' : '학습 완료') : `다음 단어 보기 (${stepNum}/${total})`;
@@ -219,13 +220,13 @@
       if (els.behindTag) els.behindTag.textContent = nextCardData.tag || '핵심 어휘';
       if (els.behindWord) els.behindWord.textContent = nextCardData.word || nextCardData.term || '';
       if (els.behindPhonetic) els.behindPhonetic.textContent = nextCardData.phonetic || '';
-      if (els.behind) { els.behind.style.display = 'flex'; els.behind.style.opacity = '0.7'; els.behind.style.transform = 'translateY(-8px) scale(0.95)'; }
-      if (els.deckLayer2) { els.deckLayer2.style.display = 'block'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.transform = 'translateY(-16px) scale(0.90)'; }
+      if (els.behind) { els.behind.style.display = 'flex'; els.behind.style.opacity = '0.7'; els.behind.style.transform = 'translateY(-8px)'; }
+      if (els.deckLayer2) { els.deckLayer2.style.display = 'block'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.transform = 'translateY(-16px)'; }
     } else {
       if (els.behindTag) els.behindTag.textContent = '단어 예습';
       if (els.behindWord) els.behindWord.textContent = '🎉 완료!';
       if (els.behindPhonetic) els.behindPhonetic.textContent = isGameFollowup ? '[퀴즈로 이동]' : '[학습 완료]';
-      if (els.behind) { els.behind.style.display = 'flex'; els.behind.style.opacity = '0.5'; els.behind.style.transform = 'translateY(-8px) scale(0.95)'; }
+      if (els.behind) { els.behind.style.display = 'flex'; els.behind.style.opacity = '0.5'; els.behind.style.transform = 'translateY(-8px)'; }
       if (els.deckLayer2) els.deckLayer2.style.opacity = '0';
     }
   }
@@ -262,10 +263,6 @@
       if (els.hint) els.hint.textContent = '👆 탭: 뜻 확인 · ↔ 밀기: 단어 넘기기';
     }
     if (typeof window.playSound === 'function') window.playSound('card_flip');
-    if (els.card) {
-      els.card.classList.add('scale-[0.98]');
-      setTimeout(() => els.card?.classList.remove('scale-[0.98]'), 140);
-    }
   }
 
   function transitionToNextCard() {
@@ -274,9 +271,24 @@
     if (currentCardIndex >= total - 1) { finishFlashcards(); return; }
     isCardTransitioning = true;
     const topEl = els.wrapper || els.card;
-    if (topEl) { topEl.style.transition = 'transform 250ms ease-in, opacity 250ms ease-in'; topEl.style.transform = 'translateX(-120%) rotate(-15deg)'; topEl.style.opacity = '0'; }
-    if (els.behind) { els.behind.style.transition = 'transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 250ms cubic-bezier(0.2, 0.8, 0.2, 1)'; els.behind.style.transform = 'translateY(0px) scale(1)'; els.behind.style.opacity = '1'; }
-    if (els.deckLayer2) { els.deckLayer2.style.transition = 'transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 250ms cubic-bezier(0.2, 0.8, 0.2, 1)'; els.deckLayer2.style.transform = 'translateY(-8px) scale(0.95)'; els.deckLayer2.style.opacity = '0.7'; }
+
+    // 현재 카드 슬라이드 아웃 (수평 이동 + 페이드아웃만 적용)
+    if (topEl) {
+      topEl.style.transition = 'transform 220ms ease-out, opacity 220ms ease-out';
+      topEl.style.transform = 'translateX(-110%)';
+      topEl.style.opacity = '0';
+    }
+    // 뒷장 카드가 자연스럽게 올라옴 (scale 1.0 강제 확대 제거!)
+    if (els.behind) {
+      els.behind.style.transition = 'transform 220ms ease-out, opacity 220ms ease-out';
+      els.behind.style.transform = 'translateY(0px)';
+      els.behind.style.opacity = '1';
+    }
+    if (els.deckLayer2) {
+      els.deckLayer2.style.transition = 'transform 220ms ease-out, opacity 220ms ease-out';
+      els.deckLayer2.style.transform = 'translateY(-8px)';
+      els.deckLayer2.style.opacity = '0.7';
+    }
 
     setTimeout(() => {
       currentCardIndex++;
@@ -285,11 +297,12 @@
       if (nextCard && (!window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false) && typeof window.speakWord === 'function') {
         window.speakWord(nextCard.word || nextCard.term, currentCourse);
       }
-      if (topEl) { topEl.style.transition = 'none'; topEl.style.transform = 'translate(0px, 0px) rotate(0deg)'; topEl.style.opacity = '1'; }
-      if (els.behind) { els.behind.style.transition = 'none'; els.behind.style.transform = 'translateY(-8px) scale(0.95)'; els.behind.style.opacity = (currentCardIndex < total - 1) ? '0.7' : '0.5'; }
-      if (els.deckLayer2) { els.deckLayer2.style.transition = 'none'; els.deckLayer2.style.transform = 'translateY(-16px) scale(0.90)'; els.deckLayer2.style.opacity = (currentCardIndex < total - 2) ? '0.8' : '0'; }
+      // 상태 복원 시에도 scale 제거
+      if (topEl) { topEl.style.transition = 'none'; topEl.style.transform = 'translate(0px, 0px)'; topEl.style.opacity = '1'; }
+      if (els.behind) { els.behind.style.transition = 'none'; els.behind.style.transform = 'translateY(-8px)'; els.behind.style.opacity = (currentCardIndex < total - 1) ? '0.7' : '0.5'; }
+      if (els.deckLayer2) { els.deckLayer2.style.transition = 'none'; els.deckLayer2.style.transform = 'translateY(-16px)'; els.deckLayer2.style.opacity = (currentCardIndex < total - 2) ? '0.8' : '0'; }
       setTimeout(() => { isCardTransitioning = false; }, 20);
-    }, 250);
+    }, 220);
   }
 
   function transitionToPrevCard() {
@@ -304,12 +317,21 @@
       window.speakWord(prevCard.word || prevCard.term, currentCourse);
     }
     if (topEl) {
-      topEl.style.transition = 'none'; topEl.style.transform = 'translateX(-120%) rotate(-15deg)'; topEl.style.opacity = '0';
+      topEl.style.transition = 'none';
+      topEl.style.transform = 'translateX(-110%)';
+      topEl.style.opacity = '0';
       void topEl.offsetWidth;
       requestAnimationFrame(() => {
-        topEl.style.transition = 'transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 250ms ease-out';
-        topEl.style.transform = 'translate(0px, 0px) rotate(0deg)'; topEl.style.opacity = '1';
-        setTimeout(() => { topEl.style.transition = ''; topEl.style.transform = ''; topEl.style.opacity = ''; renderCurrentCard(); isCardTransitioning = false; }, 250);
+        topEl.style.transition = 'transform 220ms ease-out, opacity 220ms ease-out';
+        topEl.style.transform = 'translate(0px, 0px)';
+        topEl.style.opacity = '1';
+        setTimeout(() => {
+          topEl.style.transition = '';
+          topEl.style.transform = '';
+          topEl.style.opacity = '';
+          renderCurrentCard();
+          isCardTransitioning = false;
+        }, 220);
       });
     } else { isCardTransitioning = false; }
   }
@@ -329,7 +351,15 @@
     currentX = clientX; currentY = clientY; diffX = currentX - startX; diffY = currentY - startY;
     if (e && e.cancelable) e.preventDefault();
     const targetEl = els.wrapper || els.card;
-    if (targetEl) { targetEl.style.transition = 'none'; targetEl.style.transform = `translate(${diffX}px, ${diffY * 0.3}px) rotate(${diffX * 0.08}deg)`; }
+
+    // 마지막 카드일 때 왼쪽으로 넘어가려 하면 저항(고무줄 탄성) 적용
+    const isLastCard = currentCardIndex >= activeDeck.length - 1;
+    let effectiveX = diffX;
+    if (isLastCard && diffX < 0) {
+      effectiveX = diffX * 0.25; // 왼쪽으로 잘 끌려가지 않도록 저항
+    }
+
+    if (targetEl) { targetEl.style.transition = 'none'; targetEl.style.transform = `translate(${effectiveX}px, ${diffY * 0.3}px)`; }
   }
 
   function safeToggleCardFlip() {
@@ -344,19 +374,32 @@
     isDragging = false;
     const targetEl = els.wrapper || els.card;
     if (targetEl) { targetEl.classList.remove('cursor-grabbing'); targetEl.classList.add('cursor-grab'); }
-    if (diffX <= -50) { transitionToNextCard(); return; }
+
+    const isLastCard = currentCardIndex >= activeDeck.length - 1;
+
+    // 마지막 카드는 왼쪽으로 밀어도 넘어가지 않고 제자리로 복귀
+    if (diffX <= -50) {
+      if (isLastCard) {
+        resetCardPosition();
+      } else {
+        transitionToNextCard();
+      }
+      return;
+    }
+
     if (diffX >= 50) { if (currentCardIndex > 0) transitionToPrevCard(); else resetCardPosition(); return; }
     resetCardPosition();
     if (Math.hypot(diffX, diffY) < 30) safeToggleCardFlip();
   }
 
+  // 바운스 튀는 bezier(1.275)를 제거하고 정직한 ease-out으로 고정
   function resetCardPosition() {
     const targetEl = els.wrapper || els.card;
     if (!targetEl) return;
-    targetEl.style.transition = 'transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.22s ease';
-    targetEl.style.transform = 'translate(0px, 0px) rotate(0deg)';
+    targetEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease';
+    targetEl.style.transform = 'translate(0px, 0px)';
     targetEl.style.opacity = '1';
-    setTimeout(() => { if (!isDragging && !isCardTransitioning && targetEl) { targetEl.style.transition = ''; targetEl.style.transform = ''; } }, 220);
+    setTimeout(() => { if (!isDragging && !isCardTransitioning && targetEl) { targetEl.style.transition = ''; targetEl.style.transform = ''; } }, 200);
   }
 
   function bindEvents() {

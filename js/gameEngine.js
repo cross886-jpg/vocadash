@@ -68,9 +68,31 @@
   }
 
   function updateItemCountUI() {
-    const inv = getInventory(); window.gameItemCounts = inv;
-    ["pass", "freeze", "bomb", "heal"].forEach(t => { const el = document.getElementById(`game-item-${t}-count`); if (el) el.textContent = inv[t] ?? 0; });
+    const inv = (typeof window.getVocaInventory === "function")
+      ? window.getVocaInventory()
+      : (window.gameItemCounts || getInventory());
+    window.gameItemCounts = inv;
+
+    ["pass", "freeze", "bomb", "heal"].forEach(t => {
+      const count = inv[t] ?? 0;
+      const countEl = document.getElementById(`game-item-${t}-count`);
+      const btnEl = document.getElementById(`game-item-${t}`);
+
+      // 숫자 배지 갱신
+      if (countEl) countEl.textContent = count;
+
+      // 0개이거나 빙결 지속 중일 때 버튼 흐리게 + 클릭 차단
+      if (btnEl) {
+        const isDepleted = count <= 0;
+        const shouldDisable = isDepleted || (t === "freeze" && typeof isFrozen !== "undefined" && isFrozen);
+
+        btnEl.disabled = shouldDisable;
+        btnEl.classList.toggle("opacity-40", shouldDisable);
+        btnEl.classList.toggle("pointer-events-none", shouldDisable);
+      }
+    });
   }
+
 
   function updateHeaderStatusUI() {
     if (gameProgressText) gameProgressText.textContent = `${currentQuestionIdx + 1}/${gameQuestions.length || 10}`;
@@ -300,30 +322,41 @@
   // --- 6. 부스터 아이템 사용 ---
   function useGameItem(itemType) {
     if (!isGameActive && !window.isGameActive) return;
-    const inv = (typeof window.getVocaInventory === "function") ? window.getVocaInventory() : (window.gameItemCounts || getInventory());
+    const inv = (typeof window.getVocaInventory === "function")
+      ? window.getVocaInventory()
+      : (window.gameItemCounts || getInventory());
+
     if ((inv[itemType] ?? 0) <= 0) {
       window.showToast?.("⚠️ 아이템을 모두 사용했습니다!", "⚠️");
       return;
     }
 
+    // 공통 수량 차감 및 동기화
+    inv[itemType]--;
+    saveInventory(inv);
+    window.gameItemCounts = inv;
+
     if (itemType === "pass") {
-      inv.pass--; saveInventory(inv); window.gameItemCounts = inv; updateItemCountUI();
+      updateItemCountUI();
       showGameFloatingEffect("⚡ 번개 패스!", true);
       handleCorrectAnswer(null, "패스");
+
     } else if (itemType === "freeze") {
-      inv.freeze--; saveInventory(inv); window.gameItemCounts = inv; updateItemCountUI();
+      if (typeof freezeTimer !== "undefined" && freezeTimer) clearTimeout(freezeTimer);
       isFrozen = true;
-      const freezeBtn = document.getElementById("game-item-freeze");
-      if (freezeBtn) freezeBtn.disabled = true;
       if (gameFreezeOverlay) gameFreezeOverlay.classList.remove("hidden");
+      updateItemCountUI();
       showGameFloatingEffect("❄️ 5초 빙결!", true);
+
       freezeTimer = setTimeout(() => {
         isFrozen = false;
-        if (freezeBtn) freezeBtn.disabled = false;
+        freezeTimer = null;
         if (gameFreezeOverlay) gameFreezeOverlay.classList.add("hidden");
+        updateItemCountUI();
       }, 5000);
+
     } else if (itemType === "bomb") {
-      inv.bomb--; saveInventory(inv); window.gameItemCounts = inv; updateItemCountUI();
+      updateItemCountUI();
       showGameFloatingEffect("💣 오답 제거!", true);
       const q = gameQuestions[currentQuestionIdx];
       const targetAns = String(q?.isCloze ? (q.answer || q.meaning) : (q?.meaning || q?.answer || "")).trim();
@@ -335,19 +368,24 @@
           removed++;
         }
       });
+
     } else if (itemType === "heal") {
       if (currentHearts >= 5) {
+        inv.heal++;
+        saveInventory(inv);
+        window.gameItemCounts = inv;
         window.showToast?.("이미 체력이 가득 차 있습니다!", "💖");
         showGameFloatingEffect("이미 체력이 가득 차 있습니다!", false);
         return;
       }
-      inv.heal--; saveInventory(inv); window.gameItemCounts = inv; updateItemCountUI();
       currentHearts = Math.min(5, currentHearts + 1);
       updateHeartsUI();
+      updateItemCountUI();
       showGameFloatingEffect("💖 하트 +1 회복!", true);
     }
   }
   window.useGameItem = useGameItem;
+
 
   // --- 7. 화면 라이프사이클 & 모달 위임 ---
   function openGameScreen(lessonId = "node-2", session = null) {

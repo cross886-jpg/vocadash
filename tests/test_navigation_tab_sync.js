@@ -9,6 +9,10 @@ const assert = require('assert');
 // 1. Mock DOM
 global.window = global;
 global.window.scrollTo = () => {};
+global.window.addEventListener = () => {};
+global.window.removeEventListener = () => {};
+global.history = { pushState: () => {}, replaceState: () => {} };
+global.window.history = global.history;
 const domStore = {};
 
 function createMockElement(id, classes = '', attrs = {}) {

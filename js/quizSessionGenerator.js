@@ -144,9 +144,9 @@
     let selected = [];
 
     if (isBoss) {
-      // 보스전: 유닛 전체 단어 셔플 중 13개 + 오답 3개 (총 16개)
-      const core = pool.slice(0, 13);
-      const wrong = wrongList.slice(0, 3);
+      // 보스전 강화: 유닛 핵심 단어 15개 + 오답 최대 3개 (총 15~18개 출제)
+      const core = pool.slice(0, 15);
+      const wrong = Array.isArray(wrongList) ? wrongList.slice(0, 3) : [];
       selected = shuffleArray([...core, ...wrong]);
     } else if (subStage === 1) {
       // 1회차: 기본 10단어 랜덤 출제

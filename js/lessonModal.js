@@ -386,6 +386,15 @@
     window.currentSessionQuestions = session;
     const nodeData = { nodeId: targetNodeId, lessonId: targetNodeId, session, words: session };
 
+    // [보스전 전용] 플래시카드 건너뛰고 바로 게임 시작
+    const isBoss = targetNodeId === "node-boss" || String(targetNodeId).includes("boss") || String(targetNodeId).endsWith("_n6");
+    if (isBoss) {
+      if (typeof window.openGameScreen === "function") {
+        window.openGameScreen(targetNodeId, session);
+      }
+      return session;
+    }
+
     if (typeof window.openFlashcardScreen === "function") {
       window.openFlashcardScreen({
         words: session,

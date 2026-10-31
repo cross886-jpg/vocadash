@@ -153,11 +153,12 @@
     const nodeData = getNodeProg ? getNodeProg(resolvedId) : { clearedCount: 0, stars: 0 };
     const pCount = effectiveCompleted ? 3 : (effectiveActive ? (nodeData.clearedCount || 0) : 0);
 
+    // [핵심 수정] 잠긴 노드가 아니면 클리어 여부와 상관없이 유닛 고유의 카테고리 테마 색상 유지
     const btnClass = isLocked
       ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'
-      : (effectiveCompleted
-        ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl border-b-[5px] border-emerald-800 shadow-[0_6px_14px_rgba(16,185,129,0.35)] ring-2 ring-emerald-300/40'
-        : (effectiveActive ? theme.activeBtn : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'));
+      : (effectiveCompleted || effectiveActive
+        ? theme.activeBtn
+        : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm');
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
 
     return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}">
@@ -171,7 +172,7 @@
         ${isLocked ? '<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>' : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : (effectiveCompleted ? 'border-emerald-300' : theme.activeBorder)} pointer-events-none">
+      <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : theme.activeBorder} pointer-events-none">
         ${renderPawBadge(pCount)}
       </div>
     </div>`;
@@ -235,22 +236,48 @@
 
   function renderUnitBossHtml(opt) {
     const { unitNum, align, width, isCompleted, isActive, isLocked, nodeId } = opt;
-    const resolvedId = nodeId || `u${unitNum}_node-boss`;
+    const resolvedId = nodeId || (unitNum === 1 ? 'node-boss' : `u${unitNum}_node-boss`);
     const effectiveCompleted = isLocked ? false : !!isCompleted;
     const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
-    const btnClass = isLocked ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm ring-2 ring-slate-300' : (effectiveCompleted ? 'bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white border-b-[6px] border-emerald-800 shadow-xl ring-4 ring-emerald-300/70' : (effectiveActive ? 'bg-gradient-to-b from-amber-400 via-yellow-500 to-amber-600 hover:from-amber-300 hover:to-yellow-400 text-white border-b-[6px] border-amber-800 shadow-[0_8px_24px_rgba(245,158,11,0.5)] ring-4 ring-amber-300/90' : 'bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-white border-b-[6px] border-amber-800 shadow-xl ring-4 ring-amber-300/70'));
+    const theme = getUnitTheme(unitNum);
 
-    return `<div class="roadmap-node relative z-20 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'boss'))}" data-unit-index="${unitNum - 1}">
-      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
-        <button class="subsequent-node-btn node-btn btn-3d relative w-[80px] h-[80px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="Unit ${unitNum} 보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-          <span class="text-4xl select-none leading-none drop-shadow-md relative z-10">${isLocked ? '👑' : (effectiveCompleted ? '👑' : '🔥')}</span>
+    // [핵심] 모든 유닛 100% 동일한 회색 반투명 원형 바탕과 테두리 규격
+    const btnClass = isLocked
+      ? 'bg-slate-300/40 border-2 border-slate-300/60 shadow-none pointer-events-none'
+      : (effectiveCompleted || effectiveActive
+        ? theme.activeBtn
+        : 'bg-slate-300 border-b-4 border-slate-400 opacity-60');
+
+    const containerId = unitNum === 1 ? 'node-boss-container' : `u${unitNum}_node-boss-container`;
+    const targetId = unitNum === 1 ? 'node-boss-target' : `u${unitNum}_node-boss-target`;
+    const btnId = unitNum === 1 ? 'node-boss-btn' : `u${unitNum}_node-boss-btn`;
+    const lockBadgeId = unitNum === 1 ? 'node-boss-lock-badge' : `u${unitNum}_node-boss-lock-badge`;
+    const checkBadgeId = unitNum === 1 ? 'node-boss-check-badge' : `u${unitNum}_node-boss-check-badge`;
+    const labelCardId = unitNum === 1 ? 'node-boss-label-card' : `u${unitNum}_node-boss-label-card`;
+    const labelBadgeId = unitNum === 1 ? 'node-boss-label-badge' : `u${unitNum}_node-boss-label-badge`;
+
+    return `<div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6 ${align || ''} ${effectiveActive ? 'active node-pulse' : ''} ${isLocked ? 'opacity-80' : ''}" style="width: ${width || '290px'};" data-node-id="${resolvedId}" data-node-type="boss" data-unit-index="${unitNum - 1}" id="${containerId}">
+      <div class="relative flex items-center justify-center node-target ${isLocked ? 'cursor-not-allowed' : 'cursor-pointer'}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" id="${targetId}" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
+        
+        <!-- Unit 1과 동일한 황금빛 아우라 -->
+        ${isLocked ? '<div class="absolute w-[100px] h-[100px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(251, 191, 36, 0.42) 0%, rgba(251, 191, 36, 0.18) 50%, rgba(251, 191, 36, 0) 72%);"></div>' : ''}
+        ${effectiveActive ? `<span class="absolute w-[94px] h-[94px] rounded-full ${theme.pingBg} animate-ping pointer-events-none"></span><span class="absolute w-[86px] h-[86px] rounded-full ${theme.pulseRingBg} pointer-events-none"></span>` : ''}
+
+        <!-- Unit 1과 100% 동일한 버튼 크기(84px)와 왕관 크기 -->
+        <button class="node-btn relative w-[84px] h-[84px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 transition-all ${isLocked ? '' : 'cursor-pointer'}" type="button" title="Unit ${unitNum} 보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}" id="${btnId}" ${isLocked ? 'disabled' : ''}>
+          <span class="text-[34px] select-none leading-none drop-shadow-sm relative z-10 ${isLocked ? 'opacity-70 saturate-120' : ''}">${effectiveCompleted ? '👑' : (isLocked ? '👑' : '🔥')}</span>
         </button>
-        ${isLocked ? '<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>' : ''}
-        ${effectiveCompleted ? '<div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none"><span class="material-symbols-outlined text-[15px] font-black">check</span></div>' : ''}
+
+        ${isLocked ? `<div class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[#855B32]/85 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" id="${lockBadgeId}"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
+        ${effectiveCompleted ? `<div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none z-20" id="${checkBadgeId}"><span class="material-symbols-outlined text-[16px] font-black">check</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      <div class="mt-2.5 flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1 rounded-full shadow-md border border-orange-400 pointer-events-none opacity-90">
-        <span class="text-[11px] text-white font-black tracking-wide flex items-center gap-1 drop-shadow-sm"><span>🔥</span><span>FINAL BOSS EXAM</span></span>
+
+      <!-- Unit 1과 동일한 반투명 그레이 알약 뱃지 -->
+      <div class="mt-2.5 flex items-center justify-center ${isLocked ? 'bg-white/70 backdrop-blur-xs border-slate-200/80' : 'bg-gradient-to-r from-amber-500 to-orange-500 border-orange-400 shadow-md'} px-3 py-0.5 rounded-full border pointer-events-none" id="${labelCardId}">
+        <span class="text-[11px] ${isLocked ? 'text-slate-500 font-bold' : 'text-white font-black'} tracking-wide flex items-center gap-1" id="${labelBadgeId}">
+          ${isLocked ? '<span class="text-[11px]">🔒</span><span>3과 완료 후 해금</span>' : (effectiveCompleted ? '<span>👑</span><span>BOSS CLEAR!</span>' : '<span>🔥</span><span>FINAL BOSS EXAM</span>')}
+        </span>
       </div>
     </div>`;
   }
@@ -672,23 +699,19 @@
       else { rCard.classList.remove('hidden'); rCard.style.display = 'flex'; rCard.className = 'mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ' + (isReviewDone && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200') + ' pointer-events-none'; }
     }
 
-    // 4. Boss Node
-    const nodeBossContainer = el('node-boss-container') || document.querySelector('[data-node-id*="boss"]');
-    const targetBoss = el('node-boss-target') || nodeBossContainer?.querySelector('.node-target'), btnBoss = el('node-boss-btn') || nodeBossContainer?.querySelector('.node-btn');
-    const lockBadgeBoss = el('node-boss-lock-badge') || nodeBossContainer?.querySelector('[id*="lock"]'), checkBadgeBoss = el('node-boss-check-badge') || nodeBossContainer?.querySelector('[id*="check"]');
-    const badgeBoss = el('node-boss-label-badge') || nodeBossContainer?.querySelector('[id*="label-badge"]'), cardBoss = el('node-boss-label-card') || nodeBossContainer?.querySelector('[id*="label-card"]'), startPillBoss = el('node-boss-start-pill') || nodeBossContainer?.querySelector('[id*="start-pill"]');
-
-    if (nodeBossContainer) { nodeBossContainer.classList.toggle('active', isBossActive); nodeBossContainer.classList.toggle('node-pulse', isBossActive); nodeBossContainer.classList.toggle('opacity-80', !isBossUnlocked); }
-    setVis(startPillBoss, isBossActive);
-    setVis(lockBadgeBoss, !isBossUnlocked);
-    const isBossCleared = isUnit1Completed || progBoss >= 1;
-    setVis(checkBadgeBoss, isBossCleared);
-    if (targetBoss) targetBoss.dataset.nodeType = !isBossUnlocked ? 'locked' : (isBossCleared ? 'completed' : 'active');
-    if (btnBoss) btnBoss.title = !isBossUnlocked ? '보스전: 잠김' : (isBossCleared ? '보스전 (완료)' : '보스전 (FINAL BOSS EXAM)');
-    if (cardBoss) cardBoss.className = 'mt-2.5 flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1 rounded-full shadow-md border border-orange-400 pointer-events-none opacity-90';
-    if (badgeBoss) {
-      badgeBoss.innerHTML = isBossCleared ? '<span class="text-[11px] text-emerald-600 font-black flex items-center gap-1"><span>👑</span><span>BOSS CLEAR!</span></span>'
-        : '<span class="text-[11px] text-white font-black tracking-wide flex items-center gap-1 drop-shadow-sm"><span>🔥</span><span>FINAL BOSS EXAM</span></span>';
+    // 4. Boss Node (Unit 1 동적 슬롯에 renderUnitBossHtml로 일원화 렌더링)
+    const u1BossSlot = el('u1-boss-slot');
+    if (u1BossSlot) {
+      const isBossCleared = Boolean(isUnit1Completed || progBoss >= 1);
+      u1BossSlot.innerHTML = renderUnitBossHtml({
+        unitNum: 1,
+        align: 'mx-auto mb-6',
+        width: '290px',
+        isCompleted: isBossCleared,
+        isActive: isBossActive,
+        isLocked: !isBossUnlocked,
+        nodeId: 'node-boss'
+      });
     }
 
     if (typeof window.updateCatMarkerPosition === 'function') window.updateCatMarkerPosition();

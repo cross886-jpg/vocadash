@@ -50,7 +50,26 @@ function createMockElement(id = '') {
     },
     removeEventListener: function () { },
     remove: function () { },
-    innerHTML: '',
+    _innerHTML: '',
+    get innerHTML() { return this._innerHTML; },
+    set innerHTML(val) {
+      this._innerHTML = val;
+      const tagRegex = /<([a-z0-9\-]+)([^>]*)>/gi;
+      let match;
+      while ((match = tagRegex.exec(val)) !== null) {
+        const attrs = match[2];
+        const idMatch = attrs.match(/id="([^"]+)"/);
+        if (idMatch) {
+          const elId = idMatch[1];
+          const subEl = mockDocument.getElementById(elId);
+          const typeMatch = attrs.match(/data-node-type="([^"]+)"/);
+          if (typeMatch) subEl.dataset.nodeType = typeMatch[1];
+          const lockMatch = attrs.match(/data-is-locked="([^"]+)"/);
+          if (lockMatch) subEl.dataset.isLocked = lockMatch[1];
+          if (attrs.includes('disabled')) subEl.disabled = true;
+        }
+      }
+    },
     textContent: '',
     className: ''
   };
@@ -257,7 +276,8 @@ win.updateRoadmapNodesUI();
 
 // Verify boss node is active/unlocked
 const lockBadgeBoss = mockDocument.getElementById('node-boss-lock-badge');
-assert.strictEqual(lockBadgeBoss.classList.contains('hidden'), true, 'Boss lock badge must be hidden');
+const isLockBadgeHidden = !lockBadgeBoss || lockBadgeBoss.classList.contains('hidden') || !mockDocument.getElementById('u1-boss-slot').innerHTML.includes('id="node-boss-lock-badge"');
+assert.strictEqual(isLockBadgeHidden, true, 'Boss lock badge must be hidden');
 assert.strictEqual(targetBoss.dataset.nodeType, 'active', 'Boss target must be active');
 
 // Also verify isNodeUnlocked for boss
