@@ -110,12 +110,11 @@
     return UNIT_THEMES[idx];
   }
 
-  // 🐾 [핵심 일원화] 1과와 100% 동일한 전용 고양이 발바닥 벡터 SVG 렌더러
+  // 🐾 전용 고양이 발바닥 벡터 SVG 렌더러 (불투명 색상으로 통일)
   function renderSinglePawSvg(isActive) {
     const fill = isActive ? '#f59e0b' : '#cbd5e1';
-    const op = isActive ? '1' : '0.35';
     const glow = isActive ? 'filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.45)); transform: scale(1.15);' : 'transform: scale(1.0);';
-    return `<div class="inline-flex items-center justify-center p-0.5" style="width: 18px; height: 18px;"><svg viewBox="0 0 44 42" class="transition-all duration-200" style="width: 100%; height: 100%; fill: ${fill}; opacity: ${op}; ${glow}" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8.5" cy="13" rx="4.0" ry="5.6" transform="rotate(-26 8.5 13)"></ellipse><ellipse cx="17.2" cy="7.2" rx="4.3" ry="6.2" transform="rotate(-8 17.2 7.2)"></ellipse><ellipse cx="26.8" cy="7.2" rx="4.3" ry="6.2" transform="rotate(8 26.8 7.2)"></ellipse><ellipse cx="35.5" cy="13" rx="4.0" ry="5.6" transform="rotate(26 35.5 13)"></ellipse><path d="M 22 17.5 C 17.2 17.5 13.0 19.3 9.6 22.8 C 6.5 26.0 5.6 30.5 7.4 34.6 C 9.5 39.4 15.2 42.0 22 42.0 C 28.8 42.0 34.5 39.4 36.6 34.6 C 38.4 30.5 37.5 26.0 34.4 22.8 C 31.0 19.3 26.8 17.5 22 17.5 Z"></path></svg></div>`;
+    return `<div class="inline-flex items-center justify-center p-0.5" style="width: 18px; height: 18px;"><svg viewBox="0 0 44 42" class="transition-all duration-200" style="width: 100%; height: 100%; fill: ${fill}; ${glow}" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8.5" cy="13" rx="4.0" ry="5.6" transform="rotate(-26 8.5 13)"></ellipse><ellipse cx="17.2" cy="7.2" rx="4.3" ry="6.2" transform="rotate(-8 17.2 7.2)"></ellipse><ellipse cx="26.8" cy="7.2" rx="4.3" ry="6.2" transform="rotate(8 26.8 7.2)"></ellipse><ellipse cx="35.5" cy="13" rx="4.0" ry="5.6" transform="rotate(26 35.5 13)"></ellipse><path d="M 22 17.5 C 17.2 17.5 13.0 19.3 9.6 22.8 C 6.5 26.0 5.6 30.5 7.4 34.6 C 9.5 39.4 15.2 42.0 22 42.0 C 28.8 42.0 34.5 39.4 36.6 34.6 C 38.4 30.5 37.5 26.0 34.4 22.8 C 31.0 19.3 26.8 17.5 22 17.5 Z"></path></svg></div>`;
   }
 
   function renderPawBadge(prog) {
@@ -125,7 +124,7 @@
 
   function renderStarsBadge(clearedCount, stars, isLocked) {
     if (isLocked) {
-      return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5 opacity-40">${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}</div>`;
+      return `<div class="flex items-center justify-center gap-1.5 select-none py-0.5">${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}${renderSinglePawSvg(false)}</div>`;
     }
     const c = Math.max(0, Math.min(3, Number(clearedCount) || 0));
     const label = c >= 3
@@ -153,27 +152,37 @@
     const nodeData = getNodeProg ? getNodeProg(resolvedId) : { clearedCount: 0, stars: 0 };
     const pCount = effectiveCompleted ? 3 : (effectiveActive ? (nodeData.clearedCount || 0) : 0);
 
-    // [핵심 수정] 잠긴 노드가 아니면 클리어 여부와 상관없이 유닛 고유의 카테고리 테마 색상 유지
+    // 100% 불투명 솔리드 배경 적용
     const btnClass = isLocked
-      ? 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm'
+      ? 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm pointer-events-none'
       : (effectiveCompleted || effectiveActive
         ? theme.activeBtn
-        : 'bg-slate-300 text-slate-500 font-black text-2xl border-b-4 border-slate-400 shadow-sm');
+        : 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm');
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
 
-    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}">
-      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+    const isU1 = unitNum === 1;
+    const containerIdAttr = isU1 ? `id="node-${stageNum}-container"` : '';
+    const targetIdAttr = isU1 ? `id="node-${stageNum}-target"` : '';
+    const btnIdAttr = isU1 ? `id="node-${stageNum}-btn"` : '';
+    const checkIdAttr = isU1 ? `id="node-${stageNum}-check-badge"` : '';
+    const lockIdAttr = isU1 ? `id="node-${stageNum}-lock-badge"` : '';
+    const cardIdAttr = isU1 ? `id="node-${stageNum}-label-card"` : '';
+    const badgeIdAttr = isU1 ? `id="node-${stageNum}-label-badge"` : '';
+    const textColor = isLocked ? 'text-slate-400' : 'text-white';
+
+    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-id="${resolvedId}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" data-unit-index="${unitNum - 1}" ${containerIdAttr}>
+      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" ${targetIdAttr}>
         ${effectiveActive ? `<span class="absolute w-[94px] h-[94px] rounded-full ${theme.pingBg} animate-ping pointer-events-none"></span><span class="absolute w-[86px] h-[86px] rounded-full ${theme.pulseRingBg} pointer-events-none"></span>` : ''}
-        <button class="subsequent-node-btn node-btn btn-3d relative w-[72px] h-[72px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${esc(title || `${stageNum}과`)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
-          <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
-          <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 text-white">${stageNum}</span>
+        <button class="subsequent-node-btn node-btn btn-3d relative w-[72px] h-[72px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden" type="button" title="${esc(title || `${stageNum}과`)}" data-unit-number="${unitNum}" data-node-type="stage" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}" ${btnIdAttr}>
+          <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
+          <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 ${textColor}">${stageNum}</span>
         </button>
-        ${effectiveCompleted ? '<div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none"><span class="material-symbols-outlined text-[15px] font-black">check</span></div>' : ''}
-        ${isLocked ? '<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>' : ''}
+        ${effectiveCompleted ? `<div class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none" ${checkIdAttr}><span class="material-symbols-outlined text-[15px] font-black">check</span></div>` : ''}
+        ${isLocked ? `<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" ${lockIdAttr}><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      <div class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : theme.activeBorder} pointer-events-none">
-        ${renderPawBadge(pCount)}
+      <div class="mt-2 flex items-center justify-center bg-white px-3 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200' : theme.activeBorder} pointer-events-none" ${cardIdAttr}>
+        <div class="flex items-center gap-1" ${badgeIdAttr}>${renderPawBadge(pCount)}</div>
       </div>
     </div>`;
   }
@@ -183,20 +192,35 @@
     const resolvedId = nodeId || `u${unitNum}_node-bonus`;
     const effectiveCompleted = isLocked ? false : !!isCompleted;
     const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
-    const btnClass = isLocked ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm' : (effectiveCompleted ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60' : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80');
 
-    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'bonus')}" data-unit-index="${unitNum - 1}">
-      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+    const btnClass = isLocked
+      ? 'bg-slate-200 text-slate-400 border-b-4 border-slate-300 shadow-sm pointer-events-none'
+      : (effectiveCompleted
+        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300'
+        : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80');
+
+    const isU1 = unitNum === 1;
+    const containerIdAttr = isU1 ? 'id="node-bonus-container"' : '';
+    const targetIdAttr = isU1 ? 'id="node-bonus-target"' : '';
+    const btnIdAttr = isU1 ? 'id="node-bonus-btn"' : '';
+    const iconIdAttr = isU1 ? 'id="node-bonus-icon"' : '';
+    const lockIdAttr = isU1 ? 'id="node-bonus-lock-badge"' : '';
+    const cardIdAttr = isU1 ? 'id="node-bonus-label-card"' : '';
+    const badgeIconIdAttr = isU1 ? 'id="node-bonus-badge-icon"' : '';
+    const badgeTextIdAttr = isU1 ? 'id="node-bonus-badge-text"' : '';
+
+    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-id="${resolvedId}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'bonus')}" data-unit-index="${unitNum - 1}" ${containerIdAttr}>
+      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'bonus')}" ${targetIdAttr}>
         ${effectiveActive ? '<span class="absolute w-[94px] h-[94px] rounded-full bg-amber-400/25 animate-ping pointer-events-none"></span><span class="absolute w-[86px] h-[86px] rounded-full bg-amber-200/50 pointer-events-none"></span>' : ''}
-        <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+        <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="보너스 선물 상자" data-unit-number="${unitNum}" data-node-type="bonus" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}" ${btnIdAttr}>
           <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none"></div>
-          <span class="text-3xl select-none leading-none drop-shadow-sm ${isLocked ? '' : (effectiveCompleted ? '' : (effectiveActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10">${isLocked ? '🎁' : (effectiveCompleted ? '📦' : '🎁')}</span>
+          <span class="text-3xl select-none leading-none drop-shadow-sm ${isLocked ? '' : (effectiveCompleted ? '' : (effectiveActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10" ${iconIdAttr}>${isLocked ? '🎁' : (effectiveCompleted ? '📦' : '🎁')}</span>
         </button>
-        ${isLocked ? '<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>' : ''}
+        ${isLocked ? `<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" ${lockIdAttr}><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      <div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200 opacity-60' : (effectiveCompleted ? 'border-slate-200 opacity-80' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none">
-        <div class="flex items-center gap-1"><span class="text-xs">${isLocked ? '🔒' : (effectiveCompleted ? '📦' : '🎁')}</span><span class="text-[11px] ${isLocked ? 'text-slate-400' : (effectiveCompleted ? 'text-slate-500' : 'text-amber-600')} font-extrabold">${isLocked ? '잠김' : (effectiveCompleted ? '수령 완료' : '+15 💎')}</span></div>
+      <div class="mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200' : (effectiveCompleted ? 'border-slate-200' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none" ${cardIdAttr}>
+        <div class="flex items-center gap-1"><span class="text-xs" ${badgeIconIdAttr}>${isLocked ? '🔒' : (effectiveCompleted ? '📦' : '🎁')}</span><span class="text-[11px] ${isLocked ? 'text-slate-400' : (effectiveCompleted ? 'text-slate-500' : 'text-amber-600')} font-extrabold" ${badgeTextIdAttr}>${isLocked ? '잠김' : (effectiveCompleted ? '수령 완료' : '+15 💎')}</span></div>
       </div>
     </div>`;
   }
@@ -218,19 +242,34 @@
 
     const reviewBadgeLabel = reviewWrongCount > 0 ? `오답 탈출 (${reviewWrongCount})` : (effectiveCompleted ? '복습 완료' : '스피드 복습');
     const reviewBadgeIcon = (effectiveCompleted && reviewWrongCount === 0) ? '✅' : '⚡️';
-    const btnClass = isLocked ? 'bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm' : (effectiveCompleted ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300/60' : 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80');
 
-    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${isLocked ? 'opacity-80' : ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'review')}" data-unit-index="${unitNum - 1}">
-      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer">
+    const btnClass = isLocked
+      ? 'bg-slate-200 text-slate-400 border-b-4 border-slate-300 shadow-sm pointer-events-none'
+      : (effectiveCompleted
+        ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300'
+        : 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80');
+
+    const isU1 = unitNum === 1;
+    const containerIdAttr = isU1 ? 'id="node-review-container"' : '';
+    const targetIdAttr = isU1 ? 'id="node-review-target"' : '';
+    const btnIdAttr = isU1 ? 'id="node-review-btn"' : '';
+    const iconIdAttr = isU1 ? 'id="node-review-icon"' : '';
+    const lockIdAttr = isU1 ? 'id="node-review-lock-badge"' : '';
+    const cardIdAttr = isU1 ? 'id="node-review-label-card"' : '';
+    const badgeIconIdAttr = isU1 ? 'id="node-review-badge-icon"' : '';
+    const badgeTextIdAttr = isU1 ? 'id="node-review-badge-text"' : '';
+
+    return `<div class="roadmap-node relative z-10 flex flex-col items-center ${align} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width};" data-node-id="${resolvedId}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'review')}" data-unit-index="${unitNum - 1}" ${containerIdAttr}>
+      <div class="relative flex items-center justify-center my-1 node-target cursor-pointer" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'review')}" ${targetIdAttr}>
         ${effectiveActive ? '<span class="absolute w-[94px] h-[94px] rounded-full bg-orange-400/25 animate-ping pointer-events-none"></span><span class="absolute w-[86px] h-[86px] rounded-full bg-orange-200/50 pointer-events-none"></span>' : ''}
-        <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}">
+        <button class="subsequent-node-btn node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer" type="button" title="약점 복습 드릴" data-unit-number="${unitNum}" data-node-type="review" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}" ${btnIdAttr}>
           <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none"></div>
-          <div class="relative flex items-center justify-center z-10"><span class="text-3xl select-none leading-none drop-shadow-sm">${effectiveCompleted ? '✅' : '⚡️'}</span>${!isLocked && !effectiveCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}</div>
+          <div class="relative flex items-center justify-center z-10"><span class="text-3xl select-none leading-none drop-shadow-sm" ${iconIdAttr}>${effectiveCompleted ? '✅' : '⚡️'}</span>${!isLocked && !effectiveCompleted ? '<span class="absolute -bottom-1 -right-1 text-sm">🩹</span>' : ''}</div>
         </button>
-        ${isLocked ? '<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>' : ''}
+        ${isLocked ? `<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" ${lockIdAttr}><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      ${isLocked ? '' : `<div class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ${effectiveCompleted && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200'} pointer-events-none"><div class="flex items-center gap-1"><span class="text-xs">${reviewBadgeIcon}</span><span class="text-[11px] text-orange-600 font-extrabold">${reviewBadgeLabel}</span></div></div>`}
+      ${isLocked ? '' : `<div class="mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${effectiveCompleted && reviewWrongCount === 0 ? 'border-slate-200' : 'border-orange-200'} pointer-events-none" ${cardIdAttr}><div class="flex items-center gap-1"><span class="text-xs" ${badgeIconIdAttr}>${reviewBadgeIcon}</span><span class="text-[11px] text-orange-600 font-extrabold" ${badgeTextIdAttr}>${reviewBadgeLabel}</span></div></div>`}
     </div>`;
   }
 
@@ -241,12 +280,11 @@
     const effectiveActive = isLocked ? false : (!effectiveCompleted && !!isActive);
     const theme = getUnitTheme(unitNum);
 
-    // [핵심] 모든 유닛 100% 동일한 회색 반투명 원형 바탕과 테두리 규격
     const btnClass = isLocked
-      ? 'bg-slate-300/40 border-2 border-slate-300/60 shadow-none pointer-events-none'
+      ? 'bg-[#E2E8F0] border-2 border-slate-300 shadow-sm pointer-events-none'
       : (effectiveCompleted || effectiveActive
         ? theme.activeBtn
-        : 'bg-slate-300 border-b-4 border-slate-400 opacity-60');
+        : 'bg-slate-200 border-b-4 border-slate-300');
 
     const containerId = unitNum === 1 ? 'node-boss-container' : `u${unitNum}_node-boss-container`;
     const targetId = unitNum === 1 ? 'node-boss-target' : `u${unitNum}_node-boss-target`;
@@ -256,25 +294,21 @@
     const labelCardId = unitNum === 1 ? 'node-boss-label-card' : `u${unitNum}_node-boss-label-card`;
     const labelBadgeId = unitNum === 1 ? 'node-boss-label-badge' : `u${unitNum}_node-boss-label-badge`;
 
-    return `<div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6 ${align || ''} ${effectiveActive ? 'active node-pulse' : ''} ${isLocked ? 'opacity-80' : ''}" style="width: ${width || '290px'};" data-node-id="${resolvedId}" data-node-type="boss" data-unit-index="${unitNum - 1}" id="${containerId}">
+    return `<div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6 ${align || ''} ${effectiveActive ? 'active node-pulse' : ''}" style="width: ${width || '290px'};" data-node-id="${resolvedId}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : 'boss')}" data-unit-index="${unitNum - 1}" id="${containerId}">
       <div class="relative flex items-center justify-center node-target ${isLocked ? 'cursor-not-allowed' : 'cursor-pointer'}" data-node-type="${isLocked ? 'locked' : (effectiveCompleted ? 'completed' : (effectiveActive ? 'active' : 'unlocked'))}" id="${targetId}" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
         
-        <!-- Unit 1과 동일한 황금빛 아우라 -->
-        ${isLocked ? '<div class="absolute w-[100px] h-[100px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(251, 191, 36, 0.42) 0%, rgba(251, 191, 36, 0.18) 50%, rgba(251, 191, 36, 0) 72%);"></div>' : ''}
         ${effectiveActive ? `<span class="absolute w-[94px] h-[94px] rounded-full ${theme.pingBg} animate-ping pointer-events-none"></span><span class="absolute w-[86px] h-[86px] rounded-full ${theme.pulseRingBg} pointer-events-none"></span>` : ''}
 
-        <!-- Unit 1과 100% 동일한 버튼 크기(84px)와 왕관 크기 -->
         <button class="node-btn relative w-[84px] h-[84px] rounded-full ${btnClass} flex items-center justify-center active:translate-y-1 transition-all ${isLocked ? '' : 'cursor-pointer'}" type="button" title="Unit ${unitNum} 보스전" data-unit-number="${unitNum}" data-node-type="boss" data-node-id="${resolvedId}" data-is-locked="${isLocked ? 'true' : 'false'}" id="${btnId}" ${isLocked ? 'disabled' : ''}>
-          <span class="text-[34px] select-none leading-none drop-shadow-sm relative z-10 ${isLocked ? 'opacity-70 saturate-120' : ''}">${effectiveCompleted ? '👑' : (isLocked ? '👑' : '🔥')}</span>
+          <span class="text-[34px] select-none leading-none drop-shadow-sm relative z-10">${effectiveCompleted ? '👑' : (isLocked ? '👑' : '🔥')}</span>
         </button>
 
-        ${isLocked ? `<div class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[#855B32]/85 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" id="${lockBadgeId}"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
+        ${isLocked ? `<div class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[#855B32] text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" id="${lockBadgeId}"><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
         ${effectiveCompleted ? `<div class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none z-20" id="${checkBadgeId}"><span class="material-symbols-outlined text-[16px] font-black">check</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
 
-      <!-- Unit 1과 동일한 반투명 그레이 알약 뱃지 -->
-      <div class="mt-2.5 flex items-center justify-center ${isLocked ? 'bg-white/70 backdrop-blur-xs border-slate-200/80' : 'bg-gradient-to-r from-amber-500 to-orange-500 border-orange-400 shadow-md'} px-3 py-0.5 rounded-full border pointer-events-none" id="${labelCardId}">
+      <div class="mt-2.5 flex items-center justify-center ${isLocked ? 'bg-white border-slate-200' : 'bg-gradient-to-r from-amber-500 to-orange-500 border-orange-400 shadow-md'} px-3 py-0.5 rounded-full border pointer-events-none shadow-xs" id="${labelCardId}">
         <span class="text-[11px] ${isLocked ? 'text-slate-500 font-bold' : 'text-white font-black'} tracking-wide flex items-center gap-1" id="${labelBadgeId}">
           ${isLocked ? '<span class="text-[11px]">🔒</span><span>3과 완료 후 해금</span>' : (effectiveCompleted ? '<span>👑</span><span>BOSS CLEAR!</span>' : '<span>🔥</span><span>FINAL BOSS EXAM</span>')}
         </span>
@@ -284,56 +318,79 @@
 
   function renderSubsequentUnits(activeCourse, unlockedLevel) {
     const container = document.getElementById('roadmap-subsequent-units');
-    if (!container) return;
+    const u1Container = document.getElementById('unit-1-nodes-container');
+
     const course = activeCourse
       || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
 
-    let html = '';
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
     const isClaimedFn = (typeof window.isBonusClaimed === 'function') ? window.isBonusClaimed : () => false;
     const isReviewCompletedFn = (typeof window.isReviewNodeCompleted === 'function') ? window.isReviewNodeCompleted : () => false;
     const getNodeProgFn = (typeof window.getNodeProgress === 'function') ? window.getNodeProgress : () => ({ clearedCount: 0, stars: 0 });
     const isUnlockedFn = (typeof window.isNodeUnlocked === 'function') ? window.isNodeUnlocked : () => true;
 
-    // Unit 1은 위쪽 메인 화면에 이미 그려져 있으므로, Unit 2(idx = 1)부터 렌더링
-    for (let idx = 1; idx < units.length; idx++) {
-      const unit = units[idx], unitNum = idx + 1;
-      const unitIcon = unit.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
-      const unitTitle = unit.title || `Unit ${unitNum}`, unitDesc = unit.desc || unit.subtitle || '';
-      const theme = getUnitTheme(unitNum);
-
-      if (idx > 0) {
-        html += `<div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}"><div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${theme.dividerBadge} text-xs font-bold shadow-md"><span>${esc(unitIcon)}</span><span>${esc(unitTitle)}</span></div><p class="text-xs text-slate-500 mt-1">${esc(unitDesc)}</p></div>`;
-      }
+    function buildUnitNodesHtml(idx, unit, isUnit1 = false) {
+      const unitNum = idx + 1;
+      const unitTitle = unit?.title || `Unit ${unitNum}`;
+      const unitDesc = unit?.desc || unit?.subtitle || '';
 
       const uNodes = (unit && Array.isArray(unit.nodes)) ? unit.nodes : [];
-      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1'))) || { id: `u${unitNum}_stage-1`, title: `1과: ${unitTitle}`, type: 'stage' };
-      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2'))) || { id: `u${unitNum}_stage-2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
-      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3')) || { id: `u${unitNum}_node-bonus`, title: '보너스 상자', type: 'bonus' };
-      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4')) || { id: `u${unitNum}_node-review`, title: '약점 복습', type: 'review' };
-      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: `u${unitNum}_stage-3`, title: '3과: 자기소개와 소통', type: 'stage' };
-      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6')) || { id: `u${unitNum}_node-boss`, title: `Unit ${unit.unitNumber || unitNum} 보스전`, type: 'boss' };
+      const n1 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 1 || n.id?.endsWith('_n1') || n.id === 'node-1')) || { id: isUnit1 ? 'node-1' : `u${unitNum}_stage-1`, title: `1과: ${unitTitle}`, type: 'stage' };
+      const n2 = uNodes.find(n => n.type === 'stage' && (n.stageNumber === 2 || n.id?.endsWith('_n2') || n.id === 'node-2')) || { id: isUnit1 ? 'node-2' : `u${unitNum}_stage-2`, title: `2과: ${unitDesc || '핵심 회화'}`, type: 'stage' };
+      const nBonus = uNodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3') || n.id === 'node-bonus') || { id: isUnit1 ? 'node-bonus' : `u${unitNum}_node-bonus`, title: '보너스 상자', type: 'bonus' };
+      const nReview = uNodes.find(n => n.type === 'review' || n.id?.endsWith('_n4') || n.id === 'node-review') || { id: isUnit1 ? 'node-review' : `u${unitNum}_node-review`, title: '약점 복습', type: 'review' };
+      const n3 = uNodes.find(n => ((n.type === 'stage' && n.stageNumber === 3) || n.id?.endsWith('_n5') || n.id === 'node-3' || (n.type === 'sentence' && !n.id?.includes('review') && !n.id?.endsWith('_n4')))) || { id: isUnit1 ? 'node-3' : `u${unitNum}_stage-3`, title: '3과: 자기소개와 소통', type: 'stage' };
+      const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6') || n.id === 'node-boss') || { id: isUnit1 ? 'node-boss' : `u${unitNum}_node-boss`, title: `Unit ${unit?.unitNumber || unitNum} 보스전`, type: 'boss' };
 
-      const bonusId = nBonus.id || `u${unitNum}_node-bonus`, reviewId = nReview.id || `u${unitNum}_node-review`;
-      const isBonusDone = isClaimedFn(bonusId) || unitNum < unlockedLevel, isReviewDone = isReviewCompletedFn(reviewId, unitNum) || unitNum < unlockedLevel;
-      const n1Data = getNodeProgFn(n1.id || `u${unitNum}_stage-1`), n2Data = getNodeProgFn(n2.id || `u${unitNum}_stage-2`), n3Data = getNodeProgFn(n3.id || `u${unitNum}_stage-3`), bossData = getNodeProgFn(nBoss.id || `u${unitNum}_node-boss`);
+      const bonusId = nBonus.id, reviewId = nReview.id;
+      const isBonusDone = isClaimedFn(bonusId) || unitNum < unlockedLevel;
+      const isReviewDone = isReviewCompletedFn(reviewId, unitNum) || unitNum < unlockedLevel;
 
-      const isN1Unlocked = isUnlockedFn(idx, 0, n1, course), isN2Unlocked = isN1Unlocked && (n1Data.clearedCount >= 3 || unitNum < unlockedLevel);
-      const isBonusUnlocked = isN2Unlocked && (n2Data.clearedCount >= 3 || unitNum < unlockedLevel), isReviewUnlocked = isBonusUnlocked && (isBonusDone || unitNum < unlockedLevel);
-      const isN3Unlocked = isReviewUnlocked && (isReviewDone || unitNum < unlockedLevel), isBossUnlocked = isN3Unlocked && (n3Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const n1Data = getNodeProgFn(n1.id), n2Data = getNodeProgFn(n2.id), n3Data = getNodeProgFn(n3.id), bossData = getNodeProgFn(nBoss.id);
 
-      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3 && unitNum >= unlockedLevel, isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone && unitNum >= unlockedLevel, isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone && unitNum >= unlockedLevel;
-      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel, isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
+      const isN1Unlocked = isUnit1 ? true : isUnlockedFn(idx, 0, n1, course);
+      const isN2Unlocked = isN1Unlocked && (n1Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const isBonusUnlocked = isN2Unlocked && (n2Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const isReviewUnlocked = isBonusUnlocked && (isBonusDone || unitNum < unlockedLevel);
+      const isN3Unlocked = isReviewUnlocked && (isReviewDone || unitNum < unlockedLevel);
+      const isBossUnlocked = isN3Unlocked && (n3Data.clearedCount >= 3 || unitNum < unlockedLevel);
 
-      html += `<div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="${idx}" id="unit-section-${idx}">${renderUnitTrackSvgHtml()}${renderUnitNodeHtml({ unitNum, stageNum: 1, title: n1.title, align: 'ml-5 mb-11', width: '200px', isCompleted: (!isN1Unlocked) ? false : (n1Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN1Active, isLocked: !isN1Unlocked, nodeId: n1.id })}${renderUnitNodeHtml({ unitNum, stageNum: 2, title: n2.title, align: 'mr-7 ml-auto mb-11', width: '200px', isCompleted: (!isN2Unlocked) ? false : (n2Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN2Active, isLocked: !isN2Unlocked, nodeId: n2.id })}${renderUnitBonusHtml({ unitNum, align: 'ml-6 mb-11', width: '170px', isCompleted: isBonusDone, isActive: isBonusActive, isLocked: !isBonusUnlocked, nodeId: bonusId })}${renderUnitReviewHtml({ unitNum, align: 'ml-auto mr-7 mb-11', width: '170px', isCompleted: isReviewDone, isActive: isReviewActive, isLocked: !isReviewUnlocked, nodeId: reviewId })}${renderUnitNodeHtml({ unitNum, stageNum: 3, title: n3.title, align: 'ml-6 mb-11', width: '210px', isCompleted: (!isN3Unlocked) ? false : (n3Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN3Active, isLocked: !isN3Unlocked, nodeId: n3.id })}${renderUnitBossHtml({ unitNum, align: 'mx-auto mb-6', width: '290px', isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel), isActive: isBossActive, isLocked: !isBossUnlocked, nodeId: nBoss.id })}</div>`;
+      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone && unitNum >= unlockedLevel;
+      const isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone && unitNum >= unlockedLevel;
+      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel;
+      const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
+
+      return `${renderUnitNodeHtml({ unitNum, stageNum: 1, title: n1.title, align: 'ml-5 mb-11', width: '200px', isCompleted: (!isN1Unlocked) ? false : (n1Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN1Active, isLocked: !isN1Unlocked, nodeId: n1.id })}`
+        + `${renderUnitNodeHtml({ unitNum, stageNum: 2, title: n2.title, align: 'mr-7 ml-auto mb-11', width: '200px', isCompleted: (!isN2Unlocked) ? false : (n2Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN2Active, isLocked: !isN2Unlocked, nodeId: n2.id })}`
+        + `${renderUnitBonusHtml({ unitNum, align: 'ml-6 mb-11', width: '170px', isCompleted: isBonusDone, isActive: isBonusActive, isLocked: !isBonusUnlocked, nodeId: bonusId })}`
+        + `${renderUnitReviewHtml({ unitNum, align: 'ml-auto mr-7 mb-11', width: '170px', isCompleted: isReviewDone, isActive: isReviewActive, isLocked: !isReviewUnlocked, nodeId: reviewId })}`
+        + `${renderUnitNodeHtml({ unitNum, stageNum: 3, title: n3.title, align: 'ml-6 mb-11', width: '210px', isCompleted: (!isN3Unlocked) ? false : (n3Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN3Active, isLocked: !isN3Unlocked, nodeId: n3.id })}`
+        + `${renderUnitBossHtml({ unitNum, align: 'mx-auto mb-6', width: '290px', isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel), isActive: isBossActive, isLocked: !isBossUnlocked, nodeId: nBoss.id })}`;
     }
-    if (container) {
-      container.innerHTML = html;
+
+    if (u1Container && units.length > 0) {
+      u1Container.innerHTML = buildUnitNodesHtml(0, units[0], true);
     }
+
+    if (!container) return;
+
+    let html = '';
+    for (let idx = 1; idx < units.length; idx++) {
+      const unit = units[idx], unitNum = idx + 1;
+      const unitIcon = unit?.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
+      const unitTitle = unit?.title || `Unit ${unitNum}`, unitDesc = unit?.desc || unit?.subtitle || '';
+      const theme = getUnitTheme(unitNum);
+
+      html += `<div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}"><div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${theme.dividerBadge} text-xs font-bold shadow-md"><span>${esc(unitIcon)}</span><span>${esc(unitTitle)}</span></div><p class="text-xs text-slate-500 mt-1">${esc(unitDesc)}</p></div>`;
+      html += `<div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="${idx}" id="unit-section-${idx}">${renderUnitTrackSvgHtml()}${buildUnitNodesHtml(idx, unit, false)}</div>`;
+    }
+
+    container.innerHTML = html;
   }
 
   function isElementVisible(el) {
@@ -556,9 +613,7 @@
 
     const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const unitIndex = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
-    const currentTheme = (typeof UNIT_THEMES !== 'undefined' && UNIT_THEMES[unitIndex])
-      ? UNIT_THEMES[unitIndex]
-      : { activeBtn: 'bg-emerald-500', activeBorder: 'border-emerald-400' };
+    const currentTheme = getUnitTheme(1);
 
     const safeUnitCompleted = typeof isUnit1Completed === 'boolean'
       ? (isUnit1Completed && (window.lastCompletedCourseLang === currentCourseLang))
@@ -594,6 +649,7 @@
       node.style.display = isVisible ? 'flex' : 'none';
     };
 
+    // 1. Unit 1 Stage Nodes (1과, 2과, 3과) - Unit 2~4와 100% 동일한 불투명 솔리드 규격 적용
     [
       { n: 1, c: prog1, isL: false, isC: safeUnitCompleted || prog1 >= 3, isA: isNode1Active },
       { n: 2, c: prog2, isL: !isNode2Unlocked, isC: safeUnitCompleted || prog2 >= 3, isA: isNode2Active },
@@ -614,7 +670,8 @@
       if (container) {
         container.classList.toggle('active', isA);
         container.classList.toggle('node-pulse', isA);
-        container.classList.toggle('opacity-80', isL);
+        container.classList.remove('opacity-80', 'opacity-60'); // [핵심] 투명도 강제 제거
+        container.dataset.nodeType = isL ? 'locked' : (isC ? 'completed' : (isA ? 'active' : 'unlocked'));
       }
       if (ping) ping.classList.toggle('hidden', !isA);
       if (pulseRing) pulseRing.classList.toggle('hidden', !isA);
@@ -625,27 +682,30 @@
       if (target) target.dataset.nodeType = isL ? 'locked' : (isC ? 'completed' : (isA ? 'active' : 'unlocked'));
 
       if (btn) {
-        btn.className = isL
-          ? 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer'
-          : (isC
-            ? `node-btn btn-3d relative w-[74px] h-[74px] rounded-full ${currentTheme.activeBtn || 'bg-emerald-500'} opacity-95 text-white font-black text-2xl flex items-center justify-center border-b-[5px] border-black/20 shadow-md active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`
-            : `node-btn btn-3d relative w-[76px] h-[76px] rounded-full ${currentTheme.activeBtn || 'bg-emerald-500'} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`);
+        const btnStateClass = isL
+          ? 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm pointer-events-none'
+          : (isC || isA
+            ? currentTheme.activeBtn
+            : 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm');
+        btn.className = `node-btn btn-3d relative w-[72px] h-[72px] rounded-full ${btnStateClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`;
         btn.title = isL ? `${n}과: 잠김` : (isC ? `${n}과 (완료)` : `${n}과`);
+        btn.dataset.isLocked = isL ? 'true' : 'false';
+
+        const numSpan = btn.querySelector('.node-stage-num');
+        if (numSpan) {
+          numSpan.textContent = String(n);
+          numSpan.className = `node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs relative z-10 ${isL ? 'text-slate-400' : 'text-white'}`;
+        }
       }
 
       if (card) {
-        card.className = isC
-          ? `mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border ${currentTheme.activeBorder || 'border-emerald-300'} pointer-events-none`
-          : (isA
-            ? `mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border-2 ${currentTheme.activeBorder || 'border-emerald-400'} pointer-events-none`
-            : 'mt-2 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80');
+        card.className = `mt-2 flex items-center justify-center bg-white px-3 py-1 rounded-full shadow-sm border ${isL ? 'border-slate-200' : currentTheme.activeBorder} pointer-events-none`;
       }
 
-      // 🐾 Unit 1 노드 하단 뱃지 렌더링
       if (badge) badge.innerHTML = renderPawBadge(c);
     });
 
-    // 2. Bonus Node
+    // 2. Bonus Node (Unit 2~4와 100% 동일한 불투명 솔리드 규격)
     const bCont = el('node-bonus-container'), bTgt = el('node-bonus-target'), bBtn = el('node-bonus-btn'), bIco = el('node-bonus-icon'), bTxt = el('node-bonus-badge-text'), bCard = el('node-bonus-label-card'), bPill = el('node-bonus-start-pill');
     let bLock = el('node-bonus-lock-badge');
     if (!bLock && bTgt) {
@@ -655,23 +715,49 @@
       bLock.innerHTML = '<span class="material-symbols-outlined text-[13px] font-bold">lock</span>';
       bTgt.appendChild(bLock);
     }
-    if (bCont) { bCont.classList.toggle('active', isBonusActive); bCont.classList.toggle('node-pulse', isBonusActive); bCont.classList.toggle('opacity-80', !isBonusUnlocked); }
+    if (bCont) {
+      bCont.classList.toggle('active', isBonusActive);
+      bCont.classList.toggle('node-pulse', isBonusActive);
+      bCont.classList.remove('opacity-80', 'opacity-60'); // [핵심] 투명도 강제 제거
+      bCont.dataset.nodeType = !isBonusUnlocked ? 'locked' : (isBonusDone ? 'completed' : 'bonus');
+    }
     setVis(bPill, isBonusActive);
     setVis(bLock, !isBonusUnlocked);
-    if (bTgt) bTgt.dataset.nodeType = !isBonusUnlocked ? 'locked' : (isBonusDone ? 'bonus' : (isBonusActive ? 'active' : 'bonus'));
+    if (bTgt) bTgt.dataset.nodeType = !isBonusUnlocked ? 'locked' : (isBonusDone ? 'completed' : (isBonusActive ? 'active' : 'bonus'));
     if (bBtn) {
-      bBtn.className = !isBonusUnlocked ? 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center'
-        : (isBonusDone ? 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 flex items-center justify-center border-b-[5px] border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-2 ring-slate-300/60'
-          : 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white flex items-center justify-center border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-amber-300/80');
+      const bBtnClass = !isBonusUnlocked
+        ? 'bg-slate-200 text-slate-400 border-b-4 border-slate-300 shadow-sm pointer-events-none'
+        : (isBonusDone
+          ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300'
+          : 'bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:to-yellow-400 text-white border-b-[5px] border-amber-700 shadow-[0_6px_16px_rgba(245,158,11,0.4)] ring-4 ring-amber-300/80');
+      bBtn.className = `node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${bBtnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer`;
       bBtn.title = !isBonusUnlocked ? '보너스 선물 (잠김)' : (isBonusDone ? '보너스 선물 (수령 완료)' : '보너스 선물 상자 (열기)');
+      bBtn.dataset.isLocked = !isBonusUnlocked ? 'true' : 'false';
     }
-    if (bIco) { bIco.textContent = isBonusDone ? '📦' : '🎁'; bIco.className = `text-3xl select-none leading-none drop-shadow-sm ${isBonusActive ? 'animate-bounce' : ''} relative z-10 ${!isBonusUnlocked ? 'opacity-60' : ''}`; }
-    if (bTxt) bTxt.textContent = isBonusDone ? '수령 완료 ✅' : '+15 💎 보너스';
-    if (el('node-bonus-badge-icon')) el('node-bonus-badge-icon').textContent = isBonusDone ? '📦' : '🎁';
-    if (bCard) bCard.className = isBonusDone ? 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-85' : (isBonusActive ? 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border-2 border-amber-400 ring-2 ring-amber-100 text-center pointer-events-none' : 'mt-2 flex flex-col items-center bg-white/95 px-3 py-1.5 rounded-2xl shadow-sm border border-slate-200 text-center pointer-events-none opacity-60');
+    if (bIco) {
+      bIco.textContent = !isBonusUnlocked ? '🎁' : (isBonusDone ? '📦' : '🎁');
+      bIco.className = `text-3xl select-none leading-none drop-shadow-sm ${!isBonusUnlocked ? '' : (isBonusDone ? '' : (isBonusActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10`;
+    }
+    if (el('node-bonus-badge-icon')) el('node-bonus-badge-icon').textContent = !isBonusUnlocked ? '🔒' : (isBonusDone ? '📦' : '🎁');
+    if (bTxt) {
+      bTxt.textContent = !isBonusUnlocked ? '잠김' : (isBonusDone ? '수령 완료' : '+15 💎');
+      bTxt.className = `text-[11px] ${!isBonusUnlocked ? 'text-slate-400' : (isBonusDone ? 'text-slate-500' : 'text-amber-600')} font-extrabold`;
+    }
+    if (bCard) {
+      bCard.className = `mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${!isBonusUnlocked ? 'border-slate-200' : (isBonusDone ? 'border-slate-200' : (isBonusActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none`;
+    }
 
-    // 3. Review Node
-    const rCont = el('node-review-container'), rTgt = el('node-review-target'), rBtn = el('node-review-btn'), rIco = el('node-review-icon'), rTxt = el('node-review-badge-text'), rCard = el('node-review-label-card'), rLock = el('node-review-lock-badge'), rCheck = el('node-review-check-badge'), rPill = el('node-review-start-pill');
+    // 3. Review Node (Unit 2~4와 100% 동일한 불투명 솔리드 규격)
+    const rCont = el('node-review-container'), rTgt = el('node-review-target'), rBtn = el('node-review-btn'), rIco = el('node-review-icon'), rTxt = el('node-review-badge-text'), rCard = el('node-review-label-card'), rCheck = el('node-review-check-badge'), rPill = el('node-review-start-pill'), rExcl = el('node-review-excl');
+    let rLock = el('node-review-lock-badge');
+    if (!rLock && rTgt) {
+      rLock = document.createElement('div');
+      rLock.id = 'node-review-lock-badge';
+      rLock.className = 'absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20';
+      rLock.innerHTML = '<span class="material-symbols-outlined text-[13px] font-bold">lock</span>';
+      rTgt.appendChild(rLock);
+    }
+
     let reviewWrongCount = 0;
     try {
       if (typeof window.loadWrongWords === 'function') {
@@ -680,29 +766,45 @@
       }
     } catch (_) { }
 
-    if (rCont) { rCont.classList.toggle('active', isReviewActive); rCont.classList.toggle('node-pulse', isReviewActive); rCont.classList.toggle('opacity-80', !isReviewUnlocked); }
+    if (rCont) {
+      rCont.classList.toggle('active', isReviewActive);
+      rCont.classList.toggle('node-pulse', isReviewActive);
+      rCont.classList.remove('opacity-80', 'opacity-60'); // [핵심] 투명도 강제 제거
+      rCont.dataset.nodeType = !isReviewUnlocked ? 'locked' : (isReviewDone ? 'completed' : 'review');
+    }
     setVis(rPill, isReviewActive);
     setVis(rCheck, isReviewDone);
     setVis(rLock, !isReviewUnlocked);
+    if (rExcl) setVis(rExcl, isReviewUnlocked && !isReviewDone && reviewWrongCount > 0);
     if (rTgt) rTgt.dataset.nodeType = !isReviewUnlocked ? 'locked' : (isReviewDone ? 'completed' : 'review');
     if (rBtn) {
-      rBtn.className = !isReviewUnlocked ? 'node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 border-b-4 border-slate-400 shadow-sm flex items-center justify-center'
-        : (isReviewDone ? 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 flex items-center justify-center border-b-[5px] border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-2 ring-slate-300/60'
-          : 'node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80');
+      const rBtnClass = !isReviewUnlocked
+        ? 'bg-slate-200 text-slate-400 border-b-4 border-slate-300 shadow-sm pointer-events-none'
+        : (isReviewDone
+          ? 'bg-slate-200 hover:bg-slate-300 text-slate-500 border-b-[5px] border-slate-400 shadow-sm ring-2 ring-slate-300'
+          : 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] ring-4 ring-orange-300/80');
+      rBtn.className = `node-btn btn-3d relative w-[68px] h-[68px] rounded-full ${rBtnClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer`;
       rBtn.title = !isReviewUnlocked ? '약점 복습 (잠김)' : (isReviewDone ? '약점 복습 (완료)' : '약점 복습 드릴 (시작)');
+      rBtn.dataset.isLocked = !isReviewUnlocked ? 'true' : 'false';
     }
     if (rIco) rIco.textContent = isReviewDone ? '✅' : '⚡️';
     if (el('node-review-badge-icon')) el('node-review-badge-icon').textContent = (isReviewDone && reviewWrongCount === 0) ? '✅' : '⚡️';
     if (rTxt) rTxt.textContent = reviewWrongCount > 0 ? `오답 탈출 (${reviewWrongCount})` : (isReviewDone ? '복습 완료' : '스피드 복습');
     if (rCard) {
-      if (!isReviewUnlocked) { rCard.classList.add('hidden'); rCard.style.display = 'none'; }
-      else { rCard.classList.remove('hidden'); rCard.style.display = 'flex'; rCard.className = 'mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border ' + (isReviewDone && reviewWrongCount === 0 ? 'border-slate-200 opacity-85' : 'border-orange-200') + ' pointer-events-none'; }
+      if (!isReviewUnlocked) {
+        rCard.classList.add('hidden');
+        rCard.style.display = 'none';
+      } else {
+        rCard.classList.remove('hidden', 'opacity-85', 'opacity-80');
+        rCard.style.display = 'flex';
+        rCard.className = 'mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ' + (isReviewDone && reviewWrongCount === 0 ? 'border-slate-200' : 'border-orange-200') + ' pointer-events-none';
+      }
     }
 
-    // 4. Boss Node (Unit 1 동적 슬롯에 renderUnitBossHtml로 일원화 렌더링)
+    // 4. Boss Node (Unit 1 슬롯 또는 기존 컨테이너 모두 대응)
+    const isBossCleared = Boolean(isUnit1Completed || progBoss >= 1);
     const u1BossSlot = el('u1-boss-slot');
     if (u1BossSlot) {
-      const isBossCleared = Boolean(isUnit1Completed || progBoss >= 1);
       u1BossSlot.innerHTML = renderUnitBossHtml({
         unitNum: 1,
         align: 'mx-auto mb-6',
@@ -712,6 +814,19 @@
         isLocked: !isBossUnlocked,
         nodeId: 'node-boss'
       });
+    } else {
+      const bossCont = el('node-boss-container');
+      if (bossCont) {
+        bossCont.outerHTML = renderUnitBossHtml({
+          unitNum: 1,
+          align: 'mx-auto mb-6',
+          width: '290px',
+          isCompleted: isBossCleared,
+          isActive: isBossActive,
+          isLocked: !isBossUnlocked,
+          nodeId: 'node-boss'
+        });
+      }
     }
 
     if (typeof window.updateCatMarkerPosition === 'function') window.updateCatMarkerPosition();
@@ -774,8 +889,8 @@
     const activeCourseId = activeCourse?.id || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : 'main') || 'main';
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, activeCourseId) : 1;
 
-    if (typeof updateRoadmapNodesUI === 'function') updateRoadmapNodesUI();
     if (typeof window.renderSubsequentUnits === 'function') window.renderSubsequentUnits(activeCourse, unlockedLevel);
+    if (typeof updateRoadmapNodesUI === 'function') updateRoadmapNodesUI();
     if (typeof setupRoadmapObserver === 'function') setupRoadmapObserver();
     if (typeof updateCatMarkerPosition === 'function') updateCatMarkerPosition();
     if (typeof window.autoScrollToActiveNode === 'function') window.autoScrollToActiveNode();

@@ -358,7 +358,7 @@
     <main id="roadmap-screen" class="flex flex-col relative w-full pt-[142px] pb-40 px-4 roadmap-grid-bg flex-grow"
       style="padding-bottom: max(160px, calc(140px + env(safe-area-inset-bottom, 20px)));">
       <div id="roadmap-nodes-container" class="relative w-full pt-1 pb-4 select-none min-h-[960px]">
-        <div class="unit-section-block relative w-full" data-unit-index="0" id="unit-section-0">
+        <div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="0" id="unit-section-0">
 
           <!-- Curved Running Track SVG Layer -->
           <svg id="roadmap-svg-path"
@@ -372,7 +372,7 @@
               stroke="#38bdf8" stroke-dasharray="8 10" stroke-linecap="round" stroke-width="4"></path>
           </svg>
 
-          <!-- [Decors: 로드맵 이정표 표지판 (언어별 동적 변경)] -->
+          <!-- [Decors: 로드맵 이정표 표지판] -->
           <div id="roadmap-signpost-container"
             class="absolute top-[90px] right-4 z-10 flex flex-col items-center pointer-events-none select-none opacity-90 hover:opacity-100 transition-opacity">
             <div id="roadmap-signpost"
@@ -387,20 +387,19 @@
             <div class="w-4 h-1 bg-amber-950/20 rounded-full blur-[0.5px]"></div>
           </div>
 
-          <!-- [Decors: 선글라스 낀 러너 고양이 & 말풍선 (¡Vamos! 출발!)] -->
+          <!-- [Decors: 러너 고양이 & 말풍선] -->
           <div
             class="absolute top-[185px] left-3 z-20 flex items-end pointer-events-none select-none animate-float-gentle">
             <div class="relative flex flex-col items-center">
               <div class="w-14 h-14 relative drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)]">
                 <img id="roadmap-runner-cat-img" src="assets/characters/es-run.webp?v=88" alt="러너 고양이"
                   class="w-full h-full object-contain filter drop-shadow">
-                <!-- 선글라스 데코 이모지 -->
                 <span class="absolute top-1 left-2.5 text-base drop-shadow-xs">🕶️</span>
               </div>
               <div class="w-10 h-2 bg-slate-400/20 rounded-full blur-[1px] mt-0.5"></div>
             </div>
             <div
-              class="relative ml-1.5 -mb-1 bg-white/95 backdrop-blur-xs px-2.5 py-1.5 rounded-2xl rounded-bl-xs border border-emerald-300 shadow-md flex flex-col">
+              class="relative ml-1.5 -mb-1 bg-white px-2.5 py-1.5 rounded-2xl rounded-bl-xs border border-emerald-300 shadow-md flex flex-col">
               <div class="flex items-center gap-1 text-[11px] font-black text-emerald-800 leading-tight">
                 <span id="runner-cat-bubble-text">¡Vamos! 출발!</span>
                 <span>🐾</span>
@@ -409,9 +408,7 @@
             </div>
           </div>
 
-
-
-          <!-- Node 1: Stage 1 (1과) - 3D Stage Type -->
+          <!-- Node 1: Stage 1 (1과) -->
           <div class="roadmap-node relative z-10 flex flex-col items-center ml-5 mb-11" style="width: 200px;"
             data-node-id="node-1" data-node-type="stage" id="node-1-container">
             <div id="node-1-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer"
@@ -424,7 +421,7 @@
               <button id="node-1-btn"
                 class="node-btn btn-3d relative w-[76px] h-[76px] rounded-full bg-gradient-to-b from-emerald-400 via-emerald-500 to-green-600 hover:from-emerald-300 hover:to-green-500 text-white font-black text-2xl flex items-center justify-center border-b-[6px] border-emerald-800 shadow-[0_8px_20px_rgba(16,185,129,0.45)] ring-4 ring-emerald-300/70 active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden"
                 type="button" title="1과">
-                <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/35 blur-[0.5px] pointer-events-none">
+                <div class="absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/40 blur-[0.5px] pointer-events-none">
                 </div>
                 <span
                   class="node-stage-num text-sm font-extrabold tracking-tight select-none leading-none drop-shadow-xs relative z-10 text-white">START</span>
@@ -440,7 +437,6 @@
                 </div>
               </div>
 
-              <!-- 완료 체크 뱃지 -->
               <div id="node-1-check-badge"
                 class="hidden absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-2 ring-white pointer-events-none"
                 style="display: none;">
@@ -450,7 +446,7 @@
 
             <!-- Node 1 하단 별 3개 캡슐 -->
             <div id="node-1-label-card"
-              class="mt-2 flex items-center justify-center bg-white/95 px-3 py-1 rounded-full shadow-sm border border-slate-200 pointer-events-none">
+              class="mt-2 flex items-center justify-center bg-white px-3 py-1 rounded-full shadow-sm border border-slate-200 pointer-events-none">
               <span id="node-1-title" class="hidden">1과</span>
               <div id="node-1-label-badge" class="flex items-center gap-1">
                 <span class="text-sm opacity-30">⭐</span>
@@ -460,9 +456,9 @@
             </div>
           </div>
 
-          <!-- Node 2: Stage 2 (2과) - 3D Stage Type -->
-          <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-5 mb-11 opacity-80"
-            style="width: 200px;" data-node-id="node-2" data-node-type="stage" id="node-2-container">
+          <!-- Node 2: Stage 2 (2과) -->
+          <div class="roadmap-node relative z-20 flex flex-col items-center ml-auto mr-5 mb-11" style="width: 200px;"
+            data-node-id="node-2" data-node-type="stage" id="node-2-container">
             <div id="node-2-start-banner" class="hidden pointer-events-none"></div>
 
             <div id="node-2-target" class="relative flex items-center justify-center my-1 node-target cursor-pointer"
@@ -473,7 +469,7 @@
                 class="hidden absolute w-[88px] h-[88px] rounded-full bg-sky-200/50 pointer-events-none"></span>
 
               <button id="node-2-btn"
-                class="node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer"
+                class="node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-200 text-slate-400 font-black text-2xl flex items-center justify-center border-b-4 border-slate-300 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer pointer-events-none"
                 type="button" title="2과: 잠김">
                 <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs">2</span>
               </button>
@@ -503,7 +499,7 @@
 
             <!-- Node 2 하단 별 3개 캡슐 -->
             <div id="node-2-label-card"
-              class="mt-2 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80">
+              class="mt-2 flex items-center justify-center bg-white px-3 py-1 rounded-full shadow-sm border border-slate-200 pointer-events-none">
               <span id="node-2-title" class="hidden">2과</span>
               <div id="node-2-label-badge" class="flex items-center gap-1">
                 <span class="text-sm opacity-30">⭐</span>
@@ -518,7 +514,7 @@
             class="hidden absolute top-[405px] right-6 z-20 flex items-center pointer-events-none select-none animate-float-gentle"
             style="animation-delay: 1.2s; display: none;">
             <div
-              class="relative bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-1.5 rounded-2xl rounded-br-xs border border-amber-300 shadow-md flex items-center gap-1.5">
+              class="relative bg-white px-3 py-1.5 rounded-2xl rounded-br-xs border border-amber-300 shadow-md flex items-center gap-1.5">
               <span class="text-base animate-bounce">🎁</span>
               <div class="flex flex-col">
                 <span class="text-[11px] font-black text-amber-900 leading-tight">선물 받자!</span>
@@ -557,9 +553,9 @@
               </div>
             </div>
 
-            <!-- Node Bonus 하단 심플 캡슐 -->
+            <!-- Node Bonus 하단 캡슐 -->
             <div id="node-bonus-label-card"
-              class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-amber-200 pointer-events-none">
+              class="mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border border-amber-200 pointer-events-none">
               <span id="node-bonus-title" class="hidden">보너스 선물</span>
               <div id="node-bonus-badge" class="flex items-center gap-1">
                 <span id="node-bonus-badge-icon" class="text-xs">🎁</span>
@@ -580,9 +576,9 @@
               <button id="node-review-btn"
                 class="node-btn btn-3d relative w-[68px] h-[68px] rounded-full bg-gradient-to-b from-orange-400 via-orange-500 to-amber-600 hover:from-orange-300 hover:to-amber-500 text-white flex items-center justify-center border-b-[5px] border-orange-800 shadow-[0_6px_16px_rgba(249,115,22,0.4)] active:translate-y-1 active:border-b-0 transition-all cursor-pointer ring-4 ring-orange-300/80"
                 type="button" title="약점 복습 드릴">
-                <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/35 blur-[0.5px] pointer-events-none">
+                <div class="absolute inset-x-2 top-1.5 h-2.5 rounded-full bg-white/40 blur-[0.5px] pointer-events-none">
                 </div>
-                <div class="relative flex items-center justify-center relative z-10">
+                <div class="relative flex items-center justify-center z-10">
                   <span id="node-review-icon" class="text-3xl select-none leading-none drop-shadow-sm">⚡️</span>
                   <span class="absolute -bottom-1 -right-1 text-sm">🩹</span>
                 </div>
@@ -603,9 +599,9 @@
               </div>
             </div>
 
-            <!-- 약점 복습 하단 심플 캡슐 (잠김 시 숨김) -->
+            <!-- 약점 복습 하단 캡슐 -->
             <div id="node-review-label-card"
-              class="mt-2 flex items-center justify-center bg-white/95 px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none hidden"
+              class="mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border border-orange-200 pointer-events-none hidden"
               style="display: none;">
               <div class="flex items-center gap-1">
                 <span id="node-review-badge-icon" class="text-xs">⚡️</span>
@@ -614,9 +610,8 @@
             </div>
           </div>
 
-
-          <!-- Node 3: Stage 3 (3과) - 3D Stage Type -->
-          <div class="roadmap-node relative z-10 flex flex-col items-center ml-5 mb-14 opacity-80" style="width: 190px;"
+          <!-- Node 3: Stage 3 (3과) -->
+          <div class="roadmap-node relative z-10 flex flex-col items-center ml-5 mb-14" style="width: 190px;"
             data-node-id="node-3" data-node-type="stage" id="node-3-container">
             <div id="node-3-start-banner" class="hidden pointer-events-none"></div>
 
@@ -627,7 +622,7 @@
               <span id="node-3-pulse-ring"
                 class="hidden absolute w-[88px] h-[88px] rounded-full bg-sky-200/50 pointer-events-none"></span>
               <button id="node-3-btn"
-                class="node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-300 text-slate-500 font-black text-2xl flex items-center justify-center border-b-4 border-slate-400 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer"
+                class="node-btn btn-3d w-[68px] h-[68px] rounded-full bg-slate-200 text-slate-400 font-black text-2xl flex items-center justify-center border-b-4 border-slate-300 shadow-sm active:translate-y-1 active:border-b-0 transition-all cursor-pointer pointer-events-none"
                 type="button" title="3과: 잠김">
                 <span class="node-stage-num font-black text-2xl select-none leading-none drop-shadow-xs">3</span>
               </button>
@@ -656,7 +651,7 @@
 
             <!-- Node 3 하단 별 3개 캡슐 -->
             <div id="node-3-label-card"
-              class="mt-2 flex items-center justify-center bg-white/90 px-3 py-1 rounded-full shadow-sm border border-slate-200/60 pointer-events-none opacity-80">
+              class="mt-2 flex items-center justify-center bg-white px-3 py-1 rounded-full shadow-sm border border-slate-200 pointer-events-none">
               <span id="node-3-title" class="hidden">3과</span>
               <div id="node-3-label-badge" class="flex items-center gap-1">
                 <span class="text-sm opacity-30">⭐</span>
@@ -666,11 +661,65 @@
             </div>
           </div>
 
-          <!-- Unit 1 Boss Node Dynamic Slot -->
-          <div id="u1-boss-slot" class="w-full"></div>
-        </div>
+          <!-- Unit 1 Boss Node (2~4과와 동일한 100% 솔리드 규격) -->
+          <div class="roadmap-node relative z-20 flex flex-col items-center mx-auto mb-6" style="width: 290px;"
+            data-node-id="node-boss" data-node-type="boss" id="node-boss-container" data-unit-index="0">
+            <div id="node-boss-start-banner" class="hidden pointer-events-none"></div>
 
-        <!-- Dynamic Units Container -->
+            <div id="node-boss-target" class="relative flex items-center justify-center node-target cursor-pointer"
+              data-node-type="locked" data-lock-msg="1~3과를 모두 통과해야 보스전에 도전할 수 있어요!" data-lock-icon="👑">
+
+              <div id="node-boss-glow" class="absolute w-[100px] h-[100px] rounded-full pointer-events-none"
+                style="background: radial-gradient(circle, rgba(251, 191, 36, 0.42) 0%, rgba(251, 191, 36, 0.18) 50%, rgba(251, 191, 36, 0) 72%);">
+              </div>
+
+              <button id="node-boss-btn"
+                class="node-btn relative w-[84px] h-[84px] rounded-full bg-[#E2E8F0] border-2 border-slate-300 shadow-sm flex items-center justify-center active:translate-y-1 transition-all pointer-events-none"
+                type="button" title="Unit 1 보스전" data-unit-number="1" data-node-type="boss" data-node-id="node-boss"
+                data-is-locked="true">
+                <span
+                  class="text-[34px] select-none leading-none drop-shadow-sm relative z-10 opacity-70 saturate-120">👑</span>
+              </button>
+
+              <div id="node-boss-lock-badge"
+                class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[#855B32]/90 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20">
+                <span class="material-symbols-outlined text-[13px] font-bold">lock</span>
+              </div>
+
+              <div id="node-boss-start-pill"
+                class="node-badge-start hidden absolute -top-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center"
+                style="display: none;">
+                <div
+                  class="relative px-2.5 py-0.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 text-[10px] font-black rounded-full shadow-[0_2px_6px_rgba(245,158,11,0.5)] border border-yellow-200 tracking-wider uppercase leading-none flex items-center gap-0.5 animate-pulse">
+                  <span>▶</span><span>START</span>
+                  <div class="w-2 h-2 bg-yellow-400 border-r border-b border-yellow-500 absolute"
+                    style="bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+                </div>
+              </div>
+
+              <div id="node-boss-check-badge"
+                class="hidden absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md ring-4 ring-white pointer-events-none z-20"
+                style="display: none;">
+                <span class="material-symbols-outlined text-[16px] font-black">check</span>
+              </div>
+            </div>
+
+            <!-- Unit 1 보스 하단 뱃지 -->
+            <div id="node-boss-label-card"
+              class="mt-2.5 flex items-center justify-center bg-white border border-slate-200 px-3 py-0.5 rounded-full shadow-xs pointer-events-none">
+              <span id="node-boss-title" class="hidden">보스전</span>
+              <div id="node-boss-label-badge"
+                class="flex items-center gap-1 font-bold text-[11px] text-slate-500 tracking-wide">
+                <span class="text-[11px]">🔒</span>
+                <span>3과 완료 후 해금</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- End of Unit 1 Section Block -->
+
+        <!-- Dynamic Units Container (Unit 2~N) -->
         <div id="roadmap-subsequent-units" class="w-full"></div>
 
         <!-- 스페이서 -->
@@ -681,19 +730,17 @@
           class="absolute z-30 pointer-events-none transition-all duration-200 opacity-0 scale-90 select-none whitespace-nowrap"
           style="display: none;">
           <div
-            class="relative bg-slate-900/95 backdrop-blur-sm text-white font-label-md text-xs px-3.5 py-2 rounded-2xl shadow-xl flex items-center gap-1.5 border border-slate-700/60">
+            class="relative bg-slate-900 text-white font-label-md text-xs px-3.5 py-2 rounded-2xl shadow-xl flex items-center gap-1.5 border border-slate-700">
             <span id="locked-tooltip-icon" class="text-sm">🔒</span>
             <span id="locked-tooltip-text" class="font-bold">이전 레슨을 먼저 완료해야 열려요!</span>
             <div
-              class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900/95 rotate-45 border-b border-r border-slate-700/60">
+              class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 rotate-45 border-b border-r border-slate-700">
             </div>
           </div>
         </div>
 
       </div>
     </main>
-
-
 
     <!-- ================================================= -->
     <!-- 2-B. 오답노트 화면 (REVIEW / MISTAKE ESCAPE SCREEN) -->
