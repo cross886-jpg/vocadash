@@ -547,22 +547,98 @@
     let activeId = 'es_main';
     try {
       if (typeof localStorage !== 'undefined') {
-        activeId = localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+        activeId = localStorage.getItem('vocadash_current_course') || localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
       } else {
-        activeId = (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+        activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
       }
     } catch (_) {
-      activeId = (typeof window !== 'undefined' && window.activeCourseId) || 'es_main';
+      activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
     }
     if (activeId === 'main') {
       const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
       activeId = (curLang === 'en' && typeof window !== 'undefined' && window.courseData_en) ? 'en_main' : 'es_main';
+    } else if (activeId === 'pack_football' || activeId === 'soccer' || activeId === 'es_soccer') {
+      activeId = 'pack_football';
     }
     return (COURSES && COURSES[activeId]) || (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null) || courseData;
   }
   target.getCurrentCourseData = getCurrentCourseData;
   if (typeof window !== 'undefined') window.getCurrentCourseData = getCurrentCourseData;
 
+  function getUnitDataWithFallback(courseId, unitNumber) {
+    const uNum = parseInt(unitNumber, 10) || 1;
+    let cId = courseId;
+    if (!cId) {
+      cId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
+    }
+    if (cId === 'main') {
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+      cId = (curLang === 'en') ? 'en_main' : 'es_main';
+    } else if (cId === 'pack_football' || cId === 'soccer' || cId === 'es_soccer') {
+      cId = 'es_soccer';
+    }
+
+    const course = (COURSES && COURSES[cId]) || (cId === 'es_soccer' ? (typeof window !== 'undefined' ? window.packFootballData : null) : null) || getCurrentCourseData();
+
+    // 1. 코스 데이터 내에 해당 유닛이 존재하고 단어가 있다면 그대로 반환
+    if (course && Array.isArray(course.units)) {
+      const existing = course.units.find(u => (u.unitNumber || u.unitId || u.unit || u.id) === uNum);
+      if (existing && Array.isArray(existing.words) && existing.words.length > 0) {
+        return existing;
+      }
+    }
+
+    // 2. 메타데이터(courseSections)에서 타이틀 및 설명 조회
+    const cs = (typeof window !== 'undefined' && window.courseSections) ? window.courseSections : null;
+    const courseMeta = (cs && (cs[cId] || cs[cId.replace('es_soccer', 'pack_football')])) || null;
+    const unitMeta = courseMeta?.units?.[uNum] || courseMeta?.units?.[String(uNum)] || null;
+
+    const unitTitle = unitMeta?.title ? `Unit ${uNum}. ${unitMeta.title}` : `Unit ${uNum} 코스 학습`;
+    const unitDesc = unitMeta?.desc || `Gate ${uNum} 어휘 런 및 스테이지 도전`;
+
+    // 3. 실제 게임/플래시카드 진입 테스트가 가능하도록 30개 더미 단어 생성
+    const dummyWords = Array.from({ length: 30 }, (_, i) => ({
+      id: `dummy_${cId}_u${uNum}_${i + 1}`,
+      word: `Voca_${uNum}_${i + 1}`,
+      term: `Voca_${uNum}_${i + 1}`,
+      pronunciation: `보카 ${i + 1}`,
+      meaning: `단어 뜻 ${uNum}-${i + 1}`,
+      exampleTarget: `Example sentence for word ${i + 1}`,
+      exampleMeaning: `단어 ${i + 1}에 대한 예문 해석입니다.`
+    }));
+
+    const stage1Words = dummyWords.slice(0, 10).map(w => w.id);
+    const stage2Words = dummyWords.slice(10, 20).map(w => w.id);
+    const stage3Words = dummyWords.slice(20, 30).map(w => w.id);
+    const bossWords = dummyWords.slice(0, 15).map(w => w.id);
+
+    return {
+      unitId: uNum,
+      unitNumber: uNum,
+      id: uNum,
+      unit: uNum,
+      title: unitTitle,
+      desc: unitDesc,
+      subtitle: unitDesc,
+      dummy: true,
+      stages: [
+        { stageNumber: 1, title: "1과 기초 런", targetWords: 10, dummy: true },
+        { stageNumber: 2, title: "2과 실전 런", targetWords: 10, dummy: true },
+        { stageNumber: 3, title: "보스전 마스터", isBoss: true, targetWords: 10, dummy: true }
+      ],
+      nodes: [
+        { id: `u${uNum}_stage-1`, stageNumber: 1, type: "stage", title: `1과: ${unitTitle}`, wordIds: stage1Words },
+        { id: `u${uNum}_stage-2`, stageNumber: 2, type: "stage", title: `2과: ${unitDesc}`, wordIds: stage2Words },
+        { id: `u${uNum}_node-bonus`, type: "bonus", title: "보너스 상자" },
+        { id: `u${uNum}_node-review`, type: "review", title: "약점 복습" },
+        { id: `u${uNum}_stage-3`, stageNumber: 3, type: "stage", title: "3과: 실전 소통", wordIds: stage3Words },
+        { id: `u${uNum}_node-boss`, type: "boss", title: `Unit ${uNum} 총괄 보스전`, wordIds: bossWords }
+      ],
+      words: dummyWords
+    };
+  }
+  target.getUnitDataWithFallback = getUnitDataWithFallback;
+  if (typeof window !== 'undefined') window.getUnitDataWithFallback = getUnitDataWithFallback;
   function getWordById(wordId) {
     const course = getCurrentCourseData();
     if (course && Array.isArray(course.units)) {
@@ -632,6 +708,7 @@
       COURSES,
       courseData,
       getCurrentCourseData,
+      getUnitDataWithFallback,
       getWordById,
       forceHardReset
     };

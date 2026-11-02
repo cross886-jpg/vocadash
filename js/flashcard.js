@@ -25,6 +25,7 @@
       deckLayer2: getEl('flashcard-deck-layer-2'), tag: getEl('flashcard-tag', 'flashcard-front-tag'), front: getEl('flashcard-front'),
       back: getEl('flashcard-back'), speakerBtn: getEl('flashcard-speaker-btn'), word: getEl('flashcard-word', 'flashcard-front-word'),
       phonetic: getEl('flashcard-phonetic', 'flashcard-front-phonetic'), meaning: getEl('flashcard-meaning', 'flashcard-back-meaning'),
+      exampleContainer: getEl('flashcard-example-container'),
       exampleTarget: getEl('flashcard-example-target', 'flashcard-back-detail'), exampleMeaning: getEl('flashcard-example-meaning'),
       hint: getEl('flashcard-hint', 'flashcard-hint-text'), mascotImg: getEl('flashcard-mascot-img'), mascotMsg: getEl('flashcard-mascot-msg'),
       prevBtn: getEl('flashcard-prev-btn'), nextBtn: getEl('flashcard-next-btn'), dots: getEl('flashcard-dots'), stepText: getEl('flashcard-step-text'),
@@ -80,13 +81,37 @@
       const uIdx = Math.max(0, (window.currentUnitNumber || 1) - 1);
       deck = window.courseData.units[uIdx]?.words || [];
     }
+    if ((!deck || deck.length === 0) && typeof window.getUnitDataWithFallback === 'function') {
+      const uNum = (window.currentUnitNumber || 1);
+      const cId = window.currentCourseId || window.activeCourseId || (currentCourse === 'en' ? 'en_main' : 'es_main');
+      const fallbackUnit = window.getUnitDataWithFallback(cId, uNum);
+      deck = fallbackUnit?.words || [];
+    }
 
-    activeDeck = (deck || []).map((item) => ({
-      ...item, word: item.word || item.term || '', term: item.term || item.word || '', meaning: item.meaning || item.korean || '',
-      phonetic: item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : ''), exampleTarget: item.exampleTarget || item.example || '',
-      exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || '', isSentence: Boolean(item.type === 'sentence' || item.isSentence || (item.word && item.word.includes(' ') && item.word.length > 20)),
-      tag: item.tag || (item.type === 'sentence' ? '실전 문장' : '핵심 어휘')
-    }));
+    activeDeck = (deck || []).map((item) => {
+      const termStr = item.word || item.term || '';
+      const meanStr = item.meaning || item.korean || item.ko || '';
+      const pronStr = item.pronunciation || item.pron || item.phonetic || '';
+      const genderStr = item.gender === 'm' ? '남성' : (item.gender === 'f' ? '여성' : (item.gender || ''));
+      const posStr = item.partOfSpeech || item.pos || '';
+      const grammarHint = [genderStr, posStr].filter(Boolean).join(' · ');
+
+      return {
+        ...item,
+        word: termStr,
+        term: termStr,
+        meaning: meanStr,
+        pronunciation: pronStr,
+        phonetic: item.phonetic || (pronStr ? `[${pronStr}]` : ''),
+        gender: item.gender || null,
+        partOfSpeech: posStr || null,
+        grammarHint: grammarHint || '',
+        exampleTarget: item.exampleTarget || item.example || item.sentence || '',
+        exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || item.sentenceKo || item.sentence_ko || '',
+        isSentence: Boolean(item.type === 'sentence' || item.isSentence || (termStr && termStr.includes(' ') && termStr.length > 20)),
+        tag: item.tag || (grammarHint ? grammarHint : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
+      };
+    });
     window.currentSessionQuestions = activeDeck;
 
     const targetId = currentFlashcardLessonId;
@@ -166,7 +191,10 @@
     if (els.hint) els.hint.textContent = '👆 탭: 뜻 확인 · ↔ 밀기: 단어 넘기기';
 
     const isSentence = cardData.type === 'sentence' || cardData.isSentence || currentCardIndex >= 10;
-    if (els.tag) els.tag.textContent = cardData.tag || (isSentence ? '실전 문장' : '핵심 어휘');
+    if (els.tag) {
+      const hint = cardData.grammarHint || '';
+      els.tag.textContent = cardData.tag || (hint ? hint : (isSentence ? '실전 문장' : '핵심 어휘'));
+    }
     if (els.word) {
       const termText = cardData.word || cardData.term || '';
       els.word.textContent = termText;
@@ -181,8 +209,31 @@
       els.phonetic.classList.toggle('hidden', !isPhoneticVisible);
     }
     if (els.meaning) els.meaning.textContent = cardData.meaning || '';
-    if (els.exampleTarget) els.exampleTarget.textContent = `"${cardData.exampleTarget || cardData.example || ''}"`;
-    if (els.exampleMeaning) els.exampleMeaning.textContent = `"${cardData.exampleMeaning || cardData.exampleKo || cardData.example_ko || ''}"`;
+
+    const exTarget = String(cardData.exampleTarget || cardData.example || cardData.sentence || '').trim();
+    const exMeaning = String(cardData.exampleMeaning || cardData.exampleKo || cardData.example_ko || cardData.sentenceKo || cardData.sentence_ko || '').trim();
+    const hasExample = Boolean(exTarget || exMeaning);
+
+    const exampleContainer = els.exampleContainer || els.exampleTarget?.parentElement;
+    if (exampleContainer) {
+      if (hasExample) {
+        exampleContainer.classList.remove('hidden');
+        exampleContainer.style.display = '';
+        if (els.exampleTarget) {
+          els.exampleTarget.textContent = exTarget ? `"${exTarget}"` : '';
+          els.exampleTarget.style.display = exTarget ? '' : 'none';
+        }
+        if (els.exampleMeaning) {
+          els.exampleMeaning.textContent = exMeaning ? `"${exMeaning}"` : '';
+          els.exampleMeaning.style.display = exMeaning ? '' : 'none';
+        }
+      } else {
+        exampleContainer.classList.add('hidden');
+        exampleContainer.style.display = 'none';
+        if (els.exampleTarget) els.exampleTarget.textContent = '';
+        if (els.exampleMeaning) els.exampleMeaning.textContent = '';
+      }
+    }
 
     const total = activeDeck.length, stepNum = currentCardIndex + 1;
     if (els.stepText) els.stepText.textContent = `(${stepNum}/${total})`;

@@ -372,14 +372,14 @@ async function runE2ETests() {
     await page.click('#bonus-claim-btn', { force: true });
     await page.waitForTimeout(250);
 
-    // Test Unit Overview Sheet interaction (verify language modal is NOT opened!)
+    // Test Course Drawer (Boarding Pass) interaction (verify language modal is NOT opened!)
     await page.click('#unit-banner');
     await page.waitForTimeout(250);
     const unitOverviewState = await page.evaluate(() => {
-      const unitModal = document.getElementById('unit-overview-modal-backdrop');
+      const unitModal = document.getElementById('course-drawer-backdrop') || document.getElementById('unit-overview-modal-backdrop');
       const langModal = document.getElementById('language-modal-backdrop');
-      const titleEl = document.getElementById('unit-overview-title');
-      const cards = document.querySelectorAll('.unit-item-card');
+      const titleEl = document.getElementById('course-drawer-title') || document.getElementById('unit-overview-title');
+      const cards = document.querySelectorAll('.course-gate-card, .unit-item-card');
       return {
         unitModalOpen: unitModal && !unitModal.classList.contains('pointer-events-none') && unitModal.classList.contains('opacity-100'),
         langModalNotOpen: langModal ? langModal.classList.contains('pointer-events-none') : true,
@@ -388,8 +388,8 @@ async function runE2ETests() {
       };
     });
 
-    // Test Unit Skip Test Modal: Click locked unit card (Unit 2)
-    await page.click('.unit-item-card[data-status="locked"]');
+    // Test Unit Skip Test Modal: Click locked unit gate card (Gate 2)
+    await page.click('.course-gate-card[data-status="closed"], .unit-item-card[data-status="locked"]', { force: true });
     await page.waitForTimeout(250);
     const skipModalOpened = await page.evaluate(() => {
       const modal = document.getElementById('unit-skip-modal-backdrop');

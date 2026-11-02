@@ -103,10 +103,13 @@ lessonBackdrop.classList.add('opacity-0', 'pointer-events-none');
 const lessonSheet = document.getElementById('lesson-card-sheet');
 lessonSheet.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none', 'scale-95');
 
-const unitOverviewBackdrop = document.getElementById('unit-overview-modal-backdrop');
-unitOverviewBackdrop.classList.add('opacity-0', 'pointer-events-none');
-const unitOverviewCard = document.getElementById('unit-overview-modal-card');
-unitOverviewCard.classList.add('opacity-0', 'translate-y-full', 'pointer-events-none');
+const courseDrawerBackdrop = document.getElementById('course-drawer-backdrop');
+courseDrawerBackdrop.classList.add('opacity-0', 'pointer-events-none');
+const courseDrawerCard = document.getElementById('course-drawer-card');
+courseDrawerCard.classList.add('opacity-0', 'translate-y-full', 'pointer-events-none');
+
+const unitOverviewBackdrop = courseDrawerBackdrop;
+const unitOverviewCard = courseDrawerCard;
 
 // Initialize events
 if (typeof window.initLessonModalEvents === 'function') {

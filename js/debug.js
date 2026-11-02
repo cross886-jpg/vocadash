@@ -38,6 +38,12 @@
     <button id="dbg-unlock-next" style="background:#6366f1; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
       🔓 다음 유닛(Unit) 강제 해금
     </button>
+    <div style="display:flex; gap:4px;">
+      <input id="dbg-jump-unit-input" type="number" min="1" max="250" placeholder="Gate 번호" style="width:70px; background:#1e293b; color:#fff; border:1px solid #475569; border-radius:6px; padding:4px 6px; font-size:11px;">
+      <button id="dbg-jump-unit-btn" style="flex:1; background:#059669; color:#fff; border:none; padding:6px 8px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
+        🚀 특정 Gate로 이동/해금
+      </button>
+    </div>
     <button id="dbg-add-gems" style="background:#0284c7; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
       [치트] 💎 보석 +100개 지급
     </button>
@@ -110,45 +116,92 @@
         }
     };
 
+    // 3. 특정 Gate/Unit 번호로 점프 및 해금 함수 (SSOT: debugJumpToUnit)
+    function debugJumpToUnit(unitNumber) {
+        const targetUnit = parseInt(unitNumber, 10);
+        if (isNaN(targetUnit) || targetUnit < 1) {
+            console.warn('[치트] 유효하지 않은 유닛 번호:', unitNumber);
+            return false;
+        }
+
+        const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        const course = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
+
+        // 1) 이전 유닛들 전부 클리어 처리 및 targetUnit 해금
+        if (typeof unlockUnitsUpTo === 'function') {
+            unlockUnitsUpTo(targetUnit, lang, course);
+        } else if (typeof setUnlockedUnitLevel === 'function') {
+            setUnlockedUnitLevel(targetUnit, lang, course);
+        } else if (typeof window.setUnlockedUnitLevel === 'function') {
+            window.setUnlockedUnitLevel(targetUnit, lang, course);
+        } else {
+            localStorage.setItem(`vocadash_unlocked_${lang}_${course}`, String(targetUnit));
+        }
+
+        // 2) 전역 상태 및 로드맵 가시 뷰 갱신
+        window.currentUnitNumber = targetUnit;
+        window.activeUnit = targetUnit;
+        window.currentUnitLevel = targetUnit;
+        window._currentVisibleUnitIndex = Math.max(0, targetUnit - 1);
+        try {
+            localStorage.setItem('vocadash_current_unit', String(targetUnit));
+            localStorage.setItem('vocadash_active_unit', String(targetUnit));
+            localStorage.setItem('currentUnitLevel', String(targetUnit));
+            localStorage.setItem('currentUnitIndex', String(Math.max(0, targetUnit - 1)));
+        } catch (_) { }
+
+        // 3) 로드맵 UI 갱신
+        if (typeof window.loadRoadmapUnit === 'function') {
+            window.loadRoadmapUnit(targetUnit);
+        }
+        if (typeof updateRoadmapNodesUI === 'function') {
+            updateRoadmapNodesUI();
+        }
+        if (typeof updateTopUnitBanner === 'function') {
+            updateTopUnitBanner(Math.max(0, targetUnit - 1));
+        }
+        if (typeof renderRoadmap === 'function') {
+            renderRoadmap();
+        }
+
+        // 4) 탑승권 드로어 상태 동기화
+        if (typeof window.renderCourseDrawer === 'function') {
+            window.renderCourseDrawer(course);
+        }
+
+        if (typeof window.showToast === 'function') {
+            window.showToast(`[치트] 🚀 Gate/Unit ${targetUnit} (으)로 이동 및 해금 완료!`, '🚀');
+        }
+        return true;
+    }
+    window.debugJumpToUnit = debugJumpToUnit;
+
+    // 특정 Gate 점프 버튼 이벤트 바인딩
+    const jumpBtn = document.getElementById('dbg-jump-unit-btn');
+    if (jumpBtn) {
+        jumpBtn.onclick = () => {
+            const input = document.getElementById('dbg-jump-unit-input');
+            const targetUnit = input ? parseInt(input.value, 10) : 1;
+            if (targetUnit >= 1) {
+                debugJumpToUnit(targetUnit);
+            } else {
+                alert('이동할 1 이상의 Gate 번호를 입력하세요.');
+            }
+        };
+    }
+
     // 3. 다음 유닛/챕터 강제 해금 (이전 유닛 전체 완벽 클리어 + 다음 유닛 1번 노드 활성화)
     document.getElementById('dbg-unlock-next').onclick = () => {
-        const lang = window.currentLanguage || 'es';
-        const course = window.activeCourseId || 'main';
+        const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+        const course = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
 
-        // 1) 현재 유닛 번호 가져오기
         let curUnit = 1;
         if (typeof getUnlockedUnitLevel === 'function') {
             curUnit = getUnlockedUnitLevel(lang, course);
-        } else {
-            const savedUnit = localStorage.getItem(`${lang}_${course}_unlocked_unit`);
-            if (savedUnit) curUnit = parseInt(savedUnit, 10);
+        } else if (typeof window.getUnlockedUnitLevel === 'function') {
+            curUnit = window.getUnlockedUnitLevel(lang, course);
         }
-
-        // 2) 현재 유닛의 모든 노드(보통 1~5개 노드)를 발바닥 3개 만점으로 LocalStorage에 저장
-        for (let node = 1; node <= 10; node++) {
-            localStorage.setItem(`${lang}_${course}_u${curUnit}_n${node}`, '3');
-            localStorage.setItem(`${lang}_${course}_unit${curUnit}_node${node}`, '3');
-            localStorage.setItem(`node_progress_${lang}_${course}_${curUnit}_${node}`, '3');
-        }
-
-        // 3) 다음 유닛 번호로 증가 및 저장
-        const nextUnitNum = curUnit + 1;
-        if (typeof setUnlockedUnitLevel === 'function') {
-            setUnlockedUnitLevel(nextUnitNum, lang, course);
-        } else {
-            localStorage.setItem(`${lang}_${course}_unlocked_unit`, String(nextUnitNum));
-        }
-
-        // 4) 다음 유닛의 1번 노드를 열어두기 (START 상태 보장)
-        localStorage.setItem(`${lang}_${course}_u${nextUnitNum}_n1`, '0');
-        localStorage.setItem(`${lang}_${course}_unit${nextUnitNum}_node1`, '0');
-
-        // 5) 화면 로드맵 갱신 또는 새로고침
-        if (typeof renderRoadmap === 'function') {
-            renderRoadmap();
-        } else {
-            location.reload();
-        }
+        debugJumpToUnit(curUnit + 1);
     };
 
     // [치트] 💎 보석 +100개 지급

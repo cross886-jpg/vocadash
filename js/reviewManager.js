@@ -60,9 +60,9 @@
 
   function loadWrongWords(targetLang) {
     const lang = (targetLang || target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const key = (typeof getWrongStorageKey === 'function') ? getWrongStorageKey(lang) : `vocadash_weakness_words_${lang}`;
+    const key = (typeof getWrongStorageKey === 'function') ? getWrongStorageKey(lang) : `vocadash_wrong_answers_${lang}`;
     try {
-      let saved = localStorage.getItem(key);
+      let saved = localStorage.getItem(key) || localStorage.getItem(`vocadash_wrong_words_${lang}`);
       if (!saved && lang === 'es') {
         saved = localStorage.getItem('vocadash_wrong_words');
       }
@@ -75,6 +75,7 @@
                 return {
                   id: String(item),
                   term: String(item),
+                  word: String(item),
                   meaning: '',
                   phonetic: '',
                   correctStreak: 0,
@@ -83,11 +84,13 @@
                   lang: lang
                 };
               }
+              const termStr = String(item.term || item.word || '');
               return {
                 id: String(item.id || `w_${lang}_${idx + 1}`),
-                term: String(item.term || item.word || ''),
+                term: termStr,
+                word: String(item.word || termStr),
                 meaning: String(item.meaning || item.kor || item.ko || ''),
-                phonetic: String(item.phonetic || ''),
+                phonetic: String(item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : '')),
                 correctStreak: typeof item.correctStreak === 'number' ? item.correctStreak : (parseInt(item.correctStreak, 10) || 0),
                 wrongCount: Number(item.wrongCount) || 1,
                 escaped: !!item.escaped,
@@ -110,17 +113,22 @@
       // 5회 연속 정답 달성한 단어는 완전 졸업(영구 삭제)
       const validated = (words || [])
         .filter(w => (Number(w.correctStreak) || 0) < 5)
-        .map((w, idx) => ({
-          id: String(w.id || `w_${lang}_${idx + 1}`),
-          term: String(w.term || w.word || ''),
-          meaning: String(w.meaning || w.kor || w.ko || ''),
-          phonetic: String(w.phonetic || ''),
-          correctStreak: Number(w.correctStreak) || 0,
-          wrongCount: Number(w.wrongCount) || 1,
-          escaped: !!w.escaped,
-          lang: w.lang || lang
-        }));
+        .map((w, idx) => {
+          const termStr = String(w.term || w.word || '');
+          return {
+            id: String(w.id || `w_${lang}_${idx + 1}`),
+            term: termStr,
+            word: String(w.word || termStr),
+            meaning: String(w.meaning || w.kor || w.ko || ''),
+            phonetic: String(w.phonetic || (w.pronunciation ? `[${w.pronunciation}]` : '')),
+            correctStreak: Number(w.correctStreak) || 0,
+            wrongCount: Number(w.wrongCount) || 1,
+            escaped: !!w.escaped,
+            lang: w.lang || lang
+          };
+        });
       localStorage.setItem(key, JSON.stringify(validated));
+      localStorage.setItem(`vocadash_wrong_words_${lang}`, JSON.stringify(validated));
       if (lang === 'es') {
         localStorage.setItem('vocadash_wrong_words', JSON.stringify(validated));
       }
@@ -129,33 +137,10 @@
     }
   }
 
-  // 상단 배너 내 [⚡ 오답 탈출 런] 버튼 상태 갱신 함수
-  function updateHeroWrongRunButton(overrideCount) {
-    const heroWrongRunBtn = document.getElementById('btn-hero-wrong-run');
-    if (!heroWrongRunBtn) return;
-    let count = typeof overrideCount === 'number' ? overrideCount : null;
-    if (count === null) {
-      const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-      let wrongList = loadWrongWords(currentLang) || [];
-      count = wrongList.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
-    }
-
-    if (count > 0) {
-      heroWrongRunBtn.disabled = false;
-      heroWrongRunBtn.className = 'w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer opacity-100';
-      heroWrongRunBtn.innerHTML = `<span>⚡ 오답 탈출 런 시작 (${count}단어 복습)</span>`;
-    } else {
-      heroWrongRunBtn.disabled = true;
-      heroWrongRunBtn.className = 'w-full bg-slate-200 text-slate-400 font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-none flex items-center justify-center gap-1.5 cursor-not-allowed opacity-80';
-      heroWrongRunBtn.innerHTML = '<span>🎉 모든 오답 정복 완료!</span>';
-    }
-  }
-
   function updateWrongWordsBadge() {
     const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const list = (Array.isArray(target.wrongWords) ? target.wrongWords : []).filter(
-      (item) => (item.lang || currentLang) === currentLang
-    );
+    const list = (typeof loadWrongWords === 'function') ? loadWrongWords(currentLang) : (Array.isArray(target.wrongWords) ? target.wrongWords : []);
+    target.wrongWords = list;
     const waitingWords = list.filter((w) => !w.escaped && (Number(w.correctStreak) || 0) < 5);
     const count = waitingWords.length;
     if (typeof target.updateHeartsUI === 'function') {
@@ -176,11 +161,8 @@
     // 1-B) 교재·단어장 오답 필터 칩 숫자 (#book-filter-wrong-count)
     const bookWrongCount = document.getElementById('book-filter-wrong-count');
     if (bookWrongCount) {
-      bookWrongCount.textContent = count;
+      bookWrongCount.textContent = String(count);
     }
-
-    // 1-C) 교재·단어장 상단 배너 내 [⚡ 오답 탈출 런] 액션 버튼 상태 갱신
-    updateHeroWrongRunButton(count);
 
     // 2) 상단 배너 '탈출 대기 중인 단어 N개' (#review-waiting-count-text)
     const waitingCountText = document.getElementById('review-waiting-count-text');
@@ -197,6 +179,13 @@
     const filterEscapedBadge = document.getElementById('review-filter-escaped-count');
     if (filterEscapedBadge) {
       filterEscapedBadge.textContent = escapedCount;
+    }
+
+    // 4) 로드맵 화면 약점 복습(오답 탈출) 노드 UI 동기화
+    if (typeof target.updateRoadmapNodesUI === 'function') {
+      try {
+        target.updateRoadmapNodesUI();
+      } catch (_) { }
     }
   }
 
@@ -251,8 +240,9 @@
           list.unshift({
             id: qId || ('w_' + lang + '_' + Date.now()),
             term: qTerm,
+            word: qTerm,
             meaning: question.meaning || question.kor || question.ko || '뜻 없음',
-            phonetic: question.phonetic || `[${qTerm}]`,
+            phonetic: question.phonetic || (question.pronunciation ? `[${question.pronunciation}]` : `[${qTerm}]`),
             correctStreak: 0,
             wrongCount: 1,
             escaped: false,
@@ -490,44 +480,90 @@
     const list = (words && words.length > 0)
       ? words.filter((item) => (item.lang || currentLang) === currentLang)
       : fallbackList;
-    if (!list || list.length === 0) {
-      if (typeof target.showToast === 'function') {
-        target.showToast('복습할 오답 단어가 없습니다! 🎉', '💡');
-      }
-      return;
-    }
 
     target.isReviewGameMode = true;
 
-    // 13문제 세트로 순환 패딩
-    const session = [];
-    let idx = 0;
-    while (session.length < 13) {
-      const item = list[idx % list.length];
-      session.push({
-        id: item.id || `review-q-${idx}`,
-        word: item.term || item.word || '',
-        term: item.term || item.word || '',
-        meaning: item.meaning || '',
-        phonetic: item.phonetic || '',
-        type: 'word',
-        isSentence: false,
-        tag: '오답 복습',
-        isReviewMode: true,
-        lang: currentLang
-      });
-      idx++;
+    let session = [];
+    const targetUnit = target.currentReviewUnitNumber || target.currentUnitNumber || 1;
+
+    if (!list || list.length === 0) {
+      // 🌟 오답 0개 시: 랜덤 복습 모드 안전 Fallback
+      if (typeof target.showToast === 'function') {
+        target.showToast('오답이 없습니다! 🌟 완벽 복습 런에 도전하세요', '👏');
+      }
+      if (typeof target.generateReviewSession === 'function') {
+        session = target.generateReviewSession(targetUnit, currentLang);
+      } else if (typeof window.generateReviewSession === 'function') {
+        session = window.generateReviewSession(targetUnit, currentLang);
+      }
+    } else {
+      // 순수 오답 단어로만 10문제 큐(Queue) 빌드
+      const queueBuilder = (typeof window.buildWeaknessQuizQueue === 'function')
+        ? window.buildWeaknessQuizQueue
+        : (typeof target.buildWeaknessQuizQueue === 'function')
+          ? target.buildWeaknessQuizQueue
+          : null;
+
+      const queue = queueBuilder ? queueBuilder(list, 10) : [];
+      if (queue.length > 0) {
+        queue.forEach((item, idx) => {
+          session.push({
+            ...item,
+            id: item.id || `review-q-${idx}`,
+            word: item.term || item.word || '',
+            term: item.term || item.word || '',
+            meaning: item.meaning || '',
+            phonetic: item.phonetic || '',
+            type: 'word',
+            isSentence: false,
+            tag: '오답 복습',
+            isReviewMode: true,
+            lang: currentLang
+          });
+        });
+      } else {
+        let idx = 0;
+        while (session.length < 10 && list.length > 0) {
+          const item = list[idx % list.length];
+          session.push({
+            id: item.id || `review-q-${idx}`,
+            word: item.term || item.word || '',
+            term: item.term || item.word || '',
+            meaning: item.meaning || '',
+            phonetic: item.phonetic || '',
+            type: 'word',
+            isSentence: false,
+            tag: '오답 복습',
+            isReviewMode: true,
+            lang: currentLang
+          });
+          idx++;
+        }
+      }
+    }
+
+    // 세션이 그래도 비어있다면 10문제 보장을 위해 generateReviewSession 직접 호출
+    if (!session || session.length === 0) {
+      if (typeof target.generateReviewSession === 'function') {
+        session = target.generateReviewSession(targetUnit, currentLang);
+      } else if (typeof window.generateReviewSession === 'function') {
+        session = window.generateReviewSession(targetUnit, currentLang);
+      }
     }
 
     target.currentSessionQuestions = session;
 
+    const reviewNodeKey = (typeof window.getCompositeNodeKey === 'function')
+      ? window.getCompositeNodeKey('node-review', targetUnit)
+      : `u${targetUnit}_node-review`;
+
     if (typeof target.openGameScreen === 'function') {
-      target.openGameScreen('node-review', session);
+      target.openGameScreen(reviewNodeKey, session, { mode: 'review' });
     }
 
     const titleEl = document.getElementById('game-stage-title');
     if (titleEl) {
-      titleEl.textContent = `Unit ${target.currentUnitNumber || 1} · 🔄 약점 복습`;
+      titleEl.textContent = `Unit ${targetUnit} · 🔄 약점 복습`;
     }
   }
 
@@ -623,7 +659,6 @@
   target.loadWrongWords = loadWrongWords;
   target.saveWrongWords = saveWrongWords;
   target.updateWrongWordsBadge = updateWrongWordsBadge;
-  target.updateHeroWrongRunButton = updateHeroWrongRunButton;
   target.recordAnswerResult = recordAnswerResult;
   target.addWrongWord = addWrongWord;
   target.getSortableWord = getSortableWord;

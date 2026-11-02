@@ -8,6 +8,7 @@
 
   // --- 1. 인게임 코어 상태 변수 ---
   let currentGameLessonId = "node-2", gameQuestions = [], currentQuestionIdx = 0, currentHearts = 5;
+  let currentGameMode = "standard"; // 'standard' | 'review'
   let combo = 0, maxCombo = 0, score = 0, speedMultiplier = 1.0;
   let isActive = false, isGameActive = false, isPaused = false, isFrozen = false;
   let isQuestionActive = false, isStageFinishing = false, isCurrentQuestionFailed = false;
@@ -51,6 +52,19 @@
   // --- 3. UI 갱신 & 피드백 ---
   function updateHeartsUI() {
     if (!gameHeartsContainer) return;
+    if (currentGameMode === "review") {
+      gameHeartsContainer.innerHTML = '<span class="text-xs sm:text-sm select-none font-black text-rose-500 flex items-center gap-1">💖 ∞</span>';
+      return;
+    }
+    if (!gameHeartsContainer.querySelector(".game-heart")) {
+      gameHeartsContainer.innerHTML = `
+        <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="game-heart material-symbols-outlined text-[14px] text-error transition-all" style="font-variation-settings: 'FILL' 1;">favorite</span>
+      `;
+    }
     gameHeartsContainer.querySelectorAll(".game-heart").forEach((icon, idx) => {
       const active = idx < currentHearts;
       icon.className = active ? "game-heart material-symbols-outlined text-[14px] text-error transition-all" : "game-heart material-symbols-outlined text-[14px] text-slate-300 transition-all opacity-40";
@@ -60,6 +74,7 @@
   }
 
   function decreaseHeart() {
+    if (currentGameMode === "review") return Infinity;
     if (currentHearts <= 0) return 0;
     currentHearts = Math.max(0, currentHearts - 1);
     updateHeartsUI();
@@ -235,9 +250,27 @@
     totalAttemptCount++;
     combo = 0; speedMultiplier = 1.0;
     const q = gameQuestions[currentQuestionIdx];
-    if (q) missedWords.push(q);
-    window.missedWords = missedWords;
+    if (q) {
+      if (!isCurrentQuestionFailed) {
+        isCurrentQuestionFailed = true;
+        missedWords.push(q);
+        window.missedWords = missedWords;
+        try {
+          if (typeof window.recordAnswerResult === 'function') {
+            window.recordAnswerResult(q, false);
+          } else if (typeof window.addWrongWord === 'function') {
+            window.addWrongWord(q);
+          }
+        } catch (_) { }
+      }
+    }
     window.totalAttemptCount = totalAttemptCount;
+    if (currentGameMode === "review") {
+      showGameFloatingEffect("다시 기억해봐요! 💡", false);
+      window.playSound?.("wrong");
+      gameNextQuestionTimer = setTimeout(nextQuestion, 900);
+      return;
+    }
     const remaining = decreaseHeart();
     if (gameArena) { gameArena.classList.add("animate-game-shake"); setTimeout(() => gameArena?.classList.remove("animate-game-shake"), 400); }
     showGameFloatingEffect("위험선 도달! -1 ❤️", false);
@@ -260,10 +293,12 @@
 
     const currentQ = gameQuestions?.[currentQuestionIdx] || window.gameQuestions?.[currentQuestionIdx];
     if (currentQ) {
-      correctWords.push(currentQ);
-      window.correctWords = correctWords;
-      try { window.recordAnswerResult?.(currentQ, true); } catch (_) { }
-      try { window.addMasteredWord?.(currentQ); } catch (_) { }
+      if (!isCurrentQuestionFailed) {
+        correctWords.push(currentQ);
+        window.correctWords = correctWords;
+        try { window.recordAnswerResult?.(currentQ, true); } catch (_) { }
+        try { window.addMasteredWord?.(currentQ); } catch (_) { }
+      }
     }
     totalAttemptCount++;
     window.totalAttemptCount = totalAttemptCount;
@@ -288,13 +323,28 @@
 
   function handleWrongAnswer(btn, selectedText) {
     if (isStageFinishing || !isQuestionActive) return;
+    const isFirstFail = !isCurrentQuestionFailed;
     isCurrentQuestionFailed = true; combo = 0; speedMultiplier = 1.0; updateHeaderStatusUI();
     totalAttemptCount++;
     const currentQ = gameQuestions[currentQuestionIdx];
-    if (currentQ) missedWords.push(currentQ);
-    window.missedWords = missedWords;
+    if (currentQ && isFirstFail) {
+      missedWords.push(currentQ);
+      window.missedWords = missedWords;
+      try {
+        if (typeof window.recordAnswerResult === 'function') {
+          window.recordAnswerResult(currentQ, false);
+        } else if (typeof window.addWrongWord === 'function') {
+          window.addWrongWord(currentQ);
+        }
+      } catch (_) { }
+    }
     window.totalAttemptCount = totalAttemptCount;
     if (btn) { btn.classList.add("!bg-red-500", "!text-white", "!border-red-600"); setTimeout(() => btn?.classList.remove("!bg-red-500", "!text-white", "!border-red-600"), 500); }
+    if (currentGameMode === "review") {
+      showGameFloatingEffect("오답! 다시 도전 💬", false);
+      window.playSound?.("wrong");
+      return;
+    }
     const remaining = decreaseHeart();
     showGameFloatingEffect("오답! -1 ❤️", false);
     window.playSound?.("wrong");
@@ -386,9 +436,20 @@
   }
   window.useGameItem = useGameItem;
 
+  // 🎲 Fisher-Yates 셔플 유틸 (원본 불변성 보장 얕은 복사본 생성)
+  function shuffleArray(arr) {
+    if (!Array.isArray(arr) || arr.length <= 1) return Array.isArray(arr) ? [...arr] : [];
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  window.shuffleArray = window.shuffleArray || shuffleArray;
 
   // --- 7. 화면 라이프사이클 & 모달 위임 ---
-  function openGameScreen(lessonId = "node-2", session = null) {
+  function openGameScreen(lessonId = "node-2", session = null, options = {}) {
     if (typeof window.closeResultModal === "function") window.closeResultModal();
     const resultModal = document.getElementById("game-result-modal");
     if (resultModal) {
@@ -424,31 +485,51 @@
     window.currentGameLessonId = currentGameLessonId;
     if (currentGameLessonId !== "node-skip-test") window.isUnitSkipTestMode = false;
 
+    const explicitMode = options?.mode || (typeof lessonId === "object" && lessonId?.mode);
+    const isReview = explicitMode === "review" ||
+      (currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun || window.isReviewGameMode);
+    currentGameMode = isReview ? "review" : "standard";
+    window.currentGameMode = currentGameMode;
+    if (isReview) {
+      window.isReviewGameMode = true;
+    }
+
     const currentLang = window.currentActiveCourse || "es";
-    if (Array.isArray(session) && session.length > 0) {
-      gameQuestions = session.slice();
+    const incomingSession = (Array.isArray(session) && session.length > 0)
+      ? session
+      : (lessonId && typeof lessonId === "object" && Array.isArray(lessonId.session) && lessonId.session.length > 0)
+        ? lessonId.session
+        : (lessonId && typeof lessonId === "object" && Array.isArray(lessonId.words) && lessonId.words.length > 0)
+          ? lessonId.words
+          : null;
+
+    let sourceQuestions = [];
+    if (incomingSession && incomingSession.length > 0) {
+      sourceQuestions = incomingSession;
     } else if (Array.isArray(window.currentSessionQuestions) && window.currentSessionQuestions.length > 0) {
-      gameQuestions = window.currentSessionQuestions.slice();
+      sourceQuestions = window.currentSessionQuestions;
     } else if (window.quizSessionGenerator?.generateStageSession) {
-      gameQuestions = window.quizSessionGenerator.generateStageSession(currentGameLessonId, currentLang, 0) || [];
+      sourceQuestions = window.quizSessionGenerator.generateStageSession(currentGameLessonId, currentLang, 0) || [];
     } else if (typeof window.generateStageSession === "function") {
-      gameQuestions = window.generateStageSession(currentGameLessonId, currentLang, 0) || [];
+      sourceQuestions = window.generateStageSession(currentGameLessonId, currentLang, 0) || [];
     } else {
       const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
       const curUnit = course?.units?.[0];
-      gameQuestions = (curUnit && Array.isArray(curUnit.words))
+      sourceQuestions = (curUnit && Array.isArray(curUnit.words))
         ? curUnit.words.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || '', term: w.word || '', meaning: w.meaning || '' }))
         : [];
     }
 
-    const isReview = (currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun || window.isReviewGameMode);
-    if (isReview && (!Array.isArray(gameQuestions) || gameQuestions.length === 0)) {
+    if (isReview && (!Array.isArray(sourceQuestions) || sourceQuestions.length === 0)) {
       const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(currentGameLessonId) : null;
       const uNum = coords?.unitIndex || window.currentUnitNumber || 1;
-      gameQuestions = (typeof window.generateReviewSession === "function")
+      sourceQuestions = (typeof window.generateReviewSession === "function")
         ? window.generateReviewSession(uNum, currentLang)
         : (window.quizSessionGenerator?.generateReviewSession?.(uNum, currentLang) || []);
     }
+
+    // 퀴즈 문제 큐 생성 시 얕은 복사본을 만들어 Fisher-Yates 셔플 적용 (원본 순서 불변성 유지)
+    gameQuestions = shuffleArray(sourceQuestions);
 
     if (!Array.isArray(gameQuestions) || gameQuestions.length === 0) {
       if (typeof window.showToast === "function") window.showToast("학습할 단어가 없습니다. 로드맵으로 돌아갑니다.", "⚠️");
@@ -457,7 +538,8 @@
     }
 
     currentQuestionIdx = 0;
-    currentHearts = (typeof window.getUserHearts === "function") ? window.getUserHearts() : (window.userHearts || 5);
+    const globalHearts = (typeof window.getUserHearts === "function") ? window.getUserHearts() : (window.userHearts || 5);
+    currentHearts = currentGameMode === "review" ? 999 : globalHearts;
     combo = 0; maxCombo = 0; score = 0; speedMultiplier = 1.0;
     missedWords = []; correctWords = []; totalAttemptCount = 0;
     isActive = true; isGameActive = true; isPaused = false; isStageFinishing = false;
@@ -483,7 +565,7 @@
     if (gameStageTitle) {
       const isSkipTest = window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test";
       const isBoss = (currentGameLessonId === "node-boss" || String(currentGameLessonId).includes("boss"));
-      const isReviewMode = (currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun);
+      const isReviewMode = (currentGameMode === "review" || currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review") || window.isRoadmapReviewSpeedrun);
       const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(currentGameLessonId) : null;
       const uNum = coords?.unitIndex || window.currentUnitNumber || 1;
 
@@ -518,10 +600,13 @@
     window.currentGameLessonId = currentGameLessonId; window.gameQuestions = gameQuestions;
     window.currentQuestionIdx = currentQuestionIdx; window.score = score; window.maxCombo = maxCombo;
     window.missedWords = missedWords; window.correctWords = correctWords; window.totalAttemptCount = totalAttemptCount;
-    return window.gameResultModal?.finishGameStage?.(isClear, customAccuracy);
+    const mode = currentGameMode;
+    window.currentGameMode = currentGameMode;
+    return window.gameResultModal?.finishGameStage?.(isClear, customAccuracy, { mode });
   }
 
   function triggerGameOver() {
+    if (currentGameMode === "review") return;
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false; isQuestionActive = false;
     return window.gameResultModal?.triggerGameOver ? window.gameResultModal.triggerGameOver() : finishGameStage(false);
@@ -530,11 +615,17 @@
   function closeGameScreen(force = false) {
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false;
+    currentGameMode = "standard";
+    window.currentGameMode = "standard";
     if (gameScreen) { gameScreen.classList.add("hidden", "opacity-0", "pointer-events-none"); gameScreen.style.display = "none"; }
   }
 
   function exitGameToRoadmap(force = false) {
     closeGameScreen(force);
+    currentGameMode = "standard";
+    window.currentGameMode = "standard";
+    window.isReviewGameMode = false;
+    window.isRoadmapReviewSpeedrun = false;
     window.switchMainTab?.("home");
 
     if (window._shouldOpenAdRechargeOnRoadmap) {
@@ -548,7 +639,7 @@
   function restartStageInMemory() {
     clearAllGameTimers(); cancelGameLoop();
     if (typeof window.closeResultModal === "function") window.closeResultModal();
-    openGameScreen(currentGameLessonId, gameQuestions);
+    openGameScreen(currentGameLessonId, gameQuestions, { mode: currentGameMode });
   }
 
   function reviveGameWithAd() {
@@ -652,7 +743,8 @@
     restartGame: restartStageInMemory, restartStageInMemory, reviveGameWithAd,
     finishGameStage, triggerGameOver, renderResultModal: isClear => finishGameStage(isClear),
     decreaseHeart, updateHeartsUI, updateItemCountUI,
-    handleCorrectAnswer, judgeAnswerDirectly, spawnQuestion, startWrongWordsMiniReview,
+    handleCorrectAnswer, handleWrongAnswer, handleDeadlineBreached,
+    judgeAnswerDirectly, spawnQuestion, startWrongWordsMiniReview,
     startFallingGame: (lessonId, session) => openGameScreen(lessonId, session),
     launchGame: (type, list, opt) => openGameScreen(opt?.lessonId || "node-2", list),
     getGameEngineState: () => ({ currentGameLessonId, currentHearts, score, combo, maxCombo, missedWords, correctWords, totalAttemptCount, totalQ: gameQuestions.length, currentQuestionIdx })

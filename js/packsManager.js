@@ -267,7 +267,7 @@
   // 단어팩(DLC/확장팩) 및 메인 코스 전환 함수
   function switchCourse(courseId) {
     let targetId = courseId || 'main';
-    if (targetId === 'main_en') {
+    if (targetId === 'main_en' || targetId === 'en_main') {
       targetId = 'main';
       if (typeof window.setLanguage === 'function') {
         window.setLanguage('en');
@@ -275,7 +275,16 @@
         window.currentLanguage = 'en';
         window.currentActiveCourse = 'en';
       }
-    } else if (targetId === 'pack_football') {
+    } else if (targetId === 'es_main' || targetId === 'main_es') {
+      targetId = 'main';
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage('es');
+      } else {
+        window.currentLanguage = 'es';
+        window.currentActiveCourse = 'es';
+      }
+    } else if (targetId === 'pack_football' || targetId === 'es_soccer') {
+      targetId = 'pack_football';
       if ((window.currentLanguage || 'es') !== 'es' && typeof window.setLanguage === 'function') {
         window.setLanguage('es');
       }
@@ -285,12 +294,12 @@
     targetId = (targetId === 'pack_football') ? 'pack_football' : 'main';
 
     window.activeCourseId = targetId;
-    window.currentCourseId = targetId;
+    window.currentCourseId = (targetId === 'pack_football') ? 'es_soccer' : (activeLang === 'en' ? 'en_main' : 'es_main');
     window.currentBookCourseId = targetId;
     try {
       localStorage.setItem(`vocadash_active_course_${activeLang}`, targetId);
       localStorage.setItem('vocadash_active_course', targetId);
-      localStorage.setItem('vocadash_current_course', targetId);
+      localStorage.setItem('vocadash_current_course', window.currentCourseId);
     } catch (_) { }
 
     // 진행도 상태를 해당 activeLang과 targetId 기준으로 새로고침
@@ -317,6 +326,13 @@
     }
     if (typeof window.renderBookCourseDropdown === 'function') {
       window.renderBookCourseDropdown(lang, targetId);
+    }
+    if (typeof window.renderCourseDrawer === 'function') {
+      const drawerCard = document.getElementById('course-drawer-card');
+      const drawerBd = document.getElementById('course-drawer-backdrop');
+      if (drawerCard && drawerBd && !drawerBd.classList.contains('pointer-events-none')) {
+        window.renderCourseDrawer(targetId);
+      }
     }
     updateCourseSwitcherUI(targetId);
 

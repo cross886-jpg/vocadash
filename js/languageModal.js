@@ -14,16 +14,165 @@
     return document.getElementById(id);
   }
 
-  function getModalCourses() {
-    return target.MODAL_COURSES || window.MODAL_COURSES || {
-      es: [
-        { id: 'main', icon: '🇪🇸', title: '일상 실전 패턴', desc: 'Duolingo 스타일 필수 실전 패턴 120개', badge: '기본' },
-        { id: 'pack_football', icon: '⚽', title: '스페인 축구 실전팩', desc: '라리가 직관, 포지션, 전술, 라커룸 필수 회화', badge: '인기' }
-      ],
-      en: [
-        { id: 'main', icon: '🇺🇸', title: '필수 회화 & 어휘', desc: '일상 필수 표현 및 영단어 120개', badge: '기본' }
-      ]
-    };
+  function getAvailableLanguages() {
+    if (typeof window !== 'undefined' && Array.isArray(window.availableLanguages)) {
+      return window.availableLanguages;
+    }
+    if (typeof target !== 'undefined' && Array.isArray(target.availableLanguages)) {
+      return target.availableLanguages;
+    }
+    try {
+      return require('./data/languagesRegistry.js');
+    } catch (_) { }
+    return [
+      {
+        code: "es",
+        nameKo: "스페인어",
+        nameNative: "Español",
+        flag: "🇪🇸",
+        mascotImg: "assets/characters/es-study.webp?v=88",
+        isReady: true,
+        courses: [
+          { id: "es_main", title: "스페인어 정규 코스", desc: "일상 회화 & 실전 기초 어휘 마스터", isDlc: false, icon: "🇪🇸" },
+          { id: "es_soccer", title: "스페인 축구 실전팩", desc: "스페셜 팩 · 경기장 어휘 & 피치 콜", isDlc: true, badge: "Official DLC", icon: "⚽" }
+        ]
+      },
+      {
+        code: "en",
+        nameKo: "영어",
+        nameNative: "English",
+        flag: "🇺🇸",
+        mascotImg: "assets/characters/en-study.webp?v=88",
+        isReady: true,
+        courses: [
+          { id: "en_main", title: "영어 정규 코스", desc: "일상 회화 & 실전 필수 어휘 마스터", isDlc: false, icon: "🇺🇸" }
+        ]
+      }
+    ];
+  }
+
+  function getLanguageConfig(langCode) {
+    const list = getAvailableLanguages();
+    return list.find(l => l.code === langCode) || list[0];
+  }
+
+  function getModalCourses(langCode) {
+    const langCfg = getLanguageConfig(langCode);
+    if (langCfg && Array.isArray(langCfg.courses) && langCfg.courses.length > 0) {
+      return langCfg.courses.map(c => ({
+        id: c.id,
+        icon: c.icon || (c.id.includes('soccer') || c.id.includes('football') ? '⚽' : langCfg.flag),
+        title: c.title,
+        desc: c.desc,
+        badge: c.badge || (c.isDlc ? 'Official DLC' : '')
+      }));
+    }
+    const legacyModal = target.MODAL_COURSES || window.MODAL_COURSES;
+    if (legacyModal && legacyModal[langCode]) {
+      return legacyModal[langCode];
+    }
+    return [];
+  }
+
+  function scrollActiveCardIntoView(langCode, smooth = true) {
+    const grid = document.getElementById('language-grid');
+    const languages = getAvailableLanguages();
+    const isFirstLang = languages.length > 0 && languages[0].code === langCode;
+
+    if (isFirstLang && grid) {
+      if (typeof grid.scrollTo === 'function') {
+        grid.scrollTo({ left: 0, behavior: smooth ? 'smooth' : 'auto' });
+      } else {
+        grid.scrollLeft = 0;
+      }
+      return;
+    }
+
+    const cardEl = document.getElementById(`card-${langCode}`);
+    if (cardEl && typeof cardEl.scrollIntoView === 'function') {
+      try {
+        cardEl.scrollIntoView({ inline: 'nearest', behavior: smooth ? 'smooth' : 'auto', block: 'nearest' });
+      } catch (_) { }
+    }
+  }
+
+  function renderModalLanguageCards(selectedLang) {
+    const grid = document.getElementById('language-grid');
+    if (!grid) return;
+
+    const languages = getAvailableLanguages();
+    grid.innerHTML = languages.map(lang => {
+      const isSelected = (lang.code === selectedLang && lang.isReady);
+      const isReady = !!lang.isReady;
+
+      let cardClasses = 'course-card relative p-3.5 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center group focus:outline-none focus:ring-2 focus:ring-[#22c55e] w-[120px] shrink-0 snap-start';
+
+      if (!isReady) {
+        cardClasses += ' border-slate-200 bg-slate-50/80 opacity-75 hover:opacity-100 cursor-pointer';
+      } else if (isSelected) {
+        cardClasses += ' border-[#22c55e] bg-[#f0fdf4] ring-2 ring-[#22c55e] shadow-sm cursor-pointer active:scale-95';
+      } else {
+        cardClasses += ' border-slate-100 bg-slate-50 hover:bg-slate-100/70 hover:border-slate-200 opacity-75 hover:opacity-100 cursor-pointer active:scale-95';
+      }
+
+      const radioBadge = isReady ? `
+        <div class="absolute top-2.5 right-2.5 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'border-[#22c55e] bg-[#22c55e]' : 'border-slate-300 bg-transparent'}">
+          <div class="badge-dot w-2 h-2 rounded-full transition-colors ${isSelected ? 'bg-white' : 'bg-transparent'}"></div>
+        </div>
+      ` : (lang.badge ? `
+        <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[9px] font-black tracking-tight leading-none">${lang.badge}</span>
+      ` : '');
+
+      const nameColor = isSelected ? 'text-[#15803d]' : (isReady ? 'text-slate-700' : 'text-slate-400');
+      const subColor = isSelected ? 'text-[#22c55e] font-semibold' : 'text-slate-400 font-medium';
+
+      return `
+        <div id="card-${lang.code}" role="radio" aria-checked="${isSelected ? 'true' : 'false'}" tabindex="0"
+          data-lang-code="${lang.code}" data-is-ready="${isReady}"
+          class="${cardClasses}">
+          ${radioBadge}
+          <div class="relative mb-2 pointer-events-none">
+            <img alt="${lang.nameKo} 마스코트" class="w-16 h-16 mx-auto object-cover rounded-xl"
+              src="${lang.mascotImg || 'assets/characters/es-study.webp?v=88'}"
+              onerror="this.onerror=null; this.src='assets/characters/es-study.webp?v=88';">
+            <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">
+              ${lang.flag}
+            </div>
+          </div>
+          <span class="card-lang-name font-bold text-sm ${nameColor} tracking-tight transition-colors">${lang.nameKo}</span>
+          <span class="card-lang-sub text-[11px] ${subColor} transition-colors">${lang.nameNative}</span>
+        </div>
+      `;
+    }).join('');
+
+    // Bind click / keydown events for cards
+    const cardEls = grid.querySelectorAll('.course-card');
+    cardEls.forEach(cardEl => {
+      const langCode = cardEl.dataset.langCode;
+      const isReady = cardEl.dataset.isReady === 'true';
+
+      const selectHandler = (e) => {
+        if (e) e.stopPropagation();
+        if (!isReady) {
+          scrollActiveCardIntoView(langCode, true);
+          if (typeof window.showToast === 'function') {
+            window.showToast("곧 출시 예정입니다! 🌸", "🚀");
+          } else {
+            alert("곧 출시 예정입니다!");
+          }
+          return;
+        }
+        handleCardLanguageSelect(langCode);
+      };
+
+      cardEl.onclick = selectHandler;
+      cardEl.onkeydown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectHandler(e);
+        }
+      };
+    });
   }
 
   function renderModalCourseList(targetLang, selectedCourseId) {
@@ -31,12 +180,17 @@
     if (!list) return;
 
     const lang = (targetLang === 'en') ? 'en' : 'es';
-    const modalCourses = getModalCourses();
-    const courses = modalCourses[lang] || modalCourses.es;
+    const courses = getModalCourses(lang);
 
     let activeId = selectedCourseId;
+    if (activeId === 'main') {
+      activeId = (lang === 'en') ? 'en_main' : 'es_main';
+    } else if (activeId === 'pack_football') {
+      activeId = 'es_soccer';
+    }
+
     if (!courses.some(c => c.id === activeId)) {
-      activeId = 'main';
+      activeId = courses[0] ? courses[0].id : (lang === 'en' ? 'en_main' : 'es_main');
     }
     modalPendingCourseId = activeId;
 
@@ -71,44 +225,7 @@
 
   function updateModalCardsUI(lang) {
     modalPendingLanguage = lang;
-    const isEs = lang === 'es';
-    const cardEs = el('card-es');
-    const cardEn = el('card-en');
-    const badgeEs = el('badge-es');
-    const badgeEn = el('badge-en');
-
-    const setCardStyle = (card, badge, isSelected) => {
-      if (!card) return;
-      card.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-      card.className = `course-card relative p-3.5 rounded-2xl border-2 transition-all duration-150 flex flex-col items-center cursor-pointer active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#22c55e] ${isSelected
-        ? 'border-[#22c55e] bg-[#f0fdf4] ring-2 ring-[#22c55e]/20 scale-[1.02] shadow-xs'
-        : 'border-slate-100 bg-slate-50 hover:bg-slate-100/70 hover:border-slate-200'
-        }`;
-
-      if (badge) {
-        badge.className = `absolute top-2.5 right-2.5 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'border-[#22c55e] bg-[#22c55e]' : 'border-slate-300 bg-transparent'
-          }`;
-        const dot = badge.querySelector('.badge-dot') || badge.firstElementChild;
-        if (dot) {
-          dot.className = `badge-dot w-2 h-2 rounded-full transition-colors ${isSelected ? 'bg-white' : 'bg-transparent'}`;
-        }
-      }
-
-      const nameEl = card.querySelector('.card-lang-name');
-      if (nameEl) {
-        nameEl.className = `card-lang-name font-bold text-sm tracking-tight transition-colors ${isSelected ? 'text-[#15803d]' : 'text-slate-700'
-          }`;
-      }
-
-      const subEl = card.querySelector('.card-lang-sub');
-      if (subEl) {
-        subEl.className = `card-lang-sub text-[11px] transition-colors ${isSelected ? 'text-[#22c55e] font-semibold' : 'text-slate-400 font-medium'
-          }`;
-      }
-    };
-
-    setCardStyle(cardEs, badgeEs, isEs);
-    setCardStyle(cardEn, badgeEn, !isEs);
+    renderModalLanguageCards(lang);
   }
 
   function updateModalCourseCardsUI(selectedCourseId) {
@@ -145,6 +262,8 @@
       backdrop.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
       card.classList.remove('scale-95', 'opacity-0');
     }
+
+    scrollActiveCardIntoView(modalPendingLanguage, false);
   }
 
   function closeLanguageModal() {
@@ -170,9 +289,10 @@
     }
     updateModalCardsUI(targetLang);
     renderModalCourseList(targetLang, modalPendingCourseId);
+    scrollActiveCardIntoView(targetLang, true);
   }
 
-  function setLanguage(targetLang) {
+  function setLanguage(targetLang, explicitCourseId) {
     const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : 'es';
     window.currentActiveCourse = lang;
     window.currentLanguage = lang;
@@ -202,19 +322,22 @@
     }
 
     // 3. 코스 및 단어장 드롭다운 목록 즉시 갱신
-    let selectedCourse = 'main';
-    try {
-      selectedCourse = localStorage.getItem(`vocadash_active_course_${lang}`) || 'main';
-    } catch (_) { }
+    let selectedCourse = explicitCourseId;
+    if (!selectedCourse) {
+      try {
+        selectedCourse = localStorage.getItem(`vocadash_active_course_${lang}`) || (lang === 'en' ? 'en_main' : 'es_main');
+      } catch (_) { }
+    }
 
-    if (lang === 'en' && selectedCourse === 'pack_football') {
-      selectedCourse = 'main';
+    if (lang === 'en' && (selectedCourse === 'pack_football' || selectedCourse === 'es_soccer')) {
+      selectedCourse = 'en_main';
     }
     window.currentCourseId = selectedCourse;
-    window.activeCourseId = selectedCourse;
+    window.activeCourseId = (selectedCourse === 'es_soccer' || selectedCourse === 'pack_football') ? 'pack_football' : 'main';
     try {
       localStorage.setItem(`vocadash_active_course_${lang}`, selectedCourse);
       localStorage.setItem('vocadash_active_course', selectedCourse);
+      localStorage.setItem('vocadash_current_course', selectedCourse);
     } catch (_) { }
 
     if (typeof window.renderCourseDropdown === 'function') {
@@ -271,6 +394,15 @@
     if (typeof window.updateStatsScreenUI === 'function') {
       window.updateStatsScreenUI();
     }
+
+    // 10. 비행 탑승권(Boarding Pass) 바텀시트 동기화
+    if (typeof window.renderCourseDrawer === 'function') {
+      const drawerCard = document.getElementById('course-drawer-card');
+      const drawerBd = document.getElementById('course-drawer-backdrop');
+      if (drawerCard && drawerBd && !drawerBd.classList.contains('pointer-events-none')) {
+        window.renderCourseDrawer(lang);
+      }
+    }
   }
 
   function initLanguageModalEvents() {
@@ -281,28 +413,6 @@
     const closeBtn = document.getElementById('close-modal-btn');
     if (closeBtn) {
       closeBtn.addEventListener('click', closeLanguageModal);
-    }
-
-    const cardEs = el('card-es');
-    if (cardEs) {
-      cardEs.addEventListener('click', () => handleCardLanguageSelect('es'));
-      cardEs.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleCardLanguageSelect('es');
-        }
-      });
-    }
-
-    const cardEn = el('card-en');
-    if (cardEn) {
-      cardEn.addEventListener('click', () => handleCardLanguageSelect('en'));
-      cardEn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleCardLanguageSelect('en');
-        }
-      });
     }
 
     // 코스 스위처 카드 클릭 이벤트 (위임)
@@ -321,18 +431,26 @@
     if (btnConfirmLangCourse) {
       btnConfirmLangCourse.addEventListener('click', () => {
         const finalLang = modalPendingLanguage || window.currentLanguage || localStorage.getItem('vocadash_selected_lang') || 'es';
-        const finalCourseId = modalPendingCourseId || window.activeCourseId || 'main';
+        const finalCourseId = modalPendingCourseId || window.currentCourseId || window.activeCourseId || (finalLang === 'en' ? 'en_main' : 'es_main');
 
         try {
           localStorage.setItem('vocadash_language', finalLang);
           localStorage.setItem('vocadash_selected_lang', finalLang);
           localStorage.setItem('vocadash_active_course', finalCourseId);
+          localStorage.setItem('vocadash_current_course', finalCourseId);
         } catch (_) { }
 
-        setLanguage(finalLang);
+        setLanguage(finalLang, finalCourseId);
 
         if (typeof window.switchCourse === 'function') {
           window.switchCourse(finalCourseId);
+        } else {
+          window.currentCourseId = finalCourseId;
+          window.activeCourseId = (finalCourseId === 'es_soccer' || finalCourseId === 'pack_football') ? 'pack_football' : 'main';
+        }
+
+        if (typeof window.renderCourseDrawer === 'function') {
+          window.renderCourseDrawer(finalCourseId);
         }
 
         closeLanguageModal();

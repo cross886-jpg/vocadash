@@ -75,8 +75,17 @@
     if (!id) return 'node-2';
     const s = String(id).toLowerCase();
     if (s.includes('boss') || s.endsWith('_n6') || s === 'node-boss') return 'node-boss';
-    if (s.endsWith('_n5') || s.includes('3')) return 'node-3';
-    if (s.endsWith('_n1') || s.includes('1')) return 'node-1';
+    if (s.includes('review') || s.endsWith('_n4') || s === 'node-review') return 'node-review';
+    if (s.includes('bonus') || (s.endsWith('_n3') && s.includes('bonus'))) return 'node-bonus';
+    if (s.endsWith('_n5') || s.endsWith('node-3') || s.endsWith('stage-3')) return 'node-3';
+    const match = s.match(/(?:node|stage|n|-)(\d+)$/i);
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (num === 1) return 'node-1';
+      if (num === 2) return 'node-2';
+      if (num === 3) return 'node-3';
+      return 'node-' + num;
+    }
     return 'node-2';
   }
 
@@ -89,8 +98,19 @@
 
     if (!course || !Array.isArray(course.units) || course.units.length === 0) return [];
 
+    const coords = (typeof window.parseNodeCoordinates === 'function') ? window.parseNodeCoordinates(rawId) : null;
+    const targetUnitNum = coords ? coords.unitIndex : ((typeof window.currentUnitNumber === 'number' ? window.currentUnitNumber : 1));
     const unitIdx = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
-    const targetUnit = course.units.find(u => u.nodes?.some(n => n.id === rawId)) || course.units[unitIdx] || course.units[0];
+    let targetUnit = course.units.find(u => (u.unitNumber || u.unit) === targetUnitNum) ||
+      course.units.find(u => u.nodes?.some(n => n.id === rawId));
+
+    if (!targetUnit && typeof window.getUnitDataWithFallback === 'function') {
+      const courseId = window.currentCourseId || window.activeCourseId || (courseLang === 'en' ? 'en_main' : 'es_main');
+      targetUnit = window.getUnitDataWithFallback(courseId, targetUnitNum);
+    }
+    if (!targetUnit) {
+      targetUnit = course.units[unitIdx] || course.units[0];
+    }
 
     let nodePool = [];
     if (targetUnit?.nodes) {
@@ -125,8 +145,8 @@
     const rawPool = getStageWordPool(rawLessonId, courseLang);
     if (!rawPool || rawPool.length === 0) return [];
 
-    // 💡 핵심: 플래시카드 순서와 겹치지 않도록 단어 풀을 즉시 무작위 셔플
-    const pool = shuffleArray(rawPool);
+    // 스테이지 배정 단어 풀 (원본 불변 복사본)
+    const pool = rawPool.slice();
 
     const isBoss = (normId === 'node-boss');
     let subStage = 1;
@@ -149,23 +169,26 @@
       const wrong = Array.isArray(wrongList) ? wrongList.slice(0, 3) : [];
       selected = shuffleArray([...core, ...wrong]);
     } else if (subStage === 1) {
-      // 1회차: 기본 10단어 랜덤 출제
+      // 1회차: 기본 10단어 정규 배정 (단어 예습 1~10번 순서 보존)
       selected = pool.slice(0, 10);
     } else if (subStage === 2) {
       // 2회차: 기본 10단어 + 최근 오답 3개 (총 13개)
       const wrong = wrongList.slice(0, 3);
-      selected = shuffleArray([...pool.slice(0, 10), ...wrong]);
+      selected = [...pool.slice(0, 10), ...wrong];
     } else {
       // 3회차: 기본 10단어 + 누적 오답 3~4개 (총 13~14개)
       const wrong = wrongList.slice(0, 4);
-      selected = shuffleArray([...pool.slice(0, 10), ...wrong]);
+      selected = [...pool.slice(0, 10), ...wrong];
     }
 
-    // 최종 출제 순서도 한 번 더 셔플하여 완전 무작위 보장
-    return shuffleArray(selected).map((item, idx) => {
+    return selected.map((item, idx) => {
       const wordStr = item.word || item.term || '';
       const meanStr = item.meaning || item.answer || item.korean || item.ko || '';
       const pronStr = item.pronunciation || item.pron || item.phonetic || '';
+      const genderStr = item.gender === 'm' ? '남성' : (item.gender === 'f' ? '여성' : (item.gender || ''));
+      const posStr = item.partOfSpeech || item.pos || '';
+      const grammarHint = [genderStr, posStr].filter(Boolean).join(' · ');
+
       return {
         ...item,
         id: item.id || `q_${idx + 1}`,
@@ -174,29 +197,126 @@
         meaning: meanStr,
         pronunciation: pronStr,
         phonetic: pronStr ? `[${pronStr}]` : '',
+        gender: item.gender || null,
+        partOfSpeech: posStr || null,
+        grammarHint: grammarHint || '',
+        exampleTarget: item.exampleTarget || item.example || item.sentence || '',
+        exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || item.sentenceKo || item.sentence_ko || '',
         type: 'word',
-        isSentence: false,
+        isSentence: Boolean(item.type === 'sentence' || item.isSentence),
         isWeakReview: Boolean(item.isWeakReview),
-        tag: item.tag || '핵심 어휘'
+        tag: item.tag || (grammarHint ? grammarHint : '핵심 어휘')
       };
     });
   }
 
-  // 약점 복습 세션 생성기
+  // 🎲 순수 오답 단어로만 10문제 큐(Queue) 빌드 유틸 (외부 일반 단어 혼입 원천 차단)
+  function buildWeaknessQuizQueue(wrongWords, targetCount = 10) {
+    if (!wrongWords || !Array.isArray(wrongWords) || wrongWords.length === 0) return [];
+    const queue = [];
+    while (queue.length < targetCount) {
+      // 10개가 찰 때까지 오답 배열을 순환 추가
+      const needed = targetCount - queue.length;
+      const batch = shuffleArray([...wrongWords]);
+      queue.push(...batch.slice(0, needed));
+    }
+    return queue;
+  }
+
+  // 📚 이미 학습한 단어 풀(현재 유닛 또는 직전 클리어한 유닛들) 추출 헬퍼
+  function getLearnedWordsPool(unitNum = 1, lang = 'es') {
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const course = window.getCurrentCourseData?.() || (courseLang === 'en' ? window.courseData_en : window.courseData_es) || window.courseData;
+    const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
+    const pool = [];
+
+    // 1. 현재 유닛 및 직전 유닛 단어 우선 수집
+    if (course && Array.isArray(course.units)) {
+      for (let u = targetU; u >= 1; u--) {
+        let uData = course.units.find(x => (x.unitNumber || x.unitId || x.unit || x.id) === u);
+        if (!uData && typeof window.getUnitDataWithFallback === 'function') {
+          const courseId = window.currentCourseId || window.activeCourseId || (courseLang === 'en' ? 'en_main' : 'es_main');
+          uData = window.getUnitDataWithFallback(courseId, u);
+        }
+        if (uData && Array.isArray(uData.words) && uData.words.length > 0) {
+          pool.push(...uData.words);
+        }
+      }
+    }
+
+    // 2. 단어 풀이 비어있다면 코스 전체 단어 또는 fallback 단어 보강
+    if (pool.length === 0) {
+      if (course && Array.isArray(course.allWords) && course.allWords.length > 0) {
+        pool.push(...course.allWords);
+      } else if (typeof window.getUnitDataWithFallback === 'function') {
+        const courseId = window.currentCourseId || window.activeCourseId || (courseLang === 'en' ? 'en_main' : 'es_main');
+        const fallbackUnit = window.getUnitDataWithFallback(courseId, targetU);
+        if (fallbackUnit && Array.isArray(fallbackUnit.words)) {
+          pool.push(...fallbackUnit.words);
+        }
+      }
+    }
+
+    return pool;
+  }
+
+  // 약점 복습 세션 생성기 (오답 0개 시 '랜덤 복습 모드' 안전 Fallback 지원)
   function generateReviewSession(unitNum = 1, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let wrongList = [];
     try {
-      const raw = localStorage.getItem('vocadash_wrong_words');
-      if (raw) {
-        wrongList = JSON.parse(raw).filter(w => (w.lang || 'es') === courseLang && !w.escaped);
+      if (typeof window.loadWrongWords === 'function') {
+        wrongList = window.loadWrongWords(courseLang) || [];
+      } else {
+        const raw = localStorage.getItem('vocadash_wrong_words_' + courseLang) ||
+          localStorage.getItem('vocadash_wrong_answers_' + courseLang) ||
+          localStorage.getItem('vocadash_wrong_words');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) wrongList = parsed;
+        }
       }
     } catch (_) { }
 
-    const pool = getStageWordPool('node-1', courseLang);
-    let selected = wrongList.length >= 10 ? wrongList.slice(0, 10) : [...wrongList, ...pool].slice(0, 10);
+    const activeWrongList = (Array.isArray(wrongList) ? wrongList : [])
+      .filter(w => (w.lang || courseLang) === courseLang && !w.escaped && (w.correctStreak === undefined || Number(w.correctStreak) < 5));
 
-    return shuffleArray(selected).map((item, idx) => ({
+    let queue = [];
+    const isPureRandomReview = (activeWrongList.length === 0);
+
+    if (activeWrongList.length >= 10) {
+      // 10개 이상이면 순수 오답으로만 10개 생성
+      queue = buildWeaknessQuizQueue(activeWrongList, 10);
+    } else if (activeWrongList.length > 0) {
+      // 1~9개로 부족한 경우: 오답을 먼저 넣고, 부족한 개수만큼 학습 완료 단어에서 채워 넣어 10문제 보장
+      const wrongIds = new Set(activeWrongList.map(w => String(w.id || w.word || w.term)));
+      const learnedPool = getLearnedWordsPool(unitNum, courseLang)
+        .filter(w => !wrongIds.has(String(w.id || w.word || w.term)));
+      const shuffledLearned = shuffleArray(learnedPool);
+
+      queue = [...activeWrongList];
+      const needed = 10 - queue.length;
+      if (shuffledLearned.length > 0) {
+        queue.push(...shuffledLearned.slice(0, needed));
+      }
+      // 그래도 부족하면(단어 풀이 극히 작은 경우) 순환하여 10개 완비
+      while (queue.length < 10 && (activeWrongList.length > 0 || learnedPool.length > 0)) {
+        const fillBatch = shuffleArray([...activeWrongList, ...learnedPool]);
+        if (fillBatch.length === 0) break;
+        queue.push(...fillBatch.slice(0, 10 - queue.length));
+      }
+      queue = shuffleArray(queue);
+    } else {
+      // 오답이 0개인 경우: 현재 유닛(또는 직전 유닛들) 학습 단어 중 10개를 랜덤 추출
+      const learnedPool = getLearnedWordsPool(unitNum, courseLang);
+      const shuffled = shuffleArray(learnedPool);
+      queue = shuffled.slice(0, 10);
+      while (queue.length < 10 && shuffled.length > 0) {
+        queue.push(...shuffleArray(learnedPool).slice(0, 10 - queue.length));
+      }
+    }
+
+    return queue.map((item, idx) => ({
       ...item,
       id: item.id || `review-q-${idx}`,
       word: item.term || item.word || '',
@@ -204,8 +324,9 @@
       meaning: item.meaning || item.kor || item.ko || '',
       phonetic: item.pronunciation || item.phonetic || '',
       type: 'word',
-      tag: '약점 복습',
-      isReviewMode: true
+      tag: isPureRandomReview ? '랜덤 복습' : (item.escaped === false || activeWrongList.some(w => w.id === item.id) ? '약점 복습' : '핵심 복습'),
+      isReviewMode: true,
+      lang: item.lang || courseLang
     }));
   }
 
@@ -246,12 +367,14 @@
   window.findWordInCourse = findWordInCourse;
   window.normalizeLessonId = normalizeLessonId;
   window.getStageWordPool = getStageWordPool;
+  window.buildWeaknessQuizQueue = buildWeaknessQuizQueue;
   window.generateStageSession = generateStageSession;
   window.generateReviewSession = generateReviewSession;
   window.generateQuestionChoices = generateQuestionChoices;
 
   window.quizSessionGenerator = {
     shuffleArray,
+    buildWeaknessQuizQueue,
     getWeakWordIds,
     addWeakWordId,
     removeWeakWordId,

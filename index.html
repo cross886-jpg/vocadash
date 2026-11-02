@@ -320,8 +320,9 @@
 
         <!-- 1-B. 상단 유닛 카드 배너 (Unit Banner) -->
         <div id="unit-banner"
+          onclick="window.openCourseDrawer ? window.openCourseDrawer() : (window.openCourseMapModal &amp;&amp; window.openCourseMapModal())"
           class="w-full bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-2xl p-3.5 shadow-md flex items-center justify-between border border-emerald-700/50 relative overflow-hidden select-none cursor-pointer hover:border-emerald-500/80 active:scale-[0.99] transition-all duration-200"
-          title="🗺️ 전체 유닛 코스 맵 보기">
+          title="🎫 비행 여정 탑승권 선택">
           <!-- Subtle decorative radial background glow -->
           <div
             class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none transition-all duration-300">
@@ -343,8 +344,9 @@
 
           <!-- 우측: 화살표 드롭다운 버튼 (v) -->
           <button id="unit-dropdown-btn" type="button"
+            onclick="window.openCourseDrawer ? window.openCourseDrawer() : (window.openCourseMapModal &amp;&amp; window.openCourseMapModal())"
             class="w-8 h-8 rounded-full bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-emerald-100 flex items-center justify-center transition-all duration-200 cursor-pointer border border-emerald-600/50 shadow-xs flex-shrink-0 ml-2"
-            title="🗺️ 전체 유닛 코스 맵 보기">
+            title="🎫 비행 여정 탑승권 선택">
             <span class="material-symbols-outlined text-lg leading-none">expand_more</span>
           </button>
         </div>
@@ -1309,13 +1311,6 @@
                 onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-emerald-100 text-2xl select-none\'>📚</div>';" />
             </div>
           </div>
-          <!-- [⚡ 오답 탈출 런] 액션 버튼 -->
-          <div class="relative z-10 mt-3.5 w-full">
-            <button id="btn-hero-wrong-run" type="button"
-              class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer">
-              <span>⚡ 오답 탈출 런 시작</span>
-            </button>
-          </div>
         </section>
 
         <!-- Filter Chips (초기 상태 반영) -->
@@ -1811,10 +1806,11 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">단어 밑에 [파사포르테] 한글 발음 표시</span>
                 </div>
                 <button id="toggle-show-phonetic" data-setting-key="showPhonetic" aria-checked="true"
+                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
-                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform"></span>
+                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform pointer-events-none"></span>
                 </button>
               </div>
               <div class="h-[1px] bg-surface-container mx-3.5"></div>
@@ -1825,10 +1821,11 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">단어가 떨어지거나 카드 등장 시 음성 재생</span>
                 </div>
                 <button id="toggle-auto-play-audio" data-setting-key="autoPlayAudio" aria-checked="true"
+                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
-                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform"></span>
+                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform pointer-events-none"></span>
                 </button>
               </div>
               <div class="h-[1px] bg-surface-container mx-3.5"></div>
@@ -1845,10 +1842,11 @@
                   </div>
                 </div>
                 <button id="toggle-sound-effects" data-setting-key="soundEffects" aria-checked="true"
+                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
-                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform"></span>
+                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform pointer-events-none"></span>
                 </button>
               </div>
               <div class="h-[1px] bg-surface-container mx-3.5"></div>
@@ -1865,10 +1863,11 @@
                   </div>
                 </div>
                 <button id="toggle-haptic-feedback" data-setting-key="hapticFeedback" aria-checked="true"
+                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
-                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform"></span>
+                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform pointer-events-none"></span>
                 </button>
               </div>
             </div>
@@ -1889,10 +1888,11 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">연속 출석 스트릭을 잃지 않도록 알림</span>
                 </div>
                 <button id="toggle-daily-reminder" data-setting-key="dailyReminder" aria-checked="true"
+                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
-                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform"></span>
+                    class="block w-[22px] h-[22px] rounded-full bg-white shadow-md transform translate-x-[22px] transition-transform pointer-events-none"></span>
                 </button>
               </div>
               <div class="h-[1px] bg-surface-container mx-3.5"></div>
@@ -2487,44 +2487,8 @@
         </h2>
         <p class="text-xs text-slate-500 mb-3.5 text-center">원하는 언어와 코스를 선택해 주세요</p>
 
-        <div id="language-grid" class="grid grid-cols-2 gap-3 w-full" role="radiogroup" aria-label="도전할 언어 선택">
-
-          <!-- Card: 영어 -->
-          <div id="card-en" role="radio" aria-checked="false" tabindex="0"
-            class="course-card relative p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 hover:bg-slate-100/70 hover:border-slate-200 transition-all duration-150 flex flex-col items-center cursor-pointer active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#22c55e]">
-            <div id="badge-en"
-              class="absolute top-2.5 right-2.5 w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center transition-colors">
-              <div class="badge-dot w-2 h-2 rounded-full bg-transparent transition-colors"></div>
-            </div>
-            <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-en" alt="영어 코스 마스코트 고양이" class="w-20 h-20 mx-auto object-cover rounded-xl"
-                src="assets/characters/en-study.webp?v=88"
-                onerror="this.onerror=null; this.src='assets/characters/en-study.webp?v=88';">
-              <div
-                class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">
-                🇺🇸</div>
-            </div>
-            <span class="card-lang-name font-bold text-sm text-slate-700 tracking-tight transition-colors">영어</span>
-            <span class="card-lang-sub text-[11px] text-slate-400 font-medium transition-colors">English</span>
-          </div>
-
-          <!-- Card: 스페인어 (기본 선택) -->
-          <div id="card-es" role="radio" aria-checked="true" tabindex="0"
-            class="course-card relative p-3.5 rounded-2xl border-2 border-[#22c55e] bg-[#f0fdf4] ring-2 ring-[#22c55e]/20 scale-[1.02] shadow-xs transition-all duration-150 flex flex-col items-center cursor-pointer active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#22c55e]">
-            <div id="badge-es"
-              class="absolute top-2.5 right-2.5 w-5 h-5 rounded-full border-2 border-[#22c55e] bg-[#22c55e] flex items-center justify-center transition-colors">
-              <div class="badge-dot w-2 h-2 rounded-full bg-white transition-colors"></div>
-            </div>
-            <div class="relative mb-2 pointer-events-none">
-              <img id="mascot-img-es" alt="스페인어 코스 마스코트" class="w-20 h-20 mx-auto object-cover rounded-xl"
-                src="assets/characters/es-study.webp?v=88">
-              <div
-                class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">
-                🇪🇸</div>
-            </div>
-            <span class="card-lang-name font-bold text-sm text-[#15803d] tracking-tight transition-colors">스페인어</span>
-            <span class="card-lang-sub text-[11px] text-[#22c55e] font-semibold transition-colors">Español</span>
-          </div>
+        <div id="language-grid" class="flex gap-2.5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-4 py-2 items-center w-full" role="radiogroup" aria-label="도전할 언어 선택">
+          <!-- 언어 카드는 window.availableLanguages 레지스트리에 의해 동적으로 주입됩니다 -->
         </div>
 
         <!-- 단어팩 / 코스 선택 섹션 -->
@@ -3201,7 +3165,8 @@
                   <h2 id="flashcard-meaning"
                     class="font-headline-xl text-[34px] font-extrabold text-[#0F172A] tracking-tight mb-4 leading-tight">
                     여권</h2>
-                  <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 w-full max-w-[290px] shadow-xs">
+                  <div id="flashcard-example-container"
+                    class="hidden bg-slate-50 border border-slate-200/80 rounded-2xl p-4 w-full max-w-[290px] shadow-xs">
                     <p id="flashcard-example-target" class="text-[14px] font-bold text-slate-800 leading-snug">"Aquí
                       tiene mi pasaporte."</p>
                     <p id="flashcard-example-meaning"
@@ -3800,50 +3765,14 @@
   </div>
 
   <!-- ================================================= -->
-  <!-- UNIT OVERVIEW BOTTOM SHEET (전체 유닛 선택 코스 맵)   -->
+  <!-- COURSE BOARDING PASS DRAWER (비행 여정 탑승권 바텀시트)  -->
   <!-- ================================================= -->
-  <div id="unit-overview-modal-backdrop"
-    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-end sm:items-center justify-center p-0 sm:p-4 select-none"
-    role="dialog" aria-modal="true" aria-labelledby="unit-overview-title">
-    <div id="unit-overview-modal-card"
-      class="relative z-50 w-full max-w-[420px] bg-white rounded-t-[32px] sm:rounded-[28px] shadow-2xl flex flex-col max-h-[85vh] overflow-hidden transform transition-all duration-300 ease-out translate-y-full sm:translate-y-0 sm:scale-95 opacity-0 pointer-events-none">
-
-      <!-- Top Drag Handle & Header -->
-      <div class="px-5 pt-3.5 pb-3 border-b border-slate-100 flex-shrink-0 bg-white">
-        <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-3"></div>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span class="text-2xl select-none">🗺️</span>
-            <div>
-              <h2 id="unit-overview-title" class="text-base font-black text-slate-900 leading-tight">스페인어 코스 맵</h2>
-              <p id="unit-overview-subtitle" class="text-[11px] font-bold text-slate-500 mt-0.5">총 10개 유닛 중 Unit 1 진행 중
-              </p>
-            </div>
-          </div>
-          <button id="close-unit-overview-btn" type="button" aria-label="닫기"
-            class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 active:scale-90 transition-all cursor-pointer">
-            <span class="material-symbols-outlined text-[18px] font-bold">close</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Unit List Container (Scrollable) -->
-      <div id="unit-overview-list" class="flex-grow overflow-y-auto p-4 space-y-2.5 max-h-[60vh] no-scrollbar">
-        <!-- Rendered dynamically via js/app.js -->
-      </div>
-
-      <!-- Bottom Summary Footer -->
-      <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between flex-shrink-0">
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-          <span class="text-base">🏃</span>
-          <span>다음 유닛을 향해 계속 달려요!</span>
-        </div>
-        <button id="unit-overview-confirm-btn" type="button"
-          class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black text-xs shadow-xs transition-all cursor-pointer">
-          계속 달리기
-        </button>
-      </div>
-
+  <div id="course-drawer-backdrop"
+    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none flex items-end justify-center select-none"
+    role="dialog" aria-modal="true" aria-labelledby="course-drawer-title">
+    <div id="course-drawer-card"
+      class="relative z-50 w-full max-w-[440px] bg-white rounded-t-[32px] shadow-2xl flex flex-col max-h-[88vh] overflow-hidden transform transition-all duration-300 ease-out translate-y-full">
+      <!-- 동적 렌더링: js/courseDrawer.js 에서 헤더, 비행 탑승권 티켓 캐러셀, 게이트 리스트 생성 -->
     </div>
   </div>
 
@@ -4110,9 +4039,11 @@
   </div>
 
   <!-- Application Data & Logic (단일 로드 체제) -->
+  <script src="js/data/languagesRegistry.js?v=128"></script>
   <script src="js/data_es.js?v=125"></script>
   <script src="js/data_football.js?v=125"></script>
   <script src="js/data_en.js?v=125"></script>
+  <script src="js/data/courseSections.js?v=128"></script>
   <script src="js/courseConfig.js?v=125"></script>
   <script src="js/sound.js?v=126"></script>
   <script src="js/settings.js?v=126"></script>
@@ -4120,6 +4051,7 @@
   <script src="js/languageModal.js?v=126"></script>
   <script src="js/bookRenderer.js?v=126"></script>
   <script src="js/progressManager.js?v=126"></script>
+  <script src="js/courseDrawer.js?v=127"></script>
   <script src="js/roadmapRenderer.js?v=126"></script>
   <script src="js/lessonModal.js?v=126"></script>
   <script src="js/profileManager.js?v=126"></script>

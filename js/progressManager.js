@@ -11,7 +11,10 @@
   const getCourse = (c, lang) => {
     let cid = c || target.currentCourseId || target.activeCourseId;
     if (!cid && storage.get) cid = storage.get(`vocadash_active_course_${getLang(lang)}`) || storage.get('vocadash_active_course');
-    return (cid === 'pack_football' && getLang(lang) !== 'en') ? 'pack_football' : 'main';
+    if (cid === 'es_soccer' || cid === 'pack_football') {
+      return (getLang(lang) !== 'en') ? 'pack_football' : 'main';
+    }
+    return 'main';
   };
   function getCompositeNodeKey(nodeId, unitId = null) {
     if (!nodeId) return `u${unitId || 1}_node-1`;
@@ -42,16 +45,29 @@
   function saveCourseProgress(progressData, courseId, targetLang) {
     storage.set(`vocadash_progress_${getLang(targetLang)}_${getCourse(courseId, targetLang)}`, JSON.stringify(progressData || {}));
   }
+  function getMaxCourseUnits(courseId, targetLang) {
+    const lang = getLang(targetLang), cid = getCourse(targetCourseId => targetCourseId, lang);
+    const resolvedCid = (cid === 'pack_football' || courseId === 'es_soccer') ? 'es_soccer' : (lang === 'en' ? 'en_main' : 'es_main');
+    const cs = target.courseSections;
+    if (cs && cs[resolvedCid] && Array.isArray(cs[resolvedCid].sections)) {
+      const lastSec = cs[resolvedCid].sections[cs[resolvedCid].sections.length - 1];
+      if (lastSec && typeof lastSec.unitEnd === 'number') return lastSec.unitEnd;
+    }
+    return (lang === 'en') ? 166 : 216;
+  }
   function getUnlockedUnitLevel(targetLang, targetCourseId) {
     const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    const maxUnits = getMaxCourseUnits(cid, lang);
     try {
       const val = storage.get(`vocadash_unlocked_${lang}_${cid}`);
-      if (val !== null) { const num = parseInt(val, 10); if (!isNaN(num) && num >= 1 && num <= 10) return num; }
+      if (val !== null) { const num = parseInt(val, 10); if (!isNaN(num) && num >= 1 && num <= maxUnits) return num; }
     } catch (_) { }
     return 1;
   }
   function setUnlockedUnitLevel(level, targetLang, targetCourseId) {
-    const lvl = Math.max(1, Math.min(10, parseInt(level, 10) || 1)), lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    const maxUnits = getMaxCourseUnits(cid, lang);
+    const lvl = Math.max(1, Math.min(maxUnits, parseInt(level, 10) || 1));
     storage.set(`vocadash_unlocked_${lang}_${cid}`, String(lvl));
     const prog = getCourseProgress(cid, lang);
     if (!prog.unlockedUnits) prog.unlockedUnits = [1];
@@ -59,12 +75,8 @@
     prog.currentUnit = lvl;
     target.currentUnitNumber = lvl;
     saveCourseProgress(prog, cid, lang);
-    return lvl;
-  }
 
-  function unlockUnitsUpTo(maxLevel, targetLang, targetCourseId) {
-    const lvl = setUnlockedUnitLevel(maxLevel, targetLang, targetCourseId);
-    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    // 💡 [Back-fill Unlock] 상위 유닛 도달 시 이전 번호(1 ~ lvl-1) 모든 게이트/노드 자동 완벽 해금
     for (let u = 1; u < lvl; u++) {
       [1, 2, 3].forEach(n => {
         const stdKey = `vocadash_prog_${lang}_${cid}_u${u}_n${n}`;
@@ -74,7 +86,23 @@
       const bossKey = `vocadash_prog_${lang}_${cid}_u${u}_n6`;
       if (!storage.get(bossKey)) storage.set(bossKey, '1');
       if (u === 1) storage.set(`node_progress_${lang}_${cid}_node-boss`, '1');
+
+      // 보너스 및 복습 완료 상태도 이전 유닛들에 대해 안전하게 동기화
+      const bonusKey = `u${u}_node-bonus`;
+      if (!isBonusClaimed(bonusKey) && !isBonusClaimed(`u${u}_n3`)) {
+        markBonusClaimed(bonusKey);
+      }
+      const reviewKey = `u${u}_node-review`;
+      if (!isReviewNodeCompleted(reviewKey, u)) {
+        markReviewNodeCompleted(reviewKey, u);
+      }
     }
+
+    return lvl;
+  }
+
+  function unlockUnitsUpTo(maxLevel, targetLang, targetCourseId) {
+    const lvl = setUnlockedUnitLevel(maxLevel, targetLang, targetCourseId);
     target.currentUnitNumber = lvl;
     target._currentVisibleUnitIndex = lvl - 1;
     target.renderRoadmap?.();
@@ -414,12 +442,6 @@
     let rawTarget = nodeId || target.currentGameLessonId || target.currentSelectedNodeId || 'node-1';
     let cid = (String(rawTarget).startsWith('fb_') || target.isFootballMode) ? 'pack_football' : getCourse(target.activeCourseId, lang);
     target.activeCourseId = cid;
-    let n1Saved = 0;
-    try {
-      const raw = storage.get(`vocadash_prog_${lang}_${cid}_u1_n1`);
-      if (raw !== null) n1Saved = parseInt(raw, 10) || (JSON.parse(raw)?.clearedCount ?? 0);
-    } catch (_) { }
-    if (n1Saved < 3 && (rawTarget === 'node-2' || String(rawTarget).includes('n2') || String(rawTarget).includes('node-2'))) rawTarget = 'node-1';
     const currentNode = resolveCurrentNode(rawTarget), activeNodeId = (rawTarget === 'node-1') ? 'node-1' : (currentNode?.id || rawTarget);
     const isBossNode = currentNode?.type === 'boss' || String(activeNodeId).includes('boss'), coords = parseNodeCoordinates(activeNodeId);
     const uNum = coords.unitIndex || target.currentUnitNumber || 1, nIdx = coords.nodeIndex || 1;
@@ -448,9 +470,12 @@
     let curGems = (parseInt(storage.get('vocadash_gems'), 10) || 120) + addGems;
     storage.set('vocadash_gems', String(curGems));
     if (isBossNode) setUnlockedUnitLevel(uNum + 1, lang, cid);
-    const isStrictReview = String(activeNodeId).includes('review') && (isReviewMode || isSpeedrun || String(activeNodeId).includes('review'));
-    if (isStrictReview) completeReviewNode(activeNodeId, uNum);
-    else {
+    const isStrictReview = Boolean(isReviewMode || isSpeedrun || (activeNodeId && String(activeNodeId).includes('review')));
+    if (isStrictReview) {
+      if (activeNodeId && String(activeNodeId).includes('review')) {
+        completeReviewNode(activeNodeId, uNum);
+      }
+    } else {
       setNodeProgress(activeNodeId, nextCount, nextCount, lang, cid);
       if (uNum === 1 && (nIdx === 3 || String(activeNodeId).includes('3'))) {
         try {
@@ -495,110 +520,67 @@
     return { action: 'learning_pipeline', currentPlayingId, nextNodeId, nextRound, nextSession };
   }
 
-  function renderUnitOverviewList(targetLang) {
-    const targetObj = (typeof target !== 'undefined' ? target : window);
-    const isFootball = (targetObj.activeCourseId || window.activeCourseId || window.currentLanguage) === 'pack_football';
-    const activeCourse = (targetObj.getCurrentCourseData?.() || window.getCurrentCourseData?.())
-      || (isFootball ? window.packFootballData : null);
-
-    const lang = isFootball ? 'pack_football' : getLang(targetLang);
-    const unlockedLevel = typeof getUnlockedUnitLevel === 'function' ? getUnlockedUnitLevel(lang) : 1;
-
-    // 💡 최우선 순위: 현재 활성 코스 units -> 프리셋 순으로 단일화
-    const units = activeCourse?.units || (!isFootball && targetObj.UNIT_LIST_PRESETS?.[lang]) || [];
-
-    const listEl = document.getElementById('unit-overview-list');
-    const titleEl = document.getElementById('unit-overview-title');
-    const subEl = document.getElementById('unit-overview-subtitle');
-
-    if (titleEl) titleEl.textContent = isFootball ? '⚽ 축구 단어팩 코스 맵' : (lang === 'en' ? '영어 코스 맵' : '스페인어 코스 맵');
-    if (subEl) subEl.textContent = `총 ${units.length}개 유닛 중 Unit ${unlockedLevel} 진행 중`;
-    if (!listEl) return;
-
-    listEl.innerHTML = units.map((item, idx) => {
-      const uNum = item.unit || item.unitNumber || (idx + 1);
-      const isCompleted = uNum < unlockedLevel;
-      const isCur = uNum === unlockedLevel;
-      const status = isCompleted ? 'completed' : (isCur ? 'active' : 'locked');
-      const badgeText = isCompleted ? '완료됨' : (isCur ? '진행 중' : '잠김');
-      const badgeClass = isCompleted
-        ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-        : (isCur ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500 border-slate-200');
-      const icon = isCompleted ? 'check_circle' : (isCur ? 'chevron_right' : 'lock');
-
-      const rawTitle = item.title || `Unit ${uNum}`;
-      const displayTitle = rawTitle.includes('Unit') ? rawTitle : `Unit ${uNum} : ${rawTitle}`;
-      const subText = item.desc || item.subtitle || '';
-
-      return `<div class="unit-item-card p-3.5 rounded-2xl border-2 ${isCompleted ? 'border-emerald-500/80 bg-emerald-50/50' : (isCur ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200/80 bg-white/90 hover:bg-slate-50 opacity-85 hover:opacity-100')} flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all" data-unit="${uNum}" data-title="${rawTitle}" data-status="${status}">
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-10 h-10 rounded-xl ${isCompleted || isCur ? 'bg-emerald-600' : 'bg-slate-100 text-slate-500'} text-white flex items-center justify-center font-black text-sm shadow-sm flex-shrink-0">U${uNum}</div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs font-black ${isCompleted || isCur ? 'text-emerald-950' : 'text-slate-800'} leading-tight">${displayTitle}</span>
-              <span class="px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tight leading-none border ${badgeClass}">${badgeText}</span>
-            </div>
-            <span class="text-[11px] font-semibold ${isCompleted || isCur ? 'text-emerald-700' : 'text-slate-400'} mt-0.5 truncate">${subText}</span>
-          </div>
-        </div>
-        <div class="flex items-center text-emerald-700 font-extrabold flex-shrink-0 ml-2">
-          <span class="material-symbols-outlined text-[20px] ${isCompleted ? 'text-emerald-600' : (isCur ? 'text-emerald-700' : 'text-slate-400')} font-bold">${icon}</span>
-        </div>
-      </div>`;
-    }).join('');
+  function getActiveCEFRLevel(lang) {
+    const curLang = lang || getLang();
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem('vocadash_active_level_' + curLang);
+        if (saved && ['a1', 'a2', 'b1', 'b2'].includes(saved.toLowerCase())) {
+          return saved.toLowerCase();
+        }
+      }
+    } catch (_) {}
+    return 'a1';
   }
 
-  function handleUnitOverviewListClick(e) {
-    const card = e.target.closest('.unit-item-card');
-    if (!card) return;
-    const uNum = parseInt(card.dataset.unit, 10);
-    const uTitle = card.dataset.title || '';
-    const status = card.dataset.status;
-
-    if (status === 'active' || status === 'completed') {
-      closeUnitOverviewModal();
-      if (typeof target.switchToUnit === 'function') {
-        target.switchToUnit(uNum);
-      } else {
-        target.currentUnitNumber = uNum;
-        target._currentVisibleUnitIndex = uNum - 1;
-        target.updateTopUnitBanner?.(uNum - 1);
-        const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${uNum - 1}"]`);
-        if (targetSection) targetSection.scrollIntoView({ behavior: 'instant', block: 'start' });
-        else window.scrollTo({ top: 0, behavior: 'instant' });
+  function setActiveCEFRLevel(level, lang) {
+    const curLang = lang || getLang();
+    const lvl = String(level || 'a1').toLowerCase();
+    const validLevel = ['a1', 'a2', 'b1', 'b2'].includes(lvl) ? lvl : 'a1';
+    target.currentLevel = validLevel;
+    if (typeof window !== 'undefined') window.currentLevel = validLevel;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('vocadash_active_level_' + curLang, validLevel);
       }
-      if (typeof target.showToast === 'function') {
-        target.showToast(`🚀 Unit ${uNum} (${uTitle || '학습'}) 화면입니다!`);
-      }
-    } else {
-      // 🔒 잠긴 유닛 카드 클릭 시 '건너뛰기 시험 안내 모달' 즉시 노출
-      openUnitSkipModal(uNum, uTitle);
-    }
+    } catch (_) {}
+    return validLevel;
   }
 
-  function openUnitOverviewModal() {
+  function openCourseDrawerWrapper(sectionId) {
     if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
     if (typeof target.closeLessonModal === 'function') target.closeLessonModal();
     if (typeof window.closeBonusModal === 'function') window.closeBonusModal();
     if (typeof window.closeReviewSpeedrunModal === 'function') window.closeReviewSpeedrunModal();
-    renderUnitOverviewList();
-    const bd = document.getElementById('unit-overview-modal-backdrop'), card = document.getElementById('unit-overview-modal-card');
-    if (bd && card) {
-      bd.classList.remove('pointer-events-none', 'opacity-0');
-      bd.classList.add('opacity-100');
-      card.classList.remove('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
-      card.classList.add('translate-y-0', 'sm:scale-100', 'opacity-100');
+    if (window.courseDrawer && typeof window.courseDrawer.open === 'function') {
+      window.courseDrawer.open(sectionId);
+    } else {
+      const bd = document.getElementById('course-drawer-backdrop') || document.getElementById('unit-overview-modal-backdrop');
+      const card = document.getElementById('course-drawer-card') || document.getElementById('unit-overview-modal-card');
+      if (bd && card) {
+        bd.classList.remove('pointer-events-none', 'opacity-0');
+        bd.classList.add('opacity-100');
+        card.classList.remove('pointer-events-none', 'translate-y-full', 'opacity-0');
+        card.classList.add('translate-y-0', 'opacity-100');
+      }
     }
   }
-  function closeUnitOverviewModal() {
-    const bd = document.getElementById('unit-overview-modal-backdrop'), card = document.getElementById('unit-overview-modal-card');
-    if (bd && card) {
-      bd.classList.remove('opacity-100');
-      bd.classList.add('pointer-events-none', 'opacity-0');
-      card.classList.remove('translate-y-0', 'sm:scale-100', 'opacity-100');
-      card.classList.add('pointer-events-none', 'translate-y-full', 'sm:scale-95', 'opacity-0');
+
+  function closeCourseDrawerWrapper() {
+    if (window.courseDrawer && typeof window.courseDrawer.close === 'function') {
+      window.courseDrawer.close();
+    } else {
+      const bd = document.getElementById('course-drawer-backdrop') || document.getElementById('unit-overview-modal-backdrop');
+      const card = document.getElementById('course-drawer-card') || document.getElementById('unit-overview-modal-card');
+      if (bd && card) {
+        bd.classList.remove('opacity-100');
+        bd.classList.add('pointer-events-none', 'opacity-0');
+        card.classList.remove('translate-y-0', 'opacity-100');
+        card.classList.add('pointer-events-none', 'translate-y-full', 'opacity-0');
+      }
     }
   }
+
   function openUnitSkipModal(unitNum, unitTitle) {
     if (typeof window.closeLessonModal === 'function') window.closeLessonModal();
     if (typeof target.closeLessonModal === 'function') target.closeLessonModal();
@@ -634,25 +616,23 @@
   }
 
   function initUnitOverviewEvents() {
-    const on = (id, fn) => { const el = document.getElementById(id); if (el && !el._bound) { el.addEventListener('click', fn); el._bound = true; } };
-    on('unit-banner', openUnitOverviewModal); on('unit-dropdown-btn', openUnitOverviewModal);
-    on('close-unit-overview-btn', closeUnitOverviewModal);
-    on('unit-overview-confirm-btn', () => {
-      closeUnitOverviewModal();
-      const lang = getLang();
-      const unlockedLvl = getUnlockedUnitLevel(lang);
-      if (typeof target.switchToUnit === 'function') {
-        target.switchToUnit(unlockedLvl);
-      } else if (typeof target.focusActiveRoadmapNode === 'function') {
-        target.focusActiveRoadmapNode();
+    const on = (id, fn) => {
+      const el = document.getElementById(id);
+      if (el && !el._bound) {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          fn(e);
+        });
+        el._bound = true;
       }
-    });
+    };
+    on('unit-banner', () => openCourseDrawerWrapper());
+    on('unit-dropdown-btn', () => openCourseDrawerWrapper());
+    on('unit-banner-content', () => openCourseDrawerWrapper());
     on('btn-close-unit-skip-modal', closeUnitSkipModal);
-    on('btn-start-unit-skip-test', () => { closeUnitSkipModal(); closeUnitOverviewModal(); startUnitSkipTest(target.currentSkipTestUnit || 2); });
-    const listEl = document.getElementById('unit-overview-list');
-    if (listEl && !listEl._bound) { listEl.addEventListener('click', handleUnitOverviewListClick); listEl._bound = true; }
-    const overviewBd = document.getElementById('unit-overview-modal-backdrop');
-    if (overviewBd && !overviewBd._bound) { overviewBd.addEventListener('click', (e) => { if (e.target === overviewBd) closeUnitOverviewModal(); }); overviewBd._bound = true; }
+    on('btn-start-unit-skip-test', () => { closeUnitSkipModal(); closeCourseDrawerWrapper(); startUnitSkipTest(target.currentSkipTestUnit || 2); });
+
     const skipBd = document.getElementById('unit-skip-modal-backdrop');
     if (skipBd && !skipBd._bound) { skipBd.addEventListener('click', (e) => { if (e.target === skipBd) closeUnitSkipModal(); }); skipBd._bound = true; }
   }
@@ -661,12 +641,34 @@
     else initUnitOverviewEvents();
   }
   try { target.nodeProgressMap = loadNodeProgress(); } catch (_) { target.nodeProgressMap = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }; }
+
+  const courseMapModal = {
+    open: openCourseDrawerWrapper,
+    close: closeCourseDrawerWrapper
+  };
+
   Object.assign(target, {
     getCompositeNodeKey, parseNodeCoordinates, getCourseProgress, saveCourseProgress, getUnlockedUnitLevel, setUnlockedUnitLevel,
     unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
     resolveNodeData, isNodeUnlocked, getNodeStatus, loadNodeProgress, saveNodeProgress, getClaimedBonuses, isBonusClaimed,
     markBonusClaimed, handleClaimBonus, claimBonusReward, claimBonus: claimBonusReward, migrateLegacyReviewData, isReviewNodeCompleted, isReviewCompleted: isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
     handleReviewNodeClick, resolveCurrentNode, getSlotAlias, getNextNodeId, saveStageClearResult, getNextStageStep,
-    renderUnitOverviewList, openUnitOverviewModal, closeUnitOverviewModal, openUnitSkipModal, closeUnitSkipModal, startUnitSkipTest
+    openCourseDrawer: openCourseDrawerWrapper, closeCourseDrawer: closeCourseDrawerWrapper,
+    openUnitOverviewModal: openCourseDrawerWrapper, closeUnitOverviewModal: closeCourseDrawerWrapper,
+    openCourseMapModal: openCourseDrawerWrapper, closeCourseMapModal: closeCourseDrawerWrapper,
+    openUnitSkipModal, closeUnitSkipModal, startUnitSkipTest,
+    courseMapModal,
+    getActiveCEFRLevel, setActiveCEFRLevel
   });
+  if (typeof window !== 'undefined') {
+    window.courseMapModal = courseMapModal;
+    window.openCourseDrawer = openCourseDrawerWrapper;
+    window.closeCourseDrawer = closeCourseDrawerWrapper;
+    window.openCourseMapModal = openCourseDrawerWrapper;
+    window.closeCourseMapModal = closeCourseDrawerWrapper;
+    window.openUnitOverviewModal = openCourseDrawerWrapper;
+    window.closeUnitOverviewModal = closeCourseDrawerWrapper;
+    window.getActiveCEFRLevel = getActiveCEFRLevel;
+    window.setActiveCEFRLevel = setActiveCEFRLevel;
+  }
 })(typeof window !== 'undefined' ? window : this);

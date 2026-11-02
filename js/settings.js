@@ -51,11 +51,17 @@
 
   function saveSettings(settings) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+      const data = settings || window.vocadashSettings || DEFAULT_SETTINGS;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      if (typeof data.soundEffects === 'boolean') {
+        localStorage.setItem('vocadash_sound_enabled', data.soundEffects ? 'true' : 'false');
+      }
     } catch (e) {
       console.warn('설정 저장 실패:', e);
     }
   }
+  window.saveSettings = saveSettings;
+  window.loadSettings = loadSettings;
 
   const currentSettings = loadSettings();
   window.vocadashSettings = currentSettings;
@@ -168,6 +174,9 @@
 
   // 설정 화면 UI 전체 동기화
   function syncSettingsUI() {
+    if (!window.vocadashSettings) {
+      window.vocadashSettings = loadSettings();
+    }
     const s = window.vocadashSettings;
     const toggles = [
       { key: 'showPhonetic', id: 'toggle-show-phonetic' },
@@ -267,20 +276,33 @@
   }
   window.syncBookScreenSettings = syncBookScreenSettings;
 
-  // 스위치 클릭 토글 함수
-  window.toggleSwitch = function (button) {
+  // 스위치 클릭 토글 함수 (단일 진실 공급원)
+  window.toggleSwitch = function (button, forcedVal) {
     if (!button) return;
-    const key = button.dataset.settingKey;
+    const btn = (button.classList && button.classList.contains('settings-toggle-btn'))
+      ? button
+      : (button.closest ? button.closest('.settings-toggle-btn') : null) || button;
+
+    const key = (btn.dataset && btn.dataset.settingKey) || (typeof btn.getAttribute === 'function' ? btn.getAttribute('data-setting-key') : null);
     if (!key) return;
 
-    const currentVal = !!window.vocadashSettings[key];
-    const nextVal = !currentVal;
+    if (!window.vocadashSettings) {
+      window.vocadashSettings = loadSettings();
+    }
+
+    const currentVal = (typeof window.vocadashSettings[key] === 'boolean')
+      ? window.vocadashSettings[key]
+      : (btn.getAttribute && btn.getAttribute('aria-checked') === 'true');
+
+    const nextVal = (typeof forcedVal === 'boolean') ? forcedVal : !currentVal;
 
     window.vocadashSettings[key] = nextVal;
     saveSettings(window.vocadashSettings);
 
-    updateToggleUI(button, nextVal);
+    updateToggleUI(btn, nextVal);
     applySetting(key, nextVal, false);
+
+    return nextVal;
   };
 
   // ===================================================
@@ -442,19 +464,35 @@
     triggerHaptic(40);
   }
 
-  // 초기 로드 시 및 DOMContentLoaded 시 바인딩
-  function initSettings() {
-    // 1) 초기 발음 표기 상태 즉시 적용
-    applySetting('showPhonetic', !!window.vocadashSettings.showPhonetic, true);
-
-    // 2) 토글 버튼 이벤트 바인딩
+  function bindToggleButtons() {
     document.querySelectorAll('.settings-toggle-btn').forEach((btn) => {
       btn.onclick = function (e) {
         e.preventDefault();
         e.stopPropagation();
         window.toggleSwitch(this);
       };
+      const row = btn.closest && btn.closest('.flex.items-center.justify-between');
+      if (row && !row._toggleRowBound) {
+        row._toggleRowBound = true;
+        row.style.cursor = 'pointer';
+        row.onclick = function (e) {
+          if (e.target.closest && e.target.closest('.settings-toggle-btn')) return;
+          e.preventDefault();
+          e.stopPropagation();
+          window.toggleSwitch(btn);
+        };
+      }
     });
+  }
+  window.bindToggleButtons = bindToggleButtons;
+
+  // 초기 로드 시 및 DOMContentLoaded 시 바인딩
+  function initSettings() {
+    // 1) 초기 발음 표기 상태 즉시 적용
+    applySetting('showPhonetic', !!window.vocadashSettings.showPhonetic, true);
+
+    // 2) 토글 버튼 이벤트 바인딩
+    bindToggleButtons();
 
     // 3) 커스텀 알림 시간 설정 모달 이벤트 바인딩
     const reminderRow = document.getElementById('settings-reminder-time-row');
@@ -564,6 +602,8 @@
   // 설정 화면 전환 & 화면 인터랙션 연동
   // ===================================================
   function showSettingsScreen() {
+    syncSettingsUI();
+    bindToggleButtons();
     if (typeof window.openSettingsScreen === 'function') {
       window.openSettingsScreen();
       return;
@@ -665,6 +705,21 @@
   window.clearCacheAlert = clearCacheAlert;
 
   function initSettingsEvents() {
+    // 0) 설정 토글 스위치 및 행 바인딩 & 전역 위임
+    bindToggleButtons();
+
+    if (!document._settingsToggleDelegated) {
+      document._settingsToggleDelegated = true;
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest && e.target.closest('.settings-toggle-btn');
+        if (btn) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.toggleSwitch(btn);
+        }
+      });
+    }
+
     // 1) 설정 화면 진입
     const openSettingsBtns = document.querySelectorAll('#btn-main-settings, #btn-review-settings, #btn-open-settings, #btn-stats-settings, #btn-profile-settings, .btn-open-settings');
     openSettingsBtns.forEach((btn) => {
@@ -764,7 +819,12 @@
       });
     }
   }
+  window.initSettings = initSettings;
   window.initSettingsEvents = initSettingsEvents;
+  window.syncSettingsUI = syncSettingsUI;
+  window.saveSettings = saveSettings;
+  window.loadSettings = loadSettings;
+  window.toggleSwitch = window.toggleSwitch;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSettings);

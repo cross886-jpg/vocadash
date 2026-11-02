@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     () => window.renderReviewWords && window.renderReviewWords('waiting'),
     window.syncBookPhoneticSetting,
     window.initSettingsEvents,
+    window.syncSettingsUI,
     window.initHallOfFameEvents,
     window.initProfileManager,
     window.checkAndRechargeHearts,

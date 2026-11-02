@@ -319,12 +319,31 @@
   function renderSubsequentUnits(activeCourse, unlockedLevel) {
     const container = document.getElementById('roadmap-subsequent-units');
     const u1Container = document.getElementById('unit-1-nodes-container');
+    const u0Section = document.getElementById('unit-section-0');
 
     const course = activeCourse
       || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
+    const courseId = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
+
+    // Section 데이터에서 현재 활성 섹션 파악 (SSOT)
+    const activeSection = (typeof window.getActiveSection === 'function')
+      ? window.getActiveSection(courseId)
+      : null;
+
+    const startUnit = activeSection ? activeSection.unitStart : 1;
+    const endUnit = activeSection ? activeSection.unitEnd : 30;
+
+    const baseUnits = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
+
+    const getUnitAt = (i) => {
+      if (baseUnits[i]) return baseUnits[i];
+      if (typeof window.getUnitDataWithFallback === 'function') {
+        return window.getUnitDataWithFallback(courseId, i + 1);
+      }
+      return { unitNumber: i + 1, title: `Unit ${i + 1}`, subtitle: '' };
+    };
 
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
     const isClaimedFn = (typeof window.isBonusClaimed === 'function') ? window.isBonusClaimed : () => false;
@@ -373,16 +392,22 @@
         + `${renderUnitBossHtml({ unitNum, align: 'mx-auto mb-6', width: '290px', isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel), isActive: isBossActive, isLocked: !isBossUnlocked, nodeId: nBoss.id })}`;
     }
 
-    if (u1Container && units.length > 0) {
-      u1Container.innerHTML = buildUnitNodesHtml(0, units[0], true);
+    if (startUnit === 1) {
+      if (u0Section) u0Section.style.display = '';
+      if (u1Container) {
+        u1Container.innerHTML = buildUnitNodesHtml(0, getUnitAt(0), true);
+      }
+    } else {
+      if (u0Section) u0Section.style.display = 'none';
     }
 
     if (!container) return;
 
     let html = '';
-    for (let idx = 1; idx < units.length; idx++) {
-      const unit = units[idx], unitNum = idx + 1;
-      const unitIcon = unit?.icon || (course?.id === 'pack_football' ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
+    const loopStartIdx = (startUnit === 1) ? 1 : (startUnit - 1);
+    for (let idx = loopStartIdx; idx < endUnit; idx++) {
+      const unit = getUnitAt(idx), unitNum = idx + 1;
+      const unitIcon = unit?.icon || (courseId.includes('soccer') || courseId.includes('football') ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
       const unitTitle = unit?.title || `Unit ${unitNum}`, unitDesc = unit?.desc || unit?.subtitle || '';
       const theme = getUnitTheme(unitNum);
 
@@ -394,7 +419,10 @@
   }
 
   function isElementVisible(el) {
-    return !!(el && !el.classList?.contains('hidden') && el.style?.display !== 'none' && el.style?.visibility !== 'hidden');
+    if (!el) return false;
+    if (el.classList?.contains('hidden') || el.style?.display === 'none' || el.style?.visibility === 'hidden') return false;
+    if (typeof el.closest === 'function' && el.closest('[style*="display: none"], .hidden')) return false;
+    return true;
   }
 
   function isNodeCompleted(node) {
@@ -417,6 +445,7 @@
     const roadmapScreen = document.getElementById('roadmap-screen') || document;
     const allNodes = Array.from(roadmapScreen.querySelectorAll('.roadmap-node'));
     for (const node of allNodes) {
+      if (!isElementVisible(node)) continue;
       if (isNodeCompleted(node) || isNodeLocked(node)) continue;
       const startBadge = node.querySelector('.node-badge-start, [id$="-start-pill"]');
       if (startBadge && isElementVisible(startBadge)) return node;
@@ -426,8 +455,8 @@
       if (stageNumEl && isElementVisible(stageNumEl) && stageNumEl.textContent.trim().toUpperCase() === 'START') return node;
       if (node.classList.contains('active') || node.classList.contains('node-pulse') || node.dataset.nodeType === 'active') return node;
     }
-    const openNodes = allNodes.filter(n => !isNodeLocked(n));
-    return openNodes[openNodes.length - 1] || document.getElementById('u1_node-1') || document.getElementById('node-1-container') || allNodes[0] || null;
+    const openNodes = allNodes.filter(n => isElementVisible(n) && !isNodeLocked(n));
+    return openNodes[openNodes.length - 1] || allNodes.find(n => isElementVisible(n)) || null;
   }
 
   function focusActiveRoadmapNode(explicitTarget) {
@@ -460,21 +489,38 @@
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
     const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
 
+    const courseId = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
+    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || window.courseSections.es_main) : null;
+    const lastSection = sectionsConfig?.sections?.[sectionsConfig.sections.length - 1];
+    const totalGates = lastSection?.unitEnd || 30;
+
+    const activeSection = (typeof window.getActiveSection === 'function')
+      ? window.getActiveSection(courseId)
+      : null;
+    const startUnit = activeSection ? activeSection.unitStart : 1;
+    const endUnit = activeSection ? activeSection.unitEnd : totalGates;
+
     const units = course?.units || window.UNIT_LIST_PRESETS?.[lang] || [];
-    const totalUnits = units.length || 1;
+    const totalUnits = Math.max(units.length || 1, totalGates);
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1;
-    const targetIdx = (typeof activeIdx === 'number' && !isNaN(activeIdx))
-      ? Math.max(0, Math.min(totalUnits - 1, activeIdx))
-      : (window._currentVisibleUnitIndex ?? Math.max(0, Math.min(totalUnits - 1, unlockedLevel - 1)));
+    const fallbackIdx = (unlockedLevel >= startUnit && unlockedLevel <= endUnit) ? (unlockedLevel - 1) : (startUnit - 1);
+    let targetIdx = (typeof activeIdx === 'number' && !isNaN(activeIdx))
+      ? activeIdx
+      : (window._currentVisibleUnitIndex ?? fallbackIdx);
+
+    targetIdx = Math.max(startUnit - 1, Math.min(endUnit - 1, targetIdx));
 
     if (!force && _lastRenderedBannerUnitIndex === targetIdx) {
       return;
     }
     _lastRenderedBannerUnitIndex = targetIdx;
 
-    const targetUnit = units[targetIdx] || units[0];
-    if (!targetUnit) return;
     const unitNum = targetIdx + 1;
+    const targetUnit = (typeof window.getUnitDataWithFallback === 'function')
+      ? window.getUnitDataWithFallback(courseId, unitNum)
+      : (units[targetIdx] || units[0] || { unitNumber: unitNum, title: `Unit ${unitNum}`, subtitle: '' });
+
+    if (!targetUnit) return;
 
     const subBadgeEl = document.getElementById('unit-sub-badge');
     const mainTitleEl = document.getElementById('unit-main-title');
@@ -483,9 +529,15 @@
     const bannerEl = document.getElementById('unit-banner');
 
     const applyContentAndTheme = () => {
-      if (subBadgeEl) subBadgeEl.textContent = `UNIT ${unitNum} / ${totalUnits}`;
+      if (subBadgeEl) {
+        subBadgeEl.textContent = activeSection?.ticketCode
+          ? `${activeSection.ticketCode} · UNIT ${unitNum} / ${endUnit}`
+          : `UNIT ${unitNum} / ${totalUnits}`;
+      }
       if (mainTitleEl) mainTitleEl.textContent = targetUnit.title || `Unit ${unitNum}`;
-      if (langBadgeEl) langBadgeEl.textContent = targetUnit.subtitle || (lang === 'en' ? '영어 정규 코스' : '스페인어 첫걸음');
+      if (langBadgeEl) {
+        langBadgeEl.textContent = activeSection?.title || targetUnit.subtitle || (lang === 'en' ? '영어 정규 코스' : '스페인어 첫걸음');
+      }
 
       const badgeEl = document.getElementById('top-unit-badge-text'); if (badgeEl) badgeEl.textContent = `UNIT ${unitNum}`;
       const titleEl = document.getElementById('top-unit-title'); if (titleEl) titleEl.textContent = targetUnit.title || `Unit ${unitNum}`;
@@ -534,24 +586,41 @@
   }
 
   function switchToUnit(unitNumber) {
-    const uNum = Math.max(1, Math.min(10, parseInt(unitNumber, 10) || 1));
+    const uNum = Math.max(1, parseInt(unitNumber, 10) || 1);
     const activeIdx = uNum - 1;
     window._currentVisibleUnitIndex = activeIdx;
     window.currentUnitNumber = uNum;
-    updateTopUnitBanner(activeIdx);
 
-    if (uNum === 1) {
+    const courseId = window.currentCourseId || window.activeCourseId || ((window.currentLanguage === 'en' || window.currentActiveCourse === 'en') ? 'en_main' : 'es_main');
+    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || window.courseSections.es_main) : null;
+    const targetSection = sectionsConfig?.sections?.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
+
+    // If target unit belongs to a different section, switch active section and re-render roadmap!
+    if (targetSection && (!window.currentSectionId || window.currentSectionId !== targetSection.id)) {
+      window.currentSectionId = targetSection.id;
+      try {
+        const cKey = (typeof window.getActiveCourseKey === 'function') ? window.getActiveCourseKey(courseId) : courseId;
+        localStorage.setItem('vocadash_active_section_' + cKey, targetSection.id);
+      } catch (_) { }
+      if (typeof window.renderRoadmap === 'function') {
+        window.renderRoadmap();
+      }
+    }
+
+    updateTopUnitBanner(activeIdx, true);
+
+    if (uNum === 1 && (!targetSection || targetSection.unitStart === 1)) {
       window.scrollTo({ top: 0, behavior: 'instant' });
       return;
     }
-    const targetSection = document.querySelector(`.unit-section-block[data-unit-index="${activeIdx}"]`);
-    if (targetSection) {
-      const activeNode = targetSection.querySelector('.roadmap-node.active, .node-target[data-node-type="active"]') || targetSection.querySelector('.roadmap-node');
+    const targetSectionBlock = document.querySelector(`.unit-section-block[data-unit-index="${activeIdx}"]`);
+    if (targetSectionBlock) {
+      const activeNode = targetSectionBlock.querySelector('.roadmap-node.active, .node-target[data-node-type="active"]') || targetSectionBlock.querySelector('.roadmap-node');
       if (activeNode && typeof focusActiveRoadmapNode === 'function') {
         focusActiveRoadmapNode(activeNode);
       } else {
         const headerHeight = document.getElementById('roadmap-header')?.offsetHeight || 140;
-        const rect = targetSection.getBoundingClientRect();
+        const rect = targetSectionBlock.getBoundingClientRect();
         const top = (window.scrollY || 0) + rect.top - headerHeight - 12;
         window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'instant' });
       }
@@ -565,7 +634,7 @@
     currentCoursePack = (currentCoursePack === 'pack_football') ? 'pack_football' : 'main';
 
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(currentLang, currentCoursePack) : 1;
-    updateTopUnitBanner((window._currentVisibleUnitIndex !== undefined) ? window._currentVisibleUnitIndex : (unlockedLevel - 1));
+    updateTopUnitBanner((window._currentVisibleUnitIndex !== undefined) ? window._currentVisibleUnitIndex : (unlockedLevel - 1), true);
 
     if (!window.nodeProgressMap) window.nodeProgressMap = {};
 
@@ -841,8 +910,10 @@
     _scrollRafId = requestAnimationFrame(() => {
       _scrollRafId = null;
       if (window.scrollY < 60) {
-        window._currentVisibleUnitIndex = 0;
-        updateTopUnitBanner(0);
+        const activeSection = (typeof window.getActiveSection === 'function') ? window.getActiveSection() : null;
+        const defaultIdx = activeSection ? (activeSection.unitStart - 1) : 0;
+        window._currentVisibleUnitIndex = defaultIdx;
+        updateTopUnitBanner(defaultIdx);
       }
     });
   }
@@ -857,9 +928,12 @@
     if (window._roadmapObserver) { window._roadmapObserver.disconnect(); window._roadmapObserver = null; }
 
     const observer = new IntersectionObserver((entries) => {
+      const activeSection = (typeof window.getActiveSection === 'function') ? window.getActiveSection() : null;
+      const defaultIdx = activeSection ? (activeSection.unitStart - 1) : 0;
+
       if (!_hasUserScrolledRoadmap && window.scrollY < 60) {
-        window._currentVisibleUnitIndex = 0;
-        updateTopUnitBanner(0);
+        window._currentVisibleUnitIndex = defaultIdx;
+        updateTopUnitBanner(defaultIdx);
         return;
       }
 
@@ -870,7 +944,7 @@
         const activeIdx = parseInt(topEntry.target.dataset.unitIndex, 10);
         if (!isNaN(activeIdx)) {
           window._currentVisibleUnitIndex = activeIdx;
-          updateTopUnitBanner(activeIdx);
+          updateTopUnitBanner(activeIdx, true);
         }
       }
     }, {
@@ -924,13 +998,22 @@
     const marker = document.getElementById('roadmap-cat-marker');
     if (!marker) return;
 
-    const progMap = window.nodeProgressMap || {};
-    const prog1 = progMap['node-1'] !== undefined ? progMap['node-1'] : 0, prog2 = progMap['node-2'] || 0, prog3 = progMap['node-3'] || 0;
-    let targetParent = document.getElementById('node-1-target');
-    if (prog1 < 3) targetParent = document.getElementById('node-1-target');
-    else if (prog2 < 3) targetParent = document.getElementById('node-2-target');
-    else if (prog3 < 3) targetParent = document.getElementById('node-3-target');
-    else targetParent = document.getElementById('node-boss-target');
+    let targetParent = null;
+    if (typeof getActiveRoadmapNodeElement === 'function') {
+      const activeNode = getActiveRoadmapNodeElement();
+      if (activeNode) {
+        targetParent = activeNode.querySelector('.node-target') || activeNode;
+      }
+    }
+
+    if (!targetParent) {
+      const progMap = window.nodeProgressMap || {};
+      const prog1 = progMap['node-1'] !== undefined ? progMap['node-1'] : 0, prog2 = progMap['node-2'] || 0, prog3 = progMap['node-3'] || 0;
+      if (prog1 < 3) targetParent = document.getElementById('node-1-target');
+      else if (prog2 < 3) targetParent = document.getElementById('node-2-target');
+      else if (prog3 < 3) targetParent = document.getElementById('node-3-target');
+      else targetParent = document.getElementById('node-boss-target');
+    }
 
     if (targetParent && marker.parentElement !== targetParent) targetParent.appendChild(marker);
     const markerImg = document.getElementById('cat-marker-img'), headerImg = document.getElementById('header-mascot-img');
@@ -985,7 +1068,7 @@
     document.addEventListener('click', (e) => {
       const targetBtn = e.target.closest('[data-node-id], .roadmap-node, .node-btn, .subsequent-node-btn');
       if (!targetBtn) return;
-      if (e.target.closest('#lesson-modal, #lesson-card-sheet, #lesson-modal-backdrop, #bonus-modal, #review-speedrun-modal, #unit-skip-modal, #unit-overview-modal')) return;
+      if (e.target.closest('#lesson-modal, #lesson-card-sheet, #lesson-modal-backdrop, #bonus-modal, #review-speedrun-modal, #unit-skip-modal, #unit-overview-modal, #course-drawer-backdrop, #course-drawer-card')) return;
 
       const nodeContainer = targetBtn.closest('.roadmap-node') || targetBtn;
       const rawNodeId = targetBtn.dataset.nodeId || targetBtn.id?.replace('-btn', '') || targetBtn.id?.replace('-container', '') || nodeContainer.dataset?.nodeId;

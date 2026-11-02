@@ -240,19 +240,63 @@
     document.querySelectorAll('.tts-speaking').forEach(resetUiSpeakerActive);
   }
 
-  // 단일화된 초고속 고음질 TTS 발음 함수
-  function playTTS(text, lang = 'es', buttonEl = null) {
-    stopAllTTS();
-
-    if (lang && typeof lang === 'object' && (lang.nodeType || lang.classList)) {
-      buttonEl = lang;
-      lang = 'es';
+  function isAutoPlayAudioEnabled() {
+    if (typeof window !== 'undefined' && window.vocadashSettings && typeof window.vocadashSettings.autoPlayAudio === 'boolean') {
+      return window.vocadashSettings.autoPlayAudio;
     }
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem('vocadash_settings');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (typeof parsed.autoPlayAudio === 'boolean') {
+            return parsed.autoPlayAudio;
+          }
+        }
+      }
+    } catch (_) {}
+    return true;
+  }
+
+  // 단일화된 초고속 고음질 TTS 발음 함수 (설정 및 수동/자동 재생 단일 진실 공급원)
+  function playTTS(text, lang = 'es', buttonEl = null, options = null) {
+    let opts = (options && typeof options === 'object') ? { ...options } : {};
+    let targetEl = buttonEl;
+
+    if (lang && typeof lang === 'object') {
+      if (lang.nodeType || lang.classList || lang.tagName) {
+        targetEl = lang;
+        lang = 'es';
+      } else {
+        opts = { ...lang, ...opts };
+        lang = opts.lang || 'es';
+      }
+    }
+
+    if (buttonEl && typeof buttonEl === 'object') {
+      if (buttonEl.nodeType || buttonEl.classList || buttonEl.tagName) {
+        targetEl = buttonEl;
+      } else {
+        opts = { ...buttonEl, ...opts };
+        targetEl = opts.buttonEl || opts.el || null;
+      }
+    }
+
+    const isDomEl = Boolean(targetEl && (targetEl.nodeType || targetEl.classList || targetEl.tagName));
+    const isManualClick = Boolean(isDomEl || opts.isManual === true || opts.forcePlay === true);
+    const isAutoRequest = Boolean(opts.isAuto === true || !isManualClick);
+
+    // 자동 재생 요청인 경우 설정(autoPlayAudio) 확인하여 OFF 시 재생 생략
+    if (isAutoRequest && !opts.forcePlay && !isAutoPlayAudioEnabled()) {
+      return;
+    }
+
+    stopAllTTS();
 
     const cleanWord = sanitizeTTSText(text);
     if (!cleanWord || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
 
-    if (buttonEl) setUiSpeakerActive(buttonEl);
+    if (isDomEl) setUiSpeakerActive(targetEl);
 
     try {
       const isEn = String(lang).toLowerCase().startsWith('en');
@@ -265,13 +309,13 @@
       const voice = getBestNaturalVoice(utterance.lang);
       if (voice) utterance.voice = voice;
 
-      const clearState = () => { if (buttonEl) resetUiSpeakerActive(buttonEl); };
+      const clearState = () => { if (isDomEl) resetUiSpeakerActive(targetEl); };
       utterance.onend = clearState;
       utterance.onerror = clearState;
 
       window.speechSynthesis.speak(utterance);
     } catch (_) {
-      if (buttonEl) resetUiSpeakerActive(buttonEl);
+      if (isDomEl) resetUiSpeakerActive(targetEl);
     }
   }
 
@@ -281,6 +325,9 @@
   window.setSoundEnabled = setSoundEnabled;
   window.playSound = playSound;
   window.unlockAudioPolicy = unlockAudio;
+
+  window.isAutoPlayAudioEnabled = isAutoPlayAudioEnabled;
+  window.playAutoWordAudio = (text, lang = 'es') => playTTS(text, lang, null, { isAuto: true });
 
   window.speakWord = playTTS;
   window.playTTS = playTTS;

@@ -125,7 +125,7 @@
     finishGameStage(false);
   }
 
-  function finishGameStage(isClear = true, customAccuracy = null) {
+  function finishGameStage(isClear = true, customAccuracy = null, options = {}) {
     if (window.isStageFinishing || isStageFinishing) return false;
 
     isStageFinishing = window.isStageFinishing = true;
@@ -186,24 +186,43 @@
       setTxt("result-accuracy-text", `${calculatedAcc}%`);
       const accAlt = document.getElementById("result-accuracy"); if (accAlt) accAlt.textContent = `${calculatedAcc}%`;
 
+      const isReviewNode = Boolean((options && options.mode === "review") || window.currentGameMode === "review" || window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentLessonId).includes("review"));
       let saveRes = null;
       if (!window.isUnitSkipTestMode && typeof window.saveStageClearResult === "function") {
         saveRes = window.saveStageClearResult({
           nodeId: currentLessonId, isClear: true, accuracy: calculatedAcc,
-          questions, missedWords: missed, isReviewMode: !!window.isReviewGameMode, isSpeedrun: !!window.isRoadmapReviewSpeedrun
+          questions, missedWords: missed, isReviewMode: isReviewNode, isSpeedrun: isReviewNode
         });
       }
 
       const nextCount = saveRes?.nextCount ?? 1;
       const isBoss = saveRes ? saveRes.isBoss : (String(currentLessonId).includes("boss") || currentLessonId === "node-boss");
       const actualTitle = window.actualUnitTitle || window.currentUnit?.title || "생존 첫걸음";
+      const currentUnitNum = saveRes?.unitIndex || window.currentUnitNumber || (typeof window.parseNodeCoordinates === 'function' ? window.parseNodeCoordinates(currentLessonId).unitIndex : 1) || 1;
+      const activeSection = (typeof window.getActiveSection === 'function') ? window.getActiveSection() : null;
+      const isSectionEnd = isBoss && activeSection && (currentUnitNum === activeSection.unitEnd);
 
       let title = "¡STAGE CLEAR!", sub = `${actualTitle} (${nextCount}/3) 클리어!`, btn = nextCount < 3 ? `다음 라운드 (${nextCount + 1}/3) ▶` : "다음 스테이지 ▶";
-      const isReviewNode = window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentLessonId).includes("review");
-      if (stars === 0) { title = "클리어 실패"; sub = "아쉬워요! 다시 도전해 보세요 💪"; btn = "다시 도전하기 🔄"; }
-      else if (isReviewNode) { title = "⚡ 약점 복습 완료!"; sub = "핵심 단어 복습을 성공적으로 마쳤습니다! 👏"; btn = "다음 스테이지 이동 ▶"; }
-      else if (isBoss) { sub = `${actualTitle} 보스전 완파! 🏆`; btn = "다음 유닛 도전하기 🚀"; }
-      else if (nextCount >= 3) { sub = `${actualTitle} (3/3) 마스터!`; }
+      if (stars === 0) {
+        title = "클리어 실패";
+        sub = "아쉬워요! 다시 도전해 보세요 💪";
+        btn = "다시 도전하기 🔄";
+      } else if (isReviewNode) {
+        title = "⚡ 약점 복습 완료!";
+        sub = "핵심 단어 복습을 성공적으로 마쳤습니다! 👏";
+        btn = "다음 스테이지 이동 ▶";
+      } else if (isSectionEnd) {
+        title = "🎉 TICKET CLEAR!";
+        sub = `축하합니다! ${activeSection.ticketCode} 구간을 정복하여 다음 구간 탑승권이 잠금 해제되었습니다! 🎫`;
+        btn = "다음 구간 탑승권 열기 ✈️";
+        window._lastClearedSectionEnd = true;
+        window._lastClearedSectionEndUnit = currentUnitNum;
+      } else if (isBoss) {
+        sub = `${actualTitle} 보스전 완파! 🏆`;
+        btn = "다음 유닛 도전하기 🚀";
+      } else if (nextCount >= 3) {
+        sub = `${actualTitle} (3/3) 마스터!`;
+      }
 
       if (window.isUnitSkipTestMode) {
         const isPassed = stars > 0 || calculatedAcc >= 70;
@@ -279,11 +298,42 @@
     }
 
     const currentPlayingId = window.currentGameLessonId || window.currentSelectedNodeId || "node-1";
-    const isReview = window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4");
+    const isReview = (window.currentGameMode === "review") || window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4");
+
+    if (window._lastClearedSectionEnd) {
+      const clearedUnitNum = window._lastClearedSectionEndUnit || window.currentUnitNumber || 1;
+      const nextUnitNum = clearedUnitNum + 1;
+      window._lastClearedSectionEnd = false;
+      window._lastClearedSectionEndUnit = null;
+
+      window.exitGameToRoadmap?.(true);
+
+      const courseId = window.currentCourseId || window.activeCourseId || ((window.currentLanguage === 'en' || window.currentActiveCourse === 'en') ? 'en_main' : 'es_main');
+      const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || window.courseSections.es_main) : null;
+      const nextSec = sectionsConfig?.sections?.find(s => nextUnitNum >= s.unitStart && nextUnitNum <= s.unitEnd);
+      if (nextSec) {
+        window.currentSectionId = nextSec.id;
+        try {
+          const cKey = (typeof window.getActiveCourseKey === 'function') ? window.getActiveCourseKey(courseId) : courseId;
+          localStorage.setItem('vocadash_active_section_' + cKey, nextSec.id);
+        } catch (_) { }
+      }
+
+      if (typeof window.switchToUnit === 'function') {
+        window.switchToUnit(nextUnitNum);
+      } else if (typeof window.renderRoadmap === 'function') {
+        window.renderRoadmap();
+      }
+      if (typeof window.showToast === 'function') {
+        window.showToast("🎫 다음 구간 탑승권이 해금되었습니다! 새로운 모험을 시작하세요!", "🎉");
+      }
+      return false;
+    }
 
     if (isReview) {
       const isRoadmapSpeedrun = !!window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4");
       window.isReviewGameMode = window.isRoadmapReviewSpeedrun = false;
+      window.currentGameMode = "standard";
       if (!isRoadmapSpeedrun) {
         window.exitGameToRoadmap?.(true); window.switchMainTab?.("review", true);
       } else {
@@ -307,17 +357,14 @@
     }
 
     window.currentSelectedNodeId = window.currentGameLessonId = window.currentLessonId = step.nextNodeId;
-    const flashcardScreen = document.getElementById("flashcard-screen");
-    if (flashcardScreen) {
-      flashcardScreen.classList.remove("hidden", "opacity-0", "pointer-events-none");
-      flashcardScreen.classList.add("opacity-100", "pointer-events-auto");
-      flashcardScreen.style.removeProperty("display");
-      flashcardScreen.style.display = "";
-    }
 
-    if (typeof window.startStageLearningPipeline === "function") window.startStageLearningPipeline(step.nextNodeId, step.nextSession);
-    else if (typeof window.openFlashcardScreen === "function") window.openFlashcardScreen(step.nextNodeId, step.nextSession);
-    else if (typeof window.openGameScreen === "function") window.openGameScreen(step.nextNodeId, step.nextSession);
+    if (typeof window.startLesson === "function") {
+      window.startLesson(step.nextNodeId);
+    } else if (typeof window.startStageLearningPipeline === "function") {
+      window.startStageLearningPipeline(step.nextNodeId, step.nextSession);
+    } else if (typeof window.openGameScreen === "function") {
+      window.openGameScreen(step.nextNodeId, step.nextSession);
+    }
     return false;
   }
 
@@ -346,7 +393,10 @@
   function handleResultSecondary(e) {
     if (e) { e.preventDefault?.(); e.stopPropagation?.(); }
     closeResultModal();
+    window._lastClearedSectionEnd = false;
+    window._lastClearedSectionEndUnit = null;
     window.isUnitSkipTestMode = false;
+    window.currentGameMode = "standard";
     window.isReviewGameMode = window.isRoadmapReviewSpeedrun = window.isWrongWordsMiniReviewActive = false;
     window.currentGameLessonId = window.currentSelectedNodeId = null;
     window.renderRoadmap?.();

@@ -53,9 +53,22 @@
       : (window.packFootballData || window.courseData_es || window.courseData);
 
     const curUnitLevel = (typeof window.getUnlockedUnitLevel === "function" ? window.getUnlockedUnitLevel(modalLang) : 1) || 1;
+    const coords = (typeof window.parseNodeCoordinates === "function")
+      ? window.parseNodeCoordinates(nodeId)
+      : { unitIndex: curUnitLevel, nodeIndex: 1 };
+    const targetUnitIndex = (coords && coords.unitIndex) || curUnitLevel || 1;
+
     let curUnit = (activeCourse && Array.isArray(activeCourse.units))
-      ? (activeCourse.units.find(u => (u.id === curUnitLevel || u.unitId === curUnitLevel || u.unitNumber === curUnitLevel)) || activeCourse.units[0])
+      ? activeCourse.units.find(u => (u.id === targetUnitIndex || u.unitId === targetUnitIndex || u.unitNumber === targetUnitIndex))
       : null;
+
+    if (!curUnit && typeof window.getUnitDataWithFallback === "function") {
+      const cId = window.currentCourseId || window.activeCourseId || (modalLang === "en" ? "en_main" : "es_main");
+      curUnit = window.getUnitDataWithFallback(cId, targetUnitIndex);
+    }
+    if (!curUnit && activeCourse?.units) {
+      curUnit = activeCourse.units[0];
+    }
 
     let matchedNode = null;
     if (curUnit && Array.isArray(curUnit.nodes)) {
@@ -74,9 +87,6 @@
     }
 
     const isBossNode = (nodeId === "node-boss" || String(nodeId).includes("boss") || (matchedNode && matchedNode.type === "boss"));
-    const coords = (typeof window.parseNodeCoordinates === "function")
-      ? window.parseNodeCoordinates(nodeId)
-      : { unitIndex: curUnitLevel, nodeIndex: 1 };
     const unitX = (coords && coords.unitIndex) || (matchedNode && matchedNode.unitNumber) || curUnit?.unitNumber || curUnitLevel || 1;
 
     let nodeTitle = isBossNode ? `Unit ${unitX} 총괄 보스전` : (matchedNode?.title || (nodeId === "node-3" ? `${unitX}과: 자기소개와 소통` : "기초 어휘"));
@@ -300,8 +310,8 @@
 
     const wrongCount = wrongList.length;
     if (wrongCount === 0) {
-      if (descEl) descEl.textContent = "오답 노트가 깨끗합니다! 👏 현재 유닛의 핵심 단어 전체 복습 런으로 진행됩니다.";
-      if (countText) countText.textContent = "유닛 핵심 단어 10개 코스";
+      if (descEl) descEl.textContent = "오답이 없습니다! 🌟 완벽 복습 런에 도전하세요 (현재 유닛 핵심 어휘 랜덤 10문항)";
+      if (countText) countText.textContent = "랜덤 완벽 복습 10개 코스";
     } else {
       if (descEl) descEl.textContent = "틀렸던 약점 단어를 포함해 총 10문제를 달립니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)";
       if (countText) countText.textContent = `오답 단어 ${Math.min(10, wrongCount)}개 코스`;
@@ -344,7 +354,7 @@
     window.currentSessionQuestions = sessionQuestions;
 
     if (typeof window.openGameScreen === "function") {
-      window.openGameScreen(targetReviewId, sessionQuestions);
+      window.openGameScreen(targetReviewId, sessionQuestions, { mode: "review" });
     }
 
     const titleEl = document.getElementById("game-stage-title");

@@ -179,13 +179,18 @@
   }
 
   function startStageLearningPipeline(nodeId, customSession = null) {
+    if (typeof window.startLesson === "function") {
+      return window.startLesson(nodeId);
+    }
     const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || "node-2";
     window.currentSelectedNodeId = targetNodeId;
     window.currentGameLessonId = targetNodeId;
     window.closeLessonModal?.();
 
     const currentCourse = window.currentActiveCourse || window.currentLanguage || "es";
-    const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+    const round = (typeof window.getNodeProgress === "function")
+      ? (Number(window.getNodeProgress(targetNodeId, currentCourse)) || 0)
+      : ((window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0);
     let session = customSession;
 
     if (!session || !Array.isArray(session) || session.length === 0) {
@@ -222,6 +227,9 @@
   function openSettingsScreen() {
     const s = el("settings-screen");
     if (s) { s.classList.remove("hidden"); s.style.display = "block"; }
+    if (typeof window.syncSettingsUI === 'function') {
+      window.syncSettingsUI();
+    }
   }
 
   function closeSettingsScreen() {
@@ -293,11 +301,32 @@
 
 // 📱 모바일 뒤로가기 가드 (초경량 최적화)
 (() => {
+  if (typeof history === 'undefined' || typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
   let lastPress = 0;
   history.pushState({ page: 'home' }, '');
 
   window.addEventListener('popstate', () => {
-    // 1. 열려 있는 모달이 있으면 최상단 모달 1개 닫기
+    // 1. 열려 있는 탑승권 바텀시트 또는 모달이 있으면 닫기
+    const courseDrawer = document.getElementById('course-drawer-backdrop');
+    if (courseDrawer && !courseDrawer.classList.contains('pointer-events-none') && !courseDrawer.classList.contains('opacity-0')) {
+      if (typeof window.closeCourseDrawer === 'function') {
+        window.closeCourseDrawer();
+      } else {
+        courseDrawer.classList.add('opacity-0', 'pointer-events-none');
+      }
+      return history.pushState({ page: 'home' }, '');
+    }
+
+    const unitOverview = document.getElementById('unit-overview-modal-backdrop');
+    if (unitOverview && !unitOverview.classList.contains('pointer-events-none') && !unitOverview.classList.contains('opacity-0')) {
+      if (typeof window.closeUnitOverviewModal === 'function') {
+        window.closeUnitOverviewModal();
+      } else {
+        unitOverview.classList.add('opacity-0', 'pointer-events-none');
+      }
+      return history.pushState({ page: 'home' }, '');
+    }
+
     const activeModal = document.querySelector(
       '#lesson-modal:not(.hidden), #language-modal:not(.hidden), #shop-modal:not(.hidden), #streak-modal:not(.hidden), #hall-of-fame-screen:not(.hidden), #course-map-modal:not(.hidden)'
     );

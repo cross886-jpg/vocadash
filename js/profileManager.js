@@ -117,6 +117,9 @@
     if (settings) {
       settings.classList.toggle('hidden', !open);
       settings.style.display = open ? 'block' : 'none';
+      if (open && typeof window.syncSettingsUI === 'function') {
+        window.syncSettingsUI();
+      }
     }
     if (open) window.scrollTo(0, 0);
   };

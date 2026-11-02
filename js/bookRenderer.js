@@ -58,6 +58,7 @@
 
   // 2. 단어장 중간 학습 진도 배너 및 필터 칩 개수 동적 동기화
   function updateBookProgressHero() {
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const courseData = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : null;
     let storedCourse = 'main';
     try {
@@ -103,10 +104,17 @@
 
     let wrongCount = 0;
     try {
-      const rawWrong = localStorage.getItem('vocadash_weakness_words') || localStorage.getItem('vocadash_wrong_words');
-      if (rawWrong) {
-        const parsedWrong = JSON.parse(rawWrong);
-        if (Array.isArray(parsedWrong)) wrongCount = parsedWrong.length;
+      if (typeof window.loadWrongWords === 'function') {
+        const loaded = window.loadWrongWords(currentLang) || [];
+        wrongCount = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+      } else {
+        const rawWrong = localStorage.getItem('vocadash_wrong_words_' + currentLang) || localStorage.getItem('vocadash_wrong_answers_' + currentLang) || localStorage.getItem('vocadash_wrong_words');
+        if (rawWrong) {
+          const parsedWrong = JSON.parse(rawWrong);
+          if (Array.isArray(parsedWrong)) {
+            wrongCount = parsedWrong.filter(w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5).length;
+          }
+        }
       }
     } catch (_) {
       wrongCount = 0;
@@ -331,25 +339,18 @@
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     let wrongList = [];
-
-    const hasStoredWrong = !!(
-      localStorage.getItem('vocadash_weakness_words') ||
-      localStorage.getItem('vocadash_wrong_words') ||
-      localStorage.getItem('wrongWords_' + currentLang) ||
-      localStorage.getItem('wrongWords')
-    );
-
-    if (!hasStoredWrong) {
-      wrongList = [];
-      if (Array.isArray(window.wrongWords)) {
-        window.wrongWords = [];
-      }
-    } else if (typeof window.loadWrongWords === 'function') {
+    if (typeof window.loadWrongWords === 'function') {
       wrongList = (window.loadWrongWords(currentLang) || []).filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
     } else {
-      wrongList = (Array.isArray(window.wrongWords) ? window.wrongWords : []).filter(
-        w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5
-      );
+      try {
+        const rawWrong = localStorage.getItem('vocadash_wrong_words_' + currentLang) || localStorage.getItem('vocadash_wrong_answers_' + currentLang) || localStorage.getItem('vocadash_wrong_words');
+        if (rawWrong) {
+          const parsedWrong = JSON.parse(rawWrong);
+          if (Array.isArray(parsedWrong)) {
+            wrongList = parsedWrong.filter(w => (w.lang || currentLang) === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
+          }
+        }
+      } catch (_) { }
     }
 
     const wrongCountEl = document.getElementById('book-filter-wrong-count');
