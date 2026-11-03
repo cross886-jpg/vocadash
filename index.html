@@ -2476,7 +2476,7 @@
     <div id="language-modal-backdrop"
       class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none flex items-start justify-center p-4 pt-16 sm:pt-20 overflow-y-auto">
       <div id="language-modal-card"
-        class="relative w-full max-w-[360px] bg-white rounded-3xl p-5 shadow-2xl flex flex-col items-center transform transition-all duration-300 scale-95 opacity-0 select-none"
+        class="relative w-full max-w-md mx-auto bg-white rounded-3xl p-4 sm:p-5 shadow-2xl flex flex-col items-center transform transition-all duration-300 scale-95 opacity-0 select-none"
         role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <button id="close-modal-btn" type="button" aria-label="닫기"
           class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors active:scale-95 cursor-pointer">
@@ -2487,8 +2487,11 @@
         </h2>
         <p class="text-xs text-slate-500 mb-3.5 text-center">원하는 언어와 코스를 선택해 주세요</p>
 
-        <div id="language-grid" class="flex gap-2.5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-4 py-2 items-center w-full" role="radiogroup" aria-label="도전할 언어 선택">
-          <!-- 언어 카드는 window.availableLanguages 레지스트리에 의해 동적으로 주입됩니다 -->
+        <!-- 캐러셀 부모 래퍼: w-full overflow-hidden -->
+        <div class="w-full overflow-hidden">
+          <div id="language-grid" class="flex gap-2.5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-2 py-2 items-center w-full min-h-[140px]" role="radiogroup" aria-label="도전할 언어 선택">
+            <!-- 언어 카드는 window.availableLanguages 레지스트리에 의해 동적으로 주입됩니다 -->
+          </div>
         </div>
 
         <!-- 단어팩 / 코스 선택 섹션 -->

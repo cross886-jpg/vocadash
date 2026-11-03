@@ -319,10 +319,11 @@
         } catch (_) { }
       }
 
+      if (typeof window.renderRoadmap === 'function') {
+        window.renderRoadmap();
+      }
       if (typeof window.switchToUnit === 'function') {
         window.switchToUnit(nextUnitNum);
-      } else if (typeof window.renderRoadmap === 'function') {
-        window.renderRoadmap();
       }
       if (typeof window.showToast === 'function') {
         window.showToast("🎫 다음 구간 탑승권이 해금되었습니다! 새로운 모험을 시작하세요!", "🎉");

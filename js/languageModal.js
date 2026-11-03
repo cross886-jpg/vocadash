@@ -100,12 +100,15 @@
     const grid = document.getElementById('language-grid');
     if (!grid) return;
 
+    // 모바일 뷰포트 스크롤 영역 명시적 높이/표시 속성 보장
+    grid.className = 'flex gap-2.5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-2 py-2 items-center w-full min-h-[140px]';
+
     const languages = getAvailableLanguages();
     grid.innerHTML = languages.map(lang => {
       const isSelected = (lang.code === selectedLang && lang.isReady);
       const isReady = !!lang.isReady;
 
-      let cardClasses = 'course-card relative p-3.5 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center group focus:outline-none focus:ring-2 focus:ring-[#22c55e] w-[120px] shrink-0 snap-start';
+      let cardClasses = 'course-card relative p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center group focus:outline-none focus:ring-2 focus:ring-[#22c55e] w-[115px] sm:w-[124px] shrink-0 snap-start select-none';
 
       if (!isReady) {
         cardClasses += ' border-slate-200 bg-slate-50/80 opacity-75 hover:opacity-100 cursor-pointer';
@@ -132,7 +135,7 @@
           class="${cardClasses}">
           ${radioBadge}
           <div class="relative mb-2 pointer-events-none">
-            <img alt="${lang.nameKo} 마스코트" class="w-16 h-16 mx-auto object-cover rounded-xl"
+            <img alt="${lang.nameKo} 마스코트" class="w-14 h-14 sm:w-16 sm:h-16 mx-auto object-cover rounded-xl"
               src="${lang.mascotImg || 'assets/characters/es-study.webp?v=88'}"
               onerror="this.onerror=null; this.src='assets/characters/es-study.webp?v=88';">
             <div class="absolute -bottom-1 -right-1 bg-white rounded-full px-1.5 py-0.5 shadow-sm text-xs border border-slate-100">
@@ -260,10 +263,18 @@
     const card = el('language-modal-card');
     if (backdrop && card) {
       backdrop.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+      backdrop.style.display = 'flex';
       card.classList.remove('scale-95', 'opacity-0');
+      card.style.display = 'flex';
     }
 
-    scrollActiveCardIntoView(modalPendingLanguage, false);
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => {
+        scrollActiveCardIntoView(modalPendingLanguage, false);
+      });
+    } else {
+      scrollActiveCardIntoView(modalPendingLanguage, false);
+    }
   }
 
   function closeLanguageModal() {
@@ -275,6 +286,7 @@
       setTimeout(() => {
         if (backdrop.classList.contains('opacity-0')) {
           backdrop.classList.add('hidden');
+          backdrop.style.display = 'none';
         }
       }, 200);
     }
