@@ -320,7 +320,7 @@
 
         <!-- 1-B. 상단 유닛 카드 배너 (Unit Banner) -->
         <div id="unit-banner"
-          onclick="window.openCourseDrawer ? window.openCourseDrawer() : (window.openCourseMapModal &amp;&amp; window.openCourseMapModal())"
+          onclick="if(window.openCourseDrawer) window.openCourseDrawer(); else if(window.openCourseMapModal) window.openCourseMapModal();"
           class="w-full bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-2xl p-3.5 shadow-md flex items-center justify-between border border-emerald-700/50 relative overflow-hidden select-none cursor-pointer hover:border-emerald-500/80 active:scale-[0.99] transition-all duration-200"
           title="🎫 비행 여정 탑승권 선택">
           <!-- Subtle decorative radial background glow -->
@@ -344,7 +344,7 @@
 
           <!-- 우측: 화살표 드롭다운 버튼 (v) -->
           <button id="unit-dropdown-btn" type="button"
-            onclick="window.openCourseDrawer ? window.openCourseDrawer() : (window.openCourseMapModal &amp;&amp; window.openCourseMapModal())"
+            onclick="if(window.openCourseDrawer) window.openCourseDrawer(); else if(window.openCourseMapModal) window.openCourseMapModal();"
             class="w-8 h-8 rounded-full bg-emerald-800/80 hover:bg-emerald-700 active:scale-95 text-emerald-100 flex items-center justify-center transition-all duration-200 cursor-pointer border border-emerald-600/50 shadow-xs flex-shrink-0 ml-2"
             title="🎫 비행 여정 탑승권 선택">
             <span class="material-symbols-outlined text-lg leading-none">expand_more</span>
@@ -1806,7 +1806,7 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">단어 밑에 [파사포르테] 한글 발음 표시</span>
                 </div>
                 <button id="toggle-show-phonetic" data-setting-key="showPhonetic" aria-checked="true"
-                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
+                  onclick="window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
@@ -1821,7 +1821,7 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">단어가 떨어지거나 카드 등장 시 음성 재생</span>
                 </div>
                 <button id="toggle-auto-play-audio" data-setting-key="autoPlayAudio" aria-checked="true"
-                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
+                  onclick="window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
@@ -1842,7 +1842,7 @@
                   </div>
                 </div>
                 <button id="toggle-sound-effects" data-setting-key="soundEffects" aria-checked="true"
-                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
+                  onclick="window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
@@ -1863,7 +1863,7 @@
                   </div>
                 </div>
                 <button id="toggle-haptic-feedback" data-setting-key="hapticFeedback" aria-checked="true"
-                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
+                  onclick="window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
@@ -1888,7 +1888,7 @@
                   <span class="text-xs text-on-surface-variant mt-0.5">연속 출석 스트릭을 잃지 않도록 알림</span>
                 </div>
                 <button id="toggle-daily-reminder" data-setting-key="dailyReminder" aria-checked="true"
-                  onclick="window.toggleSwitch &amp;&amp; window.toggleSwitch(this)"
+                  onclick="window.toggleSwitch(this)"
                   class="settings-toggle-btn w-[52px] h-[30px] rounded-full bg-primary-container p-1 transition-colors relative flex-shrink-0 cursor-pointer shadow-inner"
                   role="switch" type="button">
                   <span
