@@ -19,7 +19,7 @@
     }
   } catch (_) {}
 
-  const DEFAULT_SETTINGS = {
+  const DEFAULT_SETTINGS = (window.settingsStore && window.settingsStore.DEFAULT_SETTINGS) || {
     showPhonetic: true,    // 한글 발음 표기 ([발음] 힌트)
     autoPlayAudio: true,   // 원어민 발음 자동 재생
     soundEffects: true,    // 효과음 및 배경음악
@@ -28,36 +28,17 @@
     reminderTime: "20:00"  // 알림 시간 설정
   };
 
-  const STORAGE_KEY = 'vocadash_settings';
-
   function loadSettings() {
-    let settings = { ...DEFAULT_SETTINGS };
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        settings = { ...DEFAULT_SETTINGS, ...parsed };
-      }
-      const soundDirect = localStorage.getItem('vocadash_sound_enabled');
-      if (soundDirect !== null) {
-        settings.soundEffects = (soundDirect === 'true' || soundDirect === '1');
-      }
-      return settings;
-    } catch (e) {
-      console.warn('설정 로드 실패, 기본값 사용:', e);
+    if (window.settingsStore && typeof window.settingsStore.getSettings === 'function') {
+      return window.settingsStore.getSettings();
     }
-    return settings;
+    return { ...DEFAULT_SETTINGS };
   }
 
   function saveSettings(settings) {
-    try {
-      const data = settings || window.vocadashSettings || DEFAULT_SETTINGS;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      if (typeof data.soundEffects === 'boolean') {
-        localStorage.setItem('vocadash_sound_enabled', data.soundEffects ? 'true' : 'false');
-      }
-    } catch (e) {
-      console.warn('설정 저장 실패:', e);
+    const data = settings || window.vocadashSettings || DEFAULT_SETTINGS;
+    if (window.settingsStore && typeof window.settingsStore.saveSettings === 'function') {
+      return window.settingsStore.saveSettings(data);
     }
   }
   window.saveSettings = saveSettings;
@@ -245,18 +226,10 @@
   window.syncSettingsUI = syncSettingsUI;
 
   function syncBookScreenSettings() {
-    let isPhonetic = true;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.showPhonetic !== undefined) {
-          isPhonetic = !!parsed.showPhonetic;
-        }
-      } else if (window.vocadashSettings && window.vocadashSettings.showPhonetic !== undefined) {
-        isPhonetic = !!window.vocadashSettings.showPhonetic;
-      }
-    } catch (_) {}
+    const s = (window.settingsStore && typeof window.settingsStore.getSettings === 'function')
+      ? window.settingsStore.getSettings()
+      : (window.vocadashSettings || DEFAULT_SETTINGS);
+    const isPhonetic = s.showPhonetic !== false;
 
     const bookScreen = document.getElementById('book-screen');
     if (bookScreen) {
@@ -653,18 +626,10 @@
   window.hideSettingsScreen = hideSettingsScreen;
 
   function syncBookPhoneticSetting() {
-    let showPhonetic = true;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed.showPhonetic !== undefined) {
-          showPhonetic = !!parsed.showPhonetic;
-        }
-      } else if (window.vocadashSettings && window.vocadashSettings.showPhonetic !== undefined) {
-        showPhonetic = !!window.vocadashSettings.showPhonetic;
-      }
-    } catch (_) { }
+    const s = (window.settingsStore && typeof window.settingsStore.getSettings === 'function')
+      ? window.settingsStore.getSettings()
+      : (window.vocadashSettings || DEFAULT_SETTINGS);
+    const showPhonetic = s.showPhonetic !== false;
 
     const bookScreen = document.getElementById('book-screen');
     if (bookScreen) {
