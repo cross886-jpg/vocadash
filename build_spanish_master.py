@@ -1,8 +1,24 @@
 import urllib.request
 import csv
+import os
 
 DATA_URL = "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/es/es_50k.txt"
 OUTPUT_FILE = "spanish_5000_master.csv"
+
+def load_existing_meanings():
+    """기존 spanish_5000_master.csv 또는 사전에 있는 한글 뜻 캐싱"""
+    meanings = {}
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, mode='r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                header = next(reader, None)
+                for r in reader:
+                    if len(r) >= 6 and r[1].strip() and r[5].strip():
+                        meanings[r[1].strip().lower()] = r[5].strip()
+        except Exception:
+            pass
+    return meanings
 
 def generate_master_list(target_count=5000):
     print("📥 깃허브에서 데이터 수신 중...")
@@ -15,7 +31,8 @@ def generate_master_list(target_count=5000):
         print(f"❌ 다운로드 오류: {e}")
         return
 
-    print(f"⚙️ 상위 {target_count}단어 가공 및 유닛/노드 배정 중...")
+    existing_meanings = load_existing_meanings()
+    print(f"⚙️ 상위 {target_count}단어 가공 및 유닛/노드 배정 중 (기존 뜻 {len(existing_meanings)}개 보존)...")
     
     rows = []
     rank = 1
@@ -42,20 +59,22 @@ def generate_master_list(target_count=5000):
         else:
             level = "B2"
 
+        meaning = existing_meanings.get(word.lower(), "")
+
         rows.append([
             rank,
             word,
             level,
             f"unit_{unit_idx:03d}",
             f"es_u{unit_idx}_n{node_idx}",
-            ""
+            meaning
         ])
 
         rank += 1
         if rank > target_count:
             break
 
-    with open(OUTPUT_FILE, mode='w', encoding='utf-8-sig', newline='') as f:
+    with open(OUTPUT_FILE, mode='w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["Rank", "Word", "Level", "Unit_ID", "Node_ID", "Meaning"])
         writer.writerows(rows)

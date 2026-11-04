@@ -215,7 +215,14 @@
         const unitContainer = document.createElement('div');
         unitContainer.className = 'book-unit-container mb-4';
 
-        const wordCount = (u.words || []).length;
+        const uNum = parseInt(u.unitNumber || u.unitId || u.unit || u.id, 10) || 1;
+        const unitKey = 'unit-' + uNum;
+        const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null);
+        const unitWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
+          ? vocaSource.getWordsByUnit(unitKey)
+          : (vocaSource?.byUnit?.[unitKey] || u.words || []);
+
+        const wordCount = (unitWords || []).length;
         const subtitleText = u.subtitle || u.desc || '';
         const safeSubtitle = escapeHTML(subtitleText);
         const subtitleHtml = subtitleText ? `<p class="mt-1 pl-0.5 text-xs text-slate-500 font-medium leading-relaxed">${safeSubtitle}</p>` : '';
@@ -237,7 +244,7 @@
         const wordsListContainer = document.createElement('div');
         wordsListContainer.className = 'book-unit-words-wrap unit-word-list flex flex-col gap-3 mt-2.5';
 
-        (u.words || []).forEach((w) => {
+        (unitWords || []).forEach((w) => {
           const termStr = w.word || w.term || '';
           const meaningStr = w.meaning || '';
 

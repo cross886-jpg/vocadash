@@ -287,7 +287,59 @@
     else initNavigationEvents();
   }
 
+  function navigateTo(courseId, unitNumber = 1) {
+    const lang = (courseId && courseId.startsWith('en')) ? 'en' : 'es';
+    const targetCourseId = courseId || (lang === 'en' ? 'en_main' : 'es_main');
+    const uNum = Math.max(1, parseInt(unitNumber, 10) || 1);
+
+    // 1. 해당 유닛이 속한 섹션 탐색 (courseSections 기준)
+    const cs = window.courseSections?.[targetCourseId] || window.courseSections?.es_main;
+    let sectionId = 'A1';
+    if (cs?.sections) {
+      const matched = cs.sections.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
+      if (matched) sectionId = matched.id;
+    }
+
+    // 2. 전역 상태 및 스토리지 동기화
+    window.currentUnitNumber = uNum;
+    window._currentVisibleUnitIndex = Math.max(0, uNum - 1);
+    window.currentSectionId = sectionId;
+    try {
+      const cKey = (typeof window.getActiveCourseKey === 'function') ? window.getActiveCourseKey(targetCourseId) : targetCourseId;
+      localStorage.setItem('vocadash_active_section_' + cKey, sectionId);
+    } catch (_) { }
+
+    // 3. 탑승권 드로어 닫기 및 섹션 스위칭
+    window.closeCourseDrawer?.();
+    if (window.courseDrawer && typeof window.courseDrawer.switchSection === 'function') {
+      try {
+        const card = document.getElementById('course-drawer-card');
+        window.courseDrawer.switchSection(card, sectionId, targetCourseId, true);
+      } catch (_) { }
+    }
+
+    // 4. 로드맵 렌더링 및 유닛 이동
+    switchMainTab('home', true);
+    if (typeof window.renderRoadmap === 'function') {
+      window.renderRoadmap();
+    }
+    setTimeout(() => {
+      if (typeof window.switchToUnit === 'function') {
+        window.switchToUnit(uNum);
+      }
+    }, 50);
+  }
+
+  const navigation = {
+    switchMainTab,
+    navigateTo,
+    toggleModal,
+    setTabActive
+  };
+
   Object.assign(window, {
+    navigation,
+    navigateTo,
     switchMainTab,
     switchScreen: switchMainTab,
     toggleModal,

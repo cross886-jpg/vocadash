@@ -74,22 +74,33 @@
             <div class="text-6xl animate-bounce">💔</div>
             <div class="text-2xl font-black text-slate-800">아쉬워요! 시험 불합격</div>
             <p class="text-sm font-bold text-slate-500 leading-relaxed">모든 기회를 소진했습니다.<br/>단어를 복습하고 다시 도전해보세요!</p>
-            <button id="btn-skip-test-fail-exit" class="w-full py-3.5 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base rounded-2xl shadow-md transition cursor-pointer">로드맵으로 돌아가기</button>
+            <button id="btn-skip-test-fail-exit" class="w-full py-3.5 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base rounded-2xl shadow-md transition cursor-pointer">원래 위치로 돌아가기</button>
           </div>
         `;
         const btnSkipExit = document.getElementById("btn-skip-test-fail-exit");
         if (btnSkipExit) {
           btnSkipExit.onclick = () => {
-            window.isUnitSkipTestMode = false;
-            modal?.classList.add("hidden");
-            window.setUserHearts?.(0);
-            window._shouldOpenAdRechargeOnRoadmap = true;
-            window.exitGameToRoadmap?.(true);
+            closeJumpTest();
           };
         }
       }
     }
   }
+
+  function closeJumpTest() {
+    window.isJumpTestSession = false;
+    window.isUnitSkipTestMode = false;
+    window._skipTestPassed = false;
+    closeResultModal();
+    window.closeGameScreen?.(true);
+    window.exitGameToRoadmap?.(true);
+
+    const current = window.progressManager?.getActiveLocation?.() || { courseId: 'es_main', unitNumber: 1 };
+    window.navigation?.navigateTo?.(current.courseId, current.unitNumber);
+  }
+  window.closeJumpTest = closeJumpTest;
+  window.handleJumpTestFailed = closeJumpTest;
+  window.handleJumpTestFailReturn = closeJumpTest;
 
   function closeResultModal() {
     if (typeof window.resetStageFinishingFlag === "function") {
@@ -188,7 +199,7 @@
 
       const isReviewNode = Boolean((options && options.mode === "review") || window.currentGameMode === "review" || window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentLessonId).includes("review"));
       let saveRes = null;
-      if (!window.isUnitSkipTestMode && typeof window.saveStageClearResult === "function") {
+      if (!window.isUnitSkipTestMode && !window.isVocaBookMode && String(currentLessonId) !== "voca-book-practice" && typeof window.saveStageClearResult === "function") {
         saveRes = window.saveStageClearResult({
           nodeId: currentLessonId, isClear: true, accuracy: calculatedAcc,
           questions, missedWords: missed, isReviewMode: isReviewNode, isSpeedrun: isReviewNode
@@ -201,6 +212,13 @@
       const currentUnitNum = saveRes?.unitIndex || window.currentUnitNumber || (typeof window.parseNodeCoordinates === 'function' ? window.parseNodeCoordinates(currentLessonId).unitIndex : 1) || 1;
       const activeSection = (typeof window.getActiveSection === 'function') ? window.getActiveSection() : null;
       const isSectionEnd = isBoss && activeSection && (currentUnitNum === activeSection.unitEnd);
+
+      let nextRoadmapNode = null;
+      if (nextCount >= 3 || isBoss || isReviewNode) {
+        if (typeof window.getNextRoadmapNode === 'function') {
+          nextRoadmapNode = window.getNextRoadmapNode(currentLessonId, currentUnitNum);
+        }
+      }
 
       let title = "¡STAGE CLEAR!", sub = `${actualTitle} (${nextCount}/3) 클리어!`, btn = nextCount < 3 ? `다음 라운드 (${nextCount + 1}/3) ▶` : "다음 스테이지 ▶";
       if (stars === 0) {
@@ -222,25 +240,32 @@
         btn = "다음 유닛 도전하기 🚀";
       } else if (nextCount >= 3) {
         sub = `${actualTitle} (3/3) 마스터!`;
+        if (nextRoadmapNode?.type === 'bonus' || String(nextRoadmapNode?.id).includes('bonus')) {
+          btn = "보상 확인하기 🎁";
+        } else if (nextRoadmapNode?.type === 'review' || String(nextRoadmapNode?.id).includes('review')) {
+          btn = "오답 복습하기 ⚡";
+        } else {
+          btn = "다음 스테이지 ▶";
+        }
       }
 
       if (window.isUnitSkipTestMode) {
-        const isPassed = stars > 0 || calculatedAcc >= 70;
+        const isPassed = calculatedAcc >= 70;
         const targetUnit = window.currentSkipTestUnit || 2;
-        title = isPassed ? "⚡ 건너뛰기 시험 통과!" : "⚡ 건너뛰기 시험 결과";
-        sub = isPassed ? `Unit ${targetUnit} 해금 완료!` : "통과 기준에 미달했습니다";
-        btn = isPassed ? `Unit ${targetUnit} 이동 🚀` : "로드맵으로 돌아가기";
+        window._skipTestPassed = Boolean(isPassed);
+        title = isPassed ? "⚡ 건너뛰기 시험 통과!" : "⚡ 건너뛰기 시험 불합격";
+        sub = isPassed ? `Unit ${targetUnit} 해금 완료!` : "통과 기준(정답률 70%)에 미달했습니다";
+        btn = isPassed ? `Unit ${targetUnit} 이동 🚀` : "원래 위치로 돌아가기";
 
         if (isPassed) {
           window.unlockUnitsUpTo?.(targetUnit);
           window.currentUnitNumber = targetUnit;
           window._currentVisibleUnitIndex = targetUnit - 1;
-          window.setUserHearts?.(window.skipTestOriginalHearts ?? 5);
+          window.updateHeartsUI?.();
+          window.renderRoadmap?.();
         } else {
-          window.setUserHearts?.(0);
-          window._shouldOpenAdRechargeOnRoadmap = true;
+          window.updateHeartsUI?.();
         }
-        window.isUnitSkipTestMode = false;
       }
 
       setTxt("result-title", title); setTxt("result-subtitle", sub); setTxt("btn-result-primary-text", btn);
@@ -283,22 +308,23 @@
 
     if (window.isUnitSkipTestMode) {
       const targetUnit = window.currentSkipTestUnit || 2;
+      const isPassed = Boolean(window._skipTestPassed);
       window.isUnitSkipTestMode = false;
-      window.renderRoadmap?.();
-      window.exitGameToRoadmap?.(true);
-      setTimeout(() => {
-        if (typeof window.switchToUnit === 'function') window.switchToUnit(targetUnit);
-        else {
-          const s = document.querySelector(`.unit-section-block[data-unit-index="${targetUnit - 1}"]`);
-          if (s) s.scrollIntoView({ behavior: 'instant', block: 'start' });
-          window.updateTopUnitBanner?.(targetUnit - 1);
-        }
-      }, 50);
+      window.isJumpTestSession = false;
+      window._skipTestPassed = false;
+
+      if (isPassed) {
+        window.unlockUnitsUpTo?.(targetUnit);
+        const courseId = window.currentCourseId || window.activeCourseId || ((window.currentLanguage === 'en') ? 'en_main' : 'es_main');
+        window.navigation?.navigateTo?.(courseId, targetUnit);
+      } else {
+        closeJumpTest();
+      }
       return false;
     }
 
     const currentPlayingId = window.currentGameLessonId || window.currentSelectedNodeId || "node-1";
-    const isReview = (window.currentGameMode === "review") || window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4");
+    const isReview = (window.currentGameMode === "review") || window.isReviewGameMode || window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4") || String(currentPlayingId).includes("voca");
 
     if (window._lastClearedSectionEnd) {
       const clearedUnitNum = window._lastClearedSectionEndUnit || window.currentUnitNumber || 1;
@@ -332,8 +358,9 @@
     }
 
     if (isReview) {
-      const isRoadmapSpeedrun = !!window.isRoadmapReviewSpeedrun || String(currentPlayingId).includes("review") || String(currentPlayingId).endsWith("_n4");
+      const isRoadmapSpeedrun = !window.isVocaBookMode && (currentPlayingId !== "voca-book-practice") && (!!window.isRoadmapReviewSpeedrun || (String(currentPlayingId).includes("review") && !String(currentPlayingId).includes("voca")) || String(currentPlayingId).endsWith("_n4"));
       window.isReviewGameMode = window.isRoadmapReviewSpeedrun = false;
+      window.isVocaBookMode = false;
       window.currentGameMode = "standard";
       if (!isRoadmapSpeedrun) {
         window.exitGameToRoadmap?.(true); window.switchMainTab?.("review", true);
@@ -354,6 +381,58 @@
       window.exitGameToRoadmap?.(true);
       if (typeof window.showCourseCompletionModal === "function") window.showCourseCompletionModal();
       else window.showToast?.("🏆 축하합니다! 모든 코스 유닛을 완벽 마스터했습니다!", "🎉");
+      return false;
+    }
+
+    if (step.action === "bonus" || (step.nextNodeId && (step.nextNodeId.includes('bonus') || step.nextNode?.type === 'bonus'))) {
+      const bonusNodeId = step.nextNodeId || 'node-bonus';
+      const uNum = step.unitIndex || window.currentUnitNumber || 1;
+      window.exitGameToRoadmap?.(true);
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+
+      setTimeout(() => {
+        const bonusNode = document.querySelector(`[data-node-id="${bonusNodeId}"]`) ||
+                          document.getElementById('node-bonus-container') ||
+                          document.querySelector('#node-bonus-btn')?.closest('.roadmap-node') ||
+                          document.querySelector(`[data-unit-index="${uNum - 1}"][data-node-type="bonus"]`);
+        if (bonusNode) {
+          bonusNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          bonusNode.classList.add('animate-node-bounce');
+          setTimeout(() => bonusNode.classList.remove('animate-node-bounce'), 800);
+        }
+        setTimeout(() => {
+          if (typeof window.openBonusModal === 'function') {
+            window.openBonusModal(bonusNodeId);
+          }
+        }, 400);
+      }, 100);
+      return false;
+    }
+
+    if (step.action === "review" || (step.nextNodeId && (step.nextNodeId.includes('review') || step.nextNode?.type === 'review'))) {
+      const reviewNodeId = step.nextNodeId || 'node-review';
+      const uNum = step.unitIndex || window.currentUnitNumber || 1;
+      window.exitGameToRoadmap?.(true);
+      if (typeof window.updateRoadmapNodesUI === 'function') window.updateRoadmapNodesUI();
+      if (typeof window.renderRoadmap === 'function') window.renderRoadmap();
+
+      setTimeout(() => {
+        const reviewNode = document.querySelector(`[data-node-id="${reviewNodeId}"]`) ||
+                           document.getElementById('node-review-container') ||
+                           document.querySelector('#node-review-btn')?.closest('.roadmap-node') ||
+                           document.querySelector(`[data-unit-index="${uNum - 1}"][data-node-type="review"]`);
+        if (reviewNode) {
+          reviewNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          reviewNode.classList.add('animate-node-bounce');
+          setTimeout(() => reviewNode.classList.remove('animate-node-bounce'), 800);
+        }
+        setTimeout(() => {
+          if (typeof window.openReviewSpeedrunModal === 'function') {
+            window.openReviewSpeedrunModal(uNum, reviewNodeId);
+          }
+        }, 400);
+      }, 100);
       return false;
     }
 
@@ -441,8 +520,16 @@
     on("btn-result-wrong-review", e => { e?.preventDefault?.(); startWrongWordsMiniReview(); });
     ["btn-next-stage", "btn-result-primary"].forEach(id => on(id, e => { e?.preventDefault?.(); handleResultPrimary(e); }));
     on("btn-result-secondary", handleResultSecondary);
-    const handleExit = e => { e?.preventDefault?.(); closeResultModal(); window.exitGameToRoadmap?.(true); };
-    ["game-over-exit-btn", "btn-gameover-roadmap", "btn-gameover-close"].forEach(id => on(id, handleExit));
+    const handleExit = e => {
+      e?.preventDefault?.();
+      if (window.isUnitSkipTestMode || window.isJumpTestSession) {
+        closeJumpTest();
+        return;
+      }
+      closeResultModal();
+      window.exitGameToRoadmap?.(true);
+    };
+    ["game-over-exit-btn", "btn-gameover-roadmap", "btn-gameover-close", "btn-skip-test-fail-exit"].forEach(id => on(id, handleExit));
     on("btn-gameover-retry", e => { e?.preventDefault?.(); window.restartStageInMemory?.(e); });
 
     // 💡 [핵심 보완] 광고 보고 하트 채워 이어하기 핸들러 (gameEngine reviveGameWithAd로 단일 책임 일원화)
@@ -491,9 +578,13 @@
           startWrongWordsMiniReview();
           return;
         }
-        const btnExit = target.closest("#game-over-exit-btn, #btn-gameover-roadmap, #btn-gameover-close");
+        const btnExit = target.closest("#game-over-exit-btn, #btn-gameover-roadmap, #btn-gameover-close, #btn-skip-test-fail-exit");
         if (btnExit) {
           e.preventDefault?.();
+          if (window.isUnitSkipTestMode || window.isJumpTestSession) {
+            closeJumpTest();
+            return;
+          }
           closeResultModal();
           window.exitGameToRoadmap?.(true);
           return;

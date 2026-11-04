@@ -77,6 +77,13 @@
       const clCount = window.nodeProgressMap?.[currentFlashcardLessonId] || 0;
       deck = window.quizSessionGenerator.generateStageSession(currentFlashcardLessonId, currentCourse, clCount);
     }
+    if ((!deck || deck.length === 0) && window.VOCA_DATA) {
+      const uNum = (window.currentUnitNumber || 1);
+      const unitKey = 'unit-' + uNum;
+      deck = (typeof window.VOCA_DATA.getWordsByUnit === 'function')
+        ? window.VOCA_DATA.getWordsByUnit(unitKey)
+        : (window.VOCA_DATA.byUnit?.[unitKey] || []);
+    }
     if ((!deck || deck.length === 0) && window.courseData?.units) {
       const uIdx = Math.max(0, (window.currentUnitNumber || 1) - 1);
       deck = window.courseData.units[uIdx]?.words || [];

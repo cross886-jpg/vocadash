@@ -9,9 +9,10 @@
   // --- 1. 인게임 코어 상태 변수 ---
   let currentGameLessonId = "node-2", gameQuestions = [], currentQuestionIdx = 0, currentHearts = 5;
   let currentGameMode = "standard"; // 'standard' | 'review'
+  let isInfiniteHeart = false;
   let combo = 0, maxCombo = 0, score = 0, speedMultiplier = 1.0;
   let isActive = false, isGameActive = false, isPaused = false, isFrozen = false;
-  let isQuestionActive = false, isStageFinishing = false, isCurrentQuestionFailed = false;
+  let isQuestionActive = false, isStageFinishing = false, isCurrentQuestionFailed = false, isInputReady = false;
   let dropRafId = null, dropStartTime = 0, freezeTimer = null, gameNextQuestionTimer = null;
   let currentCorrectChoiceIdx = -1, missedWords = [], correctWords = [], totalAttemptCount = 0, sessionStartTime = 0;
   let currentDropLane = "50%";
@@ -52,7 +53,7 @@
   // --- 3. UI 갱신 & 피드백 ---
   function updateHeartsUI() {
     if (!gameHeartsContainer) return;
-    if (currentGameMode === "review") {
+    if (isInfiniteHeart) {
       gameHeartsContainer.innerHTML = '<span class="text-xs sm:text-sm select-none font-black text-rose-500 flex items-center gap-1">💖 ∞</span>';
       return;
     }
@@ -70,12 +71,37 @@
       icon.className = active ? "game-heart material-symbols-outlined text-[14px] text-error transition-all" : "game-heart material-symbols-outlined text-[14px] text-slate-300 transition-all opacity-40";
       icon.textContent = "favorite";
     });
-    window.userHearts = currentHearts;
+    if (!window.isJumpTestSession && !window.isUnitSkipTestMode) {
+      window.userHearts = currentHearts;
+    }
   }
 
+  function updateJumpTestHeartUI(hearts) {
+    if (!gameHeartsContainer) return;
+    const icons = gameHeartsContainer.querySelectorAll(".game-heart");
+    icons.forEach((icon, idx) => {
+      const active = idx < hearts;
+      icon.className = active ? "game-heart material-symbols-outlined text-[14px] text-error transition-all" : "game-heart material-symbols-outlined text-[14px] text-slate-300 transition-all opacity-40";
+      icon.textContent = "favorite";
+    });
+  }
+  window.updateJumpTestHeartUI = updateJumpTestHeartUI;
+
   function decreaseHeart() {
-    if (currentGameMode === "review") return Infinity;
+    if (isInfiniteHeart) return Infinity;
     if (currentHearts <= 0) return 0;
+
+    // 💡 [Karpathy Guidelines] 건너뛰기 시험 진행 중일 경우 실제 계정 하트는 절대 차감하지 않음
+    if (window.isJumpTestSession || window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test") {
+      currentHearts = Math.max(0, currentHearts - 1);
+      window.jumpTestHearts = currentHearts;
+      updateHeartsUI();
+      if (typeof window.updateJumpTestHeartUI === "function") {
+        window.updateJumpTestHeartUI(currentHearts);
+      }
+      return currentHearts;
+    }
+
     currentHearts = Math.max(0, currentHearts - 1);
     updateHeartsUI();
     if (typeof window.setUserHearts === "function") window.setUserHearts(currentHearts);
@@ -83,6 +109,23 @@
   }
 
   function updateItemCountUI() {
+    const itemBar = document.getElementById("game-item-bar") || document.querySelector(".quiz-items-container");
+    const isJumpTest = Boolean(window.isJumpTestSession || window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test");
+
+    if (itemBar) {
+      if (isJumpTest) {
+        itemBar.classList.add("hidden");
+        itemBar.style.display = "none";
+        itemBar.style.pointerEvents = "none";
+        return;
+      } else {
+        itemBar.classList.remove("hidden");
+        itemBar.style.removeProperty("display");
+        itemBar.style.display = "";
+        itemBar.style.pointerEvents = "auto";
+      }
+    }
+
     const inv = (typeof window.getVocaInventory === "function")
       ? window.getVocaInventory()
       : (window.gameItemCounts || getInventory());
@@ -149,6 +192,7 @@
     isQuestionActive = true;
     isFrozen = false;
     isCurrentQuestionFailed = false;
+    isInputReady = false;
     if (gameFreezeOverlay) gameFreezeOverlay.classList.add("hidden");
     updateHeaderStatusUI();
 
@@ -172,24 +216,58 @@
       }
     }
 
-    // 4지선다 보기 세팅
+    // 4지선다 보기 세팅 (해당 챕터 Unit 단어 풀 엄격 격리 및 빈칸 방어)
     const currentLang = window.currentActiveCourse || "es";
-    let choices = (window.quizSessionGenerator?.generateQuestionChoices)
-      ? window.quizSessionGenerator.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentLang)
-      : [q.meaning || q.answer || "정답", "보기1", "보기2", "보기3"];
+    let choices = [];
+    if (typeof window.generateQuestionChoices === "function") {
+      choices = window.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentLang);
+    } else if (window.quizSessionGenerator?.generateQuestionChoices) {
+      choices = window.quizSessionGenerator.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentLang);
+    } else if (typeof window.generateOptionsForUnit === "function") {
+      choices = window.generateOptionsForUnit(q, gameQuestions);
+    } else {
+      choices = [q.meaning || q.answer || q.word || "정답"];
+    }
 
-    const correctAns = String(q.isCloze ? (q.answer || q.meaning) : (q.meaning || q.answer || "")).trim();
-    currentCorrectChoiceIdx = choices.findIndex(c => String(c).trim() === correctAns);
-    if (currentCorrectChoiceIdx === -1) { choices[0] = correctAns; currentCorrectChoiceIdx = 0; }
+    // 정답 텍스트 보장 (빈 문자열 완전 방어)
+    const rawCorrect = String(q.isCloze ? (q.answer || q.meaning) : (q.meaning || q.answer || "")).trim();
+    const correctAns = rawCorrect || String(q.word || q.term || "정답").trim();
 
+    // 4개 보기 배열 보장 및 빈 문자열 완전 방어
+    while (choices.length < 4) {
+      choices.push(`선택지 ${choices.length + 1}`);
+    }
+
+    currentCorrectChoiceIdx = choices.findIndex(c => {
+      const s = typeof c === 'string' ? c.trim() : (c?.meaning || c?.word || '').trim();
+      return s === correctAns;
+    });
+    if (currentCorrectChoiceIdx === -1) {
+      choices[0] = correctAns;
+      currentCorrectChoiceIdx = 0;
+    }
+
+    // 버튼 텍스트 할당 시 빈 문자열 완전 방어
     gameChoiceBtns.forEach((btn, idx) => {
-      const choiceText = choices[idx] || "";
-      btn.textContent = choiceText;
-      btn.dataset.choice = choiceText;
+      if (!btn) return;
+      const opt = choices[idx];
+
+      let displayText = '';
+      if (typeof opt === 'string') displayText = opt.trim();
+      else if (opt && typeof opt === 'object') displayText = (opt.meaning || opt.korean || opt.word || '').trim();
+
+      // 만약 뜻이 비어있다면 임시 대체 텍스트를 부여하여 절대 공백 버튼이 되지 않도록 보장
+      if (!displayText) {
+        displayText = (idx === currentCorrectChoiceIdx) ? correctAns : `선택지 ${idx + 1}`;
+      }
+
+      btn.textContent = displayText;
+      btn.dataset.choice = displayText;
       btn.dataset.index = idx;
       btn.disabled = false;
-      btn.style.opacity = "1";
-      btn.style.display = "";
+      btn.style.color = '#0f172a'; // slate-900 강제 적용 (가림 방지)
+      btn.style.opacity = '1';
+      btn.style.display = 'flex';
       btn.className = "game-choice-btn h-[44px] rounded-xl bg-white text-on-surface border border-slate-200 font-bold text-sm shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer";
     });
 
@@ -213,13 +291,32 @@
 
     dropStartTime = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
     dropRafId = requestAnimationFrame(dropLoop);
+
+    // 💡 [Karpathy Guidelines] 단어 생성 및 타이머 시작 직후 입력을 허용하도록 순서 보장 (조기 오답/미스 방어)
+    setTimeout(() => {
+      if (isActive && isGameActive && isQuestionActive) {
+        isInputReady = true;
+      }
+    }, 300);
   }
 
   function dropLoop(timestamp) {
     if (!isQuestionActive || isPaused || !isActive || !isGameActive) return;
     if (isFrozen) { dropRafId = requestAnimationFrame(dropLoop); return; }
 
+    if (!dropStartTime || timestamp < dropStartTime) {
+      dropStartTime = timestamp;
+      dropRafId = requestAnimationFrame(dropLoop);
+      return;
+    }
+
     const elapsed = timestamp - dropStartTime;
+    // 💡 [Karpathy Guidelines] 단어 생성 초기(300ms) 동안은 데드라인 판정 차단
+    if (elapsed < 300) {
+      dropRafId = requestAnimationFrame(dropLoop);
+      return;
+    }
+
     const duration = dropBaseDuration / speedMultiplier;
     const progress = Math.min(1.0, elapsed / duration);
     const arenaH = (gameArena ? gameArena.clientHeight : 320) || 320;
@@ -231,7 +328,9 @@
     }
 
     if (progress >= 1.0) {
-      handleDeadlineBreached();
+      if (isInputReady) {
+        handleDeadlineBreached();
+      }
       return;
     }
     dropRafId = requestAnimationFrame(dropLoop);
@@ -245,7 +344,7 @@
 
   // --- 5. 채점 & 상태 전이 ---
   function handleDeadlineBreached() {
-    if (isStageFinishing || !isQuestionActive) return;
+    if (isStageFinishing || !isQuestionActive || !isInputReady) return;
     isQuestionActive = false; cancelGameLoop(); window.stopTTS?.();
     totalAttemptCount++;
     combo = 0; speedMultiplier = 1.0;
@@ -265,7 +364,7 @@
       }
     }
     window.totalAttemptCount = totalAttemptCount;
-    if (currentGameMode === "review") {
+    if (isInfiniteHeart) {
       showGameFloatingEffect("다시 기억해봐요! 💡", false);
       window.playSound?.("wrong");
       gameNextQuestionTimer = setTimeout(nextQuestion, 900);
@@ -322,7 +421,7 @@
   }
 
   function handleWrongAnswer(btn, selectedText) {
-    if (isStageFinishing || !isQuestionActive) return;
+    if (isStageFinishing || !isQuestionActive || !isInputReady) return;
     const isFirstFail = !isCurrentQuestionFailed;
     isCurrentQuestionFailed = true; combo = 0; speedMultiplier = 1.0; updateHeaderStatusUI();
     totalAttemptCount++;
@@ -340,7 +439,7 @@
     }
     window.totalAttemptCount = totalAttemptCount;
     if (btn) { btn.classList.add("!bg-red-500", "!text-white", "!border-red-600"); setTimeout(() => btn?.classList.remove("!bg-red-500", "!text-white", "!border-red-600"), 500); }
-    if (currentGameMode === "review") {
+    if (isInfiniteHeart) {
       showGameFloatingEffect("오답! 다시 도전 💬", false);
       window.playSound?.("wrong");
       return;
@@ -352,7 +451,7 @@
   }
 
   function judgeAnswerDirectly(btn, selectedText) {
-    if (!isQuestionActive || !isActive || !isGameActive || isStageFinishing) return;
+    if (!isInputReady || !isQuestionActive || !isActive || !isGameActive || isStageFinishing) return;
     const q = gameQuestions[currentQuestionIdx];
     if (!q) { finishGameStage(true); return; }
 
@@ -371,6 +470,9 @@
 
   // --- 6. 부스터 아이템 사용 ---
   function useGameItem(itemType) {
+    if (window.isJumpTestSession || window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test") {
+      return; // 시험 중 아이템 동작 차단
+    }
     if (!isGameActive && !window.isGameActive) return;
     const inv = (typeof window.getVocaInventory === "function")
       ? window.getVocaInventory()
@@ -464,6 +566,24 @@
     cancelGameLoop();
     if (window.stopTTS) window.stopTTS();
     try { window.speechSynthesis?.cancel(); } catch (_) { }
+
+    // 💡 [Karpathy Guidelines] 세션 시작 시 오답/콤보/미스 플래그 및 플로팅 텍스트 완전 리셋
+    isInputReady = false;
+    isQuestionActive = false;
+    isCurrentQuestionFailed = false;
+    dropStartTime = 0;
+    combo = 0; maxCombo = 0; score = 0; totalAttemptCount = 0; speedMultiplier = 1.0;
+    missedWords = []; correctWords = [];
+    if (gameFloatingEffect) {
+      gameFloatingEffect.classList.add("hidden");
+      gameFloatingEffect.classList.remove("animate-float-pop");
+    }
+    if (gameFloatingText) gameFloatingText.textContent = "";
+    if (gameDroppingBubble) {
+      gameDroppingBubble.style.transform = "translate3d(-50%, 0px, 0)";
+      gameDroppingBubble.classList.add("hidden");
+    }
+
     isStageFinishing = false;
     window.isStageFinishing = false;
     if (typeof window.resetStageFinishingFlag === "function") window.resetStageFinishingFlag();
@@ -483,7 +603,7 @@
 
     currentGameLessonId = (typeof lessonId === "object" && lessonId ? (lessonId.lessonId || lessonId.id) : lessonId) || "node-2";
     window.currentGameLessonId = currentGameLessonId;
-    if (currentGameLessonId !== "node-skip-test") window.isUnitSkipTestMode = false;
+    if (currentGameLessonId !== "node-skip-test" && !window.isJumpTestSession) window.isUnitSkipTestMode = false;
 
     const explicitMode = options?.mode || (typeof lessonId === "object" && lessonId?.mode);
     const isReview = explicitMode === "review" ||
@@ -493,6 +613,17 @@
     if (isReview) {
       window.isReviewGameMode = true;
     }
+
+    if (options?.isInfiniteHeart !== undefined) {
+      isInfiniteHeart = Boolean(options.isInfiniteHeart);
+    } else if (options?.isRoadmap || window.isRoadmapReviewSpeedrun || currentGameLessonId === "node-review" || String(currentGameLessonId).includes("review")) {
+      isInfiniteHeart = false;
+    } else if (options?.source === "vocaBook") {
+      isInfiniteHeart = true;
+    } else {
+      isInfiniteHeart = false;
+    }
+    window.isInfiniteHeart = isInfiniteHeart;
 
     const currentLang = window.currentActiveCourse || "es";
     const incomingSession = (Array.isArray(session) && session.length > 0)
@@ -504,7 +635,18 @@
           : null;
 
     let sourceQuestions = [];
-    if (incomingSession && incomingSession.length > 0) {
+    if (currentGameLessonId === "node-skip-test" || window.isUnitSkipTestMode) {
+      if (incomingSession && incomingSession.length > 0) {
+        sourceQuestions = incomingSession;
+      } else if (Array.isArray(window.currentSessionQuestions) && window.currentSessionQuestions.length > 0) {
+        sourceQuestions = window.currentSessionQuestions;
+      } else {
+        const targetU = window.currentSkipTestUnit || 2;
+        sourceQuestions = (typeof window.generateJumpTestSession === "function")
+          ? window.generateJumpTestSession(targetU, 10, currentLang)
+          : (window.quizSessionGenerator?.generateJumpTestSession?.(targetU, 10, currentLang) || []);
+      }
+    } else if (incomingSession && incomingSession.length > 0) {
       sourceQuestions = incomingSession;
     } else if (Array.isArray(window.currentSessionQuestions) && window.currentSessionQuestions.length > 0) {
       sourceQuestions = window.currentSessionQuestions;
@@ -513,11 +655,21 @@
     } else if (typeof window.generateStageSession === "function") {
       sourceQuestions = window.generateStageSession(currentGameLessonId, currentLang, 0) || [];
     } else {
-      const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
-      const curUnit = course?.units?.[0];
-      sourceQuestions = (curUnit && Array.isArray(curUnit.words))
-        ? curUnit.words.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || '', term: w.word || '', meaning: w.meaning || '' }))
-        : [];
+      const uNum = (window.currentUnitNumber || 1);
+      const currentUnitId = 'unit-' + uNum;
+      const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null);
+      const vocaWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
+        ? vocaSource.getWordsByUnit(currentUnitId)
+        : (vocaSource?.byUnit?.[currentUnitId] || []);
+      if (Array.isArray(vocaWords) && vocaWords.length > 0) {
+        sourceQuestions = vocaWords.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || w.term || '', term: w.word || w.term || '', meaning: w.meaning || '' }));
+      } else {
+        const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
+        const curUnit = course?.units?.[0];
+        sourceQuestions = (curUnit && Array.isArray(curUnit.words))
+          ? curUnit.words.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || '', term: w.word || '', meaning: w.meaning || '' }))
+          : [];
+      }
     }
 
     if (isReview && (!Array.isArray(sourceQuestions) || sourceQuestions.length === 0)) {
@@ -538,8 +690,16 @@
     }
 
     currentQuestionIdx = 0;
-    const globalHearts = (typeof window.getUserHearts === "function") ? window.getUserHearts() : (window.userHearts || 5);
-    currentHearts = currentGameMode === "review" ? 999 : globalHearts;
+    const isSkipTestSession = Boolean(window.isJumpTestSession || window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test");
+    if (isSkipTestSession) {
+      window.isJumpTestSession = true;
+      window.isUnitSkipTestMode = true;
+      window.jumpTestHearts = 3;
+      currentHearts = 3;
+    } else {
+      const globalHearts = (typeof window.getUserHearts === "function") ? window.getUserHearts() : (window.userHearts || 5);
+      currentHearts = isInfiniteHeart ? 999 : globalHearts;
+    }
     combo = 0; maxCombo = 0; score = 0; speedMultiplier = 1.0;
     missedWords = []; correctWords = []; totalAttemptCount = 0;
     isActive = true; isGameActive = true; isPaused = false; isStageFinishing = false;
@@ -606,7 +766,7 @@
   }
 
   function triggerGameOver() {
-    if (currentGameMode === "review") return;
+    if (isInfiniteHeart) return;
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false; isQuestionActive = false;
     return window.gameResultModal?.triggerGameOver ? window.gameResultModal.triggerGameOver() : finishGameStage(false);
@@ -617,13 +777,23 @@
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false;
     currentGameMode = "standard";
     window.currentGameMode = "standard";
+    isInfiniteHeart = false;
+    window.isInfiniteHeart = false;
     if (gameScreen) { gameScreen.classList.add("hidden", "opacity-0", "pointer-events-none"); gameScreen.style.display = "none"; }
   }
 
   function exitGameToRoadmap(force = false) {
+    if (window.isJumpTestSession || window.isUnitSkipTestMode) {
+      window.isJumpTestSession = false;
+      window.isUnitSkipTestMode = false;
+      window.updateHeartsUI?.();
+    }
+
     closeGameScreen(force);
     currentGameMode = "standard";
     window.currentGameMode = "standard";
+    isInfiniteHeart = false;
+    window.isInfiniteHeart = false;
     window.isReviewGameMode = false;
     window.isRoadmapReviewSpeedrun = false;
     window.switchMainTab?.("home");
@@ -639,7 +809,7 @@
   function restartStageInMemory() {
     clearAllGameTimers(); cancelGameLoop();
     if (typeof window.closeResultModal === "function") window.closeResultModal();
-    openGameScreen(currentGameLessonId, gameQuestions, { mode: currentGameMode });
+    openGameScreen(currentGameLessonId, gameQuestions, { mode: currentGameMode, isInfiniteHeart });
   }
 
   function reviveGameWithAd() {
@@ -731,6 +901,7 @@
     const itemBar = document.getElementById("game-item-bar");
     if (itemBar) {
       itemBar.onclick = e => {
+        if (window.isJumpTestSession || window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test") return;
         const btn = e.target.closest("button[data-item]");
         if (btn?.dataset.item) useGameItem(btn.dataset.item);
       };
@@ -747,7 +918,7 @@
     judgeAnswerDirectly, spawnQuestion, startWrongWordsMiniReview,
     startFallingGame: (lessonId, session) => openGameScreen(lessonId, session),
     launchGame: (type, list, opt) => openGameScreen(opt?.lessonId || "node-2", list),
-    getGameEngineState: () => ({ currentGameLessonId, currentHearts, score, combo, maxCombo, missedWords, correctWords, totalAttemptCount, totalQ: gameQuestions.length, currentQuestionIdx })
+    getGameEngineState: () => ({ currentGameLessonId, currentHearts, isInfiniteHeart, score, combo, maxCombo, missedWords, correctWords, totalAttemptCount, totalQ: gameQuestions.length, currentQuestionIdx })
   });
 
   if (document.readyState === "loading") {

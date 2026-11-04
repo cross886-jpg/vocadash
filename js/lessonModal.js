@@ -287,34 +287,28 @@
     window.currentReviewNodeId = resolvedNodeId;
 
     const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
-    let wrongList = [];
-    if (typeof window.loadWrongWords === "function") {
-      const loaded = window.loadWrongWords(currentLang) || [];
-      wrongList = loaded.filter(w => !w.escaped && (Number(w.correctStreak) || 0) < 5);
-    } else {
-      try {
-        const raw = localStorage.getItem("vocadash_wrong_words");
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            wrongList = parsed.filter(w => (w.lang || "es") === currentLang && !w.escaped && (Number(w.correctStreak) || 0) < 5);
-          }
-        }
-      } catch (_) { }
+    let reviewQueue = [];
+    if (typeof window.buildReviewQuestionQueue === "function") {
+      reviewQueue = window.buildReviewQuestionQueue(resolvedUnit, currentLang) || [];
+    } else if (window.quizSessionGenerator?.buildReviewQuestionQueue) {
+      reviewQueue = window.quizSessionGenerator.buildReviewQuestionQueue(resolvedUnit, currentLang) || [];
     }
 
     const titleEl = el("review-speedrun-modal-title");
     const descEl = el("review-speedrun-modal-desc");
     const countText = el("review-speedrun-target-count");
-    if (titleEl) titleEl.textContent = "⚡ 약점 극복 스피드 런 (10문제)";
 
-    const wrongCount = wrongList.length;
-    if (wrongCount === 0) {
-      if (descEl) descEl.textContent = "오답이 없습니다! 🌟 완벽 복습 런에 도전하세요 (현재 유닛 핵심 어휘 랜덤 10문항)";
-      if (countText) countText.textContent = "랜덤 완벽 복습 10개 코스";
+    const totalQuestions = reviewQueue.length;
+    const hasWrong = reviewQueue.some(item => !item.tag || item.tag === '약점 복습' || item.tag === '오답 복습');
+
+    if (!hasWrong || totalQuestions === 0) {
+      if (titleEl) titleEl.textContent = `⚡ Unit ${resolvedUnit} 완벽 핵심 복습 (${totalQuestions}문제)`;
+      if (descEl) descEl.textContent = `오답이 없습니다! 🌟 완벽 복습 런에 도전하세요 (Unit ${resolvedUnit} 핵심 어휘 ${totalQuestions}문항)`;
+      if (countText) countText.textContent = `Unit ${resolvedUnit} 핵심 복습 ${totalQuestions}개 코스`;
     } else {
-      if (descEl) descEl.textContent = "틀렸던 약점 단어를 포함해 총 10문제를 달립니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)";
-      if (countText) countText.textContent = `오답 단어 ${Math.min(10, wrongCount)}개 코스`;
+      if (titleEl) titleEl.textContent = `⚡ Unit ${resolvedUnit} 약점 극복 스피드 런 (${totalQuestions}문제)`;
+      if (descEl) descEl.textContent = `Unit ${resolvedUnit}에서 틀렸던 약점 단어를 집중 복습합니다! (각 단어 5회 연속 정답 시 오답 노트에서 영구 탈출)`;
+      if (countText) countText.textContent = `오답 단어 ${totalQuestions}개 코스`;
     }
 
     backdrop.classList.remove("opacity-0", "pointer-events-none");
@@ -354,7 +348,7 @@
     window.currentSessionQuestions = sessionQuestions;
 
     if (typeof window.openGameScreen === "function") {
-      window.openGameScreen(targetReviewId, sessionQuestions, { mode: "review" });
+      window.openGameScreen(targetReviewId, sessionQuestions, { mode: "review", isInfiniteHeart: false, isRoadmap: true });
     }
 
     const titleEl = document.getElementById("game-stage-title");

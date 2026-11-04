@@ -77,26 +77,53 @@
     saveCourseProgress(prog, cid, lang);
 
     // 💡 [Back-fill Unlock] 상위 유닛 도달 시 이전 번호(1 ~ lvl-1) 모든 게이트/노드 자동 완벽 해금
+    if (!target.nodeProgressMap) target.nodeProgressMap = {};
     for (let u = 1; u < lvl; u++) {
       [1, 2, 3].forEach(n => {
         const stdKey = `vocadash_prog_${lang}_${cid}_u${u}_n${n}`;
-        if (!storage.get(stdKey)) storage.set(stdKey, '3');
-        if (u === 1) storage.set(`node_progress_${lang}_${cid}_node-${n}`, '3');
+        storage.set(stdKey, '3');
+        storage.set(`node_progress_${lang}_${cid}_u${u}_node-${n}`, '3');
+        storage.set(`node_progress_${lang}_${cid}_u${u}_stage-${n}`, '3');
+        target.nodeProgressMap[`u${u}_node-${n}`] = 3;
+        target.nodeProgressMap[`u${u}_stage-${n}`] = 3;
+        target.nodeProgressMap[`${lang}_${cid}_u${u}_n${n}`] = 3;
+        if (u === 1) {
+          storage.set(`node_progress_${lang}_${cid}_node-${n}`, '3');
+          target.nodeProgressMap[`node-${n}`] = 3;
+        }
       });
       const bossKey = `vocadash_prog_${lang}_${cid}_u${u}_n6`;
-      if (!storage.get(bossKey)) storage.set(bossKey, '1');
-      if (u === 1) storage.set(`node_progress_${lang}_${cid}_node-boss`, '1');
+      storage.set(bossKey, '1');
+      storage.set(`node_progress_${lang}_${cid}_u${u}_node-boss`, '1');
+      target.nodeProgressMap[`u${u}_node-boss`] = 1;
+      target.nodeProgressMap[`${lang}_${cid}_u${u}_n6`] = 1;
+      if (u === 1) {
+        storage.set(`node_progress_${lang}_${cid}_node-boss`, '1');
+        target.nodeProgressMap['node-boss'] = 1;
+      }
 
       // 보너스 및 복습 완료 상태도 이전 유닛들에 대해 안전하게 동기화
       const bonusKey = `u${u}_node-bonus`;
-      if (!isBonusClaimed(bonusKey) && !isBonusClaimed(`u${u}_n3`)) {
-        markBonusClaimed(bonusKey);
-      }
+      markBonusClaimed(bonusKey);
+      target.nodeProgressMap[bonusKey] = 1;
+      if (u === 1) target.nodeProgressMap['node-bonus'] = 1;
+
       const reviewKey = `u${u}_node-review`;
-      if (!isReviewNodeCompleted(reviewKey, u)) {
-        markReviewNodeCompleted(reviewKey, u);
-      }
+      markReviewNodeCompleted(reviewKey, u);
+      target.nodeProgressMap[reviewKey] = 1;
+      if (u === 1) target.nodeProgressMap['node-review'] = 1;
     }
+
+    // 목표 유닛의 첫 번째 스테이지 활성화 보장
+    if (target.nodeProgressMap[`u${lvl}_node-1`] === undefined) {
+      target.nodeProgressMap[`u${lvl}_node-1`] = 0;
+    }
+    if (lvl === 1 && target.nodeProgressMap['node-1'] === undefined) {
+      target.nodeProgressMap['node-1'] = 0;
+    }
+    try {
+      if (typeof saveNodeProgressData === 'function') saveNodeProgressData();
+    } catch (_) { }
 
     return lvl;
   }
@@ -182,16 +209,16 @@
     }
     const nodeId = node?.id || (typeof node === 'string' ? node : ''), nodeType = node?.type || '';
     if (currentUnitIndex === 0) {
-      if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeIndex === 0) return true;
+      if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeId === 'en_1_n1' || nodeIndex === 0) return true;
       const p1 = (getNodeProgress('node-1', lang, courseId)?.clearedCount || 0);
-      if (nodeId === 'node-2' || nodeId === 'fb_1_n2' || (nodeIndex === 1 && (nodeType === 'stage' || !nodeType))) return p1 >= 3;
+      if (nodeId === 'node-2' || nodeId === 'fb_1_n2' || nodeId === 'es_1_n2' || nodeId === 'en_1_n2' || (nodeIndex === 1 && (nodeType === 'stage' || !nodeType))) return p1 >= 3;
       const p2 = (getNodeProgress('node-2', lang, courseId)?.clearedCount || 0);
-      const isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n3');
-      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n3' || nodeType === 'bonus' || nodeIndex === 2) return p2 >= 3;
-      if (nodeId === 'node-review' || nodeId === 'fb_1_n4' || nodeType === 'review' || nodeIndex === 3) return p2 >= 3 && isBonusDone;
-      const isReviewDone = isReviewNodeCompleted('node-review', 1) || isReviewNodeCompleted('fb_1_n4', 1);
-      if (nodeId === 'node-3' || nodeId === 'fb_1_n5' || nodeType === 'sentence' || (nodeIndex === 4 && nodeType === 'sentence') || nodeIndex === 4) return isReviewDone;
-      if (nodeId === 'node-boss' || nodeId === 'fb_1_n6' || nodeType === 'boss' || nodeIndex === 5) return (getNodeProgress('node-3', lang, courseId)?.clearedCount || 0) >= 3;
+      const isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n3') || isBonusClaimed('es_1_n3') || isBonusClaimed('en_1_n3');
+      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n3' || nodeId === 'es_1_n3' || nodeId === 'en_1_n3' || nodeType === 'bonus' || nodeIndex === 2 || String(nodeId).includes('bonus')) return p2 >= 3;
+      if (nodeId === 'node-review' || nodeId === 'fb_1_n4' || nodeId === 'es_1_n4' || nodeId === 'en_1_n4' || nodeType === 'review' || nodeIndex === 3 || String(nodeId).includes('review')) return p2 >= 3 && isBonusDone;
+      const isReviewDone = isReviewNodeCompleted('node-review', 1) || isReviewNodeCompleted('fb_1_n4', 1) || isReviewNodeCompleted('es_1_n4', 1) || isReviewNodeCompleted('en_1_n4', 1);
+      if (nodeId === 'node-3' || nodeId === 'u1_node-3' || nodeId === 'fb_1_n5' || nodeId === 'es_1_n5' || nodeId === 'en_1_n5' || nodeIndex === 4 || (nodeType === 'stage' && (node?.stageNumber === 3 || String(nodeId).endsWith('3')))) return isReviewDone;
+      if (nodeId === 'node-boss' || nodeId === 'u1_node-boss' || nodeId === 'fb_1_n6' || nodeId === 'es_1_n6' || nodeId === 'en_1_n6' || nodeType === 'boss' || nodeIndex === 5 || String(nodeId).includes('boss')) return (getNodeProgress('node-3', lang, courseId)?.clearedCount || 0) >= 3;
     }
     if (targetCourse?.units?.[currentUnitIndex]?.nodes) {
       const curNodes = targetCourse.units[currentUnitIndex].nodes, actualIdx = (typeof nodeIndex === 'number' && nodeIndex >= 0 && nodeIndex < curNodes.length) ? nodeIndex : curNodes.findIndex(n => n.id === nodeId);
@@ -275,11 +302,33 @@
     } catch (_) { }
     return getCourseProgress(target.activeCourseId).claimedBonuses || [];
   }
-  const isBonusClaimed = (nodeId = 'node-bonus') => getClaimedBonuses().includes(nodeId);
+  const isBonusClaimed = (nodeId = 'node-bonus') => {
+    const list = getClaimedBonuses();
+    if (list.includes(nodeId)) return true;
+    if (nodeId === 'node-bonus' || nodeId === 'u1_node-bonus' || nodeId === 'es_1_n3' || nodeId === 'en_1_n3' || nodeId === 'fb_1_n3') {
+      return list.includes('node-bonus') || list.includes('u1_node-bonus') || list.includes('es_1_n3') || list.includes('en_1_n3') || list.includes('fb_1_n3');
+    }
+    const coords = parseNodeCoordinates(nodeId);
+    if (coords.unitIndex) {
+      const u = coords.unitIndex;
+      return list.includes(`u${u}_node-bonus`) || list.includes(`u${u}-bonus`) || list.includes(`es_${u}_n3`) || list.includes(`en_${u}_n3`) || list.includes(`fb_${u}_n3`);
+    }
+    return false;
+  };
   function markBonusClaimed(nodeId = 'node-bonus') {
     const list = getClaimedBonuses();
     if (!list.includes(nodeId)) list.push(nodeId);
-    if (nodeId === 'node-bonus' && !list.includes('u1_node-bonus')) list.push('u1_node-bonus');
+    if (nodeId === 'node-bonus' || String(nodeId).endsWith('_n3') || String(nodeId).includes('bonus')) {
+      const coords = parseNodeCoordinates(nodeId);
+      const u = coords.unitIndex || 1;
+      const aliases = [`u${u}_node-bonus`, `u${u}-bonus`, `es_${u}_n3`, `en_${u}_n3`, `fb_${u}_n3`];
+      if (u === 1) aliases.push('node-bonus');
+      aliases.forEach(a => { if (!list.includes(a)) list.push(a); });
+      try {
+        const lang = getLang();
+        localStorage.setItem(`vocadash_${lang}_bonus_u${u}`, 'done');
+      } catch (_) {}
+    }
     storage.set('vocadash_claimed_bonuses', JSON.stringify(list));
     const prog = getCourseProgress(target.activeCourseId);
     prog.claimedBonuses = list;
@@ -389,7 +438,7 @@
       const session = (typeof target.generateReviewSession === 'function') ? target.generateReviewSession(unitNum, getLang()) : [];
       target.isReviewGameMode = true;
       target.isRoadmapReviewSpeedrun = true;
-      target.openGameScreen?.(nodeId, session);
+      target.openGameScreen?.(nodeId, session, { mode: 'review', isInfiniteHeart: false, isRoadmap: true });
     }
   }
 
@@ -435,6 +484,50 @@
       if (slot === 'node-3') return curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'))?.id || 'node-boss';
     }
     return slot === 'node-1' ? 'node-2' : (slot === 'node-2' ? 'node-bonus' : 'node-boss');
+  }
+
+  function getNextRoadmapNode(nodeId, unitNum = null) {
+    const coords = parseNodeCoordinates(nodeId, unitNum || 1);
+    const uIndex = unitNum || coords.unitIndex || target.currentUnitNumber || 1;
+    const activeCourse = (typeof target.getCurrentCourseData === 'function')
+      ? target.getCurrentCourseData()
+      : (target.packFootballData || target.courseData);
+    const curUnit = activeCourse?.units?.[uIndex - 1];
+
+    if (curUnit && Array.isArray(curUnit.nodes) && curUnit.nodes.length > 0) {
+      const nodes = curUnit.nodes;
+      const idx = nodes.findIndex(n => {
+        if (n.id === nodeId) return true;
+        const c = parseNodeCoordinates(n.id, uIndex);
+        if (c && c.nodeIndex === coords.nodeIndex) return true;
+        if (coords.nodeIndex === 1 && (n.stageNumber === 1 || n.id?.endsWith('_n1') || n.id === 'node-1')) return true;
+        if (coords.nodeIndex === 2 && (n.stageNumber === 2 || n.id?.endsWith('_n2') || n.id === 'node-2')) return true;
+        if (coords.nodeIndex === 'bonus' && (n.type === 'bonus' || n.id?.includes('bonus') || n.id?.endsWith('_n3'))) return true;
+        if (coords.nodeIndex === 'review' && (n.type === 'review' || n.id?.includes('review') || n.id?.endsWith('_n4'))) return true;
+        if (coords.nodeIndex === 3 && (n.stageNumber === 3 || n.id?.endsWith('_n5') || n.id === 'node-3')) return true;
+        if ((coords.nodeIndex === 6 || coords.nodeIndex === 'boss') && (n.type === 'boss' || n.id?.includes('boss') || n.id?.endsWith('_n6'))) return true;
+        return false;
+      });
+
+      if (idx >= 0 && idx < nodes.length - 1) {
+        return nodes[idx + 1];
+      } else if (idx === nodes.length - 1) {
+        const nextUnit = activeCourse.units?.[uIndex];
+        if (nextUnit && Array.isArray(nextUnit.nodes) && nextUnit.nodes.length > 0) {
+          return nextUnit.nodes[0];
+        }
+        return { id: `u${uIndex + 1}_stage-1`, stageNumber: 1, type: 'stage', title: '1과' };
+      }
+    }
+
+    const isU1 = uIndex === 1;
+    const nIdx = coords.nodeIndex;
+    if (nIdx === 1) return { id: isU1 ? 'node-2' : `u${uIndex}_stage-2`, stageNumber: 2, type: 'stage', title: '2과' };
+    if (nIdx === 2) return { id: isU1 ? 'node-bonus' : `u${uIndex}_node-bonus`, type: 'bonus', title: '보너스 상자' };
+    if (nIdx === 'bonus') return { id: isU1 ? 'node-review' : `u${uIndex}_node-review`, type: 'review', title: '약점 복습' };
+    if (nIdx === 'review') return { id: isU1 ? 'node-3' : `u${uIndex}_stage-3`, stageNumber: 3, type: 'stage', title: '3과' };
+    if (nIdx === 3) return { id: isU1 ? 'node-boss' : `u${uIndex}_node-boss`, type: 'boss', title: `Unit ${uIndex} 보스전` };
+    return { id: `u${uIndex + 1}_stage-1`, stageNumber: 1, type: 'stage', title: '1과' };
   }
 
   function saveStageClearResult(resultData = {}) {
@@ -502,16 +595,36 @@
     if (lastStars === 0) nextRound = curCount;
     else if (isCurrentBoss || curCount >= 3) {
       nextRound = 1;
-      if (isCurrentBoss) {
-        const nextUnitId = currentUnitId + 1;
-        nextNodeId = `u${nextUnitId}_node-1`;
-        setUnlockedUnitLevel(nextUnitId, lang, cid);
-        target.currentUnitNumber = nextUnitId;
-        if (!target.nodeProgressMap) target.nodeProgressMap = {};
-        target.nodeProgressMap[nextNodeId] = 0;
-      } else if (currentNodeIdx === 1 || String(currentPlayingId).endsWith('1')) nextNodeId = `u${currentUnitId}_node-2`;
-      else if (currentNodeIdx === 2 || String(currentPlayingId).endsWith('2')) nextNodeId = `u${currentUnitId}_node-3`;
-      else if (currentNodeIdx === 3 || String(currentPlayingId).endsWith('3')) nextNodeId = `u${currentUnitId}_node-boss`;
+      const nextNode = getNextRoadmapNode(currentPlayingId, currentUnitId);
+      if (nextNode) {
+        nextNodeId = nextNode.id;
+        if (nextNode.type === 'bonus' || String(nextNode.id).includes('bonus')) {
+          return { action: 'bonus', currentPlayingId, nextNodeId, nextRound: 1, unitIndex: currentUnitId, nextNode };
+        }
+        if (nextNode.type === 'review' || String(nextNode.id).includes('review')) {
+          return { action: 'review', currentPlayingId, nextNodeId, nextRound: 1, unitIndex: currentUnitId, nextNode };
+        }
+        if (isCurrentBoss) {
+          const nextUnitId = currentUnitId + 1;
+          setUnlockedUnitLevel(nextUnitId, lang, cid);
+          target.currentUnitNumber = nextUnitId;
+          if (!target.nodeProgressMap) target.nodeProgressMap = {};
+          target.nodeProgressMap[nextNodeId] = 0;
+        }
+      } else {
+        if (isCurrentBoss) {
+          const nextUnitId = currentUnitId + 1;
+          nextNodeId = `u${nextUnitId}_node-1`;
+          setUnlockedUnitLevel(nextUnitId, lang, cid);
+          target.currentUnitNumber = nextUnitId;
+          if (!target.nodeProgressMap) target.nodeProgressMap = {};
+          target.nodeProgressMap[nextNodeId] = 0;
+        } else if (currentNodeIdx === 1 || String(currentPlayingId).endsWith('1')) nextNodeId = `u${currentUnitId}_node-2`;
+        else if (currentNodeIdx === 2 || String(currentPlayingId).endsWith('2')) {
+          return { action: 'bonus', currentPlayingId, nextNodeId: (currentUnitId === 1) ? 'node-bonus' : `u${currentUnitId}_node-bonus`, nextRound: 1, unitIndex: currentUnitId };
+        }
+        else if (currentNodeIdx === 3 || String(currentPlayingId).endsWith('3')) nextNodeId = `u${currentUnitId}_node-boss`;
+      }
     }
     if (!Array.isArray(target.unlockedNodes)) target.unlockedNodes = [];
     if (!target.unlockedNodes.includes(nextNodeId)) target.unlockedNodes.push(nextNodeId);
@@ -607,10 +720,22 @@
   }
   function startUnitSkipTest(targetUnit = 2) {
     if (typeof target.closeResultModal === 'function') target.closeResultModal();
+    const uNum = parseInt(String(targetUnit).replace(/[^\d]/g, ''), 10) || 2;
     target.isUnitSkipTestMode = true;
-    target.currentSkipTestUnit = targetUnit;
-    window.skipTestOriginalHearts = typeof window.userHearts === 'number' ? window.userHearts : 5;
-    const questions = (target.quizSessionGenerator?.generateDeckForStage?.('node-boss', getLang(), 1) || []).slice(0, 15);
+    target.isJumpTestSession = true;
+    target.currentSkipTestUnit = uNum;
+    window.jumpTestHearts = 3;
+
+    let questions = [];
+    if (typeof target.generateJumpTestSession === 'function') {
+      questions = target.generateJumpTestSession(uNum, 10);
+    } else if (typeof window.generateJumpTestSession === 'function') {
+      questions = window.generateJumpTestSession(uNum, 10);
+    } else if (target.quizSessionGenerator?.generateJumpTestSession) {
+      questions = target.quizSessionGenerator.generateJumpTestSession(uNum, 10);
+    } else if (target.quizSessionGenerator?.generateDeckForStage) {
+      questions = (target.quizSessionGenerator.generateDeckForStage('node-boss', getLang(), 1) || []).slice(0, 10);
+    }
     target.currentSessionQuestions = questions;
     target.openGameScreen?.('node-skip-test', questions);
   }
@@ -642,17 +767,36 @@
   }
   try { target.nodeProgressMap = loadNodeProgress(); } catch (_) { target.nodeProgressMap = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }; }
 
+  function getActiveLocation() {
+    const lang = getLang();
+    const courseId = target.currentCourseId || target.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
+    const unitNumber = getUnlockedUnitLevel(lang, courseId) || target.currentUnitNumber || 1;
+    return { courseId, unitNumber, lang };
+  }
+
   const courseMapModal = {
     open: openCourseDrawerWrapper,
     close: closeCourseDrawerWrapper
   };
 
+  const progressManager = {
+    getActiveLocation,
+    getUnlockedUnitLevel,
+    setUnlockedUnitLevel,
+    unlockUnitsUpTo,
+    getNodeProgress,
+    saveCourseProgress,
+    getCourseProgress
+  };
+
   Object.assign(target, {
+    progressManager,
+    getActiveLocation,
     getCompositeNodeKey, parseNodeCoordinates, getCourseProgress, saveCourseProgress, getUnlockedUnitLevel, setUnlockedUnitLevel,
     unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
     resolveNodeData, isNodeUnlocked, getNodeStatus, loadNodeProgress, saveNodeProgress, getClaimedBonuses, isBonusClaimed,
     markBonusClaimed, handleClaimBonus, claimBonusReward, claimBonus: claimBonusReward, migrateLegacyReviewData, isReviewNodeCompleted, isReviewCompleted: isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
-    handleReviewNodeClick, resolveCurrentNode, getSlotAlias, getNextNodeId, saveStageClearResult, getNextStageStep,
+    handleReviewNodeClick, resolveCurrentNode, getSlotAlias, getNextNodeId, getNextRoadmapNode, saveStageClearResult, getNextStageStep,
     openCourseDrawer: openCourseDrawerWrapper, closeCourseDrawer: closeCourseDrawerWrapper,
     openUnitOverviewModal: openCourseDrawerWrapper, closeUnitOverviewModal: closeCourseDrawerWrapper,
     openCourseMapModal: openCourseDrawerWrapper, closeCourseMapModal: closeCourseDrawerWrapper,
@@ -661,6 +805,8 @@
     getActiveCEFRLevel, setActiveCEFRLevel
   });
   if (typeof window !== 'undefined') {
+    window.progressManager = progressManager;
+    window.getActiveLocation = getActiveLocation;
     window.courseMapModal = courseMapModal;
     window.openCourseDrawer = openCourseDrawerWrapper;
     window.closeCourseDrawer = closeCourseDrawerWrapper;

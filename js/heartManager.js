@@ -56,6 +56,15 @@
   }
 
   function setUserHearts(val) {
+    if (window.isJumpTestSession || window.isUnitSkipTestMode) {
+      // 💡 [Karpathy Guidelines] 시험 모드 중에는 실제 계정 하트 스토리지 저장 전면 차단
+      const clamped = Math.max(0, Math.min(5, parseInt(val, 10) || 0));
+      window.jumpTestHearts = clamped;
+      if (typeof window.updateJumpTestHeartUI === 'function') {
+        window.updateJumpTestHeartUI(clamped);
+      }
+      return clamped;
+    }
     const clamped = Math.max(0, Math.min(5, parseInt(val, 10) || 0));
     window.userHearts = clamped;
     try {
@@ -70,6 +79,26 @@
     } catch (_) { }
     updateHeartsUI();
     return clamped;
+  }
+
+  function consumeHeart() {
+    // 건너뛰기 시험 진행 중일 경우 실제 계정 하트는 절대 차감하지 않음
+    if (window.isJumpTestSession || window.isUnitSkipTestMode) {
+      if (typeof window.jumpTestHearts === 'number' && window.jumpTestHearts > 0) {
+        window.jumpTestHearts -= 1;
+        if (typeof window.updateJumpTestHeartUI === 'function') {
+          window.updateJumpTestHeartUI(window.jumpTestHearts);
+        }
+      }
+      return window.jumpTestHearts;
+    }
+
+    // 일반 스테이지 계정 하트 차감
+    let cur = getUserHearts();
+    if (cur > 0) {
+      cur = setUserHearts(cur - 1);
+    }
+    return cur;
   }
 
   function checkAndRechargeHearts() {
@@ -423,8 +452,25 @@
   }
 
   // Export to Global
+  const heartManager = {
+    getHearts: getUserHearts,
+    setHearts: setUserHearts,
+    consumeHeart,
+    deductHeart: consumeHeart,
+    updateUI: updateHeartsUI,
+    saveHearts: () => {
+      try {
+        if (!window.isJumpTestSession && !window.isUnitSkipTestMode) {
+          localStorage.setItem('vocadash_hearts', String(window.userHearts ?? 5));
+        }
+      } catch (_) { }
+    }
+  };
+  target.heartManager = heartManager;
   target.getUserHearts = getUserHearts;
   target.setUserHearts = setUserHearts;
+  target.consumeHeart = consumeHeart;
+  target.deductHeart = consumeHeart;
   target.updateHeartsUI = updateHeartsUI;
   target.updateUserHeartsUI = updateHeartsUI;
   target.checkAndRechargeHearts = checkAndRechargeHearts;

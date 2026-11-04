@@ -593,24 +593,25 @@
     const courseMeta = (cs && (cs[cId] || cs[cId.replace('es_soccer', 'pack_football')])) || null;
     const unitMeta = courseMeta?.units?.[uNum] || courseMeta?.units?.[String(uNum)] || null;
 
-    const unitTitle = unitMeta?.title ? `Unit ${uNum}. ${unitMeta.title}` : `Unit ${uNum} 코스 학습`;
-    const unitDesc = unitMeta?.desc || `Gate ${uNum} 어휘 런 및 스테이지 도전`;
+    const curSec = courseMeta?.sections?.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
+    const secShortTitle = curSec?.title ? curSec.title.replace(/\s*\([^)]*\)/, '').trim() : '';
 
-    // 3. 실제 게임/플래시카드 진입 테스트가 가능하도록 30개 더미 단어 생성
-    const dummyWords = Array.from({ length: 30 }, (_, i) => ({
-      id: `dummy_${cId}_u${uNum}_${i + 1}`,
-      word: `Voca_${uNum}_${i + 1}`,
-      term: `Voca_${uNum}_${i + 1}`,
-      pronunciation: `보카 ${i + 1}`,
-      meaning: `단어 뜻 ${uNum}-${i + 1}`,
-      exampleTarget: `Example sentence for word ${i + 1}`,
-      exampleMeaning: `단어 ${i + 1}에 대한 예문 해석입니다.`
-    }));
+    const unitTitle = unitMeta?.title
+      ? (unitMeta.title.startsWith('Unit ') ? unitMeta.title : `Unit ${uNum}. ${unitMeta.title}`)
+      : (secShortTitle ? `Unit ${uNum}. ${secShortTitle} 핵심 어휘` : `Unit ${uNum}. 핵심 어휘 학습`);
+    const unitDesc = unitMeta?.desc || (curSec?.title ? `${curSec.title} 어휘 집중 학습` : "");
 
-    const stage1Words = dummyWords.slice(0, 10).map(w => w.id);
-    const stage2Words = dummyWords.slice(10, 20).map(w => w.id);
-    const stage3Words = dummyWords.slice(20, 30).map(w => w.id);
-    const bossWords = dummyWords.slice(0, 15).map(w => w.id);
+    // 3. VOCA_DATA 또는 dataLoader에서 실제 단어 로드 (초기 비동기 로딩 찰나 빈 배열 fallback 필수)
+    const unitKey = 'unit-' + uNum;
+    const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
+    const unitWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
+      ? vocaSource.getWordsByUnit(unitKey)
+      : (vocaSource?.byUnit?.[unitKey] || vocaSource?.byUnit?.[`unit_${String(uNum).padStart(3, '0')}`] || []);
+
+    const stage1Words = (unitWords || []).slice(0, 10).map((w, i) => w.id || `u${uNum}_w_${i + 1}`);
+    const stage2Words = (unitWords || []).slice(10, 20).map((w, i) => w.id || `u${uNum}_w_${i + 11}`);
+    const stage3Words = (unitWords || []).slice(20, 30).map((w, i) => w.id || `u${uNum}_w_${i + 21}`);
+    const bossWords = (unitWords || []).slice(0, 15).map((w, i) => w.id || `u${uNum}_wb_${i + 1}`);
 
     return {
       unitId: uNum,
@@ -620,11 +621,10 @@
       title: unitTitle,
       desc: unitDesc,
       subtitle: unitDesc,
-      dummy: true,
       stages: [
-        { stageNumber: 1, title: "1과 기초 런", targetWords: 10, dummy: true },
-        { stageNumber: 2, title: "2과 실전 런", targetWords: 10, dummy: true },
-        { stageNumber: 3, title: "보스전 마스터", isBoss: true, targetWords: 10, dummy: true }
+        { stageNumber: 1, title: "1과 기초 런", targetWords: 10 },
+        { stageNumber: 2, title: "2과 실전 런", targetWords: 10 },
+        { stageNumber: 3, title: "보스전 마스터", isBoss: true, targetWords: 10 }
       ],
       nodes: [
         { id: `u${uNum}_stage-1`, stageNumber: 1, type: "stage", title: `1과: ${unitTitle}`, wordIds: stage1Words },
@@ -634,7 +634,7 @@
         { id: `u${uNum}_stage-3`, stageNumber: 3, type: "stage", title: "3과: 실전 소통", wordIds: stage3Words },
         { id: `u${uNum}_node-boss`, type: "boss", title: `Unit ${uNum} 총괄 보스전`, wordIds: bossWords }
       ],
-      words: dummyWords
+      words: unitWords || []
     };
   }
   target.getUnitDataWithFallback = getUnitDataWithFallback;
@@ -655,6 +655,12 @@
           const found = unit.words.find(w => w.id === wordId);
           if (found) return found;
         }
+      }
+    }
+    if (typeof window !== 'undefined' && window.VOCA_DATA) {
+      if (Array.isArray(window.VOCA_DATA.allWords)) {
+        const found = window.VOCA_DATA.allWords.find(w => w.id === wordId);
+        if (found) return found;
       }
     }
     return null;

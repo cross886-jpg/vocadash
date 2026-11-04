@@ -8,13 +8,13 @@
   const target = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : global);
 
   const DEFAULT_WRONG_WORDS_ES = [
-    { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', correctStreak: 0, wrongCount: 2, escaped: false, lang: 'es' },
-    { id: 'w_es_3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', correctStreak: 0, wrongCount: 2, escaped: false, lang: 'es' },
-    { id: 'w_es_6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' },
-    { id: 'w_es_7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', correctStreak: 0, wrongCount: 1, escaped: false, lang: 'es' }
+    { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 1 },
+    { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 2, escaped: false, lang: 'es', unitId: 2 },
+    { id: 'w_es_3', term: 'Boleto', meaning: '티켓 / 표', phonetic: '[볼레토]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 2 },
+    { id: 'w_es_4', term: 'Pasaporte', meaning: '여권', phonetic: '[파사포르테]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 2 },
+    { id: 'w_es_5', term: 'Maleta', meaning: '여행 가방 / 캐리어', phonetic: '[말레타]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 2, escaped: false, lang: 'es', unitId: 2 },
+    { id: 'w_es_6', term: 'Aduana', meaning: '세관', phonetic: '[아두아나]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 2 },
+    { id: 'w_es_7', term: 'Vuelo', meaning: '항공편 / 비행', phonetic: '[부에글로]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 2 }
   ];
   const DEFAULT_WRONG_WORDS_EN = [];
 
@@ -78,26 +78,36 @@
                   word: String(item),
                   meaning: '',
                   phonetic: '',
+                  consecutiveCorrect: 0,
                   correctStreak: 0,
+                  streakCorrectCount: 0,
                   wrongCount: 1,
                   escaped: false,
                   lang: lang
                 };
               }
               const termStr = String(item.term || item.word || '');
+              const streak = typeof item.consecutiveCorrect === 'number'
+                ? item.consecutiveCorrect
+                : (typeof item.correctStreak === 'number'
+                  ? item.correctStreak
+                  : (parseInt(item.streakCorrectCount ?? item.consecutiveCorrect ?? item.correctStreak, 10) || 0));
               return {
                 id: String(item.id || `w_${lang}_${idx + 1}`),
                 term: termStr,
                 word: String(item.word || termStr),
                 meaning: String(item.meaning || item.kor || item.ko || ''),
                 phonetic: String(item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : '')),
-                correctStreak: typeof item.correctStreak === 'number' ? item.correctStreak : (parseInt(item.correctStreak, 10) || 0),
+                consecutiveCorrect: streak,
+                correctStreak: streak,
+                streakCorrectCount: streak,
                 wrongCount: Number(item.wrongCount) || 1,
                 escaped: !!item.escaped,
+                unitId: item.unitId || item.unit || item.unitNumber,
                 lang: item.lang || lang
               };
             })
-            .filter((item) => item.lang === lang && (Number(item.correctStreak) || 0) < 5);
+            .filter((item) => item.lang === lang && (Number(item.consecutiveCorrect ?? item.correctStreak ?? item.streakCorrectCount) || 0) < 5);
         }
       }
     } catch (e) {
@@ -112,18 +122,22 @@
     try {
       // 5회 연속 정답 달성한 단어는 완전 졸업(영구 삭제)
       const validated = (words || [])
-        .filter(w => (Number(w.correctStreak) || 0) < 5)
+        .filter(w => (Number(w.consecutiveCorrect ?? w.correctStreak ?? w.streakCorrectCount) || 0) < 5)
         .map((w, idx) => {
           const termStr = String(w.term || w.word || '');
+          const streak = Number(w.consecutiveCorrect ?? w.correctStreak ?? w.streakCorrectCount) || 0;
           return {
             id: String(w.id || `w_${lang}_${idx + 1}`),
             term: termStr,
             word: String(w.word || termStr),
             meaning: String(w.meaning || w.kor || w.ko || ''),
             phonetic: String(w.phonetic || (w.pronunciation ? `[${w.pronunciation}]` : '')),
-            correctStreak: Number(w.correctStreak) || 0,
+            consecutiveCorrect: streak,
+            correctStreak: streak,
+            streakCorrectCount: streak,
             wrongCount: Number(w.wrongCount) || 1,
             escaped: !!w.escaped,
+            unitId: w.unitId || w.unit || w.unitNumber,
             lang: w.lang || lang
           };
         });
@@ -211,12 +225,16 @@
       if (isCorrect) {
         if (itemIdx !== -1) {
           const item = list[itemIdx];
-          item.correctStreak = (Number(item.correctStreak) || 0) + 1;
-          if (item.correctStreak >= 5) {
+          const nextStreak = (Number(item.consecutiveCorrect ?? item.correctStreak ?? item.streakCorrectCount) || 0) + 1;
+          item.consecutiveCorrect = nextStreak;
+          item.correctStreak = nextStreak;
+          item.streakCorrectCount = nextStreak;
+
+          if (nextStreak >= 5) {
             // 5회 연속 정답 시 오답 목록에서 완전히 삭제 (마스터 졸업)
             list.splice(itemIdx, 1);
             if (typeof target.showToast === 'function') {
-              target.showToast(`🎓 '${item.term}' 5연속 정답으로 오답 탈출 졸업!`, '🎉');
+              target.showToast(`마스터 완료! '${item.term}' 오답 노트에서 제외되었습니다 🎉`, '🎉');
             }
           }
           saveWrongWords(list, lang);
@@ -230,12 +248,17 @@
           }
         }
       } else {
-        // 문제 오답 시: 해당 단어의 correctStreak를 즉시 0으로 리셋
+        // 문제 오답 시: 해당 단어의 consecutiveCorrect를 즉시 0으로 초기화
         if (itemIdx !== -1) {
           const item = list[itemIdx];
+          item.consecutiveCorrect = 0;
           item.correctStreak = 0;
+          item.streakCorrectCount = 0;
           item.wrongCount = (Number(item.wrongCount) || 1) + 1;
           item.escaped = false;
+          if (!item.unitId) {
+            item.unitId = question.unitId || question.unit || question.unitNumber || (typeof target.currentUnitNumber !== 'undefined' ? target.currentUnitNumber : 1);
+          }
         } else {
           list.unshift({
             id: qId || ('w_' + lang + '_' + Date.now()),
@@ -243,10 +266,13 @@
             word: qTerm,
             meaning: question.meaning || question.kor || question.ko || '뜻 없음',
             phonetic: question.phonetic || (question.pronunciation ? `[${question.pronunciation}]` : `[${qTerm}]`),
+            consecutiveCorrect: 0,
             correctStreak: 0,
+            streakCorrectCount: 0,
             wrongCount: 1,
             escaped: false,
-            lang: lang
+            lang: lang,
+            unitId: question.unitId || question.unit || question.unitNumber || (typeof target.currentUnitNumber !== 'undefined' ? target.currentUnitNumber : 1)
           });
         }
         saveWrongWords(list, lang);
@@ -470,24 +496,30 @@
     }
   }
 
-  // 1분 스피드 복습 시작 로직
+  // 단어장 오답 연습 시작 로직 (하트 무제한, 전체 누적 오답 무작위 10문항)
   function startGameWithWords(words, options = {}) {
     if (typeof target.closeResultModal === 'function') target.closeResultModal();
     const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const fallbackList = (Array.isArray(target.wrongWords) ? target.wrongWords : []).filter(
-      (item) => (item.lang || currentLang) === currentLang
-    );
-    const list = (words && words.length > 0)
+    const allStoredWrongs = loadWrongWords(currentLang) || [];
+    const sourceList = (words && words.length > 0)
       ? words.filter((item) => (item.lang || currentLang) === currentLang)
-      : fallbackList;
+      : allStoredWrongs.filter((item) => (item.lang || currentLang) === currentLang);
 
     target.isReviewGameMode = true;
+    target.isRoadmapReviewSpeedrun = false;
+    target.isVocaBookMode = true;
+    if (typeof window !== 'undefined') window.isVocaBookMode = true;
+
+    // 미졸업 오답 리스트 (유닛 제한 없는 전체 누적 오답 풀)
+    const activeList = sourceList.filter(
+      (w) => !w.escaped && (Number(w.consecutiveCorrect ?? w.correctStreak ?? w.streakCorrectCount) || 0) < 5
+    );
 
     let session = [];
     const targetUnit = target.currentReviewUnitNumber || target.currentUnitNumber || 1;
 
-    if (!list || list.length === 0) {
-      // 🌟 오답 0개 시: 랜덤 복습 모드 안전 Fallback
+    if (activeList.length === 0) {
+      // 🌟 오답 0개 시: 완벽 복습 모드 안전 Fallback
       if (typeof target.showToast === 'function') {
         target.showToast('오답이 없습니다! 🌟 완벽 복습 런에 도전하세요', '👏');
       }
@@ -497,52 +529,38 @@
         session = window.generateReviewSession(targetUnit, currentLang);
       }
     } else {
-      // 순수 오답 단어로만 10문제 큐(Queue) 빌드
-      const queueBuilder = (typeof window.buildWeaknessQuizQueue === 'function')
-        ? window.buildWeaknessQuizQueue
-        : (typeof target.buildWeaknessQuizQueue === 'function')
-          ? target.buildWeaknessQuizQueue
-          : null;
+      // 전체 누적 오답 풀에서 무작위(Random) 추출 (최대 10개, 무패딩)
+      const shuffleFn = (typeof target.shuffleArray === 'function')
+        ? target.shuffleArray
+        : (typeof window.quizSessionGenerator?.shuffleArray === 'function')
+          ? window.quizSessionGenerator.shuffleArray
+          : (arr) => [...arr].sort(() => Math.random() - 0.5);
 
-      const queue = queueBuilder ? queueBuilder(list, 10) : [];
-      if (queue.length > 0) {
-        queue.forEach((item, idx) => {
-          session.push({
-            ...item,
-            id: item.id || `review-q-${idx}`,
-            word: item.term || item.word || '',
-            term: item.term || item.word || '',
-            meaning: item.meaning || '',
-            phonetic: item.phonetic || '',
-            type: 'word',
-            isSentence: false,
-            tag: '오답 복습',
-            isReviewMode: true,
-            lang: currentLang
-          });
+      const shuffled = shuffleFn([...activeList]);
+      const queue = shuffled.slice(0, Math.min(10, shuffled.length));
+      queue.forEach((item, idx) => {
+        const streak = Number(item.consecutiveCorrect ?? item.correctStreak ?? item.streakCorrectCount) || 0;
+        session.push({
+          ...item,
+          id: item.id || `voca-review-q-${idx}`,
+          word: item.term || item.word || '',
+          term: item.term || item.word || '',
+          meaning: item.meaning || '',
+          phonetic: item.phonetic || '',
+          consecutiveCorrect: streak,
+          correctStreak: streak,
+          streakCorrectCount: streak,
+          type: 'word',
+          isSentence: false,
+          tag: '오답 복습',
+          isReviewMode: true,
+          isVocaBook: true,
+          lang: currentLang
         });
-      } else {
-        let idx = 0;
-        while (session.length < 10 && list.length > 0) {
-          const item = list[idx % list.length];
-          session.push({
-            id: item.id || `review-q-${idx}`,
-            word: item.term || item.word || '',
-            term: item.term || item.word || '',
-            meaning: item.meaning || '',
-            phonetic: item.phonetic || '',
-            type: 'word',
-            isSentence: false,
-            tag: '오답 복습',
-            isReviewMode: true,
-            lang: currentLang
-          });
-          idx++;
-        }
-      }
+      });
     }
 
-    // 세션이 그래도 비어있다면 10문제 보장을 위해 generateReviewSession 직접 호출
+    // 세션이 그래도 비어있다면 generateReviewSession 직접 호출
     if (!session || session.length === 0) {
       if (typeof target.generateReviewSession === 'function') {
         session = target.generateReviewSession(targetUnit, currentLang);
@@ -553,17 +571,18 @@
 
     target.currentSessionQuestions = session;
 
-    const reviewNodeKey = (typeof window.getCompositeNodeKey === 'function')
-      ? window.getCompositeNodeKey('node-review', targetUnit)
-      : `u${targetUnit}_node-review`;
-
     if (typeof target.openGameScreen === 'function') {
-      target.openGameScreen(reviewNodeKey, session, { mode: 'review' });
+      target.openGameScreen('voca-book-practice', session, {
+        mode: 'review',
+        isInfiniteHeart: true,
+        source: 'vocaBook',
+        isRoadmap: false
+      });
     }
 
     const titleEl = document.getElementById('game-stage-title');
     if (titleEl) {
-      titleEl.textContent = `Unit ${targetUnit} · 🔄 약점 복습`;
+      titleEl.textContent = '📖 단어장 · 무제한 오답 연습';
     }
   }
 
@@ -571,10 +590,13 @@
     e?.preventDefault();
     e?.stopPropagation();
     const currentLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
-    const currentWrongList = (Array.isArray(target.wrongWords) ? target.wrongWords : []).filter(
+    const allWrong = loadWrongWords(currentLang) || [];
+    const currentWrongList = allWrong.filter(
       (item) => (item.lang || currentLang) === currentLang
     );
-    const waitingWords = currentWrongList.filter((w) => !w.escaped);
+    const waitingWords = currentWrongList.filter(
+      (w) => !w.escaped && (Number(w.consecutiveCorrect ?? w.correctStreak ?? w.streakCorrectCount) || 0) < 5
+    );
     const targetList = waitingWords.length > 0 ? waitingWords : currentWrongList;
     startGameWithWords(targetList, { isReviewMode: true });
   };
@@ -668,5 +690,13 @@
   target.updateReviewFilterTabs = updateReviewFilterTabs;
   target.startGameWithWords = startGameWithWords;
   target.initReviewEvents = initReviewEvents;
+  target.getWrongWords = (lang) => loadWrongWords(lang);
+  target.getWrongWordList = (lang) => loadWrongWords(lang);
+  target.wrong_words_store = {
+    load: loadWrongWords,
+    save: saveWrongWords,
+    getAll: () => loadWrongWords(target.currentLanguage || 'es'),
+    recordResult: recordAnswerResult
+  };
 
 })(typeof window !== 'undefined' ? window : this);
