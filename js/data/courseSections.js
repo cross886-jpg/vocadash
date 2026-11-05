@@ -109,12 +109,7 @@
           themeColor: "emerald"
         }
       ],
-      units: {
-        1: { title: "생존 첫걸음 & 일상 인사", desc: "¡Hola!, Gracias 등 기초 회화" },
-        2: { title: "카페, 식당 & 타파스 주문", desc: "Café con leche, 타파스 메뉴 주문" },
-        3: { title: "길찾기 & 대중교통", desc: "Metro 환승, 방향 및 위치 묻기" },
-        4: { title: "마트 장보기, 결제 & 수량 표현", desc: "식재료 쇼핑, 가격 및 결제" }
-      }
+      units: {}
     },
 
     // 2. 스페인 축구 실전팩 (LOCKER ➔ PITCH ➔ STADIUM)

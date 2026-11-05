@@ -21,9 +21,12 @@
     const str = String(nodeId).trim();
     return /^u\d+_/i.test(str) ? str : `u${unitId || target.currentUnitNumber || 1}_${str}`;
   }
-  function parseNodeCoordinates(nodeId, defaultUnit = 1) {
-    if (!nodeId) return { unitIndex: defaultUnit, nodeIndex: 1 };
-    const str = String(nodeId).trim(), uM = str.match(/(?:^|[_uU])(\d+)(?:[_nN-]|$)/), u = uM ? (parseInt(uM[1], 10) || defaultUnit) : defaultUnit;
+  function parseNodeCoordinates(nodeId, defaultUnit = null) {
+    const fallbackUnit = defaultUnit || target.currentUnitNumber || 1;
+    if (!nodeId) return { unitIndex: fallbackUnit, nodeIndex: 1 };
+    const str = String(nodeId).trim();
+    const uM = str.match(/(?:^|[_uU])(\d+)(?:[_nN-]|$)/);
+    const u = uM ? (parseInt(uM[1], 10) || fallbackUnit) : fallbackUnit;
     if (str.includes('boss') || str.endsWith('_n6')) return { unitIndex: u, nodeIndex: 6 };
     if (str.endsWith('_n5') || str.endsWith('-n3') || str === 'node-3') return { unitIndex: u, nodeIndex: 3 };
     if (str.includes('review') || str.endsWith('_n4')) return { unitIndex: u, nodeIndex: 'review' };
@@ -69,11 +72,16 @@
     const maxUnits = getMaxCourseUnits(cid, lang);
     const lvl = Math.max(1, Math.min(maxUnits, parseInt(level, 10) || 1));
     storage.set(`vocadash_unlocked_${lang}_${cid}`, String(lvl));
+    storage.set(`vocadash_unlocked_unit_${lang}_${cid}`, String(lvl));
+    storage.set(`vocadash_unlocked_unit_${cid}`, String(lvl));
+    storage.set(`vocadash_unlocked_unit_${lang}`, String(lvl));
+    storage.set('vocadash_current_unit', String(lvl));
     const prog = getCourseProgress(cid, lang);
     if (!prog.unlockedUnits) prog.unlockedUnits = [1];
     for (let u = 1; u <= lvl; u++) if (!prog.unlockedUnits.includes(u)) prog.unlockedUnits.push(u);
     prog.currentUnit = lvl;
     target.currentUnitNumber = lvl;
+    target._currentVisibleUnitIndex = lvl - 1;
     saveCourseProgress(prog, cid, lang);
 
     // 💡 [Back-fill Unlock] 상위 유닛 도달 시 이전 번호(1 ~ lvl-1) 모든 게이트/노드 자동 완벽 해금
@@ -445,24 +453,36 @@
   function resolveCurrentNode(lessonId) {
     const targetId = lessonId || target.currentGameLessonId || target.currentSelectedNodeId || 'node-2';
     const activeCourse = (typeof target.getCurrentCourseData === 'function') ? target.getCurrentCourseData() : (target.packFootballData || target.courseData);
-    const lang = getLang(), curUnitIdx = Math.max(0, ((typeof target.getUnlockedUnitLevel === 'function' ? target.getUnlockedUnitLevel(lang) : 1) || 1) - 1);
-    const curUnit = activeCourse?.units?.[curUnitIdx] || activeCourse?.units?.[0];
-    let foundNode = curUnit?.nodes?.find(n => n.id === targetId);
-    if (!foundNode && curUnit?.nodes) {
+
+    // 1. Direct ID match across all units
+    if (activeCourse?.units) {
+      for (const u of activeCourse.units) {
+        const match = u.nodes?.find(n => n.id === targetId);
+        if (match) return match;
+      }
+    }
+
+    // 2. Lookup within the unit determined by targetId's coordinates
+    const coords = parseNodeCoordinates(targetId);
+    const uIndex = coords?.unitIndex || target.currentUnitNumber || 1;
+    const curUnit = activeCourse?.units?.find(u => (u.unitNumber || u.id || u.unitId) === uIndex) || activeCourse?.units?.[uIndex - 1];
+
+    if (curUnit?.nodes) {
       const s = String(targetId).toLowerCase();
-      if (s === 'node-1' || s.endsWith('_n1')) foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || n.id?.endsWith('_n1'));
-      else if (s === 'node-2' || s.endsWith('_n2')) foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || n.id?.endsWith('_n2'));
-      else if (s === 'node-3' || s.endsWith('_n5')) foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || n.id?.endsWith('_n5'));
-      else if (s === 'node-boss' || s.includes('boss') || s.endsWith('_n6')) foundNode = curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'));
+      let foundNode = null;
+      if (s === 'node-1' || s.endsWith('_n1') || coords.nodeIndex === 1) foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || n.id?.endsWith('_n1'));
+      else if (s === 'node-2' || s.endsWith('_n2') || coords.nodeIndex === 2) foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || n.id?.endsWith('_n2'));
+      else if (s === 'node-3' || s.endsWith('_n5') || coords.nodeIndex === 3) foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || n.id?.endsWith('_n5'));
+      else if (s === 'node-boss' || s.includes('boss') || s.endsWith('_n6') || coords.nodeIndex === 6) foundNode = curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'));
+      if (foundNode) return foundNode;
     }
-    if (!foundNode && activeCourse?.units) {
-      for (const u of activeCourse.units) { foundNode = u.nodes?.find(n => n.id === targetId); if (foundNode) break; }
-    }
-    if (!foundNode) {
-      const coords = parseNodeCoordinates(targetId), sNum = coords.nodeIndex === 'boss' ? 4 : (Number(coords.nodeIndex) || 2);
-      foundNode = { id: targetId, stageNumber: sNum, type: (sNum === 4 || String(targetId).includes('boss')) ? 'boss' : 'stage' };
-    }
-    return foundNode;
+
+    const sNum = coords.nodeIndex === 'boss' ? 6 : (Number(coords.nodeIndex) || 1);
+    const isBoss = sNum === 6 || String(targetId).includes('boss');
+    const isReview = coords.nodeIndex === 'review' || String(targetId).includes('review');
+    const isBonus = coords.nodeIndex === 'bonus' || String(targetId).includes('bonus');
+    const type = isBoss ? 'boss' : (isReview ? 'review' : (isBonus ? 'bonus' : 'stage'));
+    return { id: targetId, stageNumber: sNum, type, unitNumber: uIndex };
   }
   function getSlotAlias(activeNodeId, targetNodeId) {
     const check = (id) => {
@@ -610,6 +630,7 @@
           target.currentUnitNumber = nextUnitId;
           if (!target.nodeProgressMap) target.nodeProgressMap = {};
           target.nodeProgressMap[nextNodeId] = 0;
+          return { action: 'next_unit', currentPlayingId, nextNodeId, nextUnitId, unitIndex: nextUnitId };
         }
       } else {
         if (isCurrentBoss) {
@@ -619,6 +640,7 @@
           target.currentUnitNumber = nextUnitId;
           if (!target.nodeProgressMap) target.nodeProgressMap = {};
           target.nodeProgressMap[nextNodeId] = 0;
+          return { action: 'next_unit', currentPlayingId, nextNodeId, nextUnitId, unitIndex: nextUnitId };
         } else if (currentNodeIdx === 1 || String(currentPlayingId).endsWith('1')) nextNodeId = `u${currentUnitId}_node-2`;
         else if (currentNodeIdx === 2 || String(currentPlayingId).endsWith('2')) {
           return { action: 'bonus', currentPlayingId, nextNodeId: (currentUnitId === 1) ? 'node-bonus' : `u${currentUnitId}_node-bonus`, nextRound: 1, unitIndex: currentUnitId };
@@ -774,6 +796,53 @@
     return { courseId, unitNumber, lang };
   }
 
+  function setActiveLocation(loc = {}) {
+    const lang = getLang(loc.lang);
+    const cid = getCourse(loc.courseId, lang);
+    if (loc.unitNumber) {
+      const uNum = parseInt(loc.unitNumber, 10);
+      if (!isNaN(uNum) && uNum >= 1) {
+        target.currentUnitNumber = uNum;
+        target._currentVisibleUnitIndex = uNum - 1;
+        setUnlockedUnitLevel(uNum, lang, cid);
+        try {
+          storage.set(`vocadash_active_unit_${lang}_${cid}`, String(uNum));
+          storage.set(`vocadash_unlocked_${lang}_${cid}`, String(uNum));
+          storage.set(`vocadash_unlocked_unit_${lang}_${cid}`, String(uNum));
+          storage.set(`vocadash_unlocked_unit_${cid}`, String(uNum));
+          storage.set(`vocadash_unlocked_unit_${lang}`, String(uNum));
+          storage.set('vocadash_current_unit', String(uNum));
+        } catch (_) { }
+      }
+    }
+    if (loc.courseId) {
+      target.currentCourseId = loc.courseId;
+      try {
+        storage.set(`vocadash_active_course_${lang}`, loc.courseId);
+        storage.set('vocadash_active_course', loc.courseId);
+      } catch (_) { }
+    }
+    saveNodeProgress();
+    return getActiveLocation();
+  }
+
+  function save() {
+    saveNodeProgress();
+    const lang = getLang();
+    const cid = getCourse(target.activeCourseId, lang);
+    const prog = getCourseProgress(cid, lang);
+    saveCourseProgress(prog, cid, lang);
+  }
+
+  function unlockNextUnit() {
+    const loc = getActiveLocation();
+    const nextUnit = (loc.unitNumber || 1) + 1;
+    unlockUnitsUpTo(nextUnit, loc.lang, loc.courseId);
+    setActiveLocation({ unitNumber: nextUnit, courseId: loc.courseId, lang: loc.lang });
+    save();
+    return nextUnit;
+  }
+
   const courseMapModal = {
     open: openCourseDrawerWrapper,
     close: closeCourseDrawerWrapper
@@ -781,9 +850,12 @@
 
   const progressManager = {
     getActiveLocation,
+    setActiveLocation,
     getUnlockedUnitLevel,
     setUnlockedUnitLevel,
     unlockUnitsUpTo,
+    unlockNextUnit,
+    save,
     getNodeProgress,
     saveCourseProgress,
     getCourseProgress
@@ -792,6 +864,9 @@
   Object.assign(target, {
     progressManager,
     getActiveLocation,
+    setActiveLocation,
+    unlockNextUnit,
+    saveProgress: save,
     getCompositeNodeKey, parseNodeCoordinates, getCourseProgress, saveCourseProgress, getUnlockedUnitLevel, setUnlockedUnitLevel,
     unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
     resolveNodeData, isNodeUnlocked, getNodeStatus, loadNodeProgress, saveNodeProgress, getClaimedBonuses, isBonusClaimed,
@@ -807,6 +882,8 @@
   if (typeof window !== 'undefined') {
     window.progressManager = progressManager;
     window.getActiveLocation = getActiveLocation;
+    window.setActiveLocation = setActiveLocation;
+    window.unlockNextUnit = unlockNextUnit;
     window.courseMapModal = courseMapModal;
     window.openCourseDrawer = openCourseDrawerWrapper;
     window.closeCourseDrawer = closeCourseDrawerWrapper;

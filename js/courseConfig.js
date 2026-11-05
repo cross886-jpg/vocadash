@@ -114,16 +114,16 @@
   // 5. 전체 코스 맵 유닛 프리셋 정의 (1~10 유닛)
   const UNIT_LIST_PRESETS = {
     es: [
-      { unit: 1, title: '생존 첫걸음', subtitle: '인사, 감사, 숫자 등 기초 표현 마스터', progress: 60, status: 'active', icon: '🇪🇸' },
-      { unit: 2, title: '카페 & 주문', subtitle: '커피, 타파스, 메뉴 주문 & 계산', progress: 0, status: 'locked', icon: '☕' },
-      { unit: 3, title: '길찾기 & 교통', subtitle: '지하철, 버스, 택시 & 위치 묻기', progress: 0, status: 'locked', icon: '🧭' },
-      { unit: 4, title: '쇼핑 & 환전', subtitle: '가격 흥정, 사이즈 & 결제 표현', progress: 0, status: 'locked', icon: '🛍️' },
-      { unit: 5, title: '호텔 & 숙소', subtitle: '체크인, 룸서비스 & 어메니티 요청', progress: 0, status: 'locked', icon: '🏨' },
-      { unit: 6, title: '병원 & 약국', subtitle: '증상 설명, 응급처치 & 분실물 신고', progress: 0, status: 'locked', icon: '🏥' },
-      { unit: 7, title: '친구 사귀기 & 취미', subtitle: '자기소개, 취향 & 주말 약속', progress: 0, status: 'locked', icon: '🎉' },
-      { unit: 8, title: '날씨 & 일상 대화', subtitle: '사계절, 감정 표현 & 스몰토크', progress: 0, status: 'locked', icon: '☀️' },
-      { unit: 9, title: '비즈니스 기초', subtitle: '이메일, 오피스 미팅 & 명함 교환', progress: 0, status: 'locked', icon: '💼' },
-      { unit: 10, title: '현지 문화 & 관용구', subtitle: '스페인 속담, 슬랭 & 마스터 시험', progress: 0, status: 'locked', icon: '👑' }
+      { unit: 1, title: 'Unit 1', subtitle: '', progress: 60, status: 'active', icon: '🇪🇸' },
+      { unit: 2, title: 'Unit 2', subtitle: '', progress: 0, status: 'locked', icon: '☕' },
+      { unit: 3, title: 'Unit 3', subtitle: '', progress: 0, status: 'locked', icon: '🧭' },
+      { unit: 4, title: 'Unit 4', subtitle: '', progress: 0, status: 'locked', icon: '🛍️' },
+      { unit: 5, title: 'Unit 5', subtitle: '', progress: 0, status: 'locked', icon: '🏨' },
+      { unit: 6, title: 'Unit 6', subtitle: '', progress: 0, status: 'locked', icon: '🏥' },
+      { unit: 7, title: 'Unit 7', subtitle: '', progress: 0, status: 'locked', icon: '🎉' },
+      { unit: 8, title: 'Unit 8', subtitle: '', progress: 0, status: 'locked', icon: '☀️' },
+      { unit: 9, title: 'Unit 9', subtitle: '', progress: 0, status: 'locked', icon: '💼' },
+      { unit: 10, title: 'Unit 10', subtitle: '', progress: 0, status: 'locked', icon: '👑' }
     ],
     en: [
       { unit: 1, title: '생존 첫걸음', subtitle: 'Greeting, Thanks & Numbers Master', progress: 60, status: 'active', icon: '🇺🇸' },
@@ -593,13 +593,11 @@
     const courseMeta = (cs && (cs[cId] || cs[cId.replace('es_soccer', 'pack_football')])) || null;
     const unitMeta = courseMeta?.units?.[uNum] || courseMeta?.units?.[String(uNum)] || null;
 
-    const curSec = courseMeta?.sections?.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
-    const secShortTitle = curSec?.title ? curSec.title.replace(/\s*\([^)]*\)/, '').trim() : '';
-
-    const unitTitle = unitMeta?.title
-      ? (unitMeta.title.startsWith('Unit ') ? unitMeta.title : `Unit ${uNum}. ${unitMeta.title}`)
-      : (secShortTitle ? `Unit ${uNum}. ${secShortTitle} 핵심 어휘` : `Unit ${uNum}. 핵심 어휘 학습`);
-    const unitDesc = unitMeta?.desc || (curSec?.title ? `${curSec.title} 어휘 집중 학습` : "");
+    const rawTitle = typeof unitMeta === 'string' ? unitMeta : (unitMeta?.title || '');
+    const unitTitle = rawTitle
+      ? (rawTitle.startsWith('Unit ') ? rawTitle : `Unit ${uNum}. ${rawTitle}`)
+      : `Unit ${uNum}`;
+    const unitDesc = unitMeta?.desc || "";
 
     // 3. VOCA_DATA 또는 dataLoader에서 실제 단어 로드 (초기 비동기 로딩 찰나 빈 배열 fallback 필수)
     const unitKey = 'unit-' + uNum;

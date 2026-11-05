@@ -209,7 +209,7 @@
       const nextCount = saveRes?.nextCount ?? 1;
       const isBoss = saveRes ? saveRes.isBoss : (String(currentLessonId).includes("boss") || currentLessonId === "node-boss");
       const actualTitle = window.actualUnitTitle || window.currentUnit?.title || "생존 첫걸음";
-      const currentUnitNum = saveRes?.unitIndex || window.currentUnitNumber || (typeof window.parseNodeCoordinates === 'function' ? window.parseNodeCoordinates(currentLessonId).unitIndex : 1) || 1;
+      const currentUnitNum = saveRes?.unitIndex || window.currentUnitNumber || 1;
       const activeSection = (typeof window.getActiveSection === 'function') ? window.getActiveSection() : null;
       const isSectionEnd = isBoss && activeSection && (currentUnitNum === activeSection.unitEnd);
 
@@ -381,6 +381,17 @@
       window.exitGameToRoadmap?.(true);
       if (typeof window.showCourseCompletionModal === "function") window.showCourseCompletionModal();
       else window.showToast?.("🏆 축하합니다! 모든 코스 유닛을 완벽 마스터했습니다!", "🎉");
+      return false;
+    }
+
+    if (step.action === "next_unit") {
+      window.exitGameToRoadmap?.(true);
+      const nextUnitNum = step.nextUnitId || step.unitIndex || ((window.currentUnitNumber || 1) + 1);
+      if (typeof window.switchToUnit === "function") {
+        window.switchToUnit(nextUnitNum);
+      } else if (typeof window.renderRoadmap === "function") {
+        window.renderRoadmap(nextUnitNum);
+      }
       return false;
     }
 

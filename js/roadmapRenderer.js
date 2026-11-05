@@ -108,10 +108,10 @@
     for (let idx = loopStartIdx; idx < endUnit; idx++) {
       const unit = getUnitAt(idx), unitNum = idx + 1;
       const unitIcon = unit?.icon || (courseId.includes('soccer') || courseId.includes('football') ? '⚽' : (lang === 'en' ? '🗽' : '🇪🇸'));
-      const unitTitle = unit?.title || `Unit ${unitNum}`, unitDesc = unit?.desc || unit?.subtitle || '';
+      const unitTitle = `Unit ${unitNum}`;
       const theme = getUnitTheme(unitNum);
 
-      html += `<div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}"><div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${theme.dividerBadge} text-xs font-bold shadow-md"><span>${esc(unitIcon)}</span><span>${esc(unitTitle)}</span></div><p class="text-xs text-slate-500 mt-1">${esc(unitDesc)}</p></div>`;
+      html += `<div class="unit-section-divider py-8 my-6 text-center select-none" data-unit-index="${idx}"><div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${theme.dividerBadge} text-xs font-bold shadow-md"><span>${esc(unitIcon)}</span><span>${esc(unitTitle)}</span></div></div>`;
       html += `<div class="unit-section-block relative w-full min-h-[960px] pb-6" data-unit-index="${idx}" id="unit-section-${idx}">${renderUnitTrackSvgHtml()}${buildUnitNodesHtml(idx, unit, false)}</div>`;
     }
 
@@ -234,14 +234,14 @@
           ? `${activeSection.ticketCode} · UNIT ${unitNum} / ${endUnit}`
           : `UNIT ${unitNum} / ${totalUnits}`;
       }
-      if (mainTitleEl) mainTitleEl.textContent = targetUnit.title || `Unit ${unitNum}`;
+      if (mainTitleEl) mainTitleEl.textContent = `Unit ${unitNum}`;
       if (langBadgeEl) {
-        langBadgeEl.textContent = activeSection?.title || targetUnit.subtitle || (lang === 'en' ? '영어 정규 코스' : '스페인어 첫걸음');
+        langBadgeEl.textContent = activeSection?.title || (lang === 'en' ? '영어 정규 코스' : '스페인어 첫걸음');
       }
 
       const badgeEl = document.getElementById('top-unit-badge-text'); if (badgeEl) badgeEl.textContent = `UNIT ${unitNum}`;
-      const titleEl = document.getElementById('top-unit-title'); if (titleEl) titleEl.textContent = targetUnit.title || `Unit ${unitNum}`;
-      const descEl = document.getElementById('top-unit-desc'); if (descEl) descEl.textContent = targetUnit.desc || targetUnit.subtitle || '';
+      const titleEl = document.getElementById('top-unit-title'); if (titleEl) titleEl.textContent = `Unit ${unitNum}`;
+      const descEl = document.getElementById('top-unit-desc'); if (descEl) descEl.textContent = '';
 
       if (bannerEl) {
         const theme = getUnitTheme(unitNum);

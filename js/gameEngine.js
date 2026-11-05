@@ -13,7 +13,8 @@
   let combo = 0, maxCombo = 0, score = 0, speedMultiplier = 1.0;
   let isActive = false, isGameActive = false, isPaused = false, isFrozen = false;
   let isQuestionActive = false, isStageFinishing = false, isCurrentQuestionFailed = false, isInputReady = false;
-  let dropRafId = null, dropStartTime = 0, freezeTimer = null, gameNextQuestionTimer = null;
+  let dropRafId = null, dropStartTime = null, lastFrameTime = null, accumulatedElapsed = 0;
+  let cachedArenaHeight = 320, cachedMaxDrop = 230, freezeTimer = null, gameNextQuestionTimer = null;
   let currentCorrectChoiceIdx = -1, missedWords = [], correctWords = [], totalAttemptCount = 0, sessionStartTime = 0;
   let currentDropLane = "50%";
   const dropBaseDuration = 11500;
@@ -45,8 +46,14 @@
     if (dropRafId) { cancelAnimationFrame(dropRafId); dropRafId = null; }
     if (freezeTimer) { clearTimeout(freezeTimer); freezeTimer = null; }
     if (gameNextQuestionTimer) { clearTimeout(gameNextQuestionTimer); gameNextQuestionTimer = null; }
+    dropStartTime = null;
+    lastFrameTime = null;
   }
-  function cancelGameLoop() { if (dropRafId) { cancelAnimationFrame(dropRafId); dropRafId = null; } }
+  function cancelGameLoop() {
+    if (dropRafId) { cancelAnimationFrame(dropRafId); dropRafId = null; }
+    dropStartTime = null;
+    lastFrameTime = null;
+  }
   window.clearAllGameTimers = clearAllGameTimers;
   window.cancelGameLoop = cancelGameLoop;
 
@@ -275,6 +282,15 @@
     const lanes = ["28%", "50%", "72%"];
     currentDropLane = lanes[Math.floor(Math.random() * lanes.length)];
 
+    // 캐시된 아레나 높이로 Layout Thrashing(강제 리플로우) 방지
+    cachedArenaHeight = (gameArena ? gameArena.clientHeight : 320) || 320;
+    cachedMaxDrop = Math.max(80, cachedArenaHeight - 90);
+
+    // 타임스탬프 및 누적 경과 시간 초기화 (첫 프레임 60fps 동기화 보장)
+    dropStartTime = null;
+    lastFrameTime = null;
+    accumulatedElapsed = 0;
+
     if (gameDroppingBubble) {
       gameDroppingBubble.style.transition = "none";
       gameDroppingBubble.style.position = "absolute";
@@ -285,11 +301,16 @@
       gameDroppingBubble.style.opacity = "1";
     }
 
+    // TTS 비동기 마이크로태스크 위임 (첫 프레임 드로잉 메인 스레드 블로킹 방지)
     if (typeof window.speakWord === "function") {
-      window.speakWord(q.word || q.term, currentLang);
+      const termToSpeak = q.word || q.term;
+      queueMicrotask(() => {
+        if (isQuestionActive && isGameActive && !isPaused) {
+          window.speakWord(termToSpeak, currentLang);
+        }
+      });
     }
 
-    dropStartTime = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
     dropRafId = requestAnimationFrame(dropLoop);
 
     // 💡 [Karpathy Guidelines] 단어 생성 및 타이머 시작 직후 입력을 허용하도록 순서 보장 (조기 오답/미스 방어)
@@ -302,33 +323,39 @@
 
   function dropLoop(timestamp) {
     if (!isQuestionActive || isPaused || !isActive || !isGameActive) return;
-    if (isFrozen) { dropRafId = requestAnimationFrame(dropLoop); return; }
+    if (isFrozen) {
+      lastFrameTime = timestamp;
+      dropRafId = requestAnimationFrame(dropLoop);
+      return;
+    }
 
-    if (!dropStartTime || timestamp < dropStartTime) {
+    // 1. 첫 프레임 진입 시 타임스탬프 동기화 (순간 점프 방지)
+    if (!dropStartTime || !lastFrameTime) {
       dropStartTime = timestamp;
+      lastFrameTime = timestamp;
+      accumulatedElapsed = 0;
       dropRafId = requestAnimationFrame(dropLoop);
       return;
     }
 
-    const elapsed = timestamp - dropStartTime;
-    // 💡 [Karpathy Guidelines] 단어 생성 초기(300ms) 동안은 데드라인 판정 차단
-    if (elapsed < 300) {
-      dropRafId = requestAnimationFrame(dropLoop);
-      return;
-    }
+    // 2. 델타 타임 연산 및 상한선(dt clamping) 적용으로 프레임 드랍 시 튀는 현상 완충
+    const rawDt = timestamp - lastFrameTime;
+    const clampedDt = Math.max(0, Math.min(rawDt, 50)); // 최대 50ms (0.05초) 상한 클램핑
+    lastFrameTime = timestamp;
+    accumulatedElapsed += clampedDt;
 
+    // 3. 낙하 위치 연산 (사전 캐시된 maxDrop 활용으로 Layout Thrashing 제거)
     const duration = dropBaseDuration / speedMultiplier;
-    const progress = Math.min(1.0, elapsed / duration);
-    const arenaH = (gameArena ? gameArena.clientHeight : 320) || 320;
-    const maxDrop = Math.max(80, arenaH - 90);
-    const curY = progress * maxDrop;
+    const progress = Math.min(1.0, accumulatedElapsed / duration);
+    const curY = progress * cachedMaxDrop;
 
     if (gameDroppingBubble) {
-      gameDroppingBubble.style.transform = `translate3d(-50%, ${curY}px, 0)`;
+      gameDroppingBubble.style.transform = `translate3d(-50%, ${curY.toFixed(1)}px, 0)`;
     }
 
+    // 4. 데드라인 판정
     if (progress >= 1.0) {
-      if (isInputReady) {
+      if (isInputReady && accumulatedElapsed >= 300) {
         handleDeadlineBreached();
       }
       return;
@@ -571,7 +598,9 @@
     isInputReady = false;
     isQuestionActive = false;
     isCurrentQuestionFailed = false;
-    dropStartTime = 0;
+    dropStartTime = null;
+    lastFrameTime = null;
+    accumulatedElapsed = 0;
     combo = 0; maxCombo = 0; score = 0; totalAttemptCount = 0; speedMultiplier = 1.0;
     missedWords = []; correctWords = [];
     if (gameFloatingEffect) {
@@ -751,6 +780,17 @@
     updateItemCountUI();
     updateHeaderStatusUI();
 
+    // 💡 [Performance Optimization] 오디오/TTS 및 폰트 사전 웜업 (메인 스레드 프레임 드랍 방지)
+    try {
+      if (typeof window.getAudioContext === 'function') window.getAudioContext();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.getVoices) {
+        window.speechSynthesis.getVoices();
+      }
+      if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+        document.fonts.ready.catch(() => {});
+      }
+    } catch (_) { }
+
     spawnQuestion(0);
   }
 
@@ -885,7 +925,7 @@
       btnResume.onclick = () => {
         toggleExitModal(false);
         isPaused = false;
-        dropStartTime = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+        lastFrameTime = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
         dropRafId = requestAnimationFrame(dropLoop);
       };
     }

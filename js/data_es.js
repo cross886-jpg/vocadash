@@ -26,8 +26,8 @@
         unitNumber: 1,
         id: 1,
         unit: 1,
-        title: "Unit 1. 생존 첫걸음 & 일상 인사",
-        desc: "매일 주고받는 첫인사, 감사, 사과 및 기초 대화",
+        title: "Unit 1",
+        desc: "",
         words: [
           { id: "es_101", word: "¡Hola!", pronunciation: "올라!", meaning: "안녕하세요 / 안녕" },
           { id: "es_102", word: "Buenos días", pronunciation: "부에노스 디아스", meaning: "좋은 아침이에요" },
@@ -74,8 +74,8 @@
         unitNumber: 2,
         id: 2,
         unit: 2,
-        title: "Unit 2. 카페, 식당 & 타파스 주문",
-        desc: "커피, 물, 타파스 주문과 계산서 요청하기",
+        title: "Unit 2",
+        desc: "",
         words: [
           { id: "es_201", word: "Café con leche", pronunciation: "카페 콘 레체", meaning: "카페라떼 (밀크커피)" },
           { id: "es_202", word: "Café solo", pronunciation: "카페 솔로", meaning: "에스프레소" },
@@ -122,8 +122,8 @@
         unitNumber: 3,
         id: 3,
         unit: 3,
-        title: "Unit 3. 길찾기 & 대중교통",
-        desc: "지하철, 버스, 택시 이용 및 방향 묻기",
+        title: "Unit 3",
+        desc: "",
         words: [
           { id: "es_301", word: "Estación de metro", pronunciation: "에스타시온 데 메트로", meaning: "지하철역" },
           { id: "es_302", word: "Parada de autobús", pronunciation: "파라다 데 아우토부스", meaning: "버스 정류장" },
@@ -170,8 +170,8 @@
         unitNumber: 4,
         id: 4,
         unit: 4,
-        title: "Unit 4. 마트, 쇼핑 & 결제",
-        desc: "식료품 장보기, 카드 결제, 봉투와 영수증 받기",
+        title: "Unit 4",
+        desc: "",
         words: [
           { id: "es_401", word: "Supermercado", pronunciation: "수페르메르카도", meaning: "슈퍼마켓 / 마트" },
           { id: "es_402", word: "Tienda", pronunciation: "티엔다", meaning: "가게 / 매장" },
@@ -221,7 +221,7 @@
   courseData_es.units.forEach(u => {
     u.id = u.unitId;
     u.unit = u.unitNumber;
-    u.subtitle = u.desc;
+    u.subtitle = "";
     u.words.forEach(w => {
       w.term = w.word;
       w.pron = w.pronunciation;
