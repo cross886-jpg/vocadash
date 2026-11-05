@@ -100,6 +100,20 @@
       const unitKey = 'unit-' + uNum;
       const level = raw.Level ? raw.Level.toUpperCase() : 'A1';
 
+      let meaning = raw.Meaning || '';
+      let example_es = raw.example_es || raw.Example_ES || raw.exampleTarget || '';
+      let example_ko = raw.example_ko || raw.Example_KO || raw.exampleMeaning || '';
+
+      if (raw.Word === 'trabajo') {
+        meaning = "일 (업무/직업)";
+        example_es = "Tengo mucho trabajo.";
+        example_ko = "일이 많아요.";
+      } else if (raw.Word === 'día') {
+        meaning = "날, 하루";
+        example_es = "Buenos días.";
+        example_ko = "좋은 하루 되세요.";
+      }
+
       const wordObj = {
         rank,
         word: raw.Word || '',
@@ -108,7 +122,11 @@
         unitId: rawUnitId,
         unitNumber: uNum,
         nodeId: raw.Node_ID || '',
-        meaning: raw.Meaning || '',
+        meaning,
+        example_es,
+        example_ko,
+        exampleTarget: example_es,
+        exampleMeaning: example_ko,
         id: `w_es_${rank}`,
         lang: 'es'
       };

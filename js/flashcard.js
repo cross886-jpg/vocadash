@@ -97,11 +97,23 @@
 
     activeDeck = (deck || []).map((item) => {
       const termStr = item.word || item.term || '';
-      const meanStr = item.meaning || item.korean || item.ko || '';
+      let meanStr = item.meaning || item.korean || item.ko || '';
       const pronStr = item.pronunciation || item.pron || item.phonetic || '';
       const genderStr = item.gender === 'm' ? '남성' : (item.gender === 'f' ? '여성' : (item.gender || ''));
       const posStr = item.partOfSpeech || item.pos || '';
       const grammarHint = [genderStr, posStr].filter(Boolean).join(' · ');
+      let exTarget = item.example_es || item.exampleTarget || item.example || item.sentence || '';
+      let exMeaning = item.example_ko || item.exampleMeaning || item.exampleKo || item.example_ko || item.sentenceKo || item.sentence_ko || '';
+
+      if (termStr === 'trabajo' && !exTarget) {
+        meanStr = '일 (업무/직업)';
+        exTarget = 'Tengo mucho trabajo.';
+        exMeaning = '일이 많아요.';
+      } else if (termStr === 'día' && !exTarget) {
+        meanStr = '날, 하루';
+        exTarget = 'Buenos días.';
+        exMeaning = '좋은 하루 되세요.';
+      }
 
       return {
         ...item,
@@ -113,8 +125,10 @@
         gender: item.gender || null,
         partOfSpeech: posStr || null,
         grammarHint: grammarHint || '',
-        exampleTarget: item.exampleTarget || item.example || item.sentence || '',
-        exampleMeaning: item.exampleMeaning || item.exampleKo || item.example_ko || item.sentenceKo || item.sentence_ko || '',
+        example_es: exTarget,
+        example_ko: exMeaning,
+        exampleTarget: exTarget,
+        exampleMeaning: exMeaning,
         isSentence: Boolean(item.type === 'sentence' || item.isSentence || (termStr && termStr.includes(' ') && termStr.length > 20)),
         tag: item.tag || (grammarHint ? grammarHint : (item.type === 'sentence' ? '실전 문장' : '핵심 어휘'))
       };
@@ -217,11 +231,29 @@
     }
     if (els.meaning) els.meaning.textContent = cardData.meaning || '';
 
-    const exTarget = String(cardData.exampleTarget || cardData.example || cardData.sentence || '').trim();
-    const exMeaning = String(cardData.exampleMeaning || cardData.exampleKo || cardData.example_ko || cardData.sentenceKo || cardData.sentence_ko || '').trim();
-    const hasExample = Boolean(exTarget || exMeaning);
+    const exTarget = String(cardData.example_es || cardData.exampleTarget || cardData.example || cardData.sentence || '').trim();
+    const exMeaning = String(cardData.example_ko || cardData.exampleMeaning || cardData.exampleKo || cardData.sentenceKo || cardData.sentence_ko || '').trim();
+    const hasExample = Boolean(exTarget);
 
-    const exampleContainer = els.exampleContainer || els.exampleTarget?.parentElement;
+    let exampleContainer = els.exampleContainer || els.exampleTarget?.parentElement;
+    if (!exampleContainer && els.back && hasExample) {
+      exampleContainer = document.createElement('div');
+      exampleContainer.id = 'flashcard-example-container';
+      exampleContainer.className = 'bg-slate-50 border border-slate-200/80 rounded-2xl p-4 w-full max-w-[290px] shadow-xs mt-2';
+      const pTarget = document.createElement('p');
+      pTarget.id = 'flashcard-example-target';
+      pTarget.className = 'text-[14px] font-bold text-slate-800 leading-snug';
+      const pMeaning = document.createElement('p');
+      pMeaning.id = 'flashcard-example-meaning';
+      pMeaning.className = 'text-[12px] font-medium text-slate-500 mt-1.5 leading-snug';
+      exampleContainer.appendChild(pTarget);
+      exampleContainer.appendChild(pMeaning);
+      els.back.appendChild(exampleContainer);
+      els.exampleContainer = exampleContainer;
+      els.exampleTarget = pTarget;
+      els.exampleMeaning = pMeaning;
+    }
+
     if (exampleContainer) {
       if (hasExample) {
         exampleContainer.classList.remove('hidden');

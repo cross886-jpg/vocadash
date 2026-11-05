@@ -132,7 +132,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning
 131,estar,A1,unit_005,es_u5_n2,있다
 132,ni,A1,unit_005,es_u5_n2,도 아니다
 133,poco,A1,unit_005,es_u5_n2,"적은, 조금"
-134,día,A1,unit_005,es_u5_n2,일
+134,día,A1,unit_005,es_u5_n2,"날, 하루"
 135,uno,A1,unit_005,es_u5_n2,하나
 136,noche,A1,unit_005,es_u5_n2,밤
 137,hecho,A1,unit_005,es_u5_n2,사실
@@ -140,7 +140,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning
 139,estamos,A1,unit_005,es_u5_n2,우리는
 140,otra,A1,unit_005,es_u5_n2,다른 (여성)
 141,acuerdo,A1,unit_005,es_u5_n3,합의
-142,trabajo,A1,unit_005,es_u5_n3,일
+142,trabajo,A1,unit_005,es_u5_n3,"일 (업무/직업)"
 143,nosotros,A1,unit_005,es_u5_n3,우리
 144,parece,A1,unit_005,es_u5_n3,것 같다
 145,gente,A1,unit_005,es_u5_n3,사람들
