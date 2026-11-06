@@ -1,4 +1,4 @@
-﻿Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
+Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1,de,A1,unit_001,es_u1_n1,~의 / ~로부터,[데],Soy de Corea.,저는 한국 출신입니다.
 2,que,A1,unit_001,es_u01_n2,하는 것 / 관계사,[께],Creo que tienes toda la razón en lo que dices.,네가 하는 말이 전적으로 옳다고 생각한다.
 3,no,A1,unit_001,es_u1_n1,아니요,[노],No. gracias.,아니요 괜찮습니다.
@@ -3000,7 +3000,7 @@
 2999,marcas,B1,unit_100,es_u100_n3,브랜드,[마르카스],Las mejores marcas artesanales de calzado deportivo cuidan la calidad ergonómica de cada suela.,명품 수제 스포츠화 브랜드들은 신발 밑창 하나를 제작할 때도 인체공학적 착화감에 심혈을 기울인다.
 3000,ayudarlo,B1,unit_100,es_u100_n3,도와주세요,[아유다르로],El veterano profesor se ofreció a ayudarlo a perfeccionar la redacción de su tesis doctoral.,원로 교수님은 박사학위 논문의 학술적 문장 완성도를 끌어올릴 수 있도록 흔쾌히 지도를 맡아주셨다.
 3001,leyendo,B1,unit_101,es_u101_n1,독서,[레옌도],Pasó la mañana leyendo en un banco sombreado del parque frente a la fuente de agua mansa.,맑은 분숫물이 퐁퐁 솟는 공원의 그늘진 벤치에 기대앉아 아침 내내 독서를 즐겼다.
-2002,adecuado,B1,unit_101,es_u101_n1,적당한,[아데쿠아도],Elegir el momento adecuado para intervenir en el debate asegura que tu mensaje se escuche claro.,토론에서 적절한 타이밍을 포착해 발언해야 자신의 주장을 대중에게 똑똑히 각인시킬 수 있다.
+3002,adecuado,B1,unit_101,es_u101_n1,적당한,[아데쿠아도],Elegir el momento adecuado para intervenir en el debate asegura que tu mensaje se escuche claro.,토론에서 적절한 타이밍을 포착해 발언해야 자신의 주장을 대중에게 똑똑히 각인시킬 수 있다.
 3003,cajas,B1,unit_101,es_u101_n1,상자,[카하스],Organizó los cables y componentes electrónicos en cajas de plástico clasificadas con etiquetas.,부품과 전자기기 케이블들을 라벨을 부착한 투명 수납 상자에 용도별로 정갈하게 분류해 두었다.
 3004,abandonar,B1,unit_101,es_u101_n1,버리다,[아반도나르],Nunca debes abandonar tus metas formativas ante las primeras dificultades metodológicas que surjan.,공부 도중 사소한 난관에 부딪혔다고 해서 결코 자신의 원대한 목표를 중도 포기해서는 안 된다.
 3005,dispara,B1,unit_101,es_u101_n1,쏘다,[디스파라],El delantero se perfila hacia el centro y dispara con potencia hacia la escuadra izquierda.,스트라이커는 중앙으로 파고들며 골문 왼쪽 상단을 향해 빨랫줄 같은 슈팅을 꽂아 넣는다.
