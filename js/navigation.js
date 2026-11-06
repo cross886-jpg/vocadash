@@ -83,6 +83,9 @@
     else if (normTab === "roadmap") normTab = "home";
     else if (normTab === "pack") normTab = "packs";
 
+    window.currentTab = normTab;
+    window.currentMainTab = normTab;
+
     if ((window.isGameActive === true || window.isActive === true) && !force && !window.isExplicitExitRequested) {
       return;
     }
@@ -149,6 +152,18 @@
         bottomNav.style.setProperty("bottom", "calc(1.2rem + env(safe-area-inset-bottom, 0px))", "important");
       }
 
+      // 🚀 메인 로드맵 전용 빠른 스크롤 FAB 생명주기 관리 (홈 탭 외 확실한 hidden 처리)
+      const fab = el("quick-scroll-fab");
+      if (fab) {
+        if (normTab === "home") {
+          if (typeof window.updateQuickScrollFabState === "function") {
+            window.updateQuickScrollFabState();
+          }
+        } else {
+          fab.classList.add("hidden");
+        }
+      }
+
       if (normTab === "records") {
         window.updateProfileStats?.();
       } else if (normTab === "packs") {
@@ -166,6 +181,9 @@
           window.focusActiveRoadmapNode();
         } else if (typeof window.autoScrollToActiveNode === "function") {
           window.autoScrollToActiveNode("instant");
+        }
+        if (typeof window.updateQuickScrollFabState === "function") {
+          window.updateQuickScrollFabState();
         }
       }
 
@@ -341,6 +359,7 @@
     navigation,
     navigateTo,
     switchMainTab,
+    switchTab: switchMainTab,
     switchScreen: switchMainTab,
     toggleModal,
     setTabActive,

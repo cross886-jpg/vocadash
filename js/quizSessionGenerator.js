@@ -167,7 +167,8 @@
 
     // 복습 노드 인입 분기
     if (normId === 'node-review' || String(rawLessonId).includes('review')) {
-      const uNum = (window.currentUnitNumber || 1);
+      const coords = (typeof window.parseNodeCoordinates === 'function') ? window.parseNodeCoordinates(rawLessonId) : null;
+      const uNum = coords ? coords.unitIndex : (window.currentUnitNumber || 1);
       return generateReviewSession(uNum, courseLang);
     }
 
@@ -243,7 +244,16 @@
   // 🎲 순수 오답 단어로만 퀴즈 큐 빌드 (외부 일반 단어 혼입 및 억지 패딩 금지)
   function buildWeaknessQuizQueue(wrongWords, targetCount = 10) {
     if (!wrongWords || !Array.isArray(wrongWords) || wrongWords.length === 0) return [];
-    return shuffleArray([...wrongWords]).slice(0, targetCount);
+    const count = parseInt(targetCount, 10) || 10;
+    if (wrongWords.length >= count) {
+      const sorted = [...wrongWords].sort((a, b) => (Number(b.wrongCount ?? b.count ?? 1)) - (Number(a.wrongCount ?? a.count ?? 1)));
+      return shuffleArray(sorted.slice(0, count));
+    }
+    const result = [...wrongWords];
+    while (result.length < count) {
+      result.push(wrongWords[Math.floor(Math.random() * wrongWords.length)]);
+    }
+    return shuffleArray(result);
   }
 
   // 📚 특정 유닛(Unit)에 속한 전체 단어 목록 추출 유틸
@@ -313,19 +323,19 @@
     return pool;
   }
 
-  // 오답 스테이지 단어 풀 생성 로직 (현재 챕터/Unit 격리, 10문제 한도, 무패딩)
+  // 오답 스테이지 단어 풀 생성 로직 (10문제 고정 풀이 시스템)
   function buildReviewQuestionQueue(unitId, lang = 'es') {
     const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const targetU = parseInt(unitId, 10) || (window.currentUnitNumber || 1);
 
-    // 1. 현재 저장된 유효 오답 리스트 조회 (스토리지 또는 gameState)
+    // 1. 현재 저장된 유효 오답 리스트 조회
     let wrongWords = [];
     try {
       if (typeof window.loadWrongWords === 'function') {
         wrongWords = window.loadWrongWords(courseLang) || [];
       } else {
-        const raw = localStorage.getItem('vocadash_wrong_words_' + courseLang) ||
-          localStorage.getItem('vocadash_wrong_answers_' + courseLang) ||
+        const raw = localStorage.getItem('vocadash_wrong_answers_' + courseLang) ||
+          localStorage.getItem('vocadash_wrong_words_' + courseLang) ||
           localStorage.getItem('vocadash_wrong_words');
         if (raw) {
           const parsed = JSON.parse(raw);
@@ -342,6 +352,7 @@
     // 현재 챕터(Unit)에 해당하는 오답만 엄격하게 격리 필터링
     const chapterWrongList = (Array.isArray(wrongWords) ? wrongWords : [])
       .filter(w => {
+        if (!w) return false;
         if ((w.lang || courseLang) !== courseLang) return false;
         if (w.escaped) return false;
         if (w.correctStreak !== undefined && Number(w.correctStreak) >= 5) return false;
@@ -365,25 +376,84 @@
           if (reg.test(wId)) return true;
         }
 
+        // 5) unit 정보가 없는 mock 오답은 Unit 1 기본 수용
+        if (!wUnit && targetU === 1) return true;
+
         return false;
       });
 
-    // 케이스 A: 해당 챕터의 틀린 단어가 1개 이상 존재하는 경우 -> 순수 오답만 최대 10개 추출 (억지 패딩 금지)
+    // =========================================================================
+    // 규칙 1. 오답이 10개 이상인 경우:
+    // 누적 오답 횟수(틀린 횟수) 기준 내림차순으로 정렬하여 가장 많이 틀린 상위 10개 단어를 선별하여 출제
+    // =========================================================================
+    if (chapterWrongList.length >= 10) {
+      const sorted = [...chapterWrongList].sort((a, b) => {
+        const countA = Number(a.wrongCount ?? a.count ?? 1);
+        const countB = Number(b.wrongCount ?? b.count ?? 1);
+        return countB - countA;
+      });
+      return shuffleArray(sorted.slice(0, 10));
+    }
+
+    // =========================================================================
+    // 규칙 2. 오답이 1~9개인 경우 (예: 3개):
+    // 보유한 오답 단어들을 반드시 포함하되, 총 10문제가 될 때까지 해당 오답 단어 풀 내에서
+    // 무작위로 반복 보충하여 10문제를 구성한 뒤 셔플
+    // =========================================================================
     if (chapterWrongList.length > 0) {
-      return shuffleArray([...chapterWrongList]).slice(0, Math.min(10, chapterWrongList.length));
+      const result = [...chapterWrongList];
+      while (result.length < 10) {
+        const randomPick = chapterWrongList[Math.floor(Math.random() * chapterWrongList.length)];
+        result.push(randomPick);
+      }
+      return shuffleArray(result);
     }
 
-    // 케이스 B: 해당 챕터의 오답이 0개인 경우 (완벽 클리어 상태) -> 해당 챕터 단어들 중 최대 10개를 무작위 추출하여 '챕터 핵심 복습' 진행
-    if (unitWords.length > 0) {
-      return shuffleArray([...unitWords]).slice(0, Math.min(10, unitWords.length));
+    // =========================================================================
+    // 규칙 3. 해당 챕터(Unit)에 오답이 0개인 경우 (클린 상태):
+    // - 이전 챕터(Unit 1 ~ 현재 Unit - 1)의 전체 단어 풀에서 무작위(랜덤)로 10문제를 추출하여 누적 복습 세션 구성
+    // - 단, 현재가 Unit 1이라 이전 챕터가 없는 경우에는 현재 Unit 1의 선행 스테이지(1과/2과) 단어들 중에서 랜덤 10문제를 추출
+    // =========================================================================
+    let candidatePool = [];
+
+    if (targetU > 1) {
+      // 3-A. 이전 챕터(Unit 1 ~ Unit targetU - 1)의 전체 단어 풀 수집
+      for (let u = 1; u < targetU; u++) {
+        const wordsOfU = getUnitWords(u, courseLang);
+        if (Array.isArray(wordsOfU) && wordsOfU.length > 0) {
+          candidatePool.push(...wordsOfU);
+        }
+      }
+    } else {
+      // 3-B. 현재가 Unit 1인 경우: 선행 스테이지(1과/2과, 즉 첫 20개 단어)에서 수집
+      const u1Words = (Array.isArray(unitWords) && unitWords.length > 0)
+        ? unitWords
+        : getUnitWords(1, courseLang);
+      candidatePool = u1Words.slice(0, 20);
     }
 
-    // 폴백: 해당 유닛의 1과 단어 풀에서 최대 10개 반환
-    const defaultPool = getStageWordPool(`u${targetU}_stage-1`, courseLang);
-    return (defaultPool && defaultPool.length > 0) ? shuffleArray([...defaultPool]).slice(0, Math.min(10, defaultPool.length)) : [];
+    // 만약 이전 챕터나 선행 스테이지 단어가 부족할 경우 현재 유닛 전체 풀로 보강
+    if (candidatePool.length === 0) {
+      candidatePool = (Array.isArray(unitWords) && unitWords.length > 0) ? unitWords : getLearnedWordsPool(targetU, courseLang);
+    }
+    if (candidatePool.length === 0) {
+      const defaultPool = getStageWordPool(`u${targetU}_stage-1`, courseLang);
+      candidatePool = (defaultPool && defaultPool.length > 0) ? defaultPool : [];
+    }
+
+    if (candidatePool.length === 0) return [];
+
+    // candidatePool에서 무작위(랜덤)로 10문제 추출 (풀 크기가 10개 미만일 경우 반복 보충)
+    const shuffledPool = shuffleArray([...candidatePool]);
+    const result = shuffledPool.slice(0, 10).map(w => ({ ...w, tag: '랜덤 복습' }));
+    while (result.length < 10) {
+      const randomPick = candidatePool[Math.floor(Math.random() * candidatePool.length)];
+      result.push({ ...randomPick, tag: '랜덤 복습' });
+    }
+    return shuffleArray(result);
   }
 
-  // 약점 복습 세션 생성기 (현재 챕터 격리 적용)
+  // 약점 복습 세션 생성기 (10문제 고정 풀이 시스템 및 인게임 엔진 표준 규격)
   function generateReviewSession(unitNum = 1, lang = 'es') {
     const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
@@ -405,17 +475,32 @@
     return queue.map((item, idx) => {
       const itemKey = normalizeTerm(item.term || item.word || item.id);
       const isWeakness = activeWrongSet.has(itemKey);
+      const wordStr = String(item.term || item.word || '').trim();
+      const meanStr = String(item.meaning || item.kor || item.ko || item.answer || '').trim();
+      const rawPron = String(item.pronunciation || item.pron || item.phonetic || '').trim();
+      const cleanPron = rawPron.replace(/^\[+|\]+$/g, '');
+      const phoneticStr = cleanPron ? `[${cleanPron}]` : '';
+      const exTarget = String(item.exampleTarget || item.example_es || item.example || item.sentence || '').trim();
+      const exMeaning = String(item.exampleMeaning || item.example_ko || item.exampleKo || item.sentenceKo || '').trim();
+
       return {
         ...item,
-        id: item.id || `review-q-${idx}`,
-        word: item.term || item.word || '',
-        term: item.term || item.word || '',
-        meaning: item.meaning || item.kor || item.ko || '',
-        phonetic: item.pronunciation || item.phonetic || '',
+        id: item.id || `review-q-${idx + 1}`,
+        word: wordStr,
+        term: wordStr,
+        meaning: meanStr,
+        pronunciation: cleanPron,
+        pron: cleanPron,
+        phonetic: phoneticStr,
+        exampleTarget: exTarget,
+        exampleMeaning: exMeaning,
+        example_es: item.example_es || exTarget,
+        example_ko: item.example_ko || exMeaning,
         unitId: targetU,
         type: 'word',
-        tag: isWeakness ? '약점 복습' : '핵심 복습',
+        tag: isWeakness ? '약점 복습' : '랜덤 복습',
         isReviewMode: true,
+        isWeakReview: isWeakness,
         lang: item.lang || courseLang
       };
     });

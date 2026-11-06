@@ -824,37 +824,51 @@
       document.querySelector('[id^="node-"]');
   }
 
-  // 2) 스크롤에 따른 FAB 가시성 및 화살표 방향 동기화
+  // 2) 스크롤에 따른 FAB 가시성 및 화살표 방향 동기화 (홈 탭 전용 가드 적용)
   function updateQuickScrollFabState() {
     const fab = document.getElementById('quick-scroll-fab');
-    const arrowUp = document.getElementById('quick-arrow-up');
-    const arrowDown = document.getElementById('quick-arrow-down');
     if (!fab) return;
 
+    // 홈(로드맵) 탭이 아니거나 로드맵 화면이 숨겨진 경우 무조건 hidden 처리 후 즉시 반환
+    const currentTab = window.currentTab || window.currentMainTab || 'home';
+    const roadmapScreen = document.getElementById('roadmap-screen');
+    const isHomeActive = currentTab === 'home' &&
+      roadmapScreen && !roadmapScreen.classList.contains('hidden') && roadmapScreen.style.display !== 'none';
+
+    if (!isHomeActive) {
+      fab.classList.add('hidden');
+      return;
+    }
+
     const targetNode = getFabTargetNode();
-    if (!targetNode) return;
+    if (!targetNode || typeof targetNode.getBoundingClientRect !== 'function') {
+      fab.classList.add('hidden');
+      return;
+    }
 
     const rect = targetNode.getBoundingClientRect();
-    const vh = window.innerHeight;
+    const vh = window.innerHeight || 800;
 
     // 상단 헤더 뒤로 숨거나 하단 바텀바 밑으로 가려졌을 때만 이탈로 판정
     const isAboveScreen = rect.bottom < 90;
     const isBelowScreen = rect.top > (vh - 100);
 
     if (isAboveScreen || isBelowScreen) {
-      fab.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
-      fab.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+      fab.classList.remove('hidden');
 
-      if (isAboveScreen) {
-        arrowUp?.classList.remove('hidden');
-        arrowDown?.classList.add('hidden');
-      } else {
-        arrowDown?.classList.remove('hidden');
-        arrowUp?.classList.add('hidden');
+      const arrowUp = document.getElementById('quick-arrow-up');
+      const arrowDown = document.getElementById('quick-arrow-down');
+      if (arrowUp && arrowDown) {
+        if (isAboveScreen) {
+          arrowUp.classList.remove('hidden');
+          arrowDown.classList.add('hidden');
+        } else {
+          arrowDown.classList.remove('hidden');
+          arrowUp.classList.add('hidden');
+        }
       }
     } else {
-      fab.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
-      fab.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+      fab.classList.add('hidden');
     }
   }
 
@@ -864,13 +878,17 @@
     if (fab) {
       fab.onclick = () => {
         const target = getFabTargetNode();
-        if (target) {
+        if (target && typeof target.scrollIntoView === 'function') {
           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       };
     }
 
-    const scrollHandler = () => window.requestAnimationFrame(updateQuickScrollFabState);
+    const scrollHandler = () => {
+      const curTab = window.currentTab || window.currentMainTab || 'home';
+      if (curTab !== 'home') return;
+      window.requestAnimationFrame(updateQuickScrollFabState);
+    };
 
     // window 기본 스크롤 등록
     window.addEventListener('scroll', scrollHandler, { passive: true });
