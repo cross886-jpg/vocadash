@@ -13,7 +13,7 @@ else:
     print(f"❌ {INPUT_FILE} 파일이 없습니다.")
     exit(1)
 
-# 2. 비속어/노이즈 교체 맵 (기존 정의 유지)
+# 2. 비속어/잡음 대체 단어 매핑
 SWAP_MAP = {
     "mierda": ("lunes", "월요일", "[루네스]", "El lunes voy a clase.", "월요일에 수업에 갑니다."),
     "eh": ("martes", "화요일", "[마르테스]", "El martes tengo reunión.", "화요일에 회의가 있습니다."),
@@ -35,7 +35,7 @@ SWAP_MAP = {
 
 header = []
 rows = []
-swapped_count = 0
+word_dict = {}
 
 with open(INPUT_FILE, mode="r", encoding="utf-8-sig", errors="replace") as f:
     reader = csv.reader(f)
@@ -51,76 +51,91 @@ with open(INPUT_FILE, mode="r", encoding="utf-8-sig", errors="replace") as f:
         
         target_word = row[1].strip()
 
-        # 1차: 유효하지 않은 어휘 교체
+        # 1차 비속어 정돈
         if target_word in SWAP_MAP:
             new_w, new_m, new_p, new_es, new_ko = SWAP_MAP[target_word]
-            row[1] = new_w   # Word
-            row[5] = new_m   # Meaning
-            row[6] = new_p   # Pronunciation
-            row[7] = new_es  # Example_ES
-            row[8] = new_ko  # Example_KO
-            swapped_count += 1
+            row[1] = new_w
+            row[5] = new_m
+            row[6] = new_p
+            row[7] = new_es
+            row[8] = new_ko
 
+        w_key = row[1].strip().lower()
+        if w_key not in word_dict:
+            word_dict[w_key] = row
         rows.append(row)
 
 # -------------------------------------------------------------
-# 3. Unit 1 단어 교차 배치 (Interleaving) 로직
-# 관계사/전치사가 맨 앞에 몰리지 않도록 실질 어휘 사이에 분산 배치
+# 3. Unit 1 (Node 1 ~ Node 4, 총 28단어) 황금 학습 순서 정의
+# 기초 인사/생존 어휘 + 핵심 동사 + 중간중간 연결어(de, y, con, que) 징검다리
 # -------------------------------------------------------------
-# 중간중간에 넣을 기능어 (전치사/관계사/단수관사 등)
-GRAMMAR_WORDS = {"de", "que", "a", "la", "el", "y", "en", "lo", "por", "para", "se"}
+UNIT_1_ORDER = [
+    # [Node 1: 첫 만남 & 기초 인사/긍부정]
+    "hola", "gracias", "sí", "no", "de", "amigo", "café",
+    # [Node 2: 기초 존재 & 상태 연결]
+    "es", "agua", "bueno", "y", "bien", "casa", "en",
+    # [Node 3: 기초 동사 & 소유/지칭]
+    "tener", "yo", "tú", "con", "familia", "un", "una",
+    # [Node 4: 문장 완성 & 관계 연결]
+    "estar", "ir", "el", "la", "que", "hacer", "todo"
+]
 
-# Unit 1에 속하는 상위 30개 단어 추출 (unit_001 대상)
-unit1_rows = [r for r in rows if r[2].strip() == "unit_001" or (len(r) > 2 and "unit_001" in r[2])]
-other_rows = rows[len(unit1_rows):]
+# 기존 DB에서 해당 단어 행 추출 (만약 DB에 없는 단어는 생성)
+FALLBACK_DEFS = {
+    "hola": ("hola", "안녕", "[올라]", "¡Hola! ¿Cómo estás?", "안녕! 어떻게 지내?"),
+    "gracias": ("gracias", "감사합니다", "[그라시아스]", "Muchas gracias por tu ayuda.", "도와줘서 정말 고마워요."),
+    "agua": ("agua", "물", "[아구아]", "Quiero un vaso de agua.", "물 한 잔 원해요."),
+    "café": ("café", "커피", "[카페]", "Un café con leche, por favor.", "밀크 커피 한 잔 주세요."),
+    "amigo": ("amigo", "친구", "[아미고]", "Juan es mi buen amigo.", "후안은 나의 좋은 친구입니다."),
+    "casa": ("casa", "집", "[카사]", "Voy a mi casa.", "나는 내 집으로 간다."),
+    "bueno": ("bueno", "좋은", "[부에노]", "Es un buen día.", "좋은 날입니다."),
+    "bien": ("bien", "잘 / 좋은", "[비엔]", "Todo va muy bien.", "모든 것이 잘 풀리고 있어요."),
+    "tener": ("tener", "가지다 / 있다", "[테네르]", "Tengo una pregunta.", "질문이 하나 있습니다."),
+    "ir": ("ir", "가다", "[이르]", "Vamos a la playa.", "해변으로 가자."),
+    "hacer": ("hacer", "하다 / 만들다", "[아세르]", "Tengo que hacer la tarea.", "숙제를 해야 합니다."),
+    "todo": ("todo", "모든 것", "[토도]", "Todo está listo.", "모든 것이 준비되었습니다.")
+}
 
-if unit1_rows:
-    grammar_pool = []
-    content_pool = []
+curated_unit1 = []
+used_words = set()
 
-    for r in unit1_rows:
-        word = r[1].strip().lower()
-        if word in GRAMMAR_WORDS:
-            grammar_pool.append(r)
-        else:
-            content_pool.append(r)
+for word in UNIT_1_ORDER:
+    w_lower = word.lower()
+    used_words.add(w_lower)
+    if w_lower in word_dict:
+        row = list(word_dict[w_lower])
+    else:
+        fb = FALLBACK_DEFS.get(w_lower, (word, word, f"[{word}]", f"Ejemplo con {word}.", f"{word} 예문"))
+        row = ["", fb[0], "A1", "unit_001", "", fb[1], fb[2], fb[3], fb[4]]
+    curated_unit1.append(row)
 
-    # 교차 배치: 실질 어휘(명사/동사/인사 등) 2~3개마다 기능어 1개씩 삽입
-    interleaved_unit1 = []
-    c_idx, g_idx = 0, 0
+# Unit 1으로 발탁된 단어들을 제외한 나머지 단어들 유지
+remaining_rows = [r for r in rows if r[1].strip().lower() not in used_words]
 
-    while c_idx < len(content_pool) or g_idx < len(grammar_pool):
-        # 1. 실질 어휘 2개 우선 배치
-        for _ in range(2):
-            if c_idx < len(content_pool):
-                interleaved_unit1.append(content_pool[c_idx])
-                c_idx += 1
-        # 2. 기능어 1개 삽입
-        if g_idx < len(grammar_pool):
-            interleaved_unit1.append(grammar_pool[g_idx])
-            g_idx += 1
+# 4. Node_ID 및 Unit 매핑
+for idx, r in enumerate(curated_unit1):
+    r[2] = "A1"
+    r[3] = "unit_001"
+    node_num = (idx // 7) + 1
+    r[4] = f"es_u1_n{node_num}"
 
-    # 재배치된 Unit 1의 Node_ID 및 Node 내 순번 정돈 (1노드당 7단어 기준 유지)
-    for idx, r in enumerate(interleaved_unit1):
-        node_num = (idx // 7) + 1
-        r[3] = f"es_u1_n{node_num}"
-
-    rows = interleaved_unit1 + other_rows
-
-# 전체 Rank 1부터 5000까지 재부여
-for idx, r in enumerate(rows, start=1):
+# 전체 결합 및 Rank 재부여
+final_rows = curated_unit1 + remaining_rows
+for idx, r in enumerate(final_rows, start=1):
     r[0] = str(idx)
 
-# 4. CSV 덮어쓰기 저장
+# 5. CSV 저장
 with open(INPUT_FILE, mode="w", encoding="utf-8", newline="") as f:
     writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
     if header:
         writer.writerow(header)
-    writer.writerows(rows)
+    writer.writerows(final_rows)
 
-print("=" * 50)
-print(f"✨ 비속어/잡음 단어 정돈: {swapped_count}개 완료")
-print(f"🔀 Unit 1 기능어(관계사/전치사) 징검다리 교차 배치 완료")
-print(f"📦 Node_ID 및 Rank 넘버링 자동 보정 완료")
+print("=" * 55)
+print(f"✨ Unit 1 학습자 친화적 순서 완벽 재배치 완료!")
+print(f"👉 Node 1 (1~7): hola, gracias, sí, no, de, amigo, café")
+print(f"👉 Node 2 (8~14): es, agua, bueno, y, bien, casa, en")
+print(f"👉 Node 3 (15~21): tener, yo, tú, con, familia, un, una")
+print(f"👉 Node 4 (22~28): estar, ir, el, la, que, hacer, todo")
 print(f"🎉 파일 업데이트 완료: {INPUT_FILE}")
-print("=" * 50)
+print("=" * 55)
