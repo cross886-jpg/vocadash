@@ -309,6 +309,7 @@
 
     // 새 코스의 로드맵 화면 리렌더링
     const curUnlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(activeLang, targetId) : 1;
+    window.currentUnitNumber = curUnlocked;
     window._currentVisibleUnitIndex = curUnlocked - 1;
     if (typeof window.updateRoadmapNodesUI === 'function') {
       window.updateRoadmapNodesUI();

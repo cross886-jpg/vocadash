@@ -141,7 +141,6 @@
       const saved = localStorage.getItem('vocadash_unlocked_' + lang + '_' + cKey)
                  || localStorage.getItem('vocadash_unlocked_' + lang + '_' + (cKey === 'es_soccer' ? 'pack_football' : 'main'))
                  || localStorage.getItem('vocadash_unlocked_unit_' + lang + '_' + cKey)
-                 || localStorage.getItem('vocadash_unlocked_unit_' + cKey)
                  || localStorage.getItem('vocadash_unlocked_unit_' + lang);
       if (saved) return parseInt(saved, 10) || 1;
     } catch (_) { }

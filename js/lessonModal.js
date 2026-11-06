@@ -12,7 +12,8 @@
   const getLessonBackdrop = () => el("lesson-modal-backdrop") || el("stage-modal-backdrop") || el("lesson-card-backdrop");
   const getLessonSheet = () => el("lesson-card-sheet") || el("stage-modal");
 
-  function openLessonModal(nodeId) {
+  function openLessonModal(nodeId, unitNum = null, customWords = null) {
+    window.currentCustomWords = Array.isArray(customWords) && customWords.length > 0 ? customWords : null;
     if (typeof window.closeUnitOverviewModal === "function") window.closeUnitOverviewModal();
     if (typeof window.closeUnitSkipModal === "function") window.closeUnitSkipModal();
     if (typeof window.closeBonusModal === "function") window.closeBonusModal();
@@ -27,7 +28,7 @@
     // 💡 약점 복습 노드 인입 시 전용 스피드런 모달로 안전하게 전환
     if (nodeId === "node-review" || String(nodeId).includes("review")) {
       const coords = (typeof window.parseNodeCoordinates === "function") ? window.parseNodeCoordinates(nodeId) : null;
-      const uNum = (coords && coords.unitIndex) ? coords.unitIndex : (window.currentUnitNumber || 1);
+      const uNum = (coords && coords.unitIndex) ? coords.unitIndex : (unitNum || window.currentUnitNumber || 1);
       openReviewSpeedrunModal(uNum, nodeId);
       return;
     }
@@ -52,53 +53,67 @@
       ? window.getCurrentCourseData()
       : (window.packFootballData || window.courseData_es || window.courseData);
 
-    const curUnitLevel = (typeof window.getUnlockedUnitLevel === "function" ? window.getUnlockedUnitLevel(modalLang) : 1) || 1;
+    const activeLevel = (typeof window.getUnlockedUnitLevel === "function" ? window.getUnlockedUnitLevel(modalLang) : (window.currentUnitNumber || 1)) || 1;
     const coords = (typeof window.parseNodeCoordinates === "function")
-      ? window.parseNodeCoordinates(nodeId)
-      : { unitIndex: curUnitLevel, nodeIndex: 1 };
-    const targetUnitIndex = (coords && coords.unitIndex) || curUnitLevel || 1;
+      ? window.parseNodeCoordinates(nodeId, unitNum || activeLevel)
+      : { unitIndex: activeLevel, nodeIndex: 1 };
+    const unitX = parseInt(unitNum || (coords && coords.unitIndex) || activeLevel || 1, 10);
 
     let curUnit = (activeCourse && Array.isArray(activeCourse.units))
-      ? activeCourse.units.find(u => (u.id === targetUnitIndex || u.unitId === targetUnitIndex || u.unitNumber === targetUnitIndex))
+      ? activeCourse.units.find(u => (parseInt(u.id, 10) === unitX || parseInt(u.unitId, 10) === unitX || parseInt(u.unitNumber, 10) === unitX))
       : null;
 
     if (!curUnit && typeof window.getUnitDataWithFallback === "function") {
       const cId = window.currentCourseId || window.activeCourseId || (modalLang === "en" ? "en_main" : "es_main");
-      curUnit = window.getUnitDataWithFallback(cId, targetUnitIndex);
+      curUnit = window.getUnitDataWithFallback(cId, unitX);
     }
-    if (!curUnit && activeCourse?.units) {
+    if (!curUnit && activeCourse?.units && activeCourse.units.length >= unitX && unitX > 0) {
+      curUnit = activeCourse.units[unitX - 1];
+    }
+    if (!curUnit && activeCourse?.units && activeCourse.units.length > 0) {
       curUnit = activeCourse.units[0];
     }
 
     let matchedNode = null;
     if (curUnit && Array.isArray(curUnit.nodes)) {
-      if (nodeId === "node-1") {
-        matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith("_n1")));
-      } else if (nodeId === "node-2") {
-        matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && (x.id.endsWith("_n2") || x.id.endsWith("_n3"))));
-      } else if (nodeId === "node-3") {
-        matchedNode = curUnit.nodes.find(x => (x.stageNumber === 3 || (x.id && (x.id.endsWith("_n5") || x.id.endsWith("-n3")))) && x.type !== "review" && !x.id?.includes("review"));
-        if (!matchedNode) matchedNode = curUnit.nodes.find(x => x.stageNumber === 3 && x.type !== "review");
-      } else if (nodeId === "node-boss" || String(nodeId).includes("boss")) {
-        matchedNode = curUnit.nodes.find(x => x.type === "boss" || (x.id && (x.id.endsWith("_n6") || x.id.includes("boss"))));
-      } else {
-        matchedNode = curUnit.nodes.find(x => x.id === nodeId);
+      matchedNode = curUnit.nodes.find(x => x.id === nodeId);
+      if (!matchedNode) {
+        const stageIdx = (coords && coords.nodeIndex) ? Number(coords.nodeIndex) : null;
+        if (stageIdx === 1 || nodeId === "node-1" || String(nodeId).endsWith("_n1") || String(nodeId).endsWith("stage-1")) {
+          matchedNode = curUnit.nodes.find(x => x.stageNumber === 1 || (x.id && x.id.endsWith("_n1")));
+        } else if (stageIdx === 2 || nodeId === "node-2" || String(nodeId).endsWith("_n2") || String(nodeId).endsWith("stage-2")) {
+          matchedNode = curUnit.nodes.find(x => x.stageNumber === 2 || (x.id && (x.id.endsWith("_n2") || x.id.endsWith("_n3"))));
+        } else if (stageIdx === 3 || nodeId === "node-3" || String(nodeId).endsWith("_n5") || String(nodeId).endsWith("stage-3")) {
+          matchedNode = curUnit.nodes.find(x => (x.stageNumber === 3 || (x.id && (x.id.endsWith("_n5") || x.id.endsWith("-n3")))) && x.type !== "review" && !x.id?.includes("review"));
+          if (!matchedNode) matchedNode = curUnit.nodes.find(x => x.stageNumber === 3 && x.type !== "review");
+        } else if (stageIdx === 6 || nodeId === "node-boss" || String(nodeId).includes("boss") || String(nodeId).endsWith("_n6")) {
+          matchedNode = curUnit.nodes.find(x => x.type === "boss" || (x.id && (x.id.endsWith("_n6") || x.id.includes("boss"))));
+        }
       }
     }
 
     const isBossNode = (nodeId === "node-boss" || String(nodeId).includes("boss") || (matchedNode && matchedNode.type === "boss"));
-    const unitX = (coords && coords.unitIndex) || (matchedNode && matchedNode.unitNumber) || curUnit?.unitNumber || curUnitLevel || 1;
 
-    let nodeTitle = isBossNode ? `Unit ${unitX} 총괄 보스전` : (matchedNode?.title || (nodeId === "node-3" ? `${unitX}과: 자기소개와 소통` : "기초 어휘"));
-    if (!isBossNode && (nodeId === "node-3" || String(nodeId).includes("node-3")) && (!nodeTitle || nodeTitle.includes("복습") || nodeTitle.includes("Review"))) {
-      nodeTitle = `${unitX}과: 자기소개와 소통`;
+    const targetUnitNumber = unitX;
+
+    let cleanTitle = curUnit?.title || "";
+    if (!cleanTitle || /^Unit\s*\d+$/i.test(cleanTitle.trim())) {
+      const preset = window.UNIT_LIST_PRESETS?.[modalLang]?.find(p => p.unit === targetUnitNumber)
+        || window.UNIT_LIST_PRESETS?.en?.find(p => p.unit === targetUnitNumber);
+      if (preset?.title && !/^Unit\s*\d+$/i.test(preset.title)) {
+        cleanTitle = preset.title;
+      }
     }
-    let nodeDesc = isBossNode
+    cleanTitle = cleanTitle.replace(/^Unit\s*\d+[\.\:\s-]*/i, "").trim() || "실전 어휘 학습";
+
+    const nodeTitle = isBossNode
+      ? `Unit ${targetUnitNumber} 총괄 보스전`
+      : `Unit ${targetUnitNumber}. ${cleanTitle}`;
+
+    const nodeDesc = isBossNode
       ? "이번 유닛에서 배운 모든 단어가 총출동합니다!<br>단판 승부로 다음 유닛을 해금하세요."
-      : (matchedNode?.meaning ? `${matchedNode.targetSentence || ""} (${matchedNode.meaning})` : (matchedNode?.desc || curUnit?.desc || "핵심 어휘와 문장을 마스터하세요!"));
-    if (!isBossNode && (nodeId === "node-3" || String(nodeId).includes("node-3")) && (nodeDesc.includes("복습") || nodeDesc.includes("오답") || !matchedNode?.meaning)) {
-      nodeDesc = matchedNode?.desc || curUnit?.desc || "자기소개와 일상 소통을 위한 핵심 표현을 마스터하세요!";
-    }
+      : "30단어 집중 훈련 챌린지";
+
     const nodeIcon = isBossNode ? "👑" : (curUnit?.icon || activeCourse?.icon || "🌱");
 
     let progress = 0;
@@ -165,8 +180,8 @@
     } else {
       setText("lesson-modal-icon", nodeIcon);
       if (iconBox) iconBox.className = "w-12 h-12 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center font-black text-2xl shadow-sm ring-1 ring-secondary-container/40 flex-shrink-0";
-      const sIdx = (nodeId === "node-1" || String(nodeId).includes("1")) ? "1과" : ((nodeId === "node-3" || String(nodeId).includes("3")) ? "3과" : "2과");
-      setText("lesson-modal-badge", `${sIdx} · ${progress >= 3 ? "레슨 완료" : "현재 도전 중"}`);
+      const badgeText = `Unit ${targetUnitNumber} · ${isBossNode ? '최종 관문' : (matchedNode?.stageNumber ? matchedNode.stageNumber + '단계' : '핵심 런')}`;
+      setText("lesson-modal-badge", badgeText);
       if (badgeEl) badgeEl.className = "font-label-sm text-[11px] text-secondary font-extrabold uppercase tracking-wide";
       setText("lesson-modal-title", nodeTitle);
       if (descEl) { descEl.innerHTML = nodeDesc; descEl.textContent = nodeDesc; }
@@ -205,6 +220,7 @@
   }
 
   function closeLessonModal() {
+    window.currentCustomWords = null;
     const backdrop = getLessonBackdrop();
     const sheet = getLessonSheet();
     if (backdrop) {
@@ -357,10 +373,10 @@
     }
   }
 
-  function startLesson(nodeId) {
+  function startLesson(nodeId, customWords = null) {
+    const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || "node-2";
     closeLessonModal();
     if (typeof window.closeResultModal === "function") window.closeResultModal();
-    const targetNodeId = nodeId || window.currentSelectedNodeId || window.currentGameLessonId || "node-2";
     window.currentSelectedNodeId = targetNodeId;
     window.currentGameLessonId = targetNodeId;
     window.currentLessonId = targetNodeId;
@@ -375,18 +391,19 @@
     activeCourseId = (activeCourseId === "pack_football") ? "pack_football" : "main";
     const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
 
+    const effectiveWords = customWords || window.currentCustomWords || null;
     let session = [];
-    if (activeCourseId === "pack_football" && typeof window.getFootballStageSession === "function") {
+    if (Array.isArray(effectiveWords) && effectiveWords.length > 0) {
+      session = effectiveWords.slice(0, 10);
+    } else if (activeCourseId === "pack_football" && typeof window.getFootballStageSession === "function") {
       session = window.getFootballStageSession(targetNodeId);
     } else if (window.quizSessionGenerator && typeof window.quizSessionGenerator.generateDeckForStage === "function") {
       session = window.quizSessionGenerator.generateDeckForStage(targetNodeId, currentLang, round);
     } else if (typeof window.generateStageSession === "function") {
       session = window.generateStageSession(targetNodeId, currentLang, round);
-    } else if (window.VOCA_DATA && typeof window.VOCA_DATA.generateStageSession === "function") {
-      session = window.VOCA_DATA.generateStageSession(targetNodeId, currentLang, round);
     }
 
-    closeLessonModal();
+    window.currentCustomWords = null;
     window.currentSessionQuestions = session;
     const nodeData = { nodeId: targetNodeId, lessonId: targetNodeId, session, words: session };
 
@@ -428,7 +445,8 @@
 
     on("lesson-start-btn", "click", (e) => {
       if (e) { e.preventDefault(); e.stopPropagation(); }
-      startLesson();
+      const targetNodeId = window.currentSelectedNodeId || window.currentGameLessonId || "node-2";
+      startLesson(targetNodeId, window.currentCustomWords);
     });
 
     on("lesson-modal-close-btn", "click", closeLessonModal);

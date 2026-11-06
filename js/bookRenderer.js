@@ -63,51 +63,41 @@
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null)
       || (currentLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
 
-    // 전체 단어 수 및 현재 코스 단어 목록 집합(Set) 동적 계산
+    // 마스터(암기 완료) 단어 집합 로드 (언어별 키 우선, 공용 키 폴백)
+    const masteredSet = new Set();
+    try {
+      const rawMastered = (currentLang && localStorage.getItem('vocadash_mastered_words_' + currentLang))
+        || localStorage.getItem('vocadash_mastered_words')
+        || localStorage.getItem('vocadash_learned_words');
+      if (rawMastered) {
+        const parsedArr = JSON.parse(rawMastered);
+        if (Array.isArray(parsedArr)) {
+          parsedArr.forEach((item) => {
+            const id = String(item?.id || item?.word || item?.term || item || '').trim();
+            if (id) masteredSet.add(id);
+          });
+        }
+      }
+    } catch (_) { }
+
+    // 전체 단어 수 및 현재 활성 코스 기준 암기 완료 단어 수 계산 (w.id 및 w.word/term 1:1 매칭)
     let totalWords = 0;
-    const courseWordTerms = new Set();
+    let memorizedCount = 0;
     if (activeCourse && Array.isArray(activeCourse.units)) {
       activeCourse.units.forEach((u) => {
         if (Array.isArray(u.words)) {
           totalWords += u.words.length;
-          u.words.forEach((w) => {
-            const term = String(w.word || w.term || '').trim();
-            if (term) courseWordTerms.add(term);
-          });
-        }
-      });
-    }
-
-    // 외운 단어(암기 완료) 동적 계산
-    let memorizedCount = 0;
-    try {
-      let storedCourse = 'main';
-      try {
-        storedCourse = localStorage.getItem('vocadash_active_course') || 'main';
-      } catch (_) { }
-      const activeId = activeCourse?.id || window.activeCourseId || storedCourse || 'main';
-      const savedCount = localStorage.getItem('vocadash_memorized_count_' + activeId);
-      if (savedCount !== null) {
-        const parsed = parseInt(savedCount, 10);
-        if (!isNaN(parsed) && parsed >= 0) memorizedCount = parsed;
-      } else {
-        const rawMastered = localStorage.getItem('vocadash_mastered_words') || localStorage.getItem('vocadash_learned_words');
-        if (rawMastered) {
-          const parsedArr = JSON.parse(rawMastered);
-          if (Array.isArray(parsedArr)) {
-            if (courseWordTerms.size > 0) {
-              memorizedCount = parsedArr.filter((item) => {
-                const id = String(item?.id || item?.word || item?.term || item || '').trim();
-                return courseWordTerms.has(id);
-              }).length;
-            } else {
-              memorizedCount = parsedArr.length;
-            }
+          if (masteredSet.size > 0) {
+            u.words.forEach((w) => {
+              const wid = String(w.id || '').trim();
+              const term = String(w.word || w.term || '').trim();
+              if ((wid && masteredSet.has(wid)) || (term && masteredSet.has(term))) {
+                memorizedCount++;
+              }
+            });
           }
         }
-      }
-    } catch (_) {
-      memorizedCount = 0;
+      });
     }
 
     let wrongCount = 0;
@@ -182,6 +172,7 @@
       art.className = 'book-word-card bg-white rounded-xl p-3.5 shadow-2xs border border-slate-100 hover:border-emerald-200 hover:shadow-xs transition-all';
       art.dataset.term = termStr;
       art.dataset.meaning = meaningStr;
+      if (w.id) art.dataset.id = String(w.id).trim();
       art.dataset.category = unitTitle || '';
 
       const rawPron = w.pronunciation || w.pron || w.phonetic || '';
@@ -235,7 +226,102 @@
     container.appendChild(frag);
   }
 
-  // 유닛 퀵 네비게이션 점프 바 렌더링 (가로 스크롤 칩 바)
+  // CEFR 레벨 프리셋 (A1 ~ C2)
+  const CEFR_LEVEL_PRESETS = [
+    { id: 'all', label: '전체' },
+    { id: 'A1', label: 'A1 입문' },
+    { id: 'A2', label: 'A2 초급' },
+    { id: 'B1', label: 'B1 중급' },
+    { id: 'B2', label: 'B2 중상급' },
+    { id: 'C1', label: 'C1 고급' },
+    { id: 'C2', label: 'C2 최고급' }
+  ];
+
+  // 유닛 CEFR 레벨 판별 헬퍼 (단어 레벨 > 코스 섹션 메타 > 유닛 인덱스 구간)
+  function getUnitCefrLevel(u, uNum, lang) {
+    if (u?.level && /^[ABC][12]$/i.test(String(u.level).trim())) {
+      return String(u.level).trim().toUpperCase();
+    }
+    const firstWordLevel = u?.words?.[0]?.level;
+    if (firstWordLevel && /^[ABC][12]$/i.test(String(firstWordLevel).trim())) {
+      return String(firstWordLevel).trim().toUpperCase();
+    }
+    const cs = (typeof window !== 'undefined' ? window.courseSections : null);
+    const cid = (lang === 'en') ? 'en_main' : 'es_main';
+    const sections = cs?.[cid]?.sections || cs?.es_main?.sections || [];
+    const sec = sections.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
+    if (sec && sec.tier) {
+      const match = sec.tier.match(/\b([ABC][12])\b/i);
+      if (match) return match[1].toUpperCase();
+    }
+    if (uNum <= 30) return 'A1';
+    if (uNum <= 70) return 'A2';
+    if (uNum <= 120) return 'B1';
+    if (uNum <= 166) return 'B2';
+    if (uNum <= 196) return 'C1';
+    return 'C2';
+  }
+
+  // 유닛 타이틀 정규화 헬퍼 (프리셋/노드 데이터 보강 및 'Unit X. 제목' 온전한 표기 보장)
+  function resolveUnitTitle(u, uNum, lang) {
+    let title = (u?.title || '').trim();
+
+    if (!title || /^Unit\s*\d+$/i.test(title)) {
+      const preset = window.UNIT_LIST_PRESETS?.[lang]?.find(p => p.unit === uNum)
+        || window.UNIT_LIST_PRESETS?.en?.find(p => p.unit === uNum);
+      if (preset && preset.title && !/^Unit\s*\d+$/i.test(preset.title)) {
+        title = `Unit ${uNum}. ${preset.title}`;
+      } else if (u?.nodes?.[0]?.title) {
+        const cleanNodeTitle = u.nodes[0].title.replace(/^\d+과[:\s-]*/, '').trim();
+        title = `Unit ${uNum}. ${cleanNodeTitle}`;
+      } else if (u?.desc && !/^Unit\s*\d+/i.test(u.desc)) {
+        title = `Unit ${uNum}. ${u.desc}`;
+      } else {
+        title = `Unit ${uNum}`;
+      }
+    }
+
+    if (!/^Unit\s*\d+/i.test(title)) {
+      title = `Unit ${uNum}. ${title}`;
+    }
+
+    return title;
+  }
+
+  // CEFR 레벨 기준 유닛 필터링 순수 함수 (5,000단어 DOM 무재렌더링 초고속 전환)
+  function filterUnitsByLevel(targetLevel) {
+    const container = document.getElementById('book-words-container');
+    if (!container) return;
+
+    const unitSections = container.querySelectorAll('.book-unit-container');
+    let visibleCount = 0;
+
+    unitSections.forEach(sec => {
+      const secLevel = sec.dataset.level || 'A1';
+      if (targetLevel === 'all' || secLevel === targetLevel) {
+        sec.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+
+    let emptyNotice = document.getElementById('book-level-empty-notice');
+    if (visibleCount === 0) {
+      if (!emptyNotice) {
+        emptyNotice = document.createElement('div');
+        emptyNotice.id = 'book-level-empty-notice';
+        emptyNotice.className = 'py-12 px-4 text-center text-slate-400 text-xs font-medium';
+        container.appendChild(emptyNotice);
+      }
+      emptyNotice.textContent = `선택하신 ${targetLevel} 레벨에 해당하는 유닛이 없습니다.`;
+      emptyNotice.classList.remove('hidden');
+    } else if (emptyNotice) {
+      emptyNotice.classList.add('hidden');
+    }
+  }
+
+  // 2-1. 상단 유닛 CEFR 레벨 필터 바 렌더링
   function renderUnitQuickNav(units, activeCourseId) {
     const container = document.getElementById('book-words-container');
     if (!container || !container.parentNode) return;
@@ -245,65 +331,45 @@
       quickNav = document.createElement('nav');
       quickNav.id = 'book-unit-quick-nav';
       quickNav.className = 'flex items-center gap-1.5 overflow-x-auto pb-2 mb-3 no-scrollbar scroll-smooth';
-      quickNav.setAttribute('aria-label', '유닛 바로가기');
+      quickNav.setAttribute('aria-label', 'CEFR 레벨 필터');
       container.parentNode.insertBefore(quickNav, container);
     }
 
     quickNav.classList.remove('hidden');
 
-    let chipsHtml = `
-      <button type="button" class="book-unit-chip active flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer bg-emerald-500 text-white shadow-2xs" data-unit-target="all">
-        전체
-      </button>
-    `;
+    const activeLevel = quickNav.dataset.currentLevel || 'all';
 
-    units.forEach((u, idx) => {
-      const uNum = parseInt(u.unitNumber || u.unitId || u.unit || u.id, 10) || (idx + 1);
+    let chipsHtml = '';
+    CEFR_LEVEL_PRESETS.forEach(lvl => {
+      const isActive = (lvl.id === activeLevel);
+      const activeClass = 'bg-primary text-white shadow-2xs font-bold';
+      const inactiveClass = 'bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 hover:text-primary font-semibold';
       chipsHtml += `
-        <button type="button" class="book-unit-chip flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 hover:text-emerald-600" data-unit-target="unit-${uNum}">
-          Unit ${uNum}
+        <button type="button" class="book-unit-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer ${isActive ? activeClass : inactiveClass}" data-level="${lvl.id}">
+          ${lvl.label}
         </button>
       `;
     });
 
     quickNav.innerHTML = chipsHtml;
 
-    // 칩 클릭 이벤트 바인딩
+    // 칩 클릭 이벤트 바인딩 (순수 DOM 필터링으로 5,000단어 무재렌더링 초고속 전환)
     const chips = quickNav.querySelectorAll('.book-unit-chip');
-    chips.forEach((chip) => {
+    chips.forEach(chip => {
       chip.addEventListener('click', () => {
-        chips.forEach((c) => {
-          c.className = 'book-unit-chip flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 hover:text-emerald-600';
+        const targetLevel = chip.dataset.level || 'all';
+        quickNav.dataset.currentLevel = targetLevel;
+
+        chips.forEach(c => {
+          c.className = 'book-unit-chip flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 hover:text-primary';
         });
-        chip.className = 'book-unit-chip active flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer bg-emerald-500 text-white shadow-2xs';
+        chip.className = 'book-unit-chip active flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer bg-primary text-white shadow-2xs';
 
-        const targetUnit = chip.dataset.unitTarget;
-        if (targetUnit === 'all') {
-          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return;
-        }
-
-        const targetSection = document.getElementById('book-' + targetUnit + '-section');
-        if (targetSection) {
-          const wordsWrap = targetSection.querySelector('.book-unit-words-wrap');
-          const arrowIcon = targetSection.querySelector('.unit-toggle-icon');
-          const header = targetSection.querySelector('.book-category-header');
-
-          if (wordsWrap && wordsWrap.classList.contains('hidden')) {
-            if (typeof wordsWrap._mountCards === 'function') {
-              wordsWrap._mountCards();
-            }
-            wordsWrap.classList.remove('hidden');
-            if (arrowIcon) arrowIcon.classList.add('rotate-180', 'text-emerald-600');
-            if (header) header.classList.add('bg-slate-50/80');
-          }
-
-          setTimeout(() => {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 50);
-        }
+        filterUnitsByLevel(targetLevel);
       });
     });
+
+    filterUnitsByLevel(activeLevel);
   }
 
   // 2-2. 단어장 실시간 검색 핸들러 (5,000단어 디바운스 필터 및 플랫 리스트 렌더링)
@@ -326,12 +392,16 @@
       if (quickNav) quickNav.classList.remove('hidden');
       const searchWrap = document.getElementById('book-search-results-wrap');
       if (searchWrap) searchWrap.remove();
-      container.querySelectorAll('.book-unit-container').forEach(el => el.classList.remove('hidden'));
+      const currentLevel = quickNav?.dataset.currentLevel || 'all';
+      filterUnitsByLevel(currentLevel);
       return;
     }
 
     // 2) 검색어가 있는 경우: 퀵 네비 및 Unit 아코디언 숨김
     if (quickNav) quickNav.classList.add('hidden');
+    container.querySelectorAll('.book-unit-container').forEach(el => el.classList.add('hidden'));
+    const emptyNotice = document.getElementById('book-level-empty-notice');
+    if (emptyNotice) emptyNotice.classList.add('hidden');
     container.querySelectorAll('.book-unit-container').forEach(el => el.classList.add('hidden'));
 
     // 검색 결과 래퍼 준비
@@ -479,7 +549,9 @@
       // 마스터된 단어 집합 (진도율 산출용)
       const masteredSet = new Set();
       try {
-        const rawMastered = localStorage.getItem('vocadash_mastered_words') || localStorage.getItem('vocadash_learned_words');
+        const rawMastered = (lang && localStorage.getItem('vocadash_mastered_words_' + lang))
+          || localStorage.getItem('vocadash_mastered_words')
+          || localStorage.getItem('vocadash_learned_words');
         if (rawMastered) {
           const parsedArr = JSON.parse(rawMastered);
           if (Array.isArray(parsedArr)) {
@@ -503,7 +575,8 @@
             : (window.VOCA_DATA?.byUnit?.[unitKey] || []));
 
         const wordCount = (unitWords || []).length;
-        const safeUnitTitle = escapeHTML(u.title || `Unit ${uNum}`);
+        const unitCefrLevel = getUnitCefrLevel(u, uNum, lang);
+        const safeUnitTitle = escapeHTML(resolveUnitTitle(u, uNum, lang));
 
         // Rank 범위 및 유닛 진도율 계산
         let rankMin = Infinity;
@@ -516,8 +589,9 @@
             if (r < rankMin) rankMin = r;
             if (r > rankMax) rankMax = r;
           }
+          const wid = String(w.id || '').trim();
           const termStr = String(w.word || w.term || '').trim();
-          if (termStr && masteredSet.has(termStr)) {
+          if ((wid && masteredSet.has(wid)) || (termStr && masteredSet.has(termStr))) {
             masteredInUnit++;
           }
         });
@@ -536,6 +610,8 @@
         const unitContainer = document.createElement('section');
         unitContainer.id = `book-unit-${uNum}-section`;
         unitContainer.className = 'book-unit-container mb-3 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-200';
+        unitContainer.dataset.unitNumber = String(uNum);
+        unitContainer.dataset.level = unitCefrLevel;
 
         const catHeader = document.createElement('header');
         catHeader.className = `book-category-header flex items-center justify-between p-3.5 cursor-pointer select-none group transition-colors ${isInitiallyOpen ? 'bg-slate-50/80 border-b border-slate-100/90' : 'hover:bg-slate-50/80'}`;
@@ -771,7 +847,7 @@
       renderBookWords(currentLang, window.activeCourseId || window.currentBookCourseId || 'main');
     }
 
-    if (filterType === 'starred' || filterType === 'alpha' || filterType === 'alphabet') {
+    if (filterType === 'starred' || filterType === 'memorized' || filterType === 'unmemorized' || filterType === 'alpha' || filterType === 'alphabet') {
       bookScreen.querySelectorAll('.book-unit-words-wrap').forEach((wrap) => {
         if (typeof wrap._mountCards === 'function' && wrap.children.length === 0) {
           wrap._mountCards();
@@ -779,14 +855,43 @@
       });
     }
 
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    let masteredSet = null;
+    if (filterType === 'memorized' || filterType === 'unmemorized') {
+      masteredSet = new Set();
+      try {
+        const rawMastered = (currentLang && localStorage.getItem('vocadash_mastered_words_' + currentLang))
+          || localStorage.getItem('vocadash_mastered_words')
+          || localStorage.getItem('vocadash_learned_words');
+        if (rawMastered) {
+          const parsedArr = JSON.parse(rawMastered);
+          if (Array.isArray(parsedArr)) {
+            parsedArr.forEach((item) => {
+              const id = String(item?.id || item?.word || item?.term || item || '').trim();
+              if (id) masteredSet.add(id);
+            });
+          }
+        }
+      } catch (_) { }
+    }
+
     const cards = bookScreen.querySelectorAll('.book-word-card');
     cards.forEach((card) => {
       const isStarred = !!card.querySelector('.book-star-btn.text-amber-400, .book-star-btn.text-amber-500, button[aria-label="즐겨찾기"].text-amber-400, button[aria-label="즐겨찾기"].text-amber-500');
+      const cardTerm = card.dataset.term || '';
+      const cardId = card.dataset.id || '';
+      const isMastered = masteredSet ? ((cardId && masteredSet.has(cardId)) || (cardTerm && masteredSet.has(cardTerm))) : false;
 
       if (filterType === 'all') {
         card.classList.remove('hidden');
       } else if (filterType === 'starred') {
         if (isStarred) card.classList.remove('hidden');
+        else card.classList.add('hidden');
+      } else if (filterType === 'memorized') {
+        if (isMastered) card.classList.remove('hidden');
+        else card.classList.add('hidden');
+      } else if (filterType === 'unmemorized') {
+        if (!isMastered) card.classList.remove('hidden');
         else card.classList.add('hidden');
       }
     });
@@ -1041,13 +1146,21 @@
         e.stopPropagation();
 
         const uNum = parseInt(btn.dataset.unitNum, 10) || 1;
-        const activeCourse = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : null;
+        const activeCourse = (typeof window.getCurrentCourseData === 'function')
+          ? window.getCurrentCourseData()
+          : ((window.currentLanguage === 'en' ? window.courseData_en : window.courseData_es) || null);
         let targetNodeId = null;
+        let unitWords = [];
 
         if (activeCourse && Array.isArray(activeCourse.units)) {
           const uObj = activeCourse.units.find(u => (parseInt(u.unitNumber || u.unitId || u.unit || u.id, 10) === uNum));
-          if (uObj && Array.isArray(uObj.nodes) && uObj.nodes.length > 0) {
-            targetNodeId = uObj.nodes[0].id;
+          if (uObj) {
+            if (Array.isArray(uObj.words) && uObj.words.length > 0) {
+              unitWords = uObj.words;
+            }
+            if (Array.isArray(uObj.nodes) && uObj.nodes.length > 0) {
+              targetNodeId = uObj.nodes[0].id;
+            }
           }
         }
 
@@ -1057,9 +1170,9 @@
         }
 
         if (typeof window.openLessonModal === 'function') {
-          window.openLessonModal(targetNodeId);
+          window.openLessonModal(targetNodeId, uNum, unitWords);
         } else if (typeof window.openStageModal === 'function') {
-          window.openStageModal(targetNodeId);
+          window.openStageModal(targetNodeId, uNum, unitWords);
         }
       });
     });

@@ -2,6 +2,13 @@
 (function () {
   'use strict';
 
+  // 발음 단일 대괄호 정규화 유틸 (중복 대괄호 방지 및 안전한 [발음] 형태 보장)
+  function formatPhonetic(raw) {
+    if (!raw) return '';
+    const cleaned = String(raw).trim().replace(/^\[+|\]+$/g, '').trim();
+    return cleaned ? `[${cleaned}]` : '';
+  }
+
   const cheerMessages = [
     '첫 단어부터 신나게 질주해볼까요? 🐾', '좋은 페이스예요! 귀에 쏙쏙 들어오네요 🐱', '익숙한 표현들이 점점 늘어나고 있어요 ⚡',
     '벌써 4번째 단어 돌파! 아주 훌륭해요 👏', '절반이나 왔어요! 페이스를 유지해보세요 🏃‍♂️', '실전 여행에서 가장 많이 쓰이는 표현이에요 ✈️',
@@ -121,7 +128,7 @@
         term: termStr,
         meaning: meanStr,
         pronunciation: pronStr,
-        phonetic: item.phonetic || (pronStr ? `[${pronStr}]` : ''),
+        phonetic: formatPhonetic(item.phonetic || pronStr),
         gender: item.gender || null,
         partOfSpeech: posStr || null,
         grammarHint: grammarHint || '',
@@ -225,7 +232,8 @@
 
     if (els.phonetic) {
       const isPhoneticVisible = !window.vocadashSettings || window.vocadashSettings.showPhonetic !== false;
-      els.phonetic.textContent = cardData.phonetic || '';
+      const rawPron = cardData.phonetic || cardData.pronunciation || cardData.pron || '';
+      els.phonetic.textContent = formatPhonetic(rawPron);
       els.phonetic.style.display = isPhoneticVisible ? '' : 'none';
       els.phonetic.classList.toggle('hidden', !isPhoneticVisible);
     }
@@ -309,7 +317,7 @@
     if (nextCardData) {
       if (els.behindTag) els.behindTag.textContent = nextCardData.tag || '핵심 어휘';
       if (els.behindWord) els.behindWord.textContent = nextCardData.word || nextCardData.term || '';
-      if (els.behindPhonetic) els.behindPhonetic.textContent = nextCardData.phonetic || '';
+      if (els.behindPhonetic) els.behindPhonetic.textContent = formatPhonetic(nextCardData.phonetic || nextCardData.pronunciation || nextCardData.pron || '');
       if (els.behind) { els.behind.style.display = 'flex'; els.behind.style.opacity = '0.7'; els.behind.style.transform = 'translateY(-8px)'; }
       if (els.deckLayer2) { els.deckLayer2.style.display = 'block'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.transform = 'translateY(-16px)'; }
     } else {

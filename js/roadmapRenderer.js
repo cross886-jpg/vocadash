@@ -802,7 +802,7 @@
       } else if (nType === 'review' || rawNodeId.includes('review')) {
         if (typeof window.openReviewSpeedrunModal === 'function') window.openReviewSpeedrunModal(uNum, rawNodeId);
       } else {
-        if (typeof window.openLessonModal === 'function') window.openLessonModal(rawNodeId);
+        if (typeof window.openLessonModal === 'function') window.openLessonModal(rawNodeId, uNum);
       }
     });
   }

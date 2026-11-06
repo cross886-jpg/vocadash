@@ -1,6 +1,13 @@
 import csv
 import os
 import shutil
+import sys
+
+# --lang en 지원
+if any("en" in arg.lower() for arg in sys.argv[1:]):
+    import fill_examples_en
+    fill_examples_en.fill_english_data()
+    sys.exit(0)
 
 INPUT_FILE = "spanish_5000_master.csv"
 BACKUP_FILE = "spanish_5000_master.csv.bak"

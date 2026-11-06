@@ -185,7 +185,7 @@ assert.strictEqual(mockDocument.getElementById('lesson-start-btn-text').textCont
 console.log('✅ PASS: Composite key u2_node-boss renders Unit 2 총괄 보스전');
 
 console.log('\n--- TEST 3: Normal Node Recovery (Restore 0/3 Progress & Standard Theme) ---');
-win.openLessonModal('node-2');
+win.openLessonModal('node-2', 2);
 
 console.log('Normal Badge:', badgeEl.textContent);
 console.log('Normal Title:', titleEl.textContent);
@@ -193,7 +193,7 @@ console.log('Normal Progress Text:', mockDocument.getElementById('lesson-modal-p
 console.log('Normal XP / Gems:', xpText.textContent, '/', gemsText.textContent);
 console.log('Normal Start Button:', startBtnText.textContent);
 
-assert.strictEqual(badgeEl.textContent.includes('2과'), true);
+assert.strictEqual(badgeEl.textContent.includes('Unit 2') && badgeEl.textContent.includes('2단계'), true);
 assert.strictEqual(badgeEl.className.includes('text-rose-600'), false);
 assert.strictEqual(progSection.classList.contains('hidden'), false, 'Progress section must be restored for normal node');
 assert.strictEqual(bossSection.classList.contains('hidden'), true, 'Boss condition section must be hidden for normal node');

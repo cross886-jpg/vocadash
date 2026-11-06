@@ -73,9 +73,8 @@
     const lvl = Math.max(1, Math.min(maxUnits, parseInt(level, 10) || 1));
     storage.set(`vocadash_unlocked_${lang}_${cid}`, String(lvl));
     storage.set(`vocadash_unlocked_unit_${lang}_${cid}`, String(lvl));
-    storage.set(`vocadash_unlocked_unit_${cid}`, String(lvl));
     storage.set(`vocadash_unlocked_unit_${lang}`, String(lvl));
-    storage.set('vocadash_current_unit', String(lvl));
+    storage.set(`vocadash_current_unit_${lang}`, String(lvl));
     const prog = getCourseProgress(cid, lang);
     if (!prog.unlockedUnits) prog.unlockedUnits = [1];
     for (let u = 1; u <= lvl; u++) if (!prog.unlockedUnits.includes(u)) prog.unlockedUnits.push(u);
@@ -809,9 +808,8 @@
           storage.set(`vocadash_active_unit_${lang}_${cid}`, String(uNum));
           storage.set(`vocadash_unlocked_${lang}_${cid}`, String(uNum));
           storage.set(`vocadash_unlocked_unit_${lang}_${cid}`, String(uNum));
-          storage.set(`vocadash_unlocked_unit_${cid}`, String(uNum));
           storage.set(`vocadash_unlocked_unit_${lang}`, String(uNum));
-          storage.set('vocadash_current_unit', String(uNum));
+          storage.set(`vocadash_current_unit_${lang}`, String(uNum));
         } catch (_) { }
       }
     }

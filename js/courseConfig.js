@@ -545,22 +545,22 @@
 
   function getCurrentCourseData() {
     let activeId = 'es_main';
+    const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) === 'en' ? 'en' : 'es';
     try {
       if (typeof localStorage !== 'undefined') {
-        activeId = localStorage.getItem('vocadash_current_course') || localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
+        activeId = localStorage.getItem('vocadash_active_course_' + curLang) || localStorage.getItem('vocadash_current_course') || localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || (curLang === 'en' ? 'en_main' : 'es_main');
       } else {
-        activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
+        activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || (curLang === 'en' ? 'en_main' : 'es_main');
       }
     } catch (_) {
-      activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || 'es_main';
+      activeId = (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || (curLang === 'en' ? 'en_main' : 'es_main');
     }
-    if (activeId === 'main') {
-      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
+    if (activeId === 'main' || (curLang === 'en' && activeId === 'es_main')) {
       activeId = (curLang === 'en' && typeof window !== 'undefined' && window.courseData_en) ? 'en_main' : 'es_main';
     } else if (activeId === 'pack_football' || activeId === 'soccer' || activeId === 'es_soccer') {
       activeId = 'pack_football';
     }
-    return (COURSES && COURSES[activeId]) || (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null) || courseData;
+    return (COURSES && COURSES[activeId]) || (curLang === 'en' ? (typeof window !== 'undefined' ? window.courseData_en : null) : (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null)) || courseData;
   }
   target.getCurrentCourseData = getCurrentCourseData;
   if (typeof window !== 'undefined') window.getCurrentCourseData = getCurrentCourseData;

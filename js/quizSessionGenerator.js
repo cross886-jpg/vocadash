@@ -6,6 +6,13 @@
 (function () {
   "use strict";
 
+  // 발음 단일 대괄호 정규화 유틸 (중복 대괄호 방지 및 안전한 [발음] 형태 보장)
+  function formatPhonetic(raw) {
+    if (!raw) return '';
+    const cleaned = String(raw).trim().replace(/^\[+|\]+$/g, '').trim();
+    return cleaned ? `[${cleaned}]` : '';
+  }
+
   // 1. 단어 배열 랜덤 셔플 (Fisher-Yates)
   function shuffleArray(arr) {
     const copy = Array.isArray(arr) ? arr.slice() : [];
@@ -47,13 +54,11 @@
 
   function findWordInCourse(wordId, course) {
     if (!wordId) return null;
+    const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) === 'en' ? 'en' : 'es';
     const courses = [
       course,
       window.getCurrentCourseData?.(),
-      window.courseData_es,
-      window.courseData_en,
-      window.packFootballData,
-      window.courseData
+      (curLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData))
     ].filter(Boolean);
 
     for (const c of courses) {
@@ -67,12 +72,6 @@
         const found = c.allWords.find(w => w && w.id === wordId);
         if (found) return found;
       }
-    }
-
-    const vocaAll = (typeof window !== 'undefined' ? window.VOCA_DATA?.allWords : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA?.allWords : null);
-    if (Array.isArray(vocaAll)) {
-      const found = vocaAll.find(w => w && (w.id === wordId || w.word === wordId));
-      if (found) return found;
     }
 
     return null;
@@ -100,21 +99,15 @@
   function getStageWordPool(lessonId, lang) {
     const rawId = lessonId || window.currentGameLessonId || 'node-2';
     const normId = normalizeLessonId(rawId);
-    const courseLang = (window.currentLanguage || lang || 'es') === 'en' ? 'en' : 'es';
-    const course = window.getCurrentCourseData?.() || (courseLang === 'en' ? window.courseData_en : window.courseData_es) || window.courseData;
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const course = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
 
     const coords = (typeof window.parseNodeCoordinates === 'function') ? window.parseNodeCoordinates(rawId) : null;
     const targetUnitNum = coords ? coords.unitIndex : ((typeof window.currentUnitNumber === 'number' ? window.currentUnitNumber : 1));
-    const currentUnitId = 'unit-' + targetUnitNum;
 
-    // VOCA_DATA를 최우선 단어 공급원으로 조회 (빈 배열 fallback || [] 필수 적용)
-    const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
-    const vocaUnitWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
-      ? vocaSource.getWordsByUnit(currentUnitId)
-      : (vocaSource?.byUnit?.[currentUnitId] || []);
-
-    const unitIdx = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
-    let targetUnit = course?.units?.find?.(u => (u.unitNumber || u.unit) === targetUnitNum) ||
+    let targetUnit = course?.units?.find?.(u => parseInt(u.unitNumber || u.unit || u.id, 10) === targetUnitNum) ||
       course?.units?.find?.(u => u.nodes?.some(n => n.id === rawId));
 
     if (!targetUnit && typeof window.getUnitDataWithFallback === 'function') {
@@ -122,12 +115,8 @@
       targetUnit = window.getUnitDataWithFallback(courseId, targetUnitNum);
     }
     if (!targetUnit && course?.units) {
+      const unitIdx = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
       targetUnit = course.units[unitIdx] || course.units[0];
-    }
-
-    // 대상 유닛 단어가 없거나 부족할 경우 vocaUnitWords로 보강
-    if (targetUnit && (!targetUnit.words || targetUnit.words.length === 0) && vocaUnitWords.length > 0) {
-      targetUnit.words = vocaUnitWords;
     }
 
     let nodePool = [];
@@ -137,16 +126,15 @@
           (normId === 'node-2' && n.stageNumber === 2) ||
           (normId === 'node-3' && n.stageNumber === 3) ||
           (normId === 'node-boss' && n.type === 'boss'));
-      const candidateWords = (targetUnit.words && targetUnit.words.length > 0) ? targetUnit.words : vocaUnitWords;
-      if (node?.wordIds && candidateWords.length > 0) {
-        nodePool = candidateWords.filter(w => node.wordIds.includes(w.id));
+      if (node?.wordIds && Array.isArray(targetUnit.words)) {
+        nodePool = targetUnit.words.filter(w => node.wordIds.includes(w.id));
       }
     }
 
     if (nodePool.length > 0) return nodePool;
 
     // 노드별 기본 슬라이스 (1과: 0~10, 2과: 10~20, 3과: 20~30, 보스전: 0~15)
-    const baseWords = (vocaUnitWords && vocaUnitWords.length > 0) ? vocaUnitWords : (targetUnit?.words || []);
+    const baseWords = targetUnit?.words || [];
     if (baseWords.length > 0) {
       if (normId === 'node-1') return baseWords.slice(0, 10);
       if (normId === 'node-2') return baseWords.length >= 20 ? baseWords.slice(10, 20) : baseWords.slice(0, 10);
@@ -227,7 +215,7 @@
         term: wordStr,
         meaning: meanStr,
         pronunciation: pronStr,
-        phonetic: pronStr ? `[${pronStr}]` : '',
+        phonetic: formatPhonetic(item.phonetic || pronStr),
         gender: item.gender || null,
         partOfSpeech: posStr || null,
         grammarHint: grammarHint || '',
@@ -260,27 +248,24 @@
   function getUnitWords(unitNum = 1, lang = 'es') {
     const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
-    const currentUnitId = 'unit-' + targetU;
 
-    // VOCA_DATA 최우선 조회 (빈 배열 fallback || [] 필수 적용)
-    const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
-    const vocaWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
-      ? vocaSource.getWordsByUnit(currentUnitId)
-      : (vocaSource?.byUnit?.[currentUnitId] || []);
-    if (Array.isArray(vocaWords) && vocaWords.length > 0) {
-      return vocaWords;
-    }
+    const course = (typeof window.getCurrentCourseData === 'function')
+      ? window.getCurrentCourseData()
+      : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
 
-    const course = window.getCurrentCourseData?.() || (courseLang === 'en' ? window.courseData_en : window.courseData_es) || window.courseData;
     let uData = null;
     if (course && Array.isArray(course.units)) {
-      uData = course.units.find(x => (x.unitNumber || x.unitId || x.unit || x.id) === targetU);
+      uData = course.units.find(x => parseInt(x.unitNumber || x.unitId || x.unit || x.id, 10) === targetU);
     }
     if (!uData && typeof window.getUnitDataWithFallback === 'function') {
       const courseId = window.currentCourseId || window.activeCourseId || (courseLang === 'en' ? 'en_main' : 'es_main');
       uData = window.getUnitDataWithFallback(courseId, targetU);
     }
-    return (uData && Array.isArray(uData.words)) ? uData.words : [];
+    if (uData && Array.isArray(uData.words) && uData.words.length > 0) {
+      return uData.words;
+    }
+
+    return [];
   }
 
   // 📚 이미 학습한 단어 풀(현재 유닛 또는 직전 클리어한 유닛들) 추출 헬퍼
@@ -288,38 +273,24 @@
     const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
     const pool = [];
-    const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
 
-    // 1. 현재 유닛 및 직전 유닛 단어 우선 수집
+    // 1. 현재 유닛 및 직전 유닛 단어 수집
     for (let u = targetU; u >= 1; u--) {
-      const uKey = 'unit-' + u;
-      const vocaWords = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
-        ? vocaSource.getWordsByUnit(uKey)
-        : (vocaSource?.byUnit?.[uKey] || []);
-      if (Array.isArray(vocaWords) && vocaWords.length > 0) {
-        pool.push(...vocaWords);
-      } else {
-        const uWords = getUnitWords(u, courseLang);
-        if (Array.isArray(uWords) && uWords.length > 0) {
-          pool.push(...uWords);
-        }
+      const uWords = getUnitWords(u, courseLang);
+      if (Array.isArray(uWords) && uWords.length > 0) {
+        pool.push(...uWords);
       }
     }
 
-    // 2. 단어 풀이 비어있다면 코스 전체 단어 또는 fallback 단어 보강
+    // 2. 단어 풀이 비어있다면 코스 전체 단어 보강
     if (pool.length === 0) {
-      const course = window.getCurrentCourseData?.() || (courseLang === 'en' ? window.courseData_en : window.courseData_es) || window.courseData;
+      const course = (typeof window.getCurrentCourseData === 'function')
+        ? window.getCurrentCourseData()
+        : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
       if (course && Array.isArray(course.allWords) && course.allWords.length > 0) {
-        pool.push(...course.allWords);
-      } else if (typeof window.getUnitDataWithFallback === 'function') {
-        const courseId = window.currentCourseId || window.activeCourseId || (courseLang === 'en' ? 'en_main' : 'es_main');
-        const fallbackUnit = window.getUnitDataWithFallback(courseId, targetU);
-        if (fallbackUnit && Array.isArray(fallbackUnit.words)) {
-          pool.push(...fallbackUnit.words);
-        }
+        return course.allWords;
       }
     }
-
     return pool;
   }
 
@@ -477,9 +448,9 @@
       const isWeakness = activeWrongSet.has(itemKey);
       const wordStr = String(item.term || item.word || '').trim();
       const meanStr = String(item.meaning || item.kor || item.ko || item.answer || '').trim();
-      const rawPron = String(item.pronunciation || item.pron || item.phonetic || '').trim();
-      const cleanPron = rawPron.replace(/^\[+|\]+$/g, '');
-      const phoneticStr = cleanPron ? `[${cleanPron}]` : '';
+      const rawPron = item.pronunciation || item.pron || item.phonetic || '';
+      const phoneticStr = formatPhonetic(rawPron);
+      const cleanPron = phoneticStr.replace(/^\[+|\]+$/g, '');
       const exTarget = String(item.exampleTarget || item.example_es || item.example || item.sentence || '').trim();
       const exMeaning = String(item.exampleMeaning || item.example_ko || item.exampleKo || item.sentenceKo || '').trim();
 
@@ -539,6 +510,24 @@
     const shuffled = uniqueCandidates.sort(() => 0.5 - Math.random());
     const distractors = shuffled.slice(0, 3).map(w => String(w.meaning || w.answer || w.korean || w.ko || w.word || '').trim());
 
+    // 3) 오답 선지가 3개 미만일 경우 같은 코스(active course) 내 다른 단어들의 뜻(meaning)에서 무작위 보강
+    if (distractors.length < 3) {
+      const activeCourse = course || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null);
+      const allWords = activeCourse?.allWords || [];
+      if (Array.isArray(allWords) && allWords.length > 0) {
+        const extraShuffled = allWords.slice().sort(() => 0.5 - Math.random());
+        for (const ew of extraShuffled) {
+          if (distractors.length >= 3) break;
+          const em = String(ew.meaning || ew.answer || ew.korean || ew.ko || '').trim();
+          const et = String(ew.word || ew.term || '').trim();
+          if (em && !seenMeanings.has(em) && em !== correctMeaning && et !== correctTerm) {
+            seenMeanings.add(em);
+            distractors.push(em);
+          }
+        }
+      }
+    }
+
     // 4개 보기가 모자랄 경우 대체 텍스트로 보강하여 절대 빈 버튼이 되지 않도록 보장
     let dIdx = 1;
     while (distractors.length < 3) {
@@ -549,7 +538,7 @@
       dIdx++;
     }
 
-    // 3) 정답과 오답 3개를 합친 뒤 최종 셔플 (총 4개)
+    // 4) 정답과 오답 3개를 합친 뒤 최종 셔플 (총 4개)
     const finalOptions = [correctMeaning, ...distractors].sort(() => 0.5 - Math.random());
     return finalOptions;
   }
@@ -559,6 +548,9 @@
     try {
       if (!q) return [];
       const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const course = (typeof window.getCurrentCourseData === 'function')
+        ? window.getCurrentCourseData()
+        : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
 
       // 1. 현재 질문이 속한 목표 유닛(Unit) 식별
       let targetU = q.unitNumber || parseInt(String(q.unitId || '').replace(/[^\d]/g, ''), 10);
@@ -571,22 +563,14 @@
         }
       }
 
-      // 2. 해당 챕터 단어 풀 엄격 바인딩 (타 챕터 폴백 전면 차단)
-      const unitKey = 'unit-' + targetU;
-      const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
-      let unitPool = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
-        ? vocaSource.getWordsByUnit(unitKey)
-        : (vocaSource?.byUnit?.[unitKey] || []);
-
-      if (!Array.isArray(unitPool) || unitPool.length === 0) {
-        unitPool = getUnitWords(targetU, courseLang);
-      }
+      // 2. 해당 챕터 단어 풀 바인딩 (활성 코스 데이터 기반)
+      let unitPool = getUnitWords(targetU, courseLang);
       if ((!Array.isArray(unitPool) || unitPool.length === 0) && Array.isArray(sessionQuestions) && sessionQuestions.length > 0) {
         unitPool = sessionQuestions;
       }
 
       // 3. 해당 챕터 단어 풀만 사용하여 4지선다 옵션 생성 (기초 단어 외부 주입 완전 제거)
-      return generateOptionsForUnit(q, unitPool);
+      return generateOptionsForUnit(q, unitPool, course);
     } catch (_) {
       const correctMeaning = String(q?.meaning || q?.answer || '정답').trim();
       return [correctMeaning];
@@ -598,17 +582,11 @@
   function generateJumpTestSession(targetUnitId = 2, count = 10, lang = 'es') {
     const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
     const uNum = parseInt(String(targetUnitId).replace(/[^\d]/g, ''), 10) || 2;
+    const uKey = 'unit-' + uNum;
     const totalCount = Math.min(15, Math.max(10, parseInt(count, 10) || 10));
 
-    // 1. 목표 챕터 단어 풀 엄격 조회 (타 챕터 폴백 전면 차단)
-    const vocaSource = (typeof window !== 'undefined' ? window.VOCA_DATA : null) || (typeof VOCA_DATA !== 'undefined' ? VOCA_DATA : null);
-    const uKey = 'unit-' + uNum;
-    let targetPool = (vocaSource && typeof vocaSource.getWordsByUnit === 'function')
-      ? vocaSource.getWordsByUnit(uKey)
-      : (vocaSource?.byUnit?.[uKey] || []);
-    if (!Array.isArray(targetPool) || targetPool.length === 0) {
-      targetPool = getUnitWords(uNum, courseLang) || [];
-    }
+    // 1. 목표 챕터 단어 풀 조회
+    const targetPool = getUnitWords(uNum, courseLang) || [];
 
     // 2. 해당 챕터 내부에서만 무작위 셔플 후 totalCount만큼 추출
     const shuffledTarget = shuffleArray(targetPool.slice());
@@ -630,7 +608,7 @@
         term: wordStr,
         meaning: meanStr,
         pronunciation: pronStr,
-        phonetic: pronStr ? `[${pronStr}]` : '',
+        phonetic: formatPhonetic(item.phonetic || pronStr),
         gender: item.gender || null,
         partOfSpeech: posStr || null,
         grammarHint: grammarHint || '',

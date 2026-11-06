@@ -21,7 +21,69 @@
     });
   }
 
-  function renderResultModal(isClear) {
+  function updateGameOverCardUI(options = {}) {
+    const overCard = document.getElementById("game-result-gameover-card");
+    if (!overCard) return;
+
+    // 1. 세션 타입 명시적 검증 (Default Guard: options 미전달/비어있을 시 항상 '일반 스테이지')
+    const isExam = Boolean(
+      options?.sessionType === "exam" ||
+      options?.stageType === "exam" ||
+      options?.isExam === true ||
+      window.isUnitSkipTestMode === true ||
+      window.isJumpTestSession === true
+    );
+    const isBoss = Boolean(
+      options?.sessionType === "boss" ||
+      options?.stageType === "boss" ||
+      options?.isBossStage === true ||
+      options?.isBoss === true
+    );
+    const isSpecialFail = isExam || isBoss;
+
+    const titleEl = document.getElementById("gameover-title") || overCard.querySelector("h2");
+    const subEl = document.getElementById("gameover-subtitle") || overCard.querySelector("p");
+    const badgeTextEl = document.getElementById("gameover-badge-text");
+    const reviveBtn = document.getElementById("btn-gameover-ad-revive");
+    const retryBtn = document.getElementById("btn-gameover-retry");
+    const exitBtn = document.getElementById("game-over-exit-btn") || document.getElementById("btn-gameover-roadmap");
+
+    if (isSpecialFail) {
+      // [보스/승급 시험 실패]: sessionType === 'exam' 또는 isBossStage === true가 명시적일 때만 출력
+      if (titleEl) titleEl.textContent = "아쉬워요! 시험 불합격";
+      if (subEl) subEl.textContent = "모든 기회를 소진했습니다. 단어를 복습하고 다시 도전해보세요!";
+      if (badgeTextEl) badgeTextEl.textContent = isBoss ? "보스전 실패" : "시험 불합격";
+      if (reviveBtn) reviveBtn.classList.add("hidden");
+      if (retryBtn) {
+        retryBtn.classList.remove("hidden");
+        const retrySpan = retryBtn.querySelector("span.font-extrabold") || retryBtn.querySelector("span:not(.material-symbols-outlined)");
+        if (retrySpan) retrySpan.textContent = "다시 도전";
+      }
+      if (exitBtn) {
+        exitBtn.classList.remove("hidden");
+        const exitSpan = exitBtn.querySelector("span:not(.text-base)") || exitBtn.lastElementChild;
+        if (exitSpan) exitSpan.textContent = isExam ? "원래 위치로 돌아가기" : "로드맵으로 나가기";
+      }
+    } else {
+      // [일반 스테이지 실패]: Default Guard 적용
+      if (titleEl) titleEl.textContent = "도전 실패!";
+      if (subEl) subEl.textContent = "하트를 모두 소진했습니다. 조금만 더 집중하면 클리어할 수 있어요!";
+      if (badgeTextEl) badgeTextEl.textContent = "라이프 소진";
+      if (reviveBtn) reviveBtn.classList.remove("hidden");
+      if (retryBtn) {
+        retryBtn.classList.remove("hidden");
+        const retrySpan = retryBtn.querySelector("span.font-extrabold") || retryBtn.querySelector("span:not(.material-symbols-outlined)");
+        if (retrySpan) retrySpan.textContent = "처음부터 다시 도전";
+      }
+      if (exitBtn) {
+        exitBtn.classList.remove("hidden");
+        const exitSpan = exitBtn.querySelector("span:not(.text-base)") || exitBtn.lastElementChild;
+        if (exitSpan) exitSpan.textContent = "로드맵으로 나가기";
+      }
+    }
+  }
+
+  function renderResultModal(isClear, options = {}) {
     isHandlingResultPrimary = window.isHandlingResultPrimary = false;
     const modal = document.getElementById("game-result-modal");
     if (modal) {
@@ -68,21 +130,8 @@
       overCard.style.display = isClear ? "none" : "flex";
       overCard.style.pointerEvents = isClear ? "none" : "auto";
 
-      if (!isClear && window.isUnitSkipTestMode) {
-        overCard.innerHTML = `
-          <div class="flex flex-col items-center text-center p-6 space-y-4">
-            <div class="text-6xl animate-bounce">💔</div>
-            <div class="text-2xl font-black text-slate-800">아쉬워요! 시험 불합격</div>
-            <p class="text-sm font-bold text-slate-500 leading-relaxed">모든 기회를 소진했습니다.<br/>단어를 복습하고 다시 도전해보세요!</p>
-            <button id="btn-skip-test-fail-exit" class="w-full py-3.5 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base rounded-2xl shadow-md transition cursor-pointer">원래 위치로 돌아가기</button>
-          </div>
-        `;
-        const btnSkipExit = document.getElementById("btn-skip-test-fail-exit");
-        if (btnSkipExit) {
-          btnSkipExit.onclick = () => {
-            closeJumpTest();
-          };
-        }
+      if (!isClear) {
+        updateGameOverCardUI(options);
       }
     }
   }
@@ -127,13 +176,13 @@
     }
   }
 
-  function triggerGameOver() {
+  function triggerGameOver(sessionInfo = {}) {
     window.clearAllGameTimers?.();
     window.cancelGameLoop?.();
     window.stopTTS?.();
     try { window.speechSynthesis?.cancel(); } catch (_) { }
     window.isGameActive = false;
-    finishGameStage(false);
+    finishGameStage(false, null, sessionInfo);
   }
 
   function finishGameStage(isClear = true, customAccuracy = null, options = {}) {
@@ -155,7 +204,7 @@
     try { window.speechSynthesis?.cancel(); } catch (_) { }
     window.isGameActive = window.isQuestionActive = false;
 
-    renderResultModal(isClear);
+    renderResultModal(isClear, options);
     const bubble = document.getElementById("game-dropping-bubble") || document.getElementById("dropping-word");
     if (bubble) { bubble.classList.add("hidden"); bubble.style.display = "none"; }
 
@@ -220,7 +269,8 @@
         }
       }
 
-      let title = "¡STAGE CLEAR!", sub = `${actualTitle} (${nextCount}/3) 클리어!`, btn = nextCount < 3 ? `다음 라운드 (${nextCount + 1}/3) ▶` : "다음 스테이지 ▶";
+      const isEn = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en';
+      let title = isEn ? "STAGE CLEAR!" : "¡STAGE CLEAR!", sub = `${actualTitle} (${nextCount}/3) 클리어!`, btn = nextCount < 3 ? `다음 라운드 (${nextCount + 1}/3) ▶` : "다음 스테이지 ▶";
       if (stars === 0) {
         title = "클리어 실패";
         sub = "아쉬워요! 다시 도전해 보세요 💪";
@@ -274,9 +324,25 @@
       const missedSec = document.getElementById("result-missed-section");
       if (missed.length > 0) {
         btnWrong?.classList.remove("hidden"); if (btnWrong) btnWrong.style.display = "flex";
-        setTxt("btn-result-wrong-review-text", `⚠️ 헷갈린 단어 ${missed.length}개 복습하기`);
+        const iconSpan = btnWrong?.querySelector("span.text-lg");
+        if (iconSpan) iconSpan.textContent = "⚡";
+        setTxt("btn-result-wrong-review-text", `헷갈린 단어 ${missed.length}개 복습하기`);
         missedSec?.classList.remove("hidden"); if (missedSec) missedSec.style.display = "block";
-        setTxt("result-missed-word", missed[0].word || missed[0].term || ""); setTxt("result-missed-meaning", missed[0].meaning || "");
+        const firstMissed = missed[0];
+        setTxt("result-missed-word", firstMissed.word || firstMissed.term || "");
+        setTxt("result-missed-meaning", firstMissed.meaning || "");
+
+        const missedPhoneticEl = document.getElementById("result-missed-phonetic");
+        if (missedPhoneticEl) {
+          const pron = !isEn && (firstMissed.pronunciation || firstMissed.pron || firstMissed.phonetic || "");
+          if (pron) {
+            missedPhoneticEl.textContent = pron.startsWith("[") ? pron : `[${pron}]`;
+            missedPhoneticEl.style.display = "";
+          } else {
+            missedPhoneticEl.textContent = "";
+            missedPhoneticEl.style.display = "none";
+          }
+        }
       } else {
         btnWrong?.classList.add("hidden"); if (btnWrong) btnWrong.style.display = "none";
         missedSec?.classList.add("hidden"); if (missedSec) missedSec.style.display = "none";
@@ -286,10 +352,25 @@
       setTxt("result-gems-text", `+${saveRes?.addGems ?? 10} 💎`);
       setTxt("result-xp-text", `+${saveRes?.addXp ?? 50} XP`);
     } else {
+      const isEn = (window.currentLanguage || window.currentActiveCourse || "es") === "en";
       const lastFailed = missed[missed.length - 1] || questions[qIdx];
-      const charPrefix = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+      const charPrefix = isEn ? "en" : "es";
       document.querySelectorAll("#game-result-gameover-card img").forEach(img => { img.src = `assets/characters/${charPrefix}-sad.webp?v=68`; });
-      if (lastFailed) { setTxt("gameover-missed-word", lastFailed.word || lastFailed.term || ""); setTxt("gameover-missed-meaning", lastFailed.meaning || ""); }
+      if (lastFailed) {
+        setTxt("gameover-missed-word", lastFailed.word || lastFailed.term || "");
+        setTxt("gameover-missed-meaning", lastFailed.meaning || "");
+        const goPhoneticEl = document.getElementById("gameover-missed-phonetic");
+        if (goPhoneticEl) {
+          const pron = !isEn && (lastFailed.pronunciation || lastFailed.pron || lastFailed.phonetic || "");
+          if (pron) {
+            goPhoneticEl.textContent = pron.startsWith("[") ? pron : `[${pron}]`;
+            goPhoneticEl.style.display = "";
+          } else {
+            goPhoneticEl.textContent = "";
+            goPhoneticEl.style.display = "none";
+          }
+        }
+      }
       const totalQ = questions.length || 10, progPct = Math.round((qIdx / totalQ) * 100);
       setTxt("gameover-progress-text", `${qIdx} / ${totalQ} 단어 (${progPct}%)`);
       const goProgBar = document.getElementById("gameover-progress-bar"); if (goProgBar) goProgBar.style.width = `${progPct}%`;
@@ -623,6 +704,17 @@
             }
           }
           window.showToast?.("❤️ 하트 3개가 충전되어 게임을 이어갑니다!", "✨");
+          return;
+        }
+        const missedCard = target.closest("#result-missed-card, #gameover-missed-card, [title*='발음 듣기']");
+        if (missedCard) {
+          e.preventDefault?.();
+          const word = document.getElementById("result-missed-word")?.textContent?.trim() ||
+                       document.getElementById("gameover-missed-word")?.textContent?.trim();
+          if (word && typeof window.speakWord === "function") {
+            const lang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+            window.speakWord(word, lang);
+          }
           return;
         }
       });

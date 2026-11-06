@@ -364,6 +364,7 @@
       window.nodeProgressMap = window.loadNodeProgress(lang, selectedCourse);
     }
     const unlocked = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, selectedCourse) : 1;
+    window.currentUnitNumber = unlocked;
     window._currentVisibleUnitIndex = Math.max(0, unlocked - 1);
     if (typeof window.updateRoadmapNodesUI === 'function') {
       window.updateRoadmapNodesUI();

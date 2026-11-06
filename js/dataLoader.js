@@ -18,6 +18,13 @@
   VOCA_DATA.isLoaded = false;
   VOCA_DATA.loadPromise = null;
 
+  // 발음 단일 대괄호 정규화 유틸 (중복 대괄호 방지 및 안전한 [발음] 형태 보장)
+  function formatPhonetic(raw) {
+    if (!raw) return '';
+    const cleaned = String(raw).trim().replace(/^\[+|\]+$/g, '').trim();
+    return cleaned ? `[${cleaned}]` : '';
+  }
+
   // 1. RFC 4180 호환 안전 CSV 파서 (BOM, 특수문자, 따옴표, 쉼표, 줄바꿈 방어)
   function parseCSV(text) {
     if (!text || typeof text !== 'string') return [];
@@ -204,7 +211,7 @@
         term: w.term || w.word || '',
         meaning: w.meaning || w.korean || w.ko || '',
         pronunciation: w.pronunciation || w.pron || w.phonetic || '',
-        phonetic: w.phonetic || (w.pronunciation ? `[${w.pronunciation}]` : ''),
+        phonetic: formatPhonetic(w.phonetic || w.pronunciation || w.pron),
         exampleTarget: w.exampleTarget || w.example || '',
         exampleMeaning: w.exampleMeaning || w.exampleKo || '',
         gender: w.gender || null,

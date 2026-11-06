@@ -224,7 +224,7 @@
     }
 
     // 4지선다 보기 세팅 (해당 챕터 Unit 단어 풀 엄격 격리 및 빈칸 방어)
-    const currentLang = window.currentActiveCourse || "es";
+    const currentLang = (window.currentLanguage || (window.currentActiveCourse === 'main_en' ? 'en' : 'es')) === 'en' ? 'en' : 'es';
     let choices = [];
     if (typeof window.generateQuestionChoices === "function") {
       choices = window.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentLang);
@@ -693,7 +693,7 @@
       if (Array.isArray(vocaWords) && vocaWords.length > 0) {
         sourceQuestions = vocaWords.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || w.term || '', term: w.word || w.term || '', meaning: w.meaning || '' }));
       } else {
-        const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (window.courseData_es || window.courseData);
+        const course = (typeof window.getCurrentCourseData === "function") ? window.getCurrentCourseData() : (currentLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
         const curUnit = course?.units?.[0];
         sourceQuestions = (curUnit && Array.isArray(curUnit.words))
           ? curUnit.words.slice(0, 10).map((w, idx) => ({ id: w.id || `q-${idx}`, word: w.word || '', term: w.word || '', meaning: w.meaning || '' }))
@@ -794,22 +794,48 @@
     spawnQuestion(0);
   }
 
-  function finishGameStage(isClear = true, customAccuracy = null) {
+  function finishGameStage(isClear = true, customAccuracy = null, options = {}) {
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false; isQuestionActive = false;
     window.currentGameLessonId = currentGameLessonId; window.gameQuestions = gameQuestions;
     window.currentQuestionIdx = currentQuestionIdx; window.score = score; window.maxCombo = maxCombo;
     window.missedWords = missedWords; window.correctWords = correctWords; window.totalAttemptCount = totalAttemptCount;
+    const isBoss = Boolean(currentGameLessonId === "node-boss" || String(currentGameLessonId).includes("boss"));
+    const isExam = Boolean(window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test" || window.isJumpTestSession);
+    const stageType = isExam ? "exam" : (isBoss ? "boss" : (currentGameMode === "review" ? "review" : "standard"));
     const mode = currentGameMode;
     window.currentGameMode = currentGameMode;
-    return window.gameResultModal?.finishGameStage?.(isClear, customAccuracy, { mode });
+    const mergedOptions = {
+      mode,
+      stageType,
+      sessionType: stageType,
+      isBoss,
+      isBossStage: isBoss,
+      isExam,
+      ...options
+    };
+    return window.gameResultModal?.finishGameStage?.(isClear, customAccuracy, mergedOptions);
   }
 
-  function triggerGameOver() {
+  function triggerGameOver(customOptions = {}) {
     if (isInfiniteHeart) return;
     clearAllGameTimers(); cancelGameLoop();
     isActive = false; isGameActive = false; window.isActive = false; window.isGameActive = false; isQuestionActive = false;
-    return window.gameResultModal?.triggerGameOver ? window.gameResultModal.triggerGameOver() : finishGameStage(false);
+    const isBoss = Boolean(currentGameLessonId === "node-boss" || String(currentGameLessonId).includes("boss"));
+    const isExam = Boolean(window.isUnitSkipTestMode || currentGameLessonId === "node-skip-test" || window.isJumpTestSession);
+    const stageType = isExam ? "exam" : (isBoss ? "boss" : (currentGameMode === "review" ? "review" : "standard"));
+    const sessionInfo = {
+      stageType,
+      sessionType: stageType,
+      isBoss,
+      isBossStage: isBoss,
+      isExam,
+      mode: currentGameMode,
+      ...customOptions
+    };
+    return window.gameResultModal?.triggerGameOver
+      ? window.gameResultModal.triggerGameOver(sessionInfo)
+      : finishGameStage(false, null, sessionInfo);
   }
 
   function closeGameScreen(force = false) {

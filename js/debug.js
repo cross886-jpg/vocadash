@@ -169,23 +169,23 @@
         if (typeof window.showToast === 'function') window.showToast('[치트] 🎒 아이템 풀충전 완료!', '🎒');
     };
 
-    // 5. 공장초기화 (progressManager 및 스토리지 무결성 복구)
+    // 5. 공장초기화 (모든 스토리지 및 전역 진행도 완전 소각)
     document.getElementById('dbg-factory-reset').onclick = () => {
         if (!confirm('⚠️ 모든 진행도와 재화가 완전히 삭제되고 Unit 1로 초기화됩니다. 계속할까요?')) return;
 
         localStorage.clear();
         sessionStorage.clear();
 
+        window.currentUnitNumber = 1;
+        window.currentSelectedNodeId = 'node-1';
+
         // 기본 아이템 복원
-        localStorage.setItem('vocadash_inventory', JSON.stringify({ pass: 2, freeze: 1, bomb: 1, heal: 1 }));
+        try {
+            localStorage.setItem('vocadash_inventory', JSON.stringify({ pass: 2, freeze: 1, bomb: 1, heal: 1 }));
+            localStorage.setItem('vocadash_hearts', '5');
+            localStorage.setItem('vocadash_gems', '100');
+        } catch (_) { }
 
-        // progressManager 리셋
-        if (typeof window.progressManager?.resetProgress === 'function') {
-            window.progressManager.resetProgress();
-        } else if (typeof window.progressManager?.reset === 'function') {
-            window.progressManager.reset();
-        }
-
-        location.reload();
+        window.location.reload();
     };
 })();

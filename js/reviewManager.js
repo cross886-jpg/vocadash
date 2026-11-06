@@ -7,6 +7,13 @@
   'use strict';
   const target = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : global);
 
+  // 발음 단일 대괄호 정규화 유틸 (중복 대괄호 방지 및 안전한 [발음] 형태 보장)
+  function formatPhonetic(raw) {
+    if (!raw) return '';
+    const cleaned = String(raw).trim().replace(/^\[+|\]+$/g, '').trim();
+    return cleaned ? `[${cleaned}]` : '';
+  }
+
   const DEFAULT_WRONG_WORDS_ES = [
     { id: 'w_es_1', term: 'Adiós', meaning: '잘 가요', phonetic: '[아디오스]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 1, escaped: false, lang: 'es', unitId: 1 },
     { id: 'w_es_2', term: 'Equipaje', meaning: '수하물 / 짐', phonetic: '[에키파헤]', consecutiveCorrect: 0, correctStreak: 0, streakCorrectCount: 0, wrongCount: 2, escaped: false, lang: 'es', unitId: 2 },
@@ -97,7 +104,7 @@
                 term: termStr,
                 word: String(item.word || termStr),
                 meaning: String(item.meaning || item.kor || item.ko || ''),
-                phonetic: String(item.phonetic || (item.pronunciation ? `[${item.pronunciation}]` : '')),
+                phonetic: formatPhonetic(item.phonetic || item.pronunciation),
                 consecutiveCorrect: streak,
                 correctStreak: streak,
                 streakCorrectCount: streak,
@@ -131,7 +138,7 @@
             term: termStr,
             word: String(w.word || termStr),
             meaning: String(w.meaning || w.kor || w.ko || ''),
-            phonetic: String(w.phonetic || (w.pronunciation ? `[${w.pronunciation}]` : '')),
+            phonetic: formatPhonetic(w.phonetic || w.pronunciation),
             consecutiveCorrect: streak,
             correctStreak: streak,
             streakCorrectCount: streak,
@@ -265,7 +272,7 @@
             term: qTerm,
             word: qTerm,
             meaning: question.meaning || question.kor || question.ko || '뜻 없음',
-            phonetic: question.phonetic || (question.pronunciation ? `[${question.pronunciation}]` : `[${qTerm}]`),
+            phonetic: formatPhonetic(question.phonetic || question.pronunciation || qTerm),
             consecutiveCorrect: 0,
             correctStreak: 0,
             streakCorrectCount: 0,
