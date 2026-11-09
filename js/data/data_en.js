@@ -58773,14 +58773,14 @@
           "level": "B1",
           "unitId": "unit_097",
           "nodeId": "en_u97_n2",
-          "meaning": "세련되게",
+          "meaning": "정교화하다",
           "pronunciation": "[/səfˈɪstəkˌeɪt/]",
           "pron": "[/səfˈɪstəkˌeɪt/]",
           "phonetic": "[/səfˈɪstəkˌeɪt/]",
-          "example_en": "New technology can sophisticate old systems.",
-          "example_ko": "새로운 기술은 오래된 시스템을 더 정교하게 만들 수 있다.",
-          "exampleTarget": "New technology can sophisticate old systems.",
-          "exampleMeaning": "새로운 기술은 오래된 시스템을 더 정교하게 만들 수 있다."
+          "example_en": "New tools sophisticate our workflow.",
+          "example_ko": "새 도구들이 우리의 업무 방식을 정교화한다.",
+          "exampleTarget": "New tools sophisticate our workflow.",
+          "exampleMeaning": "새 도구들이 우리의 업무 방식을 정교화한다."
         },
         {
           "id": "en_9717",
@@ -61124,14 +61124,14 @@
           "level": "B2",
           "unitId": "unit_101",
           "nodeId": "en_u101_n2",
-          "meaning": "과거·과거",
+          "meaning": "얻었다",
           "pronunciation": "[아트]",
           "pron": "[아트]",
           "phonetic": "[아트]",
-          "example_en": "This is an example for got.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for got.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I got a letter from my friend.",
+          "example_ko": "나는 친구로부터 편지를 받았다.",
+          "exampleTarget": "I got a letter from my friend.",
+          "exampleMeaning": "나는 친구로부터 편지를 받았다."
         },
         {
           "id": "en_10112",
@@ -61366,10 +61366,10 @@
           "pronunciation": "[흐어즈]",
           "pron": "[흐어즈]",
           "phonetic": "[흐어즈]",
-          "example_en": "This is an example for has.",
-          "example_ko": "이것은 인칭·단수·직설법·현재형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for has.",
-          "exampleMeaning": "이것은 인칭·단수·직설법·현재형 관련 실전 예문입니다."
+          "example_en": "He has a friendly dog.",
+          "example_ko": "그는 다정한 강아지를 한 마리 키우고 있다.",
+          "exampleTarget": "He has a friendly dog.",
+          "exampleMeaning": "그는 다정한 강아지를 한 마리 키우고 있다."
         },
         {
           "id": "en_10126",
@@ -61418,9 +61418,9 @@
           "pron": "[드이으]",
           "phonetic": "[드이으]",
           "example_en": "Its your own doing.",
-          "example_ko": "그것은 네 자신이 한 일이다; 자업자득이다. 2.《doings》행위 행동; 행실 처신; 사건; 행사.",
+          "example_ko": "그것은 네 자신이 한 일이다; 자업자득이다.",
           "exampleTarget": "Its your own doing.",
-          "exampleMeaning": "그것은 네 자신이 한 일이다; 자업자득이다. 2.《doings》행위 행동; 행실 처신; 사건; 행사."
+          "exampleMeaning": "그것은 네 자신이 한 일이다; 자업자득이다."
         },
         {
           "id": "en_10129",
@@ -61435,9 +61435,9 @@
           "pron": "[드이즈]",
           "phonetic": "[드이즈]",
           "example_en": "These are yours.",
-          "example_ko": "이것들은 당신 것입니다. 2.그때 그 당시.",
+          "example_ko": "이것들은 당신 것입니다.",
           "exampleTarget": "These are yours.",
-          "exampleMeaning": "이것들은 당신 것입니다. 2.그때 그 당시."
+          "exampleMeaning": "이것들은 당신 것입니다."
         },
         {
           "id": "en_10130",
@@ -61601,10 +61601,10 @@
           "pronunciation": "[어]",
           "pron": "[어]",
           "phonetic": "[어]",
-          "example_en": "This is an example for uh.",
-          "example_ko": "이것은 말을 이어갈 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for uh.",
-          "exampleMeaning": "이것은 말을 이어갈 관련 실전 예문입니다."
+          "example_en": "Uh please let me check my calendar first.",
+          "example_ko": "어 먼저 내 일정을 확인해 보게 해줘.",
+          "exampleTarget": "Uh please let me check my calendar first.",
+          "exampleMeaning": "어 먼저 내 일정을 확인해 보게 해줘."
         },
         {
           "id": "en_10204",
@@ -61682,14 +61682,14 @@
           "level": "B2",
           "unitId": "unit_102",
           "nodeId": "en_u102_n1",
-          "meaning": "과거·과거",
+          "meaning": "말했다",
           "pronunciation": "[트오르드]",
           "pron": "[트오르드]",
           "phonetic": "[트오르드]",
-          "example_en": "This is an example for told.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for told.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She told me the truth.",
+          "example_ko": "그녀는 나에게 진실을 말했다.",
+          "exampleTarget": "She told me the truth.",
+          "exampleMeaning": "그녀는 나에게 진실을 말했다."
         },
         {
           "id": "en_10209",
@@ -61772,9 +61772,9 @@
           "pron": "[크어므이으]",
           "phonetic": "[크어므이으]",
           "example_en": "coming soon(.",
-          "example_ko": "영화 안내에서) 근일 상영. 2.《the Coming》예수의 재림. 숙어 coming in ①개시. ②《보통 comings in》 수입 세입. coming of age 성인이 되는 것; 《주로 영》 성인 연령. ※《영》 은 18세. comings and goings 일 사건; 행동 활동; （인물 등의） 동정 소식. 형용사1.《한정적》 （다가） 오는 이번의.",
+          "example_ko": "영화 안내에서) 근일 상영.",
           "exampleTarget": "coming soon(.",
-          "exampleMeaning": "영화 안내에서) 근일 상영. 2.《the Coming》예수의 재림. 숙어 coming in ①개시. ②《보통 comings in》 수입 세입. coming of age 성인이 되는 것; 《주로 영》 성인 연령. ※《영》 은 18세. comings and goings 일 사건; 행동 활동; （인물 등의） 동정 소식. 형용사1.《한정적》 （다가） 오는 이번의."
+          "exampleMeaning": "영화 안내에서) 근일 상영."
         },
         {
           "id": "en_10214",
@@ -61789,9 +61789,9 @@
           "pron": "[우크이]",
           "phonetic": "[우크이]",
           "example_en": "He had the flu but he seems almost OK now.",
-          "example_ko": "그는 독감에 걸렸으나 지금은 거의 회복된 것 같다. 2.〈일이〉 만족스러운 좋은 순조로운 문제없는; （사죄·사례에 대하여） 상관하지 않는.",
+          "example_ko": "그는 독감에 걸렸으나 지금은 거의 회복된 것 같다.",
           "exampleTarget": "He had the flu but he seems almost OK now.",
-          "exampleMeaning": "그는 독감에 걸렸으나 지금은 거의 회복된 것 같다. 2.〈일이〉 만족스러운 좋은 순조로운 문제없는; （사죄·사례에 대하여） 상관하지 않는."
+          "exampleMeaning": "그는 독감에 걸렸으나 지금은 거의 회복된 것 같다."
         },
         {
           "id": "en_10215",
@@ -61822,10 +61822,10 @@
           "pronunciation": "[드애드]",
           "pron": "[드애드]",
           "phonetic": "[드애드]",
-          "example_en": "This is an example for dad.",
-          "example_ko": "이것은 아빠 dad는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dad.",
-          "exampleMeaning": "이것은 아빠 dad는 관련 실전 예문입니다."
+          "example_en": "Dad told me to get some rest.",
+          "example_ko": "아빠는 나에게 푹 쉬라고 말씀하셨다.",
+          "exampleTarget": "Dad told me to get some rest.",
+          "exampleMeaning": "아빠는 나에게 푹 쉬라고 말씀하셨다."
         },
         {
           "id": "en_10217",
@@ -61839,10 +61839,10 @@
           "pronunciation": "[크에이므]",
           "pron": "[크에이므]",
           "phonetic": "[크에이므]",
-          "example_en": "This is an example for came.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for came.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "They came to my house yesterday.",
+          "example_ko": "그들은 어제 우리 집에 왔다.",
+          "exampleTarget": "They came to my house yesterday.",
+          "exampleMeaning": "그들은 어제 우리 집에 왔다."
         },
         {
           "id": "en_10218",
@@ -61903,14 +61903,14 @@
           "level": "B2",
           "unitId": "unit_102",
           "nodeId": "en_u102_n5",
-          "meaning": "과거형",
+          "meaning": "갔다",
           "pronunciation": "[우에느트]",
           "pron": "[우에느트]",
           "phonetic": "[우에느트]",
-          "example_en": "This is an example for went.",
-          "example_ko": "이것은 과거형 wend의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for went.",
-          "exampleMeaning": "이것은 과거형 wend의 관련 실전 예문입니다."
+          "example_en": "We went to the park this afternoon.",
+          "example_ko": "우리는 오늘 오후에 공원에 갔다.",
+          "exampleTarget": "We went to the park this afternoon.",
+          "exampleMeaning": "우리는 오늘 오후에 공원에 갔다."
         },
         {
           "id": "en_10222",
@@ -61958,10 +61958,10 @@
           "pronunciation": "[므아므]",
           "pron": "[므아므]",
           "phonetic": "[므아므]",
-          "example_en": "This is an example for mom.",
-          "example_ko": "이것은 엄마 mom은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mom.",
-          "exampleMeaning": "이것은 엄마 mom은 관련 실전 예문입니다."
+          "example_en": "Mom made delicious soup for dinner.",
+          "example_ko": "엄마는 저녁으로 맛있는 수프를 만들어 주셨다.",
+          "exampleTarget": "Mom made delicious soup for dinner.",
+          "exampleMeaning": "엄마는 저녁으로 맛있는 수프를 만들어 주셨다."
         },
         {
           "id": "en_10225",
@@ -62061,9 +62061,9 @@
           "pron": "[애크츠우어르이]",
           "phonetic": "[애크츠우어르이]",
           "example_en": "Did he actually attack you or just threaten you?",
-          "example_ko": "그가 실제로 너를 때렸느냐 아니면 그냥 위협했느냐? 2.《드물게》 현재 지금.",
+          "example_ko": "그가 실제로 너를 때렸느냐 아니면 그냥 위협했느냐?",
           "exampleTarget": "Did he actually attack you or just threaten you?",
-          "exampleMeaning": "그가 실제로 너를 때렸느냐 아니면 그냥 위협했느냐? 2.《드물게》 현재 지금."
+          "exampleMeaning": "그가 실제로 너를 때렸느냐 아니면 그냥 위협했느냐?"
         }
       ],
       "nodes": [
@@ -62189,14 +62189,14 @@
           "level": "B2",
           "unitId": "unit_103",
           "nodeId": "en_u103_n1",
-          "meaning": "과거·과거",
+          "meaning": "들었다",
           "pronunciation": "[흐어르드]",
           "pron": "[흐어르드]",
           "phonetic": "[흐어르드]",
-          "example_en": "This is an example for heard.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for heard.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I heard good news this morning.",
+          "example_ko": "나는 오늘 아침에 좋은 소식을 들었다.",
+          "exampleTarget": "I heard good news this morning.",
+          "exampleMeaning": "나는 오늘 아침에 좋은 소식을 들었다."
         },
         {
           "id": "en_10303",
@@ -62206,14 +62206,14 @@
           "level": "B2",
           "unitId": "unit_103",
           "nodeId": "en_u103_n1",
-          "meaning": "과거형",
+          "meaning": "알았다",
           "pronunciation": "[느유]",
           "pron": "[느유]",
           "phonetic": "[느유]",
-          "example_en": "This is an example for knew.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for knew.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "I knew the answer right away.",
+          "example_ko": "나는 그 정답을 곧바로 알았다.",
+          "exampleTarget": "I knew the answer right away.",
+          "exampleMeaning": "나는 그 정답을 곧바로 알았다."
         },
         {
           "id": "en_10304",
@@ -62223,14 +62223,14 @@
           "level": "B2",
           "unitId": "unit_103",
           "nodeId": "en_u103_n1",
-          "meaning": "과거형",
+          "meaning": "가져갔다",
           "pronunciation": "[트우크]",
           "pron": "[트우크]",
           "phonetic": "[트우크]",
-          "example_en": "This is an example for took.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for took.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He took the bus to school.",
+          "example_ko": "그는 학교로 가는 버스를 탔다.",
+          "exampleTarget": "He took the bus to school.",
+          "exampleMeaning": "그는 학교로 가는 버스를 탔다."
         },
         {
           "id": "en_10305",
@@ -62244,10 +62244,10 @@
           "pronunciation": "[므에느]",
           "pron": "[므에느]",
           "phonetic": "[므에느]",
-          "example_en": "This is an example for men.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for men.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "The men worked hard together.",
+          "example_ko": "그 남자들은 함께 열심히 일했다.",
+          "exampleTarget": "The men worked hard together.",
+          "exampleMeaning": "그 남자들은 함께 열심히 일했다."
         },
         {
           "id": "en_10306",
@@ -62279,9 +62279,9 @@
           "pron": "[아]",
           "phonetic": "[아]",
           "example_en": "Ah me!",
-          "example_ko": "아! 슬프다! 명사아!라는 탄성. 동사 자동사아!라고 탄성을 지르다.",
+          "example_ko": "아! 슬프다!",
           "exampleTarget": "Ah me!",
-          "exampleMeaning": "아! 슬프다! 명사아!라는 탄성. 동사 자동사아!라고 탄성을 지르다."
+          "exampleMeaning": "아! 슬프다!"
         },
         {
           "id": "en_10308",
@@ -62296,9 +62296,9 @@
           "pron": "[므아이스르프]",
           "phonetic": "[므아이스르프]",
           "example_en": "He wrote to Richards and myself.",
-          "example_ko": "그는 리처즈와 내게 편지를 써 보냈다 . ③《than as but except 등의 뒤에서 I me 대신에》.",
+          "example_ko": "그는 리처즈와 내게 편지를 써 보냈다 . ③.",
           "exampleTarget": "He wrote to Richards and myself.",
-          "exampleMeaning": "그는 리처즈와 내게 편지를 써 보냈다 . ③《than as but except 등의 뒤에서 I me 대신에》."
+          "exampleMeaning": "그는 리처즈와 내게 편지를 써 보냈다 . ③."
         },
         {
           "id": "en_10309",
@@ -62329,10 +62329,10 @@
           "pronunciation": "[어므]",
           "pron": "[어므]",
           "phonetic": "[어므]",
-          "example_en": "This is an example for um.",
-          "example_ko": "이것은 음 숙어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for um.",
-          "exampleMeaning": "이것은 음 숙어 관련 실전 예문입니다."
+          "example_en": "Um can you repeat that question once more?",
+          "example_ko": "음 그 질문을 한 번 더 반복해 주실래요?",
+          "exampleTarget": "Um can you repeat that question once more?",
+          "exampleMeaning": "음 그 질문을 한 번 더 반복해 주실래요?"
         },
         {
           "id": "en_10311",
@@ -62363,10 +62363,10 @@
           "pronunciation": "[프우느]",
           "pron": "[프우느]",
           "phonetic": "[프우느]",
-          "example_en": "This is an example for phone.",
-          "example_ko": "이것은 「음성 장치」「악기」의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for phone.",
-          "exampleMeaning": "이것은 「음성 장치」「악기」의 관련 실전 예문입니다."
+          "example_en": "Please answer the phone right now.",
+          "example_ko": "지금 바로 전화를 받아 주세요.",
+          "exampleTarget": "Please answer the phone right now.",
+          "exampleMeaning": "지금 바로 전화를 받아 주세요."
         },
         {
           "id": "en_10313",
@@ -62431,10 +62431,10 @@
           "pronunciation": "[흐애브이으]",
           "pron": "[흐애브이으]",
           "phonetic": "[흐애브이으]",
-          "example_en": "This is an example for having.",
-          "example_ko": "이것은 욕심 부리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for having.",
-          "exampleMeaning": "이것은 욕심 부리는 관련 실전 예문입니다."
+          "example_en": "We are having lunch together at noon today.",
+          "example_ko": "우리는 오늘 정오에 함께 점심을 먹는다.",
+          "exampleTarget": "We are having lunch together at noon today.",
+          "exampleMeaning": "우리는 오늘 정오에 함께 점심을 먹는다."
         },
         {
           "id": "en_10317",
@@ -62448,10 +62448,10 @@
           "pronunciation": "[프르아브어브르이]",
           "pron": "[프르아브어브르이]",
           "phonetic": "[프르아브어브르이]",
-          "example_en": "This is an example for probably.",
-          "example_ko": "이것은 아마 대개는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for probably.",
-          "exampleMeaning": "이것은 아마 대개는 관련 실전 예문입니다."
+          "example_en": "She will probably join the meeting very soon.",
+          "example_ko": "그녀는 아마 곧 회의에 참석할 것이다.",
+          "exampleTarget": "She will probably join the meeting very soon.",
+          "exampleMeaning": "그녀는 아마 곧 회의에 참석할 것이다."
         },
         {
           "id": "en_10318",
@@ -62500,9 +62500,9 @@
           "pron": "[우어르크이으]",
           "phonetic": "[우어르크이으]",
           "example_en": "the workings of the brain.",
-          "example_ko": "두뇌의 작용. 2.일 작업; 운전 조작; 운영 경영. 3.제작 세공; 제조 건조. 4.（문제를） 풀기 계산. 5.（이스트균 등의） 발효. 6.《보통 workings》（광산·채석장 등의） 채굴장 현장. 7.노력하여 나아가기 점진. 8.（얼굴 등의） 실룩거림 경련. 형용사《한정적》 1.（현재） 일을 하고 있는 활동 중인 운전 중인. 2.노동에 종사하는 노동의.",
+          "example_ko": "두뇌의 작용.",
           "exampleTarget": "the workings of the brain.",
-          "exampleMeaning": "두뇌의 작용. 2.일 작업; 운전 조작; 운영 경영. 3.제작 세공; 제조 건조. 4.（문제를） 풀기 계산. 5.（이스트균 등의） 발효. 6.《보통 workings》（광산·채석장 등의） 채굴장 현장. 7.노력하여 나아가기 점진. 8.（얼굴 등의） 실룩거림 경련. 형용사《한정적》 1.（현재） 일을 하고 있는 활동 중인 운전 중인. 2.노동에 종사하는 노동의."
+          "exampleMeaning": "두뇌의 작용."
         },
         {
           "id": "en_10321",
@@ -62563,14 +62563,14 @@
           "level": "B2",
           "unitId": "unit_103",
           "nodeId": "en_u103_n5",
-          "meaning": "과거형",
+          "meaning": "주었다",
           "pronunciation": "[에이브]",
           "pron": "[에이브]",
           "phonetic": "[에이브]",
-          "example_en": "This is an example for gave.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gave.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "She gave me a wonderful book.",
+          "example_ko": "그녀는 나에게 멋진 책을 한 권 주었다.",
+          "exampleTarget": "She gave me a wonderful book.",
+          "exampleMeaning": "그녀는 나에게 멋진 책을 한 권 주었다."
         },
         {
           "id": "en_10325",
@@ -62602,9 +62602,9 @@
           "pron": "[트이크이으]",
           "phonetic": "[트이크이으]",
           "example_en": "the days takings of a shop.",
-          "example_ko": "어느 가게의 그 날의 매출액. 4.《미》 규제. 형용사매혹적인 사람을 끄는; 〈병이〉 감염하는.",
+          "example_ko": "어느 가게의 그 날의 매출액.",
           "exampleTarget": "the days takings of a shop.",
-          "exampleMeaning": "어느 가게의 그 날의 매출액. 4.《미》 규제. 형용사매혹적인 사람을 끄는; 〈병이〉 감염하는."
+          "exampleMeaning": "어느 가게의 그 날의 매출액."
         },
         {
           "id": "en_10327",
@@ -62803,9 +62803,9 @@
           "pron": "[느이우이]",
           "phonetic": "[느이우이]",
           "example_en": "I dont need any help right now. But thanks anyway.",
-          "example_ko": "지금 당장은 도움이 필요없습니다만 어쨌든 감사합니다. 2.그럼에도 불구하고.",
+          "example_ko": "지금 당장은 도움이 필요없습니다만 어쨌든 감사합니다.",
           "exampleTarget": "I dont need any help right now. But thanks anyway.",
-          "exampleMeaning": "지금 당장은 도움이 필요없습니다만 어쨌든 감사합니다. 2.그럼에도 불구하고."
+          "exampleMeaning": "지금 당장은 도움이 필요없습니다만 어쨌든 감사합니다."
         },
         {
           "id": "en_10403",
@@ -62815,14 +62815,14 @@
           "level": "B2",
           "unitId": "unit_104",
           "nodeId": "en_u104_n1",
-          "meaning": "ain",
+          "meaning": "아니다",
           "pronunciation": "[에이느]",
           "pron": "[에이느]",
           "phonetic": "[에이느]",
-          "example_en": "This is an example for ain.",
-          "example_ko": "이것은 ain 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ain.",
-          "exampleMeaning": "이것은 ain 관련 실전 예문입니다."
+          "example_en": "You ain seen nothing like this place before.",
+          "example_ko": "너는 이전에 이런 곳을 전혀 본 적이 없다.",
+          "exampleTarget": "You ain seen nothing like this place before.",
+          "exampleMeaning": "너는 이전에 이런 곳을 전혀 본 적이 없다."
         },
         {
           "id": "en_10404",
@@ -62888,9 +62888,9 @@
           "pron": "[므애르이드]",
           "phonetic": "[므애르이드]",
           "example_en": "a married couple(.",
-          "example_ko": "신혼) 부부. 2.결혼의; 기혼의; 부부 생활의.",
+          "example_ko": "신혼) 부부.",
           "exampleTarget": "a married couple(.",
-          "exampleMeaning": "신혼) 부부. 2.결혼의; 기혼의; 부부 생활의."
+          "exampleMeaning": "신혼) 부부."
         },
         {
           "id": "en_10408",
@@ -62917,14 +62917,14 @@
           "level": "B2",
           "unitId": "unit_104",
           "nodeId": "en_u104_n1",
-          "meaning": "mr",
+          "meaning": "씨",
           "pronunciation": "[mr]",
           "pron": "[mr]",
           "phonetic": "[mr]",
-          "example_en": "This is an example for mr.",
-          "example_ko": "이것은 mr 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mr.",
-          "exampleMeaning": "이것은 mr 관련 실전 예문입니다."
+          "example_en": "Mr. Kim is our new teacher.",
+          "example_ko": "김 씨는 우리의 새 선생님이다.",
+          "exampleTarget": "Mr. Kim is our new teacher.",
+          "exampleMeaning": "김 씨는 우리의 새 선생님이다."
         },
         {
           "id": "en_10410",
@@ -62938,10 +62938,10 @@
           "pronunciation": "[츠르드르어느]",
           "pron": "[츠르드르어느]",
           "phonetic": "[츠르드르어느]",
-          "example_en": "This is an example for children.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for children.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "The children are laughing happily.",
+          "example_ko": "아이들이 행복하게 웃고 있다.",
+          "exampleTarget": "The children are laughing happily.",
+          "exampleMeaning": "아이들이 행복하게 웃고 있다."
         },
         {
           "id": "en_10411",
@@ -62955,10 +62955,10 @@
           "pronunciation": "[우므이느]",
           "pron": "[우므이느]",
           "phonetic": "[우므이느]",
-          "example_en": "This is an example for women.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for women.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "Many women attended the meeting.",
+          "example_ko": "많은 여성들이 그 회의에 참석했다.",
+          "exampleTarget": "Many women attended the meeting.",
+          "exampleMeaning": "많은 여성들이 그 회의에 참석했다."
         },
         {
           "id": "en_10412",
@@ -63006,10 +63006,10 @@
           "pronunciation": "[쉬아트]",
           "pron": "[쉬아트]",
           "phonetic": "[쉬아트]",
-          "example_en": "This is an example for shot.",
-          "example_ko": "이것은 접미사 「…이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shot.",
-          "exampleMeaning": "이것은 접미사 「…이 관련 실전 예문입니다."
+          "example_en": "He gave it his best shot.",
+          "example_ko": "그는 최선을 다해 시도했다.",
+          "exampleTarget": "He gave it his best shot.",
+          "exampleMeaning": "그는 최선을 다해 시도했다."
         },
         {
           "id": "en_10415",
@@ -63019,14 +63019,14 @@
           "level": "B2",
           "unitId": "unit_104",
           "nodeId": "en_u104_n2",
-          "meaning": "접두사모음",
+          "meaning": "만났다",
           "pronunciation": "[므트]",
           "pron": "[므트]",
           "phonetic": "[므트]",
-          "example_en": "This is an example for met.",
-          "example_ko": "이것은 접두사모음 및 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for met.",
-          "exampleMeaning": "이것은 접두사모음 및 관련 실전 예문입니다."
+          "example_en": "We met at the coffee shop yesterday.",
+          "example_ko": "우리는 어제 카페에서 만났다.",
+          "exampleTarget": "We met at the coffee shop yesterday.",
+          "exampleMeaning": "우리는 어제 카페에서 만났다."
         },
         {
           "id": "en_10416",
@@ -63036,14 +63036,14 @@
           "level": "B2",
           "unitId": "unit_104",
           "nodeId": "en_u104_n2",
-          "meaning": "과거·과거",
+          "meaning": "가져왔다",
           "pronunciation": "[브르오트]",
           "pron": "[브르오트]",
           "phonetic": "[브르오트]",
-          "example_en": "This is an example for brought.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for brought.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "He brought an umbrella with him.",
+          "example_ko": "그는 우산을 챙겨 가져왔다.",
+          "exampleTarget": "He brought an umbrella with him.",
+          "exampleMeaning": "그는 우산을 챙겨 가져왔다."
         },
         {
           "id": "en_10417",
@@ -63058,9 +63058,9 @@
           "pron": "[우아우]",
           "phonetic": "[우아우]",
           "example_en": "wow ones dream girl with diamond ring.",
-          "example_ko": "다이아몬드 반지로 이상적인 그녀의 환심을 사다. 명사대성공 히트; 굉장한 것; 큰 기쁨 대흥분; 놀랄만한 미녀.",
+          "example_ko": "다이아몬드 반지로 이상적인 그녀의 환심을 사다.",
           "exampleTarget": "wow ones dream girl with diamond ring.",
-          "exampleMeaning": "다이아몬드 반지로 이상적인 그녀의 환심을 사다. 명사대성공 히트; 굉장한 것; 큰 기쁨 대흥분; 놀랄만한 미녀."
+          "exampleMeaning": "다이아몬드 반지로 이상적인 그녀의 환심을 사다."
         },
         {
           "id": "en_10418",
@@ -63074,10 +63074,10 @@
           "pronunciation": "[흐우오]",
           "pron": "[흐우오]",
           "phonetic": "[흐우오]",
-          "example_en": "This is an example for whoa.",
-          "example_ko": "이것은 우어 워 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for whoa.",
-          "exampleMeaning": "이것은 우어 워 관련 실전 예문입니다."
+          "example_en": "Whoa watch your step on that wet floor.",
+          "example_ko": "우와 저 젖은 바닥 조심해서 걸어.",
+          "exampleTarget": "Whoa watch your step on that wet floor.",
+          "exampleMeaning": "우와 저 젖은 바닥 조심해서 걸어."
         },
         {
           "id": "en_10419",
@@ -63087,14 +63087,14 @@
           "level": "B2",
           "unitId": "unit_104",
           "nodeId": "en_u104_n2",
-          "meaning": "bye",
+          "meaning": "안녕",
           "pronunciation": "[브이]",
           "pron": "[브이]",
           "phonetic": "[브이]",
-          "example_en": "This is an example for bye.",
-          "example_ko": "이것은 bye 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bye.",
-          "exampleMeaning": "이것은 bye 관련 실전 예문입니다."
+          "example_en": "Bye  see you tomorrow!",
+          "example_ko": "안녕  내일 또 봐!",
+          "exampleTarget": "Bye  see you tomorrow!",
+          "exampleMeaning": "안녕  내일 또 봐!"
         },
         {
           "id": "en_10420",
@@ -63160,9 +63160,9 @@
           "pron": "[스어므트이므즈]",
           "phonetic": "[스어므트이므즈]",
           "example_en": "Sometimes he drinks wine and sometimes beer.",
-          "example_ko": "그는 포도주를 마실 때도 있고 맥주를 마실 때도 있다. 2.《폐어》 이전에는.",
+          "example_ko": "그는 포도주를 마실 때도 있고 맥주를 마실 때도 있다.",
           "exampleTarget": "Sometimes he drinks wine and sometimes beer.",
-          "exampleMeaning": "그는 포도주를 마실 때도 있고 맥주를 마실 때도 있다. 2.《폐어》 이전에는."
+          "exampleMeaning": "그는 포도주를 마실 때도 있고 맥주를 마실 때도 있다."
         },
         {
           "id": "en_10424",
@@ -63193,10 +63193,10 @@
           "pronunciation": "[어므]",
           "pron": "[어므]",
           "phonetic": "[어므]",
-          "example_en": "This is an example for em.",
-          "example_ko": "이것은 역사적으로는 탈락된 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for em.",
-          "exampleMeaning": "이것은 역사적으로는 탈락된 관련 실전 예문입니다."
+          "example_en": "Pick em up and put them away now.",
+          "example_ko": "그것들을 집어 들어 지금 바로 치워라.",
+          "exampleTarget": "Pick em up and put them away now.",
+          "exampleMeaning": "그것들을 집어 들어 지금 바로 치워라."
         },
         {
           "id": "en_10426",
@@ -63211,9 +63211,9 @@
           "pron": "[르오르드]",
           "phonetic": "[르오르드]",
           "example_en": "the lord of a mansion.",
-          "example_ko": "대저택의 소유자. 2.봉건 군주 영주.",
+          "example_ko": "대저택의 소유자.",
           "exampleTarget": "the lord of a mansion.",
-          "exampleMeaning": "대저택의 소유자. 2.봉건 군주 영주."
+          "exampleMeaning": "대저택의 소유자."
         },
         {
           "id": "en_10427",
@@ -63278,10 +63278,10 @@
           "pronunciation": "[르브이으]",
           "pron": "[르브이으]",
           "phonetic": "[르브이으]",
-          "example_en": "This is an example for leaving.",
-          "example_ko": "이것은 나머지 잔여 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for leaving.",
-          "exampleMeaning": "이것은 나머지 잔여 관련 실전 예문입니다."
+          "example_en": "She is leaving the office right after sunset.",
+          "example_ko": "그녀는 해가 진 직후에 사무실을 떠난다.",
+          "exampleTarget": "She is leaving the office right after sunset.",
+          "exampleMeaning": "그녀는 해가 진 직후에 사무실을 떠난다."
         }
       ],
       "nodes": [
@@ -63395,9 +63395,9 @@
           "pron": "[르어느이으]",
           "phonetic": "[르어느이으]",
           "example_en": "excellent base running.",
-          "example_ko": "훌륭한 주루. 2.（회사의） 경영 운영 관리; （기계 등의） 운전.",
+          "example_ko": "훌륭한 주루.",
           "exampleTarget": "excellent base running.",
-          "exampleMeaning": "훌륭한 주루. 2.（회사의） 경영 운영 관리; （기계 등의） 운전."
+          "exampleMeaning": "훌륭한 주루."
         },
         {
           "id": "en_10502",
@@ -63411,10 +63411,10 @@
           "pronunciation": "[트이크어느]",
           "pron": "[트이크어느]",
           "phonetic": "[트이크어느]",
-          "example_en": "This is an example for taken.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for taken.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "This seat is already taken.",
+          "example_ko": "이 자리는 이미 임자가 있습니다.",
+          "exampleTarget": "This seat is already taken.",
+          "exampleMeaning": "이 자리는 이미 임자가 있습니다."
         },
         {
           "id": "en_10503",
@@ -63428,10 +63428,10 @@
           "pronunciation": "[므아]",
           "pron": "[므아]",
           "phonetic": "[므아]",
-          "example_en": "This is an example for ma.",
-          "example_ko": "이것은 엄마 미국에서는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ma.",
-          "exampleMeaning": "이것은 엄마 미국에서는 관련 실전 예문입니다."
+          "example_en": "Yes ma I will be home by dinner.",
+          "example_ko": "네 엄마 저 저녁 식사 전까지 집에 갈게요.",
+          "exampleTarget": "Yes ma I will be home by dinner.",
+          "exampleMeaning": "네 엄마 저 저녁 식사 전까지 집에 갈게요."
         },
         {
           "id": "en_10504",
@@ -63441,14 +63441,14 @@
           "level": "B2",
           "unitId": "unit_105",
           "nodeId": "en_u105_n1",
-          "meaning": "과거·과거",
+          "meaning": "보냈다",
           "pronunciation": "[스에느트]",
           "pron": "[스에느트]",
           "phonetic": "[스에느트]",
-          "example_en": "This is an example for sent.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sent.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I sent an email to the teacher.",
+          "example_ko": "나는 선생님께 이메일을 보냈다.",
+          "exampleTarget": "I sent an email to the teacher.",
+          "exampleMeaning": "나는 선생님께 이메일을 보냈다."
         },
         {
           "id": "en_10505",
@@ -63496,10 +63496,10 @@
           "pronunciation": "[즈아느]",
           "pron": "[즈아느]",
           "phonetic": "[즈아느]",
-          "example_en": "This is an example for john.",
-          "example_ko": "이것은 화장실 페니스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for john.",
-          "exampleMeaning": "이것은 화장실 페니스 관련 실전 예문입니다."
+          "example_en": "John will help us organize the new project.",
+          "example_ko": "존이 새로운 프로젝트를 정리하도록 우리를 도와줄 것이다.",
+          "exampleTarget": "John will help us organize the new project.",
+          "exampleMeaning": "존이 새로운 프로젝트를 정리하도록 우리를 도와줄 것이다."
         },
         {
           "id": "en_10508",
@@ -63530,10 +63530,10 @@
           "pronunciation": "[흐아]",
           "pron": "[흐아]",
           "phonetic": "[흐아]",
-          "example_en": "This is an example for ha.",
-          "example_ko": "이것은 어마 어유 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ha.",
-          "exampleMeaning": "이것은 어마 어유 관련 실전 예문입니다."
+          "example_en": "Ha you really thought you could fool me.",
+          "example_ko": "하 너는 정말 나를 속일 수 있다고 생각했구나.",
+          "exampleTarget": "Ha you really thought you could fool me.",
+          "exampleMeaning": "하 너는 정말 나를 속일 수 있다고 생각했구나."
         },
         {
           "id": "en_10510",
@@ -63548,9 +63548,9 @@
           "pron": "[애스]",
           "phonetic": "[애스]",
           "example_en": "a fancyass dress.",
-          "example_ko": "덕지덕지 장식한 드레스. 2.「시시한 녀석」의 뜻.",
+          "example_ko": "덕지덕지 장식한 드레스.",
           "exampleTarget": "a fancyass dress.",
-          "exampleMeaning": "덕지덕지 장식한 드레스. 2.「시시한 녀석」의 뜻."
+          "exampleMeaning": "덕지덕지 장식한 드레스."
         },
         {
           "id": "en_10511",
@@ -63564,10 +63564,10 @@
           "pronunciation": "[크애느아트]",
           "pron": "[크애느아트]",
           "phonetic": "[크애느아트]",
-          "example_en": "This is an example for cannot.",
-          "example_ko": "이것은 복합형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cannot.",
-          "exampleMeaning": "이것은 복합형 관련 실전 예문입니다."
+          "example_en": "We cannot accept this proposal in its current state.",
+          "example_ko": "우리는 현재 상태의 이 제안을 받아들일 수 없다.",
+          "exampleTarget": "We cannot accept this proposal in its current state.",
+          "exampleMeaning": "우리는 현재 상태의 이 제안을 받아들일 수 없다."
         },
         {
           "id": "en_10512",
@@ -63616,9 +63616,9 @@
           "pron": "[즈애크]",
           "phonetic": "[즈애크]",
           "example_en": "jack at a pinch(.",
-          "example_ko": "급할 때의) 임시 고용인. 4.〔카드놀이〕 잭 ; ＝jackpot; ＝blackjack. 5.의) 표적용의 흰 공; jackstone. 6.①잭 기중기의 일종; 피아노의 현을 치는 망치. ②〔해양〕 장두의 가로망; 무대용 대도구를 받치는 막대기; （고기 굽는） 꼬챙이 돌리는 장치; 장화 벗는 기구. ③《철도 속어》 기관차. 7.선수기; 야간 어로용의 횃불 그 기름을 담는 그릇. 8.〔전기〕 잭. 9.《복합어》 보통보다 작은 것.",
+          "example_ko": "급할 때의) 임시 고용인.",
           "exampleTarget": "jack at a pinch(.",
-          "exampleMeaning": "급할 때의) 임시 고용인. 4.〔카드놀이〕 잭 ; ＝jackpot; ＝blackjack. 5.의) 표적용의 흰 공; jackstone. 6.①잭 기중기의 일종; 피아노의 현을 치는 망치. ②〔해양〕 장두의 가로망; 무대용 대도구를 받치는 막대기; （고기 굽는） 꼬챙이 돌리는 장치; 장화 벗는 기구. ③《철도 속어》 기관차. 7.선수기; 야간 어로용의 횃불 그 기름을 담는 그릇. 8.〔전기〕 잭. 9.《복합어》 보통보다 작은 것."
+          "exampleMeaning": "급할 때의) 임시 고용인."
         },
         {
           "id": "en_10515",
@@ -63632,10 +63632,10 @@
           "pronunciation": "[드애드이]",
           "pron": "[드애드이]",
           "phonetic": "[드애드이]",
-          "example_en": "This is an example for daddy.",
-          "example_ko": "이것은 아빠 아버지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for daddy.",
-          "exampleMeaning": "이것은 아빠 아버지 관련 실전 예문입니다."
+          "example_en": "My daddy taught me how to ride bikes.",
+          "example_ko": "우리 아빠는 나에게 자전거 타는 법을 가르쳐 주셨다.",
+          "exampleTarget": "My daddy taught me how to ride bikes.",
+          "exampleMeaning": "우리 아빠는 나에게 자전거 타는 법을 가르쳐 주셨다."
         },
         {
           "id": "en_10516",
@@ -63649,10 +63649,10 @@
           "pronunciation": "[프이느어르이]",
           "pron": "[프이느어르이]",
           "phonetic": "[프이느어르이]",
-          "example_en": "This is an example for finally.",
-          "example_ko": "이것은 최후로 끝으로 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for finally.",
-          "exampleMeaning": "이것은 최후로 끝으로 관련 실전 예문입니다."
+          "example_en": "We finally completed the difficult task on time.",
+          "example_ko": "우리는 마침내 어려운 과제를 제시간에 완료했다.",
+          "exampleTarget": "We finally completed the difficult task on time.",
+          "exampleMeaning": "우리는 마침내 어려운 과제를 제시간에 완료했다."
         },
         {
           "id": "en_10517",
@@ -63718,9 +63718,9 @@
           "pron": "[느오느]",
           "phonetic": "[느오느]",
           "example_en": "There are still more unknowns than knowns about hurricanes.",
-          "example_ko": "허리케인에 대해서는 알려져 있는 사실보다 알려져 있지 않은 사실이 더 많다. 형용사1.〔…에〕 알려져 있는 〔to …〕 ; 《한정적》 이미 알려진 이미 알고 있는.",
+          "example_ko": "허리케인에 대해서는 알려져 있는 사실보다 알려져 있지 않은 사실이 더 많다. 형용사1.〔…에〕 알려져 있는 〔to …〕 ; 이미 알려진 이미 알고 있는.",
           "exampleTarget": "There are still more unknowns than knowns about hurricanes.",
-          "exampleMeaning": "허리케인에 대해서는 알려져 있는 사실보다 알려져 있지 않은 사실이 더 많다. 형용사1.〔…에〕 알려져 있는 〔to …〕 ; 《한정적》 이미 알려진 이미 알고 있는."
+          "exampleMeaning": "허리케인에 대해서는 알려져 있는 사실보다 알려져 있지 않은 사실이 더 많다. 형용사1.〔…에〕 알려져 있는 〔to …〕 ; 이미 알려진 이미 알고 있는."
         },
         {
           "id": "en_10521",
@@ -63734,10 +63734,10 @@
           "pronunciation": "[프에르트]",
           "pron": "[프에르트]",
           "phonetic": "[프에르트]",
-          "example_en": "This is an example for felt.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for felt.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I felt very tired after work.",
+          "example_ko": "나는 퇴근 후에 매우 피곤함을 느꼈다.",
+          "exampleTarget": "I felt very tired after work.",
+          "exampleMeaning": "나는 퇴근 후에 매우 피곤함을 느꼈다."
         },
         {
           "id": "en_10522",
@@ -63785,10 +63785,10 @@
           "pronunciation": "[즈즈어스]",
           "pron": "[즈즈어스]",
           "phonetic": "[즈즈어스]",
-          "example_en": "This is an example for jesus.",
-          "example_ko": "이것은 예수 속격형은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jesus.",
-          "exampleMeaning": "이것은 예수 속격형은 관련 실전 예문입니다."
+          "example_en": "Jesus showed deep compassion to all the people.",
+          "example_ko": "예수는 모든 사람들에게 깊은 연민을 보여주었다.",
+          "exampleTarget": "Jesus showed deep compassion to all the people.",
+          "exampleMeaning": "예수는 모든 사람들에게 깊은 연민을 보여주었다."
         },
         {
           "id": "en_10525",
@@ -63802,10 +63802,10 @@
           "pronunciation": "[longer]",
           "pron": "[longer]",
           "phonetic": "[longer]",
-          "example_en": "This is an example for longer.",
-          "example_ko": "이것은 간절히 바라는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for longer.",
-          "exampleMeaning": "이것은 간절히 바라는 관련 실전 예문입니다."
+          "example_en": "I cannot wait any longer for the bus.",
+          "example_ko": "나는 버스를 더 이상 기다릴 수 없다.",
+          "exampleTarget": "I cannot wait any longer for the bus.",
+          "exampleMeaning": "나는 버스를 더 이상 기다릴 수 없다."
         },
         {
           "id": "en_10526",
@@ -63820,9 +63820,9 @@
           "pron": "[크오르이으]",
           "phonetic": "[크오르이으]",
           "example_en": "the calling of a roll.",
-          "example_ko": "출석 부르기. 2.소집 소환 호출.",
+          "example_ko": "출석 부르기.",
           "exampleTarget": "the calling of a roll.",
-          "exampleMeaning": "출석 부르기. 2.소집 소환 호출."
+          "exampleMeaning": "출석 부르기."
         },
         {
           "id": "en_10527",
@@ -63871,9 +63871,9 @@
           "pron": "[스이으]",
           "phonetic": "[스이으]",
           "example_en": "Seeing it is 10 oclock we will wait no longer.10.",
-          "example_ko": "시니까 더 이상은 기다릴 수 없다 . 명사1.보기.",
+          "example_ko": "시니까 더 이상은 기다릴 수 없다 .",
           "exampleTarget": "Seeing it is 10 oclock we will wait no longer.10.",
-          "exampleMeaning": "시니까 더 이상은 기다릴 수 없다 . 명사1.보기."
+          "exampleMeaning": "시니까 더 이상은 기다릴 수 없다 ."
         },
         {
           "id": "en_10530",
@@ -63888,9 +63888,9 @@
           "pron": "[브어느]",
           "phonetic": "[브어느]",
           "example_en": "at a given place.",
-          "example_ko": "지정된 장소에. 2.선물로 주어진 기증된; 수여된.",
+          "example_ko": "지정된 장소에.",
           "exampleTarget": "at a given place.",
-          "exampleMeaning": "지정된 장소에. 2.선물로 주어진 기증된; 수여된."
+          "exampleMeaning": "지정된 장소에."
         }
       ],
       "nodes": [
@@ -64003,10 +64003,10 @@
           "pronunciation": "[오]",
           "pron": "[오]",
           "phonetic": "[오]",
-          "example_en": "This is an example for ooh.",
-          "example_ko": "이것은 어! 어허! 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ooh.",
-          "exampleMeaning": "이것은 어! 어허! 관련 실전 예문입니다."
+          "example_en": "Ooh that looks like a delicious chocolate cake.",
+          "example_ko": "오 그것 정말 맛있는 초콜릿 케이크처럼 보인다.",
+          "exampleTarget": "Ooh that looks like a delicious chocolate cake.",
+          "exampleMeaning": "오 그것 정말 맛있는 초콜릿 케이크처럼 보인다."
         },
         {
           "id": "en_10602",
@@ -64021,9 +64021,9 @@
           "pron": "[즈느트르므어느]",
           "phonetic": "[즈느트르므어느]",
           "example_en": "Please bring this gentleman a glass of beer.",
-          "example_ko": "이 남자분에게 맥주를 한 잔 갖다 드리세요. 3.《-men》 ①《호칭》 （신사） 여러분 제군.",
+          "example_ko": "이 남자분에게 맥주를 한 잔 갖다 드리세요.",
           "exampleTarget": "Please bring this gentleman a glass of beer.",
-          "exampleMeaning": "이 남자분에게 맥주를 한 잔 갖다 드리세요. 3.《-men》 ①《호칭》 （신사） 여러분 제군."
+          "exampleMeaning": "이 남자분에게 맥주를 한 잔 갖다 드리세요."
         },
         {
           "id": "en_10603",
@@ -64054,10 +64054,10 @@
           "pronunciation": "[르이드이즈]",
           "pron": "[르이드이즈]",
           "phonetic": "[르이드이즈]",
-          "example_en": "This is an example for ladies.",
-          "example_ko": "이것은 여성용 화장실 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ladies.",
-          "exampleMeaning": "이것은 여성용 화장실 관련 실전 예문입니다."
+          "example_en": "These ladies organized the charity event very successfully.",
+          "example_ko": "이 여성분들은 자선 행사를 매우 성공적으로 조직했다.",
+          "exampleTarget": "These ladies organized the charity event very successfully.",
+          "exampleMeaning": "이 여성분들은 자선 행사를 매우 성공적으로 조직했다."
         },
         {
           "id": "en_10605",
@@ -64088,10 +64088,10 @@
           "pronunciation": "[프이트]",
           "pron": "[프이트]",
           "phonetic": "[프이트]",
-          "example_en": "This is an example for feet.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for feet.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "My feet are cold in the snow.",
+          "example_ko": "눈 속에서 내 발이 시리다.",
+          "exampleTarget": "My feet are cold in the snow.",
+          "exampleMeaning": "눈 속에서 내 발이 시리다."
         },
         {
           "id": "en_10607",
@@ -64122,10 +64122,10 @@
           "pronunciation": "[드유드]",
           "pron": "[드유드]",
           "phonetic": "[드유드]",
-          "example_en": "This is an example for dude.",
-          "example_ko": "이것은 젠체하는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dude.",
-          "exampleMeaning": "이것은 젠체하는 사람 관련 실전 예문입니다."
+          "example_en": "That dude knows how to fix broken computers.",
+          "example_ko": "저 친구는 고장 난 컴퓨터를 고치는 방법을 안다.",
+          "exampleTarget": "That dude knows how to fix broken computers.",
+          "exampleMeaning": "저 친구는 고장 난 컴퓨터를 고치는 방법을 안다."
         },
         {
           "id": "en_10609",
@@ -64139,10 +64139,10 @@
           "pronunciation": "[브이으]",
           "pron": "[브이으]",
           "phonetic": "[브이으]",
-          "example_en": "This is an example for giving.",
-          "example_ko": "이것은 마음이 넓은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for giving.",
-          "exampleMeaning": "이것은 마음이 넓은 관련 실전 예문입니다."
+          "example_en": "She is giving a presentation about climate change.",
+          "example_ko": "그녀는 기후 변화에 대해 발표를 하고 있다.",
+          "exampleTarget": "She is giving a presentation about climate change.",
+          "exampleMeaning": "그녀는 기후 변화에 대해 발표를 하고 있다."
         },
         {
           "id": "en_10610",
@@ -64190,10 +64190,10 @@
           "pronunciation": "[스애므]",
           "pron": "[스애므]",
           "phonetic": "[스애므]",
-          "example_en": "This is an example for sam.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sam.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Sam forgot to bring his keys this morning.",
+          "example_ko": "샘은 오늘 아침에 열쇠를 가져오는 것을 잊었다.",
+          "exampleTarget": "Sam forgot to bring his keys this morning.",
+          "exampleMeaning": "샘은 오늘 아침에 열쇠를 가져오는 것을 잊었다."
         },
         {
           "id": "en_10613",
@@ -64259,9 +64259,9 @@
           "pron": "[흐애프느이으]",
           "phonetic": "[흐애프느이으]",
           "example_en": "amusing happenings.",
-          "example_ko": "재미있는 사건. 2.《속어》 해프닝: 대본·진행표와 관계없이 진행 도중에 관객이 참가하는 연극·연기. 형용사《속어》 〈사람·물건·장소가〉 최신 유행의; 멋진.",
+          "example_ko": "재미있는 사건.",
           "exampleTarget": "amusing happenings.",
-          "exampleMeaning": "재미있는 사건. 2.《속어》 해프닝: 대본·진행표와 관계없이 진행 도중에 관객이 참가하는 연극·연기. 형용사《속어》 〈사람·물건·장소가〉 최신 유행의; 멋진."
+          "exampleMeaning": "재미있는 사건."
         },
         {
           "id": "en_10617",
@@ -64276,9 +64276,9 @@
           "pron": "[크이드]",
           "phonetic": "[크이드]",
           "example_en": "a book bound in kid.",
-          "example_ko": "키드 가죽으로 장정한 책. 3.《비격식》 어린이 ; 젊은이 ; 아들 딸; 젊고 미숙한 운동 선수.",
+          "example_ko": "키드 가죽으로 장정한 책.",
           "exampleTarget": "a book bound in kid.",
-          "exampleMeaning": "키드 가죽으로 장정한 책. 3.《비격식》 어린이 ; 젊은이 ; 아들 딸; 젊고 미숙한 운동 선수."
+          "exampleMeaning": "키드 가죽으로 장정한 책."
         },
         {
           "id": "en_10618",
@@ -64305,14 +64305,14 @@
           "level": "B2",
           "unitId": "unit_106",
           "nodeId": "en_u106_n2",
-          "meaning": "과거·과거",
+          "meaning": "유지했다",
           "pronunciation": "[크에프트]",
           "pron": "[크에프트]",
           "phonetic": "[크에프트]",
           "example_en": "a kept politician.",
-          "example_ko": "어용 정치가. 2.〈토지·건물 등이〉 손질이 잘되어 있는. 3.〈남자·소년이〉 호모인.",
+          "example_ko": "어용 정치가.",
           "exampleTarget": "a kept politician.",
-          "exampleMeaning": "어용 정치가. 2.〈토지·건물 등이〉 손질이 잘되어 있는. 3.〈남자·소년이〉 호모인."
+          "exampleMeaning": "어용 정치가."
         },
         {
           "id": "en_10620",
@@ -64378,9 +64378,9 @@
           "pron": "[브르드이으]",
           "phonetic": "[브르드이으]",
           "example_en": "a wooden building.",
-          "example_ko": "목조 건물. 2.건축 건조; 건축술; 《형용사적》 건축의.",
+          "example_ko": "목조 건물.",
           "exampleTarget": "a wooden building.",
-          "exampleMeaning": "목조 건물. 2.건축 건조; 건축술; 《형용사적》 건축의."
+          "exampleMeaning": "목조 건물."
         },
         {
           "id": "en_10624",
@@ -64390,14 +64390,14 @@
           "level": "B2",
           "unitId": "unit_106",
           "nodeId": "en_u106_n5",
-          "meaning": "과거·과거",
+          "meaning": "잡았다",
           "pronunciation": "[크오트]",
           "pron": "[크오트]",
           "phonetic": "[크오트]",
-          "example_en": "This is an example for caught.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for caught.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I caught a cold last week.",
+          "example_ko": "나는 지난주에 감기에 걸렸다.",
+          "exampleTarget": "I caught a cold last week.",
+          "exampleMeaning": "나는 지난주에 감기에 걸렸다."
         },
         {
           "id": "en_10625",
@@ -64411,10 +64411,10 @@
           "pronunciation": "[므에느트]",
           "pron": "[므에느트]",
           "phonetic": "[므에느트]",
-          "example_en": "This is an example for meant.",
-          "example_ko": "이것은 ¹의 과거·과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for meant.",
-          "exampleMeaning": "이것은 ¹의 과거·과거 관련 실전 예문입니다."
+          "example_en": "I meant no harm to anyone.",
+          "example_ko": "나는 누구에게도 해를 끼칠 의도가 없었다.",
+          "exampleTarget": "I meant no harm to anyone.",
+          "exampleMeaning": "나는 누구에게도 해를 끼칠 의도가 없었다."
         },
         {
           "id": "en_10626",
@@ -64492,14 +64492,14 @@
           "level": "B2",
           "unitId": "unit_106",
           "nodeId": "en_u106_n5",
-          "meaning": "tv",
+          "meaning": "텔레비전",
           "pronunciation": "[tv]",
           "pron": "[tv]",
           "phonetic": "[tv]",
-          "example_en": "This is an example for tv.",
-          "example_ko": "이것은 tv 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tv.",
-          "exampleMeaning": "이것은 tv 관련 실전 예문입니다."
+          "example_en": "We watch TV together every evening.",
+          "example_ko": "우리는 매일 저녁 함께 텔레비전을 본다.",
+          "exampleTarget": "We watch TV together every evening.",
+          "exampleMeaning": "우리는 매일 저녁 함께 텔레비전을 본다."
         }
       ],
       "nodes": [
@@ -64613,9 +64613,9 @@
           "pron": "[브오르느]",
           "phonetic": "[브오르느]",
           "example_en": "ones first born child.",
-          "example_ko": "첫아이. 2.타고난 선천적인 천성의; 여간해서 바뀌지 않는.",
+          "example_ko": "첫아이.",
           "exampleTarget": "ones first born child.",
-          "exampleMeaning": "첫아이. 2.타고난 선천적인 천성의; 여간해서 바뀌지 않는."
+          "exampleMeaning": "첫아이."
         },
         {
           "id": "en_10702",
@@ -64681,9 +64681,9 @@
           "pron": "[스어르트느르이]",
           "phonetic": "[스어르트느르이]",
           "example_en": "John certainly did not like the play.",
-          "example_ko": "분명히 존은 그 연극이 마음에 들지 않았다 . 2.《대답》 그렇고 말고 물론이지; 알았습니다.",
+          "example_ko": "분명히 존은 그 연극이 마음에 들지 않았다 .",
           "exampleTarget": "John certainly did not like the play.",
-          "exampleMeaning": "분명히 존은 그 연극이 마음에 들지 않았다 . 2.《대답》 그렇고 말고 물론이지; 알았습니다."
+          "exampleMeaning": "분명히 존은 그 연극이 마음에 들지 않았다 ."
         },
         {
           "id": "en_10706",
@@ -64714,10 +64714,10 @@
           "pronunciation": "[므이크어르]",
           "pron": "[므이크어르]",
           "phonetic": "[므이크어르]",
-          "example_en": "This is an example for michael.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for michael.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Michael will lead the workshop next Monday morning.",
+          "example_ko": "마이클이 다음 주 월요일 아침 워크숍을 이끌 것이다.",
+          "exampleTarget": "Michael will lead the workshop next Monday morning.",
+          "exampleMeaning": "마이클이 다음 주 월요일 아침 워크숍을 이끌 것이다."
         },
         {
           "id": "en_10708",
@@ -64748,10 +64748,10 @@
           "pronunciation": "[즈오르즈]",
           "pron": "[즈오르즈]",
           "phonetic": "[즈오르즈]",
-          "example_en": "This is an example for george.",
-          "example_ko": "이것은 여자와 섹스하다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for george.",
-          "exampleMeaning": "이것은 여자와 섹스하다 관련 실전 예문입니다."
+          "example_en": "George always drinks black coffee in the morning.",
+          "example_ko": "조지는 아침에 항상 블랙 커피를 마신다.",
+          "exampleTarget": "George always drinks black coffee in the morning.",
+          "exampleMeaning": "조지는 아침에 항상 블랙 커피를 마신다."
         },
         {
           "id": "en_10710",
@@ -64766,9 +64766,9 @@
           "pron": "[브르오크]",
           "phonetic": "[브르오크]",
           "example_en": "The firm has gone broke.",
-          "example_ko": "회사는 파산했다. 숙어 flat broke; stony broke; dead broke; stone broke; be clean broke 《비격식》 동전 한푼 없다; 파산해 있다. go broke 《속어》 재산을 날리다 파산하다. go for broke 《비격식》 있는 힘을 다하다; 죽을 각오로 끝까지 버티다; 전 재산을 쏟아 붓다; 〔어떤 일에〕 모든 것을 걸다〔on …〕.",
+          "example_ko": "회사는 파산했다.",
           "exampleTarget": "The firm has gone broke.",
-          "exampleMeaning": "회사는 파산했다. 숙어 flat broke; stony broke; dead broke; stone broke; be clean broke 《비격식》 동전 한푼 없다; 파산해 있다. go broke 《속어》 재산을 날리다 파산하다. go for broke 《비격식》 있는 힘을 다하다; 죽을 각오로 끝까지 버티다; 전 재산을 쏟아 붓다; 〔어떤 일에〕 모든 것을 걸다〔on …〕."
+          "exampleMeaning": "회사는 파산했다."
         },
         {
           "id": "en_10711",
@@ -64799,10 +64799,10 @@
           "pronunciation": "[드이브이드]",
           "pron": "[드이브이드]",
           "phonetic": "[드이브이드]",
-          "example_en": "This is an example for david.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for david.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "David solved the complex math puzzle very quickly.",
+          "example_ko": "데이비드는 복잡한 수학 퍼즐을 아주 빠르게 풀었다.",
+          "exampleTarget": "David solved the complex math puzzle very quickly.",
+          "exampleMeaning": "데이비드는 복잡한 수학 퍼즐을 아주 빠르게 풀었다."
         },
         {
           "id": "en_10713",
@@ -64834,9 +64834,9 @@
           "pron": "[즈오]",
           "phonetic": "[즈오]",
           "example_en": "Hes a good joe.",
-          "example_ko": "그는 좋은 녀석이다. 2.커피.",
+          "example_ko": "그는 좋은 녀석이다.",
           "exampleTarget": "Hes a good joe.",
-          "exampleMeaning": "그는 좋은 녀석이다. 2.커피."
+          "exampleMeaning": "그는 좋은 녀석이다."
         },
         {
           "id": "en_10715",
@@ -64885,9 +64885,9 @@
           "pron": "[프에이드]",
           "phonetic": "[프에이드]",
           "example_en": "paid vacation.",
-          "example_ko": "유급 휴가. 2.〈사람이〉 고용된.",
+          "example_ko": "유급 휴가.",
           "exampleTarget": "paid vacation.",
-          "exampleMeaning": "유급 휴가. 2.〈사람이〉 고용된."
+          "exampleMeaning": "유급 휴가."
         },
         {
           "id": "en_10718",
@@ -64918,10 +64918,10 @@
           "pronunciation": "[르애느]",
           "pron": "[르애느]",
           "phonetic": "[르애느]",
-          "example_en": "This is an example for ran.",
-          "example_ko": "이것은 연사 한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ran.",
-          "exampleMeaning": "이것은 연사 한 관련 실전 예문입니다."
+          "example_en": "He ran five miles around the neighborhood park.",
+          "example_ko": "그는 동네 공원 주변을 5마일 달렸다.",
+          "exampleTarget": "He ran five miles around the neighborhood park.",
+          "exampleMeaning": "그는 동네 공원 주변을 5마일 달렸다."
         },
         {
           "id": "en_10720",
@@ -64986,10 +64986,10 @@
           "pronunciation": "[이오르크]",
           "pron": "[이오르크]",
           "phonetic": "[이오르크]",
-          "example_en": "This is an example for york.",
-          "example_ko": "이것은 yorker로 아웃시키다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for york.",
-          "exampleMeaning": "이것은 yorker로 아웃시키다 관련 실전 예문입니다."
+          "example_en": "We plan to visit New York next summer.",
+          "example_ko": "우리는 내년 여름에 뉴욕을 방문할 계획이다.",
+          "exampleTarget": "We plan to visit New York next summer.",
+          "exampleMeaning": "우리는 내년 여름에 뉴욕을 방문할 계획이다."
         },
         {
           "id": "en_10724",
@@ -64999,14 +64999,14 @@
           "level": "B2",
           "unitId": "unit_107",
           "nodeId": "en_u107_n5",
-          "meaning": "과거·과거",
+          "meaning": "샀다",
           "pronunciation": "[브오트]",
           "pron": "[브오트]",
           "phonetic": "[브오트]",
-          "example_en": "This is an example for bought.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bought.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I bought fresh bread at the bakery.",
+          "example_ko": "나는 빵집에서 갓 구운 빵을 샀다.",
+          "exampleTarget": "I bought fresh bread at the bakery.",
+          "exampleMeaning": "나는 빵집에서 갓 구운 빵을 샀다."
         },
         {
           "id": "en_10725",
@@ -65038,9 +65038,9 @@
           "pron": "[스트이으]",
           "phonetic": "[스트이으]",
           "example_en": "read a book in one sitting(.",
-          "example_ko": "앉아서) 단숨에 책을 읽다. 3.포란 （기간） ; 포란수. 4.（교회 등의） 좌석. 5.《영》 （법정 등의） 개정 （기간） （의회의) 회기 . 6.（선내의） 식사 시간.",
+          "example_ko": "앉아서) 단숨에 책을 읽다.",
           "exampleTarget": "read a book in one sitting(.",
-          "exampleMeaning": "앉아서) 단숨에 책을 읽다. 3.포란 （기간） ; 포란수. 4.（교회 등의） 좌석. 5.《영》 （법정 등의） 개정 （기간） （의회의) 회기 . 6.（선내의） 식사 시간."
+          "exampleMeaning": "앉아서) 단숨에 책을 읽다."
         },
         {
           "id": "en_10727",
@@ -65067,14 +65067,14 @@
           "level": "B2",
           "unitId": "unit_107",
           "nodeId": "en_u107_n5",
-          "meaning": "과거·과거",
+          "meaning": "잊었다",
           "pronunciation": "[프어르아트]",
           "pron": "[프어르아트]",
           "phonetic": "[프어르아트]",
-          "example_en": "This is an example for forgot.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for forgot.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I forgot to bring my homework.",
+          "example_ko": "나는 숙제를 가져오는 것을 잊었다.",
+          "exampleTarget": "I forgot to bring my homework.",
+          "exampleMeaning": "나는 숙제를 가져오는 것을 잊었다."
         },
         {
           "id": "en_10729",
@@ -65221,10 +65221,10 @@
           "pronunciation": "[므아이크]",
           "pron": "[므아이크]",
           "phonetic": "[므아이크]",
-          "example_en": "This is an example for mike.",
-          "example_ko": "이것은 마이크 현미경 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mike.",
-          "exampleMeaning": "이것은 마이크 현미경 관련 실전 예문입니다."
+          "example_en": "Mike answered all customer questions with great patience.",
+          "example_ko": "마이크는 대단한 인내심으로 모든 고객 질문에 답했다.",
+          "exampleTarget": "Mike answered all customer questions with great patience.",
+          "exampleMeaning": "마이크는 대단한 인내심으로 모든 고객 질문에 답했다."
         },
         {
           "id": "en_10802",
@@ -65255,10 +65255,10 @@
           "pronunciation": "[므아이르즈]",
           "pron": "[므아이르즈]",
           "phonetic": "[므아이르즈]",
-          "example_en": "This is an example for miles.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for miles.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "They walked many miles across the scenic mountains.",
+          "example_ko": "그들은 경치 좋은 산을 가로질러 수 마일을 걸었다.",
+          "exampleTarget": "They walked many miles across the scenic mountains.",
+          "exampleMeaning": "그들은 경치 좋은 산을 가로질러 수 마일을 걸었다."
         },
         {
           "id": "en_10804",
@@ -65306,10 +65306,10 @@
           "pronunciation": "[트아므]",
           "pron": "[트아므]",
           "phonetic": "[트아므]",
-          "example_en": "This is an example for tom.",
-          "example_ko": "이것은 수컷 수고양이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tom.",
-          "exampleMeaning": "이것은 수컷 수고양이 관련 실전 예문입니다."
+          "example_en": "Tom repaired the broken wooden chair by himself.",
+          "example_ko": "톰은 망가진 나무 의자를 혼자서 수리했다.",
+          "exampleTarget": "Tom repaired the broken wooden chair by himself.",
+          "exampleMeaning": "톰은 망가진 나무 의자를 혼자서 수리했다."
         },
         {
           "id": "en_10807",
@@ -65324,9 +65324,9 @@
           "pron": "[우에어르이으]",
           "phonetic": "[우에어르이으]",
           "example_en": "a wearing job.",
-          "example_ko": "지치게 하는 일. 2.입기 위한 착용의.",
+          "example_ko": "지치게 하는 일.",
           "exampleTarget": "a wearing job.",
-          "exampleMeaning": "지치게 하는 일. 2.입기 위한 착용의."
+          "exampleMeaning": "지치게 하는 일."
         },
         {
           "id": "en_10808",
@@ -65358,9 +65358,9 @@
           "pron": "[어브어르느므어느트]",
           "phonetic": "[어브어르느므어느트]",
           "example_en": "government of the people by the people for the people.",
-          "example_ko": "국민의 국민에 의한 국민을 위한 정치 〈A. Lincoln〉. 2.《종종 Government》《집합적》 정부 통치 기관; （각종 기관의） 집행부 이사회; （영국 등의 의회 제도에서） 내각.",
+          "example_ko": "국민의 국민에 의한 국민을 위한 정치 〈A. Lincoln〉.",
           "exampleTarget": "government of the people by the people for the people.",
-          "exampleMeaning": "국민의 국민에 의한 국민을 위한 정치 〈A. Lincoln〉. 2.《종종 Government》《집합적》 정부 통치 기관; （각종 기관의） 집행부 이사회; （영국 등의 의회 제도에서） 내각."
+          "exampleMeaning": "국민의 국민에 의한 국민을 위한 정치 〈A. Lincoln〉."
         },
         {
           "id": "en_10810",
@@ -65374,10 +65374,10 @@
           "pronunciation": "[프에르]",
           "pron": "[프에르]",
           "phonetic": "[프에르]",
-          "example_en": "This is an example for fell.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fell.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "The apple fell from the tree.",
+          "example_ko": "사과가 나무에서 떨어졌다.",
+          "exampleTarget": "The apple fell from the tree.",
+          "exampleMeaning": "사과가 나무에서 떨어졌다."
         },
         {
           "id": "en_10811",
@@ -65442,10 +65442,10 @@
           "pronunciation": "[어므르이크어]",
           "pron": "[어므르이크어]",
           "phonetic": "[어므르이크어]",
-          "example_en": "This is an example for america.",
-          "example_ko": "이것은 미국 아메리카 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for america.",
-          "exampleMeaning": "이것은 미국 아메리카 관련 실전 예문입니다."
+          "example_en": "Many international students travel to America every year.",
+          "example_ko": "많은 유학생들이 매년 미국으로 여행을 떠난다.",
+          "exampleTarget": "Many international students travel to America every year.",
+          "exampleMeaning": "많은 유학생들이 매년 미국으로 여행을 떠난다."
         },
         {
           "id": "en_10815",
@@ -65459,10 +65459,10 @@
           "pronunciation": "[스크르므이으]",
           "pron": "[스크르므이으]",
           "phonetic": "[스크르므이으]",
-          "example_en": "This is an example for screaming.",
-          "example_ko": "이것은 날카롭게 외치는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for screaming.",
-          "exampleMeaning": "이것은 날카롭게 외치는 관련 실전 예문입니다."
+          "example_en": "The excited children were screaming with pure joy.",
+          "example_ko": "신난 아이들은 순수한 기쁨으로 소리를 지르고 있었다.",
+          "exampleTarget": "The excited children were screaming with pure joy.",
+          "exampleMeaning": "신난 아이들은 순수한 기쁨으로 소리를 지르고 있었다."
         },
         {
           "id": "en_10816",
@@ -65494,9 +65494,9 @@
           "pron": "[프이트이으]",
           "phonetic": "[프이트이으]",
           "example_en": "a fighting formation.",
-          "example_ko": "전투 대형. 2.전투적인 호전적인 덤벼드는 듯한; 용기 있는.",
+          "example_ko": "전투 대형.",
           "exampleTarget": "a fighting formation.",
-          "exampleMeaning": "전투 대형. 2.전투적인 호전적인 덤벼드는 듯한; 용기 있는."
+          "exampleMeaning": "전투 대형."
         },
         {
           "id": "en_10818",
@@ -65510,10 +65510,10 @@
           "pronunciation": "[프트어르]",
           "pron": "[프트어르]",
           "phonetic": "[프트어르]",
-          "example_en": "This is an example for peter.",
-          "example_ko": "이것은 점차 늘어지다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for peter.",
-          "exampleMeaning": "이것은 점차 늘어지다 관련 실전 예문입니다."
+          "example_en": "Peter joined the design department two months ago.",
+          "example_ko": "피터는 두 달 전에 디자인 부서에 합류했다.",
+          "exampleTarget": "Peter joined the design department two months ago.",
+          "exampleMeaning": "피터는 두 달 전에 디자인 부서에 합류했다."
         },
         {
           "id": "en_10819",
@@ -65527,10 +65527,10 @@
           "pronunciation": "[프오르]",
           "pron": "[프오르]",
           "phonetic": "[프오르]",
-          "example_en": "This is an example for paul.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for paul.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Paul loves cooking dinner for his close friends.",
+          "example_ko": "폴은 친한 친구들을 위해 저녁 식사 요리하는 것을 좋아한다.",
+          "exampleTarget": "Paul loves cooking dinner for his close friends.",
+          "exampleMeaning": "폴은 친한 친구들을 위해 저녁 식사 요리하는 것을 좋아한다."
         },
         {
           "id": "en_10820",
@@ -65544,10 +65544,10 @@
           "pronunciation": "[므에어르이]",
           "pron": "[므에어르이]",
           "phonetic": "[므에어르이]",
-          "example_en": "This is an example for mary.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mary.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Mary works as a talented software engineer here.",
+          "example_ko": "메리는 이곳에서 유능한 소프트웨어 엔지니어로 일한다.",
+          "exampleTarget": "Mary works as a talented software engineer here.",
+          "exampleMeaning": "메리는 이곳에서 유능한 소프트웨어 엔지니어로 일한다."
         },
         {
           "id": "en_10821",
@@ -65562,9 +65562,9 @@
           "pron": "[크르이으]",
           "phonetic": "[크르이으]",
           "example_en": "The police are investigating the killing in the park.",
-          "example_ko": "경찰은 공원에서 일어난 살인 사건을 수사하고 있다. 2.사냥감. 3.《a killing》《비격식》 〔주식 등에 의한〕 큰 벌이 횡재〔in on …〕.",
+          "example_ko": "경찰은 공원에서 일어난 살인 사건을 수사하고 있다.",
           "exampleTarget": "The police are investigating the killing in the park.",
-          "exampleMeaning": "경찰은 공원에서 일어난 살인 사건을 수사하고 있다. 2.사냥감. 3.《a killing》《비격식》 〔주식 등에 의한〕 큰 벌이 횡재〔in on …〕."
+          "exampleMeaning": "경찰은 공원에서 일어난 살인 사건을 수사하고 있다."
         },
         {
           "id": "en_10822",
@@ -65595,10 +65595,10 @@
           "pronunciation": "[므]",
           "pron": "[므]",
           "phonetic": "[므]",
-          "example_en": "This is an example for mm.",
-          "example_ko": "이것은 음 흥 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mm.",
-          "exampleMeaning": "이것은 음 흥 관련 실전 예문입니다."
+          "example_en": "Mm this freshly baked bread tastes really good.",
+          "example_ko": "음 방금 구운 이 빵은 정말 맛있다.",
+          "exampleTarget": "Mm this freshly baked bread tastes really good.",
+          "exampleMeaning": "음 방금 구운 이 빵은 정말 맛있다."
         },
         {
           "id": "en_10824",
@@ -65612,10 +65612,10 @@
           "pronunciation": "[크르어르]",
           "pron": "[크르어르]",
           "phonetic": "[크르어르]",
-          "example_en": "This is an example for killer.",
-          "example_ko": "이것은 죽이는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for killer.",
-          "exampleMeaning": "이것은 죽이는 사람 관련 실전 예문입니다."
+          "example_en": "The intense workout routine was a killer today.",
+          "example_ko": "오늘의 강도 높은 운동 루틴은 정말 너무 힘들었다.",
+          "exampleTarget": "The intense workout routine was a killer today.",
+          "exampleMeaning": "오늘의 강도 높은 운동 루틴은 정말 너무 힘들었다."
         },
         {
           "id": "en_10825",
@@ -65646,10 +65646,10 @@
           "pronunciation": "[브에느]",
           "pron": "[브에느]",
           "phonetic": "[브에느]",
-          "example_en": "This is an example for ben.",
-          "example_ko": "이것은 산꼭대기 높은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ben.",
-          "exampleMeaning": "이것은 산꼭대기 높은 관련 실전 예문입니다."
+          "example_en": "Ben decided to study biology at the university.",
+          "example_ko": "벤은 대학교에서 생물학을 공부하기로 결정했다.",
+          "exampleTarget": "Ben decided to study biology at the university.",
+          "exampleMeaning": "벤은 대학교에서 생물학을 공부하기로 결정했다."
         },
         {
           "id": "en_10827",
@@ -65664,9 +65664,9 @@
           "pron": "[girlfriend]",
           "phonetic": "[girlfriend]",
           "example_en": "ones ex- girlfriend.",
-          "example_ko": "전 애인. 2.《미》 （여자의） 여자 친구 .",
+          "example_ko": "전 애인.",
           "exampleTarget": "ones ex- girlfriend.",
-          "exampleMeaning": "전 애인. 2.《미》 （여자의） 여자 친구 ."
+          "exampleMeaning": "전 애인."
         },
         {
           "id": "en_10828",
@@ -65697,10 +65697,10 @@
           "pronunciation": "[므어므]",
           "pron": "[므어므]",
           "phonetic": "[므어므]",
-          "example_en": "This is an example for mum.",
-          "example_ko": "이것은 면극 하다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mum.",
-          "exampleMeaning": "이것은 면극 하다 관련 실전 예문입니다."
+          "example_en": "My mum always prepares healthy snacks for us.",
+          "example_ko": "우리 엄마는 항상 우리를 위해 건강한 간식을 준비하신다.",
+          "exampleTarget": "My mum always prepares healthy snacks for us.",
+          "exampleMeaning": "우리 엄마는 항상 우리를 위해 건강한 간식을 준비하신다."
         },
         {
           "id": "en_10830",
@@ -65714,10 +65714,10 @@
           "pronunciation": "[스트아르트이으]",
           "pron": "[스트아르트이으]",
           "phonetic": "[스트아르트이으]",
-          "example_en": "This is an example for starting.",
-          "example_ko": "이것은 출발 개시 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for starting.",
-          "exampleMeaning": "이것은 출발 개시 관련 실전 예문입니다."
+          "example_en": "The concert is starting in ten minutes sharp.",
+          "example_ko": "콘서트는 정확히 10분 후에 시작합니다.",
+          "exampleTarget": "The concert is starting in ten minutes sharp.",
+          "exampleMeaning": "콘서트는 정확히 10분 후에 시작합니다."
         }
       ],
       "nodes": [
@@ -65831,9 +65831,9 @@
           "pron": "[스프에느트]",
           "phonetic": "[스프에느트]",
           "example_en": "a spent runner.",
-          "example_ko": "지쳐버린 주자. 2.〈물고기·곤충이〉 산란한. 3.사정한.",
+          "example_ko": "지쳐버린 주자.",
           "exampleTarget": "a spent runner.",
-          "exampleMeaning": "지쳐버린 주자. 2.〈물고기·곤충이〉 산란한. 3.사정한."
+          "exampleMeaning": "지쳐버린 주자."
         },
         {
           "id": "en_10902",
@@ -65864,10 +65864,10 @@
           "pronunciation": "[므아므어]",
           "pron": "[므아므어]",
           "phonetic": "[므아므어]",
-          "example_en": "This is an example for mama.",
-          "example_ko": "이것은 엄마 일반적임 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mama.",
-          "exampleMeaning": "이것은 엄마 일반적임 관련 실전 예문입니다."
+          "example_en": "His mama taught him how to play piano.",
+          "example_ko": "그의 엄마는 그에게 피아노 치는 법을 가르쳐 주었다.",
+          "exampleTarget": "His mama taught him how to play piano.",
+          "exampleMeaning": "그의 엄마는 그에게 피아노 치는 법을 가르쳐 주었다."
         },
         {
           "id": "en_10904",
@@ -65932,10 +65932,10 @@
           "pronunciation": "[르우트느어느트육군르에프트느해군르어트느발음에주의]",
           "pron": "[르우트느어느트육군르에프트느해군르어트느발음에주의]",
           "phonetic": "[르우트느어느트육군르에프트느해군르어트느발음에주의]",
-          "example_en": "This is an example for lieutenant.",
-          "example_ko": "이것은 중위 소위 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lieutenant.",
-          "exampleMeaning": "이것은 중위 소위 관련 실전 예문입니다."
+          "example_en": "The brave lieutenant led his team with confidence.",
+          "example_ko": "용감한 중위는 자신감을 가지고 팀을 이끌었다.",
+          "exampleTarget": "The brave lieutenant led his team with confidence.",
+          "exampleMeaning": "용감한 중위는 자신감을 가지고 팀을 이끌었다."
         },
         {
           "id": "en_10908",
@@ -65962,14 +65962,14 @@
           "level": "B2",
           "unitId": "unit_109",
           "nodeId": "en_u109_n1",
-          "meaning": "lt",
+          "meaning": "중위",
           "pronunciation": "[lt]",
           "pron": "[lt]",
           "phonetic": "[lt]",
-          "example_en": "This is an example for lt.",
-          "example_ko": "이것은 lt 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lt.",
-          "exampleMeaning": "이것은 lt 관련 실전 예문입니다."
+          "example_en": "Lt Miller reported the incident to head office.",
+          "example_ko": "밀러 중위는 본부에 그 사건을 보고했다.",
+          "exampleTarget": "Lt Miller reported the incident to head office.",
+          "exampleMeaning": "밀러 중위는 본부에 그 사건을 보고했다."
         },
         {
           "id": "en_10910",
@@ -66035,9 +66035,9 @@
           "pron": "[브르어드이]",
           "phonetic": "[브르어드이]",
           "example_en": "The bandage soon became bloody.",
-          "example_ko": "붕대는 금방 피로 물들었다. 2.유혈의 피비린내 나는; 잔학한. 3.《영·옛투》 〈사람이〉 다루기 어려운; 완고한; 빙퉁그러진. 4.《주로 영·구어》 괘씸한; 터무니없는; 지독한; 순전한 로 쓰는 경우도 있음. ⑵ 단순한 강조에도 씀).",
+          "example_ko": "붕대는 금방 피로 물들었다.",
           "exampleTarget": "The bandage soon became bloody.",
-          "exampleMeaning": "붕대는 금방 피로 물들었다. 2.유혈의 피비린내 나는; 잔학한. 3.《영·옛투》 〈사람이〉 다루기 어려운; 완고한; 빙퉁그러진. 4.《주로 영·구어》 괘씸한; 터무니없는; 지독한; 순전한 로 쓰는 경우도 있음. ⑵ 단순한 강조에도 씀)."
+          "exampleMeaning": "붕대는 금방 피로 물들었다."
         },
         {
           "id": "en_10914",
@@ -66068,10 +66068,10 @@
           "pronunciation": "[브이크이므]",
           "pron": "[브이크이므]",
           "phonetic": "[브이크이므]",
-          "example_en": "This is an example for became.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for became.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He became a successful doctor.",
+          "example_ko": "그는 성공한 의사가 되었다.",
+          "exampleTarget": "He became a successful doctor.",
+          "exampleMeaning": "그는 성공한 의사가 되었다."
         },
         {
           "id": "en_10916",
@@ -66119,10 +66119,10 @@
           "pronunciation": "[boyfriend]",
           "pron": "[boyfriend]",
           "phonetic": "[boyfriend]",
-          "example_en": "This is an example for boyfriend.",
-          "example_ko": "이것은 남자 친구 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for boyfriend.",
-          "exampleMeaning": "이것은 남자 친구 관련 실전 예문입니다."
+          "example_en": "Her boyfriend prepared a wonderful surprise birthday dinner.",
+          "example_ko": "그녀의 남자친구는 멋진 깜짝 생일 저녁을 준비했다.",
+          "exampleTarget": "Her boyfriend prepared a wonderful surprise birthday dinner.",
+          "exampleMeaning": "그녀의 남자친구는 멋진 깜짝 생일 저녁을 준비했다."
         },
         {
           "id": "en_10919",
@@ -66170,10 +66170,10 @@
           "pronunciation": "[르아]",
           "pron": "[르아]",
           "phonetic": "[르아]",
-          "example_en": "This is an example for la.",
-          "example_ko": "이것은 「라」 」조 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for la.",
-          "exampleMeaning": "이것은 「라」 」조 관련 실전 예문입니다."
+          "example_en": "We plan to visit downtown LA this weekend.",
+          "example_ko": "우리는 이번 주말에 엘에이 시내를 방문할 계획이다.",
+          "exampleTarget": "We plan to visit downtown LA this weekend.",
+          "exampleMeaning": "우리는 이번 주말에 엘에이 시내를 방문할 계획이다."
         },
         {
           "id": "en_10922",
@@ -66188,9 +66188,9 @@
           "pron": "[드르이브이으]",
           "phonetic": "[드르이브이으]",
           "example_en": "a driving foreman.",
-          "example_ko": "혹사시키는 십장. 2.정력적인 대단히 활동적인.",
+          "example_ko": "혹사시키는 십장.",
           "exampleTarget": "a driving foreman.",
-          "exampleMeaning": "혹사시키는 십장. 2.정력적인 대단히 활동적인."
+          "exampleMeaning": "혹사시키는 십장."
         },
         {
           "id": "en_10923",
@@ -66217,14 +66217,14 @@
           "level": "B2",
           "unitId": "unit_109",
           "nodeId": "en_u109_n5",
-          "meaning": "과거형",
+          "meaning": "썼다",
           "pronunciation": "[르오트]",
           "pron": "[르오트]",
           "phonetic": "[르오트]",
-          "example_en": "This is an example for wrote.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wrote.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "She wrote a letter to her parents.",
+          "example_ko": "그녀는 부모님께 편지를 썼다.",
+          "exampleTarget": "She wrote a letter to her parents.",
+          "exampleMeaning": "그녀는 부모님께 편지를 썼다."
         },
         {
           "id": "en_10925",
@@ -66256,9 +66256,9 @@
           "pron": "[스르프이으]",
           "phonetic": "[스르프이으]",
           "example_en": "a sleeping-suit(.",
-          "example_ko": "위아래가 붙어 있는) 잠옷. 3.수면의.",
+          "example_ko": "위아래가 붙어 있는) 잠옷.",
           "exampleTarget": "a sleeping-suit(.",
-          "exampleMeaning": "위아래가 붙어 있는) 잠옷. 3.수면의."
+          "exampleMeaning": "위아래가 붙어 있는) 잠옷."
         },
         {
           "id": "en_10927",
@@ -66307,9 +66307,9 @@
           "pron": "[드이이으]",
           "phonetic": "[드이이으]",
           "example_en": "a dying dog.",
-          "example_ko": "죽어가는 개. 2.임종의 말기의; 임종의 자리에서 말한.",
+          "example_ko": "죽어가는 개.",
           "exampleTarget": "a dying dog.",
-          "exampleMeaning": "죽어가는 개. 2.임종의 말기의; 임종의 자리에서 말한."
+          "exampleMeaning": "죽어가는 개."
         },
         {
           "id": "en_10930",
@@ -66456,10 +66456,10 @@
           "pronunciation": "[므므므]",
           "pron": "[므므므]",
           "phonetic": "[므므므]",
-          "example_en": "This is an example for mmm.",
-          "example_ko": "이것은 으음 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mmm.",
-          "exampleMeaning": "이것은 으음 관련 실전 예문입니다."
+          "example_en": "Mmm the warm soup smells so delicious today.",
+          "example_ko": "으음 따뜻한 수프 냄새가 오늘 아주 좋다.",
+          "exampleTarget": "Mmm the warm soup smells so delicious today.",
+          "exampleMeaning": "으음 따뜻한 수프 냄새가 오늘 아주 좋다."
         },
         {
           "id": "en_11003",
@@ -66474,9 +66474,9 @@
           "pron": "[스으이으]",
           "phonetic": "[스으이으]",
           "example_en": "singing lessons.",
-          "example_ko": "성악 레슨. 2.（벌레 등이） 우는 소리. 3.신음 울리는 소리. 형용사노래하는 우는.",
+          "example_ko": "성악 레슨.",
           "exampleTarget": "singing lessons.",
-          "exampleMeaning": "성악 레슨. 2.（벌레 등이） 우는 소리. 3.신음 울리는 소리. 형용사노래하는 우는."
+          "exampleMeaning": "성악 레슨."
         },
         {
           "id": "en_11004",
@@ -66491,9 +66491,9 @@
           "pron": "[트이으]",
           "phonetic": "[트이으]",
           "example_en": "good eating.",
-          "example_ko": "맛있는 음식. 형용사《한정적》 식용의 날로 먹을 수 있는.",
+          "example_ko": "맛있는 음식. 형용사 식용의 날로 먹을 수 있는.",
           "exampleTarget": "good eating.",
-          "exampleMeaning": "맛있는 음식. 형용사《한정적》 식용의 날로 먹을 수 있는."
+          "exampleMeaning": "맛있는 음식. 형용사 식용의 날로 먹을 수 있는."
         },
         {
           "id": "en_11005",
@@ -66541,10 +66541,10 @@
           "pronunciation": "[프어트이으]",
           "pron": "[프어트이으]",
           "phonetic": "[프어트이으]",
-          "example_en": "This is an example for putting.",
-          "example_ko": "이것은 퍼팅 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for putting.",
-          "exampleMeaning": "이것은 퍼팅 관련 실전 예문입니다."
+          "example_en": "She is putting the clean dishes into cabinets.",
+          "example_ko": "그녀는 깨끗한 접시들을 찬장에 넣고 있다.",
+          "exampleTarget": "She is putting the clean dishes into cabinets.",
+          "exampleMeaning": "그녀는 깨끗한 접시들을 찬장에 넣고 있다."
         },
         {
           "id": "en_11008",
@@ -66558,10 +66558,10 @@
           "pronunciation": "[스트어크]",
           "pron": "[스트어크]",
           "phonetic": "[스트어크]",
-          "example_en": "This is an example for stuck.",
-          "example_ko": "이것은 ²의 과거·과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stuck.",
-          "exampleMeaning": "이것은 ²의 과거·과거 관련 실전 예문입니다."
+          "example_en": "We got stuck in heavy traffic.",
+          "example_ko": "우리는 극심한 교통 체증에 갇혔다.",
+          "exampleTarget": "We got stuck in heavy traffic.",
+          "exampleMeaning": "우리는 극심한 교통 체증에 갇혔다."
         },
         {
           "id": "en_11009",
@@ -66576,9 +66576,9 @@
           "pron": "[르어느트]",
           "phonetic": "[르어느트]",
           "example_en": "The car grunted up the hill.",
-          "example_ko": "자동차가 붕붕거리며 언덕을 올라갔다. 2.투덜거리다 불평하다. 3.《미·속어》 똥을 누다. 동사 타동사…을 끙끙거리듯이 말하다.",
+          "example_ko": "자동차가 붕붕거리며 언덕을 올라갔다.",
           "exampleTarget": "The car grunted up the hill.",
-          "exampleMeaning": "자동차가 붕붕거리며 언덕을 올라갔다. 2.투덜거리다 불평하다. 3.《미·속어》 똥을 누다. 동사 타동사…을 끙끙거리듯이 말하다."
+          "exampleMeaning": "자동차가 붕붕거리며 언덕을 올라갔다."
         },
         {
           "id": "en_11010",
@@ -66609,10 +66609,10 @@
           "pronunciation": "[므애크스]",
           "pron": "[므애크스]",
           "phonetic": "[므애크스]",
-          "example_en": "This is an example for max.",
-          "example_ko": "이것은 최대한 숙어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for max.",
-          "exampleMeaning": "이것은 최대한 숙어 관련 실전 예문입니다."
+          "example_en": "We pushed the system to its max capacity.",
+          "example_ko": "우리는 시스템을 최대 용량까지 가동시켰다.",
+          "exampleTarget": "We pushed the system to its max capacity.",
+          "exampleMeaning": "우리는 시스템을 최대 용량까지 가동시켰다."
         },
         {
           "id": "en_11012",
@@ -66677,10 +66677,10 @@
           "pronunciation": "[흐느르이]",
           "pron": "[흐느르이]",
           "phonetic": "[흐느르이]",
-          "example_en": "This is an example for henry.",
-          "example_ko": "이것은 헨리 단위계에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for henry.",
-          "exampleMeaning": "이것은 헨리 단위계에 관련 실전 예문입니다."
+          "example_en": "Henry bought a vintage bicycle from that shop.",
+          "example_ko": "헨리는 그 가게에서 빈티지 자전거를 샀다.",
+          "exampleTarget": "Henry bought a vintage bicycle from that shop.",
+          "exampleMeaning": "헨리는 그 가게에서 빈티지 자전거를 샀다."
         },
         {
           "id": "en_11016",
@@ -66779,10 +66779,10 @@
           "pronunciation": "[어르]",
           "pron": "[어르]",
           "phonetic": "[어르]",
-          "example_en": "This is an example for er.",
-          "example_ko": "이것은 저 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for er.",
-          "exampleMeaning": "이것은 저 관련 실전 예문입니다."
+          "example_en": "Er let me think about your question first.",
+          "example_ko": "어 당신의 질문에 대해 먼저 생각해 볼게요.",
+          "exampleTarget": "Er let me think about your question first.",
+          "exampleMeaning": "어 당신의 질문에 대해 먼저 생각해 볼게요."
         },
         {
           "id": "en_11022",
@@ -66796,10 +66796,10 @@
           "pronunciation": "[이오]",
           "pron": "[이오]",
           "phonetic": "[이오]",
-          "example_en": "This is an example for yo.",
-          "example_ko": "이것은 야 어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yo.",
-          "exampleMeaning": "이것은 야 어 관련 실전 예문입니다."
+          "example_en": "Yo let us grab some food right now.",
+          "example_ko": "야 우리 지금 바로 밥 먹으러 가자.",
+          "exampleTarget": "Yo let us grab some food right now.",
+          "exampleMeaning": "야 우리 지금 바로 밥 먹으러 가자."
         },
         {
           "id": "en_11023",
@@ -66814,9 +66814,9 @@
           "pron": "[흐애르이]",
           "phonetic": "[흐애르이]",
           "example_en": "My publisher is harrying me to write another book.",
-          "example_ko": "출판사에서 나에게 책을 하나 더 쓰라고 조르고 있다. 2.〈토지 등을〉 （전쟁 등으로） 망치다 황폐케 하다; 약탈하다.",
+          "example_ko": "출판사에서 나에게 책을 하나 더 쓰라고 조르고 있다.",
           "exampleTarget": "My publisher is harrying me to write another book.",
-          "exampleMeaning": "출판사에서 나에게 책을 하나 더 쓰라고 조르고 있다. 2.〈토지 등을〉 （전쟁 등으로） 망치다 황폐케 하다; 약탈하다."
+          "exampleMeaning": "출판사에서 나에게 책을 하나 더 쓰라고 조르고 있다."
         },
         {
           "id": "en_11024",
@@ -66843,14 +66843,14 @@
           "level": "B2",
           "unitId": "unit_110",
           "nodeId": "en_u110_n5",
-          "meaning": "aah",
+          "meaning": "아",
           "pronunciation": "[아]",
           "pron": "[아]",
           "phonetic": "[아]",
-          "example_en": "This is an example for aah.",
-          "example_ko": "이것은 aah 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for aah.",
-          "exampleMeaning": "이것은 aah 관련 실전 예문입니다."
+          "example_en": "Aah now I finally understand the whole story.",
+          "example_ko": "아 이제서야 이야기의 전말을 완전히 이해했다.",
+          "exampleTarget": "Aah now I finally understand the whole story.",
+          "exampleMeaning": "아 이제서야 이야기의 전말을 완전히 이해했다."
         },
         {
           "id": "en_11026",
@@ -66865,9 +66865,9 @@
           "pron": "[브아브]",
           "phonetic": "[브아브]",
           "example_en": "a bob of the float(.",
-          "example_ko": "낚시에서) 찌가 까닥 움직이기. 2.고개를 까딱하는 인사. 동사타동사〈머리를〉 까딱 움직이다 ; 머리를 움직여 …을 가리키다.",
+          "example_ko": "낚시에서) 찌가 까닥 움직이기.",
           "exampleTarget": "a bob of the float(.",
-          "exampleMeaning": "낚시에서) 찌가 까닥 움직이기. 2.고개를 까딱하는 인사. 동사타동사〈머리를〉 까딱 움직이다 ; 머리를 움직여 …을 가리키다."
+          "exampleMeaning": "낚시에서) 찌가 까닥 움직이기."
         },
         {
           "id": "en_11027",
@@ -66881,10 +66881,10 @@
           "pronunciation": "[르스느이으]",
           "pron": "[르스느이으]",
           "phonetic": "[르스느이으]",
-          "example_en": "This is an example for listening.",
-          "example_ko": "이것은 경청 청취 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for listening.",
-          "exampleMeaning": "이것은 경청 청취 관련 실전 예문입니다."
+          "example_en": "Good students spend time listening to teacher advice.",
+          "example_ko": "좋은 학생들은 선생님의 조언을 경청하며 시간을 보낸다.",
+          "exampleTarget": "Good students spend time listening to teacher advice.",
+          "exampleMeaning": "좋은 학생들은 선생님의 조언을 경청하며 시간을 보낸다."
         },
         {
           "id": "en_11028",
@@ -66915,10 +66915,10 @@
           "pronunciation": "[아우]",
           "pron": "[아우]",
           "phonetic": "[아우]",
-          "example_en": "This is an example for ow.",
-          "example_ko": "이것은 으으 아야 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ow.",
-          "exampleMeaning": "이것은 으으 아야 관련 실전 예문입니다."
+          "example_en": "Ow that hot coffee really burned my tongue.",
+          "example_ko": "아 뜨거운 커피 때문에 혀를 정말 데었다.",
+          "exampleTarget": "Ow that hot coffee really burned my tongue.",
+          "exampleMeaning": "아 뜨거운 커피 때문에 혀를 정말 데었다."
         },
         {
           "id": "en_11030",
@@ -66932,10 +66932,10 @@
           "pronunciation": "[이에프]",
           "pron": "[이에프]",
           "phonetic": "[이에프]",
-          "example_en": "This is an example for yep.",
-          "example_ko": "이것은 는 입술을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yep.",
-          "exampleMeaning": "이것은 는 입술을 관련 실전 예문입니다."
+          "example_en": "Yep we finished the entire presentation on schedule.",
+          "example_ko": "응 우리는 일정에 맞춰 전체 발표 자료를 완성했어.",
+          "exampleTarget": "Yep we finished the entire presentation on schedule.",
+          "exampleMeaning": "응 우리는 일정에 맞춰 전체 발표 자료를 완성했어."
         }
       ],
       "nodes": [
@@ -67048,10 +67048,10 @@
           "pronunciation": "[쉬]",
           "pron": "[쉬]",
           "phonetic": "[쉬]",
-          "example_en": "This is an example for shh.",
-          "example_ko": "이것은 쉿 조용히 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shh.",
-          "exampleMeaning": "이것은 쉿 조용히 관련 실전 예문입니다."
+          "example_en": "Shh the baby is sleeping in that room.",
+          "example_ko": "쉿 그 방에서 아기가 자고 있어.",
+          "exampleTarget": "Shh the baby is sleeping in that room.",
+          "exampleMeaning": "쉿 그 방에서 아기가 자고 있어."
         },
         {
           "id": "en_11102",
@@ -67082,10 +67082,10 @@
           "pronunciation": "[드이]",
           "pron": "[드이]",
           "phonetic": "[드이]",
-          "example_en": "This is an example for de.",
-          "example_ko": "이것은 ｛라틴어｝ 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for de.",
-          "exampleMeaning": "이것은 ｛라틴어｝ 관련 실전 예문입니다."
+          "example_en": "Tourists love visiting the famous Rio de Janeiro.",
+          "example_ko": "관광객들은 유명한 리우데자네이루를 방문하는 것을 매우 좋아한다.",
+          "exampleTarget": "Tourists love visiting the famous Rio de Janeiro.",
+          "exampleMeaning": "관광객들은 유명한 리우데자네이루를 방문하는 것을 매우 좋아한다."
         },
         {
           "id": "en_11104",
@@ -67100,9 +67100,9 @@
           "pron": "[드어므스르브즈]",
           "phonetic": "[드어므스르브즈]",
           "example_en": "Themselves without parents they sympathized heartily with the orphan.",
-          "example_ko": "그들도 부모가 없었으므로 그 고아에게 진심으로 동정했다. 2.《재귀 용법》 그들 자신을. cf. HERSELF 2. ①《동사의 직접 목적어로서》.",
+          "example_ko": "그들도 부모가 없었으므로 그 고아에게 진심으로 동정했다.",
           "exampleTarget": "Themselves without parents they sympathized heartily with the orphan.",
-          "exampleMeaning": "그들도 부모가 없었으므로 그 고아에게 진심으로 동정했다. 2.《재귀 용법》 그들 자신을. cf. HERSELF 2. ①《동사의 직접 목적어로서》."
+          "exampleMeaning": "그들도 부모가 없었으므로 그 고아에게 진심으로 동정했다."
         },
         {
           "id": "en_11105",
@@ -67117,9 +67117,9 @@
           "pron": "[드르으크이으]",
           "phonetic": "[드르으크이으]",
           "example_en": "a drinking bout.",
-          "example_ko": "주연. 명사（습관적 또는 지나친） 음주.",
+          "example_ko": "주연.",
           "exampleTarget": "a drinking bout.",
-          "exampleMeaning": "주연. 명사（습관적 또는 지나친） 음주."
+          "exampleMeaning": "주연."
         },
         {
           "id": "en_11106",
@@ -67150,10 +67150,10 @@
           "pronunciation": "[프애르이스]",
           "pron": "[프애르이스]",
           "phonetic": "[프애르이스]",
-          "example_en": "This is an example for paris.",
-          "example_ko": "이것은 파리 프랑스의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for paris.",
-          "exampleMeaning": "이것은 파리 프랑스의 관련 실전 예문입니다."
+          "example_en": "We enjoyed our summer trip to Paris immensely.",
+          "example_ko": "우리는 파리로 떠난 여름 여행을 엄청나게 즐겼다.",
+          "exampleTarget": "We enjoyed our summer trip to Paris immensely.",
+          "exampleMeaning": "우리는 파리로 떠난 여름 여행을 엄청나게 즐겼다."
         },
         {
           "id": "en_11108",
@@ -67202,9 +67202,9 @@
           "pron": "[느이크]",
           "phonetic": "[느이크]",
           "example_en": "cut nicks in a stick.",
-          "example_ko": "막대기에 새김눈을 내다. 2.흠 깨진 곳. 3.《the nick》《영·비격식》 교도소 유치장; 경찰서. 4.《오스·영》 상태.",
+          "example_ko": "막대기에 새김눈을 내다.",
           "exampleTarget": "cut nicks in a stick.",
-          "exampleMeaning": "막대기에 새김눈을 내다. 2.흠 깨진 곳. 3.《the nick》《영·비격식》 교도소 유치장; 경찰서. 4.《오스·영》 상태."
+          "exampleMeaning": "막대기에 새김눈을 내다."
         },
         {
           "id": "en_11111",
@@ -67219,9 +67219,9 @@
           "pron": "[오스어므]",
           "phonetic": "[오스어므]",
           "example_en": "an awesome sight.",
-          "example_ko": "무시무시한 광경. 2.《미·비격식》 훌륭한 최고의.",
+          "example_ko": "무시무시한 광경.",
           "exampleTarget": "an awesome sight.",
-          "exampleMeaning": "무시무시한 광경. 2.《미·비격식》 훌륭한 최고의."
+          "exampleMeaning": "무시무시한 광경."
         },
         {
           "id": "en_11112",
@@ -67236,9 +67236,9 @@
           "pron": "[드이르크트어르]",
           "phonetic": "[드이르크트어르]",
           "example_en": "a managing director.",
-          "example_ko": "상무 이사. 3.（영화·텔레비전 등의） 제작 책임자 연출가 감독 디렉터; （악단 등의） 지휘자. 4.（학교의） 교장 관장; 소장 회장; （관청의） 국장 부장.",
+          "example_ko": "상무 이사.",
           "exampleTarget": "a managing director.",
-          "exampleMeaning": "상무 이사. 3.（영화·텔레비전 등의） 제작 책임자 연출가 감독 디렉터; （악단 등의） 지휘자. 4.（학교의） 교장 관장; 소장 회장; （관청의） 국장 부장."
+          "exampleMeaning": "상무 이사."
         },
         {
           "id": "en_11113",
@@ -67252,10 +67252,10 @@
           "pronunciation": "[느애르에이트어르]",
           "pron": "[느애르에이트어르]",
           "phonetic": "[느애르에이트어르]",
-          "example_en": "This is an example for narrator.",
-          "example_ko": "이것은 이야기하는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for narrator.",
-          "exampleMeaning": "이것은 이야기하는 사람 관련 실전 예문입니다."
+          "example_en": "The narrator explained the story with great emotion.",
+          "example_ko": "그 내레이터는 아주 큰 감정을 담아 이야기를 설명했다.",
+          "exampleTarget": "The narrator explained the story with great emotion.",
+          "exampleMeaning": "그 내레이터는 아주 큰 감정을 담아 이야기를 설명했다."
         },
         {
           "id": "en_11114",
@@ -67270,9 +67270,9 @@
           "pron": "[흐어르스르프]",
           "phonetic": "[흐어르스르프]",
           "example_en": "She met the First Lady herself.",
-          "example_ko": "그녀는 영부인 본인을 만났다. 2.《재귀 용법》 《동사·전치사의 목적어》 그녀 자신.",
+          "example_ko": "그녀는 영부인 본인을 만났다.",
           "exampleTarget": "She met the First Lady herself.",
-          "exampleMeaning": "그녀는 영부인 본인을 만났다. 2.《재귀 용법》 《동사·전치사의 목적어》 그녀 자신."
+          "exampleMeaning": "그녀는 영부인 본인을 만났다."
         },
         {
           "id": "en_11115",
@@ -67321,9 +67321,9 @@
           "pron": "[아르스르브즈]",
           "phonetic": "[아르스르브즈]",
           "example_en": "We seated ourselves.",
-          "example_ko": "우리는 자리에 앉았다. 2.《강조 용법》 우리 자신.",
+          "example_ko": "우리는 자리에 앉았다.",
           "exampleTarget": "We seated ourselves.",
-          "exampleMeaning": "우리는 자리에 앉았다. 2.《강조 용법》 우리 자신."
+          "exampleMeaning": "우리는 자리에 앉았다."
         },
         {
           "id": "en_11118",
@@ -67337,10 +67337,10 @@
           "pronunciation": "[애르이크스]",
           "pron": "[애르이크스]",
           "phonetic": "[애르이크스]",
-          "example_en": "This is an example for alex.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alex.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Alex scored the winning goal in soccer practice.",
+          "example_ko": "알렉스는 축구 연습에서 결승골을 넣었다.",
+          "exampleTarget": "Alex scored the winning goal in soccer practice.",
+          "exampleMeaning": "알렉스는 축구 연습에서 결승골을 넣었다."
         },
         {
           "id": "en_11119",
@@ -67422,10 +67422,10 @@
           "pronunciation": "[어르이어르]",
           "pron": "[어르이어르]",
           "phonetic": "[어르이어르]",
-          "example_en": "This is an example for earlier.",
-          "example_ko": "이것은 비교급 숙어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for earlier.",
-          "exampleMeaning": "이것은 비교급 숙어 관련 실전 예문입니다."
+          "example_en": "She arrived earlier than expected for the interview.",
+          "example_ko": "그녀는 면접을 위해 예상보다 더 일찍 도착했다.",
+          "exampleTarget": "She arrived earlier than expected for the interview.",
+          "exampleMeaning": "그녀는 면접을 위해 예상보다 더 일찍 도착했다."
         },
         {
           "id": "en_11124",
@@ -67439,10 +67439,10 @@
           "pronunciation": "[즈이므]",
           "pron": "[즈이므]",
           "phonetic": "[즈이므]",
-          "example_en": "This is an example for jim.",
-          "example_ko": "이것은 못쓰게 만들다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jim.",
-          "exampleMeaning": "이것은 못쓰게 만들다 관련 실전 예문입니다."
+          "example_en": "Jim helped us move the heavy furniture yesterday.",
+          "example_ko": "짐은 어제 우리가 무거운 가구를 옮기는 것을 도왔다.",
+          "exampleTarget": "Jim helped us move the heavy furniture yesterday.",
+          "exampleMeaning": "짐은 어제 우리가 무거운 가구를 옮기는 것을 도왔다."
         },
         {
           "id": "en_11125",
@@ -67491,9 +67491,9 @@
           "pron": "[르어느트]",
           "phonetic": "[르어느트]",
           "example_en": "The car grunted up the hill.",
-          "example_ko": "자동차가 붕붕거리며 언덕을 올라갔다. 2.투덜거리다 불평하다. 3.《미·속어》 똥을 누다. 동사 타동사…을 끙끙거리듯이 말하다.",
+          "example_ko": "자동차가 붕붕거리며 언덕을 올라갔다.",
           "exampleTarget": "The car grunted up the hill.",
-          "exampleMeaning": "자동차가 붕붕거리며 언덕을 올라갔다. 2.투덜거리다 불평하다. 3.《미·속어》 똥을 누다. 동사 타동사…을 끙끙거리듯이 말하다."
+          "exampleMeaning": "자동차가 붕붕거리며 언덕을 올라갔다."
         },
         {
           "id": "en_11128",
@@ -67541,10 +67541,10 @@
           "pronunciation": "[스아르즈어느트발음에주의]",
           "pron": "[스아르즈어느트발음에주의]",
           "phonetic": "[스아르즈어느트발음에주의]",
-          "example_en": "This is an example for sergeant.",
-          "example_ko": "이것은 하사관 중사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sergeant.",
-          "exampleMeaning": "이것은 하사관 중사 관련 실전 예문입니다."
+          "example_en": "The sergeant ordered the squad to stand ready.",
+          "example_ko": "그 하사는 분대원들에게 준비 태세를 갖추라고 명령했다.",
+          "exampleTarget": "The sergeant ordered the squad to stand ready.",
+          "exampleMeaning": "그 하사는 분대원들에게 준비 태세를 갖추라고 명령했다."
         }
       ],
       "nodes": [
@@ -67658,9 +67658,9 @@
           "pron": "[크프이으]",
           "phonetic": "[크프이으]",
           "example_en": "the keeping of a wedding anniversary.",
-          "example_ko": "결혼 기념일을 축하하기. 3.관리 보존 유지; 《keepings》보유물.",
+          "example_ko": "결혼 기념일을 축하하기.",
           "exampleTarget": "the keeping of a wedding anniversary.",
-          "exampleMeaning": "결혼 기념일을 축하하기. 3.관리 보존 유지; 《keepings》보유물."
+          "exampleMeaning": "결혼 기념일을 축하하기."
         },
         {
           "id": "en_11202",
@@ -67691,10 +67691,10 @@
           "pronunciation": "[애드어므]",
           "pron": "[애드어므]",
           "phonetic": "[애드어므]",
-          "example_en": "This is an example for adam.",
-          "example_ko": "이것은 아담 신이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for adam.",
-          "exampleMeaning": "이것은 아담 신이 관련 실전 예문입니다."
+          "example_en": "Adam shared his notes with all the classmates.",
+          "example_ko": "아담은 모든 반 친구들과 자신의 필기노트를 공유했다.",
+          "exampleTarget": "Adam shared his notes with all the classmates.",
+          "exampleMeaning": "아담은 모든 반 친구들과 자신의 필기노트를 공유했다."
         },
         {
           "id": "en_11204",
@@ -67704,14 +67704,14 @@
           "level": "B2",
           "unitId": "unit_112",
           "nodeId": "en_u112_n1",
-          "meaning": "과거·과거",
+          "meaning": "팔았다",
           "pronunciation": "[스오르드]",
           "pron": "[스오르드]",
           "phonetic": "[스오르드]",
-          "example_en": "This is an example for sold.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sold.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "They sold all the tickets quickly.",
+          "example_ko": "그들은 모든 표를 빠르게 팔았다.",
+          "exampleTarget": "They sold all the tickets quickly.",
+          "exampleMeaning": "그들은 모든 표를 빠르게 팔았다."
         },
         {
           "id": "en_11205",
@@ -67726,9 +67726,9 @@
           "pron": "[르으이으]",
           "phonetic": "[르으이으]",
           "example_en": "a ringing voice.",
-          "example_ko": "잘 울리는 목소리. 명사울리는 소리; 귀울음.",
+          "example_ko": "잘 울리는 목소리.",
           "exampleTarget": "a ringing voice.",
-          "exampleMeaning": "잘 울리는 목소리. 명사울리는 소리; 귀울음."
+          "exampleMeaning": "잘 울리는 목소리."
         },
         {
           "id": "en_11206",
@@ -67759,10 +67759,10 @@
           "pronunciation": "[스트이브]",
           "pron": "[스트이브]",
           "phonetic": "[스트이브]",
-          "example_en": "This is an example for steve.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for steve.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Steve painted the entire kitchen wall white yesterday.",
+          "example_ko": "스티브는 어제 부엌 벽 전체를 하얗게 칠했다.",
+          "exampleTarget": "Steve painted the entire kitchen wall white yesterday.",
+          "exampleMeaning": "스티브는 어제 부엌 벽 전체를 하얗게 칠했다."
         },
         {
           "id": "en_11208",
@@ -67811,9 +67811,9 @@
           "pron": "[프르쉬어르]",
           "phonetic": "[프르쉬어르]",
           "example_en": "blood pressure.",
-          "example_ko": "혈압; 《비격식》 고혈압. 2.고민 중압; （물리적·정신적인） 고난 고생 궁핍.",
+          "example_ko": "혈압; 고혈압.",
           "exampleTarget": "blood pressure.",
-          "exampleMeaning": "혈압; 《비격식》 고혈압. 2.고민 중압; （물리적·정신적인） 고난 고생 궁핍."
+          "exampleMeaning": "혈압; 고혈압."
         },
         {
           "id": "en_11211",
@@ -67827,10 +67827,10 @@
           "pronunciation": "[스트오르]",
           "pron": "[스트오르]",
           "phonetic": "[스트오르]",
-          "example_en": "This is an example for stole.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stole.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "Someone stole his bicycle yesterday.",
+          "example_ko": "누군가 어제 그의 자전거를 훔쳐갔다.",
+          "exampleTarget": "Someone stole his bicycle yesterday.",
+          "exampleMeaning": "누군가 어제 그의 자전거를 훔쳐갔다."
         },
         {
           "id": "en_11212",
@@ -67896,9 +67896,9 @@
           "pron": "[프아르오이으]",
           "phonetic": "[프아르오이으]",
           "example_en": "The magazine has a large following.",
-          "example_ko": "그 잡지는 독자가 많다. 2.《the following》아래에 말하는 사람.",
+          "example_ko": "그 잡지는 독자가 많다.",
           "exampleTarget": "The magazine has a large following.",
-          "exampleMeaning": "그 잡지는 독자가 많다. 2.《the following》아래에 말하는 사람."
+          "exampleMeaning": "그 잡지는 독자가 많다."
         },
         {
           "id": "en_11216",
@@ -67913,9 +67913,9 @@
           "pron": "[브애스르므]",
           "phonetic": "[브애스르므]",
           "example_en": "Where is the bathroom?",
-          "example_ko": "화장실은 어딘가요? 2.《영》 욕실 목욕탕 . bathroom은 세면대 변기 욕조 또는 샤워룸이 설비되어 있으며 욕조에는 반드시 샤워 커튼을 설치하여 물이 욕조 밖으로 튀지 않게 함. 보통 직물로 된 매트를 욕조 밖에 깔고 목욕 전후에는 가운을 입음.",
+          "example_ko": "화장실은 어딘가요?",
           "exampleTarget": "Where is the bathroom?",
-          "exampleMeaning": "화장실은 어딘가요? 2.《영》 욕실 목욕탕 . bathroom은 세면대 변기 욕조 또는 샤워룸이 설비되어 있으며 욕조에는 반드시 샤워 커튼을 설치하여 물이 욕조 밖으로 튀지 않게 함. 보통 직물로 된 매트를 욕조 밖에 깔고 목욕 전후에는 가운을 입음."
+          "exampleMeaning": "화장실은 어딘가요?"
         },
         {
           "id": "en_11217",
@@ -67925,7 +67925,7 @@
           "level": "B2",
           "unitId": "unit_112",
           "nodeId": "en_u112_n2",
-          "meaning": "과거·과거",
+          "meaning": "지었다",
           "pronunciation": "[브이르트]",
           "pron": "[브이르트]",
           "phonetic": "[브이르트]",
@@ -67946,10 +67946,10 @@
           "pronunciation": "[크르우즈어르]",
           "pron": "[크르우즈어르]",
           "phonetic": "[크르우즈어르]",
-          "example_en": "This is an example for closer.",
-          "example_ko": "이것은 닫는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for closer.",
-          "exampleMeaning": "이것은 닫는 사람 관련 실전 예문입니다."
+          "example_en": "Please step closer so everyone can hear you.",
+          "example_ko": "모두가 네 말을 들을 수 있도록 더 가까이 다가와 줘.",
+          "exampleTarget": "Please step closer so everyone can hear you.",
+          "exampleMeaning": "모두가 네 말을 들을 수 있도록 더 가까이 다가와 줘."
         },
         {
           "id": "en_11219",
@@ -68014,10 +68014,10 @@
           "pronunciation": "[르츠어르드]",
           "pron": "[르츠어르드]",
           "phonetic": "[르츠어르드]",
-          "example_en": "This is an example for richard.",
-          "example_ko": "이것은 리처드 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for richard.",
-          "exampleMeaning": "이것은 리처드 남자 관련 실전 예문입니다."
+          "example_en": "Richard attended the business conference in Chicago yesterday.",
+          "example_ko": "리처드는 어제 시카고에서 열린 비즈니스 컨퍼런스에 참석했다.",
+          "exampleTarget": "Richard attended the business conference in Chicago yesterday.",
+          "exampleMeaning": "리처드는 어제 시카고에서 열린 비즈니스 컨퍼런스에 참석했다."
         },
         {
           "id": "en_11223",
@@ -68032,9 +68032,9 @@
           "pron": "[르즈이으]",
           "phonetic": "[르즈이으]",
           "example_en": "play on a losing side.",
-          "example_ko": "지는 편에 붙다. 명사1.실패 패배. 2.《losings》（특히 투기·내기에서의） 손실.",
+          "example_ko": "지는 편에 붙다.",
           "exampleTarget": "play on a losing side.",
-          "exampleMeaning": "지는 편에 붙다. 명사1.실패 패배. 2.《losings》（특히 투기·내기에서의） 손실."
+          "exampleMeaning": "지는 편에 붙다."
         },
         {
           "id": "en_11224",
@@ -68044,14 +68044,14 @@
           "level": "B2",
           "unitId": "unit_112",
           "nodeId": "en_u112_n5",
-          "meaning": "mommy",
+          "meaning": "엄마",
           "pronunciation": "[므아므이]",
           "pron": "[므아므이]",
           "phonetic": "[므아므이]",
-          "example_en": "This is an example for mommy.",
-          "example_ko": "이것은 mommy 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mommy.",
-          "exampleMeaning": "이것은 mommy 관련 실전 예문입니다."
+          "example_en": "Mommy baked fresh cookies for us.",
+          "example_ko": "엄마가 우리를 위해 갓 구운 쿠키를 구워 주셨다.",
+          "exampleTarget": "Mommy baked fresh cookies for us.",
+          "exampleMeaning": "엄마가 우리를 위해 갓 구운 쿠키를 구워 주셨다."
         },
         {
           "id": "en_11225",
@@ -68100,9 +68100,9 @@
           "pron": "[르이]",
           "phonetic": "[르이]",
           "example_en": "under the lee of a fallen tree.",
-          "example_ko": "쓰러진 나무의 그늘에. 2.〔항해〕 바람 불어가는 쪽.",
+          "example_ko": "쓰러진 나무의 그늘에.",
           "exampleTarget": "under the lee of a fallen tree.",
-          "exampleMeaning": "쓰러진 나무의 그늘에. 2.〔항해〕 바람 불어가는 쪽."
+          "exampleMeaning": "쓰러진 나무의 그늘에."
         },
         {
           "id": "en_11228",
@@ -68116,10 +68116,10 @@
           "pronunciation": "[쉬트이으]",
           "pron": "[쉬트이으]",
           "phonetic": "[쉬트이으]",
-          "example_en": "This is an example for shooting.",
-          "example_ko": "이것은 사격 발사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shooting.",
-          "exampleMeaning": "이것은 사격 발사 관련 실전 예문입니다."
+          "example_en": "The director finished shooting the final movie scene.",
+          "example_ko": "감독은 마지막 영화 장면 촬영을 끝마쳤다.",
+          "exampleTarget": "The director finished shooting the final movie scene.",
+          "exampleMeaning": "감독은 마지막 영화 장면 촬영을 끝마쳤다."
         },
         {
           "id": "en_11229",
@@ -68267,9 +68267,9 @@
           "pron": "[므애즈어스트이]",
           "phonetic": "[므애즈어스트이]",
           "example_en": "with majesty.",
-          "example_ko": "장엄하게. 2.《보통 the majesty》지고의 권위; 주권 통치권.",
+          "example_ko": "장엄하게.",
           "exampleTarget": "with majesty.",
-          "exampleMeaning": "장엄하게. 2.《보통 the majesty》지고의 권위; 주권 통치권."
+          "exampleMeaning": "장엄하게."
         },
         {
           "id": "en_11302",
@@ -68318,9 +68318,9 @@
           "pron": "[오프어르]",
           "phonetic": "[오프어르]",
           "example_en": "an awful storm.",
-          "example_ko": "무시무시한 폭풍우. 2.《비격식》 몹시 나쁜 지독한 심한; 기분이 나쁜.",
+          "example_ko": "무시무시한 폭풍우.",
           "exampleTarget": "an awful storm.",
-          "exampleMeaning": "무시무시한 폭풍우. 2.《비격식》 몹시 나쁜 지독한 심한; 기분이 나쁜."
+          "exampleMeaning": "무시무시한 폭풍우."
         },
         {
           "id": "en_11305",
@@ -68334,10 +68334,10 @@
           "pronunciation": "[아드드애므]",
           "pron": "[아드드애므]",
           "phonetic": "[아드드애므]",
-          "example_en": "This is an example for goddamn.",
-          "example_ko": "이것은 제기랄 빌어먹을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for goddamn.",
-          "exampleMeaning": "이것은 제기랄 빌어먹을 관련 실전 예문입니다."
+          "example_en": "Turn off that goddamn loud alarm right now.",
+          "example_ko": "저 빌어먹을 시끄러운 알람 당장 꺼라.",
+          "exampleTarget": "Turn off that goddamn loud alarm right now.",
+          "exampleMeaning": "저 빌어먹을 시끄러운 알람 당장 꺼라."
         },
         {
           "id": "en_11306",
@@ -68351,10 +68351,10 @@
           "pronunciation": "[즈에이느]",
           "pron": "[즈에이느]",
           "phonetic": "[즈에이느]",
-          "example_en": "This is an example for jane.",
-          "example_ko": "이것은 처녀 여자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jane.",
-          "exampleMeaning": "이것은 처녀 여자 관련 실전 예문입니다."
+          "example_en": "Jane played violin during the evening school concert.",
+          "example_ko": "제인은 저녁 학교 콘서트에서 바이올린을 연주했다.",
+          "exampleTarget": "Jane played violin during the evening school concert.",
+          "exampleMeaning": "제인은 저녁 학교 콘서트에서 바이올린을 연주했다."
         },
         {
           "id": "en_11307",
@@ -68368,10 +68368,10 @@
           "pronunciation": "[우어느드어르이으]",
           "pron": "[우어느드어르이으]",
           "phonetic": "[우어느드어르이으]",
-          "example_en": "This is an example for wondering.",
-          "example_ko": "이것은 사의하게 여기는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wondering.",
-          "exampleMeaning": "이것은 사의하게 여기는 관련 실전 예문입니다."
+          "example_en": "I was wondering if you could help today.",
+          "example_ko": "네가 오늘 도와줄 수 있는지 궁금해서 물어봤어.",
+          "exampleTarget": "I was wondering if you could help today.",
+          "exampleMeaning": "네가 오늘 도와줄 수 있는지 궁금해서 물어봤어."
         },
         {
           "id": "en_11308",
@@ -68402,10 +68402,10 @@
           "pronunciation": "[스우트흐아르트]",
           "pron": "[스우트흐아르트]",
           "phonetic": "[스우트흐아르트]",
-          "example_en": "This is an example for sweetheart.",
-          "example_ko": "이것은 연인 애인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sweetheart.",
-          "exampleMeaning": "이것은 연인 애인 관련 실전 예문입니다."
+          "example_en": "My sweetheart bought me flowers for our anniversary.",
+          "example_ko": "내 연인은 우리 기념일을 위해 나에게 꽃을 사주었다.",
+          "exampleTarget": "My sweetheart bought me flowers for our anniversary.",
+          "exampleMeaning": "내 연인은 우리 기념일을 위해 나에게 꽃을 사주었다."
         },
         {
           "id": "en_11310",
@@ -68437,9 +68437,9 @@
           "pron": "[프어크]",
           "phonetic": "[프어크]",
           "example_en": "What the fuck is it?",
-          "example_ko": "그건 도대체 뭐야. 숙어 not care a fuck for nothing; not give a fuck for nothing; not give a fuck; not care a fuck 전혀 신경을 쓰지 않다. Take a flying fuck! 뒈져 버려. 감탄사《종종 fuck you》제기랄 망할 놈 뒈져라 .",
+          "example_ko": "그건 도대체 뭐야.",
           "exampleTarget": "What the fuck is it?",
-          "exampleMeaning": "그건 도대체 뭐야. 숙어 not care a fuck for nothing; not give a fuck for nothing; not give a fuck; not care a fuck 전혀 신경을 쓰지 않다. Take a flying fuck! 뒈져 버려. 감탄사《종종 fuck you》제기랄 망할 놈 뒈져라 ."
+          "exampleMeaning": "그건 도대체 뭐야."
         },
         {
           "id": "en_11312",
@@ -68453,10 +68453,10 @@
           "pronunciation": "[츠어르이으]",
           "pron": "[츠어르이으]",
           "phonetic": "[츠어르이으]",
-          "example_en": "This is an example for cheering.",
-          "example_ko": "이것은 격려 되는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cheering.",
-          "exampleMeaning": "이것은 격려 되는 관련 실전 예문입니다."
+          "example_en": "The crowd kept cheering for their favorite team.",
+          "example_ko": "관중들은 자신이 가장 좋아하는 팀을 계속해서 응원했다.",
+          "exampleTarget": "The crowd kept cheering for their favorite team.",
+          "exampleMeaning": "관중들은 자신이 가장 좋아하는 팀을 계속해서 응원했다."
         },
         {
           "id": "en_11313",
@@ -68488,9 +68488,9 @@
           "pron": "[즈어르므어느]",
           "phonetic": "[즈어르므어느]",
           "example_en": "a brother-german.",
-          "example_ko": "친형제. 2.《고어》 ＝germane.",
+          "example_ko": "친형제.",
           "exampleTarget": "a brother-german.",
-          "exampleMeaning": "친형제. 2.《고어》 ＝germane."
+          "exampleMeaning": "친형제."
         },
         {
           "id": "en_11315",
@@ -68505,9 +68505,9 @@
           "pron": "[흐우브어르]",
           "phonetic": "[흐우브어르]",
           "example_en": "Well welcome whoever comes.",
-          "example_ko": "오는 사람은 누구나 환영합니다 . ②《양보의 부사절을 이끌어》 누가 …이라도.",
+          "example_ko": "오는 사람은 누구나 환영합니다 . ② 누가 …이라도.",
           "exampleTarget": "Well welcome whoever comes.",
-          "exampleMeaning": "오는 사람은 누구나 환영합니다 . ②《양보의 부사절을 이끌어》 누가 …이라도."
+          "exampleMeaning": "오는 사람은 누구나 환영합니다 . ② 누가 …이라도."
         },
         {
           "id": "en_11316",
@@ -68521,10 +68521,10 @@
           "pronunciation": "[크어므애느드어르]",
           "pron": "[크어므애느드어르]",
           "phonetic": "[크어므애느드어르]",
-          "example_en": "This is an example for commander.",
-          "example_ko": "이것은 지휘관 사령관 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for commander.",
-          "exampleMeaning": "이것은 지휘관 사령관 관련 실전 예문입니다."
+          "example_en": "The commander gave clear instructions to his team.",
+          "example_ko": "지휘관은 팀원들에게 명확한 지시를 내렸습니다.",
+          "exampleTarget": "The commander gave clear instructions to his team.",
+          "exampleMeaning": "지휘관은 팀원들에게 명확한 지시를 내렸습니다."
         },
         {
           "id": "en_11317",
@@ -68573,9 +68573,9 @@
           "pron": "[느우이으]",
           "phonetic": "[느우이으]",
           "example_en": "a knowing look.",
-          "example_ko": "알고 있다는 눈초리. 2.〔…에 대하여〕 지식이 있는 박식한 〔about …〕; 영리한.",
+          "example_ko": "알고 있다는 눈초리.",
           "exampleTarget": "a knowing look.",
-          "exampleMeaning": "알고 있다는 눈초리. 2.〔…에 대하여〕 지식이 있는 박식한 〔about …〕; 영리한."
+          "exampleMeaning": "알고 있다는 눈초리."
         },
         {
           "id": "en_11320",
@@ -68589,10 +68589,10 @@
           "pronunciation": "[크르어르이]",
           "pron": "[크르어르이]",
           "phonetic": "[크르어르이]",
-          "example_en": "This is an example for clearly.",
-          "example_ko": "이것은 밝게 투명하게 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for clearly.",
-          "exampleMeaning": "이것은 밝게 투명하게 관련 실전 예문입니다."
+          "example_en": "She explained the whole process very clearly today.",
+          "example_ko": "그녀는 오늘 전체 과정을 아주 명확하게 설명했습니다.",
+          "exampleTarget": "She explained the whole process very clearly today.",
+          "exampleMeaning": "그녀는 오늘 전체 과정을 아주 명확하게 설명했습니다."
         },
         {
           "id": "en_11321",
@@ -68640,10 +68640,10 @@
           "pronunciation": "[bullshit]",
           "pron": "[bullshit]",
           "phonetic": "[bullshit]",
-          "example_en": "This is an example for bullshit.",
-          "example_ko": "이것은 되는대로의 엉터리의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bullshit.",
-          "exampleMeaning": "이것은 되는대로의 엉터리의 관련 실전 예문입니다."
+          "example_en": "His ridiculous excuse sounded like complete bullshit today.",
+          "example_ko": "그의 터무니없는 변명은 오늘 완전 헛소리처럼 들렸습니다.",
+          "exampleTarget": "His ridiculous excuse sounded like complete bullshit today.",
+          "exampleMeaning": "그의 터무니없는 변명은 오늘 완전 헛소리처럼 들렸습니다."
         },
         {
           "id": "en_11324",
@@ -68657,10 +68657,10 @@
           "pronunciation": "[르애느드므아]",
           "pron": "[르애느드므아]",
           "phonetic": "[르애느드므아]",
-          "example_en": "This is an example for grandma.",
-          "example_ko": "이것은 grandma 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grandma.",
-          "exampleMeaning": "이것은 grandma 관련 실전 예문입니다."
+          "example_en": "My grandma bakes delicious apple pie every Sunday.",
+          "example_ko": "우리 할머니는 일요일마다 맛있는 사과 파이를 구우십니다.",
+          "exampleTarget": "My grandma bakes delicious apple pie every Sunday.",
+          "exampleMeaning": "우리 할머니는 일요일마다 맛있는 사과 파이를 구우십니다."
         },
         {
           "id": "en_11325",
@@ -68691,10 +68691,10 @@
           "pronunciation": "[쉬우트이으]",
           "pron": "[쉬우트이으]",
           "phonetic": "[쉬우트이으]",
-          "example_en": "This is an example for shouting.",
-          "example_ko": "이것은 외침 갈채 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shouting.",
-          "exampleMeaning": "이것은 외침 갈채 관련 실전 예문입니다."
+          "example_en": "The angry fans started shouting outside the stadium.",
+          "example_ko": "성난 팬들이 경기장 밖에서 소리를 지르기 시작했습니다.",
+          "exampleTarget": "The angry fans started shouting outside the stadium.",
+          "exampleMeaning": "성난 팬들이 경기장 밖에서 소리를 지르기 시작했습니다."
         },
         {
           "id": "en_11327",
@@ -68708,10 +68708,10 @@
           "pronunciation": "[아트느]",
           "pron": "[아트느]",
           "phonetic": "[아트느]",
-          "example_en": "This is an example for gotten.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gotten.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "It has gotten quite cold outside.",
+          "example_ko": "바깥 날씨가 꽤 쌀쌀해졌다.",
+          "exampleTarget": "It has gotten quite cold outside.",
+          "exampleMeaning": "바깥 날씨가 꽤 쌀쌀해졌다."
         },
         {
           "id": "en_11328",
@@ -68743,9 +68743,9 @@
           "pron": "[흐애으이으]",
           "phonetic": "[흐애으이으]",
           "example_en": "put a person to death by hanging.",
-          "example_ko": "남을 교수형에 처하다. 2.매달기 걸기. 3.《종종 hangings》（방의 벽 등을） 가리는 물건 벽걸이.",
+          "example_ko": "남을 교수형에 처하다.",
           "exampleTarget": "put a person to death by hanging.",
-          "exampleMeaning": "남을 교수형에 처하다. 2.매달기 걸기. 3.《종종 hangings》（방의 벽 등을） 가리는 물건 벽걸이."
+          "exampleMeaning": "남을 교수형에 처하다."
         },
         {
           "id": "en_11330",
@@ -68875,10 +68875,10 @@
           "pronunciation": "[흐에르드]",
           "pron": "[흐에르드]",
           "phonetic": "[흐에르드]",
-          "example_en": "This is an example for held.",
-          "example_ko": "이것은 ¹의 과거·과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for held.",
-          "exampleMeaning": "이것은 ¹의 과거·과거 관련 실전 예문입니다."
+          "example_en": "The meeting was held in the hall.",
+          "example_ko": "그 회의는 강당에서 열렸다.",
+          "exampleTarget": "The meeting was held in the hall.",
+          "exampleMeaning": "그 회의는 강당에서 열렸다."
         },
         {
           "id": "en_11402",
@@ -68961,9 +68961,9 @@
           "pron": "[스어므흐우]",
           "phonetic": "[스어므흐우]",
           "example_en": "We must get the car fixed somehow.",
-          "example_ko": "어떻게든 차를 수리해야 한다. 2.어쩐지 웬일인지 아무래도.",
+          "example_ko": "어떻게든 차를 수리해야 한다.",
           "exampleTarget": "We must get the car fixed somehow.",
-          "exampleMeaning": "어떻게든 차를 수리해야 한다. 2.어쩐지 웬일인지 아무래도."
+          "exampleMeaning": "어떻게든 차를 수리해야 한다."
         },
         {
           "id": "en_11407",
@@ -68994,10 +68994,10 @@
           "pronunciation": "[스프오크]",
           "pron": "[스프오크]",
           "phonetic": "[스프오크]",
-          "example_en": "This is an example for spoke.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spoke.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He spoke English very fluently.",
+          "example_ko": "그는 영어를 아주 유창하게 말했다.",
+          "exampleTarget": "He spoke English very fluently.",
+          "exampleMeaning": "그는 영어를 아주 유창하게 말했다."
         },
         {
           "id": "en_11409",
@@ -69007,14 +69007,14 @@
           "level": "B2",
           "unitId": "unit_114",
           "nodeId": "en_u114_n1",
-          "meaning": "과거·과거",
+          "meaning": "이해했다",
           "pronunciation": "[어느드어르스트드]",
           "pron": "[어느드어르스트드]",
           "phonetic": "[어느드어르스트드]",
-          "example_en": "This is an example for understood.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for understood.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I understood the lesson completely.",
+          "example_ko": "나는 그 수업을 완전히 이해했다.",
+          "exampleTarget": "I understood the lesson completely.",
+          "exampleMeaning": "나는 그 수업을 완전히 이해했다."
         },
         {
           "id": "en_11410",
@@ -69062,10 +69062,10 @@
           "pronunciation": "[즈에이크]",
           "pron": "[즈에이크]",
           "phonetic": "[즈에이크]",
-          "example_en": "This is an example for jake.",
-          "example_ko": "이것은 좋은 만족스러운 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jake.",
-          "exampleMeaning": "이것은 좋은 만족스러운 관련 실전 예문입니다."
+          "example_en": "Jake fixed my broken laptop in one hour.",
+          "example_ko": "제이크는 한 시간 만에 내 고장 난 노트북을 고쳤습니다.",
+          "exampleTarget": "Jake fixed my broken laptop in one hour.",
+          "exampleMeaning": "제이크는 한 시간 만에 내 고장 난 노트북을 고쳤습니다."
         },
         {
           "id": "en_11413",
@@ -69109,14 +69109,14 @@
           "level": "B2",
           "unitId": "unit_114",
           "nodeId": "en_u114_n2",
-          "meaning": "과거·과거",
+          "meaning": "가르쳤다",
           "pronunciation": "[트오트]",
           "pron": "[트오트]",
           "phonetic": "[트오트]",
-          "example_en": "This is an example for taught.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for taught.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She taught math at our school.",
+          "example_ko": "그녀는 우리 학교에서 수학을 가르쳤다.",
+          "exampleTarget": "She taught math at our school.",
+          "exampleMeaning": "그녀는 우리 학교에서 수학을 가르쳤다."
         },
         {
           "id": "en_11416",
@@ -69130,10 +69130,10 @@
           "pronunciation": "[르아브어르트]",
           "pron": "[르아브어르트]",
           "phonetic": "[르아브어르트]",
-          "example_en": "This is an example for robert.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for robert.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Robert works as a senior software engineer now.",
+          "example_ko": "로버트는 현재 수석 소프트웨어 엔지니어로 일합니다.",
+          "exampleTarget": "Robert works as a senior software engineer now.",
+          "exampleMeaning": "로버트는 현재 수석 소프트웨어 엔지니어로 일합니다."
         },
         {
           "id": "en_11417",
@@ -69181,10 +69181,10 @@
           "pronunciation": "[드애느스이으]",
           "pron": "[드애느스이으]",
           "phonetic": "[드애느스이으]",
-          "example_en": "This is an example for dancing.",
-          "example_ko": "이것은 춤 무도 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dancing.",
-          "exampleMeaning": "이것은 춤 무도 관련 실전 예문입니다."
+          "example_en": "People were dancing happily at the wedding reception.",
+          "example_ko": "사람들은 결혼식 피로연에서 행복하게 춤을 추고 있었습니다.",
+          "exampleTarget": "People were dancing happily at the wedding reception.",
+          "exampleMeaning": "사람들은 결혼식 피로연에서 행복하게 춤을 추고 있었습니다."
         },
         {
           "id": "en_11420",
@@ -69198,10 +69198,10 @@
           "pronunciation": "[므아르트어느]",
           "pron": "[므아르트어느]",
           "phonetic": "[므아르트어느]",
-          "example_en": "This is an example for martin.",
-          "example_ko": "이것은 몇 종의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for martin.",
-          "exampleMeaning": "이것은 몇 종의 관련 실전 예문입니다."
+          "example_en": "Martin ordered delicious lunch for the whole office.",
+          "example_ko": "마틴은 사무실 전체를 위해 맛있는 점심을 주문했습니다.",
+          "exampleTarget": "Martin ordered delicious lunch for the whole office.",
+          "exampleMeaning": "마틴은 사무실 전체를 위해 맛있는 점심을 주문했습니다."
         },
         {
           "id": "en_11421",
@@ -69249,10 +69249,10 @@
           "pronunciation": "[크르이스]",
           "pron": "[크르이스]",
           "phonetic": "[크르이스]",
-          "example_en": "This is an example for chris.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chris.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Chris will pick us up right after work.",
+          "example_ko": "크리스가 퇴근 직후 우리를 데리러 올 것입니다.",
+          "exampleTarget": "Chris will pick us up right after work.",
+          "exampleMeaning": "크리스가 퇴근 직후 우리를 데리러 올 것입니다."
         },
         {
           "id": "en_11424",
@@ -69335,9 +69335,9 @@
           "pron": "[프우트오]",
           "phonetic": "[프우트오]",
           "example_en": "take a photo.",
-          "example_ko": "사진을 찍다 . 동사 자동사（…의） 사진을 찍다; 사진으로 찍다.",
+          "example_ko": "사진을 찍다 .",
           "exampleTarget": "take a photo.",
-          "exampleMeaning": "사진을 찍다 . 동사 자동사（…의） 사진을 찍다; 사진으로 찍다."
+          "exampleMeaning": "사진을 찍다 ."
         },
         {
           "id": "en_11429",
@@ -69536,9 +69536,9 @@
           "pron": "[브르이크이으]",
           "phonetic": "[브르이크이으]",
           "example_en": "breaking and entering.",
-          "example_ko": "가택 침입. 2.〔언어학〕 단모음의 이중 모음화.",
+          "example_ko": "가택 침입.",
           "exampleTarget": "breaking and entering.",
-          "exampleMeaning": "가택 침입. 2.〔언어학〕 단모음의 이중 모음화."
+          "exampleMeaning": "가택 침입."
         },
         {
           "id": "en_11505",
@@ -69587,9 +69587,9 @@
           "pron": "[느아느스에느스]",
           "phonetic": "[느아느스에느스]",
           "example_en": "Youre talking complete nonsense.",
-          "example_ko": "너는 순전한 허튼소리를 늘어놓고 있다. 3.어리석은 행위.",
+          "example_ko": "너는 순전한 허튼소리를 늘어놓고 있다.",
           "exampleTarget": "Youre talking complete nonsense.",
-          "exampleMeaning": "너는 순전한 허튼소리를 늘어놓고 있다. 3.어리석은 행위."
+          "exampleMeaning": "너는 순전한 허튼소리를 늘어놓고 있다."
         },
         {
           "id": "en_11508",
@@ -69603,10 +69603,10 @@
           "pronunciation": "[드아크]",
           "pron": "[드아크]",
           "phonetic": "[드아크]",
-          "example_en": "This is an example for doc.",
-          "example_ko": "이것은 선생님 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for doc.",
-          "exampleMeaning": "이것은 선생님 관련 실전 예문입니다."
+          "example_en": "The doc advised me to rest for days.",
+          "example_ko": "선생님은 며칠 동안 쉬라고 조언하셨습니다.",
+          "exampleTarget": "The doc advised me to rest for days.",
+          "exampleMeaning": "선생님은 며칠 동안 쉬라고 조언하셨습니다."
         },
         {
           "id": "en_11509",
@@ -69654,10 +69654,10 @@
           "pronunciation": "[르애느드프아]",
           "pron": "[르애느드프아]",
           "phonetic": "[르애느드프아]",
-          "example_en": "This is an example for grandpa.",
-          "example_ko": "이것은 grandpa 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grandpa.",
-          "exampleMeaning": "이것은 grandpa 관련 실전 예문입니다."
+          "example_en": "My grandpa takes a morning walk every day.",
+          "example_ko": "우리 할아버지는 매일 아침 산책을 하십니다.",
+          "exampleTarget": "My grandpa takes a morning walk every day.",
+          "exampleMeaning": "우리 할아버지는 매일 아침 산책을 하십니다."
         },
         {
           "id": "en_11512",
@@ -69671,10 +69671,10 @@
           "pronunciation": "[프이이으]",
           "pron": "[프이이으]",
           "phonetic": "[프이이으]",
-          "example_en": "This is an example for paying.",
-          "example_ko": "이것은 지 하는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for paying.",
-          "exampleMeaning": "이것은 지 하는 관련 실전 예문입니다."
+          "example_en": "Who is paying for our dinner bill tonight?",
+          "example_ko": "오늘 밤 우리 저녁 식사비는 누가 내나요?",
+          "exampleTarget": "Who is paying for our dinner bill tonight?",
+          "exampleMeaning": "오늘 밤 우리 저녁 식사비는 누가 내나요?"
         },
         {
           "id": "en_11513",
@@ -69688,10 +69688,10 @@
           "pronunciation": "[트이스]",
           "pron": "[트이스]",
           "phonetic": "[트이스]",
-          "example_en": "This is an example for teeth.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for teeth.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "Brush your teeth twice a day.",
+          "example_ko": "하루에 두 번 이를 닦으세요.",
+          "exampleTarget": "Brush your teeth twice a day.",
+          "exampleMeaning": "하루에 두 번 이를 닦으세요."
         },
         {
           "id": "en_11514",
@@ -69722,10 +69722,10 @@
           "pronunciation": "[츠아르즈]",
           "pron": "[츠아르즈]",
           "phonetic": "[츠아르즈]",
-          "example_en": "This is an example for charles.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for charles.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Charles sent the updated contract to the client.",
+          "example_ko": "찰스는 고객에게 수정된 계약서를 보냈습니다.",
+          "exampleTarget": "Charles sent the updated contract to the client.",
+          "exampleMeaning": "찰스는 고객에게 수정된 계약서를 보냈습니다."
         },
         {
           "id": "en_11516",
@@ -69774,9 +69774,9 @@
           "pron": "[아느이스트르이]",
           "phonetic": "[아느이스트르이]",
           "example_en": "Answer the following questions honestly.",
-          "example_ko": "다음 질문에 정직하게 대답해라. 2.《문장 전체를 수식하여》 《비판적 발언을 이끌어서》 솔직하게 말하면; 《질문을 이끌어서》 솔직하게 묻지만.",
+          "example_ko": "다음 질문에 정직하게 대답해라.",
           "exampleTarget": "Answer the following questions honestly.",
-          "exampleMeaning": "다음 질문에 정직하게 대답해라. 2.《문장 전체를 수식하여》 《비판적 발언을 이끌어서》 솔직하게 말하면; 《질문을 이끌어서》 솔직하게 묻지만."
+          "exampleMeaning": "다음 질문에 정직하게 대답해라."
         },
         {
           "id": "en_11519",
@@ -69790,10 +69790,10 @@
           "pronunciation": "[브르오]",
           "pron": "[브르오]",
           "phonetic": "[브르오]",
-          "example_en": "This is an example for bro.",
-          "example_ko": "이것은 형제 친구 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bro.",
-          "exampleMeaning": "이것은 형제 친구 관련 실전 예문입니다."
+          "example_en": "My bro will help us move furniture tomorrow.",
+          "example_ko": "내 친구가 내일 가구 옮기는 것을 도와줄 것입니다.",
+          "exampleTarget": "My bro will help us move furniture tomorrow.",
+          "exampleMeaning": "내 친구가 내일 가구 옮기는 것을 도와줄 것입니다."
         },
         {
           "id": "en_11520",
@@ -69808,9 +69808,9 @@
           "pron": "[프에이크]",
           "phonetic": "[프에이크]",
           "example_en": "fake an alibi.",
-          "example_ko": "알리바이를 조작하다. 2.…의 결점을 감추다 겉꾸림하다; …에 손대다 윤색하다. 3.《비격식》 …인 체하다 가장하다.",
+          "example_ko": "알리바이를 조작하다.",
           "exampleTarget": "fake an alibi.",
-          "exampleMeaning": "알리바이를 조작하다. 2.…의 결점을 감추다 겉꾸림하다; …에 손대다 윤색하다. 3.《비격식》 …인 체하다 가장하다."
+          "exampleMeaning": "알리바이를 조작하다."
         },
         {
           "id": "en_11521",
@@ -69824,10 +69824,10 @@
           "pronunciation": "[브르드이으]",
           "pron": "[브르드이으]",
           "phonetic": "[브르드이으]",
-          "example_en": "This is an example for breathing.",
-          "example_ko": "이것은 호흡 한숨 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for breathing.",
-          "exampleMeaning": "이것은 호흡 한숨 관련 실전 예문입니다."
+          "example_en": "Deep breathing exercises help reduce your daily stress.",
+          "example_ko": "심호흡 운동은 일상의 스트레스를 줄이는 데 도움이 됩니다.",
+          "exampleTarget": "Deep breathing exercises help reduce your daily stress.",
+          "exampleMeaning": "심호흡 운동은 일상의 스트레스를 줄이는 데 도움이 됩니다."
         },
         {
           "id": "en_11522",
@@ -69841,10 +69841,10 @@
           "pronunciation": "[스우트이]",
           "pron": "[스우트이]",
           "phonetic": "[스우트이]",
-          "example_en": "This is an example for sweetie.",
-          "example_ko": "이것은 캔디 사탕 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sweetie.",
-          "exampleMeaning": "이것은 캔디 사탕 관련 실전 예문입니다."
+          "example_en": "Good night sweetie and have very sweet dreams.",
+          "example_ko": "잘 자 얘야 그리고 정말 좋은 꿈 꿔.",
+          "exampleTarget": "Good night sweetie and have very sweet dreams.",
+          "exampleMeaning": "잘 자 얘야 그리고 정말 좋은 꿈 꿔."
         },
         {
           "id": "en_11523",
@@ -69892,10 +69892,10 @@
           "pronunciation": "[이므이]",
           "pron": "[이므이]",
           "phonetic": "[이므이]",
-          "example_en": "This is an example for amy.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for amy.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Amy finished her design presentation ahead of schedule.",
+          "example_ko": "에이미는 예정보다 일찍 디자인 발표를 마쳤습니다.",
+          "exampleTarget": "Amy finished her design presentation ahead of schedule.",
+          "exampleMeaning": "에이미는 예정보다 일찍 디자인 발표를 마쳤습니다."
         },
         {
           "id": "en_11526",
@@ -69909,10 +69909,10 @@
           "pronunciation": "[프어르아트느]",
           "pron": "[프어르아트느]",
           "phonetic": "[프어르아트느]",
-          "example_en": "This is an example for forgotten.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for forgotten.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "That old song is never forgotten.",
+          "example_ko": "그 옛 노래는 결코 잊히지 않는다.",
+          "exampleTarget": "That old song is never forgotten.",
+          "exampleMeaning": "그 옛 노래는 결코 잊히지 않는다."
         },
         {
           "id": "en_11527",
@@ -69943,10 +69943,10 @@
           "pronunciation": "[프아프어]",
           "pron": "[프아프어]",
           "phonetic": "[프아프어]",
-          "example_en": "This is an example for papa.",
-          "example_ko": "이것은 아빠 현재는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for papa.",
-          "exampleMeaning": "이것은 아빠 현재는 관련 실전 예문입니다."
+          "example_en": "Her papa taught her how to ride bicycle.",
+          "example_ko": "그녀의 아빠는 그녀에게 자전거 타는 법을 가르쳐 주셨습니다.",
+          "exampleTarget": "Her papa taught her how to ride bicycle.",
+          "exampleMeaning": "그녀의 아빠는 그녀에게 자전거 타는 법을 가르쳐 주셨습니다."
         },
         {
           "id": "en_11529",
@@ -69977,10 +69977,10 @@
           "pronunciation": "[우]",
           "pron": "[우]",
           "phonetic": "[우]",
-          "example_en": "This is an example for ugh.",
-          "example_ko": "이것은 윽 악 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ugh.",
-          "exampleMeaning": "이것은 윽 악 관련 실전 예문입니다."
+          "example_en": "Ugh that boring meeting lasted for three hours.",
+          "example_ko": "으 그 지루한 회의가 세 시간 동안 이어졌습니다.",
+          "exampleTarget": "Ugh that boring meeting lasted for three hours.",
+          "exampleMeaning": "으 그 지루한 회의가 세 시간 동안 이어졌습니다."
         }
       ],
       "nodes": [
@@ -70110,10 +70110,10 @@
           "pronunciation": "[르아즈어르]",
           "pron": "[르아즈어르]",
           "phonetic": "[르아즈어르]",
-          "example_en": "This is an example for roger.",
-          "example_ko": "이것은 좋아 알았다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for roger.",
-          "exampleMeaning": "이것은 좋아 알았다 관련 실전 예문입니다."
+          "example_en": "Roger that we will start the inspection immediately.",
+          "example_ko": "알겠습니다 우리는 즉시 점검을 시작하겠습니다.",
+          "exampleTarget": "Roger that we will start the inspection immediately.",
+          "exampleMeaning": "알겠습니다 우리는 즉시 점검을 시작하겠습니다."
         },
         {
           "id": "en_11603",
@@ -70123,14 +70123,14 @@
           "level": "B2",
           "unitId": "unit_116",
           "nodeId": "en_u116_n1",
-          "meaning": "dr",
+          "meaning": "박사",
           "pronunciation": "[dr]",
           "pron": "[dr]",
           "phonetic": "[dr]",
-          "example_en": "This is an example for dr.",
-          "example_ko": "이것은 dr 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dr.",
-          "exampleMeaning": "이것은 dr 관련 실전 예문입니다."
+          "example_en": "Dr. Smith is a renowned specialist.",
+          "example_ko": "스미스 박사는 유명한 전문의이다.",
+          "exampleTarget": "Dr. Smith is a renowned specialist.",
+          "exampleMeaning": "스미스 박사는 유명한 전문의이다."
         },
         {
           "id": "en_11604",
@@ -70145,9 +70145,9 @@
           "pron": "[쉬르이프]",
           "phonetic": "[쉬르이프]",
           "example_en": "a deputy sheriff.",
-          "example_ko": "군 보안관 대리. 2.《보통 High Sheriff》《영》 （주 및 몇몇 도시의） 사법 장관 . 3.《스코》 주 법원의 법관.",
+          "example_ko": "군 보안관 대리.",
           "exampleTarget": "a deputy sheriff.",
-          "exampleMeaning": "군 보안관 대리. 2.《보통 High Sheriff》《영》 （주 및 몇몇 도시의） 사법 장관 . 3.《스코》 주 법원의 법관."
+          "exampleMeaning": "군 보안관 대리."
         },
         {
           "id": "en_11605",
@@ -70161,10 +70161,10 @@
           "pronunciation": "[크이므]",
           "pron": "[크이므]",
           "phonetic": "[크이므]",
-          "example_en": "This is an example for kim.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kim.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Kim shared her wonderful travel photos with us.",
+          "example_ko": "킴은 멋진 여행 사진들을 우리와 함께 공유했습니다.",
+          "exampleTarget": "Kim shared her wonderful travel photos with us.",
+          "exampleMeaning": "킴은 멋진 여행 사진들을 우리와 함께 공유했습니다."
         },
         {
           "id": "en_11606",
@@ -70179,9 +70179,9 @@
           "pron": "[트어르느이으]",
           "phonetic": "[트어르느이으]",
           "example_en": "Take the next turning on the right.",
-          "example_ko": "다음 모퉁이에서 오른쪽으로 도시오. 3.선반 세공; 《turnings》（선반·녹로의） 깎아낸 부스러기. 4.선반의 회전 부분: 굴대 등. 5.《the turning》（비문·문학 작품 등의） 형성 구성.",
+          "example_ko": "다음 모퉁이에서 오른쪽으로 도시오.",
           "exampleTarget": "Take the next turning on the right.",
-          "exampleMeaning": "다음 모퉁이에서 오른쪽으로 도시오. 3.선반 세공; 《turnings》（선반·녹로의） 깎아낸 부스러기. 4.선반의 회전 부분: 굴대 등. 5.《the turning》（비문·문학 작품 등의） 형성 구성."
+          "exampleMeaning": "다음 모퉁이에서 오른쪽으로 도시오."
         },
         {
           "id": "en_11607",
@@ -70196,9 +70196,9 @@
           "pron": "[즈르어스]",
           "phonetic": "[즈르어스]",
           "example_en": "He is jealous of his friends success.",
-          "example_ko": "그는 친구의 성공을 시샘하고 있다. 2.〈남이〉 질투심이 많은 투기가 심한; 〈언행 등이〉 시기에 의한.",
+          "example_ko": "그는 친구의 성공을 시샘하고 있다.",
           "exampleTarget": "He is jealous of his friends success.",
-          "exampleMeaning": "그는 친구의 성공을 시샘하고 있다. 2.〈남이〉 질투심이 많은 투기가 심한; 〈언행 등이〉 시기에 의한."
+          "exampleMeaning": "그는 친구의 성공을 시샘하고 있다."
         },
         {
           "id": "en_11608",
@@ -70263,10 +70263,10 @@
           "pronunciation": "[르트이으]",
           "pron": "[르트이으]",
           "phonetic": "[르트이으]",
-          "example_en": "This is an example for letting.",
-          "example_ko": "이것은 셋집 임대 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for letting.",
-          "exampleMeaning": "이것은 셋집 임대 관련 실전 예문입니다."
+          "example_en": "Thank you for letting us visit your home.",
+          "example_ko": "당신의 집에 방문할 수 있게 해 주셔서 감사합니다.",
+          "exampleTarget": "Thank you for letting us visit your home.",
+          "exampleMeaning": "당신의 집에 방문할 수 있게 해 주셔서 감사합니다."
         },
         {
           "id": "en_11612",
@@ -70276,14 +70276,14 @@
           "level": "B2",
           "unitId": "unit_116",
           "nodeId": "en_u116_n2",
-          "meaning": "과거형",
+          "meaning": "시작했다",
           "pronunciation": "[브이애느]",
           "pron": "[브이애느]",
           "phonetic": "[브이애느]",
-          "example_en": "This is an example for began.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for began.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "The movie began ten minutes ago.",
+          "example_ko": "그 영화는 십 분 전에 시작했다.",
+          "exampleTarget": "The movie began ten minutes ago.",
+          "exampleMeaning": "그 영화는 십 분 전에 시작했다."
         },
         {
           "id": "en_11613",
@@ -70298,9 +70298,9 @@
           "pron": "[아이]",
           "phonetic": "[아이]",
           "example_en": "vote aye.",
-          "example_ko": "찬성 투표하다. 명사（특히 영국 의회에서） 찬성 찬성 투표.",
+          "example_ko": "찬성 투표하다.",
           "exampleTarget": "vote aye.",
-          "exampleMeaning": "찬성 투표하다. 명사（특히 영국 의회에서） 찬성 찬성 투표."
+          "exampleMeaning": "찬성 투표하다."
         },
         {
           "id": "en_11614",
@@ -70314,10 +70314,10 @@
           "pronunciation": "[즈에프]",
           "pron": "[즈에프]",
           "phonetic": "[즈에프]",
-          "example_en": "This is an example for jeff.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jeff.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Jeff is organizing a surprise party for Sarah.",
+          "example_ko": "제프는 사라를 위한 깜짝 파티를 준비하고 있습니다.",
+          "exampleTarget": "Jeff is organizing a surprise party for Sarah.",
+          "exampleMeaning": "제프는 사라를 위한 깜짝 파티를 준비하고 있습니다."
         },
         {
           "id": "en_11615",
@@ -70416,10 +70416,10 @@
           "pronunciation": "[르애브]",
           "pron": "[르애브]",
           "phonetic": "[르애브]",
-          "example_en": "This is an example for lab.",
-          "example_ko": "이것은 lab 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lab.",
-          "exampleMeaning": "이것은 lab 관련 실전 예문입니다."
+          "example_en": "Our research lab developed an effective new medicine.",
+          "example_ko": "우리 연구소는 효과적인 신약을 개발했습니다.",
+          "exampleTarget": "Our research lab developed an effective new medicine.",
+          "exampleMeaning": "우리 연구소는 효과적인 신약을 개발했습니다."
         },
         {
           "id": "en_11621",
@@ -70434,9 +70434,9 @@
           "pron": "[스르이으]",
           "phonetic": "[스르이으]",
           "example_en": "our fast-selling model.",
-          "example_ko": "우리 가게에서 가장 잘 팔리는 형. 명사판매.",
+          "example_ko": "우리 가게에서 가장 잘 팔리는 형.",
           "exampleTarget": "our fast-selling model.",
-          "exampleMeaning": "우리 가게에서 가장 잘 팔리는 형. 명사판매."
+          "exampleMeaning": "우리 가게에서 가장 잘 팔리는 형."
         },
         {
           "id": "en_11622",
@@ -70467,10 +70467,10 @@
           "pronunciation": "[dumb]",
           "pron": "[dumb]",
           "phonetic": "[dumb]",
-          "example_en": "This is an example for dumb.",
-          "example_ko": "이것은 구 정신없이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dumb.",
-          "exampleMeaning": "이것은 구 정신없이 관련 실전 예문입니다."
+          "example_en": "Leaving the front door unlocked was really dumb.",
+          "example_ko": "현관문을 잠그지 않고 둔 것은 정말 멍청한 짓이었습니다.",
+          "exampleTarget": "Leaving the front door unlocked was really dumb.",
+          "exampleMeaning": "현관문을 잠그지 않고 둔 것은 정말 멍청한 짓이었습니다."
         },
         {
           "id": "en_11624",
@@ -70480,14 +70480,14 @@
           "level": "B2",
           "unitId": "unit_116",
           "nodeId": "en_u116_n5",
-          "meaning": "과거형",
+          "meaning": "던졌다",
           "pronunciation": "[스르우]",
           "pron": "[스르우]",
           "phonetic": "[스르우]",
-          "example_en": "This is an example for threw.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for threw.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He threw the ball to the catcher.",
+          "example_ko": "그는 포수에게 공을 던졌다.",
+          "exampleTarget": "He threw the ball to the catcher.",
+          "exampleMeaning": "그는 포수에게 공을 던졌다."
         },
         {
           "id": "en_11625",
@@ -70501,10 +70501,10 @@
           "pronunciation": "[프르애느스]",
           "pron": "[프르애느스]",
           "phonetic": "[프르애느스]",
-          "example_en": "This is an example for france.",
-          "example_ko": "이것은 프랑스 유럽 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for france.",
-          "exampleMeaning": "이것은 프랑스 유럽 관련 실전 예문입니다."
+          "example_en": "They spent two wonderful weeks traveling in France.",
+          "example_ko": "그들은 프랑스를 여행하며 멋진 2주를 보냈습니다.",
+          "exampleTarget": "They spent two wonderful weeks traveling in France.",
+          "exampleMeaning": "그들은 프랑스를 여행하며 멋진 2주를 보냈습니다."
         },
         {
           "id": "en_11626",
@@ -70536,9 +70536,9 @@
           "pron": "[브르트이쉬]",
           "phonetic": "[브르트이쉬]",
           "example_en": "The British drink a lot of tea.",
-          "example_ko": "영국인들은 차를 많이 마신다. 2.＝BRITISH ENGLISH.3.고대 브리튼족의 켈트어. 숙어 best of British! 《비격식》 잘해 봐라. ※ 흔히 가망이 없을 때 씀.",
+          "example_ko": "영국인들은 차를 많이 마신다.",
           "exampleTarget": "The British drink a lot of tea.",
-          "exampleMeaning": "영국인들은 차를 많이 마신다. 2.＝BRITISH ENGLISH.3.고대 브리튼족의 켈트어. 숙어 best of British! 《비격식》 잘해 봐라. ※ 흔히 가망이 없을 때 씀."
+          "exampleMeaning": "영국인들은 차를 많이 마신다."
         },
         {
           "id": "en_11628",
@@ -70702,10 +70702,10 @@
           "pronunciation": "[브어크]",
           "pron": "[브어크]",
           "phonetic": "[브어크]",
-          "example_en": "This is an example for bucks.",
-          "example_ko": "이것은 수사슴 벅 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bucks.",
-          "exampleMeaning": "이것은 수사슴 벅 관련 실전 예문입니다."
+          "example_en": "The movie ticket costs only ten bucks today.",
+          "example_ko": "오늘 영화 표는 겨우 10달러입니다.",
+          "exampleTarget": "The movie ticket costs only ten bucks today.",
+          "exampleMeaning": "오늘 영화 표는 겨우 10달러입니다."
         },
         {
           "id": "en_11702",
@@ -70720,9 +70720,9 @@
           "pron": "[므스트어르]",
           "phonetic": "[므스트어르]",
           "example_en": "Mr. Chairman.",
-          "example_ko": "의장님. 2.《종종 Mister》《미·구어; 영·비어》 《직접적인 호칭》 선생 여보.",
+          "example_ko": "의장님.",
           "exampleTarget": "Mr. Chairman.",
-          "exampleMeaning": "의장님. 2.《종종 Mister》《미·구어; 영·비어》 《직접적인 호칭》 선생 여보."
+          "exampleMeaning": "의장님."
         },
         {
           "id": "en_11703",
@@ -70753,10 +70753,10 @@
           "pronunciation": "[드애느]",
           "pron": "[드애느]",
           "phonetic": "[드애느]",
-          "example_en": "This is an example for dan.",
-          "example_ko": "이것은 표지 부표 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dan.",
-          "exampleMeaning": "이것은 표지 부표 관련 실전 예문입니다."
+          "example_en": "Dan brought delicious homemade cookies to the party.",
+          "example_ko": "댄은 파티에 맛있는 수제 쿠키를 가져왔습니다.",
+          "exampleTarget": "Dan brought delicious homemade cookies to the party.",
+          "exampleMeaning": "댄은 파티에 맛있는 수제 쿠키를 가져왔습니다."
         },
         {
           "id": "en_11705",
@@ -70770,10 +70770,10 @@
           "pronunciation": "[으르어느드]",
           "pron": "[으르어느드]",
           "phonetic": "[으르어느드]",
-          "example_en": "This is an example for england.",
-          "example_ko": "이것은 잉글랜드 섬의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for england.",
-          "exampleMeaning": "이것은 잉글랜드 섬의 관련 실전 예문입니다."
+          "example_en": "She studied European literature in England last year.",
+          "example_ko": "그녀는 작년에 영국에서 유럽 문학을 공부했습니다.",
+          "exampleTarget": "She studied European literature in England last year.",
+          "exampleMeaning": "그녀는 작년에 영국에서 유럽 문학을 공부했습니다."
         },
         {
           "id": "en_11706",
@@ -70805,9 +70805,9 @@
           "pron": "[우프어느이으]",
           "phonetic": "[우프어느이으]",
           "example_en": "the opening of a new freeway.",
-          "example_ko": "새 고속도로의 개통. 2.빈터 광장; 《미》 숲속의 공지; 후미 만. 3.〔…의〕 구멍 틈 간극〔in …〕; 〔…의〕 빠져나가는 구멍 통로〔into onto through …〕; 개구부.",
+          "example_ko": "새 고속도로의 개통.",
           "exampleTarget": "the opening of a new freeway.",
-          "exampleMeaning": "새 고속도로의 개통. 2.빈터 광장; 《미》 숲속의 공지; 후미 만. 3.〔…의〕 구멍 틈 간극〔in …〕; 〔…의〕 빠져나가는 구멍 통로〔into onto through …〕; 개구부."
+          "exampleMeaning": "새 고속도로의 개통."
         },
         {
           "id": "en_11708",
@@ -70838,10 +70838,10 @@
           "pronunciation": "[아느어]",
           "pron": "[아느어]",
           "phonetic": "[아느어]",
-          "example_en": "This is an example for anna.",
-          "example_ko": "이것은 안나 인도·파키스탄·미얀마의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for anna.",
-          "exampleMeaning": "이것은 안나 인도·파키스탄·미얀마의 관련 실전 예문입니다."
+          "example_en": "Anna recommended a wonderful Italian restaurant nearby us.",
+          "example_ko": "안나는 우리 근처에 있는 멋진 이탈리아 식당을 추천해 주었습니다.",
+          "exampleTarget": "Anna recommended a wonderful Italian restaurant nearby us.",
+          "exampleMeaning": "안나는 우리 근처에 있는 멋진 이탈리아 식당을 추천해 주었습니다."
         },
         {
           "id": "en_11710",
@@ -70924,9 +70924,9 @@
           "pron": "[스오르드발음에주의]",
           "phonetic": "[스오르드발음에주의]",
           "example_en": "a court sword.",
-          "example_ko": "예복용 검. 2.《보통 the sword》（무력·권위의 상징인） 검.",
+          "example_ko": "예복용 검.",
           "exampleTarget": "a court sword.",
-          "exampleMeaning": "예복용 검. 2.《보통 the sword》（무력·권위의 상징인） 검."
+          "exampleMeaning": "예복용 검."
         },
         {
           "id": "en_11715",
@@ -70940,10 +70940,10 @@
           "pronunciation": "[프어크트]",
           "pron": "[프어크트]",
           "phonetic": "[프어크트]",
-          "example_en": "This is an example for fucked.",
-          "example_ko": "이것은 지쳐버린 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fucked.",
-          "exampleMeaning": "이것은 지쳐버린 관련 실전 예문입니다."
+          "example_en": "I really fucked up my final job interview.",
+          "example_ko": "나는 마지막 면접을 정말 완전히 망쳐버렸습니다.",
+          "exampleTarget": "I really fucked up my final job interview.",
+          "exampleMeaning": "나는 마지막 면접을 정말 완전히 망쳐버렸습니다."
         },
         {
           "id": "en_11716",
@@ -71009,9 +71009,9 @@
           "pron": "[프르이드에이]",
           "phonetic": "[프르이드에이]",
           "example_en": "Friday the thirteenth13.",
-          "example_ko": "일의 금요일. ※용법은 ☞ SUNDAY1 【어법】. 2.Robinson Crusoe의 충실한 종 이름; （일반적으로） 충직한 하인 비서. 숙어 make it a Friday night 금요일 밤처럼 즐겁게 보내다. Thank God its Friday! 아 드디어 금요일이다. ※ 한 주중에 일하는 날의 마지막 날이라고 기뻐하며 하는 말. *Thanks God …이라고는 하지 않음. 약자: TGIF 부사《비격식》 금요일에.",
+          "example_ko": "일의 금요일.",
           "exampleTarget": "Friday the thirteenth13.",
-          "exampleMeaning": "일의 금요일. ※용법은 ☞ SUNDAY1 【어법】. 2.Robinson Crusoe의 충실한 종 이름; （일반적으로） 충직한 하인 비서. 숙어 make it a Friday night 금요일 밤처럼 즐겁게 보내다. Thank God its Friday! 아 드디어 금요일이다. ※ 한 주중에 일하는 날의 마지막 날이라고 기뻐하며 하는 말. *Thanks God …이라고는 하지 않음. 약자: TGIF 부사《비격식》 금요일에."
+          "exampleMeaning": "일의 금요일."
         },
         {
           "id": "en_11720",
@@ -71072,14 +71072,14 @@
           "level": "B2",
           "unitId": "unit_117",
           "nodeId": "en_u117_n5",
-          "meaning": "kinda",
+          "meaning": "약간",
           "pronunciation": "[크이느드어어르]",
           "pron": "[크이느드어어르]",
           "phonetic": "[크이느드어어르]",
-          "example_en": "This is an example for kinda.",
-          "example_ko": "이것은 kinda 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kinda.",
-          "exampleMeaning": "이것은 kinda 관련 실전 예문입니다."
+          "example_en": "The weather feels kinda chilly outside this morning.",
+          "example_ko": "오늘 아침 밖의 날씨가 약간 쌀쌀하게 느껴집니다.",
+          "exampleTarget": "The weather feels kinda chilly outside this morning.",
+          "exampleMeaning": "오늘 아침 밖의 날씨가 약간 쌀쌀하게 느껴집니다."
         },
         {
           "id": "en_11724",
@@ -71094,9 +71094,9 @@
           "pron": "[브에이브]",
           "phonetic": "[브에이브]",
           "example_en": "Whatre you doing tonight babe?",
-          "example_ko": "너 오늘밤에 뭐 할 거야? 숙어 babe in arms ①젖먹이. ②（젖먹이처럼） 미숙한 사람 풋내기. babe in the wood 《미》 순진하여 남을 잘 믿는 사람.",
+          "example_ko": "너 오늘밤에 뭐 할 거야?",
           "exampleTarget": "Whatre you doing tonight babe?",
-          "exampleMeaning": "너 오늘밤에 뭐 할 거야? 숙어 babe in arms ①젖먹이. ②（젖먹이처럼） 미숙한 사람 풋내기. babe in the wood 《미》 순진하여 남을 잘 믿는 사람."
+          "exampleMeaning": "너 오늘밤에 뭐 할 거야?"
         },
         {
           "id": "en_11725",
@@ -71110,10 +71110,10 @@
           "pronunciation": "[트아므어스]",
           "pron": "[트아므어스]",
           "phonetic": "[트아므어스]",
-          "example_en": "This is an example for thomas.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thomas.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Thomas answered all customer questions with great patience.",
+          "example_ko": "토머스는 대단한 인내심으로 모든 고객 질문에 답했습니다.",
+          "exampleTarget": "Thomas answered all customer questions with great patience.",
+          "exampleMeaning": "토머스는 대단한 인내심으로 모든 고객 질문에 답했습니다."
         },
         {
           "id": "en_11726",
@@ -71128,9 +71128,9 @@
           "pron": "[스애트어르드이]",
           "phonetic": "[스애트어르드이]",
           "example_en": "We do our shopping on Saturdays.",
-          "example_ko": "우리는 토요일마다 쇼핑을 한다. 부사《비격식》 토요일에.",
+          "example_ko": "우리는 토요일마다 쇼핑을 한다. 부사 토요일에.",
           "exampleTarget": "We do our shopping on Saturdays.",
-          "exampleMeaning": "우리는 토요일마다 쇼핑을 한다. 부사《비격식》 토요일에."
+          "exampleMeaning": "우리는 토요일마다 쇼핑을 한다. 부사 토요일에."
         },
         {
           "id": "en_11727",
@@ -71174,14 +71174,14 @@
           "level": "B2",
           "unitId": "unit_117",
           "nodeId": "en_u117_n5",
-          "meaning": "과거·과거",
+          "meaning": "잤다",
           "pronunciation": "[스르에프트]",
           "pron": "[스르에프트]",
           "phonetic": "[스르에프트]",
-          "example_en": "This is an example for slept.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for slept.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "I slept well all night long.",
+          "example_ko": "나는 밤새도록 푹 잘 잤다.",
+          "exampleTarget": "I slept well all night long.",
+          "exampleMeaning": "나는 밤새도록 푹 잘 잤다."
         },
         {
           "id": "en_11730",
@@ -71195,10 +71195,10 @@
           "pronunciation": "[스프애느이쉬]",
           "pron": "[스프애느이쉬]",
           "phonetic": "[스프애느이쉬]",
-          "example_en": "This is an example for spanish.",
-          "example_ko": "이것은 스페인의 스페인인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spanish.",
-          "exampleMeaning": "이것은 스페인의 스페인인 관련 실전 예문입니다."
+          "example_en": "He speaks Spanish very fluently with his neighbors.",
+          "example_ko": "그는 이웃들과 스페인어를 아주 유창하게 구사합니다.",
+          "exampleTarget": "He speaks Spanish very fluently with his neighbors.",
+          "exampleMeaning": "그는 이웃들과 스페인어를 아주 유창하게 구사합니다."
         }
       ],
       "nodes": [
@@ -71346,9 +71346,9 @@
           "pron": "[이느스이느]",
           "phonetic": "[이느스이느]",
           "example_en": "go insane with rage.",
-          "example_ko": "화가 나서 미치다. 2.미치광이 특유의; 정신 이상자의.",
+          "example_ko": "화가 나서 미치다.",
           "exampleTarget": "go insane with rage.",
-          "exampleMeaning": "화가 나서 미치다. 2.미치광이 특유의; 정신 이상자의."
+          "exampleMeaning": "화가 나서 미치다."
         },
         {
           "id": "en_11804",
@@ -71358,14 +71358,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n1",
-          "meaning": "san",
+          "meaning": "성인",
           "pronunciation": "[스애느]",
           "pron": "[스애느]",
           "phonetic": "[스애느]",
-          "example_en": "This is an example for san.",
-          "example_ko": "이것은 san 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for san.",
-          "exampleMeaning": "이것은 san 관련 실전 예문입니다."
+          "example_en": "They took a weekend flight to San Francisco.",
+          "example_ko": "그들은 주말에 샌프란시스코행 비행기를 탔습니다.",
+          "exampleTarget": "They took a weekend flight to San Francisco.",
+          "exampleMeaning": "그들은 주말에 샌프란시스코행 비행기를 탔습니다."
         },
         {
           "id": "en_11805",
@@ -71380,9 +71380,9 @@
           "pron": "[브이스이크어르이]",
           "phonetic": "[브이스이크어르이]",
           "example_en": "Hes basically nice.",
-          "example_ko": "그는 원래 친절하다. 2.요컨대 다시 말하면.",
+          "example_ko": "그는 원래 친절하다.",
           "exampleTarget": "Hes basically nice.",
-          "exampleMeaning": "그는 원래 친절하다. 2.요컨대 다시 말하면."
+          "exampleMeaning": "그는 원래 친절하다."
         },
         {
           "id": "en_11806",
@@ -71396,10 +71396,10 @@
           "pronunciation": "[어르]",
           "pron": "[어르]",
           "phonetic": "[어르]",
-          "example_en": "This is an example for al.",
-          "example_ko": "이것은 접두사 별형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for al.",
-          "exampleMeaning": "이것은 접두사 별형 관련 실전 예문입니다."
+          "example_en": "Al is short for Albert or Alexander.",
+          "example_ko": "알은 앨버트 또는 알렉산더의 줄임말이다.",
+          "exampleTarget": "Al is short for Albert or Alexander.",
+          "exampleMeaning": "알은 앨버트 또는 알렉산더의 줄임말이다."
         },
         {
           "id": "en_11807",
@@ -71430,10 +71430,10 @@
           "pronunciation": "[느오프]",
           "pron": "[느오프]",
           "phonetic": "[느오프]",
-          "example_en": "This is an example for nope.",
-          "example_ko": "이것은 아니 아니오 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nope.",
-          "exampleMeaning": "이것은 아니 아니오 관련 실전 예문입니다."
+          "example_en": "Nope nobody saw your wallet on the table.",
+          "example_ko": "아니요 탁자 위에서 당신의 지갑을 본 사람은 없습니다.",
+          "exampleTarget": "Nope nobody saw your wallet on the table.",
+          "exampleMeaning": "아니요 탁자 위에서 당신의 지갑을 본 사람은 없습니다."
         },
         {
           "id": "en_11809",
@@ -71460,14 +71460,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n1",
-          "meaning": "ohh",
+          "meaning": "아",
           "pronunciation": "[ohh]",
           "pron": "[ohh]",
           "phonetic": "[ohh]",
-          "example_en": "This is an example for ohh.",
-          "example_ko": "이것은 ohh 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ohh.",
-          "exampleMeaning": "이것은 ohh 관련 실전 예문입니다."
+          "example_en": "Ohh now I clearly understand what happened yesterday.",
+          "example_ko": "아 이제 어제 무슨 일이 있었는지 확실히 알겠네요.",
+          "exampleTarget": "Ohh now I clearly understand what happened yesterday.",
+          "exampleMeaning": "아 이제 어제 무슨 일이 있었는지 확실히 알겠네요."
         },
         {
           "id": "en_11811",
@@ -71481,10 +71481,10 @@
           "pronunciation": "[스에느드]",
           "pron": "[스에느드]",
           "phonetic": "[스에느드]",
-          "example_en": "This is an example for sending.",
-          "example_ko": "이것은 파도에 밀려 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sending.",
-          "exampleMeaning": "이것은 파도에 밀려 관련 실전 예문입니다."
+          "example_en": "I am sending the invoice to your email.",
+          "example_ko": "당신의 이메일로 인보이스를 보내는 중입니다.",
+          "exampleTarget": "I am sending the invoice to your email.",
+          "exampleMeaning": "당신의 이메일로 인보이스를 보내는 중입니다."
         },
         {
           "id": "en_11812",
@@ -71515,10 +71515,10 @@
           "pronunciation": "[흐드이으]",
           "pron": "[흐드이으]",
           "phonetic": "[흐드이으]",
-          "example_en": "This is an example for heading.",
-          "example_ko": "이것은 머리 되는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for heading.",
-          "exampleMeaning": "이것은 머리 되는 관련 실전 예문입니다."
+          "example_en": "We are heading toward the beach right now.",
+          "example_ko": "우리는 지금 해변 쪽으로 향하고 있습니다.",
+          "exampleTarget": "We are heading toward the beach right now.",
+          "exampleMeaning": "우리는 지금 해변 쪽으로 향하고 있습니다."
         },
         {
           "id": "en_11814",
@@ -71533,9 +71533,9 @@
           "pron": "[스이르어느스]",
           "phonetic": "[스이르어느스]",
           "example_en": "Silence reigned in the cemetery.",
-          "example_ko": "공동 묘지는 정적이 지배하고 있었다. 2.침묵 무언; 과묵; 언급하지 않음 묵살 비밀.",
+          "example_ko": "공동 묘지는 정적이 지배하고 있었다.",
           "exampleTarget": "Silence reigned in the cemetery.",
-          "exampleMeaning": "공동 묘지는 정적이 지배하고 있었다. 2.침묵 무언; 과묵; 언급하지 않음 묵살 비밀."
+          "exampleMeaning": "공동 묘지는 정적이 지배하고 있었다."
         },
         {
           "id": "en_11815",
@@ -71549,10 +71549,10 @@
           "pronunciation": "[프이트]",
           "pron": "[프이트]",
           "phonetic": "[프이트]",
-          "example_en": "This is an example for pete.",
-          "example_ko": "이것은 금고 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pete.",
-          "exampleMeaning": "이것은 금고 관련 실전 예문입니다."
+          "example_en": "Pete fixed our kitchen sink within thirty minutes.",
+          "example_ko": "피트는 삼십 분 만에 우리 주방 싱크대를 고쳤습니다.",
+          "exampleTarget": "Pete fixed our kitchen sink within thirty minutes.",
+          "exampleMeaning": "피트는 삼십 분 만에 우리 주방 싱크대를 고쳤습니다."
         },
         {
           "id": "en_11816",
@@ -71566,10 +71566,10 @@
           "pronunciation": "[ed]",
           "pron": "[ed]",
           "phonetic": "[ed]",
-          "example_en": "This is an example for ed.",
-          "example_ko": "이것은 접미사규칙 과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ed.",
-          "exampleMeaning": "이것은 접미사규칙 과거 관련 실전 예문입니다."
+          "example_en": "The word ended with the letters ed.",
+          "example_ko": "그 단어는 ed 철자로 끝났다.",
+          "exampleTarget": "The word ended with the letters ed.",
+          "exampleMeaning": "그 단어는 ed 철자로 끝났다."
         },
         {
           "id": "en_11817",
@@ -71579,14 +71579,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n2",
-          "meaning": "nah",
+          "meaning": "아니",
           "pronunciation": "[느애]",
           "pron": "[느애]",
           "phonetic": "[느애]",
-          "example_en": "This is an example for nah.",
-          "example_ko": "이것은 nah 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nah.",
-          "exampleMeaning": "이것은 nah 관련 실전 예문입니다."
+          "example_en": "Nah I would rather stay home tonight instead.",
+          "example_ko": "아니 나는 오늘 밤 차라리 집에 있을래.",
+          "exampleTarget": "Nah I would rather stay home tonight instead.",
+          "exampleMeaning": "아니 나는 오늘 밤 차라리 집에 있을래."
         },
         {
           "id": "en_11818",
@@ -71600,10 +71600,10 @@
           "pronunciation": "[크에이트]",
           "pron": "[크에이트]",
           "phonetic": "[크에이트]",
-          "example_en": "This is an example for kate.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kate.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Kate showed everyone her exciting new mobile game.",
+          "example_ko": "케이트는 모든 사람에게 자신의 신나는 새 모바일 게임을 보여주었습니다.",
+          "exampleTarget": "Kate showed everyone her exciting new mobile game.",
+          "exampleMeaning": "케이트는 모든 사람에게 자신의 신나는 새 모바일 게임을 보여주었습니다."
         },
         {
           "id": "en_11819",
@@ -71634,10 +71634,10 @@
           "pronunciation": "[흐아르드어르]",
           "pron": "[흐아르드어르]",
           "phonetic": "[흐아르드어르]",
-          "example_en": "This is an example for harder.",
-          "example_ko": "이것은 숭어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for harder.",
-          "exampleMeaning": "이것은 숭어 관련 실전 예문입니다."
+          "example_en": "You need to practice harder to win matches.",
+          "example_ko": "경기에서 이기려면 연습을 더 열심히 해야 합니다.",
+          "exampleTarget": "You need to practice harder to win matches.",
+          "exampleMeaning": "경기에서 이기려면 연습을 더 열심히 해야 합니다."
         },
         {
           "id": "en_11821",
@@ -71647,14 +71647,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n5",
-          "meaning": "fbi",
+          "meaning": "미 연방수사국",
           "pronunciation": "[fbi]",
           "pron": "[fbi]",
           "phonetic": "[fbi]",
-          "example_en": "This is an example for fbi.",
-          "example_ko": "이것은 fbi 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fbi.",
-          "exampleMeaning": "이것은 fbi 관련 실전 예문입니다."
+          "example_en": "The FBI investigated the cyber crime.",
+          "example_ko": "미 연방수사국이 사이버 범죄를 수사했다.",
+          "exampleTarget": "The FBI investigated the cyber crime.",
+          "exampleMeaning": "미 연방수사국이 사이버 범죄를 수사했다."
         },
         {
           "id": "en_11822",
@@ -71669,9 +71669,9 @@
           "pron": "[쉬우이으]",
           "phonetic": "[쉬우이으]",
           "example_en": "make a good showing.",
-          "example_ko": "좋은 성과를 거두다. 3.《단수형으로》 설명 표시.",
+          "example_ko": "좋은 성과를 거두다.",
           "exampleTarget": "make a good showing.",
-          "exampleMeaning": "좋은 성과를 거두다. 3.《단수형으로》 설명 표시."
+          "exampleMeaning": "좋은 성과를 거두다."
         },
         {
           "id": "en_11823",
@@ -71685,10 +71685,10 @@
           "pronunciation": "[드이브]",
           "pron": "[드이브]",
           "phonetic": "[드이브]",
-          "example_en": "This is an example for dave.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dave.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Dave called earlier to confirm our lunch reservation.",
+          "example_ko": "데이브는 점심 예약을 확인하기 위해 일찍 전화했습니다.",
+          "exampleTarget": "Dave called earlier to confirm our lunch reservation.",
+          "exampleMeaning": "데이브는 점심 예약을 확인하기 위해 일찍 전화했습니다."
         },
         {
           "id": "en_11824",
@@ -71698,14 +71698,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n5",
-          "meaning": "과거·과거",
+          "meaning": "묻힌",
           "pronunciation": "[브르이드]",
           "pron": "[브르이드]",
           "phonetic": "[브르이드]",
-          "example_en": "This is an example for buried.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for buried.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "They found buried treasure on the island.",
+          "example_ko": "그들은 섬에서 묻힌 보물을 발견했다.",
+          "exampleTarget": "They found buried treasure on the island.",
+          "exampleMeaning": "그들은 섬에서 묻힌 보물을 발견했다."
         },
         {
           "id": "en_11825",
@@ -71719,10 +71719,10 @@
           "pronunciation": "[므아르이어]",
           "pron": "[므아르이어]",
           "phonetic": "[므아르이어]",
-          "example_en": "This is an example for maria.",
-          "example_ko": "이것은 ³의 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for maria.",
-          "exampleMeaning": "이것은 ³의 복수형 관련 실전 예문입니다."
+          "example_en": "Maria sings beautifully in the choir.",
+          "example_ko": "마리아는 성가대에서 아름답게 노래한다.",
+          "exampleTarget": "Maria sings beautifully in the choir.",
+          "exampleMeaning": "마리아는 성가대에서 아름답게 노래한다."
         },
         {
           "id": "en_11826",
@@ -71770,10 +71770,10 @@
           "pronunciation": "[우르이어므]",
           "pron": "[우르이어므]",
           "phonetic": "[우르이어므]",
-          "example_en": "This is an example for william.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for william.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "William graduated from the university with high honors.",
+          "example_ko": "윌리엄은 우수한 성적으로 대학교를 졸업했습니다.",
+          "exampleTarget": "William graduated from the university with high honors.",
+          "exampleMeaning": "윌리엄은 우수한 성적으로 대학교를 졸업했습니다."
         },
         {
           "id": "en_11829",
@@ -71783,14 +71783,14 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "en_u118_n5",
-          "meaning": "outta",
+          "meaning": "밖으로",
           "pronunciation": "[우트어]",
           "pron": "[우트어]",
           "phonetic": "[우트어]",
-          "example_en": "This is an example for outta.",
-          "example_ko": "이것은 outta 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for outta.",
-          "exampleMeaning": "이것은 outta 관련 실전 예문입니다."
+          "example_en": "Get outta here before the heavy rain begins.",
+          "example_ko": "폭우가 시작되기 전에 여기서 얼른 나가세요.",
+          "exampleTarget": "Get outta here before the heavy rain begins.",
+          "exampleMeaning": "폭우가 시작되기 전에 여기서 얼른 나가세요."
         },
         {
           "id": "en_11830",
@@ -71920,10 +71920,10 @@
           "pronunciation": "[스느어르]",
           "pron": "[스느어르]",
           "phonetic": "[스느어르]",
-          "example_en": "This is an example for sooner.",
-          "example_ko": "이것은 선점 이주자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sooner.",
-          "exampleMeaning": "이것은 선점 이주자 관련 실전 예문입니다."
+          "example_en": "We should start the project sooner than later.",
+          "example_ko": "우리는 그 프로젝트를 늦기 전에 더 일찍 시작해야 합니다.",
+          "exampleTarget": "We should start the project sooner than later.",
+          "exampleMeaning": "우리는 그 프로젝트를 늦기 전에 더 일찍 시작해야 합니다."
         },
         {
           "id": "en_11902",
@@ -71937,10 +71937,10 @@
           "pronunciation": "[스이므어느]",
           "pron": "[스이므어느]",
           "phonetic": "[스이므어느]",
-          "example_en": "This is an example for simon.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for simon.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Simon plays classical piano pieces with great skill.",
+          "example_ko": "사이먼은 대단한 솜씨로 클래식 피아노 곡을 연주합니다.",
+          "exampleTarget": "Simon plays classical piano pieces with great skill.",
+          "exampleMeaning": "사이먼은 대단한 솜씨로 클래식 피아노 곡을 연주합니다."
         },
         {
           "id": "en_11903",
@@ -71971,10 +71971,10 @@
           "pronunciation": "[크어즈]",
           "pron": "[크어즈]",
           "phonetic": "[크어즈]",
-          "example_en": "This is an example for cos.",
-          "example_ko": "이것은 cos 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cos.",
-          "exampleMeaning": "이것은 cos 관련 실전 예문입니다."
+          "example_en": "I stayed inside cos the weather was awful.",
+          "example_ko": "날씨가 너무 험해서 나는 실내에 머물렀습니다.",
+          "exampleTarget": "I stayed inside cos the weather was awful.",
+          "exampleMeaning": "날씨가 너무 험해서 나는 실내에 머물렀습니다."
         },
         {
           "id": "en_11905",
@@ -71989,9 +71989,9 @@
           "pron": "[프어르스어느어르이]",
           "phonetic": "[프어르스어느어르이]",
           "example_en": "Personally Im not convinced hes the right man for the job.",
-          "example_ko": "나로서는 그가 그 일에 적임자라는 확신이 서지 않습니다 . 2.《문중 또는 문미에서》 개인적으로 개인으로서; 몸소 친히 직접 （만나서）.",
+          "example_ko": "나로서는 그가 그 일에 적임자라는 확신이 서지 않습니다 .",
           "exampleTarget": "Personally Im not convinced hes the right man for the job.",
-          "exampleMeaning": "나로서는 그가 그 일에 적임자라는 확신이 서지 않습니다 . 2.《문중 또는 문미에서》 개인적으로 개인으로서; 몸소 친히 직접 （만나서）."
+          "exampleMeaning": "나로서는 그가 그 일에 적임자라는 확신이 서지 않습니다 ."
         },
         {
           "id": "en_11906",
@@ -72006,9 +72006,9 @@
           "pron": "[아르트이스트]",
           "phonetic": "[아르트이스트]",
           "example_en": "a professional artist.",
-          "example_ko": "전문 예술가. 2.명인 명수.",
+          "example_ko": "전문 예술가.",
           "exampleTarget": "a professional artist.",
-          "exampleMeaning": "전문 예술가. 2.명인 명수."
+          "exampleMeaning": "전문 예술가."
         },
         {
           "id": "en_11907",
@@ -72086,14 +72086,14 @@
           "level": "B2",
           "unitId": "unit_119",
           "nodeId": "en_u119_n2",
-          "meaning": "goin",
+          "meaning": "가는",
           "pronunciation": "[goin]",
           "pron": "[goin]",
           "phonetic": "[goin]",
-          "example_en": "This is an example for goin.",
-          "example_ko": "이것은 goin 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for goin.",
-          "exampleMeaning": "이것은 goin 관련 실전 예문입니다."
+          "example_en": "Where are you goin after the meeting ends?",
+          "example_ko": "회의가 끝난 후에 당신은 어디로 가나요?",
+          "exampleTarget": "Where are you goin after the meeting ends?",
+          "exampleMeaning": "회의가 끝난 후에 당신은 어디로 가나요?"
         },
         {
           "id": "en_11912",
@@ -72124,10 +72124,10 @@
           "pronunciation": "[애느드이]",
           "pron": "[애느드이]",
           "phonetic": "[애느드이]",
-          "example_en": "This is an example for andy.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for andy.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Andy brought delicious homemade bread for the picnic.",
+          "example_ko": "앤디는 소풍을 위해 맛있는 수제 빵을 가져왔습니다.",
+          "exampleTarget": "Andy brought delicious homemade bread for the picnic.",
+          "exampleMeaning": "앤디는 소풍을 위해 맛있는 수제 빵을 가져왔습니다."
         },
         {
           "id": "en_11914",
@@ -72142,9 +72142,9 @@
           "pron": "[르우이으]",
           "phonetic": "[르우이으]",
           "example_en": "her growing reputation as a dancer.",
-          "example_ko": "무용가로서 높아지고 있는 그녀의 명성. 2.성장하고 있는 나 있는; 성장의.",
+          "example_ko": "무용가로서 높아지고 있는 그녀의 명성.",
           "exampleTarget": "her growing reputation as a dancer.",
-          "exampleMeaning": "무용가로서 높아지고 있는 그녀의 명성. 2.성장하고 있는 나 있는; 성장의."
+          "exampleMeaning": "무용가로서 높아지고 있는 그녀의 명성."
         },
         {
           "id": "en_11915",
@@ -72176,9 +72176,9 @@
           "pron": "[브이프]",
           "phonetic": "[브이프]",
           "example_en": "Please leave a message after the beep.",
-          "example_ko": "발신음 후에 용건을 말하시오 . 동사 자동사삑 소리를 내다.",
+          "example_ko": "발신음 후에 용건을 말하시오 .",
           "exampleTarget": "Please leave a message after the beep.",
-          "exampleMeaning": "발신음 후에 용건을 말하시오 . 동사 자동사삑 소리를 내다."
+          "exampleMeaning": "발신음 후에 용건을 말하시오 ."
         },
         {
           "id": "en_11917",
@@ -72192,10 +72192,10 @@
           "pronunciation": "[드이트이으]",
           "pron": "[드이트이으]",
           "phonetic": "[드이트이으]",
-          "example_en": "This is an example for dating.",
-          "example_ko": "이것은 데이트 날짜 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dating.",
-          "exampleMeaning": "이것은 데이트 날짜 관련 실전 예문입니다."
+          "example_en": "They started dating during their first college semester.",
+          "example_ko": "그들은 대학교 첫 학기 동안 연애를 시작했습니다.",
+          "exampleTarget": "They started dating during their first college semester.",
+          "exampleMeaning": "그들은 대학교 첫 학기 동안 연애를 시작했습니다."
         },
         {
           "id": "en_11918",
@@ -72209,10 +72209,10 @@
           "pronunciation": "[스애느트어]",
           "pron": "[스애느트어]",
           "phonetic": "[스애느트어]",
-          "example_en": "This is an example for santa.",
-          "example_ko": "이것은 성녀 성 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for santa.",
-          "exampleMeaning": "이것은 성녀 성 관련 실전 예문입니다."
+          "example_en": "Young children believe Santa brings wonderful Christmas gifts.",
+          "example_ko": "어린 아이들은 산타가 멋진 크리스마스 선물을 가져다준다고 믿습니다.",
+          "exampleTarget": "Young children believe Santa brings wonderful Christmas gifts.",
+          "exampleMeaning": "어린 아이들은 산타가 멋진 크리스마스 선물을 가져다준다고 믿습니다."
         },
         {
           "id": "en_11919",
@@ -72227,9 +72227,9 @@
           "pron": "[르이크르이]",
           "phonetic": "[르이크르이]",
           "example_en": "War is likely.",
-          "example_ko": "전쟁이 일어날 모양이다. 1. likely 있을 법한 가능성은 probable보다 약간 덜함. 2. probable 절대로 확실한 것은 아니나 가능성이 높음. 3. possible 인간의 능력·자연의 섭리·우연성 등에 비추어 있을 수 있는 가능성은 이들 셋 중 가장 낮음 ◇ a likely result 일어날 듯한 결과.3.《한정적》 〔…에〕 적당한 알맞은 안성맞춤의〔to do for …〕.",
+          "example_ko": "전쟁이 일어날 모양이다. 1. likely 있을 법한 가능성은 probable보다 약간 덜함.",
           "exampleTarget": "War is likely.",
-          "exampleMeaning": "전쟁이 일어날 모양이다. 1. likely 있을 법한 가능성은 probable보다 약간 덜함. 2. probable 절대로 확실한 것은 아니나 가능성이 높음. 3. possible 인간의 능력·자연의 섭리·우연성 등에 비추어 있을 수 있는 가능성은 이들 셋 중 가장 낮음 ◇ a likely result 일어날 듯한 결과.3.《한정적》 〔…에〕 적당한 알맞은 안성맞춤의〔to do for …〕."
+          "exampleMeaning": "전쟁이 일어날 모양이다. 1. likely 있을 법한 가능성은 probable보다 약간 덜함."
         },
         {
           "id": "en_11920",
@@ -72261,9 +72261,9 @@
           "pron": "[어스트어느트]",
           "phonetic": "[어스트어느트]",
           "example_en": "an assistant to the president.",
-          "example_ko": "회장 보좌역. 2.도움이 되는 것 보조 수단.",
+          "example_ko": "회장 보좌역.",
           "exampleTarget": "an assistant to the president.",
-          "exampleMeaning": "회장 보좌역. 2.도움이 되는 것 보조 수단."
+          "exampleMeaning": "회장 보좌역."
         },
         {
           "id": "en_11922",
@@ -72311,10 +72311,10 @@
           "pronunciation": "[므어르드어르어르]",
           "pron": "[므어르드어르어르]",
           "phonetic": "[므어르드어르어르]",
-          "example_en": "This is an example for murderer.",
-          "example_ko": "이것은 살인자 모살자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for murderer.",
-          "exampleMeaning": "이것은 살인자 모살자 관련 실전 예문입니다."
+          "example_en": "The detective caught the dangerous murderer last night.",
+          "example_ko": "형사는 어젯밤 그 위험한 살인범을 붙잡았습니다.",
+          "exampleTarget": "The detective caught the dangerous murderer last night.",
+          "exampleMeaning": "형사는 어젯밤 그 위험한 살인범을 붙잡았습니다."
         },
         {
           "id": "en_11925",
@@ -72324,14 +72324,14 @@
           "level": "B2",
           "unitId": "unit_119",
           "nodeId": "en_u119_n5",
-          "meaning": "matt",
+          "meaning": "맷",
           "pronunciation": "[므애트]",
           "pron": "[므애트]",
           "phonetic": "[므애트]",
-          "example_en": "This is an example for matt.",
-          "example_ko": "이것은 matt 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for matt.",
-          "exampleMeaning": "이것은 matt 관련 실전 예문입니다."
+          "example_en": "Matt delivered an impressive speech at the conference.",
+          "example_ko": "맷은 콘퍼런스에서 인상적인 연설을 선보였습니다.",
+          "exampleTarget": "Matt delivered an impressive speech at the conference.",
+          "exampleMeaning": "맷은 콘퍼런스에서 인상적인 연설을 선보였습니다."
         },
         {
           "id": "en_11926",
@@ -72341,14 +72341,14 @@
           "level": "B2",
           "unitId": "unit_119",
           "nodeId": "en_u119_n5",
-          "meaning": "과거형",
+          "meaning": "먹었다",
           "pronunciation": "[에이트]",
           "pron": "[에이트]",
           "phonetic": "[에이트]",
-          "example_en": "This is an example for ate.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ate.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "We ate lunch at a nice restaurant.",
+          "example_ko": "우리는 좋은 식당에서 점심을 먹었다.",
+          "exampleTarget": "We ate lunch at a nice restaurant.",
+          "exampleMeaning": "우리는 좋은 식당에서 점심을 먹었다."
         },
         {
           "id": "en_11927",
@@ -72358,14 +72358,14 @@
           "level": "B2",
           "unitId": "unit_119",
           "nodeId": "en_u119_n5",
-          "meaning": "과거형",
+          "meaning": "자랐다",
           "pronunciation": "[르우]",
           "pron": "[르우]",
           "phonetic": "[르우]",
-          "example_en": "This is an example for grew.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grew.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "The flowers grew quickly this spring.",
+          "example_ko": "이번 봄에 꽃들이 쑥쑥 자랐다.",
+          "exampleTarget": "The flowers grew quickly this spring.",
+          "exampleMeaning": "이번 봄에 꽃들이 쑥쑥 자랐다."
         },
         {
           "id": "en_11928",
@@ -72380,9 +72380,9 @@
           "pron": "[프르어프쉬어느르]",
           "phonetic": "[프르어프쉬어느르]",
           "example_en": "professional jealousy.",
-          "example_ko": "동업자끼리의 질시. 2.《한정적》 지적 직업에 종사하는 전문직의.",
+          "example_ko": "동업자끼리의 질시.",
           "exampleTarget": "professional jealousy.",
-          "exampleMeaning": "동업자끼리의 질시. 2.《한정적》 지적 직업에 종사하는 전문직의."
+          "exampleMeaning": "동업자끼리의 질시."
         },
         {
           "id": "en_11929",
@@ -72396,10 +72396,10 @@
           "pronunciation": "[트이므]",
           "pron": "[트이므]",
           "phonetic": "[트이므]",
-          "example_en": "This is an example for tim.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tim.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Tim returned the borrowed library books this morning.",
+          "example_ko": "팀은 오늘 아침에 대출했던 도서관 책들을 반납했습니다.",
+          "exampleTarget": "Tim returned the borrowed library books this morning.",
+          "exampleMeaning": "팀은 오늘 아침에 대출했던 도서관 책들을 반납했습니다."
         },
         {
           "id": "en_11930",
@@ -72529,10 +72529,10 @@
           "pronunciation": "[애르어느]",
           "pron": "[애르어느]",
           "phonetic": "[애르어느]",
-          "example_en": "This is an example for alan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Alan booked airline tickets for our family vacation.",
+          "example_ko": "앨런은 우리 가족 휴가를 위한 비행기 표를 예약했습니다.",
+          "exampleTarget": "Alan booked airline tickets for our family vacation.",
+          "exampleMeaning": "앨런은 우리 가족 휴가를 위한 비행기 표를 예약했습니다."
         },
         {
           "id": "en_12002",
@@ -72576,14 +72576,14 @@
           "level": "B2",
           "unitId": "unit_120",
           "nodeId": "en_u120_n1",
-          "meaning": "da",
+          "meaning": "그",
           "pronunciation": "[da]",
           "pron": "[da]",
           "phonetic": "[da]",
-          "example_en": "This is an example for da.",
-          "example_ko": "이것은 da 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for da.",
-          "exampleMeaning": "이것은 da 관련 실전 예문입니다."
+          "example_en": "Who is da leader of this dance crew?",
+          "example_ko": "이 댄스 크루의 리더는 누구인가요?",
+          "exampleTarget": "Who is da leader of this dance crew?",
+          "exampleMeaning": "이 댄스 크루의 리더는 누구인가요?"
         },
         {
           "id": "en_12005",
@@ -72614,10 +72614,10 @@
           "pronunciation": "[드느이]",
           "pron": "[드느이]",
           "phonetic": "[드느이]",
-          "example_en": "This is an example for dna.",
-          "example_ko": "이것은 dna 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dna.",
-          "exampleMeaning": "이것은 dna 관련 실전 예문입니다."
+          "example_en": "Scientists extracted ancient DNA from the fossil specimen.",
+          "example_ko": "과학자들은 화석 표본에서 고대 DNA를 추출했습니다.",
+          "exampleTarget": "Scientists extracted ancient DNA from the fossil specimen.",
+          "exampleMeaning": "과학자들은 화석 표본에서 고대 DNA를 추출했습니다."
         },
         {
           "id": "en_12007",
@@ -72648,10 +72648,10 @@
           "pronunciation": "[브르이프]",
           "pron": "[브르이프]",
           "phonetic": "[브르이프]",
-          "example_en": "This is an example for bleep.",
-          "example_ko": "이것은 삑 울리다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bleep.",
-          "exampleMeaning": "이것은 삑 울리다 관련 실전 예문입니다."
+          "example_en": "The heart monitor made a continuous loud bleep.",
+          "example_ko": "심장 박동 모니터에서 계속해서 큰 삐 소리가 났습니다.",
+          "exampleTarget": "The heart monitor made a continuous loud bleep.",
+          "exampleMeaning": "심장 박동 모니터에서 계속해서 큰 삐 소리가 났습니다."
         },
         {
           "id": "en_12009",
@@ -72665,10 +72665,10 @@
           "pronunciation": "[르스어]",
           "pron": "[르스어]",
           "phonetic": "[르스어]",
-          "example_en": "This is an example for lisa.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lisa.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Lisa adopted an adorable rescue dog last Sunday.",
+          "example_ko": "리사는 지난 일요일에 사랑스러운 구조견을 입양했습니다.",
+          "exampleTarget": "Lisa adopted an adorable rescue dog last Sunday.",
+          "exampleMeaning": "리사는 지난 일요일에 사랑스러운 구조견을 입양했습니다."
         },
         {
           "id": "en_12010",
@@ -72716,10 +72716,10 @@
           "pronunciation": "[스므이스]",
           "pron": "[스므이스]",
           "phonetic": "[스므이스]",
-          "example_en": "This is an example for smith.",
-          "example_ko": "이것은 금속 세공인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for smith.",
-          "exampleMeaning": "이것은 금속 세공인 관련 실전 예문입니다."
+          "example_en": "Mr Smith teaches world history at our highschool.",
+          "example_ko": "스미스 선생님은 우리 고등학교에서 세계사를 가르치십니다.",
+          "exampleTarget": "Mr Smith teaches world history at our highschool.",
+          "exampleMeaning": "스미스 선생님은 우리 고등학교에서 세계사를 가르치십니다."
         },
         {
           "id": "en_12013",
@@ -72733,10 +72733,10 @@
           "pronunciation": "[프르애느드]",
           "pron": "[프르애느드]",
           "phonetic": "[프르애느드]",
-          "example_en": "This is an example for planned.",
-          "example_ko": "이것은 계획된 정연한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for planned.",
-          "exampleMeaning": "이것은 계획된 정연한 관련 실전 예문입니다."
+          "example_en": "We planned an adventurous camping trip next weekend.",
+          "example_ko": "우리는 다음 주말에 모험적인 캠핑 여행을 계획했습니다.",
+          "exampleTarget": "We planned an adventurous camping trip next weekend.",
+          "exampleMeaning": "우리는 다음 주말에 모험적인 캠핑 여행을 계획했습니다."
         },
         {
           "id": "en_12014",
@@ -72750,10 +72750,10 @@
           "pronunciation": "[이므르이어]",
           "pron": "[이므르이어]",
           "phonetic": "[이므르이어]",
-          "example_en": "This is an example for emily.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for emily.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Emily plays classical violin in the city orchestra.",
+          "example_ko": "에밀리는 시립 오케스트라에서 클래식 바이올린을 연주합니다.",
+          "exampleTarget": "Emily plays classical violin in the city orchestra.",
+          "exampleMeaning": "에밀리는 시립 오케스트라에서 클래식 바이올린을 연주합니다."
         },
         {
           "id": "en_12015",
@@ -72767,10 +72767,10 @@
           "pronunciation": "[브오르이으]",
           "pron": "[브오르이으]",
           "phonetic": "[브오르이으]",
-          "example_en": "This is an example for boring.",
-          "example_ko": "이것은 구멍뚫기 시굴 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for boring.",
-          "exampleMeaning": "이것은 구멍뚫기 시굴 관련 실전 예문입니다."
+          "example_en": "The lecture became really boring after thirty minutes.",
+          "example_ko": "그 강의는 삼십 분 후에 정말 지루해졌습니다.",
+          "exampleTarget": "The lecture became really boring after thirty minutes.",
+          "exampleMeaning": "그 강의는 삼십 분 후에 정말 지루해졌습니다."
         },
         {
           "id": "en_12016",
@@ -72801,10 +72801,10 @@
           "pronunciation": "[느아크이으]",
           "pron": "[느아크이으]",
           "phonetic": "[느아크이으]",
-          "example_en": "This is an example for knocking.",
-          "example_ko": "이것은 문을 두드리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for knocking.",
-          "exampleMeaning": "이것은 문을 두드리는 관련 실전 예문입니다."
+          "example_en": "Someone is knocking loudly on the front door.",
+          "example_ko": "누군가 현관문을 크게 두드리고 있습니다.",
+          "exampleTarget": "Someone is knocking loudly on the front door.",
+          "exampleMeaning": "누군가 현관문을 크게 두드리고 있습니다."
         },
         {
           "id": "en_12018",
@@ -72818,10 +72818,10 @@
           "pronunciation": "[르]",
           "pron": "[르]",
           "phonetic": "[르]",
-          "example_en": "This is an example for re.",
-          "example_ko": "이것은 라틴어계의 단어에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for re.",
-          "exampleMeaning": "이것은 라틴어계의 단어에 관련 실전 예문입니다."
+          "example_en": "I sent an email re the upcoming conference.",
+          "example_ko": "다가오는 콘퍼런스 건으로 이메일을 보냈습니다.",
+          "exampleTarget": "I sent an email re the upcoming conference.",
+          "exampleMeaning": "다가오는 콘퍼런스 건으로 이메일을 보냈습니다."
         },
         {
           "id": "en_12019",
@@ -72886,10 +72886,10 @@
           "pronunciation": "[므애드어므]",
           "pron": "[므애드어므]",
           "phonetic": "[므애드어므]",
-          "example_en": "This is an example for madame.",
-          "example_ko": "이것은 부인인 약어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for madame.",
-          "exampleMeaning": "이것은 부인인 약어 관련 실전 예문입니다."
+          "example_en": "Madame Laurent welcomed the guests into the salon.",
+          "example_ko": "로랑 부인은 응접실로 손님들을 맞이했습니다.",
+          "exampleTarget": "Madame Laurent welcomed the guests into the salon.",
+          "exampleMeaning": "로랑 부인은 응접실로 손님들을 맞이했습니다."
         },
         {
           "id": "en_12023",
@@ -72904,9 +72904,9 @@
           "pron": "[드우느스트에어르즈]",
           "phonetic": "[드우느스트에어르즈]",
           "example_en": "go downstairs.",
-          "example_ko": "아래층에 내려가다. 숙어 kick … downstairs …을 집에서 내쫓다; 해고하다. 형용사 | -́-̀ | 아래층의; （특히） 1층의. 명사 | -́-́ | 1.《단수 취급》 아래층. ※ 한 층 또는 몇 층을 포함함. 2.하강 계단.",
+          "example_ko": "아래층에 내려가다.",
           "exampleTarget": "go downstairs.",
-          "exampleMeaning": "아래층에 내려가다. 숙어 kick … downstairs …을 집에서 내쫓다; 해고하다. 형용사 | -́-̀ | 아래층의; （특히） 1층의. 명사 | -́-́ | 1.《단수 취급》 아래층. ※ 한 층 또는 몇 층을 포함함. 2.하강 계단."
+          "exampleMeaning": "아래층에 내려가다."
         },
         {
           "id": "en_12024",
@@ -72938,9 +72938,9 @@
           "pron": "[브어르느이으]",
           "phonetic": "[브어르느이으]",
           "example_en": "burning hot water.",
-          "example_ko": "열탕. 2.이글거리는 타오르는 듯한.",
+          "example_ko": "열탕.",
           "exampleTarget": "burning hot water.",
-          "exampleMeaning": "열탕. 2.이글거리는 타오르는 듯한."
+          "exampleMeaning": "열탕."
         },
         {
           "id": "en_12026",
@@ -72954,10 +72954,10 @@
           "pronunciation": "[애르이스]",
           "pron": "[애르이스]",
           "phonetic": "[애르이스]",
-          "example_en": "This is an example for alice.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alice.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Alice found her missing car keys under sofa.",
+          "example_ko": "앨리스는 소파 밑에서 잃어버린 차 열쇠를 찾았습니다.",
+          "exampleTarget": "Alice found her missing car keys under sofa.",
+          "exampleMeaning": "앨리스는 소파 밑에서 잃어버린 차 열쇠를 찾았습니다."
         },
         {
           "id": "en_12027",
@@ -72988,10 +72988,10 @@
           "pronunciation": "[우오르트어르]",
           "pron": "[우오르트어르]",
           "phonetic": "[우오르트어르]",
-          "example_en": "This is an example for walter.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for walter.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Walter grows organic tomatoes in his backyard garden.",
+          "example_ko": "월터는 뒷마당 텃밭에서 유기농 토마토를 재배합니다.",
+          "exampleTarget": "Walter grows organic tomatoes in his backyard garden.",
+          "exampleMeaning": "월터는 뒷마당 텃밭에서 유기농 토마토를 재배합니다."
         },
         {
           "id": "en_12029",
@@ -73155,10 +73155,10 @@
           "pronunciation": "[르아브르어]",
           "pron": "[르아브르어]",
           "phonetic": "[르아브르어]",
-          "example_en": "This is an example for laura.",
-          "example_ko": "이것은 라우라 독거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for laura.",
-          "exampleMeaning": "이것은 라우라 독거 관련 실전 예문입니다."
+          "example_en": "Laura completed the difficult marathon in four hours.",
+          "example_ko": "로라는 네 시간 만에 힘든 마라톤을 완주했습니다.",
+          "exampleTarget": "Laura completed the difficult marathon in four hours.",
+          "exampleMeaning": "로라는 네 시간 만에 힘든 마라톤을 완주했습니다."
         },
         {
           "id": "en_12103",
@@ -73173,9 +73173,9 @@
           "pron": "[프우트오]",
           "phonetic": "[프우트오]",
           "example_en": "take a photo.",
-          "example_ko": "사진을 찍다 . 동사 자동사（…의） 사진을 찍다; 사진으로 찍다.",
+          "example_ko": "사진을 찍다 .",
           "exampleTarget": "take a photo.",
-          "exampleMeaning": "사진을 찍다 . 동사 자동사（…의） 사진을 찍다; 사진으로 찍다."
+          "exampleMeaning": "사진을 찍다 ."
         },
         {
           "id": "en_12104",
@@ -73223,10 +73223,10 @@
           "pronunciation": "[츠이느어]",
           "pron": "[츠이느어]",
           "phonetic": "[츠이느어]",
-          "example_en": "This is an example for china.",
-          "example_ko": "이것은 도자기 사기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for china.",
-          "exampleMeaning": "이것은 도자기 사기 관련 실전 예문입니다."
+          "example_en": "She keeps delicate china plates in the cabinet.",
+          "example_ko": "그녀는 장식장에 섬세한 도자기 접시들을 보관합니다.",
+          "exampleTarget": "She keeps delicate china plates in the cabinet.",
+          "exampleMeaning": "그녀는 장식장에 섬세한 도자기 접시들을 보관합니다."
         },
         {
           "id": "en_12107",
@@ -73240,10 +73240,10 @@
           "pronunciation": "[르오므]",
           "pron": "[르오므]",
           "phonetic": "[르오므]",
-          "example_en": "This is an example for rome.",
-          "example_ko": "이것은 로마 （이탈리아·고대 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rome.",
-          "exampleMeaning": "이것은 로마 （이탈리아·고대 관련 실전 예문입니다."
+          "example_en": "Rome attracts millions of enthusiastic tourists each year.",
+          "example_ko": "로마는 매년 수백만 명의 열정적인 관광객을 끌어모읍니다.",
+          "exampleTarget": "Rome attracts millions of enthusiastic tourists each year.",
+          "exampleMeaning": "로마는 매년 수백만 명의 열정적인 관광객을 끌어모읍니다."
         },
         {
           "id": "en_12108",
@@ -73257,10 +73257,10 @@
           "pronunciation": "[르에드]",
           "pron": "[르에드]",
           "phonetic": "[르에드]",
-          "example_en": "This is an example for led.",
-          "example_ko": "이것은 ¹의 과거·과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for led.",
-          "exampleMeaning": "이것은 ¹의 과거·과거 관련 실전 예문입니다."
+          "example_en": "She led the project to success.",
+          "example_ko": "그녀는 그 프로젝트를 성공으로 이끌었다.",
+          "exampleTarget": "She led the project to success.",
+          "exampleMeaning": "그녀는 그 프로젝트를 성공으로 이끌었다."
         },
         {
           "id": "en_12109",
@@ -73275,9 +73275,9 @@
           "pron": "[흐오르느]",
           "phonetic": "[흐오르느]",
           "example_en": "get on the horn.",
-          "example_ko": "전화를 걸다. 4.〔항공〕 ①혼: 방향타·보조 날개·승강타와 조타색 연결 부분의 완목 레버. ②혼 밸런스; 뿔 모양의 안테나; 초승달의 한쪽 끝; 활의 양끝 모루의 첨단; （안장의） 앞머리; 모래톱의 끄트머리; 《the Horn》＝Cape Horn; 깎아지른 봉우리 〔지리〕 빙식 첨봉; 《속어》 코; 《영 비어》 발기한 음경.",
+          "example_ko": "전화를 걸다.",
           "exampleTarget": "get on the horn.",
-          "exampleMeaning": "전화를 걸다. 4.〔항공〕 ①혼: 방향타·보조 날개·승강타와 조타색 연결 부분의 완목 레버. ②혼 밸런스; 뿔 모양의 안테나; 초승달의 한쪽 끝; 활의 양끝 모루의 첨단; （안장의） 앞머리; 모래톱의 끄트머리; 《the Horn》＝Cape Horn; 깎아지른 봉우리 〔지리〕 빙식 첨봉; 《속어》 코; 《영 비어》 발기한 음경."
+          "exampleMeaning": "전화를 걸다."
         },
         {
           "id": "en_12110",
@@ -73321,14 +73321,14 @@
           "level": "B2",
           "unitId": "unit_121",
           "nodeId": "en_u121_n2",
-          "meaning": "pounds",
+          "meaning": "파운드",
           "pronunciation": "[pounds]",
           "pron": "[pounds]",
           "phonetic": "[pounds]",
-          "example_en": "This is an example for pounds.",
-          "example_ko": "이것은 pounds 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pounds.",
-          "exampleMeaning": "이것은 pounds 관련 실전 예문입니다."
+          "example_en": "This bag costs twenty pounds.",
+          "example_ko": "이 가방은 20파운드이다.",
+          "exampleTarget": "This bag costs twenty pounds.",
+          "exampleMeaning": "이 가방은 20파운드이다."
         },
         {
           "id": "en_12113",
@@ -73360,9 +73360,9 @@
           "pron": "[크에어르프어르이]",
           "phonetic": "[크에어르프어르이]",
           "example_en": "Listen to me carefully.",
-          "example_ko": "내 말을 잘 들으시오. ※양태를 나타내는 경우에는 문장 끝에서만 쓰이나 뜻이 주어에 걸릴 때는 문장 앞 또는 첫째 조동사의 앞뒤에 놓음.",
+          "example_ko": "내 말을 잘 들으시오.",
           "exampleTarget": "Listen to me carefully.",
-          "exampleMeaning": "내 말을 잘 들으시오. ※양태를 나타내는 경우에는 문장 끝에서만 쓰이나 뜻이 주어에 걸릴 때는 문장 앞 또는 첫째 조동사의 앞뒤에 놓음."
+          "exampleMeaning": "내 말을 잘 들으시오."
         },
         {
           "id": "en_12115",
@@ -73440,14 +73440,14 @@
           "level": "B2",
           "unitId": "unit_121",
           "nodeId": "en_u121_n2",
-          "meaning": "doin",
+          "meaning": "하는",
           "pronunciation": "[doin]",
           "pron": "[doin]",
           "phonetic": "[doin]",
-          "example_en": "This is an example for doin.",
-          "example_ko": "이것은 doin 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for doin.",
-          "exampleMeaning": "이것은 doin 관련 실전 예문입니다."
+          "example_en": "How are you doin on your research project?",
+          "example_ko": "연구 프로젝트는 요즘 어떻게 되어가고 있나요?",
+          "exampleTarget": "How are you doin on your research project?",
+          "exampleMeaning": "연구 프로젝트는 요즘 어떻게 되어가고 있나요?"
         },
         {
           "id": "en_12120",
@@ -73508,14 +73508,14 @@
           "level": "B2",
           "unitId": "unit_121",
           "nodeId": "en_u121_n5",
-          "meaning": "과거·과거",
+          "meaning": "싸웠다",
           "pronunciation": "[프오트]",
           "pron": "[프오트]",
           "phonetic": "[프오트]",
-          "example_en": "This is an example for fought.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fought.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "They fought bravely for their country.",
+          "example_ko": "그들은 조국을 위해 용감히 싸웠다.",
+          "exampleTarget": "They fought bravely for their country.",
+          "exampleMeaning": "그들은 조국을 위해 용감히 싸웠다."
         },
         {
           "id": "en_12124",
@@ -73546,10 +73546,10 @@
           "pronunciation": "[스크에어르이]",
           "pron": "[스크에어르이]",
           "phonetic": "[스크에어르이]",
-          "example_en": "This is an example for scary.",
-          "example_ko": "이것은 잘 놀라는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for scary.",
-          "exampleMeaning": "이것은 잘 놀라는 관련 실전 예문입니다."
+          "example_en": "The lightning storm was truly scary last night.",
+          "example_ko": "어젯밤의 번개 폭풍은 정말 무서웠습니다.",
+          "exampleTarget": "The lightning storm was truly scary last night.",
+          "exampleMeaning": "어젯밤의 번개 폭풍은 정말 무서웠습니다."
         },
         {
           "id": "en_12126",
@@ -73563,10 +73563,10 @@
           "pronunciation": "[크애르이이으]",
           "pron": "[크애르이이으]",
           "phonetic": "[크애르이이으]",
-          "example_en": "This is an example for carrying.",
-          "example_ko": "이것은 운송 운수 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carrying.",
-          "exampleMeaning": "이것은 운송 운수 관련 실전 예문입니다."
+          "example_en": "He was carrying heavy grocery bags upstairs alone.",
+          "example_ko": "그는 혼자서 무거운 장바구니를 들고 위층으로 올라갔습니다.",
+          "exampleTarget": "He was carrying heavy grocery bags upstairs alone.",
+          "exampleMeaning": "그는 혼자서 무거운 장바구니를 들고 위층으로 올라갔습니다."
         },
         {
           "id": "en_12127",
@@ -73598,9 +73598,9 @@
           "pron": "[스크스이]",
           "phonetic": "[스크스이]",
           "example_en": "sexy picture.",
-          "example_ko": "성적 충동을 일으키는 그림. 3.《비격식》 매력적인; 사람의 눈을 끄는. 4.성적인.",
+          "example_ko": "성적 충동을 일으키는 그림.",
           "exampleTarget": "sexy picture.",
-          "exampleMeaning": "성적 충동을 일으키는 그림. 3.《비격식》 매력적인; 사람의 눈을 끄는. 4.성적인."
+          "exampleMeaning": "성적 충동을 일으키는 그림."
         },
         {
           "id": "en_12129",
@@ -73631,10 +73631,10 @@
           "pronunciation": "[프애느트이으]",
           "pron": "[프애느트이으]",
           "phonetic": "[프애느트이으]",
-          "example_en": "This is an example for panting.",
-          "example_ko": "이것은 헐떡거리는 두근거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for panting.",
-          "exampleMeaning": "이것은 헐떡거리는 두근거리는 관련 실전 예문입니다."
+          "example_en": "The tired runner was panting after the sprint.",
+          "example_ko": "지친 주자는 전력 질주 후 숨을 헐떡이고 있었습니다.",
+          "exampleTarget": "The tired runner was panting after the sprint.",
+          "exampleMeaning": "지친 주자는 전력 질주 후 숨을 헐떡이고 있었습니다."
         }
       ],
       "nodes": [
@@ -73748,9 +73748,9 @@
           "pron": "[우르드어느]",
           "phonetic": "[우르드어느]",
           "example_en": "golden hair.",
-          "example_ko": "금발 . 2.금의 ; 금을 함유한; 금화의.",
+          "example_ko": "금발 .",
           "exampleTarget": "golden hair.",
-          "exampleMeaning": "금발 . 2.금의 ; 금을 함유한; 금화의."
+          "exampleMeaning": "금발 ."
         },
         {
           "id": "en_12202",
@@ -73764,10 +73764,10 @@
           "pronunciation": "[크어므트이드]",
           "pron": "[크어므트이드]",
           "phonetic": "[크어므트이드]",
-          "example_en": "This is an example for committed.",
-          "example_ko": "이것은 빠져 있는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for committed.",
-          "exampleMeaning": "이것은 빠져 있는 관련 실전 예문입니다."
+          "example_en": "She is deeply committed to finishing the project.",
+          "example_ko": "그녀는 프로젝트를 끝내는 일에 전적으로 전념하고 있습니다.",
+          "exampleTarget": "She is deeply committed to finishing the project.",
+          "exampleMeaning": "그녀는 프로젝트를 끝내는 일에 전적으로 전념하고 있습니다."
         },
         {
           "id": "en_12203",
@@ -73798,10 +73798,10 @@
           "pronunciation": "[아르스어르]",
           "pron": "[아르스어르]",
           "phonetic": "[아르스어르]",
-          "example_en": "This is an example for arthur.",
-          "example_ko": "이것은 아서왕 세기경에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for arthur.",
-          "exampleMeaning": "이것은 아서왕 세기경에 관련 실전 예문입니다."
+          "example_en": "Arthur arrived at the office early this morning.",
+          "example_ko": "아서는 오늘 아침 일찍 사무실에 도착했습니다.",
+          "exampleTarget": "Arthur arrived at the office early this morning.",
+          "exampleMeaning": "아서는 오늘 아침 일찍 사무실에 도착했습니다."
         },
         {
           "id": "en_12205",
@@ -73832,10 +73832,10 @@
           "pronunciation": "[흐크트어므트어르]",
           "pron": "[흐크트어므트어르]",
           "phonetic": "[흐크트어므트어르]",
-          "example_en": "This is an example for hm.",
-          "example_ko": "이것은 헥토미터 길이의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hm.",
-          "exampleMeaning": "이것은 헥토미터 길이의 관련 실전 예문입니다."
+          "example_en": "Hm that sounds like a very good idea.",
+          "example_ko": "흠 그거 꽤 좋은 생각처럼 들리네요.",
+          "exampleTarget": "Hm that sounds like a very good idea.",
+          "exampleMeaning": "흠 그거 꽤 좋은 생각처럼 들리네요."
         },
         {
           "id": "en_12207",
@@ -73867,9 +73867,9 @@
           "pron": "[쉬아트]",
           "phonetic": "[쉬아트]",
           "example_en": "The shot echoed through the hills.",
-          "example_ko": "총성이 언덕에 울려퍼졌다. ②탄환 총알; 포탄 포환; （화포의 작약이 들어 있지 않은） 실체탄; 《집합적》 산탄; 발파약.",
+          "example_ko": "총성이 언덕에 울려퍼졌다. ②탄환 총알; 포탄 포환; （화포의 작약이 들어 있지 않은） 실체탄; 산탄; 발파약.",
           "exampleTarget": "The shot echoed through the hills.",
-          "exampleMeaning": "총성이 언덕에 울려퍼졌다. ②탄환 총알; 포탄 포환; （화포의 작약이 들어 있지 않은） 실체탄; 《집합적》 산탄; 발파약."
+          "exampleMeaning": "총성이 언덕에 울려퍼졌다. ②탄환 총알; 포탄 포환; （화포의 작약이 들어 있지 않은） 실체탄; 산탄; 발파약."
         },
         {
           "id": "en_12209",
@@ -73900,10 +73900,10 @@
           "pronunciation": "[프르]",
           "pron": "[프르]",
           "phonetic": "[프르]",
-          "example_en": "This is an example for phil.",
-          "example_ko": "이것은 「…을 사랑하는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for phil.",
-          "exampleMeaning": "이것은 「…을 사랑하는 관련 실전 예문입니다."
+          "example_en": "Phil helped me fix the broken coffee machine.",
+          "example_ko": "필은 고장 난 커피 머신 고치는 것을 도와주었습니다.",
+          "exampleTarget": "Phil helped me fix the broken coffee machine.",
+          "exampleMeaning": "필은 고장 난 커피 머신 고치는 것을 도와주었습니다."
         },
         {
           "id": "en_12211",
@@ -73918,9 +73918,9 @@
           "pron": "[브어트]",
           "phonetic": "[브어트]",
           "example_en": "a cigar butt.",
-          "example_ko": "엽궐련 꽁초. 3.《속어》 궐련. 4.《속어》 궁둥이. 5.《미 속어》 （병역 복무 기간의） 마지막 해 마지막 몇 개월. 6.《미 속어》 단기간 짧은 복무 기간.",
+          "example_ko": "엽궐련 꽁초.",
           "exampleTarget": "a cigar butt.",
-          "exampleMeaning": "엽궐련 꽁초. 3.《속어》 궐련. 4.《속어》 궁둥이. 5.《미 속어》 （병역 복무 기간의） 마지막 해 마지막 몇 개월. 6.《미 속어》 단기간 짧은 복무 기간."
+          "exampleMeaning": "엽궐련 꽁초."
         },
         {
           "id": "en_12212",
@@ -73930,14 +73930,14 @@
           "level": "B2",
           "unitId": "unit_122",
           "nodeId": "en_u122_n2",
-          "meaning": "과거형",
+          "meaning": "운전했다",
           "pronunciation": "[드르오브]",
           "pron": "[드르오브]",
           "phonetic": "[드르오브]",
-          "example_en": "This is an example for drove.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for drove.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He drove his family to the beach.",
+          "example_ko": "그는 가족들을 태우고 해변으로 운전해 갔다.",
+          "exampleTarget": "He drove his family to the beach.",
+          "exampleMeaning": "그는 가족들을 태우고 해변으로 운전해 갔다."
         },
         {
           "id": "en_12213",
@@ -73951,10 +73951,10 @@
           "pronunciation": "[이오르스르브즈]",
           "pron": "[이오르스르브즈]",
           "phonetic": "[이오르스르브즈]",
-          "example_en": "This is an example for yourselves.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yourselves.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "Please help yourselves to some food.",
+          "example_ko": "음식을 마음껏 가져다 드세요.",
+          "exampleTarget": "Please help yourselves to some food.",
+          "exampleMeaning": "음식을 마음껏 가져다 드세요."
         },
         {
           "id": "en_12214",
@@ -74036,10 +74036,10 @@
           "pronunciation": "[이트애르이어느]",
           "pron": "[이트애르이어느]",
           "phonetic": "[이트애르이어느]",
-          "example_en": "This is an example for italian.",
-          "example_ko": "이것은 이탈리아의 이탈리아인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for italian.",
-          "exampleMeaning": "이것은 이탈리아의 이탈리아인 관련 실전 예문입니다."
+          "example_en": "We had dinner at a great Italian restaurant.",
+          "example_ko": "우리는 훌륭한 이탈리아 식당에서 저녁을 먹었습니다.",
+          "exampleTarget": "We had dinner at a great Italian restaurant.",
+          "exampleMeaning": "우리는 훌륭한 이탈리아 식당에서 저녁을 먹었습니다."
         },
         {
           "id": "en_12219",
@@ -74053,10 +74053,10 @@
           "pronunciation": "[므어]",
           "pron": "[므어]",
           "phonetic": "[므어]",
-          "example_en": "This is an example for emma.",
-          "example_ko": "이것은 무선에서 문자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for emma.",
-          "exampleMeaning": "이것은 무선에서 문자 관련 실전 예문입니다."
+          "example_en": "Emma will lead our presentation tomorrow morning.",
+          "example_ko": "엠마가 내일 아침 우리 발표를 이끌 것입니다.",
+          "exampleTarget": "Emma will lead our presentation tomorrow morning.",
+          "exampleMeaning": "엠마가 내일 아침 우리 발표를 이끌 것입니다."
         },
         {
           "id": "en_12220",
@@ -74104,10 +74104,10 @@
           "pronunciation": "[우느어르]",
           "pron": "[우느어르]",
           "phonetic": "[우느어르]",
-          "example_en": "This is an example for winner.",
-          "example_ko": "이것은 승리자 이긴 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for winner.",
-          "exampleMeaning": "이것은 승리자 이긴 관련 실전 예문입니다."
+          "example_en": "The judges announced the lucky winner just now.",
+          "example_ko": "심사위원들이 방금 행운의 우승자를 발표했습니다.",
+          "exampleTarget": "The judges announced the lucky winner just now.",
+          "exampleMeaning": "심사위원들이 방금 행운의 우승자를 발표했습니다."
         },
         {
           "id": "en_12223",
@@ -74138,10 +74138,10 @@
           "pronunciation": "[므어느드에이]",
           "pron": "[므어느드에이]",
           "phonetic": "[므어느드에이]",
-          "example_en": "This is an example for monday.",
-          "example_ko": "이것은 월요일 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for monday.",
-          "exampleMeaning": "이것은 월요일 약자 관련 실전 예문입니다."
+          "example_en": "Our team meeting is scheduled for next Monday.",
+          "example_ko": "우리 팀 회의는 다음 주 월요일로 예정되어 있습니다.",
+          "exampleTarget": "Our team meeting is scheduled for next Monday.",
+          "exampleMeaning": "우리 팀 회의는 다음 주 월요일로 예정되어 있습니다."
         },
         {
           "id": "en_12225",
@@ -74155,10 +74155,10 @@
           "pronunciation": "[즈느이]",
           "pron": "[즈느이]",
           "phonetic": "[즈느이]",
-          "example_en": "This is an example for jenny.",
-          "example_ko": "이것은 암컷 제니 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jenny.",
-          "exampleMeaning": "이것은 암컷 제니 관련 실전 예문입니다."
+          "example_en": "Jenny baked delicious chocolate cookies for our party.",
+          "example_ko": "제니는 우리 파티를 위해 맛있는 초콜릿 쿠키를 구웠습니다.",
+          "exampleTarget": "Jenny baked delicious chocolate cookies for our party.",
+          "exampleMeaning": "제니는 우리 파티를 위해 맛있는 초콜릿 쿠키를 구웠습니다."
         },
         {
           "id": "en_12226",
@@ -74168,14 +74168,14 @@
           "level": "B2",
           "unitId": "unit_122",
           "nodeId": "en_u122_n5",
-          "meaning": "과거형",
+          "meaning": "선택했다",
           "pronunciation": "[츠오즈]",
           "pron": "[츠오즈]",
           "phonetic": "[츠오즈]",
-          "example_en": "This is an example for chose.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chose.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "I chose the blue shirt yesterday.",
+          "example_ko": "나는 어제 파란색 셔츠를 선택했다.",
+          "exampleTarget": "I chose the blue shirt yesterday.",
+          "exampleMeaning": "나는 어제 파란색 셔츠를 선택했다."
         },
         {
           "id": "en_12227",
@@ -74206,10 +74206,10 @@
           "pronunciation": "[크아르]",
           "pron": "[크아르]",
           "phonetic": "[크아르]",
-          "example_en": "This is an example for carl.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carl.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Carl called to confirm the reservation time yesterday.",
+          "example_ko": "칼은 어제 예약 시간을 확인하려고 전화했습니다.",
+          "exampleTarget": "Carl called to confirm the reservation time yesterday.",
+          "exampleMeaning": "칼은 어제 예약 시간을 확인하려고 전화했습니다."
         },
         {
           "id": "en_12229",
@@ -74223,10 +74223,10 @@
           "pronunciation": "[르이크]",
           "pron": "[르이크]",
           "phonetic": "[르이크]",
-          "example_en": "This is an example for rick.",
-          "example_ko": "이것은 건초 리 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rick.",
-          "exampleMeaning": "이것은 건초 리 관련 실전 예문입니다."
+          "example_en": "Rick offered to drive us to the airport.",
+          "example_ko": "릭은 우리를 공항까지 태워다 주겠다고 제안했습니다.",
+          "exampleTarget": "Rick offered to drive us to the airport.",
+          "exampleMeaning": "릭은 우리를 공항까지 태워다 주겠다고 제안했습니다."
         },
         {
           "id": "en_12230",
@@ -74236,14 +74236,14 @@
           "level": "B2",
           "unitId": "unit_122",
           "nodeId": "en_u122_n5",
-          "meaning": "과거·과거",
+          "meaning": "서 있었다",
           "pronunciation": "[스트우드]",
           "pron": "[스트우드]",
           "phonetic": "[스트우드]",
-          "example_en": "This is an example for stood.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stood.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "We stood in line for one hour.",
+          "example_ko": "우리는 한 시간 동안 줄을 서 있었다.",
+          "exampleTarget": "We stood in line for one hour.",
+          "exampleMeaning": "우리는 한 시간 동안 줄을 서 있었다."
         }
       ],
       "nodes": [
@@ -74442,9 +74442,9 @@
           "pron": "[프이스]",
           "phonetic": "[프이스]",
           "example_en": "have a piss.",
-          "example_ko": "오줌누다. 2.《오스》 값싼 맥주. 숙어 a piece of piss 《영·구어》 식은죽 먹기 아주 간단한 일. go on the piss; be on the piss 《영·구어》 술을 많이 마시다. piss and vinegar 《미·속어》 쾌활 기운참 원기. piss and wind 《속어》 수다 잡담. piss call 《속어》 기상 신호. take the piss 《영·구어》 （…을） 놀리다. 동사 자동사1.오줌 누다. 2.《it을 주어로 하여》 장대비가 내리다.",
+          "example_ko": "오줌누다.",
           "exampleTarget": "have a piss.",
-          "exampleMeaning": "오줌누다. 2.《오스》 값싼 맥주. 숙어 a piece of piss 《영·구어》 식은죽 먹기 아주 간단한 일. go on the piss; be on the piss 《영·구어》 술을 많이 마시다. piss and vinegar 《미·속어》 쾌활 기운참 원기. piss and wind 《속어》 수다 잡담. piss call 《속어》 기상 신호. take the piss 《영·구어》 （…을） 놀리다. 동사 자동사1.오줌 누다. 2.《it을 주어로 하여》 장대비가 내리다."
+          "exampleMeaning": "오줌누다."
         },
         {
           "id": "en_12307",
@@ -74458,10 +74458,10 @@
           "pronunciation": "[느드이어]",
           "pron": "[느드이어]",
           "phonetic": "[느드이어]",
-          "example_en": "This is an example for india.",
-          "example_ko": "이것은 인도 아시아 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for india.",
-          "exampleMeaning": "이것은 인도 아시아 관련 실전 예문입니다."
+          "example_en": "He plans to travel across India next spring.",
+          "example_ko": "그는 내년 봄에 인도를 횡단 여행할 계획입니다.",
+          "exampleTarget": "He plans to travel across India next spring.",
+          "exampleMeaning": "그는 내년 봄에 인도를 횡단 여행할 계획입니다."
         },
         {
           "id": "en_12308",
@@ -74493,9 +74493,9 @@
           "pron": "[프르이크]",
           "phonetic": "[프르이크]",
           "example_en": "a freak of nature.",
-          "example_ko": "변종 기형 돌연변이. 3.《비격식》 괴짜; 열광자 …광; 성적 도착자; 히피.",
+          "example_ko": "변종 기형 돌연변이.",
           "exampleTarget": "a freak of nature.",
-          "exampleMeaning": "변종 기형 돌연변이. 3.《비격식》 괴짜; 열광자 …광; 성적 도착자; 히피."
+          "exampleMeaning": "변종 기형 돌연변이."
         },
         {
           "id": "en_12310",
@@ -74577,10 +74577,10 @@
           "pronunciation": "[르오]",
           "pron": "[르오]",
           "phonetic": "[르오]",
-          "example_en": "This is an example for leo.",
-          "example_ko": "이것은 사자자리 사자궁 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for leo.",
-          "exampleMeaning": "이것은 사자자리 사자궁 관련 실전 예문입니다."
+          "example_en": "Leo adopted a stray cat from the shelter.",
+          "example_ko": "레오는 보호소에서 유기묘 한 마리를 입양했습니다.",
+          "exampleTarget": "Leo adopted a stray cat from the shelter.",
+          "exampleMeaning": "레오는 보호소에서 유기묘 한 마리를 입양했습니다."
         },
         {
           "id": "en_12315",
@@ -74594,10 +74594,10 @@
           "pronunciation": "[르애느드므어드어르]",
           "pron": "[르애느드므어드어르]",
           "phonetic": "[르애느드므어드어르]",
-          "example_en": "This is an example for grandmother.",
-          "example_ko": "이것은 조모 할머니 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grandmother.",
-          "exampleMeaning": "이것은 조모 할머니 관련 실전 예문입니다."
+          "example_en": "My grandmother still knits warm wool sweaters yearly.",
+          "example_ko": "우리 할머니는 여전히 매년 따뜻한 털 스웨터를 뜨십니다.",
+          "exampleTarget": "My grandmother still knits warm wool sweaters yearly.",
+          "exampleMeaning": "우리 할머니는 여전히 매년 따뜻한 털 스웨터를 뜨십니다."
         },
         {
           "id": "en_12316",
@@ -74611,10 +74611,10 @@
           "pronunciation": "[르우크]",
           "pron": "[르우크]",
           "phonetic": "[르우크]",
-          "example_en": "This is an example for luke.",
-          "example_ko": "이것은 누 예수의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for luke.",
-          "exampleMeaning": "이것은 누 예수의 관련 실전 예문입니다."
+          "example_en": "Luke forgot his house keys on the desk.",
+          "example_ko": "루크는 책상 위에 집 열쇠를 두고 잊어버렸습니다.",
+          "exampleTarget": "Luke forgot his house keys on the desk.",
+          "exampleMeaning": "루크는 책상 위에 집 열쇠를 두고 잊어버렸습니다."
         },
         {
           "id": "en_12317",
@@ -74645,10 +74645,10 @@
           "pronunciation": "[흐오르]",
           "pron": "[흐오르]",
           "phonetic": "[흐오르]",
-          "example_en": "This is an example for whore.",
-          "example_ko": "이것은 매춘부 정조 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for whore.",
-          "exampleMeaning": "이것은 매춘부 정조 관련 실전 예문입니다."
+          "example_en": "Do not use that offensive whore insult ever.",
+          "example_ko": "그런 불쾌한 창녀 욕설은 절대로 쓰지 마세요.",
+          "exampleTarget": "Do not use that offensive whore insult ever.",
+          "exampleMeaning": "그런 불쾌한 창녀 욕설은 절대로 쓰지 마세요."
         },
         {
           "id": "en_12319",
@@ -74663,9 +74663,9 @@
           "pron": "[크크이으]",
           "phonetic": "[크크이으]",
           "example_en": "be good at cooking.",
-          "example_ko": "요리를 잘하다. 형용사《한정적》 1.요리용의.",
+          "example_ko": "요리를 잘하다. 형용사 1.요리용의.",
           "exampleTarget": "be good at cooking.",
-          "exampleMeaning": "요리를 잘하다. 형용사《한정적》 1.요리용의."
+          "exampleMeaning": "요리를 잘하다. 형용사 1.요리용의."
         },
         {
           "id": "en_12320",
@@ -74679,10 +74679,10 @@
           "pronunciation": "[아느어르]",
           "pron": "[아느어르]",
           "phonetic": "[아느어르]",
-          "example_en": "This is an example for honour.",
-          "example_ko": "이것은 honour 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for honour.",
-          "exampleMeaning": "이것은 honour 관련 실전 예문입니다."
+          "example_en": "It is a great honour to meet you.",
+          "example_ko": "당신을 만나 뵙게 되어 큰 영광입니다.",
+          "exampleTarget": "It is a great honour to meet you.",
+          "exampleMeaning": "당신을 만나 뵙게 되어 큰 영광입니다."
         },
         {
           "id": "en_12321",
@@ -74747,10 +74747,10 @@
           "pronunciation": "[므드이어]",
           "pron": "[므드이어]",
           "phonetic": "[므드이어]",
-          "example_en": "This is an example for media.",
-          "example_ko": "이것은 복수형 매스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for media.",
-          "exampleMeaning": "이것은 복수형 매스 관련 실전 예문입니다."
+          "example_en": "The news media covered the big event.",
+          "example_ko": "뉴스 매체가 그 큰 행사를 취재했다.",
+          "exampleTarget": "The news media covered the big event.",
+          "exampleMeaning": "뉴스 매체가 그 큰 행사를 취재했다."
         },
         {
           "id": "en_12325",
@@ -74764,10 +74764,10 @@
           "pronunciation": "[크르어르]",
           "pron": "[크르어르]",
           "phonetic": "[크르어르]",
-          "example_en": "This is an example for claire.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for claire.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Claire submitted her annual financial report on time.",
+          "example_ko": "클레어는 연간 재무 보고서를 제때 제출했습니다.",
+          "exampleTarget": "Claire submitted her annual financial report on time.",
+          "exampleMeaning": "클레어는 연간 재무 보고서를 제때 제출했습니다."
         },
         {
           "id": "en_12326",
@@ -74781,10 +74781,10 @@
           "pronunciation": "[프르에드]",
           "pron": "[프르에드]",
           "phonetic": "[프르에드]",
-          "example_en": "This is an example for fred.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fred.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Fred showed me how to assemble the bookshelf.",
+          "example_ko": "프레드는 책장을 조립하는 방법을 내게 보여주었습니다.",
+          "exampleTarget": "Fred showed me how to assemble the bookshelf.",
+          "exampleMeaning": "프레드는 책장을 조립하는 방법을 내게 보여주었습니다."
         },
         {
           "id": "en_12327",
@@ -74798,10 +74798,10 @@
           "pronunciation": "[우아쉬이으트어느]",
           "pron": "[우아쉬이으트어느]",
           "phonetic": "[우아쉬이으트어느]",
-          "example_en": "This is an example for washington.",
-          "example_ko": "이것은 워싱턴 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for washington.",
-          "exampleMeaning": "이것은 워싱턴 미국의 관련 실전 예문입니다."
+          "example_en": "They took a school trip to Washington recently.",
+          "example_ko": "그들은 최근 워싱턴으로 수학여행을 다녀왔습니다.",
+          "exampleTarget": "They took a school trip to Washington recently.",
+          "exampleMeaning": "그들은 최근 워싱턴으로 수학여행을 다녀왔습니다."
         },
         {
           "id": "en_12328",
@@ -74850,9 +74850,9 @@
           "pron": "[브르드이으]",
           "phonetic": "[브르드이으]",
           "example_en": "bleeding to death.",
-          "example_ko": "출혈사. 2.〔인쇄·염색〕 색의 번지기. 형용사1.〈상처가〉 출혈하는; 《비유》 〈사건 등이〉 피눈물이 나는. 2.《영·속어》 《한정적》 엄청난 끔찍한. ※ bloody의 완곡 표현.",
+          "example_ko": "출혈사.",
           "exampleTarget": "bleeding to death.",
-          "exampleMeaning": "출혈사. 2.〔인쇄·염색〕 색의 번지기. 형용사1.〈상처가〉 출혈하는; 《비유》 〈사건 등이〉 피눈물이 나는. 2.《영·속어》 《한정적》 엄청난 끔찍한. ※ bloody의 완곡 표현."
+          "exampleMeaning": "출혈사."
         }
       ],
       "nodes": [
@@ -75016,10 +75016,10 @@
           "pronunciation": "[크아르트어르]",
           "pron": "[크아르트어르]",
           "phonetic": "[크아르트어르]",
-          "example_en": "This is an example for carter.",
-          "example_ko": "이것은 폐품 회수업자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carter.",
-          "exampleMeaning": "이것은 폐품 회수업자 관련 실전 예문입니다."
+          "example_en": "Carter forgot to charge his laptop before class.",
+          "example_ko": "카터는 수업 전에 노트북을 충전하는 것을 깜빡했습니다.",
+          "exampleTarget": "Carter forgot to charge his laptop before class.",
+          "exampleMeaning": "카터는 수업 전에 노트북을 충전하는 것을 깜빡했습니다."
         },
         {
           "id": "en_12405",
@@ -75068,9 +75068,9 @@
           "pron": "[프애스이으]",
           "phonetic": "[프애스이으]",
           "example_en": "the passing years.",
-          "example_ko": "흘러가는 세월. 2.〈광경·사건 등이〉 눈앞인 현재인 지금 일어나고 있는.",
+          "example_ko": "흘러가는 세월.",
           "exampleTarget": "the passing years.",
-          "exampleMeaning": "흘러가는 세월. 2.〈광경·사건 등이〉 눈앞인 현재인 지금 일어나고 있는."
+          "exampleMeaning": "흘러가는 세월."
         },
         {
           "id": "en_12408",
@@ -75085,9 +75085,9 @@
           "pron": "[츠애트어르]",
           "phonetic": "[츠애트어르]",
           "example_en": "The monkeys were chattering away in the trees.",
-          "example_ko": "원숭이들이 나무에서 요란하게 소리지르고 있었다. 2. 〈사람이〉 〔시시한 내용을〕 재잘재잘 지껄이다 떠들어대다〔away on about …〕.",
+          "example_ko": "원숭이들이 나무에서 요란하게 소리지르고 있었다.",
           "exampleTarget": "The monkeys were chattering away in the trees.",
-          "exampleMeaning": "원숭이들이 나무에서 요란하게 소리지르고 있었다. 2. 〈사람이〉 〔시시한 내용을〕 재잘재잘 지껄이다 떠들어대다〔away on about …〕."
+          "exampleMeaning": "원숭이들이 나무에서 요란하게 소리지르고 있었다."
         },
         {
           "id": "en_12409",
@@ -75118,10 +75118,10 @@
           "pronunciation": "[르에이드]",
           "pron": "[르에이드]",
           "phonetic": "[르에이드]",
-          "example_en": "This is an example for laid.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for laid.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She laid the baby gently on the bed.",
+          "example_ko": "그녀는 아기를 침대에 조심스럽게 눕혔다.",
+          "exampleTarget": "She laid the baby gently on the bed.",
+          "exampleMeaning": "그녀는 아기를 침대에 조심스럽게 눕혔다."
         },
         {
           "id": "en_12411",
@@ -75152,10 +75152,10 @@
           "pronunciation": "[르이스]",
           "pron": "[르이스]",
           "phonetic": "[르이스]",
-          "example_en": "This is an example for louis.",
-          "example_ko": "이것은 루이 세 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for louis.",
-          "exampleMeaning": "이것은 루이 세 관련 실전 예문입니다."
+          "example_en": "Louis gave a helpful presentation on budget management.",
+          "example_ko": "루이스는 예산 관리에 대한 유익한 발표를 했습니다.",
+          "exampleTarget": "Louis gave a helpful presentation on budget management.",
+          "exampleMeaning": "루이스는 예산 관리에 대한 유익한 발표를 했습니다."
         },
         {
           "id": "en_12413",
@@ -75187,9 +75187,9 @@
           "pron": "[브이크어므이으]",
           "phonetic": "[브이크어므이으]",
           "example_en": "a hairdo becoming to her.",
-          "example_ko": "그녀에게 어울리는 머리형. 2.〈행위 등이〉 〔…에〕 알맞은 적절한〔to in for …〕.",
+          "example_ko": "그녀에게 어울리는 머리형.",
           "exampleTarget": "a hairdo becoming to her.",
-          "exampleMeaning": "그녀에게 어울리는 머리형. 2.〈행위 등이〉 〔…에〕 알맞은 적절한〔to in for …〕."
+          "exampleMeaning": "그녀에게 어울리는 머리형."
         },
         {
           "id": "en_12415",
@@ -75288,10 +75288,10 @@
           "pronunciation": "[스르우이으]",
           "pron": "[스르우이으]",
           "phonetic": "[스르우이으]",
-          "example_en": "This is an example for throwing.",
-          "example_ko": "이것은 던짐 투척 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for throwing.",
-          "exampleMeaning": "이것은 던짐 투척 관련 실전 예문입니다."
+          "example_en": "Stop throwing paper airplanes across the busy classroom.",
+          "example_ko": "복잡한 교실 안에서 종이비행기를 날리지 마세요.",
+          "exampleTarget": "Stop throwing paper airplanes across the busy classroom.",
+          "exampleMeaning": "복잡한 교실 안에서 종이비행기를 날리지 마세요."
         },
         {
           "id": "en_12421",
@@ -75305,10 +75305,10 @@
           "pronunciation": "[즈아쉬]",
           "pron": "[즈아쉬]",
           "phonetic": "[즈아쉬]",
-          "example_en": "This is an example for josh.",
-          "example_ko": "이것은 놀리다 희롱하다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for josh.",
-          "exampleMeaning": "이것은 놀리다 희롱하다 관련 실전 예문입니다."
+          "example_en": "Josh brought fresh donuts for the morning meeting.",
+          "example_ko": "조쉬가 아침 회의를 위해 신선한 도넛을 가져왔습니다.",
+          "exampleTarget": "Josh brought fresh donuts for the morning meeting.",
+          "exampleMeaning": "조쉬가 아침 회의를 위해 신선한 도넛을 가져왔습니다."
         },
         {
           "id": "en_12422",
@@ -75339,10 +75339,10 @@
           "pronunciation": "[트에드]",
           "pron": "[트에드]",
           "phonetic": "[트에드]",
-          "example_en": "This is an example for ted.",
-          "example_ko": "이것은 펴서 말리다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ted.",
-          "exampleMeaning": "이것은 펴서 말리다 관련 실전 예문입니다."
+          "example_en": "Ted answered every question during the press interview.",
+          "example_ko": "테드는 언론 인터뷰 동안 모든 질문에 답했습니다.",
+          "exampleTarget": "Ted answered every question during the press interview.",
+          "exampleMeaning": "테드는 언론 인터뷰 동안 모든 질문에 답했습니다."
         },
         {
           "id": "en_12424",
@@ -75356,10 +75356,10 @@
           "pronunciation": "[드이느]",
           "pron": "[드이느]",
           "phonetic": "[드이느]",
-          "example_en": "This is an example for dean.",
-          "example_ko": "이것은 학장 학생감 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dean.",
-          "exampleMeaning": "이것은 학장 학생감 관련 실전 예문입니다."
+          "example_en": "The university dean welcomed all the new students.",
+          "example_ko": "대학교 학장님이 모든 신입생들을 환영해 주었습니다.",
+          "exampleTarget": "The university dean welcomed all the new students.",
+          "exampleMeaning": "대학교 학장님이 모든 신입생들을 환영해 주었습니다."
         },
         {
           "id": "en_12425",
@@ -75373,10 +75373,10 @@
           "pronunciation": "[쉬오느]",
           "pron": "[쉬오느]",
           "phonetic": "[쉬오느]",
-          "example_en": "This is an example for sean.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sean.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Sean ordered spicy noodles for lunch right now.",
+          "example_ko": "숀은 지금 점심으로 매운 국수를 주문했습니다.",
+          "exampleTarget": "Sean ordered spicy noodles for lunch right now.",
+          "exampleMeaning": "숀은 지금 점심으로 매운 국수를 주문했습니다."
         },
         {
           "id": "en_12426",
@@ -75390,10 +75390,10 @@
           "pronunciation": "[스즈느]",
           "pron": "[스즈느]",
           "phonetic": "[스즈느]",
-          "example_en": "This is an example for susan.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for susan.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Susan watered the office plants before heading home.",
+          "example_ko": "수잔은 퇴근하기 전에 사무실 화분에 물을 주었습니다.",
+          "exampleTarget": "Susan watered the office plants before heading home.",
+          "exampleMeaning": "수잔은 퇴근하기 전에 사무실 화분에 물을 주었습니다."
         },
         {
           "id": "en_12427",
@@ -75403,14 +75403,14 @@
           "level": "B2",
           "unitId": "unit_124",
           "nodeId": "en_u124_n5",
-          "meaning": "ahh",
+          "meaning": "아",
           "pronunciation": "[아]",
           "pron": "[아]",
           "phonetic": "[아]",
-          "example_en": "This is an example for ahh.",
-          "example_ko": "이것은 ahh 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ahh.",
-          "exampleMeaning": "이것은 ahh 관련 실전 예문입니다."
+          "example_en": "Ahh a hot cup of tea feels wonderful.",
+          "example_ko": "아 따뜻한 차 한 잔을 마시니 정말 좋네요.",
+          "exampleTarget": "Ahh a hot cup of tea feels wonderful.",
+          "exampleMeaning": "아 따뜻한 차 한 잔을 마시니 정말 좋네요."
         },
         {
           "id": "en_12428",
@@ -75441,10 +75441,10 @@
           "pronunciation": "[스크오프]",
           "pron": "[스크오프]",
           "phonetic": "[스크오프]",
-          "example_en": "This is an example for scoffs.",
-          "example_ko": "이것은 비웃음 조롱 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for scoffs.",
-          "exampleMeaning": "이것은 비웃음 조롱 관련 실전 예문입니다."
+          "example_en": "He always scoffs whenever anyone suggests new rules.",
+          "example_ko": "그는 누군가 새로운 규칙을 제안할 때마다 늘 비웃습니다.",
+          "exampleTarget": "He always scoffs whenever anyone suggests new rules.",
+          "exampleMeaning": "그는 누군가 새로운 규칙을 제안할 때마다 늘 비웃습니다."
         },
         {
           "id": "en_12430",
@@ -75458,10 +75458,10 @@
           "pronunciation": "[므어드어르프어크어르]",
           "pron": "[므어드어르프어크어르]",
           "phonetic": "[므어드어르프어크어르]",
-          "example_en": "This is an example for motherfucker.",
-          "example_ko": "이것은 비열한 놈 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for motherfucker.",
-          "exampleMeaning": "이것은 비열한 놈 관련 실전 예문입니다."
+          "example_en": "The angry customer yelled that offensive motherfucker insult.",
+          "example_ko": "화가 난 손님은 그 불쾌한 욕설을 크게 내질렀습니다.",
+          "exampleTarget": "The angry customer yelled that offensive motherfucker insult.",
+          "exampleMeaning": "화가 난 손님은 그 불쾌한 욕설을 크게 내질렀습니다."
         }
       ],
       "nodes": [
@@ -75575,9 +75575,9 @@
           "pron": "[스우]",
           "phonetic": "[스우]",
           "example_en": "They sued the company for negligence.",
-          "example_ko": "그들은 그 회사를 과실로 고소했다. 2.《드물게》 〈남에게〉 〔…을〕 청하다 청원하다〔for …〕. 3.《고어》 …에게 구혼하다. 자동사 1.〔…을 요구하여〕 소송을 제기하다 〔for …〕.",
+          "example_ko": "그들은 그 회사를 과실로 고소했다.",
           "exampleTarget": "They sued the company for negligence.",
-          "exampleMeaning": "그들은 그 회사를 과실로 고소했다. 2.《드물게》 〈남에게〉 〔…을〕 청하다 청원하다〔for …〕. 3.《고어》 …에게 구혼하다. 자동사 1.〔…을 요구하여〕 소송을 제기하다 〔for …〕."
+          "exampleMeaning": "그들은 그 회사를 과실로 고소했다."
         },
         {
           "id": "en_12502",
@@ -75591,10 +75591,10 @@
           "pronunciation": "[스트르이으]",
           "pron": "[스트르이으]",
           "phonetic": "[스트르이으]",
-          "example_en": "This is an example for stealing.",
-          "example_ko": "이것은 몰래 훔치기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stealing.",
-          "exampleMeaning": "이것은 몰래 훔치기 관련 실전 예문입니다."
+          "example_en": "Security caught someone stealing items from the shop.",
+          "example_ko": "보안요원이 매장에서 물건을 훔치던 사람을 붙잡았습니다.",
+          "exampleTarget": "Security caught someone stealing items from the shop.",
+          "exampleMeaning": "보안요원이 매장에서 물건을 훔치던 사람을 붙잡았습니다."
         },
         {
           "id": "en_12503",
@@ -75626,9 +75626,9 @@
           "pron": "[프이스트]",
           "phonetic": "[프이스트]",
           "example_en": "I was pissed at him.",
-          "example_ko": "그에게 화를 냈다. 2.《속어》 술 취한.",
+          "example_ko": "그에게 화를 냈다.",
           "exampleTarget": "I was pissed at him.",
-          "exampleMeaning": "그에게 화를 냈다. 2.《속어》 술 취한."
+          "exampleMeaning": "그에게 화를 냈다."
         },
         {
           "id": "en_12505",
@@ -75711,9 +75711,9 @@
           "pron": "[프르아프어르이]",
           "phonetic": "[프르아프어르이]",
           "example_en": "The fax machine didnt work properly.",
-          "example_ko": "팩스가 잘 작동하지 않았다. 2.올바르게 틀림없이; 정확히.",
+          "example_ko": "팩스가 잘 작동하지 않았다.",
           "exampleTarget": "The fax machine didnt work properly.",
-          "exampleMeaning": "팩스가 잘 작동하지 않았다. 2.올바르게 틀림없이; 정확히."
+          "exampleMeaning": "팩스가 잘 작동하지 않았다."
         },
         {
           "id": "en_12510",
@@ -75727,10 +75727,10 @@
           "pronunciation": "[드르애어느]",
           "pron": "[드르애어느]",
           "phonetic": "[드르애어느]",
-          "example_en": "This is an example for dragon.",
-          "example_ko": "이것은 용 큰 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dragon.",
-          "exampleMeaning": "이것은 용 큰 관련 실전 예문입니다."
+          "example_en": "The fantasy movie featured a massive fire dragon.",
+          "example_ko": "그 판타지 영화에는 거대한 불의 용이 등장했습니다.",
+          "exampleTarget": "The fantasy movie featured a massive fire dragon.",
+          "exampleMeaning": "그 판타지 영화에는 거대한 불의 용이 등장했습니다."
         },
         {
           "id": "en_12511",
@@ -75762,9 +75762,9 @@
           "pron": "[츠어크]",
           "phonetic": "[츠어크]",
           "example_en": "He chucked the cat under the chin.",
-          "example_ko": "그는 고양이의 턱 밑을 어루만졌다. 2. …을 （재빨리） 휙 던지다 팽개치다; 내버리다〔away out up〕; 〈남에게〉 〈물건을〉 던져주다.",
+          "example_ko": "그는 고양이의 턱 밑을 어루만졌다.",
           "exampleTarget": "He chucked the cat under the chin.",
-          "exampleMeaning": "그는 고양이의 턱 밑을 어루만졌다. 2. …을 （재빨리） 휙 던지다 팽개치다; 내버리다〔away out up〕; 〈남에게〉 〈물건을〉 던져주다."
+          "exampleMeaning": "그는 고양이의 턱 밑을 어루만졌다."
         },
         {
           "id": "en_12513",
@@ -75812,10 +75812,10 @@
           "pronunciation": "[드아우]",
           "pron": "[드아우]",
           "phonetic": "[드아우]",
-          "example_en": "This is an example for thou.",
-          "example_ko": "이것은 그대 당신 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thou.",
-          "exampleMeaning": "이것은 그대 당신 관련 실전 예문입니다."
+          "example_en": "Honor thy parents and cherish all thou hast.",
+          "example_ko": "부모를 공경하고 네가 가진 모든 것을 소중히 여겨라.",
+          "exampleTarget": "Honor thy parents and cherish all thou hast.",
+          "exampleMeaning": "부모를 공경하고 네가 가진 모든 것을 소중히 여겨라."
         },
         {
           "id": "en_12516",
@@ -75829,10 +75829,10 @@
           "pronunciation": "[즈어르므어느이]",
           "pron": "[즈어르므어느이]",
           "phonetic": "[즈어르므어느이]",
-          "example_en": "This is an example for germany.",
-          "example_ko": "이것은 독일 수도 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for germany.",
-          "exampleMeaning": "이것은 독일 수도 관련 실전 예문입니다."
+          "example_en": "Our company opened a new branch in Germany.",
+          "example_ko": "우리 회사는 독일에 새 지사를 열었습니다.",
+          "exampleTarget": "Our company opened a new branch in Germany.",
+          "exampleMeaning": "우리 회사는 독일에 새 지사를 열었습니다."
         },
         {
           "id": "en_12517",
@@ -75846,10 +75846,10 @@
           "pronunciation": "[애프르이크어]",
           "pron": "[애프르이크어]",
           "phonetic": "[애프르이크어]",
-          "example_en": "This is an example for africa.",
-          "example_ko": "이것은 아프리카 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for africa.",
-          "exampleMeaning": "이것은 아프리카 관련 실전 예문입니다."
+          "example_en": "Many rare animal species live across wild Africa.",
+          "example_ko": "야생의 아프리카 전역에는 수많은 희귀 동물 종이 서식합니다.",
+          "exampleTarget": "Many rare animal species live across wild Africa.",
+          "exampleMeaning": "야생의 아프리카 전역에는 수많은 희귀 동물 종이 서식합니다."
         },
         {
           "id": "en_12518",
@@ -75863,10 +75863,10 @@
           "pronunciation": "[우오크]",
           "pron": "[우오크]",
           "phonetic": "[우오크]",
-          "example_en": "This is an example for woke.",
-          "example_ko": "이것은 ¹의 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for woke.",
-          "exampleMeaning": "이것은 ¹의 과거형 관련 실전 예문입니다."
+          "example_en": "I woke up early this morning.",
+          "example_ko": "나는 오늘 아침 일찍 잠에서 깼다.",
+          "exampleTarget": "I woke up early this morning.",
+          "exampleMeaning": "나는 오늘 아침 일찍 잠에서 깼다."
         },
         {
           "id": "en_12519",
@@ -75898,9 +75898,9 @@
           "pron": "[우느이으]",
           "phonetic": "[우느이으]",
           "example_en": "the winning hit.",
-          "example_ko": "승리의 일타 결승타. 2.〈사람·인품이〉 매력적인 사람을 끄는.",
+          "example_ko": "승리의 일타 결승타.",
           "exampleTarget": "the winning hit.",
-          "exampleMeaning": "승리의 일타 결승타. 2.〈사람·인품이〉 매력적인 사람을 끄는."
+          "exampleMeaning": "승리의 일타 결승타."
         },
         {
           "id": "en_12521",
@@ -75915,9 +75915,9 @@
           "pron": "[우이츠]",
           "phonetic": "[우이츠]",
           "example_en": "witches Sabbath.",
-          "example_ko": "마녀 집회. 2.《비격식》 ①추한 여자 추녀; 마귀 할멈. ※ 여성을 모욕하는 말. ②굉장히 매력 있는 여자. 동사 타동사1.…에 마법을 걸다 ; …에 마법을 걸어 〔…으로〕 만들다〔to …〕.",
+          "example_ko": "마녀 집회.",
           "exampleTarget": "witches Sabbath.",
-          "exampleMeaning": "마녀 집회. 2.《비격식》 ①추한 여자 추녀; 마귀 할멈. ※ 여성을 모욕하는 말. ②굉장히 매력 있는 여자. 동사 타동사1.…에 마법을 걸다 ; …에 마법을 걸어 〔…으로〕 만들다〔to …〕."
+          "exampleMeaning": "마녀 집회."
         },
         {
           "id": "en_12522",
@@ -75931,10 +75931,10 @@
           "pronunciation": "[어느우느스어르]",
           "pron": "[어느우느스어르]",
           "phonetic": "[어느우느스어르]",
-          "example_en": "This is an example for announcer.",
-          "example_ko": "이것은 아나운서 고지자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for announcer.",
-          "exampleMeaning": "이것은 아나운서 고지자 관련 실전 예문입니다."
+          "example_en": "The radio announcer shared breaking news this afternoon.",
+          "example_ko": "라디오 아나운서가 오늘 오후에 속보를 전했습니다.",
+          "exampleTarget": "The radio announcer shared breaking news this afternoon.",
+          "exampleMeaning": "라디오 아나운서가 오늘 오후에 속보를 전했습니다."
         },
         {
           "id": "en_12523",
@@ -75949,9 +75949,9 @@
           "pron": "[쉬애므프이느]",
           "phonetic": "[쉬애므프이느]",
           "example_en": "People drank champagne to celebrate New Years Eve.",
-          "example_ko": "사람들은 신년 전야를 축하하기 위해 샴페인을 마셨다. 2.샴페인색 담황색. 형용사1.샴페인의. 2.〈취미등이〉 사치스러운 고급의.",
+          "example_ko": "사람들은 신년 전야를 축하하기 위해 샴페인을 마셨다.",
           "exampleTarget": "People drank champagne to celebrate New Years Eve.",
-          "exampleMeaning": "사람들은 신년 전야를 축하하기 위해 샴페인을 마셨다. 2.샴페인색 담황색. 형용사1.샴페인의. 2.〈취미등이〉 사치스러운 고급의."
+          "exampleMeaning": "사람들은 신년 전야를 축하하기 위해 샴페인을 마셨다."
         },
         {
           "id": "en_12524",
@@ -75965,10 +75965,10 @@
           "pronunciation": "[크아이르]",
           "pron": "[크아이르]",
           "phonetic": "[크아이르]",
-          "example_en": "This is an example for kyle.",
-          "example_ko": "이것은 좁은 수로 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kyle.",
-          "exampleMeaning": "이것은 좁은 수로 관련 실전 예문입니다."
+          "example_en": "Kyle parked his bicycle near the subway entrance.",
+          "example_ko": "카일은 지하철 입구 근처에 자전거를 주차했습니다.",
+          "exampleTarget": "Kyle parked his bicycle near the subway entrance.",
+          "exampleMeaning": "카일은 지하철 입구 근처에 자전거를 주차했습니다."
         },
         {
           "id": "en_12525",
@@ -76000,9 +76000,9 @@
           "pron": "[프오르어느]",
           "phonetic": "[프오르어느]",
           "example_en": "fallen leaves.",
-          "example_ko": "낙엽. 2.〈물건·사람이〉 넘어진 누워 있는 가로놓인; 〈사람이〉 죽은; 《the fallen》《명사적》 《격식》 전사자들.",
+          "example_ko": "낙엽.",
           "exampleTarget": "fallen leaves.",
-          "exampleMeaning": "낙엽. 2.〈물건·사람이〉 넘어진 누워 있는 가로놓인; 〈사람이〉 죽은; 《the fallen》《명사적》 《격식》 전사자들."
+          "exampleMeaning": "낙엽."
         },
         {
           "id": "en_12527",
@@ -76033,10 +76033,10 @@
           "pronunciation": "[므어스이어르]",
           "pron": "[므어스이어르]",
           "phonetic": "[므어스이어르]",
-          "example_en": "This is an example for monsieur.",
-          "example_ko": "이것은 씨 님 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for monsieur.",
-          "exampleMeaning": "이것은 씨 님 관련 실전 예문입니다."
+          "example_en": "The waiter bowed and addressed the guest monsieur.",
+          "example_ko": "웨이터는 고개를 숙이며 손님을 무슈라고 불렀습니다.",
+          "exampleTarget": "The waiter bowed and addressed the guest monsieur.",
+          "exampleMeaning": "웨이터는 고개를 숙이며 손님을 무슈라고 불렀습니다."
         },
         {
           "id": "en_12529",
@@ -76050,10 +76050,10 @@
           "pronunciation": "[크르아르크]",
           "pron": "[크르아르크]",
           "phonetic": "[크르아르크]",
-          "example_en": "This is an example for clark.",
-          "example_ko": "이것은 클라크 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for clark.",
-          "exampleMeaning": "이것은 클라크 남자 관련 실전 예문입니다."
+          "example_en": "Clark printed the contract documents for our signature.",
+          "example_ko": "클라크는 우리가 서명할 계약 문서를 인쇄했습니다.",
+          "exampleTarget": "Clark printed the contract documents for our signature.",
+          "exampleMeaning": "클라크는 우리가 서명할 계약 문서를 인쇄했습니다."
         },
         {
           "id": "en_12530",
@@ -76183,10 +76183,10 @@
           "pronunciation": "[스므우크이으]",
           "pron": "[스므우크이으]",
           "phonetic": "[스므우크이으]",
-          "example_en": "This is an example for smoking.",
-          "example_ko": "이것은 연기 남 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for smoking.",
-          "exampleMeaning": "이것은 연기 남 관련 실전 예문입니다."
+          "example_en": "Public health campaigns actively discourage smoking everywhere.",
+          "example_ko": "공중보건 캠페인은 모든 곳에서 흡연을 적극적으로 말리고 있습니다.",
+          "exampleTarget": "Public health campaigns actively discourage smoking everywhere.",
+          "exampleMeaning": "공중보건 캠페인은 모든 곳에서 흡연을 적극적으로 말리고 있습니다."
         },
         {
           "id": "en_12602",
@@ -76200,10 +76200,10 @@
           "pronunciation": "[흐애으크]",
           "pron": "[흐애으크]",
           "phonetic": "[흐애으크]",
-          "example_en": "This is an example for hank.",
-          "example_ko": "이것은 타래 한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hank.",
-          "exampleMeaning": "이것은 타래 한 관련 실전 예문입니다."
+          "example_en": "Hank helped unload the heavy boxes from delivery.",
+          "example_ko": "행크는 배달된 무거운 상자들을 내리는 것을 도왔습니다.",
+          "exampleTarget": "Hank helped unload the heavy boxes from delivery.",
+          "exampleMeaning": "행크는 배달된 무거운 상자들을 내리는 것을 도왔습니다."
         },
         {
           "id": "en_12603",
@@ -76213,14 +76213,14 @@
           "level": "B2",
           "unitId": "unit_126",
           "nodeId": "en_u126_n1",
-          "meaning": "ls",
+          "meaning": "파일 목록",
           "pronunciation": "[ls]",
           "pron": "[ls]",
           "phonetic": "[ls]",
-          "example_en": "This is an example for ls.",
-          "example_ko": "이것은 ls 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ls.",
-          "exampleMeaning": "이것은 ls 관련 실전 예문입니다."
+          "example_en": "Type ls in the terminal window to see files.",
+          "example_ko": "터미널 창에 ls를 입력하여 파일들을 확인하세요.",
+          "exampleTarget": "Type ls in the terminal window to see files.",
+          "exampleMeaning": "터미널 창에 ls를 입력하여 파일들을 확인하세요."
         },
         {
           "id": "en_12604",
@@ -76235,9 +76235,9 @@
           "pron": "[이프르어르]",
           "phonetic": "[이프르어르]",
           "example_en": "April is the cruelest month.4.",
-          "example_ko": "월은 가장 잔인한 달 〈T.S. Eliot〉. 2.여자 이름.",
+          "example_ko": "월은 가장 잔인한 달 〈T.S. Eliot〉.",
           "exampleTarget": "April is the cruelest month.4.",
-          "exampleMeaning": "월은 가장 잔인한 달 〈T.S. Eliot〉. 2.여자 이름."
+          "exampleMeaning": "월은 가장 잔인한 달 〈T.S. Eliot〉."
         },
         {
           "id": "en_12605",
@@ -76302,10 +76302,10 @@
           "pronunciation": "[브르에이크]",
           "pron": "[브르에이크]",
           "phonetic": "[브르에이크]",
-          "example_en": "This is an example for blake.",
-          "example_ko": "이것은 블레이크 영국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for blake.",
-          "exampleMeaning": "이것은 블레이크 영국의 관련 실전 예문입니다."
+          "example_en": "Blake fixed the broken monitor in five minutes.",
+          "example_ko": "블레이크는 고장 난 모니터를 5분 만에 고쳤습니다.",
+          "exampleTarget": "Blake fixed the broken monitor in five minutes.",
+          "exampleMeaning": "블레이크는 고장 난 모니터를 5분 만에 고쳤습니다."
         },
         {
           "id": "en_12609",
@@ -76319,10 +76319,10 @@
           "pronunciation": "[크애브]",
           "pron": "[크애브]",
           "phonetic": "[크애브]",
-          "example_en": "This is an example for cab.",
-          "example_ko": "이것은 캅 히브리의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cab.",
-          "exampleMeaning": "이것은 캅 히브리의 관련 실전 예문입니다."
+          "example_en": "We took a yellow cab to reach downtown.",
+          "example_ko": "우리는 시내에 가기 위해 노란색 택시를 탔습니다.",
+          "exampleTarget": "We took a yellow cab to reach downtown.",
+          "exampleMeaning": "우리는 시내에 가기 위해 노란색 택시를 탔습니다."
         },
         {
           "id": "en_12610",
@@ -76332,14 +76332,14 @@
           "level": "B2",
           "unitId": "unit_126",
           "nodeId": "en_u126_n1",
-          "meaning": "과거·과거",
+          "meaning": "걸었다",
           "pronunciation": "[흐어으]",
           "pron": "[흐어으]",
           "phonetic": "[흐어으]",
-          "example_en": "This is an example for hung.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hung.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She hung the picture on the wall.",
+          "example_ko": "그녀는 벽에 그림을 걸었다.",
+          "exampleTarget": "She hung the picture on the wall.",
+          "exampleMeaning": "그녀는 벽에 그림을 걸었다."
         },
         {
           "id": "en_12611",
@@ -76353,10 +76353,10 @@
           "pronunciation": "[크애르이드]",
           "pron": "[크애르이드]",
           "phonetic": "[크애르이드]",
-          "example_en": "This is an example for carried.",
-          "example_ko": "이것은 운반된 넋을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carried.",
-          "exampleMeaning": "이것은 운반된 넋을 관련 실전 예문입니다."
+          "example_en": "She carried two grocery bags up the stairs.",
+          "example_ko": "그녀는 식료품 가방 두 개를 들고 계단을 올라갔습니다.",
+          "exampleTarget": "She carried two grocery bags up the stairs.",
+          "exampleMeaning": "그녀는 식료품 가방 두 개를 들고 계단을 올라갔습니다."
         },
         {
           "id": "en_12612",
@@ -76422,9 +76422,9 @@
           "pron": "[츠애트어르]",
           "phonetic": "[츠애트어르]",
           "example_en": "The monkeys were chattering away in the trees.",
-          "example_ko": "원숭이들이 나무에서 요란하게 소리지르고 있었다. 2. 〈사람이〉 〔시시한 내용을〕 재잘재잘 지껄이다 떠들어대다〔away on about …〕.",
+          "example_ko": "원숭이들이 나무에서 요란하게 소리지르고 있었다.",
           "exampleTarget": "The monkeys were chattering away in the trees.",
-          "exampleMeaning": "원숭이들이 나무에서 요란하게 소리지르고 있었다. 2. 〈사람이〉 〔시시한 내용을〕 재잘재잘 지껄이다 떠들어대다〔away on about …〕."
+          "exampleMeaning": "원숭이들이 나무에서 요란하게 소리지르고 있었다."
         },
         {
           "id": "en_12616",
@@ -76438,10 +76438,10 @@
           "pronunciation": "[즈어프애느]",
           "pron": "[즈어프애느]",
           "phonetic": "[즈어프애느]",
-          "example_en": "This is an example for japan.",
-          "example_ko": "이것은 옻칠 칠 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for japan.",
-          "exampleMeaning": "이것은 옻칠 칠 관련 실전 예문입니다."
+          "example_en": "Cherry blossoms bloom early every spring across Japan.",
+          "example_ko": "일본 전역에서는 매년 봄 벚꽃이 일찍 피어납니다.",
+          "exampleTarget": "Cherry blossoms bloom early every spring across Japan.",
+          "exampleMeaning": "일본 전역에서는 매년 봄 벚꽃이 일찍 피어납니다."
         },
         {
           "id": "en_12617",
@@ -76456,9 +76456,9 @@
           "pron": "[크르츠어르]",
           "phonetic": "[크르츠어르]",
           "example_en": "dumb creatures.",
-          "example_ko": "동물. 3.《종종 칭찬·경멸 등을 나타내는 형용사와 함께》 사람 놈 남자 여자 아이.",
+          "example_ko": "동물.",
           "exampleTarget": "dumb creatures.",
-          "exampleMeaning": "동물. 3.《종종 칭찬·경멸 등을 나타내는 형용사와 함께》 사람 놈 남자 여자 아이."
+          "exampleMeaning": "동물."
         },
         {
           "id": "en_12618",
@@ -76473,9 +76473,9 @@
           "pron": "[프오르스]",
           "phonetic": "[프오르스]",
           "example_en": "the Fourth day(.",
-          "example_ko": "퀘이커 교도 사이에서) 수요일. 2.4분의.",
+          "example_ko": "퀘이커 교도 사이에서) 수요일.",
           "exampleTarget": "the Fourth day(.",
-          "exampleMeaning": "퀘이커 교도 사이에서) 수요일. 2.4분의."
+          "exampleMeaning": "퀘이커 교도 사이에서) 수요일."
         },
         {
           "id": "en_12619",
@@ -76506,10 +76506,10 @@
           "pronunciation": "[크애르어프오르느이어]",
           "pron": "[크애르어프오르느이어]",
           "phonetic": "[크애르어프오르느이어]",
-          "example_en": "This is an example for california.",
-          "example_ko": "이것은 캘리포니아 태평양에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for california.",
-          "exampleMeaning": "이것은 캘리포니아 태평양에 관련 실전 예문입니다."
+          "example_en": "Sunny weather makes California pleasant throughout the year.",
+          "example_ko": "화창한 날씨 덕분에 캘리포니아는 일 년 내내 쾌적합니다.",
+          "exampleTarget": "Sunny weather makes California pleasant throughout the year.",
+          "exampleMeaning": "화창한 날씨 덕분에 캘리포니아는 일 년 내내 쾌적합니다."
         },
         {
           "id": "en_12621",
@@ -76519,14 +76519,14 @@
           "level": "B2",
           "unitId": "unit_126",
           "nodeId": "en_u126_n5",
-          "meaning": "lf",
+          "meaning": "줄 바꿈",
           "pronunciation": "[lf]",
           "pron": "[lf]",
           "phonetic": "[lf]",
-          "example_en": "This is an example for lf.",
-          "example_ko": "이것은 lf 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lf.",
-          "exampleMeaning": "이것은 lf 관련 실전 예문입니다."
+          "example_en": "The code uses lf for consistent line endings.",
+          "example_ko": "해당 코드는 일관된 줄 바꿈을 위해 lf를 사용합니다.",
+          "exampleTarget": "The code uses lf for consistent line endings.",
+          "exampleMeaning": "해당 코드는 일관된 줄 바꿈을 위해 lf를 사용합니다."
         },
         {
           "id": "en_12622",
@@ -76536,14 +76536,14 @@
           "level": "B2",
           "unitId": "unit_126",
           "nodeId": "en_u126_n5",
-          "meaning": "ll",
+          "meaning": "할 것이다",
           "pronunciation": "[ll]",
           "pron": "[ll]",
           "phonetic": "[ll]",
-          "example_en": "This is an example for ll.",
-          "example_ko": "이것은 ll 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ll.",
-          "exampleMeaning": "이것은 ll 관련 실전 예문입니다."
+          "example_en": "They ll send the confirmation email very soon.",
+          "example_ko": "그들이 곧 확인 이메일을 보내줄 것입니다.",
+          "exampleTarget": "They ll send the confirmation email very soon.",
+          "exampleMeaning": "그들이 곧 확인 이메일을 보내줄 것입니다."
         },
         {
           "id": "en_12623",
@@ -76557,10 +76557,10 @@
           "pronunciation": "[이르즈어브어스]",
           "pron": "[이르즈어브어스]",
           "phonetic": "[이르즈어브어스]",
-          "example_en": "This is an example for elizabeth.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for elizabeth.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Elizabeth organizes the community book club every month.",
+          "example_ko": "엘리자베스는 매달 지역 독서 모임을 조직합니다.",
+          "exampleTarget": "Elizabeth organizes the community book club every month.",
+          "exampleMeaning": "엘리자베스는 매달 지역 독서 모임을 조직합니다."
         },
         {
           "id": "en_12624",
@@ -76574,10 +76574,10 @@
           "pronunciation": "[쉬이크아오]",
           "pron": "[쉬이크아오]",
           "phonetic": "[쉬이크아오]",
-          "example_en": "This is an example for chicago.",
-          "example_ko": "이것은 시카고 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chicago.",
-          "exampleMeaning": "이것은 시카고 미국 관련 실전 예문입니다."
+          "example_en": "Winter winds blow very cold across downtown Chicago.",
+          "example_ko": "시카고 시내에는 겨울바람이 매우 차갑게 붑니다.",
+          "exampleTarget": "Winter winds blow very cold across downtown Chicago.",
+          "exampleMeaning": "시카고 시내에는 겨울바람이 매우 차갑게 붑니다."
         },
         {
           "id": "en_12625",
@@ -76591,10 +76591,10 @@
           "pronunciation": "[크애르어느]",
           "pron": "[크애르어느]",
           "phonetic": "[크애르어느]",
-          "example_en": "This is an example for karen.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for karen.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Karen baked a tasty lemon pie for dessert.",
+          "example_ko": "카렌은 디저트로 맛있는 레몬 파이를 구웠습니다.",
+          "exampleTarget": "Karen baked a tasty lemon pie for dessert.",
+          "exampleMeaning": "카렌은 디저트로 맛있는 레몬 파이를 구웠습니다."
         },
         {
           "id": "en_12626",
@@ -76608,10 +76608,10 @@
           "pronunciation": "[즈애크스느]",
           "pron": "[즈애크스느]",
           "phonetic": "[즈애크스느]",
-          "example_en": "This is an example for jackson.",
-          "example_ko": "이것은 잭슨 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jackson.",
-          "exampleMeaning": "이것은 잭슨 미국의 관련 실전 예문입니다."
+          "example_en": "Jackson plays the acoustic guitar in our band.",
+          "example_ko": "잭슨은 우리 밴드에서 어쿠스틱 기타를 연주합니다.",
+          "exampleTarget": "Jackson plays the acoustic guitar in our band.",
+          "exampleMeaning": "잭슨은 우리 밴드에서 어쿠스틱 기타를 연주합니다."
         },
         {
           "id": "en_12627",
@@ -76642,10 +76642,10 @@
           "pronunciation": "[드아이]",
           "pron": "[드아이]",
           "phonetic": "[드아이]",
-          "example_en": "This is an example for thy.",
-          "example_ko": "이것은 그대의 당신의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thy.",
-          "exampleMeaning": "이것은 그대의 당신의 관련 실전 예문입니다."
+          "example_en": "Listen closely and obey thy heart always.",
+          "example_ko": "귀를 기울이고 항상 네 마음에 귀 기울여라.",
+          "exampleTarget": "Listen closely and obey thy heart always.",
+          "exampleMeaning": "귀를 기울이고 항상 네 마음에 귀 기울여라."
         },
         {
           "id": "en_12629",
@@ -76676,10 +76676,10 @@
           "pronunciation": "[흐르어느]",
           "pron": "[흐르어느]",
           "phonetic": "[흐르어느]",
-          "example_en": "This is an example for helen.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for helen.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Helen shared her secret recipe for vegetable soup.",
+          "example_ko": "헬렌은 야채수프 비법 레시피를 공유해 주었습니다.",
+          "exampleTarget": "Helen shared her secret recipe for vegetable soup.",
+          "exampleMeaning": "헬렌은 야채수프 비법 레시피를 공유해 주었습니다."
         }
       ],
       "nodes": [
@@ -76826,10 +76826,10 @@
           "pronunciation": "[즈르이]",
           "pron": "[즈르이]",
           "phonetic": "[즈르이]",
-          "example_en": "This is an example for julie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for julie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Julie brought colorful fresh flowers for our reception.",
+          "example_ko": "줄리는 리셉션을 위해 알록달록한 생화를 가져왔습니다.",
+          "exampleTarget": "Julie brought colorful fresh flowers for our reception.",
+          "exampleMeaning": "줄리는 리셉션을 위해 알록달록한 생화를 가져왔습니다."
         },
         {
           "id": "en_12704",
@@ -76843,10 +76843,10 @@
           "pronunciation": "[브르우]",
           "pron": "[브르우]",
           "phonetic": "[브르우]",
-          "example_en": "This is an example for blew.",
-          "example_ko": "이것은 ²의 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for blew.",
-          "exampleMeaning": "이것은 ²의 과거형 관련 실전 예문입니다."
+          "example_en": "A strong wind blew across the lake.",
+          "example_ko": "호수 위로 거센 바람이 불었다.",
+          "exampleTarget": "A strong wind blew across the lake.",
+          "exampleMeaning": "호수 위로 거센 바람이 불었다."
         },
         {
           "id": "en_12705",
@@ -76860,10 +76860,10 @@
           "pronunciation": "[브크트어르]",
           "pron": "[브크트어르]",
           "phonetic": "[브크트어르]",
-          "example_en": "This is an example for victor.",
-          "example_ko": "이것은 정복자 전승자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for victor.",
-          "exampleMeaning": "이것은 정복자 전승자 관련 실전 예문입니다."
+          "example_en": "The victor smiled proudly on the podium today.",
+          "example_ko": "승리자는 오늘 시상대 위에서 자랑스럽게 미소를 지었습니다.",
+          "exampleTarget": "The victor smiled proudly on the podium today.",
+          "exampleMeaning": "승리자는 오늘 시상대 위에서 자랑스럽게 미소를 지었습니다."
         },
         {
           "id": "en_12706",
@@ -76911,10 +76911,10 @@
           "pronunciation": "[트느]",
           "pron": "[트느]",
           "phonetic": "[트느]",
-          "example_en": "This is an example for eaten.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for eaten.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "Have you eaten dinner already?",
+          "example_ko": "너는 벌써 저녁을 다 먹었니?",
+          "exampleTarget": "Have you eaten dinner already?",
+          "exampleMeaning": "너는 벌써 저녁을 다 먹었니?"
         },
         {
           "id": "en_12709",
@@ -76928,10 +76928,10 @@
           "pronunciation": "[트이르어르]",
           "pron": "[트이르어르]",
           "phonetic": "[트이르어르]",
-          "example_en": "This is an example for taylor.",
-          "example_ko": "이것은 테일러 영국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for taylor.",
-          "exampleMeaning": "이것은 테일러 영국의 관련 실전 예문입니다."
+          "example_en": "Taylor designed the stylish logo for our brand.",
+          "example_ko": "테일러는 우리 브랜드를 위한 멋진 로고를 디자인했습니다.",
+          "exampleTarget": "Taylor designed the stylish logo for our brand.",
+          "exampleMeaning": "테일러는 우리 브랜드를 위한 멋진 로고를 디자인했습니다."
         },
         {
           "id": "en_12710",
@@ -76963,9 +76963,9 @@
           "pron": "[스트에어르이으]",
           "phonetic": "[스트에어르이으]",
           "example_en": "a picture painted in staring colors.",
-          "example_ko": "화려한 색으로 그린 그림. 3.털이 곤두선. 부사아주 전혀.",
+          "example_ko": "화려한 색으로 그린 그림.",
           "exampleTarget": "a picture painted in staring colors.",
-          "exampleMeaning": "화려한 색으로 그린 그림. 3.털이 곤두선. 부사아주 전혀."
+          "exampleMeaning": "화려한 색으로 그린 그림."
         },
         {
           "id": "en_12712",
@@ -76979,10 +76979,10 @@
           "pronunciation": "[오르드느]",
           "pron": "[오르드느]",
           "phonetic": "[오르드느]",
-          "example_en": "This is an example for gordon.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gordon.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Gordon prepared a delicious gourmet dinner tonight.",
+          "example_ko": "고든은 오늘 밤 맛있는 고급 저녁 식사를 준비했습니다.",
+          "exampleTarget": "Gordon prepared a delicious gourmet dinner tonight.",
+          "exampleMeaning": "고든은 오늘 밤 맛있는 고급 저녁 식사를 준비했습니다."
         },
         {
           "id": "en_12713",
@@ -77047,10 +77047,10 @@
           "pronunciation": "[즈우이]",
           "pron": "[즈우이]",
           "phonetic": "[즈우이]",
-          "example_en": "This is an example for joey.",
-          "example_ko": "이것은 펜스 동전 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for joey.",
-          "exampleMeaning": "이것은 펜스 동전 관련 실전 예문입니다."
+          "example_en": "Joey ordered a large pepperoni pizza for everyone.",
+          "example_ko": "조이는 모두를 위해 커다란 페퍼로니 피자를 주문했습니다.",
+          "exampleTarget": "Joey ordered a large pepperoni pizza for everyone.",
+          "exampleMeaning": "조이는 모두를 위해 커다란 페퍼로니 피자를 주문했습니다."
         },
         {
           "id": "en_12717",
@@ -77099,9 +77099,9 @@
           "pron": "[이므느]",
           "phonetic": "[이므느]",
           "example_en": "Amen to that.",
-          "example_ko": "그것에 동감 이의 없음. 명사1.아멘이라고 하기; 그 말투.",
+          "example_ko": "그것에 동감 이의 없음.",
           "exampleTarget": "Amen to that.",
-          "exampleMeaning": "그것에 동감 이의 없음. 명사1.아멘이라고 하기; 그 말투."
+          "exampleMeaning": "그것에 동감 이의 없음."
         },
         {
           "id": "en_12720",
@@ -77149,10 +77149,10 @@
           "pronunciation": "[므프어르어르]",
           "pron": "[므프어르어르]",
           "phonetic": "[므프어르어르]",
-          "example_en": "This is an example for emperor.",
-          "example_ko": "이것은 황제 제왕 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for emperor.",
-          "exampleMeaning": "이것은 황제 제왕 관련 실전 예문입니다."
+          "example_en": "The powerful emperor ruled the land for decades.",
+          "example_ko": "강력한 황제는 수십 년 동안 그 영토를 다스렸습니다.",
+          "exampleTarget": "The powerful emperor ruled the land for decades.",
+          "exampleMeaning": "강력한 황제는 수십 년 동안 그 영토를 다스렸습니다."
         },
         {
           "id": "en_12723",
@@ -77166,10 +77166,10 @@
           "pronunciation": "[므크스이크우]",
           "pron": "[므크스이크우]",
           "phonetic": "[므크스이크우]",
-          "example_en": "This is an example for mexico.",
-          "example_ko": "이것은 멕시코 북미 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mexico.",
-          "exampleMeaning": "이것은 멕시코 북미 관련 실전 예문입니다."
+          "example_en": "We spent two sunny weeks traveling around Mexico.",
+          "example_ko": "우리는 멕시코 전역을 여행하며 화창한 2주를 보냈습니다.",
+          "exampleTarget": "We spent two sunny weeks traveling around Mexico.",
+          "exampleMeaning": "우리는 멕시코 전역을 여행하며 화창한 2주를 보냈습니다."
         },
         {
           "id": "en_12724",
@@ -77184,9 +77184,9 @@
           "pron": "[르이]",
           "phonetic": "[르이]",
           "example_en": "gild the lily(.",
-          "example_ko": "아름다운 것에) 멋없는 장식을 하다. 5.（특히 화장품의） 백합 향기. 6.남자답지 않은 남자; 호모. 숙어 gild the lily; paint the lily 이미 완벽한 것에 쓸데없이 손을 보다. lilies and roses 《비유》 흰 얼굴빛 미모. 형용사1.백합의 백합같이 흰. 2.〈여성이〉 섬세하고 아름다운; 순수한; 티 없는 오점 없는.",
+          "example_ko": "아름다운 것에) 멋없는 장식을 하다.",
           "exampleTarget": "gild the lily(.",
-          "exampleMeaning": "아름다운 것에) 멋없는 장식을 하다. 5.（특히 화장품의） 백합 향기. 6.남자답지 않은 남자; 호모. 숙어 gild the lily; paint the lily 이미 완벽한 것에 쓸데없이 손을 보다. lilies and roses 《비유》 흰 얼굴빛 미모. 형용사1.백합의 백합같이 흰. 2.〈여성이〉 섬세하고 아름다운; 순수한; 티 없는 오점 없는."
+          "exampleMeaning": "아름다운 것에) 멋없는 장식을 하다."
         },
         {
           "id": "en_12725",
@@ -77201,9 +77201,9 @@
           "pron": "[애크트어르]",
           "phonetic": "[애크트어르]",
           "example_en": "a film actor.",
-          "example_ko": "영화 배우. 2.행위자; （사건 등의） 관여자 관계자. 3.비행자; 망나니. 4.《형용사와 함께》 믿지못할 사람; 고약한 사람.",
+          "example_ko": "영화 배우.",
           "exampleTarget": "a film actor.",
-          "exampleMeaning": "영화 배우. 2.행위자; （사건 등의） 관여자 관계자. 3.비행자; 망나니. 4.《형용사와 함께》 믿지못할 사람; 고약한 사람."
+          "exampleMeaning": "영화 배우."
         },
         {
           "id": "en_12726",
@@ -77217,10 +77217,10 @@
           "pronunciation": "[르에]",
           "pron": "[르에]",
           "phonetic": "[르에]",
-          "example_en": "This is an example for greg.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for greg.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Greg works as a software engineer at Google.",
+          "example_ko": "그렉은 구글에서 소프트웨어 엔지니어로 일합니다.",
+          "exampleTarget": "Greg works as a software engineer at Google.",
+          "exampleMeaning": "그렉은 구글에서 소프트웨어 엔지니어로 일합니다."
         },
         {
           "id": "en_12727",
@@ -77269,9 +77269,9 @@
           "pron": "[즈오느즈]",
           "phonetic": "[즈오느즈]",
           "example_en": "keep up with the Jones.",
-          "example_ko": "헤로인을 상용하다. ②강한 흥미. 숙어 get ones Jones 간절히 원하는 것을 얻다. keep up with the Joneses 《구어》 이웃에 지지 않으려고 허세를 부리다.",
+          "example_ko": "헤로인을 상용하다. ②강한 흥미.",
           "exampleTarget": "keep up with the Jones.",
-          "exampleMeaning": "헤로인을 상용하다. ②강한 흥미. 숙어 get ones Jones 간절히 원하는 것을 얻다. keep up with the Joneses 《구어》 이웃에 지지 않으려고 허세를 부리다."
+          "exampleMeaning": "헤로인을 상용하다. ②강한 흥미."
         },
         {
           "id": "en_12730",
@@ -77286,9 +77286,9 @@
           "pron": "[츠우즈느]",
           "phonetic": "[츠우즈느]",
           "example_en": "a chosen few.",
-          "example_ko": "선택된 소수의 엘리트. 2.좋아하는.",
+          "example_ko": "선택된 소수의 엘리트.",
           "exampleTarget": "a chosen few.",
-          "exampleMeaning": "선택된 소수의 엘리트. 2.좋아하는."
+          "exampleMeaning": "선택된 소수의 엘리트."
         }
       ],
       "nodes": [
@@ -77401,10 +77401,10 @@
           "pronunciation": "[즈르이어]",
           "pron": "[즈르이어]",
           "phonetic": "[즈르이어]",
-          "example_en": "This is an example for julia.",
-          "example_ko": "이것은 여자이름 Julius에서 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for julia.",
-          "exampleMeaning": "이것은 여자이름 Julius에서 관련 실전 예문입니다."
+          "example_en": "Julia adopted a friendly rescue dog last Saturday.",
+          "example_ko": "줄리아는 지난 토요일 친근한 유기견을 입양했습니다.",
+          "exampleTarget": "Julia adopted a friendly rescue dog last Saturday.",
+          "exampleMeaning": "줄리아는 지난 토요일 친근한 유기견을 입양했습니다."
         },
         {
           "id": "en_12802",
@@ -77452,10 +77452,10 @@
           "pronunciation": "[스프느드이으]",
           "pron": "[스프느드이으]",
           "phonetic": "[스프느드이으]",
-          "example_en": "This is an example for spending.",
-          "example_ko": "이것은 지출 소비 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spending.",
-          "exampleMeaning": "이것은 지출 소비 관련 실전 예문입니다."
+          "example_en": "Careful budget spending helps avoid unnecessary debts later.",
+          "example_ko": "신중한 예산 지출은 나중에 불필요한 빚을 피하는 데 도움이 됩니다.",
+          "exampleTarget": "Careful budget spending helps avoid unnecessary debts later.",
+          "exampleMeaning": "신중한 예산 지출은 나중에 불필요한 빚을 피하는 데 도움이 됩니다."
         },
         {
           "id": "en_12805",
@@ -77470,9 +77470,9 @@
           "pron": "[르어르느이으]",
           "phonetic": "[르어르느이으]",
           "example_en": "a man of profound learning.",
-          "example_ko": "학문에 조예가 깊은 사람. 2.학습 배우기 익히기 외기 습득; 〔심리학〕 학습.",
+          "example_ko": "학문에 조예가 깊은 사람.",
           "exampleTarget": "a man of profound learning.",
-          "exampleMeaning": "학문에 조예가 깊은 사람. 2.학습 배우기 익히기 외기 습득; 〔심리학〕 학습."
+          "exampleMeaning": "학문에 조예가 깊은 사람."
         },
         {
           "id": "en_12806",
@@ -77520,10 +77520,10 @@
           "pronunciation": "[즈이므이]",
           "pron": "[즈이므이]",
           "phonetic": "[즈이므이]",
-          "example_en": "This is an example for jamie.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jamie.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Jamie plays soccer with friends every Sunday afternoon.",
+          "example_ko": "제이미는 매주 일요일 오후마다 친구들과 축구를 합니다.",
+          "exampleTarget": "Jamie plays soccer with friends every Sunday afternoon.",
+          "exampleMeaning": "제이미는 매주 일요일 오후마다 친구들과 축구를 합니다."
         },
         {
           "id": "en_12809",
@@ -77572,9 +77572,9 @@
           "pron": "[프쉬이으]",
           "phonetic": "[프쉬이으]",
           "example_en": "do fishing.",
-          "example_ko": "낚시질을 하다. 2.어장 낚시터.",
+          "example_ko": "낚시질을 하다.",
           "exampleTarget": "do fishing.",
-          "exampleMeaning": "낚시질을 하다. 2.어장 낚시터."
+          "exampleMeaning": "낚시질을 하다."
         },
         {
           "id": "en_12812",
@@ -77589,9 +77589,9 @@
           "pron": "[스어므트이므]",
           "phonetic": "[스어므트이므]",
           "example_en": "sometime ago.",
-          "example_ko": "얼마 전에. 2.（미래의） 언젠가 머지않아 훗날에.",
+          "example_ko": "얼마 전에.",
           "exampleTarget": "sometime ago.",
-          "exampleMeaning": "얼마 전에. 2.（미래의） 언젠가 머지않아 훗날에."
+          "exampleMeaning": "얼마 전에."
         },
         {
           "id": "en_12813",
@@ -77656,10 +77656,10 @@
           "pronunciation": "[그애스프이으]",
           "pron": "[그애스프이으]",
           "phonetic": "[그애스프이으]",
-          "example_en": "This is an example for gasping.",
-          "example_ko": "이것은 숨이 턱 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gasping.",
-          "exampleMeaning": "이것은 숨이 턱 관련 실전 예문입니다."
+          "example_en": "The tired runner was gasping after the steep climb.",
+          "example_ko": "지친 달리기 주자는 가파른 언덕을 오른 뒤 숨을 헐떡이고 있었습니다.",
+          "exampleTarget": "The tired runner was gasping after the steep climb.",
+          "exampleMeaning": "지친 달리기 주자는 가파른 언덕을 오른 뒤 숨을 헐떡이고 있었습니다."
         },
         {
           "id": "en_12817",
@@ -77690,10 +77690,10 @@
           "pronunciation": "[르아브이느]",
           "pron": "[르아브이느]",
           "phonetic": "[르아브이느]",
-          "example_en": "This is an example for robin.",
-          "example_ko": "이것은 지빠귓과 울새속의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for robin.",
-          "exampleMeaning": "이것은 지빠귓과 울새속의 관련 실전 예문입니다."
+          "example_en": "A cheerful robin sang sweetly in the garden tree.",
+          "example_ko": "명랑한 울새 한 마리가 정원 나무에서 감미롭게 노래했습니다.",
+          "exampleTarget": "A cheerful robin sang sweetly in the garden tree.",
+          "exampleMeaning": "명랑한 울새 한 마리가 정원 나무에서 감미롭게 노래했습니다."
         },
         {
           "id": "en_12819",
@@ -77741,10 +77741,10 @@
           "pronunciation": "[이드]",
           "pron": "[이드]",
           "phonetic": "[이드]",
-          "example_en": "This is an example for id.",
-          "example_ko": "이것은 이드 본능적 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for id.",
-          "exampleMeaning": "이것은 이드 본능적 관련 실전 예문입니다."
+          "example_en": "Please show your employee id card at the entrance.",
+          "example_ko": "입구에서 직원 신분증 카드를 보여주시기 바랍니다.",
+          "exampleTarget": "Please show your employee id card at the entrance.",
+          "exampleMeaning": "입구에서 직원 신분증 카드를 보여주시기 바랍니다."
         },
         {
           "id": "en_12822",
@@ -77754,14 +77754,14 @@
           "level": "B2",
           "unitId": "unit_128",
           "nodeId": "en_u128_n5",
-          "meaning": "maggie",
+          "meaning": "매기",
           "pronunciation": "[므애이]",
           "pron": "[므애이]",
           "phonetic": "[므애이]",
-          "example_en": "This is an example for maggie.",
-          "example_ko": "이것은 maggie 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for maggie.",
-          "exampleMeaning": "이것은 maggie 관련 실전 예문입니다."
+          "example_en": "Maggie painted a lovely landscape during art class.",
+          "example_ko": "매기는 미술 수업 시간에 아름다운 풍경화를 그렸습니다.",
+          "exampleTarget": "Maggie painted a lovely landscape during art class.",
+          "exampleMeaning": "매기는 미술 수업 시간에 아름다운 풍경화를 그렸습니다."
         },
         {
           "id": "en_12823",
@@ -77844,9 +77844,9 @@
           "pron": "[스아브]",
           "phonetic": "[스아브]",
           "example_en": "sob with fear.",
-          "example_ko": "무서워서 흐느껴 울다. 2.〈바람·물결·기계가〉 흐느끼듯 소리내다; 〈동물이〉 흐느끼듯 신음하다. 타동사1. …을 흐느끼며 말하다〔out〕.",
+          "example_ko": "무서워서 흐느껴 울다.",
           "exampleTarget": "sob with fear.",
-          "exampleMeaning": "무서워서 흐느껴 울다. 2.〈바람·물결·기계가〉 흐느끼듯 소리내다; 〈동물이〉 흐느끼듯 신음하다. 타동사1. …을 흐느끼며 말하다〔out〕."
+          "exampleMeaning": "무서워서 흐느껴 울다."
         },
         {
           "id": "en_12828",
@@ -77877,10 +77877,10 @@
           "pronunciation": "[므아르트이]",
           "pron": "[므아르트이]",
           "phonetic": "[므아르트이]",
-          "example_en": "This is an example for marty.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for marty.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Marty checked the train schedule on his smartphone.",
+          "example_ko": "마티는 스마트폰으로 기차 시간표를 확인했습니다.",
+          "exampleTarget": "Marty checked the train schedule on his smartphone.",
+          "exampleMeaning": "마티는 스마트폰으로 기차 시간표를 확인했습니다."
         },
         {
           "id": "en_12830",
@@ -77895,9 +77895,9 @@
           "pron": "[트르애쉬]",
           "phonetic": "[트르애쉬]",
           "example_en": "Some people dump their trash on the street.",
-          "example_ko": "쓰레기를 길에 버리는 사람들도 있다. 2.《비격식》 하찮은 것; 쓸데없는 생각 허튼소리 시시한 이야기 잡담; （예술·문학의） 졸작.",
+          "example_ko": "쓰레기를 길에 버리는 사람들도 있다.",
           "exampleTarget": "Some people dump their trash on the street.",
-          "exampleMeaning": "쓰레기를 길에 버리는 사람들도 있다. 2.《비격식》 하찮은 것; 쓸데없는 생각 허튼소리 시시한 이야기 잡담; （예술·문학의） 졸작."
+          "exampleMeaning": "쓰레기를 길에 버리는 사람들도 있다."
         }
       ],
       "nodes": [
@@ -78010,10 +78010,10 @@
           "pronunciation": "[흐우어르드]",
           "pron": "[흐우어르드]",
           "phonetic": "[흐우어르드]",
-          "example_en": "This is an example for howard.",
-          "example_ko": "이것은 하워드 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for howard.",
-          "exampleMeaning": "이것은 하워드 남자 관련 실전 예문입니다."
+          "example_en": "Howard repaired the leaking pipe in the basement.",
+          "example_ko": "하워드는 지하실의 물이 새는 배관을 수리했습니다.",
+          "exampleTarget": "Howard repaired the leaking pipe in the basement.",
+          "exampleMeaning": "하워드는 지하실의 물이 새는 배관을 수리했습니다."
         },
         {
           "id": "en_12902",
@@ -78027,10 +78027,10 @@
           "pronunciation": "[프어스우드]",
           "pron": "[프어스우드]",
           "phonetic": "[프어스우드]",
-          "example_en": "This is an example for episode.",
-          "example_ko": "이것은 삽화적인 사건 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for episode.",
-          "exampleMeaning": "이것은 삽화적인 사건 관련 실전 예문입니다."
+          "example_en": "Tonight we will watch the final season episode.",
+          "example_ko": "오늘 밤 우리는 이번 시즌 마지막 에피소드를 시청할 것입니다.",
+          "exampleTarget": "Tonight we will watch the final season episode.",
+          "exampleMeaning": "오늘 밤 우리는 이번 시즌 마지막 에피소드를 시청할 것입니다."
         },
         {
           "id": "en_12903",
@@ -78062,9 +78062,9 @@
           "pron": "[우아느트이으]",
           "phonetic": "[우아느트이으]",
           "example_en": "I will make sure that nothing is wanting.",
-          "example_ko": "모자라는 것이 없는지 확인하겠다. 2.《격식》 〈사람 등이〉 〔…이〕 부족한 빠져 있는〔in …〕; 〔…에 응할〕 힘이 없는〔to …〕.",
+          "example_ko": "모자라는 것이 없는지 확인하겠다.",
           "exampleTarget": "I will make sure that nothing is wanting.",
-          "exampleMeaning": "모자라는 것이 없는지 확인하겠다. 2.《격식》 〈사람 등이〉 〔…이〕 부족한 빠져 있는〔in …〕; 〔…에 응할〕 힘이 없는〔to …〕."
+          "exampleMeaning": "모자라는 것이 없는지 확인하겠다."
         },
         {
           "id": "en_12905",
@@ -78078,10 +78078,10 @@
           "pronunciation": "[흐트르어르]",
           "pron": "[흐트르어르]",
           "phonetic": "[흐트르어르]",
-          "example_en": "This is an example for hitler.",
-          "example_ko": "이것은 히틀러 독일의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hitler.",
-          "exampleMeaning": "이것은 히틀러 독일의 관련 실전 예문입니다."
+          "example_en": "History textbooks detail how Hitler started the war.",
+          "example_ko": "역사 교과서는 히틀러가 어떻게 전쟁을 일으켰는지 자세히 다룹니다.",
+          "exampleTarget": "History textbooks detail how Hitler started the war.",
+          "exampleMeaning": "역사 교과서는 히틀러가 어떻게 전쟁을 일으켰는지 자세히 다룹니다."
         },
         {
           "id": "en_12906",
@@ -78095,10 +78095,10 @@
           "pronunciation": "[드이]",
           "pron": "[드이]",
           "phonetic": "[드이]",
-          "example_en": "This is an example for thee.",
-          "example_ko": "이것은 그대를 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thee.",
-          "exampleMeaning": "이것은 그대를 관련 실전 예문입니다."
+          "example_en": "I give thee my honest promise today.",
+          "example_ko": "오늘 그대에게 나의 진실한 약속을 드립니다.",
+          "exampleTarget": "I give thee my honest promise today.",
+          "exampleMeaning": "오늘 그대에게 나의 진실한 약속을 드립니다."
         },
         {
           "id": "en_12907",
@@ -78129,10 +78129,10 @@
           "pronunciation": "[느오르므어르이]",
           "pron": "[느오르므어르이]",
           "phonetic": "[느오르므어르이]",
-          "example_en": "This is an example for normally.",
-          "example_ko": "이것은 규칙 따라서 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for normally.",
-          "exampleMeaning": "이것은 규칙 따라서 관련 실전 예문입니다."
+          "example_en": "We normally eat lunch around twelve thirty noon.",
+          "example_ko": "우리는 보통 낮 12시 30분쯤에 점심을 먹습니다.",
+          "exampleTarget": "We normally eat lunch around twelve thirty noon.",
+          "exampleMeaning": "우리는 보통 낮 12시 30분쯤에 점심을 먹습니다."
         },
         {
           "id": "en_12909",
@@ -78163,10 +78163,10 @@
           "pronunciation": "[브르아브오]",
           "pron": "[브르아브오]",
           "phonetic": "[브르아브오]",
-          "example_en": "This is an example for bravo.",
-          "example_ko": "이것은 브라보 잘한다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bravo.",
-          "exampleMeaning": "이것은 브라보 잘한다 관련 실전 예문입니다."
+          "example_en": "The happy crowd shouted bravo after the show.",
+          "example_ko": "행복한 군중은 공연이 끝난 뒤 브라보라고 환호했습니다.",
+          "exampleTarget": "The happy crowd shouted bravo after the show.",
+          "exampleMeaning": "행복한 군중은 공연이 끝난 뒤 브라보라고 환호했습니다."
         },
         {
           "id": "en_12911",
@@ -78181,9 +78181,9 @@
           "pron": "[르에이프]",
           "phonetic": "[르에이프]",
           "example_en": "a partial rape.",
-          "example_ko": "강간 미수. 2.《고어·시어》 강탈 （행위） 약탈; （자연의） 파괴; （정의 등의） 침범.",
+          "example_ko": "강간 미수.",
           "exampleTarget": "a partial rape.",
-          "exampleMeaning": "강간 미수. 2.《고어·시어》 강탈 （행위） 약탈; （자연의） 파괴; （정의 등의） 침범."
+          "exampleMeaning": "강간 미수."
         },
         {
           "id": "en_12912",
@@ -78197,10 +78197,10 @@
           "pronunciation": "[르우르이으]",
           "pron": "[르우르이으]",
           "phonetic": "[르우르이으]",
-          "example_en": "This is an example for growling.",
-          "example_ko": "이것은 으르렁 거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for growling.",
-          "exampleMeaning": "이것은 으르렁 거리는 관련 실전 예문입니다."
+          "example_en": "A fierce dog was growling behind the fence.",
+          "example_ko": "사나운 개 한 마리가 울타리 뒤에서 으르렁거리고 있었습니다.",
+          "exampleTarget": "A fierce dog was growling behind the fence.",
+          "exampleMeaning": "사나운 개 한 마리가 울타리 뒤에서 으르렁거리고 있었습니다."
         },
         {
           "id": "en_12913",
@@ -78214,10 +78214,10 @@
           "pronunciation": "[스르오느]",
           "pron": "[스르오느]",
           "phonetic": "[스르오느]",
-          "example_en": "This is an example for thrown.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thrown.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "The ball was thrown very high.",
+          "example_ko": "공이 매우 높이 던져졌다.",
+          "exampleTarget": "The ball was thrown very high.",
+          "exampleMeaning": "공이 매우 높이 던져졌다."
         },
         {
           "id": "en_12914",
@@ -78316,10 +78316,10 @@
           "pronunciation": "[브아르이]",
           "pron": "[브아르이]",
           "phonetic": "[브아르이]",
-          "example_en": "This is an example for barry.",
-          "example_ko": "이것은 두 지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for barry.",
-          "exampleMeaning": "이것은 두 지 관련 실전 예문입니다."
+          "example_en": "Barry carried the heavy luggage to the car.",
+          "example_ko": "배리는 무거운 짐을 차까지 날랐습니다.",
+          "exampleTarget": "Barry carried the heavy luggage to the car.",
+          "exampleMeaning": "배리는 무거운 짐을 차까지 날랐습니다."
         },
         {
           "id": "en_12920",
@@ -78350,10 +78350,10 @@
           "pronunciation": "[이아르드]",
           "pron": "[이아르드]",
           "phonetic": "[이아르드]",
-          "example_en": "This is an example for yard.",
-          "example_ko": "이것은 집 정 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yard.",
-          "exampleMeaning": "이것은 집 정 관련 실전 예문입니다."
+          "example_en": "Children love playing games in the back yard.",
+          "example_ko": "아이들은 뒤뜰에서 게임을 하며 노는 것을 아주 좋아합니다.",
+          "exampleTarget": "Children love playing games in the back yard.",
+          "exampleMeaning": "아이들은 뒤뜰에서 게임을 하며 노는 것을 아주 좋아합니다."
         },
         {
           "id": "en_12922",
@@ -78401,10 +78401,10 @@
           "pronunciation": "[애느]",
           "pron": "[애느]",
           "phonetic": "[애느]",
-          "example_en": "This is an example for anne.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for anne.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Anne wrote an insightful review about the novel.",
+          "example_ko": "앤은 그 소설에 대한 통찰력 있는 서평을 작성했습니다.",
+          "exampleTarget": "Anne wrote an insightful review about the novel.",
+          "exampleMeaning": "앤은 그 소설에 대한 통찰력 있는 서평을 작성했습니다."
         },
         {
           "id": "en_12925",
@@ -78436,9 +78436,9 @@
           "pron": "[이므우쉬어느르]",
           "phonetic": "[이므우쉬어느르]",
           "example_en": "an emotional disturbance.",
-          "example_ko": "정서 장애. 2.《보통 서술적》 〈사람이〉 감정적인 정에 약한 마음이 여린.",
+          "example_ko": "정서 장애.",
           "exampleTarget": "an emotional disturbance.",
-          "exampleMeaning": "정서 장애. 2.《보통 서술적》 〈사람이〉 감정적인 정에 약한 마음이 여린."
+          "exampleMeaning": "정서 장애."
         },
         {
           "id": "en_12927",
@@ -78453,9 +78453,9 @@
           "pron": "[스트이으]",
           "phonetic": "[스트이으]",
           "example_en": "the setting of the moon.",
-          "example_ko": "달의 짐. 3.《보통 단수형》 주위의 상태 환경.",
+          "example_ko": "달의 짐.",
           "exampleTarget": "the setting of the moon.",
-          "exampleMeaning": "달의 짐. 3.《보통 단수형》 주위의 상태 환경."
+          "exampleMeaning": "달의 짐."
         },
         {
           "id": "en_12928",
@@ -78487,9 +78487,9 @@
           "pron": "[스느어트어르]",
           "phonetic": "[스느어트어르]",
           "example_en": "Senator Edward Kennedy.",
-          "example_ko": "에드워드 케네디 상원 의원. 2.（고대 로마의） 원로원 의원. 3.（대학의） 이사.",
+          "example_ko": "에드워드 케네디 상원 의원.",
           "exampleTarget": "Senator Edward Kennedy.",
-          "exampleMeaning": "에드워드 케네디 상원 의원. 2.（고대 로마의） 원로원 의원. 3.（대학의） 이사."
+          "exampleMeaning": "에드워드 케네디 상원 의원."
         },
         {
           "id": "en_12930",
@@ -78615,14 +78615,14 @@
           "level": "B2",
           "unitId": "unit_130",
           "nodeId": "en_u130_n1",
-          "meaning": "과거·과거",
+          "meaning": "먹였다",
           "pronunciation": "[프에드]",
           "pron": "[프에드]",
           "phonetic": "[프에드]",
-          "example_en": "This is an example for fed.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fed.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She fed the hungry dog.",
+          "example_ko": "그녀는 배고픈 강아지에게 밥을 주었다.",
+          "exampleTarget": "She fed the hungry dog.",
+          "exampleMeaning": "그녀는 배고픈 강아지에게 밥을 주었다."
         },
         {
           "id": "en_13002",
@@ -78636,10 +78636,10 @@
           "pronunciation": "[즈아느스느]",
           "pron": "[즈아느스느]",
           "phonetic": "[즈아느스느]",
-          "example_en": "This is an example for johnson.",
-          "example_ko": "이것은 존슨 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for johnson.",
-          "exampleMeaning": "이것은 존슨 미국의 관련 실전 예문입니다."
+          "example_en": "Professor Johnson explained the difficult math concept clearly.",
+          "example_ko": "존슨 교수님은 어려운 수학 개념을 명확하게 설명해 주셨습니다.",
+          "exampleTarget": "Professor Johnson explained the difficult math concept clearly.",
+          "exampleMeaning": "존슨 교수님은 어려운 수학 개념을 명확하게 설명해 주셨습니다."
         },
         {
           "id": "en_13003",
@@ -78653,10 +78653,10 @@
           "pronunciation": "[프애트르이크]",
           "pron": "[프애트르이크]",
           "phonetic": "[프애트르이크]",
-          "example_en": "This is an example for patrick.",
-          "example_ko": "이것은 성 패트릭 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for patrick.",
-          "exampleMeaning": "이것은 성 패트릭 관련 실전 예문입니다."
+          "example_en": "Patrick cleaned the kitchen counter after cooking dinner.",
+          "example_ko": "패트릭은 저녁 식사를 준비한 후 주방 조리대를 닦았습니다.",
+          "exampleTarget": "Patrick cleaned the kitchen counter after cooking dinner.",
+          "exampleMeaning": "패트릭은 저녁 식사를 준비한 후 주방 조리대를 닦았습니다."
         },
         {
           "id": "en_13004",
@@ -78722,9 +78722,9 @@
           "pron": "[므어므이]",
           "phonetic": "[므어므이]",
           "example_en": "a mummy case.",
-          "example_ko": "미라의 관. 2.（미라처럼） 말라빠진 사람 생기 없는 사람; 형해. 동사 자동사＝mummify.",
+          "example_ko": "미라의 관.",
           "exampleTarget": "a mummy case.",
-          "exampleMeaning": "미라의 관. 2.（미라처럼） 말라빠진 사람 생기 없는 사람; 형해. 동사 자동사＝mummify."
+          "exampleMeaning": "미라의 관."
         },
         {
           "id": "en_13008",
@@ -78738,10 +78738,10 @@
           "pronunciation": "[애느드르우]",
           "pron": "[애느드르우]",
           "phonetic": "[애느드르우]",
-          "example_en": "This is an example for andrew.",
-          "example_ko": "이것은 안드레 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for andrew.",
-          "exampleMeaning": "이것은 안드레 남자 관련 실전 예문입니다."
+          "example_en": "Andrew will host the opening party this Friday.",
+          "example_ko": "앤드루는 이번 주 금요일 개업 파티를 진행할 예정입니다.",
+          "exampleTarget": "Andrew will host the opening party this Friday.",
+          "exampleMeaning": "앤드루는 이번 주 금요일 개업 파티를 진행할 예정입니다."
         },
         {
           "id": "en_13009",
@@ -78751,14 +78751,14 @@
           "level": "B2",
           "unitId": "unit_130",
           "nodeId": "en_u130_n1",
-          "meaning": "fellas",
+          "meaning": "친구들",
           "pronunciation": "[프르어]",
           "pron": "[프르어]",
           "phonetic": "[프르어]",
-          "example_en": "This is an example for fellas.",
-          "example_ko": "이것은 fellas 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fellas.",
-          "exampleMeaning": "이것은 fellas 관련 실전 예문입니다."
+          "example_en": "Listen up fellas because we have big news.",
+          "example_ko": "친구들 큰 소식이 있으니 모두 주목해 봐요.",
+          "exampleTarget": "Listen up fellas because we have big news.",
+          "exampleMeaning": "친구들 큰 소식이 있으니 모두 주목해 봐요."
         },
         {
           "id": "en_13010",
@@ -78789,10 +78789,10 @@
           "pronunciation": "[브르우이으]",
           "pron": "[브르우이으]",
           "phonetic": "[브르우이으]",
-          "example_en": "This is an example for blowing.",
-          "example_ko": "이것은 통기공 나오는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for blowing.",
-          "exampleMeaning": "이것은 통기공 나오는 관련 실전 예문입니다."
+          "example_en": "Strong cold wind is blowing through the trees.",
+          "example_ko": "거센 찬 바람이 나무 사이로 불어오고 있습니다.",
+          "exampleTarget": "Strong cold wind is blowing through the trees.",
+          "exampleMeaning": "거센 찬 바람이 나무 사이로 불어오고 있습니다."
         },
         {
           "id": "en_13012",
@@ -78806,10 +78806,10 @@
           "pronunciation": "[흐아르이우드]",
           "pron": "[흐아르이우드]",
           "phonetic": "[흐아르이우드]",
-          "example_en": "This is an example for hollywood.",
-          "example_ko": "이것은 할리우드 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hollywood.",
-          "exampleMeaning": "이것은 할리우드 미국 관련 실전 예문입니다."
+          "example_en": "Many aspiring actors move to glamorous Hollywood dreams.",
+          "example_ko": "많은 배우 지망생들이 화려한 할리우드의 꿈을 찾아 떠납니다.",
+          "exampleTarget": "Many aspiring actors move to glamorous Hollywood dreams.",
+          "exampleMeaning": "많은 배우 지망생들이 화려한 할리우드의 꿈을 찾아 떠납니다."
         },
         {
           "id": "en_13013",
@@ -78841,9 +78841,9 @@
           "pron": "[프쉬이으]",
           "phonetic": "[프쉬이으]",
           "example_en": "a pushing locomotive.",
-          "example_ko": "뒤에서 미는 기관차. 2.출세욕이 강한; 원기왕성한 정력적인. 3.（남에게） 억지가 센; 뻔뻔스러운 주제넘게 나서는. 전치사《수사 앞에서》 （어떤） 수에 가까운.",
+          "example_ko": "뒤에서 미는 기관차.",
           "exampleTarget": "a pushing locomotive.",
-          "exampleMeaning": "뒤에서 미는 기관차. 2.출세욕이 강한; 원기왕성한 정력적인. 3.（남에게） 억지가 센; 뻔뻔스러운 주제넘게 나서는. 전치사《수사 앞에서》 （어떤） 수에 가까운."
+          "exampleMeaning": "뒤에서 미는 기관차."
         },
         {
           "id": "en_13015",
@@ -78858,9 +78858,9 @@
           "pron": "[어브르어트이]",
           "phonetic": "[어브르어트이]",
           "example_en": "The ostrich has lost the ability to fly.",
-          "example_ko": "타조는 나는 능력을 잃었다. 2.《또는 -ties》 〔…의〕 재능 수완 솜씨 역량〔in for …〕; 〔…하는〕 재간〔to do〕.",
+          "example_ko": "타조는 나는 능력을 잃었다.",
           "exampleTarget": "The ostrich has lost the ability to fly.",
-          "exampleMeaning": "타조는 나는 능력을 잃었다. 2.《또는 -ties》 〔…의〕 재능 수완 솜씨 역량〔in for …〕; 〔…하는〕 재간〔to do〕."
+          "exampleMeaning": "타조는 나는 능력을 잃었다."
         },
         {
           "id": "en_13016",
@@ -78874,10 +78874,10 @@
           "pronunciation": "[우스프어르이으]",
           "pron": "[우스프어르이으]",
           "phonetic": "[우스프어르이으]",
-          "example_en": "This is an example for whispering.",
-          "example_ko": "이것은 속삭임 소문 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for whispering.",
-          "exampleMeaning": "이것은 속삭임 소문 관련 실전 예문입니다."
+          "example_en": "They kept whispering secrets in the quiet library.",
+          "example_ko": "그들은 조용한 도서관에서 계속 귓속말로 비밀을 나눴습니다.",
+          "exampleTarget": "They kept whispering secrets in the quiet library.",
+          "exampleMeaning": "그들은 조용한 도서관에서 계속 귓속말로 비밀을 나눴습니다."
         },
         {
           "id": "en_13017",
@@ -78908,10 +78908,10 @@
           "pronunciation": "[즈에스]",
           "pron": "[즈에스]",
           "phonetic": "[즈에스]",
-          "example_en": "This is an example for jesse.",
-          "example_ko": "이것은 젓갖 발목에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jesse.",
-          "exampleMeaning": "이것은 젓갖 발목에 관련 실전 예문입니다."
+          "example_en": "Jesse brought his new acoustic guitar to school.",
+          "example_ko": "제시는 새로 산 어쿠스틱 기타를 학교에 가져왔습니다.",
+          "exampleTarget": "Jesse brought his new acoustic guitar to school.",
+          "exampleMeaning": "제시는 새로 산 어쿠스틱 기타를 학교에 가져왔습니다."
         },
         {
           "id": "en_13019",
@@ -78925,10 +78925,10 @@
           "pronunciation": "[프아]",
           "pron": "[프아]",
           "phonetic": "[프아]",
-          "example_en": "This is an example for pa.",
-          "example_ko": "이것은 아빠 현재는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pa.",
-          "exampleMeaning": "이것은 아빠 현재는 관련 실전 예문입니다."
+          "example_en": "Her loving pa taught her how to fish.",
+          "example_ko": "그녀의 다정한 아빠는 그녀에게 낚시하는 법을 가르쳐 주셨습니다.",
+          "exampleTarget": "Her loving pa taught her how to fish.",
+          "exampleMeaning": "그녀의 다정한 아빠는 그녀에게 낚시하는 법을 가르쳐 주셨습니다."
         },
         {
           "id": "en_13020",
@@ -78942,10 +78942,10 @@
           "pronunciation": "[즈이]",
           "pron": "[즈이]",
           "phonetic": "[즈이]",
-          "example_en": "This is an example for gee.",
-          "example_ko": "이것은 오른쪽으로 숙어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gee.",
-          "exampleMeaning": "이것은 오른쪽으로 숙어 관련 실전 예문입니다."
+          "example_en": "Gee that unexpected surprise party was truly amazing.",
+          "example_ko": "와 그 깜짝 파티는 정말로 환상적이었어요.",
+          "exampleTarget": "Gee that unexpected surprise party was truly amazing.",
+          "exampleMeaning": "와 그 깜짝 파티는 정말로 환상적이었어요."
         },
         {
           "id": "en_13021",
@@ -78960,9 +78960,9 @@
           "pron": "[느애츠어르어르이]",
           "phonetic": "[느애츠어르어르이]",
           "example_en": "Youre just naturally bright.",
-          "example_ko": "정말 당신은 선천적으로 머리가 좋소. 3.꾸밈없이 자연스럽게.",
+          "example_ko": "정말 당신은 선천적으로 머리가 좋소.",
           "exampleTarget": "Youre just naturally bright.",
-          "exampleMeaning": "정말 당신은 선천적으로 머리가 좋소. 3.꾸밈없이 자연스럽게."
+          "exampleMeaning": "정말 당신은 선천적으로 머리가 좋소."
         },
         {
           "id": "en_13022",
@@ -78994,9 +78994,9 @@
           "pron": "[크어트이으]",
           "phonetic": "[크어트이으]",
           "example_en": "newspaper cuttings.",
-          "example_ko": "신문에서 오려낸 것. 4.《영》 （산을 깎아 낸 철도·운하용의） 개착로; 인공 수로. 5.《영》 필름의 편집. 6.《비격식》 싸구려로 팔기 할인. 형용사1.〈날이〉 잘 드는 예리한.",
+          "example_ko": "신문에서 오려낸 것.",
           "exampleTarget": "newspaper cuttings.",
-          "exampleMeaning": "신문에서 오려낸 것. 4.《영》 （산을 깎아 낸 철도·운하용의） 개착로; 인공 수로. 5.《영》 필름의 편집. 6.《비격식》 싸구려로 팔기 할인. 형용사1.〈날이〉 잘 드는 예리한."
+          "exampleMeaning": "신문에서 오려낸 것."
         },
         {
           "id": "en_13024",
@@ -79010,10 +79010,10 @@
           "pronunciation": "[브아르크이으]",
           "pron": "[브아르크이으]",
           "phonetic": "[브아르크이으]",
-          "example_en": "This is an example for barking.",
-          "example_ko": "이것은 미친 듯한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for barking.",
-          "exampleMeaning": "이것은 미친 듯한 관련 실전 예문입니다."
+          "example_en": "Our neighbor dog started barking loudly at midnight.",
+          "example_ko": "이웃집 개가 한밤중에 크게 짖기 시작했습니다.",
+          "exampleTarget": "Our neighbor dog started barking loudly at midnight.",
+          "exampleMeaning": "이웃집 개가 한밤중에 크게 짖기 시작했습니다."
         },
         {
           "id": "en_13025",
@@ -79028,9 +79028,9 @@
           "pron": "[므에이드]",
           "phonetic": "[므에이드]",
           "example_en": "maid service(.",
-          "example_ko": "호텔의) 객실 청소. 3.《old maid의 형태로》（혼기가 지난 제법 나이 든） 미혼 여성. ※ 「올드 미스」는 영어식 표현이 아님. 4.《the Maid》잔다르크.",
+          "example_ko": "호텔의) 객실 청소.",
           "exampleTarget": "maid service(.",
-          "exampleMeaning": "호텔의) 객실 청소. 3.《old maid의 형태로》（혼기가 지난 제법 나이 든） 미혼 여성. ※ 「올드 미스」는 영어식 표현이 아님. 4.《the Maid》잔다르크."
+          "exampleMeaning": "호텔의) 객실 청소."
         },
         {
           "id": "en_13026",
@@ -79079,9 +79079,9 @@
           "pron": "[우이스트이으]",
           "phonetic": "[우이스트이으]",
           "example_en": "a wasting illness.",
-          "example_ko": "소모성 질환. 2.〈전쟁 등이〉 황폐시키는 파괴적인; 〈지역이〉 점점 황폐해 가는.",
+          "example_ko": "소모성 질환.",
           "exampleTarget": "a wasting illness.",
-          "exampleMeaning": "소모성 질환. 2.〈전쟁 등이〉 황폐시키는 파괴적인; 〈지역이〉 점점 황폐해 가는."
+          "exampleMeaning": "소모성 질환."
         },
         {
           "id": "en_13029",
@@ -79096,9 +79096,9 @@
           "pron": "[츠이크]",
           "phonetic": "[츠이크]",
           "example_en": "a poor fatherless chick.",
-          "example_ko": "아버지가 없는 불쌍한 아이. 3.《속어》 젊은 여자 계집애. 4.《미·속어》 （불량배 사이에서） 교도소 음식.",
+          "example_ko": "아버지가 없는 불쌍한 아이.",
           "exampleTarget": "a poor fatherless chick.",
-          "exampleMeaning": "아버지가 없는 불쌍한 아이. 3.《속어》 젊은 여자 계집애. 4.《미·속어》 （불량배 사이에서） 교도소 음식."
+          "exampleMeaning": "아버지가 없는 불쌍한 아이."
         },
         {
           "id": "en_13030",
@@ -79112,10 +79112,10 @@
           "pronunciation": "[스에어르어]",
           "pron": "[스에어르어]",
           "phonetic": "[스에어르어]",
-          "example_en": "This is an example for sara.",
-          "example_ko": "이것은 )사라족 아프리카 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sara.",
-          "exampleMeaning": "이것은 )사라족 아프리카 관련 실전 예문입니다."
+          "example_en": "Sara always drinks green tea after morning workouts.",
+          "example_ko": "사라는 아침 운동 후 항상 녹차를 마십니다.",
+          "exampleTarget": "Sara always drinks green tea after morning workouts.",
+          "exampleMeaning": "사라는 아침 운동 후 항상 녹차를 마십니다."
         }
       ],
       "nodes": [
@@ -79246,9 +79246,9 @@
           "pron": "[흐브이르이]",
           "phonetic": "[흐브이르이]",
           "example_en": "a heavily loaded truck.",
-          "example_ko": "잔뜩 짐을 실은 트럭. 2.〈잠이〉 푹; 〈호흡이〉 괴로운 듯이; 〈동작이〉 육중하게; 느릿느릿 힘에 겨운 듯이; （정신적으로） 무겁게.",
+          "example_ko": "잔뜩 짐을 실은 트럭.",
           "exampleTarget": "a heavily loaded truck.",
-          "exampleMeaning": "잔뜩 짐을 실은 트럭. 2.〈잠이〉 푹; 〈호흡이〉 괴로운 듯이; 〈동작이〉 육중하게; 느릿느릿 힘에 겨운 듯이; （정신적으로） 무겁게."
+          "exampleMeaning": "잔뜩 짐을 실은 트럭."
         },
         {
           "id": "en_13103",
@@ -79258,14 +79258,14 @@
           "level": "B2",
           "unitId": "unit_131",
           "nodeId": "en_u131_n1",
-          "meaning": "동시에일어난",
+          "meaning": "우연의 일치",
           "pronunciation": "[크오느스이드어느스]",
           "pron": "[크오느스이드어느스]",
           "phonetic": "[크오느스이드어느스]",
-          "example_en": "the coincidence of coal and iron.",
-          "example_ko": "석탄과 철이 같은 지역에 있는 일. 2.《격식》 일치 합치 부합; （우연의） 일치.",
-          "exampleTarget": "the coincidence of coal and iron.",
-          "exampleMeaning": "석탄과 철이 같은 지역에 있는 일. 2.《격식》 일치 합치 부합; （우연의） 일치."
+          "example_en": "It was a pure coincidence.",
+          "example_ko": "그것은 순전한 우연의 일치였다.",
+          "exampleTarget": "It was a pure coincidence.",
+          "exampleMeaning": "그것은 순전한 우연의 일치였다."
         },
         {
           "id": "en_13104",
@@ -79279,10 +79279,10 @@
           "pronunciation": "[므애크]",
           "pron": "[므애크]",
           "phonetic": "[므애크]",
-          "example_en": "This is an example for mac.",
-          "example_ko": "이것은 야 이봐 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mac.",
-          "exampleMeaning": "이것은 야 이봐 관련 실전 예문입니다."
+          "example_en": "Listen mac you need to follow the rules.",
+          "example_ko": "이봐 형씨 당신은 규칙을 지켜야 합니다.",
+          "exampleTarget": "Listen mac you need to follow the rules.",
+          "exampleMeaning": "이봐 형씨 당신은 규칙을 지켜야 합니다."
         },
         {
           "id": "en_13105",
@@ -79331,9 +79331,9 @@
           "pron": "[크우이어트르이]",
           "phonetic": "[크우이어트르이]",
           "example_en": "Talk as quietly as possible.",
-          "example_ko": "가급적 조용히 이야기하시오. 2.차분히 평온하게; 얌전하게.",
+          "example_ko": "가급적 조용히 이야기하시오.",
           "exampleTarget": "Talk as quietly as possible.",
-          "exampleMeaning": "가급적 조용히 이야기하시오. 2.차분히 평온하게; 얌전하게."
+          "exampleMeaning": "가급적 조용히 이야기하시오."
         },
         {
           "id": "en_13108",
@@ -79382,9 +79382,9 @@
           "pron": "[흐어느트어르]",
           "phonetic": "[흐어느트어르]",
           "example_en": "The leopard is a skillful hunter.",
-          "example_ko": "표범은 교묘하게 다른 동물을 잡는다. ※《영》 에서는 말을 타고 여우 사냥을 하는 것은 스포츠이며 그런 사람을 hunter라고는 흔히 하지 않음. cf. HUNTSMAN. 2.사냥개. ※《영》 에서는 특히 여우 사냥용의 말. 3.（자기에게 이로운 것을） 찾아다니는 사람 추구하는 사람.",
+          "example_ko": "표범은 교묘하게 다른 동물을 잡는다.",
           "exampleTarget": "The leopard is a skillful hunter.",
-          "exampleMeaning": "표범은 교묘하게 다른 동물을 잡는다. ※《영》 에서는 말을 타고 여우 사냥을 하는 것은 스포츠이며 그런 사람을 hunter라고는 흔히 하지 않음. cf. HUNTSMAN. 2.사냥개. ※《영》 에서는 특히 여우 사냥용의 말. 3.（자기에게 이로운 것을） 찾아다니는 사람 추구하는 사람."
+          "exampleMeaning": "표범은 교묘하게 다른 동물을 잡는다."
         },
         {
           "id": "en_13111",
@@ -79399,9 +79399,9 @@
           "pron": "[르이트이스트]",
           "phonetic": "[르이트이스트]",
           "example_en": "the latest bus for Chicago.",
-          "example_ko": "시카고행 맨 마지막 버스. 2.최신의 최근의; 지금의.",
+          "example_ko": "시카고행 맨 마지막 버스.",
           "exampleTarget": "the latest bus for Chicago.",
-          "exampleMeaning": "시카고행 맨 마지막 버스. 2.최신의 최근의; 지금의."
+          "exampleMeaning": "시카고행 맨 마지막 버스."
         },
         {
           "id": "en_13112",
@@ -79415,10 +79415,10 @@
           "pronunciation": "[흐어르트이으]",
           "pron": "[흐어르트이으]",
           "phonetic": "[흐어르트이으]",
-          "example_en": "This is an example for hurting.",
-          "example_ko": "이것은 아주 보기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hurting.",
-          "exampleMeaning": "이것은 아주 보기 관련 실전 예문입니다."
+          "example_en": "My left knee is hurting after yesterday workout.",
+          "example_ko": "어제 운동을 한 뒤로 왼쪽 무릎이 아픕니다.",
+          "exampleTarget": "My left knee is hurting after yesterday workout.",
+          "exampleMeaning": "어제 운동을 한 뒤로 왼쪽 무릎이 아픕니다."
         },
         {
           "id": "en_13113",
@@ -79432,10 +79432,10 @@
           "pronunciation": "[크우느트이으]",
           "pron": "[크우느트이으]",
           "phonetic": "[크우느트이으]",
-          "example_en": "This is an example for counting.",
-          "example_ko": "이것은 계산 집계 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for counting.",
-          "exampleMeaning": "이것은 계산 집계 관련 실전 예문입니다."
+          "example_en": "The cashier was counting the money very carefully.",
+          "example_ko": "계산원은 매우 주의 깊게 돈을 세고 있었습니다.",
+          "exampleTarget": "The cashier was counting the money very carefully.",
+          "exampleMeaning": "계산원은 매우 주의 깊게 돈을 세고 있었습니다."
         },
         {
           "id": "en_13114",
@@ -79445,14 +79445,14 @@
           "level": "B2",
           "unitId": "unit_131",
           "nodeId": "en_u131_n2",
-          "meaning": "과거형",
+          "meaning": "그렸다",
           "pronunciation": "[드르우]",
           "pron": "[드르우]",
           "phonetic": "[드르우]",
-          "example_en": "This is an example for drew.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for drew.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "The child drew a lovely picture.",
+          "example_ko": "그 아이는 사랑스러운 그림을 그렸다.",
+          "exampleTarget": "The child drew a lovely picture.",
+          "exampleMeaning": "그 아이는 사랑스러운 그림을 그렸다."
         },
         {
           "id": "en_13115",
@@ -79466,10 +79466,10 @@
           "pronunciation": "[므어르]",
           "pron": "[므어르]",
           "phonetic": "[므어르]",
-          "example_en": "This is an example for marie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for marie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Marie baked sweet cinnamon rolls for the kids.",
+          "example_ko": "마리는 아이들을 위해 달콤한 시나몬 롤을 구웠습니다.",
+          "exampleTarget": "Marie baked sweet cinnamon rolls for the kids.",
+          "exampleMeaning": "마리는 아이들을 위해 달콤한 시나몬 롤을 구웠습니다."
         },
         {
           "id": "en_13116",
@@ -79483,10 +79483,10 @@
           "pronunciation": "[드어]",
           "pron": "[드어]",
           "phonetic": "[드어]",
-          "example_en": "This is an example for doug.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for doug.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Doug fixed the broken fence behind our house.",
+          "example_ko": "더그는 우리 집 뒤편의 부서진 울타리를 수리했습니다.",
+          "exampleTarget": "Doug fixed the broken fence behind our house.",
+          "exampleMeaning": "더그는 우리 집 뒤편의 부서진 울타리를 수리했습니다."
         },
         {
           "id": "en_13117",
@@ -79517,10 +79517,10 @@
           "pronunciation": "[스르트어느드]",
           "pron": "[스르트어느드]",
           "phonetic": "[스르트어느드]",
-          "example_en": "This is an example for threatened.",
-          "example_ko": "이것은 위협당한 위험에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for threatened.",
-          "exampleMeaning": "이것은 위협당한 위험에 관련 실전 예문입니다."
+          "example_en": "Rising flood waters threatened homes along the river.",
+          "example_ko": "불어난 강물이 강가의 집들을 위협했습니다.",
+          "exampleTarget": "Rising flood waters threatened homes along the river.",
+          "exampleMeaning": "불어난 강물이 강가의 집들을 위협했습니다."
         },
         {
           "id": "en_13119",
@@ -79551,10 +79551,10 @@
           "pronunciation": "[므아르이]",
           "pron": "[므아르이]",
           "phonetic": "[므아르이]",
-          "example_en": "This is an example for molly.",
-          "example_ko": "이것은 몰리 라티핀나 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for molly.",
-          "exampleMeaning": "이것은 몰리 라티핀나 관련 실전 예문입니다."
+          "example_en": "Molly painted a bright sunrise on the canvas.",
+          "example_ko": "몰리는 캔버스 위에 밝은 일출을 그렸습니다.",
+          "exampleTarget": "Molly painted a bright sunrise on the canvas.",
+          "exampleMeaning": "몰리는 캔버스 위에 밝은 일출을 그렸습니다."
         },
         {
           "id": "en_13121",
@@ -79568,10 +79568,10 @@
           "pronunciation": "[subtitles]",
           "pron": "[subtitles]",
           "phonetic": "[subtitles]",
-          "example_en": "This is an example for subtitles.",
-          "example_ko": "이것은 부제 약식 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for subtitles.",
-          "exampleMeaning": "이것은 부제 약식 관련 실전 예문입니다."
+          "example_en": "Foreign language films always need clear English subtitles.",
+          "example_ko": "외국어 영화에는 항상 선명한 영어 자막이 필요합니다.",
+          "exampleTarget": "Foreign language films always need clear English subtitles.",
+          "exampleMeaning": "외국어 영화에는 항상 선명한 영어 자막이 필요합니다."
         },
         {
           "id": "en_13122",
@@ -79602,10 +79602,10 @@
           "pronunciation": "[츠이스이으]",
           "pron": "[츠이스이으]",
           "phonetic": "[츠이스이으]",
-          "example_en": "This is an example for chasing.",
-          "example_ko": "이것은 조금 금속에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chasing.",
-          "exampleMeaning": "이것은 조금 금속에 관련 실전 예문입니다."
+          "example_en": "A playful puppy was chasing butterflies across grass.",
+          "example_ko": "장난기 많은 강아지 한 마리가 풀밭에서 나비를 쫓고 있었습니다.",
+          "exampleTarget": "A playful puppy was chasing butterflies across grass.",
+          "exampleMeaning": "장난기 많은 강아지 한 마리가 풀밭에서 나비를 쫓고 있었습니다."
         },
         {
           "id": "en_13124",
@@ -79619,10 +79619,10 @@
           "pronunciation": "[드유크]",
           "pron": "[드유크]",
           "phonetic": "[드유크]",
-          "example_en": "This is an example for duke.",
-          "example_ko": "이것은 군주 공작 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for duke.",
-          "exampleMeaning": "이것은 군주 공작 관련 실전 예문입니다."
+          "example_en": "The wealthy duke donated funds for medical research.",
+          "example_ko": "그 부유한 공작은 의학 연구를 위해 기금을 기부했습니다.",
+          "exampleTarget": "The wealthy duke donated funds for medical research.",
+          "exampleMeaning": "그 부유한 공작은 의학 연구를 위해 기금을 기부했습니다."
         },
         {
           "id": "en_13125",
@@ -79654,9 +79654,9 @@
           "pron": "[크애르어르]",
           "phonetic": "[크애르어르]",
           "example_en": "Christmas carols.",
-          "example_ko": "크리스마스 캐럴. 3.（새의） 지저귐. 동사 자동사즐겁게 노래하다 〔away〕; 〈새가〉 지저귀다; （이집 저집） 성가를 부르며 다니다.",
+          "example_ko": "크리스마스 캐럴.",
           "exampleTarget": "Christmas carols.",
-          "exampleMeaning": "크리스마스 캐럴. 3.（새의） 지저귐. 동사 자동사즐겁게 노래하다 〔away〕; 〈새가〉 지저귀다; （이집 저집） 성가를 부르며 다니다."
+          "exampleMeaning": "크리스마스 캐럴."
         },
         {
           "id": "en_13127",
@@ -79688,9 +79688,9 @@
           "pron": "[므애스이브]",
           "phonetic": "[므애스이브]",
           "example_en": "a massive volume.",
-          "example_ko": "부피가 큰 책. 2.〈머리·용모·체격 등이〉 큰 억센.",
+          "example_ko": "부피가 큰 책.",
           "exampleTarget": "a massive volume.",
-          "exampleMeaning": "부피가 큰 책. 2.〈머리·용모·체격 등이〉 큰 억센."
+          "exampleMeaning": "부피가 큰 책."
         },
         {
           "id": "en_13129",
@@ -79837,10 +79837,10 @@
           "pronunciation": "[즈오]",
           "pron": "[즈오]",
           "phonetic": "[즈오]",
-          "example_en": "This is an example for jo.",
-          "example_ko": "이것은 애인 연인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jo.",
-          "exampleMeaning": "이것은 애인 연인 관련 실전 예문입니다."
+          "example_en": "Jo will join our team meeting this afternoon.",
+          "example_ko": "조가 오늘 오후 우리 팀 회의에 참여할 거예요.",
+          "exampleTarget": "Jo will join our team meeting this afternoon.",
+          "exampleMeaning": "조가 오늘 오후 우리 팀 회의에 참여할 거예요."
         },
         {
           "id": "en_13202",
@@ -79854,10 +79854,10 @@
           "pronunciation": "[프이어르이으]",
           "pron": "[프이어르이으]",
           "phonetic": "[프이어르이으]",
-          "example_en": "This is an example for firing.",
-          "example_ko": "이것은 발포 발사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for firing.",
-          "exampleMeaning": "이것은 발포 발사 관련 실전 예문입니다."
+          "example_en": "The security guards stopped firing at the target.",
+          "example_ko": "보안 요원들은 표적을 향한 발포를 멈췄어요.",
+          "exampleTarget": "The security guards stopped firing at the target.",
+          "exampleMeaning": "보안 요원들은 표적을 향한 발포를 멈췄어요."
         },
         {
           "id": "en_13203",
@@ -79871,10 +79871,10 @@
           "pronunciation": "[애브이]",
           "pron": "[애브이]",
           "phonetic": "[애브이]",
-          "example_en": "This is an example for abby.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for abby.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Abby finished her presentation ahead of schedule today.",
+          "example_ko": "애비는 오늘 예정보다 일찍 발표를 마쳤어요.",
+          "exampleTarget": "Abby finished her presentation ahead of schedule today.",
+          "exampleMeaning": "애비는 오늘 예정보다 일찍 발표를 마쳤어요."
         },
         {
           "id": "en_13204",
@@ -79888,10 +79888,10 @@
           "pronunciation": "[스트아프이으]",
           "pron": "[스트아프이으]",
           "phonetic": "[스트아프이으]",
-          "example_en": "This is an example for stopping.",
-          "example_ko": "이것은 중지 휴지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stopping.",
-          "exampleMeaning": "이것은 중지 휴지 관련 실전 예문입니다."
+          "example_en": "The heavy rain is not stopping anytime soon.",
+          "example_ko": "폭우가 당분간 멈추지 않을 것 같아요.",
+          "exampleTarget": "The heavy rain is not stopping anytime soon.",
+          "exampleMeaning": "폭우가 당분간 멈추지 않을 것 같아요."
         },
         {
           "id": "en_13205",
@@ -79905,10 +79905,10 @@
           "pronunciation": "[즈이느]",
           "pron": "[즈이느]",
           "phonetic": "[즈이느]",
-          "example_en": "This is an example for jean.",
-          "example_ko": "이것은 능직 무명천 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jean.",
-          "exampleMeaning": "이것은 능직 무명천 관련 실전 예문입니다."
+          "example_en": "She bought a comfortable blue jean jacket yesterday.",
+          "example_ko": "그녀는 어제 편안한 파란색 청바지 재킷을 샀어요.",
+          "exampleTarget": "She bought a comfortable blue jean jacket yesterday.",
+          "exampleMeaning": "그녀는 어제 편안한 파란색 청바지 재킷을 샀어요."
         },
         {
           "id": "en_13206",
@@ -79956,10 +79956,10 @@
           "pronunciation": "[브이스므어느트]",
           "pron": "[브이스므어느트]",
           "phonetic": "[브이스므어느트]",
-          "example_en": "This is an example for basement.",
-          "example_ko": "이것은 지하층 지하실 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for basement.",
-          "exampleMeaning": "이것은 지하층 지하실 관련 실전 예문입니다."
+          "example_en": "We store all the extra boxes in the basement.",
+          "example_ko": "우리는 모든 여분의 상자들을 지하실에 보관해요.",
+          "exampleTarget": "We store all the extra boxes in the basement.",
+          "exampleMeaning": "우리는 모든 여분의 상자들을 지하실에 보관해요."
         },
         {
           "id": "en_13209",
@@ -79973,10 +79973,10 @@
           "pronunciation": "[르느드어]",
           "pron": "[르느드어]",
           "phonetic": "[르느드어]",
-          "example_en": "This is an example for linda.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for linda.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Linda will organize the workshop materials for us.",
+          "example_ko": "린다가 우리를 위해 워크숍 자료를 정리해 줄 거예요.",
+          "exampleTarget": "Linda will organize the workshop materials for us.",
+          "exampleMeaning": "린다가 우리를 위해 워크숍 자료를 정리해 줄 거예요."
         },
         {
           "id": "en_13210",
@@ -79990,10 +79990,10 @@
           "pronunciation": "[erm]",
           "pron": "[erm]",
           "phonetic": "[erm]",
-          "example_en": "This is an example for erm.",
-          "example_ko": "이것은 환율 조정 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for erm.",
-          "exampleMeaning": "이것은 환율 조정 관련 실전 예문입니다."
+          "example_en": "Erm I think we should check the schedule again.",
+          "example_ko": "어 내 생각에 우리는 일정을 다시 확인해야 해요.",
+          "exampleTarget": "Erm I think we should check the schedule again.",
+          "exampleMeaning": "어 내 생각에 우리는 일정을 다시 확인해야 해요."
         },
         {
           "id": "en_13211",
@@ -80024,10 +80024,10 @@
           "pronunciation": "[어트스]",
           "pron": "[어트스]",
           "phonetic": "[어트스]",
-          "example_en": "This is an example for guts.",
-          "example_ko": "이것은 허겁지겁 먹다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for guts.",
-          "exampleMeaning": "이것은 허겁지겁 먹다 관련 실전 예문입니다."
+          "example_en": "He has the guts to speak the truth.",
+          "example_ko": "그는 진실을 말할 수 있는 배짱이 있어요.",
+          "exampleTarget": "He has the guts to speak the truth.",
+          "exampleMeaning": "그는 진실을 말할 수 있는 배짱이 있어요."
         },
         {
           "id": "en_13213",
@@ -80037,14 +80037,14 @@
           "level": "B2",
           "unitId": "unit_132",
           "nodeId": "en_u132_n2",
-          "meaning": "fella",
+          "meaning": "친구",
           "pronunciation": "[프르어]",
           "pron": "[프르어]",
           "phonetic": "[프르어]",
-          "example_en": "This is an example for fella.",
-          "example_ko": "이것은 fella 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fella.",
-          "exampleMeaning": "이것은 fella 관련 실전 예문입니다."
+          "example_en": "That young fella helped me carry the groceries.",
+          "example_ko": "저 젊은 친구가 식료품 옮기는 것을 도와주었어요.",
+          "exampleTarget": "That young fella helped me carry the groceries.",
+          "exampleMeaning": "저 젊은 친구가 식료품 옮기는 것을 도와주었어요."
         },
         {
           "id": "en_13214",
@@ -80058,10 +80058,10 @@
           "pronunciation": "[르오므아]",
           "pron": "[르오므아]",
           "phonetic": "[르오므아]",
-          "example_en": "This is an example for roman.",
-          "example_ko": "이것은 로망 특히 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for roman.",
-          "exampleMeaning": "이것은 로망 특히 관련 실전 예문입니다."
+          "example_en": "We visited an ancient Roman temple last summer.",
+          "example_ko": "우리는 지난여름 고대 로마 신전을 방문했어요.",
+          "exampleTarget": "We visited an ancient Roman temple last summer.",
+          "exampleMeaning": "우리는 지난여름 고대 로마 신전을 방문했어요."
         },
         {
           "id": "en_13215",
@@ -80093,9 +80093,9 @@
           "pron": "[드애므드]",
           "phonetic": "[드애므드]",
           "example_en": "They will be eternally damned.",
-          "example_ko": "그들은 영원히 지옥으로 떨어질 것이다. 2.악평을 받은 비난을 받은; 지긋지긋한 가증스러운.",
+          "example_ko": "그들은 영원히 지옥으로 떨어질 것이다.",
           "exampleTarget": "They will be eternally damned.",
-          "exampleMeaning": "그들은 영원히 지옥으로 떨어질 것이다. 2.악평을 받은 비난을 받은; 지긋지긋한 가증스러운."
+          "exampleMeaning": "그들은 영원히 지옥으로 떨어질 것이다."
         },
         {
           "id": "en_13217",
@@ -80110,9 +80110,9 @@
           "pron": "[크아우츠]",
           "phonetic": "[크아우츠]",
           "example_en": "a studio couch.",
-          "example_ko": "침대 겸용 소파. 2.（의사·정신 분석 의사의 환자용） 베개 달린 침대 의자; 《the couch》정신 분석 치료.",
+          "example_ko": "침대 겸용 소파.",
           "exampleTarget": "a studio couch.",
-          "exampleMeaning": "침대 겸용 소파. 2.（의사·정신 분석 의사의 환자용） 베개 달린 침대 의자; 《the couch》정신 분석 치료."
+          "exampleMeaning": "침대 겸용 소파."
         },
         {
           "id": "en_13218",
@@ -80126,10 +80126,10 @@
           "pronunciation": "[브이어스]",
           "pron": "[브이어스]",
           "phonetic": "[브이어스]",
-          "example_en": "This is an example for vegas.",
-          "example_ko": "이것은 베 스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vegas.",
-          "exampleMeaning": "이것은 베 스 관련 실전 예문입니다."
+          "example_en": "We plan to visit Vegas during our vacation.",
+          "example_ko": "우리는 휴가 기간 동안 베이거스를 방문할 계획이에요.",
+          "exampleTarget": "We plan to visit Vegas during our vacation.",
+          "exampleMeaning": "우리는 휴가 기간 동안 베이거스를 방문할 계획이에요."
         },
         {
           "id": "en_13219",
@@ -80156,14 +80156,14 @@
           "level": "B2",
           "unitId": "unit_132",
           "nodeId": "en_u132_n2",
-          "meaning": "los",
+          "meaning": "로스",
           "pronunciation": "[los]",
           "pron": "[los]",
           "phonetic": "[los]",
-          "example_en": "This is an example for los.",
-          "example_ko": "이것은 los 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for los.",
-          "exampleMeaning": "이것은 los 관련 실전 예문입니다."
+          "example_en": "She moved to Los Angeles for her new job.",
+          "example_ko": "그녀는 새 직장을 위해 로스앤젤레스로 이사했어요.",
+          "exampleTarget": "She moved to Los Angeles for her new job.",
+          "exampleMeaning": "그녀는 새 직장을 위해 로스앤젤레스로 이사했어요."
         },
         {
           "id": "en_13221",
@@ -80178,9 +80178,9 @@
           "pron": "[크르아즈이트]",
           "phonetic": "[크르아즈이트]",
           "example_en": "a closet novelist.",
-          "example_ko": "자기만을 위한 소설을 쓰는 사람. 2.명상에 잠긴; 비실제적인. 동사 타동사 《보통 수동태 또는 재귀 용법》 〈남을〉 〔밀담·회견 등을 위하여〕 사실에 들어앉게 하다 틀어박히다 〔together with …〕.",
+          "example_ko": "자기만을 위한 소설을 쓰는 사람.",
           "exampleTarget": "a closet novelist.",
-          "exampleMeaning": "자기만을 위한 소설을 쓰는 사람. 2.명상에 잠긴; 비실제적인. 동사 타동사 《보통 수동태 또는 재귀 용법》 〈남을〉 〔밀담·회견 등을 위하여〕 사실에 들어앉게 하다 틀어박히다 〔together with …〕."
+          "exampleMeaning": "자기만을 위한 소설을 쓰는 사람."
         },
         {
           "id": "en_13222",
@@ -80211,10 +80211,10 @@
           "pronunciation": "[브르우스]",
           "pron": "[브르우스]",
           "phonetic": "[브르우스]",
-          "example_en": "This is an example for bruce.",
-          "example_ko": "이것은 브루스 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bruce.",
-          "exampleMeaning": "이것은 브루스 남자 관련 실전 예문입니다."
+          "example_en": "Bruce will lead the project starting next week.",
+          "example_ko": "브루스가 다음 주부터 그 프로젝트를 이끌 거예요.",
+          "exampleTarget": "Bruce will lead the project starting next week.",
+          "exampleMeaning": "브루스가 다음 주부터 그 프로젝트를 이끌 거예요."
         },
         {
           "id": "en_13224",
@@ -80229,9 +80229,9 @@
           "pron": "[스이어르어느]",
           "phonetic": "[스이어르어느]",
           "example_en": "a siren song.",
-          "example_ko": "감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌.",
+          "example_ko": "감미로운 유혹 저항할 수 없는 매력.",
           "exampleTarget": "a siren song.",
-          "exampleMeaning": "감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌."
+          "exampleMeaning": "감미로운 유혹 저항할 수 없는 매력."
         },
         {
           "id": "en_13225",
@@ -80262,10 +80262,10 @@
           "pronunciation": "[크애스이크이트이]",
           "pron": "[크애스이크이트이]",
           "phonetic": "[크애스이크이트이]",
-          "example_en": "This is an example for katie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for katie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Katie brought delicious cookies to the office party.",
+          "example_ko": "케이티는 사무실 파티에 맛있는 쿠키를 가져왔어요.",
+          "exampleTarget": "Katie brought delicious cookies to the office party.",
+          "exampleMeaning": "케이티는 사무실 파티에 맛있는 쿠키를 가져왔어요."
         },
         {
           "id": "en_13227",
@@ -80296,10 +80296,10 @@
           "pronunciation": "[흐우프프어르이]",
           "pron": "[흐우프프어르이]",
           "phonetic": "[흐우프프어르이]",
-          "example_en": "This is an example for hopefully.",
-          "example_ko": "이것은 희망 지고 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hopefully.",
-          "exampleMeaning": "이것은 희망 지고 관련 실전 예문입니다."
+          "example_en": "Hopefully the weather stays clear for our trip.",
+          "example_ko": "바라건대 우리 여행 동안 날씨가 맑으면 좋겠어요.",
+          "exampleTarget": "Hopefully the weather stays clear for our trip.",
+          "exampleMeaning": "바라건대 우리 여행 동안 날씨가 맑으면 좋겠어요."
         },
         {
           "id": "en_13229",
@@ -80314,9 +80314,9 @@
           "pron": "[르우르이으]",
           "phonetic": "[르우르이으]",
           "example_en": "rolling hills.",
-          "example_ko": "기복하는 구릉들. 3.〈배가〉 옆질하는; 《한정적》 〈사람이〉 （취하거나 하여） 비틀거리는.",
+          "example_ko": "기복하는 구릉들.",
           "exampleTarget": "rolling hills.",
-          "exampleMeaning": "기복하는 구릉들. 3.〈배가〉 옆질하는; 《한정적》 〈사람이〉 （취하거나 하여） 비틀거리는."
+          "exampleMeaning": "기복하는 구릉들."
         },
         {
           "id": "en_13230",
@@ -80330,10 +80330,10 @@
           "pronunciation": "[르오이]",
           "pron": "[르오이]",
           "phonetic": "[르오이]",
-          "example_en": "This is an example for roy.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for roy.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Roy fixed the broken printer in our office.",
+          "example_ko": "로이가 우리 사무실의 고장 난 프린터를 고쳤어요.",
+          "exampleTarget": "Roy fixed the broken printer in our office.",
+          "exampleMeaning": "로이가 우리 사무실의 고장 난 프린터를 고쳤어요."
         }
       ],
       "nodes": [
@@ -80464,9 +80464,9 @@
           "pron": "[츠이트]",
           "phonetic": "[츠이트]",
           "example_en": "The land sale turned out to be a cheat.",
-          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.",
+          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다.",
           "exampleTarget": "The land sale turned out to be a cheat.",
-          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕."
+          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다."
         },
         {
           "id": "en_13303",
@@ -80498,9 +80498,9 @@
           "pron": "[스어스프쉬어스]",
           "phonetic": "[스어스프쉬어스]",
           "example_en": "suspicious circumstances.",
-          "example_ko": "미심쩍은 상황. 2.의심이 많은; 〔…을〕 나쁜 쪽으로 짐작하기 쉬운 〔…에 대하여〕 의심에 찬〔of about …〕.",
+          "example_ko": "미심쩍은 상황.",
           "exampleTarget": "suspicious circumstances.",
-          "exampleMeaning": "미심쩍은 상황. 2.의심이 많은; 〔…을〕 나쁜 쪽으로 짐작하기 쉬운 〔…에 대하여〕 의심에 찬〔of about …〕."
+          "exampleMeaning": "미심쩍은 상황."
         },
         {
           "id": "en_13305",
@@ -80514,10 +80514,10 @@
           "pronunciation": "[트아드]",
           "pron": "[트아드]",
           "phonetic": "[트아드]",
-          "example_en": "This is an example for todd.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for todd.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Todd sent the updated contract to the client.",
+          "example_ko": "토드가 고객에게 업데이트된 계약서를 보냈어요.",
+          "exampleTarget": "Todd sent the updated contract to the client.",
+          "exampleMeaning": "토드가 고객에게 업데이트된 계약서를 보냈어요."
         },
         {
           "id": "en_13306",
@@ -80548,10 +80548,10 @@
           "pronunciation": "[르우]",
           "pron": "[르우]",
           "phonetic": "[르우]",
-          "example_en": "This is an example for lou.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lou.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Lou will arrive at the train station soon.",
+          "example_ko": "루는 곧 기차역에 도착할 예정이에요.",
+          "exampleTarget": "Lou will arrive at the train station soon.",
+          "exampleMeaning": "루는 곧 기차역에 도착할 예정이에요."
         },
         {
           "id": "en_13308",
@@ -80616,10 +80616,10 @@
           "pronunciation": "[스어르즈드에이]",
           "pron": "[스어르즈드에이]",
           "phonetic": "[스어르즈드에이]",
-          "example_en": "This is an example for thursday.",
-          "example_ko": "이것은 목요일 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thursday.",
-          "exampleMeaning": "이것은 목요일 약자 관련 실전 예문입니다."
+          "example_en": "We have a team lunch every Thursday afternoon.",
+          "example_ko": "우리는 매주 목요일 오후마다 팀 점심 식사를 해요.",
+          "exampleTarget": "We have a team lunch every Thursday afternoon.",
+          "exampleMeaning": "우리는 매주 목요일 오후마다 팀 점심 식사를 해요."
         },
         {
           "id": "en_13312",
@@ -80650,10 +80650,10 @@
           "pronunciation": "[애르브어르트]",
           "pron": "[애르브어르트]",
           "phonetic": "[애르브어르트]",
-          "example_en": "This is an example for albert.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for albert.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Albert showed great leadership during the crisis.",
+          "example_ko": "앨버트는 위기 상황에서 훌륭한 리더십을 보여주었어요.",
+          "exampleTarget": "Albert showed great leadership during the crisis.",
+          "exampleMeaning": "앨버트는 위기 상황에서 훌륭한 리더십을 보여주었어요."
         },
         {
           "id": "en_13314",
@@ -80685,9 +80685,9 @@
           "pron": "[즈어르므어느]",
           "phonetic": "[즈어르므어느]",
           "example_en": "German literature.",
-          "example_ko": "독일 문학. 2.게르만 민족의. 명사1.독일인; 《the Germans》독일 국민. 2.독일어.",
+          "example_ko": "독일 문학.",
           "exampleTarget": "German literature.",
-          "exampleMeaning": "독일 문학. 2.게르만 민족의. 명사1.독일인; 《the Germans》독일 국민. 2.독일어."
+          "exampleMeaning": "독일 문학."
         },
         {
           "id": "en_13316",
@@ -80718,10 +80718,10 @@
           "pronunciation": "[트이즈드에이]",
           "pron": "[트이즈드에이]",
           "phonetic": "[트이즈드에이]",
-          "example_en": "This is an example for tuesday.",
-          "example_ko": "이것은 화요일 용법은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tuesday.",
-          "exampleMeaning": "이것은 화요일 용법은 관련 실전 예문입니다."
+          "example_en": "The report is due before next Tuesday morning.",
+          "example_ko": "그 보고서는 다음 주 화요일 아침까지 제출해야 해요.",
+          "exampleTarget": "The report is due before next Tuesday morning.",
+          "exampleMeaning": "그 보고서는 다음 주 화요일 아침까지 제출해야 해요."
         },
         {
           "id": "en_13318",
@@ -80735,10 +80735,10 @@
           "pronunciation": "[프아르크어르]",
           "pron": "[프아르크어르]",
           "phonetic": "[프아르크어르]",
-          "example_en": "This is an example for parker.",
-          "example_ko": "이것은 파커 별칭 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for parker.",
-          "exampleMeaning": "이것은 파커 별칭 관련 실전 예문입니다."
+          "example_en": "Mr Parker approved our budget proposal this morning.",
+          "example_ko": "파커 씨는 오늘 아침 우리의 예산 제안을 승인했어요.",
+          "exampleTarget": "Mr Parker approved our budget proposal this morning.",
+          "exampleMeaning": "파커 씨는 오늘 아침 우리의 예산 제안을 승인했어요."
         },
         {
           "id": "en_13319",
@@ -80752,10 +80752,10 @@
           "pronunciation": "[즈우즈어프]",
           "pron": "[즈우즈어프]",
           "phonetic": "[즈우즈어프]",
-          "example_en": "This is an example for joseph.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for joseph.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Joseph will explain the rules to new members.",
+          "example_ko": "조셉이 새 회원들에게 규칙을 설명해 줄 거예요.",
+          "exampleTarget": "Joseph will explain the rules to new members.",
+          "exampleMeaning": "조셉이 새 회원들에게 규칙을 설명해 줄 거예요."
         },
         {
           "id": "en_13320",
@@ -80769,10 +80769,10 @@
           "pronunciation": "[흐아으]",
           "pron": "[흐아으]",
           "phonetic": "[흐아으]",
-          "example_en": "This is an example for hong.",
-          "example_ko": "이것은 항 상관 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hong.",
-          "exampleMeaning": "이것은 항 상관 관련 실전 예문입니다."
+          "example_en": "We booked a flight to Hong Kong yesterday.",
+          "example_ko": "우리는 어제 홍콩행 비행기 표를 예매했어요.",
+          "exampleTarget": "We booked a flight to Hong Kong yesterday.",
+          "exampleMeaning": "우리는 어제 홍콩행 비행기 표를 예매했어요."
         },
         {
           "id": "en_13321",
@@ -80854,10 +80854,10 @@
           "pronunciation": "[아르어브어르]",
           "pron": "[아르어브어르]",
           "phonetic": "[아르어브어르]",
-          "example_en": "This is an example for oliver.",
-          "example_ko": "이것은 발로 밟아 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for oliver.",
-          "exampleMeaning": "이것은 발로 밟아 관련 실전 예문입니다."
+          "example_en": "Oliver helped me carry the heavy boxes inside.",
+          "example_ko": "올리버는 무거운 상자들을 안으로 옮기는 것을 도와주었어요.",
+          "exampleTarget": "Oliver helped me carry the heavy boxes inside.",
+          "exampleMeaning": "올리버는 무거운 상자들을 안으로 옮기는 것을 도와주었어요."
         },
         {
           "id": "en_13326",
@@ -80871,10 +80871,10 @@
           "pronunciation": "[우르스느]",
           "pron": "[우르스느]",
           "phonetic": "[우르스느]",
-          "example_en": "This is an example for wilson.",
-          "example_ko": "이것은 윌슨 영국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wilson.",
-          "exampleMeaning": "이것은 윌슨 영국 관련 실전 예문입니다."
+          "example_en": "Doctor Wilson gave me very helpful medical advice.",
+          "example_ko": "윌슨 의사 선생님은 나에게 매우 유용한 의학적 조언을 해주셨어요.",
+          "exampleTarget": "Doctor Wilson gave me very helpful medical advice.",
+          "exampleMeaning": "윌슨 의사 선생님은 나에게 매우 유용한 의학적 조언을 해주셨어요."
         },
         {
           "id": "en_13327",
@@ -80922,10 +80922,10 @@
           "pronunciation": "[스에크]",
           "pron": "[스에크]",
           "phonetic": "[스에크]",
-          "example_en": "This is an example for sec.",
-          "example_ko": "이것은 sec 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sec.",
-          "exampleMeaning": "이것은 sec 관련 실전 예문입니다."
+          "example_en": "Wait a sec while I grab my keys.",
+          "example_ko": "내가 열쇠를 챙기는 동안 잠깐만 기다려 줘요.",
+          "exampleTarget": "Wait a sec while I grab my keys.",
+          "exampleMeaning": "내가 열쇠를 챙기는 동안 잠깐만 기다려 줘요."
         },
         {
           "id": "en_13330",
@@ -80940,9 +80940,9 @@
           "pron": "[크어느스드어르이으]",
           "phonetic": "[크어느스드어르이으]",
           "example_en": "Considering his age he speaks very well.",
-          "example_ko": "나이에 비해서 말을 참 잘한다. 부사《구어》 《보통 문미에 두어》 모든 사정을 고려하면 그런 대로 제법 비교적.",
+          "example_ko": "나이에 비해서 말을 참 잘한다. 부사 모든 사정을 고려하면 그런 대로 제법 비교적.",
           "exampleTarget": "Considering his age he speaks very well.",
-          "exampleMeaning": "나이에 비해서 말을 참 잘한다. 부사《구어》 《보통 문미에 두어》 모든 사정을 고려하면 그런 대로 제법 비교적."
+          "exampleMeaning": "나이에 비해서 말을 참 잘한다. 부사 모든 사정을 고려하면 그런 대로 제법 비교적."
         }
       ],
       "nodes": [
@@ -81055,10 +81055,10 @@
           "pronunciation": "[프스이]",
           "pron": "[프스이]",
           "phonetic": "[프스이]",
-          "example_en": "This is an example for pussy.",
-          "example_ko": "이것은 고양이 야옹이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pussy.",
-          "exampleMeaning": "이것은 고양이 야옹이 관련 실전 예문입니다."
+          "example_en": "The little pussy slept peacefully on the rug.",
+          "example_ko": "그 작은 고양이는 양탄자 위에서 평화롭게 잠을 잤어요.",
+          "exampleTarget": "The little pussy slept peacefully on the rug.",
+          "exampleMeaning": "그 작은 고양이는 양탄자 위에서 평화롭게 잠을 잤어요."
         },
         {
           "id": "en_13402",
@@ -81072,10 +81072,10 @@
           "pronunciation": "[드오느어]",
           "pron": "[드오느어]",
           "phonetic": "[드오느어]",
-          "example_en": "This is an example for donna.",
-          "example_ko": "이것은 양 부인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for donna.",
-          "exampleMeaning": "이것은 양 부인 관련 실전 예문입니다."
+          "example_en": "Donna prepared a lovely gift for her friend.",
+          "example_ko": "도나는 친구를 위해 사랑스러운 선물을 준비했어요.",
+          "exampleTarget": "Donna prepared a lovely gift for her friend.",
+          "exampleMeaning": "도나는 친구를 위해 사랑스러운 선물을 준비했어요."
         },
         {
           "id": "en_13403",
@@ -81106,10 +81106,10 @@
           "pronunciation": "[크드느애프]",
           "pron": "[크드느애프]",
           "phonetic": "[크드느애프]",
-          "example_en": "This is an example for kidnapped.",
-          "example_ko": "이것은 납치하다 유괴하다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kidnapped.",
-          "exampleMeaning": "이것은 납치하다 유괴하다 관련 실전 예문입니다."
+          "example_en": "The wealthy businessman was kidnapped near his home.",
+          "example_ko": "그 부유한 사업가는 집 근처에서 납치되었어요.",
+          "exampleTarget": "The wealthy businessman was kidnapped near his home.",
+          "exampleMeaning": "그 부유한 사업가는 집 근처에서 납치되었어요."
         },
         {
           "id": "en_13405",
@@ -81123,10 +81123,10 @@
           "pronunciation": "[트어르이]",
           "pron": "[트어르이]",
           "phonetic": "[트어르이]",
-          "example_en": "This is an example for italy.",
-          "example_ko": "이것은 이탈리아 유럽 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for italy.",
-          "exampleMeaning": "이것은 이탈리아 유럽 관련 실전 예문입니다."
+          "example_en": "They spent two wonderful weeks traveling in Italy.",
+          "example_ko": "그들은 이탈리아에서 여행하며 멋진 2주를 보냈어요.",
+          "exampleTarget": "They spent two wonderful weeks traveling in Italy.",
+          "exampleMeaning": "그들은 이탈리아에서 여행하며 멋진 2주를 보냈어요."
         },
         {
           "id": "en_13406",
@@ -81141,9 +81141,9 @@
           "pron": "[크르츠어르]",
           "phonetic": "[크르츠어르]",
           "example_en": "dumb creatures.",
-          "example_ko": "동물. 3.《종종 칭찬·경멸 등을 나타내는 형용사와 함께》 사람 놈 남자 여자 아이.",
+          "example_ko": "동물.",
           "exampleTarget": "dumb creatures.",
-          "exampleMeaning": "동물. 3.《종종 칭찬·경멸 등을 나타내는 형용사와 함께》 사람 놈 남자 여자 아이."
+          "exampleMeaning": "동물."
         },
         {
           "id": "en_13407",
@@ -81157,10 +81157,10 @@
           "pronunciation": "[우아르이트]",
           "pron": "[우아르이트]",
           "phonetic": "[우아르이트]",
-          "example_en": "This is an example for wallet.",
-          "example_ko": "이것은 지갑 지폐를 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wallet.",
-          "exampleMeaning": "이것은 지갑 지폐를 관련 실전 예문입니다."
+          "example_en": "I left my leather wallet on the table.",
+          "example_ko": "나는 가죽 지갑을 테이블 위에 두고 왔어요.",
+          "exampleTarget": "I left my leather wallet on the table.",
+          "exampleMeaning": "나는 가죽 지갑을 테이블 위에 두고 왔어요."
         },
         {
           "id": "en_13408",
@@ -81174,10 +81174,10 @@
           "pronunciation": "[브느스어느트]",
           "pron": "[브느스어느트]",
           "phonetic": "[브느스어느트]",
-          "example_en": "This is an example for vincent.",
-          "example_ko": "이것은 성 빈첸티우스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vincent.",
-          "exampleMeaning": "이것은 성 빈첸티우스 관련 실전 예문입니다."
+          "example_en": "Vincent painted a beautiful landscape for the gallery.",
+          "example_ko": "빈센트는 갤러리를 위해 아름다운 풍경화를 그렸어요.",
+          "exampleTarget": "Vincent painted a beautiful landscape for the gallery.",
+          "exampleMeaning": "빈센트는 갤러리를 위해 아름다운 풍경화를 그렸어요."
         },
         {
           "id": "en_13409",
@@ -81204,14 +81204,14 @@
           "level": "B2",
           "unitId": "unit_134",
           "nodeId": "en_u134_n1",
-          "meaning": "angela",
+          "meaning": "안젤라",
           "pronunciation": "[애느즈어르어]",
           "pron": "[애느즈어르어]",
           "phonetic": "[애느즈어르어]",
-          "example_en": "This is an example for angela.",
-          "example_ko": "이것은 angela 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for angela.",
-          "exampleMeaning": "이것은 angela 관련 실전 예문입니다."
+          "example_en": "Angela answered all customer questions very politely today.",
+          "example_ko": "안젤라는 오늘 모든 고객 문의에 매우 정중하게 답했어요.",
+          "exampleTarget": "Angela answered all customer questions very politely today.",
+          "exampleMeaning": "안젤라는 오늘 모든 고객 문의에 매우 정중하게 답했어요."
         },
         {
           "id": "en_13411",
@@ -81225,10 +81225,10 @@
           "pronunciation": "[즈에이]",
           "pron": "[즈에이]",
           "phonetic": "[즈에이]",
-          "example_en": "This is an example for jay.",
-          "example_ko": "이것은 어치 수다스러운 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jay.",
-          "exampleMeaning": "이것은 어치 수다스러운 관련 실전 예문입니다."
+          "example_en": "A bright blue jay landed on the branch.",
+          "example_ko": "밝은 파란색 어치 한 마리가 나뭇가지에 앉았어요.",
+          "exampleTarget": "A bright blue jay landed on the branch.",
+          "exampleMeaning": "밝은 파란색 어치 한 마리가 나뭇가지에 앉았어요."
         },
         {
           "id": "en_13412",
@@ -81238,14 +81238,14 @@
           "level": "B2",
           "unitId": "unit_134",
           "nodeId": "en_u134_n2",
-          "meaning": "favour",
+          "meaning": "부탁",
           "pronunciation": "[프이브어르]",
           "pron": "[프이브어르]",
           "phonetic": "[프이브어르]",
-          "example_en": "This is an example for favour.",
-          "example_ko": "이것은 favour 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for favour.",
-          "exampleMeaning": "이것은 favour 관련 실전 예문입니다."
+          "example_en": "Can you do me a favour?",
+          "example_ko": "부탁 하나만 들어줄 수 있니?",
+          "exampleTarget": "Can you do me a favour?",
+          "exampleMeaning": "부탁 하나만 들어줄 수 있니?"
         },
         {
           "id": "en_13413",
@@ -81260,9 +81260,9 @@
           "pron": "[르이애크쉬어느]",
           "phonetic": "[르이애크쉬어느]",
           "example_en": "reaction against militarism.",
-          "example_ko": "군국주의에 대한 반발. 2.（정치상의） 반동 보수적 경향; 역행. 3.〔사건·영향·자극 등에 대한〕 반응 받아들이기 태도〔to …〕.",
+          "example_ko": "군국주의에 대한 반발.",
           "exampleTarget": "reaction against militarism.",
-          "exampleMeaning": "군국주의에 대한 반발. 2.（정치상의） 반동 보수적 경향; 역행. 3.〔사건·영향·자극 등에 대한〕 반응 받아들이기 태도〔to …〕."
+          "exampleMeaning": "군국주의에 대한 반발."
         },
         {
           "id": "en_13414",
@@ -81276,10 +81276,10 @@
           "pronunciation": "[즈스이크어]",
           "pron": "[즈스이크어]",
           "phonetic": "[즈스이크어]",
-          "example_en": "This is an example for jessica.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jessica.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Jessica shared her notes with the whole class.",
+          "example_ko": "제시카는 반 전체와 자신의 필기 내용을 공유했어요.",
+          "exampleTarget": "Jessica shared her notes with the whole class.",
+          "exampleMeaning": "제시카는 반 전체와 자신의 필기 내용을 공유했어요."
         },
         {
           "id": "en_13415",
@@ -81311,9 +81311,9 @@
           "pron": "[드이어므어느드]",
           "phonetic": "[드이어므어느드]",
           "example_en": "a small diamond.",
-          "example_ko": "점수가 낮은 다이아 패. 5.〔야구〕 내야; 야구장. 숙어 diamond cut diamond （기지·책략 등이） 막상막하의 호적수의 대결 난형난제의 명승부. ※ It is diamond cut diamond. 처럼 씀. 형용사1.다이아로 만든.",
+          "example_ko": "점수가 낮은 다이아 패.",
           "exampleTarget": "a small diamond.",
-          "exampleMeaning": "점수가 낮은 다이아 패. 5.〔야구〕 내야; 야구장. 숙어 diamond cut diamond （기지·책략 등이） 막상막하의 호적수의 대결 난형난제의 명승부. ※ It is diamond cut diamond. 처럼 씀. 형용사1.다이아로 만든."
+          "exampleMeaning": "점수가 낮은 다이아 패."
         },
         {
           "id": "en_13417",
@@ -81327,10 +81327,10 @@
           "pronunciation": "[스트브어느]",
           "pron": "[스트브어느]",
           "phonetic": "[스트브어느]",
-          "example_en": "This is an example for steven.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for steven.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Steven accepted the job offer from that company.",
+          "example_ko": "스티븐은 그 회사의 입사 제안을 수락했어요.",
+          "exampleTarget": "Steven accepted the job offer from that company.",
+          "exampleMeaning": "스티븐은 그 회사의 입사 제안을 수락했어요."
         },
         {
           "id": "en_13418",
@@ -81361,10 +81361,10 @@
           "pronunciation": "[쉬아르어트]",
           "pron": "[쉬아르어트]",
           "phonetic": "[쉬아르어트]",
-          "example_en": "This is an example for charlotte.",
-          "example_ko": "이것은 샤를로트 디저트용 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for charlotte.",
-          "exampleMeaning": "이것은 샤를로트 디저트용 관련 실전 예문입니다."
+          "example_en": "Charlotte works as a senior designer in London.",
+          "example_ko": "샬럿은 런던에서 수석 디자이너로 일하고 있어요.",
+          "exampleTarget": "Charlotte works as a senior designer in London.",
+          "exampleMeaning": "샬럿은 런던에서 수석 디자이너로 일하고 있어요."
         },
         {
           "id": "en_13420",
@@ -81396,9 +81396,9 @@
           "pron": "[프이프스]",
           "phonetic": "[프이프스]",
           "example_en": "the fifth act.",
-          "example_ko": "제 5막 종막; 노경. 2.5분의 1의. 3.〔음악〕 5도 의. 명사1.《보통 the fifth》제5 5번째 사람. 2.《a fifth》5분의 1. 3.《미·비격식》 피프스: 주류 용량 단위; 1 5 gallon . 4.〔음악〕 5도 （음정） ; 제 5음. 숙어 plead the fifth; take the fifth 《미·비격식》 ①《F-》 （법정에서） 미국 헌법 수정 제5조를 수용하다; 묵비권을 행사하다. ②（일반적으로） 답변을 거부하다.",
+          "example_ko": "제 5막 종막; 노경.",
           "exampleTarget": "the fifth act.",
-          "exampleMeaning": "제 5막 종막; 노경. 2.5분의 1의. 3.〔음악〕 5도 의. 명사1.《보통 the fifth》제5 5번째 사람. 2.《a fifth》5분의 1. 3.《미·비격식》 피프스: 주류 용량 단위; 1 5 gallon . 4.〔음악〕 5도 （음정） ; 제 5음. 숙어 plead the fifth; take the fifth 《미·비격식》 ①《F-》 （법정에서） 미국 헌법 수정 제5조를 수용하다; 묵비권을 행사하다. ②（일반적으로） 답변을 거부하다."
+          "exampleMeaning": "제 5막 종막; 노경."
         },
         {
           "id": "en_13422",
@@ -81481,9 +81481,9 @@
           "pron": "[므이스트어르이어스]",
           "phonetic": "[므이스트어르이어스]",
           "example_en": "the mysterious universe.",
-          "example_ko": "신비의 우주. 1. mysterious 정체를 몰라서 호기심·두려움·놀라움을 갖게 하는 것을 가리킴. 2. inscrutable 불가해하고 수수께끼 같아서 이해하기 어려운 ◇ keep an inscrutable face 짐작도 할 수 없는 표정을 유지하다. 3. mystical 의식·표상 등의 안에 은밀한 뜻을 가진것. 종교적·영적으로 쓰는 경우가 많음 ◇ mystical rite 비밀 의식.2.（성질·의미·원인 등이） 분명치 않은 모호한; 불가사의한.",
+          "example_ko": "신비의 우주. 1. mysterious 정체를 몰라서 호기심·두려움·놀라움을 갖게 하는 것을 가리킴.",
           "exampleTarget": "the mysterious universe.",
-          "exampleMeaning": "신비의 우주. 1. mysterious 정체를 몰라서 호기심·두려움·놀라움을 갖게 하는 것을 가리킴. 2. inscrutable 불가해하고 수수께끼 같아서 이해하기 어려운 ◇ keep an inscrutable face 짐작도 할 수 없는 표정을 유지하다. 3. mystical 의식·표상 등의 안에 은밀한 뜻을 가진것. 종교적·영적으로 쓰는 경우가 많음 ◇ mystical rite 비밀 의식.2.（성질·의미·원인 등이） 분명치 않은 모호한; 불가사의한."
+          "exampleMeaning": "신비의 우주. 1. mysterious 정체를 몰라서 호기심·두려움·놀라움을 갖게 하는 것을 가리킴."
         },
         {
           "id": "en_13427",
@@ -81514,10 +81514,10 @@
           "pronunciation": "[즈어스트어느]",
           "pron": "[즈어스트어느]",
           "phonetic": "[즈어스트어느]",
-          "example_en": "This is an example for justin.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for justin.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Justin played guitar wonderfully at the school concert.",
+          "example_ko": "저스틴은 학교 콘서트에서 기타를 멋지게 연주했어요.",
+          "exampleTarget": "Justin played guitar wonderfully at the school concert.",
+          "exampleMeaning": "저스틴은 학교 콘서트에서 기타를 멋지게 연주했어요."
         },
         {
           "id": "en_13429",
@@ -81531,10 +81531,10 @@
           "pronunciation": "[드르므이으]",
           "pron": "[드르므이으]",
           "phonetic": "[드르므이으]",
-          "example_en": "This is an example for dreaming.",
-          "example_ko": "이것은 꿈을 꾸고 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dreaming.",
-          "exampleMeaning": "이것은 꿈을 꾸고 관련 실전 예문입니다."
+          "example_en": "He kept dreaming about opening his own bakery.",
+          "example_ko": "그는 자신만의 빵집을 여는 꿈을 계속 꾸었어요.",
+          "exampleTarget": "He kept dreaming about opening his own bakery.",
+          "exampleMeaning": "그는 자신만의 빵집을 여는 꿈을 계속 꾸었어요."
         },
         {
           "id": "en_13430",
@@ -81664,10 +81664,10 @@
           "pronunciation": "[르]",
           "pron": "[르]",
           "phonetic": "[르]",
-          "example_en": "This is an example for el.",
-          "example_ko": "이것은 접두사l앞에서의 ²의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for el.",
-          "exampleMeaning": "이것은 접두사l앞에서의 ²의 관련 실전 예문입니다."
+          "example_en": "El is a short nickname for Eleanor.",
+          "example_ko": "엘은 엘리너의 짧은 애칭이다.",
+          "exampleTarget": "El is a short nickname for Eleanor.",
+          "exampleMeaning": "엘은 엘리너의 짧은 애칭이다."
         },
         {
           "id": "en_13502",
@@ -81681,10 +81681,10 @@
           "pronunciation": "[트드이]",
           "pron": "[트드이]",
           "phonetic": "[트드이]",
-          "example_en": "This is an example for teddy.",
-          "example_ko": "이것은 테디 슈미즈와 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for teddy.",
-          "exampleMeaning": "이것은 테디 슈미즈와 관련 실전 예문입니다."
+          "example_en": "The child fell asleep holding a soft teddy.",
+          "example_ko": "그 아이는 부드러운 곰 인형을 안고 잠이 들었어요.",
+          "exampleTarget": "The child fell asleep holding a soft teddy.",
+          "exampleMeaning": "그 아이는 부드러운 곰 인형을 안고 잠이 들었어요."
         },
         {
           "id": "en_13503",
@@ -81698,10 +81698,10 @@
           "pronunciation": "[크아으]",
           "pron": "[크아으]",
           "phonetic": "[크아으]",
-          "example_en": "This is an example for kong.",
-          "example_ko": "이것은 싸구려 위스키 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kong.",
-          "exampleMeaning": "이것은 싸구려 위스키 관련 실전 예문입니다."
+          "example_en": "Many international flights connect through Hong Kong airport.",
+          "example_ko": "많은 국제선 항공편이 홍콩 공항을 경유해요.",
+          "exampleTarget": "Many international flights connect through Hong Kong airport.",
+          "exampleMeaning": "많은 국제선 항공편이 홍콩 공항을 경유해요."
         },
         {
           "id": "en_13504",
@@ -81749,10 +81749,10 @@
           "pronunciation": "[므이스느]",
           "pron": "[므이스느]",
           "phonetic": "[므이스느]",
-          "example_en": "This is an example for mason.",
-          "example_ko": "이것은 석공 석수 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mason.",
-          "exampleMeaning": "이것은 석공 석수 관련 실전 예문입니다."
+          "example_en": "The skilled mason built a strong stone wall.",
+          "example_ko": "숙련된 석공이 튼튼한 돌담을 쌓았어요.",
+          "exampleTarget": "The skilled mason built a strong stone wall.",
+          "exampleMeaning": "숙련된 석공이 튼튼한 돌담을 쌓았어요."
         },
         {
           "id": "en_13507",
@@ -81766,10 +81766,10 @@
           "pronunciation": "[즈이므]",
           "pron": "[즈이므]",
           "phonetic": "[즈이므]",
-          "example_en": "This is an example for gym.",
-          "example_ko": "이것은 체육관 체조 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gym.",
-          "exampleMeaning": "이것은 체육관 체조 관련 실전 예문입니다."
+          "example_en": "I exercise at the local gym every evening.",
+          "example_ko": "나는 매일 저녁 동네 헬스장에서 운동해요.",
+          "exampleTarget": "I exercise at the local gym every evening.",
+          "exampleMeaning": "나는 매일 저녁 동네 헬스장에서 운동해요."
         },
         {
           "id": "en_13508",
@@ -81783,10 +81783,10 @@
           "pronunciation": "[크트이]",
           "pron": "[크트이]",
           "phonetic": "[크트이]",
-          "example_en": "This is an example for kitty.",
-          "example_ko": "이것은 새끼 고양이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kitty.",
-          "exampleMeaning": "이것은 새끼 고양이 관련 실전 예문입니다."
+          "example_en": "The playful kitty chased a yarn ball happily.",
+          "example_ko": "장난기 많은 아기 고양이가 털실 뭉치를 신나게 쫓아갔어요.",
+          "exampleTarget": "The playful kitty chased a yarn ball happily.",
+          "exampleMeaning": "장난기 많은 아기 고양이가 털실 뭉치를 신나게 쫓아갔어요."
         },
         {
           "id": "en_13509",
@@ -81796,14 +81796,14 @@
           "level": "B2",
           "unitId": "unit_135",
           "nodeId": "en_u135_n1",
-          "meaning": "yup",
+          "meaning": "응",
           "pronunciation": "[이어프]",
           "pron": "[이어프]",
           "phonetic": "[이어프]",
-          "example_en": "This is an example for yup.",
-          "example_ko": "이것은 yup 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yup.",
-          "exampleMeaning": "이것은 yup 관련 실전 예문입니다."
+          "example_en": "Yup we decided to take the early train.",
+          "example_ko": "응 우리는 이른 기차를 타기로 결정했어.",
+          "exampleTarget": "Yup we decided to take the early train.",
+          "exampleMeaning": "응 우리는 이른 기차를 타기로 결정했어."
         },
         {
           "id": "en_13510",
@@ -81817,10 +81817,10 @@
           "pronunciation": "[프이]",
           "pron": "[프이]",
           "phonetic": "[프이]",
-          "example_en": "This is an example for pee.",
-          "example_ko": "이것은 소변 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pee.",
-          "exampleMeaning": "이것은 소변 관련 실전 예문입니다."
+          "example_en": "The puppy needs to pee outside right now.",
+          "example_ko": "강아지가 지금 바로 밖에서 소변을 봐야 해요.",
+          "exampleTarget": "The puppy needs to pee outside right now.",
+          "exampleMeaning": "강아지가 지금 바로 밖에서 소변을 봐야 해요."
         },
         {
           "id": "en_13511",
@@ -81834,10 +81834,10 @@
           "pronunciation": "[즈오르드어느]",
           "pron": "[즈오르드어느]",
           "phonetic": "[즈오르드어느]",
-          "example_en": "This is an example for jordan.",
-          "example_ko": "이것은 jordan 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jordan.",
-          "exampleMeaning": "이것은 jordan 관련 실전 예문입니다."
+          "example_en": "Jordan scored twenty points in the basketball match.",
+          "example_ko": "조던은 농구 경기에서 20점을 득점했어요.",
+          "exampleTarget": "Jordan scored twenty points in the basketball match.",
+          "exampleMeaning": "조던은 농구 경기에서 20점을 득점했어요."
         },
         {
           "id": "en_13512",
@@ -81852,9 +81852,9 @@
           "pron": "[크아므르애드]",
           "phonetic": "[크아므르애드]",
           "example_en": "a comrade in arms.",
-          "example_ko": "전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지.",
+          "example_ko": "전우.",
           "exampleTarget": "a comrade in arms.",
-          "exampleMeaning": "전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지."
+          "exampleMeaning": "전우."
         },
         {
           "id": "en_13513",
@@ -81868,10 +81868,10 @@
           "pronunciation": "[브트이]",
           "pron": "[브트이]",
           "phonetic": "[브트이]",
-          "example_en": "This is an example for betty.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for betty.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Betty baked delicious apple pies for our guests.",
+          "example_ko": "베티는 우리 손님들을 위해 맛있는 사과 파이를 구웠어요.",
+          "exampleTarget": "Betty baked delicious apple pies for our guests.",
+          "exampleMeaning": "베티는 우리 손님들을 위해 맛있는 사과 파이를 구웠어요."
         },
         {
           "id": "en_13514",
@@ -81919,10 +81919,10 @@
           "pronunciation": "[드우어르드]",
           "pron": "[드우어르드]",
           "phonetic": "[드우어르드]",
-          "example_en": "This is an example for edward.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for edward.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Edward teaches history at the local high school.",
+          "example_ko": "에드워드는 지역 고등학교에서 역사를 가르쳐요.",
+          "exampleTarget": "Edward teaches history at the local high school.",
+          "exampleMeaning": "에드워드는 지역 고등학교에서 역사를 가르쳐요."
         },
         {
           "id": "en_13517",
@@ -81936,10 +81936,10 @@
           "pronunciation": "[트크스어스]",
           "pron": "[트크스어스]",
           "phonetic": "[트크스어스]",
-          "example_en": "This is an example for texas.",
-          "example_ko": "이것은 최상부 갑판 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for texas.",
-          "exampleMeaning": "이것은 최상부 갑판 관련 실전 예문입니다."
+          "example_en": "My family moved to Texas five years ago.",
+          "example_ko": "우리 가족은 5년 전에 텍사스로 이사했어요.",
+          "exampleTarget": "My family moved to Texas five years ago.",
+          "exampleMeaning": "우리 가족은 5년 전에 텍사스로 이사했어요."
         },
         {
           "id": "en_13518",
@@ -81953,10 +81953,10 @@
           "pronunciation": "[므아르크어스]",
           "pron": "[므아르크어스]",
           "phonetic": "[므아르크어스]",
-          "example_en": "This is an example for marcus.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for marcus.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Marcus completed the difficult project on his own.",
+          "example_ko": "마커스는 어려운 프로젝트를 혼자서 완수했어요.",
+          "exampleTarget": "Marcus completed the difficult project on his own.",
+          "exampleMeaning": "마커스는 어려운 프로젝트를 혼자서 완수했어요."
         },
         {
           "id": "en_13519",
@@ -82021,10 +82021,10 @@
           "pronunciation": "[쉬오느]",
           "pron": "[쉬오느]",
           "phonetic": "[쉬오느]",
-          "example_en": "This is an example for shown.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shown.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "The movie was shown on television.",
+          "example_ko": "그 영화는 텔레비전에서 상영되었다.",
+          "exampleTarget": "The movie was shown on television.",
+          "exampleMeaning": "그 영화는 텔레비전에서 상영되었다."
         },
         {
           "id": "en_13523",
@@ -82072,10 +82072,10 @@
           "pronunciation": "[느이스어느]",
           "pron": "[느이스어느]",
           "phonetic": "[느이스어느]",
-          "example_en": "This is an example for nathan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nathan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Nathan repaired the broken bicycle for his brother.",
+          "example_ko": "네이선은 남동생을 위해 고장 난 자전거를 수리했어요.",
+          "exampleTarget": "Nathan repaired the broken bicycle for his brother.",
+          "exampleMeaning": "네이선은 남동생을 위해 고장 난 자전거를 수리했어요."
         },
         {
           "id": "en_13526",
@@ -82089,10 +82089,10 @@
           "pronunciation": "[므아르어르이트]",
           "pron": "[므아르어르이트]",
           "phonetic": "[므아르어르이트]",
-          "example_en": "This is an example for margaret.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for margaret.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Margaret gave an insightful lecture on modern art.",
+          "example_ko": "마가렛은 현대 미술에 대한 통찰력 있는 강의를 했어요.",
+          "exampleTarget": "Margaret gave an insightful lecture on modern art.",
+          "exampleMeaning": "마가렛은 현대 미술에 대한 통찰력 있는 강의를 했어요."
         },
         {
           "id": "en_13527",
@@ -82106,10 +82106,10 @@
           "pronunciation": "[르오스]",
           "pron": "[르오스]",
           "phonetic": "[르오스]",
-          "example_en": "This is an example for ross.",
-          "example_ko": "이것은 꺼칠꺼칠한 외피 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ross.",
-          "exampleMeaning": "이것은 꺼칠꺼칠한 외피 관련 실전 예문입니다."
+          "example_en": "Ross ordered a fresh cup of hot coffee.",
+          "example_ko": "로스는 따끈한 신선한 커피 한 잔을 주문했어요.",
+          "exampleTarget": "Ross ordered a fresh cup of hot coffee.",
+          "exampleMeaning": "로스는 따끈한 신선한 커피 한 잔을 주문했어요."
         },
         {
           "id": "en_13528",
@@ -82124,9 +82124,9 @@
           "pron": "[츠이트]",
           "phonetic": "[츠이트]",
           "example_en": "The land sale turned out to be a cheat.",
-          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.",
+          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다.",
           "exampleTarget": "The land sale turned out to be a cheat.",
-          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕."
+          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다."
         },
         {
           "id": "en_13529",
@@ -82140,10 +82140,10 @@
           "pronunciation": "[르이스]",
           "pron": "[르이스]",
           "phonetic": "[르이스]",
-          "example_en": "This is an example for lewis.",
-          "example_ko": "이것은 쐐기 볼트 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lewis.",
-          "exampleMeaning": "이것은 쐐기 볼트 관련 실전 예문입니다."
+          "example_en": "Lewis runs a popular bookstore in our neighborhood.",
+          "example_ko": "루이스는 우리 동네에서 인기 있는 서점을 운영해요.",
+          "exampleTarget": "Lewis runs a popular bookstore in our neighborhood.",
+          "exampleMeaning": "루이스는 우리 동네에서 인기 있는 서점을 운영해요."
         },
         {
           "id": "en_13530",
@@ -82273,10 +82273,10 @@
           "pronunciation": "[트이르어르]",
           "pron": "[트이르어르]",
           "phonetic": "[트이르어르]",
-          "example_en": "This is an example for tyler.",
-          "example_ko": "이것은 집회소 문지기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tyler.",
-          "exampleMeaning": "이것은 집회소 문지기 관련 실전 예문입니다."
+          "example_en": "Tyler volunteered at the local animal shelter yesterday.",
+          "example_ko": "타일러는 어제 지역 동물 보호소에서 자원봉사를 했어요.",
+          "exampleTarget": "Tyler volunteered at the local animal shelter yesterday.",
+          "exampleMeaning": "타일러는 어제 지역 동물 보호소에서 자원봉사를 했어요."
         },
         {
           "id": "en_13602",
@@ -82290,10 +82290,10 @@
           "pronunciation": "[브이브르]",
           "pron": "[브이브르]",
           "phonetic": "[브이브르]",
-          "example_en": "This is an example for bible.",
-          "example_ko": "이것은 성서 성경 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bible.",
-          "exampleMeaning": "이것은 성서 성경 관련 실전 예문입니다."
+          "example_en": "She reads a chapter of the Bible daily.",
+          "example_ko": "그녀는 매일 성경 한 장씩을 읽어요.",
+          "exampleTarget": "She reads a chapter of the Bible daily.",
+          "exampleMeaning": "그녀는 매일 성경 한 장씩을 읽어요."
         },
         {
           "id": "en_13603",
@@ -82308,9 +82308,9 @@
           "pron": "[프르애크트이크어르이방언빠른말투프르애크르이]",
           "phonetic": "[프르애크트이크어르이방언빠른말투프르애크르이]",
           "example_en": "behave practically.",
-          "example_ko": "실제적으로 행동하다. 2.《문장 전체를 수식하여》 실질적으로 사실상 실제상.",
+          "example_ko": "실제적으로 행동하다.",
           "exampleTarget": "behave practically.",
-          "exampleMeaning": "실제적으로 행동하다. 2.《문장 전체를 수식하여》 실질적으로 사실상 실제상."
+          "exampleMeaning": "실제적으로 행동하다."
         },
         {
           "id": "en_13604",
@@ -82324,10 +82324,10 @@
           "pronunciation": "[크애스어르이느]",
           "pron": "[크애스어르이느]",
           "phonetic": "[크애스어르이느]",
-          "example_en": "This is an example for catherine.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for catherine.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Catherine received a scholarship for her academic excellence.",
+          "example_ko": "캐서린은 뛰어난 학업 성적으로 장학금을 받았어요.",
+          "exampleTarget": "Catherine received a scholarship for her academic excellence.",
+          "exampleMeaning": "캐서린은 뛰어난 학업 성적으로 장학금을 받았어요."
         },
         {
           "id": "en_13605",
@@ -82359,9 +82359,9 @@
           "pron": "[크애브이느]",
           "phonetic": "[크애브이느]",
           "example_en": "a log cabin.",
-          "example_ko": "통나무 오두막집. 2.《미》 （트레일러에 붙은） 거실 （케이블카의） 객실. 3. 객실; （군함 내의） 장교실; （비행기의） 기실; （우주선의） 선실.",
+          "example_ko": "통나무 오두막집.",
           "exampleTarget": "a log cabin.",
-          "exampleMeaning": "통나무 오두막집. 2.《미》 （트레일러에 붙은） 거실 （케이블카의） 객실. 3. 객실; （군함 내의） 장교실; （비행기의） 기실; （우주선의） 선실."
+          "exampleMeaning": "통나무 오두막집."
         },
         {
           "id": "en_13607",
@@ -82392,10 +82392,10 @@
           "pronunciation": "[스이어느트이스트]",
           "pron": "[스이어느트이스트]",
           "phonetic": "[스이어느트이스트]",
-          "example_en": "This is an example for scientists.",
-          "example_ko": "이것은 과학자 자연 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for scientists.",
-          "exampleMeaning": "이것은 과학자 자연 관련 실전 예문입니다."
+          "example_en": "Scientists discovered a new species in the ocean.",
+          "example_ko": "과학자들은 바다에서 새로운 종을 발견했어요.",
+          "exampleTarget": "Scientists discovered a new species in the ocean.",
+          "exampleMeaning": "과학자들은 바다에서 새로운 종을 발견했어요."
         },
         {
           "id": "en_13609",
@@ -82444,9 +82444,9 @@
           "pron": "[스크르이프트]",
           "phonetic": "[스크르이프트]",
           "example_en": "in italic script.",
-          "example_ko": "이탤릭체로. 2.원고 사본 문서. 3.（연극·영화·텔레비전 등의） 대본 스크립트.",
+          "example_ko": "이탤릭체로.",
           "exampleTarget": "in italic script.",
-          "exampleMeaning": "이탤릭체로. 2.원고 사본 문서. 3.（연극·영화·텔레비전 등의） 대본 스크립트."
+          "exampleMeaning": "이탤릭체로."
         },
         {
           "id": "en_13612",
@@ -82478,9 +82478,9 @@
           "pron": "[크오프]",
           "phonetic": "[크오프]",
           "example_en": "The engine coughed once or twice but wouldnt start.",
-          "example_ko": "엔진은 한 두번 덜덜거렸을 뿐 시동이 걸리지 않았다. 3.《영·속어》 자백하다 실토하다. 동사 타동사 〈피·가래·목에 걸린 것 등을〉 기침을 하여 토해내다〔out up〕; …을 기침하면서 말하다〔out〕.",
+          "example_ko": "엔진은 한 두번 덜덜거렸을 뿐 시동이 걸리지 않았다.",
           "exampleTarget": "The engine coughed once or twice but wouldnt start.",
-          "exampleMeaning": "엔진은 한 두번 덜덜거렸을 뿐 시동이 걸리지 않았다. 3.《영·속어》 자백하다 실토하다. 동사 타동사 〈피·가래·목에 걸린 것 등을〉 기침을 하여 토해내다〔out up〕; …을 기침하면서 말하다〔out〕."
+          "exampleMeaning": "엔진은 한 두번 덜덜거렸을 뿐 시동이 걸리지 않았다."
         },
         {
           "id": "en_13614",
@@ -82494,10 +82494,10 @@
           "pronunciation": "[스트브어느]",
           "pron": "[스트브어느]",
           "phonetic": "[스트브어느]",
-          "example_en": "This is an example for stephen.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stephen.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Stephen explained the solution clearly to the class.",
+          "example_ko": "스티븐은 반 친구들에게 해결책을 명확히 설명했어요.",
+          "exampleTarget": "Stephen explained the solution clearly to the class.",
+          "exampleMeaning": "스티븐은 반 친구들에게 해결책을 명확히 설명했어요."
         },
         {
           "id": "en_13615",
@@ -82546,9 +82546,9 @@
           "pron": "[트어츠이으]",
           "phonetic": "[트어츠이으]",
           "example_en": "a touching scene.",
-          "example_ko": "감동적인 장면. 전치사《격식》 …에 관하여.",
+          "example_ko": "감동적인 장면. 전치사 …에 관하여.",
           "exampleTarget": "a touching scene.",
-          "exampleMeaning": "감동적인 장면. 전치사《격식》 …에 관하여."
+          "exampleMeaning": "감동적인 장면. 전치사 …에 관하여."
         },
         {
           "id": "en_13618",
@@ -82558,14 +82558,14 @@
           "level": "B2",
           "unitId": "unit_136",
           "nodeId": "en_u136_n2",
-          "meaning": "realise",
+          "meaning": "깨닫다",
           "pronunciation": "[르어르이즈]",
           "pron": "[르어르이즈]",
           "phonetic": "[르어르이즈]",
-          "example_en": "This is an example for realise.",
-          "example_ko": "이것은 realise 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for realise.",
-          "exampleMeaning": "이것은 realise 관련 실전 예문입니다."
+          "example_en": "I didn't realise you were here.",
+          "example_ko": "네가 여기 있는 줄 미처 깨닫지 못했어.",
+          "exampleTarget": "I didn't realise you were here.",
+          "exampleMeaning": "네가 여기 있는 줄 미처 깨닫지 못했어."
         },
         {
           "id": "en_13619",
@@ -82579,10 +82579,10 @@
           "pronunciation": "[르이브크어]",
           "pron": "[르이브크어]",
           "phonetic": "[르이브크어]",
-          "example_en": "This is an example for rebecca.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rebecca.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Rebecca wrote an encouraging letter to her friend.",
+          "example_ko": "레베카는 친구에게 격려의 편지를 썼어요.",
+          "exampleTarget": "Rebecca wrote an encouraging letter to her friend.",
+          "exampleMeaning": "레베카는 친구에게 격려의 편지를 썼어요."
         },
         {
           "id": "en_13620",
@@ -82596,10 +82596,10 @@
           "pronunciation": "[브아르브어르어]",
           "pron": "[브아르브어르어]",
           "phonetic": "[브아르브어르어]",
-          "example_en": "This is an example for barbara.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for barbara.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Barbara planted beautiful roses in her front garden.",
+          "example_ko": "바바라는 앞마당 정원에 아름다운 장미를 심었어요.",
+          "exampleTarget": "Barbara planted beautiful roses in her front garden.",
+          "exampleMeaning": "바바라는 앞마당 정원에 아름다운 장미를 심었어요."
         },
         {
           "id": "en_13621",
@@ -82614,9 +82614,9 @@
           "pron": "[footsteps]",
           "phonetic": "[footsteps]",
           "example_en": "He heard soft footsteps coming up the stairs.",
-          "example_ko": "그는 층계를 올라오는 가벼운 발소리를 들었다. 3.계단 （오르는） 발판. 숙어 tread in a persons footsteps; follow in a persons footsteps; walk in a persons footsteps 남의 발자국을 따라가다; 남의 뜻을 잇다 선례를 좇다.",
+          "example_ko": "그는 층계를 올라오는 가벼운 발소리를 들었다.",
           "exampleTarget": "He heard soft footsteps coming up the stairs.",
-          "exampleMeaning": "그는 층계를 올라오는 가벼운 발소리를 들었다. 3.계단 （오르는） 발판. 숙어 tread in a persons footsteps; follow in a persons footsteps; walk in a persons footsteps 남의 발자국을 따라가다; 남의 뜻을 잇다 선례를 좇다."
+          "exampleMeaning": "그는 층계를 올라오는 가벼운 발소리를 들었다."
         },
         {
           "id": "en_13622",
@@ -82630,10 +82630,10 @@
           "pronunciation": "[프르이트느드이으]",
           "pron": "[프르이트느드이으]",
           "phonetic": "[프르이트느드이으]",
-          "example_en": "This is an example for pretending.",
-          "example_ko": "이것은 겉치레하는 거짓의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pretending.",
-          "exampleMeaning": "이것은 겉치레하는 거짓의 관련 실전 예문입니다."
+          "example_en": "Stop pretending that you know everything about this.",
+          "example_ko": "이것에 대해 모든 것을 다 아는 척하지 마세요.",
+          "exampleTarget": "Stop pretending that you know everything about this.",
+          "exampleMeaning": "이것에 대해 모든 것을 다 아는 척하지 마세요."
         },
         {
           "id": "en_13623",
@@ -82647,10 +82647,10 @@
           "pronunciation": "[즈이쉬]",
           "pron": "[즈이쉬]",
           "phonetic": "[즈이쉬]",
-          "example_en": "This is an example for jewish.",
-          "example_ko": "이것은 유대인 유대교의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jewish.",
-          "exampleMeaning": "이것은 유대인 유대교의 관련 실전 예문입니다."
+          "example_en": "They celebrated a traditional Jewish holiday with family.",
+          "example_ko": "그들은 가족과 함께 전통 유대교 명절을 축하했어요.",
+          "exampleTarget": "They celebrated a traditional Jewish holiday with family.",
+          "exampleMeaning": "그들은 가족과 함께 전통 유대교 명절을 축하했어요."
         },
         {
           "id": "en_13624",
@@ -82716,9 +82716,9 @@
           "pron": "[드이브지어느]",
           "phonetic": "[드이브지어느]",
           "example_en": "division of powers3.",
-          "example_ko": "권 분립. 2.〔수학〕 나눗셈 제법. 3.분리하는 것; 칸막이 격벽 〔… 사이의〕 ; 분계 표지 경계선 〔between …〕.",
+          "example_ko": "권 분립.",
           "exampleTarget": "division of powers3.",
-          "exampleMeaning": "권 분립. 2.〔수학〕 나눗셈 제법. 3.분리하는 것; 칸막이 격벽 〔… 사이의〕 ; 분계 표지 경계선 〔between …〕."
+          "exampleMeaning": "권 분립."
         },
         {
           "id": "en_13628",
@@ -82749,10 +82749,10 @@
           "pronunciation": "[르어쉬어]",
           "pron": "[르어쉬어]",
           "phonetic": "[르어쉬어]",
-          "example_en": "This is an example for russia.",
-          "example_ko": "이것은 러시아 제국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for russia.",
-          "exampleMeaning": "이것은 러시아 제국 관련 실전 예문입니다."
+          "example_en": "Russia covers a vast land area across continents.",
+          "example_ko": "러시아는 대륙에 걸쳐 광대한 영토를 차지하고 있어요.",
+          "exampleTarget": "Russia covers a vast land area across continents.",
+          "exampleMeaning": "러시아는 대륙에 걸쳐 광대한 영토를 차지하고 있어요."
         },
         {
           "id": "en_13630",
@@ -82916,10 +82916,10 @@
           "pronunciation": "[스느트어르]",
           "pron": "[스느트어르]",
           "phonetic": "[스느트어르]",
-          "example_en": "This is an example for centre.",
-          "example_ko": "이것은 centre 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for centre.",
-          "exampleMeaning": "이것은 centre 관련 실전 예문입니다."
+          "example_en": "We met at the community centre this morning.",
+          "example_ko": "우리는 오늘 아침 커뮤니티 센터에서 만났어요.",
+          "exampleTarget": "We met at the community centre this morning.",
+          "exampleMeaning": "우리는 오늘 아침 커뮤니티 센터에서 만났어요."
         },
         {
           "id": "en_13704",
@@ -82950,10 +82950,10 @@
           "pronunciation": "[즈르어므이]",
           "pron": "[즈르어므이]",
           "phonetic": "[즈르어므이]",
-          "example_en": "This is an example for jeremy.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jeremy.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Jeremy fixed the leaking pipe under the sink.",
+          "example_ko": "제레미가 싱크대 아래 새는 배관을 수리했어요.",
+          "exampleTarget": "Jeremy fixed the leaking pipe under the sink.",
+          "exampleMeaning": "제레미가 싱크대 아래 새는 배관을 수리했어요."
         },
         {
           "id": "en_13706",
@@ -82967,10 +82967,10 @@
           "pronunciation": "[르어느]",
           "pron": "[르어느]",
           "phonetic": "[르어느]",
-          "example_en": "This is an example for ellen.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ellen.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Ellen adopted a friendly rescue dog last weekend.",
+          "example_ko": "엘렌은 지난 주말에 다정한 유기견을 입양했어요.",
+          "exampleTarget": "Ellen adopted a friendly rescue dog last weekend.",
+          "exampleMeaning": "엘렌은 지난 주말에 다정한 유기견을 입양했어요."
         },
         {
           "id": "en_13707",
@@ -82980,14 +82980,14 @@
           "level": "B2",
           "unitId": "unit_137",
           "nodeId": "en_u137_n1",
-          "meaning": "과거형",
+          "meaning": "입었다",
           "pronunciation": "[우오르]",
           "pron": "[우오르]",
           "phonetic": "[우오르]",
-          "example_en": "This is an example for wore.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wore.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "She wore a beautiful red dress.",
+          "example_ko": "그녀는 아름다운 빨간 드레스를 입었다.",
+          "exampleTarget": "She wore a beautiful red dress.",
+          "exampleMeaning": "그녀는 아름다운 빨간 드레스를 입었다."
         },
         {
           "id": "en_13708",
@@ -82997,7 +82997,7 @@
           "level": "B2",
           "unitId": "unit_137",
           "nodeId": "en_u137_n1",
-          "meaning": "과거·과거",
+          "meaning": "쳤다",
           "pronunciation": "[스트르어크]",
           "pron": "[스트르어크]",
           "phonetic": "[스트르어크]",
@@ -83019,9 +83019,9 @@
           "pron": "[프어르스]",
           "phonetic": "[프어르스]",
           "example_en": "a light purse.",
-          "example_ko": "가벼운 돈주머니; 《비유》 가난.",
+          "example_ko": "가벼운 돈주머니; 가난.",
           "exampleTarget": "a light purse.",
-          "exampleMeaning": "가벼운 돈주머니; 《비유》 가난."
+          "exampleMeaning": "가벼운 돈주머니; 가난."
         },
         {
           "id": "en_13710",
@@ -83069,10 +83069,10 @@
           "pronunciation": "[크느이]",
           "pron": "[크느이]",
           "phonetic": "[크느이]",
-          "example_en": "This is an example for kenny.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kenny.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Kenny joined the soccer team as a goalkeeper.",
+          "example_ko": "케니는 골키퍼로 축구 팀에 합류했어요.",
+          "exampleTarget": "Kenny joined the soccer team as a goalkeeper.",
+          "exampleMeaning": "케니는 골키퍼로 축구 팀에 합류했어요."
         },
         {
           "id": "en_13713",
@@ -83086,10 +83086,10 @@
           "pronunciation": "[브어크]",
           "pron": "[브어크]",
           "phonetic": "[브어크]",
-          "example_en": "This is an example for buck.",
-          "example_ko": "이것은 수사슴 벅 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for buck.",
-          "exampleMeaning": "이것은 수사슴 벅 관련 실전 예문입니다."
+          "example_en": "Can you lend me a buck for coffee?",
+          "example_ko": "커피 사 마시게 1달러만 빌려줄 수 있나요?",
+          "exampleTarget": "Can you lend me a buck for coffee?",
+          "exampleMeaning": "커피 사 마시게 1달러만 빌려줄 수 있나요?"
         },
         {
           "id": "en_13714",
@@ -83103,10 +83103,10 @@
           "pronunciation": "[느느어]",
           "pron": "[느느어]",
           "phonetic": "[느느어]",
-          "example_en": "This is an example for nina.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nina.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Nina gave a wonderful speech at the graduation.",
+          "example_ko": "니나는 졸업식에서 멋진 연설을 했어요.",
+          "exampleTarget": "Nina gave a wonderful speech at the graduation.",
+          "exampleMeaning": "니나는 졸업식에서 멋진 연설을 했어요."
         },
         {
           "id": "en_13715",
@@ -83154,10 +83154,10 @@
           "pronunciation": "[이르어]",
           "pron": "[이르어]",
           "phonetic": "[이르어]",
-          "example_en": "This is an example for ali.",
-          "example_ko": "이것은 「날개」 「날개부」의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ali.",
-          "exampleMeaning": "이것은 「날개」 「날개부」의 관련 실전 예문입니다."
+          "example_en": "Ali trains boxing every morning before going to work.",
+          "example_ko": "알리는 출근하기 전에 매일 아침 권투를 연습해요.",
+          "exampleTarget": "Ali trains boxing every morning before going to work.",
+          "exampleMeaning": "알리는 출근하기 전에 매일 아침 권투를 연습해요."
         },
         {
           "id": "en_13718",
@@ -83222,10 +83222,10 @@
           "pronunciation": "[르크어스]",
           "pron": "[르크어스]",
           "phonetic": "[르크어스]",
-          "example_en": "This is an example for lucas.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lucas.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Lucas borrowed an interesting science book from me.",
+          "example_ko": "루카스는 나에게서 흥미로운 과학책을 빌려 갔어요.",
+          "exampleTarget": "Lucas borrowed an interesting science book from me.",
+          "exampleMeaning": "루카스는 나에게서 흥미로운 과학책을 빌려 갔어요."
         },
         {
           "id": "en_13722",
@@ -83256,10 +83256,10 @@
           "pronunciation": "[흐애느어]",
           "pron": "[흐애느어]",
           "phonetic": "[흐애느어]",
-          "example_en": "This is an example for hannah.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hannah.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Hannah made a reservation at our favorite restaurant.",
+          "example_ko": "한나는 우리가 가장 좋아하는 식당에 예약했어요.",
+          "exampleTarget": "Hannah made a reservation at our favorite restaurant.",
+          "exampleMeaning": "한나는 우리가 가장 좋아하는 식당에 예약했어요."
         },
         {
           "id": "en_13724",
@@ -83274,9 +83274,9 @@
           "pron": "[everyday]",
           "phonetic": "[everyday]",
           "example_en": "an everyday event.",
-          "example_ko": "나날의 사건. 2.평일의 평소의 일상의; 매일같이 보는 예사로운; 평범한.",
+          "example_ko": "나날의 사건.",
           "exampleTarget": "an everyday event.",
-          "exampleMeaning": "나날의 사건. 2.평일의 평소의 일상의; 매일같이 보는 예사로운; 평범한."
+          "exampleMeaning": "나날의 사건."
         },
         {
           "id": "en_13725",
@@ -83307,10 +83307,10 @@
           "pronunciation": "[흐아르이]",
           "pron": "[흐아르이]",
           "phonetic": "[흐아르이]",
-          "example_en": "This is an example for holly.",
-          "example_ko": "이것은 감탕나뭇과의 나무의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for holly.",
-          "exampleMeaning": "이것은 감탕나뭇과의 나무의 관련 실전 예문입니다."
+          "example_en": "They decorated the front door with fresh holly.",
+          "example_ko": "그들은 현관문을 신선한 호랑가시나무로 장식했어요.",
+          "exampleTarget": "They decorated the front door with fresh holly.",
+          "exampleMeaning": "그들은 현관문을 신선한 호랑가시나무로 장식했어요."
         },
         {
           "id": "en_13727",
@@ -83375,10 +83375,10 @@
           "pronunciation": "[스므이르이으]",
           "pron": "[스므이르이으]",
           "phonetic": "[스므이르이으]",
-          "example_en": "This is an example for smiling.",
-          "example_ko": "이것은 미소하는 방긋거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for smiling.",
-          "exampleMeaning": "이것은 미소하는 방긋거리는 관련 실전 예문입니다."
+          "example_en": "She kept smiling throughout the whole pleasant evening.",
+          "example_ko": "그녀는 유쾌한 저녁 내내 계속 미소를 짓고 있었어요.",
+          "exampleTarget": "She kept smiling throughout the whole pleasant evening.",
+          "exampleMeaning": "그녀는 유쾌한 저녁 내내 계속 미소를 짓고 있었어요."
         }
       ],
       "nodes": [
@@ -83555,14 +83555,14 @@
           "level": "B2",
           "unitId": "unit_138",
           "nodeId": "en_u138_n1",
-          "meaning": "chffffff",
+          "meaning": "지지직잡음",
           "pronunciation": "[chffffff]",
           "pron": "[chffffff]",
           "phonetic": "[chffffff]",
-          "example_en": "I use the word chffffff in daily life.",
-          "example_ko": "나는 일상에서 chffffff 단어를 사용합니다.",
-          "exampleTarget": "I use the word chffffff in daily life.",
-          "exampleMeaning": "나는 일상에서 chffffff 단어를 사용합니다."
+          "example_en": "The radio made a strange static sound: chffffff.",
+          "example_ko": "라디오에서 지지직거리는 이상한 잡음이 났다.",
+          "exampleTarget": "The radio made a strange static sound: chffffff.",
+          "exampleMeaning": "라디오에서 지지직거리는 이상한 잡음이 났다."
         },
         {
           "id": "en_13806",
@@ -83576,10 +83576,10 @@
           "pronunciation": "[스어르브이르어느스]",
           "pron": "[스어르브이르어느스]",
           "phonetic": "[스어르브이르어느스]",
-          "example_en": "This is an example for surveillance.",
-          "example_ko": "이것은 감시 감사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for surveillance.",
-          "exampleMeaning": "이것은 감시 감사 관련 실전 예문입니다."
+          "example_en": "The bank installed new surveillance cameras for security.",
+          "example_ko": "은행은 보안을 위해 새로운 감시 카메라를 설치했어요.",
+          "exampleTarget": "The bank installed new surveillance cameras for security.",
+          "exampleMeaning": "은행은 보안을 위해 새로운 감시 카메라를 설치했어요."
         },
         {
           "id": "en_13807",
@@ -83593,10 +83593,10 @@
           "pronunciation": "[크아르어스]",
           "pron": "[크아르어스]",
           "phonetic": "[크아르어스]",
-          "example_en": "This is an example for carlos.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carlos.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Carlos will cook dinner for the family tonight.",
+          "example_ko": "카를로스는 오늘 밤 가족을 위해 저녁을 요리할 거예요.",
+          "exampleTarget": "Carlos will cook dinner for the family tonight.",
+          "exampleMeaning": "카를로스는 오늘 밤 가족을 위해 저녁을 요리할 거예요."
         },
         {
           "id": "en_13808",
@@ -83610,10 +83610,10 @@
           "pronunciation": "[브애므프아이어르]",
           "pron": "[브애므프아이어르]",
           "phonetic": "[브애므프아이어르]",
-          "example_en": "This is an example for vampire.",
-          "example_ko": "이것은 흡혈귀 유럽의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vampire.",
-          "exampleMeaning": "이것은 흡혈귀 유럽의 관련 실전 예문입니다."
+          "example_en": "We watched an exciting vampire movie last night.",
+          "example_ko": "우리는 어젯밤 흥미진진한 뱀파이어 영화를 보았어요.",
+          "exampleTarget": "We watched an exciting vampire movie last night.",
+          "exampleMeaning": "우리는 어젯밤 흥미진진한 뱀파이어 영화를 보았어요."
         },
         {
           "id": "en_13809",
@@ -83627,10 +83627,10 @@
           "pronunciation": "[므이쉬르]",
           "pron": "[므이쉬르]",
           "phonetic": "[므이쉬르]",
-          "example_en": "This is an example for michelle.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for michelle.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Michelle opened a small bakery in our neighborhood.",
+          "example_ko": "미셸은 우리 동네에 작은 빵집을 열었어요.",
+          "exampleTarget": "Michelle opened a small bakery in our neighborhood.",
+          "exampleMeaning": "미셸은 우리 동네에 작은 빵집을 열었어요."
         },
         {
           "id": "en_13810",
@@ -83661,10 +83661,10 @@
           "pronunciation": "[브르애드]",
           "pron": "[브르애드]",
           "phonetic": "[브르애드]",
-          "example_en": "This is an example for brad.",
-          "example_ko": "이것은 대 리 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for brad.",
-          "exampleMeaning": "이것은 대 리 관련 실전 예문입니다."
+          "example_en": "Brad joined our marketing department as an intern.",
+          "example_ko": "브래드는 마케팅 부서에 인턴으로 입사했어요.",
+          "exampleTarget": "Brad joined our marketing department as an intern.",
+          "exampleMeaning": "브래드는 마케팅 부서에 인턴으로 입사했어요."
         },
         {
           "id": "en_13812",
@@ -83695,10 +83695,10 @@
           "pronunciation": "[스우프이]",
           "pron": "[스우프이]",
           "phonetic": "[스우프이]",
-          "example_en": "This is an example for sophie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sophie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Sophie studies french literature at the local university.",
+          "example_ko": "소피는 지역 대학교에서 프랑스 문학을 공부해요.",
+          "exampleTarget": "Sophie studies french literature at the local university.",
+          "exampleMeaning": "소피는 지역 대학교에서 프랑스 문학을 공부해요."
         },
         {
           "id": "en_13814",
@@ -83729,10 +83729,10 @@
           "pronunciation": "[크에느]",
           "pron": "[크에느]",
           "phonetic": "[크에느]",
-          "example_en": "This is an example for ken.",
-          "example_ko": "이것은 이해 시야 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ken.",
-          "exampleMeaning": "이것은 이해 시야 관련 실전 예문입니다."
+          "example_en": "Ken offered to drive us to the airport.",
+          "example_ko": "켄은 우리를 공항까지 차로 데려다주겠다고 제안했어요.",
+          "exampleTarget": "Ken offered to drive us to the airport.",
+          "exampleMeaning": "켄은 우리를 공항까지 차로 데려다주겠다고 제안했어요."
         },
         {
           "id": "en_13816",
@@ -83763,10 +83763,10 @@
           "pronunciation": "[이느크르드어브르이]",
           "pron": "[이느크르드어브르이]",
           "phonetic": "[이느크르드어브르이]",
-          "example_en": "This is an example for incredibly.",
-          "example_ko": "이것은 믿을 수 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for incredibly.",
-          "exampleMeaning": "이것은 믿을 수 관련 실전 예문입니다."
+          "example_en": "The exam was incredibly difficult for most students.",
+          "example_ko": "그 시험은 대부분의 학생들에게 믿을 수 없을 정도로 어려웠어요.",
+          "exampleTarget": "The exam was incredibly difficult for most students.",
+          "exampleMeaning": "그 시험은 대부분의 학생들에게 믿을 수 없을 정도로 어려웠어요."
         },
         {
           "id": "en_13818",
@@ -83780,10 +83780,10 @@
           "pronunciation": "[아스크어르]",
           "pron": "[아스크어르]",
           "phonetic": "[아스크어르]",
-          "example_en": "This is an example for oscar.",
-          "example_ko": "이것은 현금 돈 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for oscar.",
-          "exampleMeaning": "이것은 현금 돈 관련 실전 예문입니다."
+          "example_en": "The famous actor won an Oscar last year.",
+          "example_ko": "그 유명한 배우는 작년에 오스카상을 수상했어요.",
+          "exampleTarget": "The famous actor won an Oscar last year.",
+          "exampleMeaning": "그 유명한 배우는 작년에 오스카상을 수상했어요."
         },
         {
           "id": "en_13819",
@@ -83815,9 +83815,9 @@
           "pron": "[스트에이크]",
           "phonetic": "[스트에이크]",
           "example_en": "drive a stake.",
-          "example_ko": "말뚝을 박다. 2.（특히 중세 화형용） 기둥; 《the stake》화형.",
+          "example_ko": "말뚝을 박다.",
           "exampleTarget": "drive a stake.",
-          "exampleMeaning": "말뚝을 박다. 2.（특히 중세 화형용） 기둥; 《the stake》화형."
+          "exampleMeaning": "말뚝을 박다."
         },
         {
           "id": "en_13821",
@@ -83865,10 +83865,10 @@
           "pronunciation": "[므르어르]",
           "pron": "[므르어르]",
           "phonetic": "[므르어르]",
-          "example_en": "This is an example for miller.",
-          "example_ko": "이것은 제분업자 방앗간 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for miller.",
-          "exampleMeaning": "이것은 제분업자 방앗간 관련 실전 예문입니다."
+          "example_en": "Mr Miller teaches mathematics at the public school.",
+          "example_ko": "밀러 선생님은 공립 학교에서 수학을 가르치세요.",
+          "exampleTarget": "Mr Miller teaches mathematics at the public school.",
+          "exampleMeaning": "밀러 선생님은 공립 학교에서 수학을 가르치세요."
         },
         {
           "id": "en_13824",
@@ -83933,10 +83933,10 @@
           "pronunciation": "[크르우이]",
           "pron": "[크르우이]",
           "phonetic": "[크르우이]",
-          "example_en": "This is an example for chloe.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chloe.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Chloe designed a colorful poster for the concert.",
+          "example_ko": "클로이는 콘서트를 위해 화려한 포스터를 디자인했어요.",
+          "exampleTarget": "Chloe designed a colorful poster for the concert.",
+          "exampleMeaning": "클로이는 콘서트를 위해 화려한 포스터를 디자인했어요."
         },
         {
           "id": "en_13828",
@@ -83984,10 +83984,10 @@
           "pronunciation": "[르이크오르드이으]",
           "pron": "[르이크오르드이으]",
           "phonetic": "[르이크오르드이으]",
-          "example_en": "This is an example for recording.",
-          "example_ko": "이것은 기록 기재 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for recording.",
-          "exampleMeaning": "이것은 기록 기재 관련 실전 예문입니다."
+          "example_en": "The musician finished recording his new song today.",
+          "example_ko": "그 음악가는 오늘 자신의 신곡 녹음을 마쳤어요.",
+          "exampleTarget": "The musician finished recording his new song today.",
+          "exampleMeaning": "그 음악가는 오늘 자신의 신곡 녹음을 마쳤어요."
         }
       ],
       "nodes": [
@@ -84117,10 +84117,10 @@
           "pronunciation": "[트우크이오]",
           "pron": "[트우크이오]",
           "phonetic": "[트우크이오]",
-          "example_en": "This is an example for tokyo.",
-          "example_ko": "이것은 도쿄 일본의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tokyo.",
-          "exampleMeaning": "이것은 도쿄 일본의 관련 실전 예문입니다."
+          "example_en": "We visited several famous museums during our Tokyo trip.",
+          "example_ko": "우리는 도쿄 여행 중에 몇몇 유명한 박물관들을 방문했어요.",
+          "exampleTarget": "We visited several famous museums during our Tokyo trip.",
+          "exampleMeaning": "우리는 도쿄 여행 중에 몇몇 유명한 박물관들을 방문했어요."
         },
         {
           "id": "en_13903",
@@ -84134,10 +84134,10 @@
           "pronunciation": "[드이브이스]",
           "pron": "[드이브이스]",
           "phonetic": "[드이브이스]",
-          "example_en": "This is an example for davis.",
-          "example_ko": "이것은 데이비스 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for davis.",
-          "exampleMeaning": "이것은 데이비스 미국의 관련 실전 예문입니다."
+          "example_en": "Professor Davis gave an inspiring speech to graduates.",
+          "example_ko": "데이비스 교수님은 졸업생들에게 감동적인 연설을 해주셨어요.",
+          "exampleTarget": "Professor Davis gave an inspiring speech to graduates.",
+          "exampleMeaning": "데이비스 교수님은 졸업생들에게 감동적인 연설을 해주셨어요."
         },
         {
           "id": "en_13904",
@@ -84151,10 +84151,10 @@
           "pronunciation": "[우에이느]",
           "pron": "[우에이느]",
           "phonetic": "[우에이느]",
-          "example_en": "This is an example for wayne.",
-          "example_ko": "이것은 웨인 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wayne.",
-          "exampleMeaning": "이것은 웨인 남자 관련 실전 예문입니다."
+          "example_en": "Wayne repaired the broken computer in the office.",
+          "example_ko": "웨인은 사무실의 고장 난 컴퓨터를 수리했어요.",
+          "exampleTarget": "Wayne repaired the broken computer in the office.",
+          "exampleMeaning": "웨인은 사무실의 고장 난 컴퓨터를 수리했어요."
         },
         {
           "id": "en_13905",
@@ -84164,14 +84164,14 @@
           "level": "B2",
           "unitId": "unit_139",
           "nodeId": "en_u139_n1",
-          "meaning": "somethin",
+          "meaning": "무엇인가",
           "pronunciation": "[somethin]",
           "pron": "[somethin]",
           "phonetic": "[somethin]",
-          "example_en": "I use the word somethin in daily life.",
-          "example_ko": "나는 일상에서 somethin 단어를 사용합니다.",
-          "exampleTarget": "I use the word somethin in daily life.",
-          "exampleMeaning": "나는 일상에서 somethin 단어를 사용합니다."
+          "example_en": "There is somethin strange going on.",
+          "example_ko": "무언가 이상한 일이 일어나고 있다.",
+          "exampleTarget": "There is somethin strange going on.",
+          "exampleMeaning": "무언가 이상한 일이 일어나고 있다."
         },
         {
           "id": "en_13906",
@@ -84185,10 +84185,10 @@
           "pronunciation": "[이어느이어느]",
           "pron": "[이어느이어느]",
           "phonetic": "[이어느이어느]",
-          "example_en": "This is an example for ian.",
-          "example_ko": "이것은 접미사 별형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ian.",
-          "exampleMeaning": "이것은 접미사 별형 관련 실전 예문입니다."
+          "example_en": "Ian is my good friend from school.",
+          "example_ko": "이안은 학교에서 만난 내 좋은 친구이다.",
+          "exampleTarget": "Ian is my good friend from school.",
+          "exampleMeaning": "이안은 학교에서 만난 내 좋은 친구이다."
         },
         {
           "id": "en_13907",
@@ -84219,10 +84219,10 @@
           "pronunciation": "[스프에이느]",
           "pron": "[스프에이느]",
           "phonetic": "[스프에이느]",
-          "example_en": "This is an example for spain.",
-          "example_ko": "이것은 스페인 유럽 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spain.",
-          "exampleMeaning": "이것은 스페인 유럽 관련 실전 예문입니다."
+          "example_en": "They spent two weeks traveling through northern Spain.",
+          "example_ko": "그들은 2주 동안 스페인 북부를 여행했어요.",
+          "exampleTarget": "They spent two weeks traveling through northern Spain.",
+          "exampleMeaning": "그들은 2주 동안 스페인 북부를 여행했어요."
         },
         {
           "id": "en_13909",
@@ -84270,10 +84270,10 @@
           "pronunciation": "[즈우]",
           "pron": "[즈우]",
           "phonetic": "[즈우]",
-          "example_en": "This is an example for jews.",
-          "example_ko": "이것은 유대인 이스라엘인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jews.",
-          "exampleMeaning": "이것은 유대인 이스라엘인 관련 실전 예문입니다."
+          "example_en": "Jews around the world gather to celebrate Passover.",
+          "example_ko": "전 세계의 유대인들이 유월절을 축하하기 위해 모여요.",
+          "exampleTarget": "Jews around the world gather to celebrate Passover.",
+          "exampleMeaning": "전 세계의 유대인들이 유월절을 축하하기 위해 모여요."
         },
         {
           "id": "en_13912",
@@ -84287,10 +84287,10 @@
           "pronunciation": "[애느스어르이으]",
           "pron": "[애느스어르이으]",
           "phonetic": "[애느스어르이으]",
-          "example_en": "This is an example for answering.",
-          "example_ko": "이것은 응답 상응 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for answering.",
-          "exampleMeaning": "이것은 응답 상응 관련 실전 예문입니다."
+          "example_en": "She was answering client phone calls all afternoon.",
+          "example_ko": "그녀는 오후 내내 고객의 전화를 받고 있었어요.",
+          "exampleTarget": "She was answering client phone calls all afternoon.",
+          "exampleMeaning": "그녀는 오후 내내 고객의 전화를 받고 있었어요."
         },
         {
           "id": "en_13913",
@@ -84304,10 +84304,10 @@
           "pronunciation": "[someplace]",
           "pron": "[someplace]",
           "phonetic": "[someplace]",
-          "example_en": "This is an example for someplace.",
-          "example_ko": "이것은 somewhere보다 구어적 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for someplace.",
-          "exampleMeaning": "이것은 somewhere보다 구어적 관련 실전 예문입니다."
+          "example_en": "Let us find someplace quiet to have dinner.",
+          "example_ko": "저녁 식사를 할 조용한 장소를 찾아봅시다.",
+          "exampleTarget": "Let us find someplace quiet to have dinner.",
+          "exampleMeaning": "저녁 식사를 할 조용한 장소를 찾아봅시다."
         },
         {
           "id": "en_13914",
@@ -84321,10 +84321,10 @@
           "pronunciation": "[느애느스이]",
           "pron": "[느애느스이]",
           "phonetic": "[느애느스이]",
-          "example_en": "This is an example for nancy.",
-          "example_ko": "이것은 여자 같은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nancy.",
-          "exampleMeaning": "이것은 여자 같은 관련 실전 예문입니다."
+          "example_en": "Nancy brought some fresh flowers to the office.",
+          "example_ko": "낸시는 사무실에 싱싱한 꽃을 가져왔어요.",
+          "exampleTarget": "Nancy brought some fresh flowers to the office.",
+          "exampleMeaning": "낸시는 사무실에 싱싱한 꽃을 가져왔어요."
         },
         {
           "id": "en_13915",
@@ -84372,10 +84372,10 @@
           "pronunciation": "[르어스르]",
           "pron": "[르어스르]",
           "phonetic": "[르어스르]",
-          "example_en": "This is an example for russell.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for russell.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Russell showed us around the new company building.",
+          "example_ko": "러셀은 우리에게 새 회사 건물을 안내해 주었어요.",
+          "exampleTarget": "Russell showed us around the new company building.",
+          "exampleMeaning": "러셀은 우리에게 새 회사 건물을 안내해 주었어요."
         },
         {
           "id": "en_13918",
@@ -84424,9 +84424,9 @@
           "pron": "[르에이프]",
           "phonetic": "[르에이프]",
           "example_en": "a partial rape.",
-          "example_ko": "강간 미수. 2.《고어·시어》 강탈 （행위） 약탈; （자연의） 파괴; （정의 등의） 침범.",
+          "example_ko": "강간 미수.",
           "exampleTarget": "a partial rape.",
-          "exampleMeaning": "강간 미수. 2.《고어·시어》 강탈 （행위） 약탈; （자연의） 파괴; （정의 등의） 침범."
+          "exampleMeaning": "강간 미수."
         },
         {
           "id": "en_13921",
@@ -84440,10 +84440,10 @@
           "pronunciation": "[즈드이]",
           "pron": "[즈드이]",
           "phonetic": "[즈드이]",
-          "example_en": "This is an example for judy.",
-          "example_ko": "이것은 여자 처녀 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for judy.",
-          "exampleMeaning": "이것은 여자 처녀 관련 실전 예문입니다."
+          "example_en": "Judy will arrive at the train station soon.",
+          "example_ko": "주디는 곧 기차역에 도착할 예정이에요.",
+          "exampleTarget": "Judy will arrive at the train station soon.",
+          "exampleMeaning": "주디는 곧 기차역에 도착할 예정이에요."
         },
         {
           "id": "en_13922",
@@ -84458,9 +84458,9 @@
           "pron": "[스애트이스프이드]",
           "phonetic": "[스애트이스프이드]",
           "example_en": "I am satisfied with my life.",
-          "example_ko": "나는 내 인생에 만족한다. 2.（계산 등을） 깨끗이 치른. 3.《보통 서술적》 〔논의 등에서〕 납득한 〔…을〕 확신한 〔that 절〕.",
+          "example_ko": "나는 내 인생에 만족한다.",
           "exampleTarget": "I am satisfied with my life.",
-          "exampleMeaning": "나는 내 인생에 만족한다. 2.（계산 등을） 깨끗이 치른. 3.《보통 서술적》 〔논의 등에서〕 납득한 〔…을〕 확신한 〔that 절〕."
+          "exampleMeaning": "나는 내 인생에 만족한다."
         },
         {
           "id": "en_13923",
@@ -84475,9 +84475,9 @@
           "pron": "[브이프]",
           "phonetic": "[브이프]",
           "example_en": "Please leave a message after the beep.",
-          "example_ko": "발신음 후에 용건을 말하시오 . 동사 자동사삑 소리를 내다.",
+          "example_ko": "발신음 후에 용건을 말하시오 .",
           "exampleTarget": "Please leave a message after the beep.",
-          "exampleMeaning": "발신음 후에 용건을 말하시오 . 동사 자동사삑 소리를 내다."
+          "exampleMeaning": "발신음 후에 용건을 말하시오 ."
         },
         {
           "id": "en_13924",
@@ -84491,10 +84491,10 @@
           "pronunciation": "[스트아르브이으]",
           "pron": "[스트아르브이으]",
           "phonetic": "[스트아르브이으]",
-          "example_en": "This is an example for starving.",
-          "example_ko": "이것은 몹시 허기진 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for starving.",
-          "exampleMeaning": "이것은 몹시 허기진 관련 실전 예문입니다."
+          "example_en": "I am starving after working all day long.",
+          "example_ko": "하루 종일 일했더니 배가 너무 고파요.",
+          "exampleTarget": "I am starving after working all day long.",
+          "exampleMeaning": "하루 종일 일했더니 배가 너무 고파요."
         },
         {
           "id": "en_13925",
@@ -84508,10 +84508,10 @@
           "pronunciation": "[브이스]",
           "pron": "[브이스]",
           "phonetic": "[브이스]",
-          "example_en": "This is an example for beth.",
-          "example_ko": "이것은 베이스 히브리어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for beth.",
-          "exampleMeaning": "이것은 베이스 히브리어 관련 실전 예문입니다."
+          "example_en": "Beth left her blue umbrella in the car.",
+          "example_ko": "베스는 차 안에 파란 우산을 두고 내렸어요.",
+          "exampleTarget": "Beth left her blue umbrella in the car.",
+          "exampleMeaning": "베스는 차 안에 파란 우산을 두고 내렸어요."
         },
         {
           "id": "en_13926",
@@ -84542,10 +84542,10 @@
           "pronunciation": "[우오르이어르]",
           "pron": "[우오르이어르]",
           "phonetic": "[우오르이어르]",
-          "example_en": "This is an example for warrior.",
-          "example_ko": "이것은 군인 병사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for warrior.",
-          "exampleMeaning": "이것은 군인 병사 관련 실전 예문입니다."
+          "example_en": "The ancient warrior carried a heavy metal sword.",
+          "example_ko": "고대 전사는 무거운 쇠검을 들고 있었습니다.",
+          "exampleTarget": "The ancient warrior carried a heavy metal sword.",
+          "exampleMeaning": "고대 전사는 무거운 쇠검을 들고 있었습니다."
         },
         {
           "id": "en_13928",
@@ -84576,10 +84576,10 @@
           "pronunciation": "[트이므이으]",
           "pron": "[트이므이으]",
           "phonetic": "[트이므이으]",
-          "example_en": "This is an example for timing.",
-          "example_ko": "이것은 타이밍 알맞은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for timing.",
-          "exampleMeaning": "이것은 타이밍 알맞은 관련 실전 예문입니다."
+          "example_en": "Our timing could not have been better today.",
+          "example_ko": "오늘 우리의 타이밍은 더할 나위 없이 좋았습니다.",
+          "exampleTarget": "Our timing could not have been better today.",
+          "exampleMeaning": "오늘 우리의 타이밍은 더할 나위 없이 좋았습니다."
         },
         {
           "id": "en_13930",
@@ -84760,10 +84760,10 @@
           "pronunciation": "[어프쉬어르이]",
           "pron": "[어프쉬어르이]",
           "phonetic": "[어프쉬어르이]",
-          "example_en": "This is an example for officially.",
-          "example_ko": "이것은 공무상 직책상 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for officially.",
-          "exampleMeaning": "이것은 공무상 직책상 관련 실전 예문입니다."
+          "example_en": "The new store officially opened this morning.",
+          "example_ko": "새 매장이 오늘 아침 공식적으로 문을 열었습니다.",
+          "exampleTarget": "The new store officially opened this morning.",
+          "exampleMeaning": "새 매장이 오늘 아침 공식적으로 문을 열었습니다."
         },
         {
           "id": "en_14005",
@@ -84777,10 +84777,10 @@
           "pronunciation": "[므아르스어]",
           "pron": "[므아르스어]",
           "phonetic": "[므아르스어]",
-          "example_en": "This is an example for martha.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for martha.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Martha baked fresh chocolate cookies for the party.",
+          "example_ko": "마사는 파티를 위해 신선한 초콜릿 쿠키를 구웠어요.",
+          "exampleTarget": "Martha baked fresh chocolate cookies for the party.",
+          "exampleMeaning": "마사는 파티를 위해 신선한 초콜릿 쿠키를 구웠어요."
         },
         {
           "id": "en_14006",
@@ -84812,9 +84812,9 @@
           "pron": "[브르오느]",
           "phonetic": "[브르오느]",
           "example_en": "blown stomachs.",
-          "example_ko": "부풀어 오른 위. 2.망가진 못쓰게 된 〈퓨즈 등이〉 끊어진; 숨가쁜 지친. 3.검정파리가 쉬를 슨. 4.（취관으로） 불어서 만든.",
+          "example_ko": "부풀어 오른 위.",
           "exampleTarget": "blown stomachs.",
-          "exampleMeaning": "부풀어 오른 위. 2.망가진 못쓰게 된 〈퓨즈 등이〉 끊어진; 숨가쁜 지친. 3.검정파리가 쉬를 슨. 4.（취관으로） 불어서 만든."
+          "exampleMeaning": "부풀어 오른 위."
         },
         {
           "id": "en_14008",
@@ -84863,9 +84863,9 @@
           "pron": "[브우스]",
           "phonetic": "[브우스]",
           "example_en": "the carnival booths.",
-          "example_ko": "사육제의 노점. 2.（나뭇가지·범포 등으로 된） 움막 판잣집. 3.（특별한 용도로 쓰이는） 부스 칸막이한 작은 공간; （식당의） 칸막이된 자리.",
+          "example_ko": "사육제의 노점.",
           "exampleTarget": "the carnival booths.",
-          "exampleMeaning": "사육제의 노점. 2.（나뭇가지·범포 등으로 된） 움막 판잣집. 3.（특별한 용도로 쓰이는） 부스 칸막이한 작은 공간; （식당의） 칸막이된 자리."
+          "exampleMeaning": "사육제의 노점."
         },
         {
           "id": "en_14011",
@@ -84879,10 +84879,10 @@
           "pronunciation": "[브어르느]",
           "pron": "[브어르느]",
           "phonetic": "[브어르느]",
-          "example_en": "This is an example for berlin.",
-          "example_ko": "이것은 베를린 원래 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for berlin.",
-          "exampleMeaning": "이것은 베를린 원래 관련 실전 예문입니다."
+          "example_en": "We took a morning train to Berlin yesterday.",
+          "example_ko": "우리는 어제 아침 베를린행 기차를 탔습니다.",
+          "exampleTarget": "We took a morning train to Berlin yesterday.",
+          "exampleMeaning": "우리는 어제 아침 베를린행 기차를 탔습니다."
         },
         {
           "id": "en_14012",
@@ -84896,10 +84896,10 @@
           "pronunciation": "[르애느드이]",
           "pron": "[르애느드이]",
           "phonetic": "[르애느드이]",
-          "example_en": "This is an example for randy.",
-          "example_ko": "이것은 난잡한 떠들썩한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for randy.",
-          "exampleMeaning": "이것은 난잡한 떠들썩한 관련 실전 예문입니다."
+          "example_en": "Randy fixed my broken bicycle yesterday afternoon.",
+          "example_ko": "랜디가 어제 오후에 제 고장 난 자전거를 고쳐 주었습니다.",
+          "exampleTarget": "Randy fixed my broken bicycle yesterday afternoon.",
+          "exampleMeaning": "랜디가 어제 오후에 제 고장 난 자전거를 고쳐 주었습니다."
         },
         {
           "id": "en_14013",
@@ -84914,9 +84914,9 @@
           "pron": "[르즈어느어브르]",
           "phonetic": "[르즈어느어브르]",
           "example_en": "There is no reasonable relationship between deed and punishment.",
-          "example_ko": "행위와 벌 사이에는 이치에 맞는 관계 같은 것은 없다. 2.도리에 어긋나지 않는 정당한 공평한; （가격에 대하여） 합당한 비싸지 않은.",
+          "example_ko": "행위와 벌 사이에는 이치에 맞는 관계 같은 것은 없다.",
           "exampleTarget": "There is no reasonable relationship between deed and punishment.",
-          "exampleMeaning": "행위와 벌 사이에는 이치에 맞는 관계 같은 것은 없다. 2.도리에 어긋나지 않는 정당한 공평한; （가격에 대하여） 합당한 비싸지 않은."
+          "exampleMeaning": "행위와 벌 사이에는 이치에 맞는 관계 같은 것은 없다."
         },
         {
           "id": "en_14014",
@@ -84930,10 +84930,10 @@
           "pronunciation": "[르]",
           "pron": "[르]",
           "phonetic": "[르]",
-          "example_en": "This is an example for le.",
-          "example_ko": "이것은 접미사 「작은…」의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for le.",
-          "exampleMeaning": "이것은 접미사 「작은…」의 관련 실전 예문입니다."
+          "example_en": "Le is the French word for the.",
+          "example_ko": "Le는 프랑스어로 the에 해당하는 단어이다.",
+          "exampleTarget": "Le is the French word for the.",
+          "exampleMeaning": "Le는 프랑스어로 the에 해당하는 단어이다."
         },
         {
           "id": "en_14015",
@@ -84947,10 +84947,10 @@
           "pronunciation": "[흐아르브이]",
           "pron": "[흐아르브이]",
           "phonetic": "[흐아르브이]",
-          "example_en": "This is an example for harvey.",
-          "example_ko": "이것은 하비 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for harvey.",
-          "exampleMeaning": "이것은 하비 남자 관련 실전 예문입니다."
+          "example_en": "Harvey forgot to lock the front door again.",
+          "example_ko": "하비는 또 현관문 잠그는 것을 깜빡했습니다.",
+          "exampleTarget": "Harvey forgot to lock the front door again.",
+          "exampleMeaning": "하비는 또 현관문 잠그는 것을 깜빡했습니다."
         },
         {
           "id": "en_14016",
@@ -84981,10 +84981,10 @@
           "pronunciation": "[브쉬어프]",
           "pron": "[브쉬어프]",
           "phonetic": "[브쉬어프]",
-          "example_en": "This is an example for bishop.",
-          "example_ko": "이것은 주교 감독 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bishop.",
-          "exampleMeaning": "이것은 주교 감독 관련 실전 예문입니다."
+          "example_en": "The bishop spoke kindly to the local community.",
+          "example_ko": "주교는 지역 사회 사람들에게 따뜻하게 이야기했습니다.",
+          "exampleTarget": "The bishop spoke kindly to the local community.",
+          "exampleMeaning": "주교는 지역 사회 사람들에게 따뜻하게 이야기했습니다."
         },
         {
           "id": "en_14018",
@@ -84999,9 +84999,9 @@
           "pron": "[드르어르]",
           "phonetic": "[드르어르]",
           "example_en": "a used-car dealer.",
-          "example_ko": "중고차 상인. 2.〔카드놀이〕 딜러: 카드를 도르는 사람; 도박장의 종업원 도박사. 3.（남에 대해 어떤 특정한 태도로） 행동하는 사람.",
+          "example_ko": "중고차 상인.",
           "exampleTarget": "a used-car dealer.",
-          "exampleMeaning": "중고차 상인. 2.〔카드놀이〕 딜러: 카드를 도르는 사람; 도박장의 종업원 도박사. 3.（남에 대해 어떤 특정한 태도로） 행동하는 사람."
+          "exampleMeaning": "중고차 상인."
         },
         {
           "id": "en_14019",
@@ -85015,10 +85015,10 @@
           "pronunciation": "[드이프느드어느트]",
           "pron": "[드이프느드어느트]",
           "phonetic": "[드이프느드어느트]",
-          "example_en": "This is an example for defendant.",
-          "example_ko": "이것은 피고 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for defendant.",
-          "exampleMeaning": "이것은 피고 관련 실전 예문입니다."
+          "example_en": "The defendant stood quietly in front of judge.",
+          "example_ko": "피고인은 판사 앞에서 조용히 서 있었습니다.",
+          "exampleTarget": "The defendant stood quietly in front of judge.",
+          "exampleMeaning": "피고인은 판사 앞에서 조용히 서 있었습니다."
         },
         {
           "id": "en_14020",
@@ -85033,9 +85033,9 @@
           "pron": "[backup]",
           "phonetic": "[backup]",
           "example_en": "a backup of traffic.",
-          "example_ko": "교통의 정체. 3.예비 대체; 교체요원 대체물 예비품.",
+          "example_ko": "교통의 정체.",
           "exampleTarget": "a backup of traffic.",
-          "exampleMeaning": "교통의 정체. 3.예비 대체; 교체요원 대체물 예비품."
+          "exampleMeaning": "교통의 정체."
         },
         {
           "id": "en_14021",
@@ -85049,10 +85049,10 @@
           "pronunciation": "[아우츠]",
           "pron": "[아우츠]",
           "phonetic": "[아우츠]",
-          "example_en": "This is an example for ouch.",
-          "example_ko": "이것은 아야 갑작스러운 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ouch.",
-          "exampleMeaning": "이것은 아야 갑작스러운 관련 실전 예문입니다."
+          "example_en": "Ouch that hot coffee burned my tongue badly.",
+          "example_ko": "아야 뜨거운 커피에 혀를 심하게 데었어요.",
+          "exampleTarget": "Ouch that hot coffee burned my tongue badly.",
+          "exampleMeaning": "아야 뜨거운 커피에 혀를 심하게 데었어요."
         },
         {
           "id": "en_14022",
@@ -85066,10 +85066,10 @@
           "pronunciation": "[애느]",
           "pron": "[애느]",
           "phonetic": "[애느]",
-          "example_en": "This is an example for ann.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ann.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Ann returned the library books this afternoon.",
+          "example_ko": "앤은 오늘 오후에 도서관 책들을 반납했습니다.",
+          "exampleTarget": "Ann returned the library books this afternoon.",
+          "exampleMeaning": "앤은 오늘 오후에 도서관 책들을 반납했습니다."
         },
         {
           "id": "en_14023",
@@ -85096,14 +85096,14 @@
           "level": "B2",
           "unitId": "unit_140",
           "nodeId": "en_u140_n5",
-          "meaning": "과거형",
+          "meaning": "마셨다",
           "pronunciation": "[드르애으크]",
           "pron": "[드르애으크]",
           "phonetic": "[드르애으크]",
-          "example_en": "This is an example for drank.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for drank.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "He drank a glass of cold water.",
+          "example_ko": "그는 시원한 물 한 잔을 마셨다.",
+          "exampleTarget": "He drank a glass of cold water.",
+          "exampleMeaning": "그는 시원한 물 한 잔을 마셨다."
         },
         {
           "id": "en_14025",
@@ -85117,10 +85117,10 @@
           "pronunciation": "[즈아느어스어느]",
           "pron": "[즈아느어스어느]",
           "phonetic": "[즈아느어스어느]",
-          "example_en": "This is an example for jonathan.",
-          "example_ko": "이것은 요나단 Saul의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jonathan.",
-          "exampleMeaning": "이것은 요나단 Saul의 관련 실전 예문입니다."
+          "example_en": "Jonathan always drinks black coffee in the morning.",
+          "example_ko": "조너선은 아침마다 항상 블랙커피를 마십니다.",
+          "exampleTarget": "Jonathan always drinks black coffee in the morning.",
+          "exampleMeaning": "조너선은 아침마다 항상 블랙커피를 마십니다."
         },
         {
           "id": "en_14026",
@@ -85134,10 +85134,10 @@
           "pronunciation": "[드느이스]",
           "pron": "[드느이스]",
           "phonetic": "[드느이스]",
-          "example_en": "This is an example for dennis.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dennis.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Dennis bought a new laptop for his classes.",
+          "example_ko": "데니스는 수업을 위해 새 노트북을 샀습니다.",
+          "exampleTarget": "Dennis bought a new laptop for his classes.",
+          "exampleMeaning": "데니스는 수업을 위해 새 노트북을 샀습니다."
         },
         {
           "id": "en_14027",
@@ -85147,14 +85147,14 @@
           "level": "B2",
           "unitId": "unit_140",
           "nodeId": "en_u140_n5",
-          "meaning": "ve",
+          "meaning": "가지다",
           "pronunciation": "[ve]",
           "pron": "[ve]",
           "phonetic": "[ve]",
-          "example_en": "This is an example for ve.",
-          "example_ko": "이것은 ve 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ve.",
-          "exampleMeaning": "이것은 ve 관련 실전 예문입니다."
+          "example_en": "We ve already visited that famous art gallery.",
+          "example_ko": "우리는 이미 그 유명한 미술관을 방문했습니다.",
+          "exampleTarget": "We ve already visited that famous art gallery.",
+          "exampleMeaning": "우리는 이미 그 유명한 미술관을 방문했습니다."
         },
         {
           "id": "en_14028",
@@ -85168,10 +85168,10 @@
           "pronunciation": "[드르어느]",
           "pron": "[드르어느]",
           "phonetic": "[드르어느]",
-          "example_en": "This is an example for dylan.",
-          "example_ko": "이것은 딜런 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dylan.",
-          "exampleMeaning": "이것은 딜런 미국의 관련 실전 예문입니다."
+          "example_en": "Dylan plays guitar in a local rock band.",
+          "example_ko": "딜런은 지역 록 밴드에서 기타를 연주합니다.",
+          "exampleTarget": "Dylan plays guitar in a local rock band.",
+          "exampleMeaning": "딜런은 지역 록 밴드에서 기타를 연주합니다."
         },
         {
           "id": "en_14029",
@@ -85202,10 +85202,10 @@
           "pronunciation": "[브어스트이드]",
           "pron": "[브어스트이드]",
           "phonetic": "[브어스트이드]",
-          "example_en": "This is an example for busted.",
-          "example_ko": "이것은 들통난 포착된 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for busted.",
-          "exampleMeaning": "이것은 들통난 포착된 관련 실전 예문입니다."
+          "example_en": "He got busted for sneaking out of school.",
+          "example_ko": "그는 학교를 몰래 빠져나가다가 딱 걸렸습니다.",
+          "exampleTarget": "He got busted for sneaking out of school.",
+          "exampleMeaning": "그는 학교를 몰래 빠져나가다가 딱 걸렸습니다."
         }
       ],
       "nodes": [
@@ -85314,14 +85314,14 @@
           "level": "C1",
           "unitId": "unit_141",
           "nodeId": "en_u141_n1",
-          "meaning": "favourite",
+          "meaning": "가장 좋아하는",
           "pronunciation": "[프이브어르이트]",
           "pron": "[프이브어르이트]",
           "phonetic": "[프이브어르이트]",
-          "example_en": "This is an example for favourite.",
-          "example_ko": "이것은 favourite 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for favourite.",
-          "exampleMeaning": "이것은 favourite 관련 실전 예문입니다."
+          "example_en": "Pizza is my favourite food.",
+          "example_ko": "피자는 내가 가장 좋아하는 음식이다.",
+          "exampleTarget": "Pizza is my favourite food.",
+          "exampleMeaning": "피자는 내가 가장 좋아하는 음식이다."
         },
         {
           "id": "en_14102",
@@ -85335,10 +85335,10 @@
           "pronunciation": "[브어]",
           "pron": "[브어]",
           "phonetic": "[브어]",
-          "example_en": "This is an example for eva.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for eva.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Eva started learning Spanish two months ago.",
+          "example_ko": "에바는 두 달 전에 스페인어를 배우기 시작했습니다.",
+          "exampleTarget": "Eva started learning Spanish two months ago.",
+          "exampleMeaning": "에바는 두 달 전에 스페인어를 배우기 시작했습니다."
         },
         {
           "id": "en_14103",
@@ -85352,10 +85352,10 @@
           "pronunciation": "[프르크이으]",
           "pron": "[프르크이으]",
           "phonetic": "[프르크이으]",
-          "example_en": "This is an example for freaking.",
-          "example_ko": "이것은 심한 터무니없는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for freaking.",
-          "exampleMeaning": "이것은 심한 터무니없는 관련 실전 예문입니다."
+          "example_en": "That was a freaking amazing performance tonight.",
+          "example_ko": "오늘 밤 공연은 진짜 엄청나게 대단했어요.",
+          "exampleTarget": "That was a freaking amazing performance tonight.",
+          "exampleMeaning": "오늘 밤 공연은 진짜 엄청나게 대단했어요."
         },
         {
           "id": "en_14104",
@@ -85369,10 +85369,10 @@
           "pronunciation": "[드르아프이으]",
           "pron": "[드르아프이으]",
           "phonetic": "[드르아프이으]",
-          "example_en": "This is an example for dropping.",
-          "example_ko": "이것은 적하 낙하 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dropping.",
-          "exampleMeaning": "이것은 적하 낙하 관련 실전 예문입니다."
+          "example_en": "The temperature is dropping fast this evening.",
+          "example_ko": "오늘 저녁에는 기온이 빠르게 떨어지고 있습니다.",
+          "exampleTarget": "The temperature is dropping fast this evening.",
+          "exampleMeaning": "오늘 저녁에는 기온이 빠르게 떨어지고 있습니다."
         },
         {
           "id": "en_14105",
@@ -85403,10 +85403,10 @@
           "pronunciation": "[프르애느스크오]",
           "pron": "[프르애느스크오]",
           "phonetic": "[프르애느스크오]",
-          "example_en": "This is an example for francisco.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for francisco.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Francisco moved into an apartment near the station.",
+          "example_ko": "프란시스코는 역 근처 아파트로 이사했습니다.",
+          "exampleTarget": "Francisco moved into an apartment near the station.",
+          "exampleMeaning": "프란시스코는 역 근처 아파트로 이사했습니다."
         },
         {
           "id": "en_14107",
@@ -85455,9 +85455,9 @@
           "pron": "[프애르어드이스]",
           "phonetic": "[프애르어드이스]",
           "example_en": "the Paradise of the Pacific.",
-          "example_ko": "태평양의 낙원. 3.〔건축〕 （교회의） 앞뜰 주랑 안뜰 현관. 4.（특히 동양에서） 유원지 동물원. 5.《속어》 （극장의） 꼭대기 좌석.",
+          "example_ko": "태평양의 낙원.",
           "exampleTarget": "the Paradise of the Pacific.",
-          "exampleMeaning": "태평양의 낙원. 3.〔건축〕 （교회의） 앞뜰 주랑 안뜰 현관. 4.（특히 동양에서） 유원지 동물원. 5.《속어》 （극장의） 꼭대기 좌석."
+          "exampleMeaning": "태평양의 낙원."
         },
         {
           "id": "en_14110",
@@ -85472,9 +85472,9 @@
           "pron": "[므느트이므]",
           "phonetic": "[므느트이므]",
           "example_en": "In the meantime its time to say Seasons Greetings.",
-          "example_ko": "그런데 이제 곧 크리스마스의 인사를 나눌 시기가 되었군. 부사《구어》 1.그 동안에 이럭저럭 하는 사이에. 2.（이야기가 바뀌어） 한편으로는 동시에.",
+          "example_ko": "그런데 이제 곧 크리스마스의 인사를 나눌 시기가 되었군. 부사 1.그 동안에 이럭저럭 하는 사이에.",
           "exampleTarget": "In the meantime its time to say Seasons Greetings.",
-          "exampleMeaning": "그런데 이제 곧 크리스마스의 인사를 나눌 시기가 되었군. 부사《구어》 1.그 동안에 이럭저럭 하는 사이에. 2.（이야기가 바뀌어） 한편으로는 동시에."
+          "exampleMeaning": "그런데 이제 곧 크리스마스의 인사를 나눌 시기가 되었군. 부사 1.그 동안에 이럭저럭 하는 사이에."
         },
         {
           "id": "en_14111",
@@ -85488,10 +85488,10 @@
           "pronunciation": "[즈에스]",
           "pron": "[즈에스]",
           "phonetic": "[즈에스]",
-          "example_en": "This is an example for jess.",
-          "example_ko": "이것은 젓갖 발목에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jess.",
-          "exampleMeaning": "이것은 젓갖 발목에 관련 실전 예문입니다."
+          "example_en": "Jess works at a marketing firm downtown.",
+          "example_ko": "제스는 시내에 있는 마케팅 회사에서 일합니다.",
+          "exampleTarget": "Jess works at a marketing firm downtown.",
+          "exampleMeaning": "제스는 시내에 있는 마케팅 회사에서 일합니다."
         },
         {
           "id": "en_14112",
@@ -85540,9 +85540,9 @@
           "pron": "[크아크]",
           "phonetic": "[크아크]",
           "example_en": "a cock lobster.",
-          "example_ko": "대하의 수컷. 동사 타동사1.〈총의〉 공이치기를 당겨 세우다; 〈주먹 등을〉 （때리려고） 뒤로 빼다; 〈카메라의 셔터 등을〉 누를 준비를 하다. 2.〈귀·꼬리 등을〉 곧추세우다; 〈모자의〉 테를 젖혀올리다 〈모자를〉 멋부려서 비스듬히 쓰다.",
+          "example_ko": "대하의 수컷.",
           "exampleTarget": "a cock lobster.",
-          "exampleMeaning": "대하의 수컷. 동사 타동사1.〈총의〉 공이치기를 당겨 세우다; 〈주먹 등을〉 （때리려고） 뒤로 빼다; 〈카메라의 셔터 등을〉 누를 준비를 하다. 2.〈귀·꼬리 등을〉 곧추세우다; 〈모자의〉 테를 젖혀올리다 〈모자를〉 멋부려서 비스듬히 쓰다."
+          "exampleMeaning": "대하의 수컷."
         },
         {
           "id": "en_14115",
@@ -85556,10 +85556,10 @@
           "pronunciation": "[프에어르이]",
           "pron": "[프에어르이]",
           "phonetic": "[프에어르이]",
-          "example_en": "This is an example for fairy.",
-          "example_ko": "이것은 요정 선녀 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fairy.",
-          "exampleMeaning": "이것은 요정 선녀 관련 실전 예문입니다."
+          "example_en": "She read a fairy tale to her daughter.",
+          "example_ko": "그녀는 딸에게 동화 이야기를 읽어 주었습니다.",
+          "exampleTarget": "She read a fairy tale to her daughter.",
+          "exampleMeaning": "그녀는 딸에게 동화 이야기를 읽어 주었습니다."
         },
         {
           "id": "en_14116",
@@ -85573,10 +85573,10 @@
           "pronunciation": "[어르]",
           "pron": "[어르]",
           "phonetic": "[어르]",
-          "example_en": "This is an example for earl.",
-          "example_ko": "이것은 백작 marquis의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for earl.",
-          "exampleMeaning": "이것은 백작 marquis의 관련 실전 예문입니다."
+          "example_en": "The rich earl owned an enormous historic castle.",
+          "example_ko": "부유한 백작은 거대한 역사적인 성을 소유하고 있었습니다.",
+          "exampleTarget": "The rich earl owned an enormous historic castle.",
+          "exampleMeaning": "부유한 백작은 거대한 역사적인 성을 소유하고 있었습니다."
         },
         {
           "id": "en_14117",
@@ -85607,10 +85607,10 @@
           "pronunciation": "[트스트이으]",
           "pron": "[트스트이으]",
           "phonetic": "[트스트이으]",
-          "example_en": "This is an example for testing.",
-          "example_ko": "이것은 시험 최대한의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for testing.",
-          "exampleMeaning": "이것은 시험 최대한의 관련 실전 예문입니다."
+          "example_en": "The team is testing new software features today.",
+          "example_ko": "팀은 오늘 새로운 소프트웨어 기능을 테스트하고 있습니다.",
+          "exampleTarget": "The team is testing new software features today.",
+          "exampleMeaning": "팀은 오늘 새로운 소프트웨어 기능을 테스트하고 있습니다."
         },
         {
           "id": "en_14119",
@@ -85624,10 +85624,10 @@
           "pronunciation": "[즈느어프어르]",
           "pron": "[즈느어프어르]",
           "phonetic": "[즈느어프어르]",
-          "example_en": "This is an example for jennifer.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jennifer.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Jennifer invited everyone to her birthday dinner.",
+          "example_ko": "제니퍼는 모든 사람을 자신의 생일 저녁 식사에 초대했습니다.",
+          "exampleTarget": "Jennifer invited everyone to her birthday dinner.",
+          "exampleMeaning": "제니퍼는 모든 사람을 자신의 생일 저녁 식사에 초대했습니다."
         },
         {
           "id": "en_14120",
@@ -85641,10 +85641,10 @@
           "pronunciation": "[애느스어느이]",
           "pron": "[애느스어느이]",
           "phonetic": "[애느스어느이]",
-          "example_en": "This is an example for anthony.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for anthony.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Anthony walks his golden retriever every single morning.",
+          "example_ko": "앤서니는 매일 아침 골든 리트리버를 산책시킵니다.",
+          "exampleTarget": "Anthony walks his golden retriever every single morning.",
+          "exampleMeaning": "앤서니는 매일 아침 골든 리트리버를 산책시킵니다."
         },
         {
           "id": "en_14121",
@@ -85658,10 +85658,10 @@
           "pronunciation": "[크프어르]",
           "pron": "[크프어르]",
           "phonetic": "[크프어르]",
-          "example_en": "This is an example for cooper.",
-          "example_ko": "이것은 통 제조업자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cooper.",
-          "exampleMeaning": "이것은 통 제조업자 관련 실전 예문입니다."
+          "example_en": "The old cooper made wooden barrels by hand.",
+          "example_ko": "노련한 통 제조공은 손으로 나무통을 만들었습니다.",
+          "exampleTarget": "The old cooper made wooden barrels by hand.",
+          "exampleMeaning": "노련한 통 제조공은 손으로 나무통을 만들었습니다."
         },
         {
           "id": "en_14122",
@@ -85675,10 +85675,10 @@
           "pronunciation": "[브오스트어느]",
           "pron": "[브오스트어느]",
           "phonetic": "[브오스트어느]",
-          "example_en": "This is an example for boston.",
-          "example_ko": "이것은 보스턴 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for boston.",
-          "exampleMeaning": "이것은 보스턴 미국 관련 실전 예문입니다."
+          "example_en": "My family spent winter vacation in Boston.",
+          "example_ko": "우리 가족은 겨울 방학을 보스턴에서 보냈습니다.",
+          "exampleTarget": "My family spent winter vacation in Boston.",
+          "exampleMeaning": "우리 가족은 겨울 방학을 보스턴에서 보냈습니다."
         },
         {
           "id": "en_14123",
@@ -85692,10 +85692,10 @@
           "pronunciation": "[브어즈이으]",
           "pron": "[브어즈이으]",
           "phonetic": "[브어즈이으]",
-          "example_en": "This is an example for buzzing.",
-          "example_ko": "이것은 윙윙거리는 와글거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for buzzing.",
-          "exampleMeaning": "이것은 윙윙거리는 와글거리는 관련 실전 예문입니다."
+          "example_en": "A tiny bee was buzzing around the garden.",
+          "example_ko": "작은 벌 한 마리가 정원 주변에서 윙윙거리고 있었습니다.",
+          "exampleTarget": "A tiny bee was buzzing around the garden.",
+          "exampleMeaning": "작은 벌 한 마리가 정원 주변에서 윙윙거리고 있었습니다."
         },
         {
           "id": "en_14124",
@@ -85709,10 +85709,10 @@
           "pronunciation": "[므어으크]",
           "pron": "[므어으크]",
           "phonetic": "[므어으크]",
-          "example_en": "This is an example for monk.",
-          "example_ko": "이것은 수도사 수사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for monk.",
-          "exampleMeaning": "이것은 수도사 수사 관련 실전 예문입니다."
+          "example_en": "The peaceful monk meditated quietly on the mountain.",
+          "example_ko": "평화로운 수도사는 산 위에서 조용히 명상했습니다.",
+          "exampleTarget": "The peaceful monk meditated quietly on the mountain.",
+          "exampleMeaning": "평화로운 수도사는 산 위에서 조용히 명상했습니다."
         },
         {
           "id": "en_14125",
@@ -85777,10 +85777,10 @@
           "pronunciation": "[르아느]",
           "pron": "[르아느]",
           "phonetic": "[르아느]",
-          "example_en": "This is an example for ron.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ron.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Ron always orders spicy noodles for lunch.",
+          "example_ko": "론은 점심으로 항상 매운 면 요리를 주문합니다.",
+          "exampleTarget": "Ron always orders spicy noodles for lunch.",
+          "exampleMeaning": "론은 점심으로 항상 매운 면 요리를 주문합니다."
         },
         {
           "id": "en_14129",
@@ -85795,9 +85795,9 @@
           "pron": "[르우즈이]",
           "phonetic": "[르우즈이]",
           "example_en": "a lousy actor.",
-          "example_ko": "서투른 배우. 3.《구어》 《부정문에서 강조어로서》 …조차.",
+          "example_ko": "서투른 배우.",
           "exampleTarget": "a lousy actor.",
-          "exampleMeaning": "서투른 배우. 3.《구어》 《부정문에서 강조어로서》 …조차."
+          "exampleMeaning": "서투른 배우."
         },
         {
           "id": "en_14130",
@@ -85928,9 +85928,9 @@
           "pron": "[브르이]",
           "phonetic": "[브르이]",
           "example_en": "back and belly.",
-          "example_ko": "등과 배; 의식; 《부사적》 등과 배에 앞뒤에.",
+          "example_ko": "등과 배; 의식; 등과 배에 앞뒤에.",
           "exampleTarget": "back and belly.",
-          "exampleMeaning": "등과 배; 의식; 《부사적》 등과 배에 앞뒤에."
+          "exampleMeaning": "등과 배; 의식; 등과 배에 앞뒤에."
         },
         {
           "id": "en_14202",
@@ -85979,9 +85979,9 @@
           "pron": "[우오르드]",
           "phonetic": "[우오르드]",
           "example_en": "an isolation ward.",
-          "example_ko": "격리 병동. 3.（교도소의） 감방.",
+          "example_ko": "격리 병동.",
           "exampleTarget": "an isolation ward.",
-          "exampleMeaning": "격리 병동. 3.（교도소의） 감방."
+          "exampleMeaning": "격리 병동."
         },
         {
           "id": "en_14205",
@@ -85995,10 +85995,10 @@
           "pronunciation": "[애크트르이스]",
           "pron": "[애크트르이스]",
           "phonetic": "[애크트르이스]",
-          "example_en": "This is an example for actress.",
-          "example_ko": "이것은 여배우 여우 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for actress.",
-          "exampleMeaning": "이것은 여배우 여우 관련 실전 예문입니다."
+          "example_en": "The talented actress won an award last night.",
+          "example_ko": "재능 있는 여배우가 어젯밤에 상을 받았습니다.",
+          "exampleTarget": "The talented actress won an award last night.",
+          "exampleMeaning": "재능 있는 여배우가 어젯밤에 상을 받았습니다."
         },
         {
           "id": "en_14206",
@@ -86012,10 +86012,10 @@
           "pronunciation": "[트애트]",
           "pron": "[트애트]",
           "phonetic": "[트애트]",
-          "example_en": "This is an example for tattoo.",
-          "example_ko": "이것은 귀영 나팔 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tattoo.",
-          "exampleMeaning": "이것은 귀영 나팔 관련 실전 예문입니다."
+          "example_en": "He got a small tattoo on his arm.",
+          "example_ko": "그는 팔에 작은 문신을 새겼습니다.",
+          "exampleTarget": "He got a small tattoo on his arm.",
+          "exampleMeaning": "그는 팔에 작은 문신을 새겼습니다."
         },
         {
           "id": "en_14207",
@@ -86059,14 +86059,14 @@
           "level": "C1",
           "unitId": "unit_142",
           "nodeId": "en_u142_n1",
-          "meaning": "yay",
+          "meaning": "환호",
           "pronunciation": "[yay]",
           "pron": "[yay]",
           "phonetic": "[yay]",
-          "example_en": "I use the word yay in daily life.",
-          "example_ko": "나는 일상에서 yay 단어를 사용합니다.",
-          "exampleTarget": "I use the word yay in daily life.",
-          "exampleMeaning": "나는 일상에서 yay 단어를 사용합니다."
+          "example_en": "Yay  we finally won the championship!",
+          "example_ko": "와  우리가 드디어 우승했어!",
+          "exampleTarget": "Yay  we finally won the championship!",
+          "exampleMeaning": "와  우리가 드디어 우승했어!"
         },
         {
           "id": "en_14210",
@@ -86076,14 +86076,14 @@
           "level": "C1",
           "unitId": "unit_142",
           "nodeId": "en_u142_n1",
-          "meaning": "mistake의",
+          "meaning": "잘못된",
           "pronunciation": "[므이스트이크어느]",
           "pron": "[므이스트이크어느]",
           "phonetic": "[므이스트이크어느]",
-          "example_en": "He said so if I am not mistaken.",
-          "example_ko": "분명히 그는 그렇게 말한 것으로 생각해.",
-          "exampleTarget": "He said so if I am not mistaken.",
-          "exampleMeaning": "분명히 그는 그렇게 말한 것으로 생각해."
+          "example_en": "You are mistaken about that.",
+          "example_ko": "너는 그것에 대해 잘못 알고 있다.",
+          "exampleTarget": "You are mistaken about that.",
+          "exampleMeaning": "너는 그것에 대해 잘못 알고 있다."
         },
         {
           "id": "en_14211",
@@ -86114,10 +86114,10 @@
           "pronunciation": "[이스트]",
           "pron": "[이스트]",
           "phonetic": "[이스트]",
-          "example_en": "This is an example for st.",
-          "example_ko": "이것은 접미사 최상급을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for st.",
-          "exampleMeaning": "이것은 접미사 최상급을 관련 실전 예문입니다."
+          "example_en": "Turn left on Main St to find the bank.",
+          "example_ko": "은행을 찾으려면 메인 거리에서 좌회전하세요.",
+          "exampleTarget": "Turn left on Main St to find the bank.",
+          "exampleMeaning": "은행을 찾으려면 메인 거리에서 좌회전하세요."
         },
         {
           "id": "en_14213",
@@ -86132,9 +86132,9 @@
           "pron": "[uncomfortable]",
           "phonetic": "[uncomfortable]",
           "example_en": "an uncomfortable pair of shoes.",
-          "example_ko": "편치 않은 신. 2.〈사람이〉 불유쾌한 기분 좋은 감정이 아닌; 차분할 수 없는; 골치 아픈 딱한 성가신.",
+          "example_ko": "편치 않은 신.",
           "exampleTarget": "an uncomfortable pair of shoes.",
-          "exampleMeaning": "편치 않은 신. 2.〈사람이〉 불유쾌한 기분 좋은 감정이 아닌; 차분할 수 없는; 골치 아픈 딱한 성가신."
+          "exampleMeaning": "편치 않은 신."
         },
         {
           "id": "en_14214",
@@ -86148,10 +86148,10 @@
           "pronunciation": "[우느즈드에이]",
           "pron": "[우느즈드에이]",
           "phonetic": "[우느즈드에이]",
-          "example_en": "This is an example for wednesday.",
-          "example_ko": "이것은 수요일 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wednesday.",
-          "exampleMeaning": "이것은 수요일 약자 관련 실전 예문입니다."
+          "example_en": "We have an important meeting this Wednesday morning.",
+          "example_ko": "우리는 이번 주 수요일 아침에 중요한 회의가 있습니다.",
+          "exampleTarget": "We have an important meeting this Wednesday morning.",
+          "exampleMeaning": "우리는 이번 주 수요일 아침에 중요한 회의가 있습니다."
         },
         {
           "id": "en_14215",
@@ -86178,14 +86178,14 @@
           "level": "C1",
           "unitId": "unit_142",
           "nodeId": "en_u142_n2",
-          "meaning": "na",
+          "meaning": "하려고",
           "pronunciation": "[느아]",
           "pron": "[느아]",
           "phonetic": "[느아]",
-          "example_en": "This is an example for na.",
-          "example_ko": "이것은 na 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for na.",
-          "exampleMeaning": "이것은 na 관련 실전 예문입니다."
+          "example_en": "I am gon na call you later tonight.",
+          "example_ko": "오늘 밤 늦게 너에게 전화할게.",
+          "exampleTarget": "I am gon na call you later tonight.",
+          "exampleMeaning": "오늘 밤 늦게 너에게 전화할게."
         },
         {
           "id": "en_14217",
@@ -86217,9 +86217,9 @@
           "pron": "[르이크]",
           "phonetic": "[르이크]",
           "example_en": "Greek letters.",
-          "example_ko": "그리스 문자. 2.그리스 정교회의. 명사1.그리스 사람. 2.그리스어. 3.（말·문장 등） 도무지 알 수 없는 것.",
+          "example_ko": "그리스 문자.",
           "exampleTarget": "Greek letters.",
-          "exampleMeaning": "그리스 문자. 2.그리스 정교회의. 명사1.그리스 사람. 2.그리스어. 3.（말·문장 등） 도무지 알 수 없는 것."
+          "exampleMeaning": "그리스 문자."
         },
         {
           "id": "en_14219",
@@ -86267,10 +86267,10 @@
           "pronunciation": "[underwear]",
           "pron": "[underwear]",
           "phonetic": "[underwear]",
-          "example_en": "This is an example for underwear.",
-          "example_ko": "이것은 내의류 속옷 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for underwear.",
-          "exampleMeaning": "이것은 내의류 속옷 관련 실전 예문입니다."
+          "example_en": "Pack enough clean underwear for the whole trip.",
+          "example_ko": "여행 전체 일정에 맞춰 깨끗한 속옷을 충분히 챙기세요.",
+          "exampleTarget": "Pack enough clean underwear for the whole trip.",
+          "exampleMeaning": "여행 전체 일정에 맞춰 깨끗한 속옷을 충분히 챙기세요."
         },
         {
           "id": "en_14222",
@@ -86284,10 +86284,10 @@
           "pronunciation": "[드르이크]",
           "pron": "[드르이크]",
           "phonetic": "[드르이크]",
-          "example_en": "This is an example for derek.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for derek.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Derek solved the complicated puzzle very quickly.",
+          "example_ko": "데릭은 복잡한 퍼즐을 아주 빠르게 풀었습니다.",
+          "exampleTarget": "Derek solved the complicated puzzle very quickly.",
+          "exampleMeaning": "데릭은 복잡한 퍼즐을 아주 빠르게 풀었습니다."
         },
         {
           "id": "en_14223",
@@ -86302,9 +86302,9 @@
           "pron": "[프어르스어느애르어트이]",
           "phonetic": "[프어르스어느애르어트이]",
           "example_en": "Her personality is rather forceful.",
-          "example_ko": "그녀의 성격은 꽤 강렬하다. 2.（여러 성질을 갖춘） 인물 사람; 명사 유명 인사.",
+          "example_ko": "그녀의 성격은 꽤 강렬하다.",
           "exampleTarget": "Her personality is rather forceful.",
-          "exampleMeaning": "그녀의 성격은 꽤 강렬하다. 2.（여러 성질을 갖춘） 인물 사람; 명사 유명 인사."
+          "exampleMeaning": "그녀의 성격은 꽤 강렬하다."
         },
         {
           "id": "en_14224",
@@ -86318,10 +86318,10 @@
           "pronunciation": "[브애트므어느]",
           "pron": "[브애트므어느]",
           "phonetic": "[브애트므어느]",
-          "example_en": "This is an example for batman.",
-          "example_ko": "이것은 배트맨 만화 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for batman.",
-          "exampleMeaning": "이것은 배트맨 만화 관련 실전 예문입니다."
+          "example_en": "My nephew loves watching Batman movies on weekends.",
+          "example_ko": "내 조카는 주말마다 배트맨 영화 보는 것을 정말 좋아합니다.",
+          "exampleTarget": "My nephew loves watching Batman movies on weekends.",
+          "exampleMeaning": "내 조카는 주말마다 배트맨 영화 보는 것을 정말 좋아합니다."
         },
         {
           "id": "en_14225",
@@ -86335,10 +86335,10 @@
           "pronunciation": "[브어르즈느이어]",
           "pron": "[브어르즈느이어]",
           "phonetic": "[브어르즈느이어]",
-          "example_en": "This is an example for virginia.",
-          "example_ko": "이것은 버지니아 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for virginia.",
-          "exampleMeaning": "이것은 버지니아 미국 관련 실전 예문입니다."
+          "example_en": "They bought a cozy house in northern Virginia.",
+          "example_ko": "그들은 버지니아 북부에 아늑한 집을 샀습니다.",
+          "exampleTarget": "They bought a cozy house in northern Virginia.",
+          "exampleMeaning": "그들은 버지니아 북부에 아늑한 집을 샀습니다."
         },
         {
           "id": "en_14226",
@@ -86352,10 +86352,10 @@
           "pronunciation": "[우아이브즈]",
           "pron": "[우아이브즈]",
           "phonetic": "[우아이브즈]",
-          "example_en": "This is an example for wives.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wives.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "The wives met for lunch today.",
+          "example_ko": "아내들이 오늘 점심 식사를 위해 모였다.",
+          "exampleTarget": "The wives met for lunch today.",
+          "exampleMeaning": "아내들이 오늘 점심 식사를 위해 모였다."
         },
         {
           "id": "en_14227",
@@ -86369,10 +86369,10 @@
           "pronunciation": "[크어르어르]",
           "pron": "[크어르어르]",
           "phonetic": "[크어르어르]",
-          "example_en": "This is an example for colour.",
-          "example_ko": "이것은 타∙ 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for colour.",
-          "exampleMeaning": "이것은 타∙ 관련 실전 예문입니다."
+          "example_en": "What is your favourite colour to wear?",
+          "example_ko": "너는 어떤 색의 옷을 입는 것을 제일 좋아하니?",
+          "exampleTarget": "What is your favourite colour to wear?",
+          "exampleMeaning": "너는 어떤 색의 옷을 입는 것을 제일 좋아하니?"
         },
         {
           "id": "en_14228",
@@ -86404,9 +86404,9 @@
           "pron": "[프오프]",
           "phonetic": "[프오프]",
           "example_en": "Pope Paul.",
-          "example_ko": "바오로 교황. 2.교조 교주 교황; 교황적 존재. 3.（초기 크리스트 교회에서） 감독. 숙어 Is the Pope Catholic? 《비격식·풍자적》 당연하다 물론이다 .",
+          "example_ko": "바오로 교황.",
           "exampleTarget": "Pope Paul.",
-          "exampleMeaning": "바오로 교황. 2.교조 교주 교황; 교황적 존재. 3.（초기 크리스트 교회에서） 감독. 숙어 Is the Pope Catholic? 《비격식·풍자적》 당연하다 물론이다 ."
+          "exampleMeaning": "바오로 교황."
         },
         {
           "id": "en_14230",
@@ -86549,14 +86549,14 @@
           "level": "C1",
           "unitId": "unit_143",
           "nodeId": "en_u143_n1",
-          "meaning": "vince",
+          "meaning": "빈스",
           "pronunciation": "[vince]",
           "pron": "[vince]",
           "phonetic": "[vince]",
-          "example_en": "I use the word vince in daily life.",
-          "example_ko": "나는 일상에서 vince 단어를 사용합니다.",
-          "exampleTarget": "I use the word vince in daily life.",
-          "exampleMeaning": "나는 일상에서 vince 단어를 사용합니다."
+          "example_en": "Vince is studying hard for his final exam.",
+          "example_ko": "빈스는 기말시험을 위해 열심히 공부하고 있다.",
+          "exampleTarget": "Vince is studying hard for his final exam.",
+          "exampleMeaning": "빈스는 기말시험을 위해 열심히 공부하고 있다."
         },
         {
           "id": "en_14303",
@@ -86566,14 +86566,14 @@
           "level": "C1",
           "unitId": "unit_143",
           "nodeId": "en_u143_n1",
-          "meaning": "comin",
+          "meaning": "오는 중",
           "pronunciation": "[comin]",
           "pron": "[comin]",
           "phonetic": "[comin]",
-          "example_en": "I use the word comin in daily life.",
-          "example_ko": "나는 일상에서 comin 단어를 사용합니다.",
-          "exampleTarget": "I use the word comin in daily life.",
-          "exampleMeaning": "나는 일상에서 comin 단어를 사용합니다."
+          "example_en": "Wait for me  I am comin right now.",
+          "example_ko": "나 기다려  지금 바로 가는 중이야.",
+          "exampleTarget": "Wait for me  I am comin right now.",
+          "exampleMeaning": "나 기다려  지금 바로 가는 중이야."
         },
         {
           "id": "en_14304",
@@ -86621,10 +86621,10 @@
           "pronunciation": "[르아브드]",
           "pron": "[르아브드]",
           "phonetic": "[르아브드]",
-          "example_en": "This is an example for robbed.",
-          "example_ko": "이것은 속은 속아넘어간 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for robbed.",
-          "exampleMeaning": "이것은 속은 속아넘어간 관련 실전 예문입니다."
+          "example_en": "Someone robbed the small jewelry shop downtown.",
+          "example_ko": "누군가 시내에 있는 작은 보석상을 털었습니다.",
+          "exampleTarget": "Someone robbed the small jewelry shop downtown.",
+          "exampleMeaning": "누군가 시내에 있는 작은 보석상을 털었습니다."
         },
         {
           "id": "en_14307",
@@ -86638,10 +86638,10 @@
           "pronunciation": "[프트이즈]",
           "pron": "[프트이즈]",
           "phonetic": "[프트이즈]",
-          "example_en": "This is an example for footage.",
-          "example_ko": "이것은 피트 수 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for footage.",
-          "exampleMeaning": "이것은 피트 수 관련 실전 예문입니다."
+          "example_en": "Security cameras captured clear footage of the suspect.",
+          "example_ko": "보안 카메라가 용의자의 선명한 영상을 포착했습니다.",
+          "exampleTarget": "Security cameras captured clear footage of the suspect.",
+          "exampleMeaning": "보안 카메라가 용의자의 선명한 영상을 포착했습니다."
         },
         {
           "id": "en_14308",
@@ -86673,9 +86673,9 @@
           "pron": "[스어르크어스]",
           "phonetic": "[스어르크어스]",
           "example_en": "a traveling circus.",
-          "example_ko": "지방을 순회하는 서커스단. 2.원형 곡마장; 원형 경기장 비슷한 것; （고대 로마의） 원형 극장; （거기서 거행된） 시합. 3.《a circus》《영》 （여러 개의 길이 방사상으로 모이는） 원형 광장 cf. SQUARE 『명사』2.",
+          "example_ko": "지방을 순회하는 서커스단.",
           "exampleTarget": "a traveling circus.",
-          "exampleMeaning": "지방을 순회하는 서커스단. 2.원형 곡마장; 원형 경기장 비슷한 것; （고대 로마의） 원형 극장; （거기서 거행된） 시합. 3.《a circus》《영》 （여러 개의 길이 방사상으로 모이는） 원형 광장 cf. SQUARE 『명사』2."
+          "exampleMeaning": "지방을 순회하는 서커스단."
         },
         {
           "id": "en_14310",
@@ -86706,10 +86706,10 @@
           "pronunciation": "[애드]",
           "pron": "[애드]",
           "phonetic": "[애드]",
-          "example_en": "This is an example for ad.",
-          "example_ko": "이것은 「…로」 「…에」 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ad.",
-          "exampleMeaning": "이것은 「…로」 「…에」 관련 실전 예문입니다."
+          "example_en": "I saw an interesting ad on social media.",
+          "example_ko": "소셜 미디어에서 흥미로운 광고를 보았습니다.",
+          "exampleTarget": "I saw an interesting ad on social media.",
+          "exampleMeaning": "소셜 미디어에서 흥미로운 광고를 보았습니다."
         },
         {
           "id": "en_14312",
@@ -86724,9 +86724,9 @@
           "pron": "[드이어므어느드]",
           "phonetic": "[드이어므어느드]",
           "example_en": "a small diamond.",
-          "example_ko": "점수가 낮은 다이아 패. 5.〔야구〕 내야; 야구장. 숙어 diamond cut diamond （기지·책략 등이） 막상막하의 호적수의 대결 난형난제의 명승부. ※ It is diamond cut diamond. 처럼 씀. 형용사1.다이아로 만든.",
+          "example_ko": "점수가 낮은 다이아 패.",
           "exampleTarget": "a small diamond.",
-          "exampleMeaning": "점수가 낮은 다이아 패. 5.〔야구〕 내야; 야구장. 숙어 diamond cut diamond （기지·책략 등이） 막상막하의 호적수의 대결 난형난제의 명승부. ※ It is diamond cut diamond. 처럼 씀. 형용사1.다이아로 만든."
+          "exampleMeaning": "점수가 낮은 다이아 패."
         },
         {
           "id": "en_14313",
@@ -86740,10 +86740,10 @@
           "pronunciation": "[므애스유]",
           "pron": "[므애스유]",
           "phonetic": "[므애스유]",
-          "example_en": "This is an example for matthew.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for matthew.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Matthew answered all questions during the interview.",
+          "example_ko": "매튜는 면접 동안 모든 질문에 답했습니다.",
+          "exampleTarget": "Matthew answered all questions during the interview.",
+          "exampleMeaning": "매튜는 면접 동안 모든 질문에 답했습니다."
         },
         {
           "id": "en_14314",
@@ -86757,10 +86757,10 @@
           "pronunciation": "[애느트이]",
           "pron": "[애느트이]",
           "phonetic": "[애느트이]",
-          "example_en": "This is an example for auntie.",
-          "example_ko": "이것은 아줌마 aunt의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for auntie.",
-          "exampleMeaning": "이것은 아줌마 aunt의 관련 실전 예문입니다."
+          "example_en": "My auntie baked delicious apple pies for us.",
+          "example_ko": "우리 이모는 우리를 위해 맛있는 사과 파이를 구워주셨어요.",
+          "exampleTarget": "My auntie baked delicious apple pies for us.",
+          "exampleMeaning": "우리 이모는 우리를 위해 맛있는 사과 파이를 구워주셨어요."
         },
         {
           "id": "en_14315",
@@ -86774,10 +86774,10 @@
           "pronunciation": "[프르애느스이스]",
           "pron": "[프르애느스이스]",
           "phonetic": "[프르애느스이스]",
-          "example_en": "This is an example for francis.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for francis.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Francis joined the company as a software developer.",
+          "example_ko": "프랜시스는 소프트웨어 개발자로 회사에 입사했습니다.",
+          "exampleTarget": "Francis joined the company as a software developer.",
+          "exampleMeaning": "프랜시스는 소프트웨어 개발자로 회사에 입사했습니다."
         },
         {
           "id": "en_14316",
@@ -86792,9 +86792,9 @@
           "pron": "[스느어츠어르]",
           "phonetic": "[스느어츠어르]",
           "example_en": "write ones signature.",
-          "example_ko": "사인하다. 2.〔음악〕 시그니처: 악보의 음조·박자의 지시 기호. 3.〔라디오·TV〕 테마 음악. 4.〔제책〕 접지; 〔인쇄〕 접지 번호. 5.〔의학〕 《미》 （처방전에 쓰는） 용법 표시. 6.〔물리〕 사인; 《고어》 특징 특성. 7.〔컴퓨터〕 메시지 끝에 쓰는 사인에 해당하는 것으로 전자 우편 등에서 메시지에 붙이는 ID나 식별에 쓰이는 데이터 시퀀스.",
+          "example_ko": "사인하다.",
           "exampleTarget": "write ones signature.",
-          "exampleMeaning": "사인하다. 2.〔음악〕 시그니처: 악보의 음조·박자의 지시 기호. 3.〔라디오·TV〕 테마 음악. 4.〔제책〕 접지; 〔인쇄〕 접지 번호. 5.〔의학〕 《미》 （처방전에 쓰는） 용법 표시. 6.〔물리〕 사인; 《고어》 특징 특성. 7.〔컴퓨터〕 메시지 끝에 쓰는 사인에 해당하는 것으로 전자 우편 등에서 메시지에 붙이는 ID나 식별에 쓰이는 데이터 시퀀스."
+          "exampleMeaning": "사인하다."
         },
         {
           "id": "en_14317",
@@ -86859,10 +86859,10 @@
           "pronunciation": "[브르트느]",
           "pron": "[브르트느]",
           "phonetic": "[브르트느]",
-          "example_en": "This is an example for britain.",
-          "example_ko": "이것은 Britain의 약칭 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for britain.",
-          "exampleMeaning": "이것은 Britain의 약칭 관련 실전 예문입니다."
+          "example_en": "She plans to study abroad in Britain next year.",
+          "example_ko": "그녀는 내년에 영국으로 유학을 갈 계획입니다.",
+          "exampleTarget": "She plans to study abroad in Britain next year.",
+          "exampleMeaning": "그녀는 내년에 영국으로 유학을 갈 계획입니다."
         },
         {
           "id": "en_14321",
@@ -86876,10 +86876,10 @@
           "pronunciation": "[흐이드]",
           "pron": "[흐이드]",
           "phonetic": "[흐이드]",
-          "example_en": "This is an example for hid.",
-          "example_ko": "이것은 ¹의 과거·과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hid.",
-          "exampleMeaning": "이것은 ¹의 과거·과거 관련 실전 예문입니다."
+          "example_en": "The cat hid under the soft bed.",
+          "example_ko": "고양이가 푹신한 침대 아래로 숨었다.",
+          "exampleTarget": "The cat hid under the soft bed.",
+          "exampleMeaning": "고양이가 푹신한 침대 아래로 숨었다."
         },
         {
           "id": "en_14322",
@@ -86893,10 +86893,10 @@
           "pronunciation": "[우이르이으]",
           "pron": "[우이르이으]",
           "phonetic": "[우이르이으]",
-          "example_en": "This is an example for wailing.",
-          "example_ko": "이것은 훌륭한 근사한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wailing.",
-          "exampleMeaning": "이것은 훌륭한 근사한 관련 실전 예문입니다."
+          "example_en": "We heard an ambulance wailing in the distance.",
+          "example_ko": "우리는 멀리서 구급차가 요란하게 울리는 소리를 들었습니다.",
+          "exampleTarget": "We heard an ambulance wailing in the distance.",
+          "exampleMeaning": "우리는 멀리서 구급차가 요란하게 울리는 소리를 들었습니다."
         },
         {
           "id": "en_14323",
@@ -86927,10 +86927,10 @@
           "pronunciation": "[브이크]",
           "pron": "[브이크]",
           "phonetic": "[브이크]",
-          "example_en": "This is an example for vic.",
-          "example_ko": "이것은 V자형 편대 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vic.",
-          "exampleMeaning": "이것은 V자형 편대 관련 실전 예문입니다."
+          "example_en": "Vic parked his blue car outside the building.",
+          "example_ko": "빅은 건물 바깥에 자신의 파란 차를 주차했습니다.",
+          "exampleTarget": "Vic parked his blue car outside the building.",
+          "exampleMeaning": "빅은 건물 바깥에 자신의 파란 차를 주차했습니다."
         },
         {
           "id": "en_14325",
@@ -86978,10 +86978,10 @@
           "pronunciation": "[흐아므어스이드]",
           "pron": "[흐아므어스이드]",
           "phonetic": "[흐아므어스이드]",
-          "example_en": "This is an example for homicide.",
-          "example_ko": "이것은 살인 살인범 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for homicide.",
-          "exampleMeaning": "이것은 살인 살인범 관련 실전 예문입니다."
+          "example_en": "The detective works in the city homicide unit.",
+          "example_ko": "그 형사는 도시 강력계 살인 사건 수사대에서 일합니다.",
+          "exampleTarget": "The detective works in the city homicide unit.",
+          "exampleMeaning": "그 형사는 도시 강력계 살인 사건 수사대에서 일합니다."
         },
         {
           "id": "en_14328",
@@ -86995,10 +86995,10 @@
           "pronunciation": "[크이즈이]",
           "pron": "[크이즈이]",
           "phonetic": "[크이즈이]",
-          "example_en": "This is an example for casey.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for casey.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Casey ordered two pizzas for the team lunch.",
+          "example_ko": "케이시는 팀 점심 식사를 위해 피자 두 판을 주문했습니다.",
+          "exampleTarget": "Casey ordered two pizzas for the team lunch.",
+          "exampleMeaning": "케이시는 팀 점심 식사를 위해 피자 두 판을 주문했습니다."
         },
         {
           "id": "en_14329",
@@ -87012,10 +87012,10 @@
           "pronunciation": "[프르우]",
           "pron": "[프르우]",
           "phonetic": "[프르우]",
-          "example_en": "This is an example for flew.",
-          "example_ko": "이것은 ¹의 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for flew.",
-          "exampleMeaning": "이것은 ¹의 과거형 관련 실전 예문입니다."
+          "example_en": "The birds flew south for the winter.",
+          "example_ko": "새들은 겨울을 나기 위해 남쪽으로 날아갔다.",
+          "exampleTarget": "The birds flew south for the winter.",
+          "exampleMeaning": "새들은 겨울을 나기 위해 남쪽으로 날아갔다."
         },
         {
           "id": "en_14330",
@@ -87029,10 +87029,10 @@
           "pronunciation": "[즈이크어브]",
           "pron": "[즈이크어브]",
           "phonetic": "[즈이크어브]",
-          "example_en": "This is an example for jacob.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jacob.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Jacob helps his younger sister with math homework.",
+          "example_ko": "제이콥은 여동생의 수학 숙제를 도와줍니다.",
+          "exampleTarget": "Jacob helps his younger sister with math homework.",
+          "exampleMeaning": "제이콥은 여동생의 수학 숙제를 도와줍니다."
         }
       ],
       "nodes": [
@@ -87146,9 +87146,9 @@
           "pron": "[스르애프]",
           "phonetic": "[스르애프]",
           "example_en": "get a slap on the cheek.",
-          "example_ko": "따귀를 한 대 맞다. 2.따귀 때리는 （것 같은） 소리. 3.（통렬한） 비난 비방; 모욕; 〔…에 대한〕 거절〔at …〕. 숙어 a slap and tickle 《영·비격식》 소란스러운 여흥; （남녀의） 시시덕거림 농탕치기. a slap in the face 《비격식》 ①얼굴을 찰싹 때리기. ②모욕 창피; 거절; 비난; 실망. a slap on the back （찬성·격려 등의 표시로） 등을 가볍게 두드리기. a slap on the wrist 《비격식》 온건하고 효과 없는 질책. have a slap at … 《비격식》 …을 해 보다. 동사타동사 1.…을 （손바닥으로） 찰싹 때리다; 〈남의〉 〔얼굴을〕 찰싹 때리다〔in on …〕 ; 왕복으로 따귀를 때리다〔around〕; 〈어깨 등을〉 가볍게 두드리다.",
+          "example_ko": "따귀를 한 대 맞다.",
           "exampleTarget": "get a slap on the cheek.",
-          "exampleMeaning": "따귀를 한 대 맞다. 2.따귀 때리는 （것 같은） 소리. 3.（통렬한） 비난 비방; 모욕; 〔…에 대한〕 거절〔at …〕. 숙어 a slap and tickle 《영·비격식》 소란스러운 여흥; （남녀의） 시시덕거림 농탕치기. a slap in the face 《비격식》 ①얼굴을 찰싹 때리기. ②모욕 창피; 거절; 비난; 실망. a slap on the back （찬성·격려 등의 표시로） 등을 가볍게 두드리기. a slap on the wrist 《비격식》 온건하고 효과 없는 질책. have a slap at … 《비격식》 …을 해 보다. 동사타동사 1.…을 （손바닥으로） 찰싹 때리다; 〈남의〉 〔얼굴을〕 찰싹 때리다〔in on …〕 ; 왕복으로 따귀를 때리다〔around〕; 〈어깨 등을〉 가볍게 두드리다."
+          "exampleMeaning": "따귀를 한 대 맞다."
         },
         {
           "id": "en_14402",
@@ -87162,10 +87162,10 @@
           "pronunciation": "[스크르츠이으]",
           "pron": "[스크르츠이으]",
           "phonetic": "[스크르츠이으]",
-          "example_en": "This is an example for screeching.",
-          "example_ko": "이것은 새된 소리를 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for screeching.",
-          "exampleMeaning": "이것은 새된 소리를 관련 실전 예문입니다."
+          "example_en": "The train stopped with a loud screeching noise.",
+          "example_ko": "기차가 앙칼진 끼익 소리를 내며 멈춰 섰습니다.",
+          "exampleTarget": "The train stopped with a loud screeching noise.",
+          "exampleMeaning": "기차가 앙칼진 끼익 소리를 내며 멈춰 섰습니다."
         },
         {
           "id": "en_14403",
@@ -87214,9 +87214,9 @@
           "pron": "[므오느]",
           "phonetic": "[므오느]",
           "example_en": "with a moan of pain.",
-          "example_ko": "고통으로 신음 소리를 내며. 2.《영·비격식》 불평; 한탄.",
+          "example_ko": "고통으로 신음 소리를 내며.",
           "exampleTarget": "with a moan of pain.",
-          "exampleMeaning": "고통으로 신음 소리를 내며. 2.《영·비격식》 불평; 한탄."
+          "exampleMeaning": "고통으로 신음 소리를 내며."
         },
         {
           "id": "en_14406",
@@ -87231,9 +87231,9 @@
           "pron": "[프프트이]",
           "phonetic": "[프프트이]",
           "example_en": "by fifties50.",
-          "example_ko": "명씩. 3.《ones -ties》 50세대; 《the -ties》 50대 （세기의） 50년대; （특히） 1950년대.",
+          "example_ko": "명씩.",
           "exampleTarget": "by fifties50.",
-          "exampleMeaning": "명씩. 3.《ones -ties》 50세대; 《the -ties》 50대 （세기의） 50년대; （특히） 1950년대."
+          "exampleMeaning": "명씩."
         },
         {
           "id": "en_14407",
@@ -87247,10 +87247,10 @@
           "pronunciation": "[므크이]",
           "pron": "[므크이]",
           "phonetic": "[므크이]",
-          "example_en": "This is an example for mickey.",
-          "example_ko": "이것은 위스키 병 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mickey.",
-          "exampleMeaning": "이것은 위스키 병 관련 실전 예문입니다."
+          "example_en": "My nephew loves watching Mickey Mouse cartoons.",
+          "example_ko": "제 조카는 미키 마우스 만화 보는 것을 아주 좋아합니다.",
+          "exampleTarget": "My nephew loves watching Mickey Mouse cartoons.",
+          "exampleMeaning": "제 조카는 미키 마우스 만화 보는 것을 아주 좋아합니다."
         },
         {
           "id": "en_14408",
@@ -87265,9 +87265,9 @@
           "pron": "[프에어르우르]",
           "phonetic": "[프에어르우르]",
           "example_en": "Farewell! I hope we meet again soon.",
-          "example_ko": "안녕! 곧 다시 만나길 바래. 명사《문어·옛투》 1.작별의 말.",
+          "example_ko": "안녕! 곧 다시 만나길 바래.",
           "exampleTarget": "Farewell! I hope we meet again soon.",
-          "exampleMeaning": "안녕! 곧 다시 만나길 바래. 명사《문어·옛투》 1.작별의 말."
+          "exampleMeaning": "안녕! 곧 다시 만나길 바래."
         },
         {
           "id": "en_14409",
@@ -87282,9 +87282,9 @@
           "pron": "[스르이프]",
           "phonetic": "[스르이프]",
           "example_en": "He often slips in his grammar.",
-          "example_ko": "그는 종종 어법을 잘못 쓴다. 3.①미끄러지듯이 달리다; 급히 입다〔into out of on off …〕; 걸치다〔into …〕; 곧 열중하다.",
+          "example_ko": "그는 종종 어법을 잘못 쓴다.",
           "exampleTarget": "He often slips in his grammar.",
-          "exampleMeaning": "그는 종종 어법을 잘못 쓴다. 3.①미끄러지듯이 달리다; 급히 입다〔into out of on off …〕; 걸치다〔into …〕; 곧 열중하다."
+          "exampleMeaning": "그는 종종 어법을 잘못 쓴다."
         },
         {
           "id": "en_14410",
@@ -87315,10 +87315,10 @@
           "pronunciation": "[프이스이으]",
           "pron": "[프이스이으]",
           "phonetic": "[프이스이으]",
-          "example_en": "This is an example for facing.",
-          "example_ko": "이것은 표면 단장 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for facing.",
-          "exampleMeaning": "이것은 표면 단장 관련 실전 예문입니다."
+          "example_en": "Our living room window is facing the ocean.",
+          "example_ko": "우리 거실 창문은 바다를 향하고 있습니다.",
+          "exampleTarget": "Our living room window is facing the ocean.",
+          "exampleMeaning": "우리 거실 창문은 바다를 향하고 있습니다."
         },
         {
           "id": "en_14412",
@@ -87401,9 +87401,9 @@
           "pron": "[츠이트]",
           "phonetic": "[츠이트]",
           "example_en": "The land sale turned out to be a cheat.",
-          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.",
+          "example_ko": "그 토지의 매각은 나중에 사기임이 드러났다.",
           "exampleTarget": "The land sale turned out to be a cheat.",
-          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕."
+          "exampleMeaning": "그 토지의 매각은 나중에 사기임이 드러났다."
         },
         {
           "id": "en_14417",
@@ -87417,10 +87417,10 @@
           "pronunciation": "[르이즈르이즈어]",
           "pron": "[르이즈르이즈어]",
           "phonetic": "[르이즈르이즈어]",
-          "example_en": "This is an example for liz.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for liz.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Liz booked a flight ticket to London today.",
+          "example_ko": "리즈는 오늘 런던행 비행기 표를 예매했습니다.",
+          "exampleTarget": "Liz booked a flight ticket to London today.",
+          "exampleMeaning": "리즈는 오늘 런던행 비행기 표를 예매했습니다."
         },
         {
           "id": "en_14418",
@@ -87435,9 +87435,9 @@
           "pron": "[흐유므애느어트이]",
           "phonetic": "[흐유므애느어트이]",
           "example_en": "Poetry redeems humanity.",
-          "example_ko": "시는 인간성을 회복한다. 2.《집합적》 인류; 인간.",
+          "example_ko": "시는 인간성을 회복한다.",
           "exampleTarget": "Poetry redeems humanity.",
-          "exampleMeaning": "시는 인간성을 회복한다. 2.《집합적》 인류; 인간."
+          "exampleMeaning": "시는 인간성을 회복한다."
         },
         {
           "id": "en_14419",
@@ -87452,9 +87452,9 @@
           "pron": "[프르어드이스어르]",
           "phonetic": "[프르어드이스어르]",
           "example_en": "a producer price index.",
-          "example_ko": "생산자 물가 지수. 2.（극·영화·방송 등의） 프로듀서 제작자; 흥행주; 《영》 〔연극〕 연출가. cf. DIRECTOR 3. 3.가스 발생로. 4.〔생물〕 유기물 생성 생물.",
+          "example_ko": "생산자 물가 지수.",
           "exampleTarget": "a producer price index.",
-          "exampleMeaning": "생산자 물가 지수. 2.（극·영화·방송 등의） 프로듀서 제작자; 흥행주; 《영》 〔연극〕 연출가. cf. DIRECTOR 3. 3.가스 발생로. 4.〔생물〕 유기물 생성 생물."
+          "exampleMeaning": "생산자 물가 지수."
         },
         {
           "id": "en_14420",
@@ -87468,10 +87468,10 @@
           "pronunciation": "[트크느이크어르이]",
           "pron": "[트크느이크어르이]",
           "phonetic": "[트크느이크어르이]",
-          "example_en": "This is an example for technically.",
-          "example_ko": "이것은 엄밀한 사실 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for technically.",
-          "exampleMeaning": "이것은 엄밀한 사실 관련 실전 예문입니다."
+          "example_en": "Technically that answer is correct but incomplete.",
+          "example_ko": "엄밀히 말해 그 답변은 맞지만 불완전합니다.",
+          "exampleTarget": "Technically that answer is correct but incomplete.",
+          "exampleMeaning": "엄밀히 말해 그 답변은 맞지만 불완전합니다."
         },
         {
           "id": "en_14421",
@@ -87502,10 +87502,10 @@
           "pronunciation": "[cia]",
           "pron": "[cia]",
           "phonetic": "[cia]",
-          "example_en": "This is an example for cia.",
-          "example_ko": "이것은 cia 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cia.",
-          "exampleMeaning": "이것은 cia 관련 실전 예문입니다."
+          "example_en": "He works as an analyst for the CIA.",
+          "example_ko": "그는 CIA에서 분석관으로 일하고 있습니다.",
+          "exampleTarget": "He works as an analyst for the CIA.",
+          "exampleMeaning": "그는 CIA에서 분석관으로 일하고 있습니다."
         },
         {
           "id": "en_14423",
@@ -87515,14 +87515,14 @@
           "level": "C1",
           "unitId": "unit_144",
           "nodeId": "en_u144_n5",
-          "meaning": "ii",
+          "meaning": "로마 숫자 2",
           "pronunciation": "[ii]",
           "pron": "[ii]",
           "phonetic": "[ii]",
-          "example_en": "I use the word ii in daily life.",
-          "example_ko": "나는 일상에서 ii 단어를 사용합니다.",
-          "exampleTarget": "I use the word ii in daily life.",
-          "exampleMeaning": "나는 일상에서 ii 단어를 사용합니다."
+          "example_en": "Chapter II explains the basic grammar rules.",
+          "example_ko": "제2장은 기본 문법 규칙을 설명한다.",
+          "exampleTarget": "Chapter II explains the basic grammar rules.",
+          "exampleMeaning": "제2장은 기본 문법 규칙을 설명한다."
         },
         {
           "id": "en_14424",
@@ -87536,10 +87536,10 @@
           "pronunciation": "[아크스이즈에느]",
           "pron": "[아크스이즈에느]",
           "phonetic": "[아크스이즈에느]",
-          "example_en": "This is an example for oxygen.",
-          "example_ko": "이것은 산소 기호 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for oxygen.",
-          "exampleMeaning": "이것은 산소 기호 관련 실전 예문입니다."
+          "example_en": "Humans need fresh oxygen to breathe and survive.",
+          "example_ko": "인간은 숨을 쉬고 생존하기 위해 신선한 산소가 필요합니다.",
+          "exampleTarget": "Humans need fresh oxygen to breathe and survive.",
+          "exampleMeaning": "인간은 숨을 쉬고 생존하기 위해 신선한 산소가 필요합니다."
         },
         {
           "id": "en_14425",
@@ -87553,10 +87553,10 @@
           "pronunciation": "[즈이즈]",
           "pron": "[즈이즈]",
           "phonetic": "[즈이즈]",
-          "example_en": "This is an example for jeez.",
-          "example_ko": "이것은 어머나 저런 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jeez.",
-          "exampleMeaning": "이것은 어머나 저런 관련 실전 예문입니다."
+          "example_en": "Jeez we almost missed our morning flight today.",
+          "example_ko": "이런 우리 오늘 아침 비행기를 거의 놓칠 뻔했네.",
+          "exampleTarget": "Jeez we almost missed our morning flight today.",
+          "exampleMeaning": "이런 우리 오늘 아침 비행기를 거의 놓칠 뻔했네."
         },
         {
           "id": "en_14426",
@@ -87570,10 +87570,10 @@
           "pronunciation": "[에크스]",
           "pron": "[에크스]",
           "phonetic": "[에크스]",
-          "example_en": "This is an example for ex.",
-          "example_ko": "이것은 시험 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ex.",
-          "exampleMeaning": "이것은 시험 관련 실전 예문입니다."
+          "example_en": "She still talks to her friendly ex often.",
+          "example_ko": "그녀는 여전히 친근한 전 연인과 자주 대화합니다.",
+          "exampleTarget": "She still talks to her friendly ex often.",
+          "exampleMeaning": "그녀는 여전히 친근한 전 연인과 자주 대화합니다."
         },
         {
           "id": "en_14427",
@@ -87621,10 +87621,10 @@
           "pronunciation": "[므애스]",
           "pron": "[므애스]",
           "phonetic": "[므애스]",
-          "example_en": "This is an example for math.",
-          "example_ko": "이것은 math 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for math.",
-          "exampleMeaning": "이것은 math 관련 실전 예문입니다."
+          "example_en": "He teaches basic math at the local school.",
+          "example_ko": "그는 지역 학교에서 기초 수학을 가르칩니다.",
+          "exampleTarget": "He teaches basic math at the local school.",
+          "exampleMeaning": "그는 지역 학교에서 기초 수학을 가르칩니다."
         },
         {
           "id": "en_14430",
@@ -87771,10 +87771,10 @@
           "pronunciation": "[오이]",
           "pron": "[오이]",
           "phonetic": "[오이]",
-          "example_en": "This is an example for oi.",
-          "example_ko": "이것은 어이 사람의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for oi.",
-          "exampleMeaning": "이것은 어이 사람의 관련 실전 예문입니다."
+          "example_en": "Oi watch your step on the icy pavement.",
+          "example_ko": "어이 빙판길에서 발밑을 조심해.",
+          "exampleTarget": "Oi watch your step on the icy pavement.",
+          "exampleMeaning": "어이 빙판길에서 발밑을 조심해."
         },
         {
           "id": "en_14503",
@@ -87784,14 +87784,14 @@
           "level": "C1",
           "unitId": "unit_145",
           "nodeId": "en_u145_n1",
-          "meaning": "grey",
+          "meaning": "회색",
           "pronunciation": "[르에이]",
           "pron": "[르에이]",
           "phonetic": "[르에이]",
-          "example_en": "This is an example for grey.",
-          "example_ko": "이것은 grey 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grey.",
-          "exampleMeaning": "이것은 grey 관련 실전 예문입니다."
+          "example_en": "She wore a warm grey sweater this morning.",
+          "example_ko": "그녀는 오늘 아침 따뜻한 회색 스웨터를 입었습니다.",
+          "exampleTarget": "She wore a warm grey sweater this morning.",
+          "exampleMeaning": "그녀는 오늘 아침 따뜻한 회색 스웨터를 입었습니다."
         },
         {
           "id": "en_14504",
@@ -87801,14 +87801,14 @@
           "level": "C1",
           "unitId": "unit_145",
           "nodeId": "en_u145_n1",
-          "meaning": "격의",
+          "meaning": "이야기하는",
           "pronunciation": "[talkin]",
           "pron": "[talkin]",
           "phonetic": "[talkin]",
-          "example_en": "I use the word talkin in daily life.",
-          "example_ko": "나는 일상에서 talkin 단어를 사용합니다.",
-          "exampleTarget": "I use the word talkin in daily life.",
-          "exampleMeaning": "나는 일상에서 talkin 단어를 사용합니다."
+          "example_en": "What are you talkin about?",
+          "example_ko": "너 지금 무슨 이야기를 하고 있는 거야?",
+          "exampleTarget": "What are you talkin about?",
+          "exampleMeaning": "너 지금 무슨 이야기를 하고 있는 거야?"
         },
         {
           "id": "en_14505",
@@ -87822,10 +87822,10 @@
           "pronunciation": "[트르어르이스트]",
           "pron": "[트르어르이스트]",
           "phonetic": "[트르어르이스트]",
-          "example_en": "This is an example for terrorist.",
-          "example_ko": "이것은 테러리스트 테러 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for terrorist.",
-          "exampleMeaning": "이것은 테러리스트 테러 관련 실전 예문입니다."
+          "example_en": "Police arrested a dangerous terrorist at the airport.",
+          "example_ko": "경찰은 공항에서 위험한 테러리스트를 체포했습니다.",
+          "exampleTarget": "Police arrested a dangerous terrorist at the airport.",
+          "exampleMeaning": "경찰은 공항에서 위험한 테러리스트를 체포했습니다."
         },
         {
           "id": "en_14506",
@@ -87856,10 +87856,10 @@
           "pronunciation": "[어스]",
           "pron": "[어스]",
           "phonetic": "[어스]",
-          "example_en": "This is an example for gus.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gus.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Gus brought delicious homemade sandwiches for lunch.",
+          "example_ko": "거스는 점심으로 맛있는 수제 샌드위치를 가져왔습니다.",
+          "exampleTarget": "Gus brought delicious homemade sandwiches for lunch.",
+          "exampleMeaning": "거스는 점심으로 맛있는 수제 샌드위치를 가져왔습니다."
         },
         {
           "id": "en_14508",
@@ -87873,10 +87873,10 @@
           "pronunciation": "[애므브르이으]",
           "pron": "[애므브르이으]",
           "phonetic": "[애므브르이으]",
-          "example_en": "This is an example for gambling.",
-          "example_ko": "이것은 도박 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gambling.",
-          "exampleMeaning": "이것은 도박 관련 실전 예문입니다."
+          "example_en": "He lost too much money on sports gambling.",
+          "example_ko": "그는 스포츠 도박으로 너무 많은 돈을 잃었습니다.",
+          "exampleTarget": "He lost too much money on sports gambling.",
+          "exampleMeaning": "그는 스포츠 도박으로 너무 많은 돈을 잃었습니다."
         },
         {
           "id": "en_14509",
@@ -87891,9 +87891,9 @@
           "pron": "[프르어스즈어르]",
           "phonetic": "[프르어스즈어르]",
           "example_en": "follow the prearranged procedure.",
-          "example_ko": "미리 정한 순서대로 해나가다. 2.（법률·의회 등의） （정식） 절차; 소송 절차 cf. PROCEEDING 2.",
+          "example_ko": "미리 정한 순서대로 해나가다.",
           "exampleTarget": "follow the prearranged procedure.",
-          "exampleMeaning": "미리 정한 순서대로 해나가다. 2.（법률·의회 등의） （정식） 절차; 소송 절차 cf. PROCEEDING 2."
+          "exampleMeaning": "미리 정한 순서대로 해나가다."
         },
         {
           "id": "en_14510",
@@ -87941,10 +87941,10 @@
           "pronunciation": "[르이프트]",
           "pron": "[르이프트]",
           "phonetic": "[르이프트]",
-          "example_en": "This is an example for ripped.",
-          "example_ko": "이것은 마약 취해 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ripped.",
-          "exampleMeaning": "이것은 마약 취해 관련 실전 예문입니다."
+          "example_en": "He accidentally ripped his jacket on the fence.",
+          "example_ko": "그는 실수로 울타리에 재킷이 찢어졌습니다.",
+          "exampleTarget": "He accidentally ripped his jacket on the fence.",
+          "exampleMeaning": "그는 실수로 울타리에 재킷이 찢어졌습니다."
         },
         {
           "id": "en_14513",
@@ -87975,10 +87975,10 @@
           "pronunciation": "[므아르스]",
           "pron": "[므아르스]",
           "phonetic": "[므아르스]",
-          "example_en": "This is an example for mars.",
-          "example_ko": "이것은 ｛프랑스어｝ 월 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mars.",
-          "exampleMeaning": "이것은 ｛프랑스어｝ 월 관련 실전 예문입니다."
+          "example_en": "Scientists study the red surface of Mars carefully.",
+          "example_ko": "과학자들은 화성의 붉은 표면을 주의 깊게 연구합니다.",
+          "exampleTarget": "Scientists study the red surface of Mars carefully.",
+          "exampleMeaning": "과학자들은 화성의 붉은 표면을 주의 깊게 연구합니다."
         },
         {
           "id": "en_14515",
@@ -87993,9 +87993,9 @@
           "pron": "[아르트이스트]",
           "phonetic": "[아르트이스트]",
           "example_en": "a professional artist.",
-          "example_ko": "전문 예술가. 2.명인 명수.",
+          "example_ko": "전문 예술가.",
           "exampleTarget": "a professional artist.",
-          "exampleMeaning": "전문 예술가. 2.명인 명수."
+          "exampleMeaning": "전문 예술가."
         },
         {
           "id": "en_14516",
@@ -88009,10 +88009,10 @@
           "pronunciation": "[흐이이스트]",
           "pron": "[흐이이스트]",
           "phonetic": "[흐이이스트]",
-          "example_en": "This is an example for highest.",
-          "example_ko": "이것은 장 높은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for highest.",
-          "exampleMeaning": "이것은 장 높은 관련 실전 예문입니다."
+          "example_en": "Mount Everest is the highest mountain on Earth.",
+          "example_ko": "에베레스트산은 지구상에서 가장 높은 산입니다.",
+          "exampleTarget": "Mount Everest is the highest mountain on Earth.",
+          "exampleMeaning": "에베레스트산은 지구상에서 가장 높은 산입니다."
         },
         {
           "id": "en_14517",
@@ -88027,9 +88027,9 @@
           "pron": "[흐우어르]",
           "phonetic": "[흐우어르]",
           "example_en": "the whir of the sewing machine.",
-          "example_ko": "재봉틀의 윙윙거리는 소리. 2.《비유》 대소동; （마음의） 동요.",
+          "example_ko": "재봉틀의 윙윙거리는 소리.",
           "exampleTarget": "the whir of the sewing machine.",
-          "exampleMeaning": "재봉틀의 윙윙거리는 소리. 2.《비유》 대소동; （마음의） 동요."
+          "exampleMeaning": "재봉틀의 윙윙거리는 소리."
         },
         {
           "id": "en_14518",
@@ -88043,10 +88043,10 @@
           "pronunciation": "[느에이트]",
           "pron": "[느에이트]",
           "phonetic": "[느에이트]",
-          "example_en": "This is an example for nate.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nate.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Nate scored two goals in the soccer match.",
+          "example_ko": "네이트는 축구 경기에서 두 골을 넣었습니다.",
+          "exampleTarget": "Nate scored two goals in the soccer match.",
+          "exampleMeaning": "네이트는 축구 경기에서 두 골을 넣었습니다."
         },
         {
           "id": "en_14519",
@@ -88061,9 +88061,9 @@
           "pron": "[르애브]",
           "phonetic": "[르애브]",
           "example_en": "Grab a chair.",
-          "example_ko": "의자에 앉아요. ②《속어》 〈남의〉 마음을 사로잡다 〈남에게〉 （강한） 인상을 주다.",
+          "example_ko": "의자에 앉아요. ② 〈남의〉 마음을 사로잡다 〈남에게〉 （강한） 인상을 주다.",
           "exampleTarget": "Grab a chair.",
-          "exampleMeaning": "의자에 앉아요. ②《속어》 〈남의〉 마음을 사로잡다 〈남에게〉 （강한） 인상을 주다."
+          "exampleMeaning": "의자에 앉아요. ② 〈남의〉 마음을 사로잡다 〈남에게〉 （강한） 인상을 주다."
         },
         {
           "id": "en_14520",
@@ -88077,10 +88077,10 @@
           "pronunciation": "[오르브이어]",
           "pron": "[오르브이어]",
           "phonetic": "[오르브이어]",
-          "example_en": "This is an example for olivia.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for olivia.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Olivia plays piano very well after years practice.",
+          "example_ko": "올리비아는 수년간의 연습 끝에 피아노를 아주 잘 칩니다.",
+          "exampleTarget": "Olivia plays piano very well after years practice.",
+          "exampleMeaning": "올리비아는 수년간의 연습 끝에 피아노를 아주 잘 칩니다."
         },
         {
           "id": "en_14521",
@@ -88095,9 +88095,9 @@
           "pron": "[르브어르어느드]",
           "phonetic": "[르브어르어느드]",
           "example_en": "the Reverend James Wilson.",
-          "example_ko": "제임스 윌슨 신부. 2.거룩한 공경 받아 마땅한; 성직의. Reverend는 the를 생략하여 Reverend Robert Cranston으로 하는 경우가 있으나 the를 붙이는 편이 공손함. 편지 등의 수신인명으로 쓰이는 경우 the는 생략됨. 약자로 Rev. 또는 Revd.를 씀. Rev.Robert Cranston으로 하는 것은 신문 어법이나 격식차린 표현에 한함. professor와 달리 호칭일 때 성이나 이름을 붙이지 않고 Reverend만으로 하는 것은 피해야 함. 따라서 반드시 성과 이름 또는 성과 이니셜을 수반하며 성뿐일 때는 Mr. 또는 Dr.를 the Reverend 다음에 둠 ◇ the Reverend Mr. H. Clark.명사《보통 reverends》《비격식》 신부 목사 성직자.",
+          "example_ko": "제임스 윌슨 신부.",
           "exampleTarget": "the Reverend James Wilson.",
-          "exampleMeaning": "제임스 윌슨 신부. 2.거룩한 공경 받아 마땅한; 성직의. Reverend는 the를 생략하여 Reverend Robert Cranston으로 하는 경우가 있으나 the를 붙이는 편이 공손함. 편지 등의 수신인명으로 쓰이는 경우 the는 생략됨. 약자로 Rev. 또는 Revd.를 씀. Rev.Robert Cranston으로 하는 것은 신문 어법이나 격식차린 표현에 한함. professor와 달리 호칭일 때 성이나 이름을 붙이지 않고 Reverend만으로 하는 것은 피해야 함. 따라서 반드시 성과 이름 또는 성과 이니셜을 수반하며 성뿐일 때는 Mr. 또는 Dr.를 the Reverend 다음에 둠 ◇ the Reverend Mr. H. Clark.명사《보통 reverends》《비격식》 신부 목사 성직자."
+          "exampleMeaning": "제임스 윌슨 신부."
         },
         {
           "id": "en_14522",
@@ -88129,9 +88129,9 @@
           "pron": "[스크오르트]",
           "phonetic": "[스크오르트]",
           "example_en": "The VIP was provided with a security escort.",
-          "example_ko": "그 중요 인물은 경호를 받고 있었다. 2.（개인의） 보호자 수행원; （여성을） 에스코트하는 남자. 3.（고관 등의） 경호; （여행자의） 안내; （죄수의） 호송. 숙어 under escort 호위되어. 동사 | iskɔ́ːrt | 타동사 1.〈사람·선박 등을〉 호위하다; 〈남성이〉 〈여성을〉 〔파티 등에〕 바래다주다 에스코트하다 〈범인 등을〉 〔교도소 등으로〕 호송하다〔to …〕.",
+          "example_ko": "그 중요 인물은 경호를 받고 있었다.",
           "exampleTarget": "The VIP was provided with a security escort.",
-          "exampleMeaning": "그 중요 인물은 경호를 받고 있었다. 2.（개인의） 보호자 수행원; （여성을） 에스코트하는 남자. 3.（고관 등의） 경호; （여행자의） 안내; （죄수의） 호송. 숙어 under escort 호위되어. 동사 | iskɔ́ːrt | 타동사 1.〈사람·선박 등을〉 호위하다; 〈남성이〉 〈여성을〉 〔파티 등에〕 바래다주다 에스코트하다 〈범인 등을〉 〔교도소 등으로〕 호송하다〔to …〕."
+          "exampleMeaning": "그 중요 인물은 경호를 받고 있었다."
         },
         {
           "id": "en_14524",
@@ -88163,9 +88163,9 @@
           "pron": "[크오르프스]",
           "phonetic": "[크오르프스]",
           "example_en": "a living corpse.",
-          "example_ko": "산 송장. 2.효력을 잃은 것 시체 같은 것.",
+          "example_ko": "산 송장.",
           "exampleTarget": "a living corpse.",
-          "exampleMeaning": "산 송장. 2.효력을 잃은 것 시체 같은 것."
+          "exampleMeaning": "산 송장."
         },
         {
           "id": "en_14526",
@@ -88175,14 +88175,14 @@
           "level": "C1",
           "unitId": "unit_145",
           "nodeId": "en_u145_n5",
-          "meaning": "louise",
+          "meaning": "루이스",
           "pronunciation": "[louise]",
           "pron": "[louise]",
           "phonetic": "[louise]",
-          "example_en": "I use the word louise in daily life.",
-          "example_ko": "나는 일상에서 louise 단어를 사용합니다.",
-          "exampleTarget": "I use the word louise in daily life.",
-          "exampleMeaning": "나는 일상에서 louise 단어를 사용합니다."
+          "example_en": "Louise enjoys painting landscapes on weekends.",
+          "example_ko": "루이스는 주말마다 풍경화 그리는 것을 즐긴다.",
+          "exampleTarget": "Louise enjoys painting landscapes on weekends.",
+          "exampleMeaning": "루이스는 주말마다 풍경화 그리는 것을 즐긴다."
         },
         {
           "id": "en_14527",
@@ -88197,9 +88197,9 @@
           "pron": "[우어르드이]",
           "phonetic": "[우어르드이]",
           "example_en": "a worthy endeavor.",
-          "example_ko": "훌륭한 노력. 2.〔…을 받을〕 가치가 있는 〔…에〕 어울리는 〔of …〕; 〔…할〕 만한〔to do〕.",
+          "example_ko": "훌륭한 노력.",
           "exampleTarget": "a worthy endeavor.",
-          "exampleMeaning": "훌륭한 노력. 2.〔…을 받을〕 가치가 있는 〔…에〕 어울리는 〔of …〕; 〔…할〕 만한〔to do〕."
+          "exampleMeaning": "훌륭한 노력."
         },
         {
           "id": "en_14528",
@@ -88213,10 +88213,10 @@
           "pronunciation": "[우르이어므즈]",
           "pron": "[우르이어므즈]",
           "phonetic": "[우르이어므즈]",
-          "example_en": "This is an example for williams.",
-          "example_ko": "이것은 윌리엄스 영국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for williams.",
-          "exampleMeaning": "이것은 윌리엄스 영국 관련 실전 예문입니다."
+          "example_en": "Mr Williams will attend the parent meeting tomorrow.",
+          "example_ko": "윌리엄스 선생님께서 내일 학부모 회의에 참석하실 것입니다.",
+          "exampleTarget": "Mr Williams will attend the parent meeting tomorrow.",
+          "exampleMeaning": "윌리엄스 선생님께서 내일 학부모 회의에 참석하실 것입니다."
         },
         {
           "id": "en_14529",
@@ -88363,10 +88363,10 @@
           "pronunciation": "[르애르프]",
           "pron": "[르애르프]",
           "phonetic": "[르애르프]",
-          "example_en": "This is an example for ralph.",
-          "example_ko": "이것은 타∙ 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ralph.",
-          "exampleMeaning": "이것은 타∙ 관련 실전 예문입니다."
+          "example_en": "Ralph adopted an energetic rescue dog last week.",
+          "example_ko": "랠프는 지난주에 활발한 유기견을 입양했습니다.",
+          "exampleTarget": "Ralph adopted an energetic rescue dog last week.",
+          "exampleMeaning": "랠프는 지난주에 활발한 유기견을 입양했습니다."
         },
         {
           "id": "en_14602",
@@ -88397,10 +88397,10 @@
           "pronunciation": "[스오프트르이]",
           "pron": "[스오프트르이]",
           "phonetic": "[스오프트르이]",
-          "example_en": "This is an example for softly.",
-          "example_ko": "이것은 부드럽게 조용히 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for softly.",
-          "exampleMeaning": "이것은 부드럽게 조용히 관련 실전 예문입니다."
+          "example_en": "She spoke softly so nobody would hear her.",
+          "example_ko": "그녀는 아무도 듣지 못하도록 조용하게 말했습니다.",
+          "exampleTarget": "She spoke softly so nobody would hear her.",
+          "exampleMeaning": "그녀는 아무도 듣지 못하도록 조용하게 말했습니다."
         },
         {
           "id": "en_14604",
@@ -88414,10 +88414,10 @@
           "pronunciation": "[크애르어르이느]",
           "pron": "[크애르어르이느]",
           "phonetic": "[크애르어르이느]",
-          "example_en": "This is an example for caroline.",
-          "example_ko": "이것은 영국 왕 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for caroline.",
-          "exampleMeaning": "이것은 영국 왕 관련 실전 예문입니다."
+          "example_en": "Caroline sent me an email about the project.",
+          "example_ko": "캐롤라인은 프로젝트에 관한 이메일을 내게 보냈습니다.",
+          "exampleTarget": "Caroline sent me an email about the project.",
+          "exampleMeaning": "캐롤라인은 프로젝트에 관한 이메일을 내게 보냈습니다."
         },
         {
           "id": "en_14605",
@@ -88431,10 +88431,10 @@
           "pronunciation": "[쉬아르크]",
           "pron": "[쉬아르크]",
           "phonetic": "[쉬아르크]",
-          "example_en": "This is an example for shark.",
-          "example_ko": "이것은 상어 （판새류 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shark.",
-          "exampleMeaning": "이것은 상어 （판새류 관련 실전 예문입니다."
+          "example_en": "A great white shark swam near the boat.",
+          "example_ko": "거대한 백상아리 한 마리가 보트 근처를 헤엄쳤습니다.",
+          "exampleTarget": "A great white shark swam near the boat.",
+          "exampleMeaning": "거대한 백상아리 한 마리가 보트 근처를 헤엄쳤습니다."
         },
         {
           "id": "en_14606",
@@ -88465,10 +88465,10 @@
           "pronunciation": "[크르프이]",
           "pron": "[크르프이]",
           "phonetic": "[크르프이]",
-          "example_en": "This is an example for creepy.",
-          "example_ko": "이것은 기는 느릿느릿 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for creepy.",
-          "exampleMeaning": "이것은 기는 느릿느릿 관련 실전 예문입니다."
+          "example_en": "That dark empty house looks very creepy tonight.",
+          "example_ko": "저 어둡고 텅 빈 집은 오늘 밤 매우 으스스해 보입니다.",
+          "exampleTarget": "That dark empty house looks very creepy tonight.",
+          "exampleMeaning": "저 어둡고 텅 빈 집은 오늘 밤 매우 으스스해 보입니다."
         },
         {
           "id": "en_14608",
@@ -88516,10 +88516,10 @@
           "pronunciation": "[크이스]",
           "pron": "[크이스]",
           "phonetic": "[크이스]",
-          "example_en": "This is an example for keith.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for keith.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Keith walked into the meeting room on time.",
+          "example_ko": "키스는 정각에 회의실로 걸어 들어왔습니다.",
+          "exampleTarget": "Keith walked into the meeting room on time.",
+          "exampleMeaning": "키스는 정각에 회의실로 걸어 들어왔습니다."
         },
         {
           "id": "en_14611",
@@ -88533,10 +88533,10 @@
           "pronunciation": "[즈오이느이으]",
           "pron": "[즈오이느이으]",
           "phonetic": "[즈오이느이으]",
-          "example_en": "This is an example for joining.",
-          "example_ko": "이것은 접합 연결 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for joining.",
-          "exampleMeaning": "이것은 접합 연결 관련 실전 예문입니다."
+          "example_en": "Thank you for joining our team meeting today.",
+          "example_ko": "오늘 우리 팀 회의에 참여해 주셔서 감사합니다.",
+          "exampleTarget": "Thank you for joining our team meeting today.",
+          "exampleMeaning": "오늘 우리 팀 회의에 참여해 주셔서 감사합니다."
         },
         {
           "id": "en_14612",
@@ -88567,10 +88567,10 @@
           "pronunciation": "[므애르크어므]",
           "pron": "[므애르크어므]",
           "phonetic": "[므애르크어므]",
-          "example_en": "This is an example for malcolm.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for malcolm.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Malcolm prepared a great slide presentation for clients.",
+          "example_ko": "맬컴은 고객들을 위한 멋진 슬라이드 발표를 준비했습니다.",
+          "exampleTarget": "Malcolm prepared a great slide presentation for clients.",
+          "exampleMeaning": "맬컴은 고객들을 위한 멋진 슬라이드 발표를 준비했습니다."
         },
         {
           "id": "en_14614",
@@ -88580,14 +88580,14 @@
           "level": "C1",
           "unitId": "unit_146",
           "nodeId": "en_u146_n2",
-          "meaning": "흐드러지다",
+          "meaning": "대단히 매혹적인",
           "pronunciation": "[프애스어느이트이으]",
           "pron": "[프애스어느이트이으]",
           "phonetic": "[프애스어느이트이으]",
-          "example_en": "a fascinating novel.",
-          "example_ko": "흥미진진한 소설.",
-          "exampleTarget": "a fascinating novel.",
-          "exampleMeaning": "흥미진진한 소설."
+          "example_en": "That was a fascinating story.",
+          "example_ko": "그것은 대단히 매혹적인 이야기였다.",
+          "exampleTarget": "That was a fascinating story.",
+          "exampleMeaning": "그것은 대단히 매혹적인 이야기였다."
         },
         {
           "id": "en_14615",
@@ -88601,10 +88601,10 @@
           "pronunciation": "[스어느]",
           "pron": "[스어느]",
           "phonetic": "[스어느]",
-          "example_en": "This is an example for ethan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ethan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Ethan finished his homework before dinner this evening.",
+          "example_ko": "이선은 오늘 저녁 식사 전에 숙제를 마쳤습니다.",
+          "exampleTarget": "Ethan finished his homework before dinner this evening.",
+          "exampleMeaning": "이선은 오늘 저녁 식사 전에 숙제를 마쳤습니다."
         },
         {
           "id": "en_14616",
@@ -88619,9 +88619,9 @@
           "pron": "[르오므애느스]",
           "phonetic": "[르오므애느스]",
           "example_en": "a whirlwind romance.",
-          "example_ko": "단숨에 타오르는 사랑. 2.전기 소설; 연애 소설; （문학의 한 장르로서의） 로맨스.",
+          "example_ko": "단숨에 타오르는 사랑.",
           "exampleTarget": "a whirlwind romance.",
-          "exampleMeaning": "단숨에 타오르는 사랑. 2.전기 소설; 연애 소설; （문학의 한 장르로서의） 로맨스."
+          "exampleMeaning": "단숨에 타오르는 사랑."
         },
         {
           "id": "en_14617",
@@ -88635,10 +88635,10 @@
           "pronunciation": "[즈어므프이으]",
           "pron": "[즈어므프이으]",
           "phonetic": "[즈어므프이으]",
-          "example_en": "This is an example for jumping.",
-          "example_ko": "이것은 뛰는 튀는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jumping.",
-          "exampleMeaning": "이것은 뛰는 튀는 관련 실전 예문입니다."
+          "example_en": "The excited kids are jumping on the bed.",
+          "example_ko": "신난 아이들이 침대 위에서 폴짝폴짝 뛰고 있습니다.",
+          "exampleTarget": "The excited kids are jumping on the bed.",
+          "exampleMeaning": "신난 아이들이 침대 위에서 폴짝폴짝 뛰고 있습니다."
         },
         {
           "id": "en_14618",
@@ -88687,9 +88687,9 @@
           "pron": "[우오크어르]",
           "phonetic": "[우오크어르]",
           "example_en": "a great walker.",
-          "example_ko": "산책을 몹시 좋아하는 사람. 3.（개 등을） 산책시키는 사람. 4.《보통 walkers》보행용 구두.",
+          "example_ko": "산책을 몹시 좋아하는 사람.",
           "exampleTarget": "a great walker.",
-          "exampleMeaning": "산책을 몹시 좋아하는 사람. 3.（개 등을） 산책시키는 사람. 4.《보통 walkers》보행용 구두."
+          "exampleMeaning": "산책을 몹시 좋아하는 사람."
         },
         {
           "id": "en_14621",
@@ -88703,10 +88703,10 @@
           "pronunciation": "[investigating]",
           "pron": "[investigating]",
           "phonetic": "[investigating]",
-          "example_en": "This is an example for investigating.",
-          "example_ko": "이것은 조사의 연구의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for investigating.",
-          "exampleMeaning": "이것은 조사의 연구의 관련 실전 예문입니다."
+          "example_en": "The police are investigating the cause of accident.",
+          "example_ko": "경찰은 사고 원인을 면밀히 조사하고 있습니다.",
+          "exampleTarget": "The police are investigating the cause of accident.",
+          "exampleMeaning": "경찰은 사고 원인을 면밀히 조사하고 있습니다."
         },
         {
           "id": "en_14622",
@@ -88721,9 +88721,9 @@
           "pron": "[이이강이]",
           "phonetic": "[이이강이]",
           "example_en": "Ye are the salt of the earth.",
-          "example_ko": "너희는 세상의 소금이다 〈〔성서〕 마태 복음 5:13〉. ②《호칭》.",
+          "example_ko": "너희는 세상의 소금이다 〈〔성서〕 마태 복음 5:13〉. ②.",
           "exampleTarget": "Ye are the salt of the earth.",
-          "exampleMeaning": "너희는 세상의 소금이다 〈〔성서〕 마태 복음 5:13〉. ②《호칭》."
+          "exampleMeaning": "너희는 세상의 소금이다 〈〔성서〕 마태 복음 5:13〉. ②."
         },
         {
           "id": "en_14623",
@@ -88737,10 +88737,10 @@
           "pronunciation": "[어르이느어]",
           "pron": "[어르이느어]",
           "phonetic": "[어르이느어]",
-          "example_en": "This is an example for elena.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for elena.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Elena ordered warm tomato soup at the cafe.",
+          "example_ko": "엘레나는 카페에서 따뜻한 토마토 수프를 주문했습니다.",
+          "exampleTarget": "Elena ordered warm tomato soup at the cafe.",
+          "exampleMeaning": "엘레나는 카페에서 따뜻한 토마토 수프를 주문했습니다."
         },
         {
           "id": "en_14624",
@@ -88754,10 +88754,10 @@
           "pronunciation": "[느크르이스]",
           "pron": "[느크르이스]",
           "phonetic": "[느크르이스]",
-          "example_en": "This is an example for necklace.",
-          "example_ko": "이것은 목걸이 네크리스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for necklace.",
-          "exampleMeaning": "이것은 목걸이 네크리스 관련 실전 예문입니다."
+          "example_en": "She wore a shiny silver necklace to dinner.",
+          "example_ko": "그녀는 저녁 식사 자리에 반짝이는 은목걸이를 차고 왔습니다.",
+          "exampleTarget": "She wore a shiny silver necklace to dinner.",
+          "exampleMeaning": "그녀는 저녁 식사 자리에 반짝이는 은목걸이를 차고 왔습니다."
         },
         {
           "id": "en_14625",
@@ -88772,9 +88772,9 @@
           "pron": "[르오이어르트이]",
           "phonetic": "[르오이어르트이]",
           "example_en": "ones loyalty to the cause.",
-          "example_ko": "그 신조에 대한 충실함. 2.〔국왕·정부·주의 등에의〕 충성 〔to for …〕 cf. ALLEGIANCE FIDELITY 2.",
+          "example_ko": "그 신조에 대한 충실함.",
           "exampleTarget": "ones loyalty to the cause.",
-          "exampleMeaning": "그 신조에 대한 충실함. 2.〔국왕·정부·주의 등에의〕 충성 〔to for …〕 cf. ALLEGIANCE FIDELITY 2."
+          "exampleMeaning": "그 신조에 대한 충실함."
         },
         {
           "id": "en_14626",
@@ -88788,10 +88788,10 @@
           "pronunciation": "[junk]",
           "pron": "[junk]",
           "phonetic": "[junk]",
-          "example_en": "This is an example for junk.",
-          "example_ko": "이것은 성기 자지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for junk.",
-          "exampleMeaning": "이것은 성기 자지 관련 실전 예문입니다."
+          "example_en": "We threw away all the old junk today.",
+          "example_ko": "우리는 오늘 오래된 잡동사니를 모두 버렸습니다.",
+          "exampleTarget": "We threw away all the old junk today.",
+          "exampleMeaning": "우리는 오늘 오래된 잡동사니를 모두 버렸습니다."
         },
         {
           "id": "en_14627",
@@ -88805,10 +88805,10 @@
           "pronunciation": "[크오르]",
           "pron": "[크오르]",
           "phonetic": "[크오르]",
-          "example_en": "This is an example for cole.",
-          "example_ko": "이것은 십자화과 유채속 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cole.",
-          "exampleMeaning": "이것은 십자화과 유채속 관련 실전 예문입니다."
+          "example_en": "Cole helped his younger brother with tough homework.",
+          "example_ko": "콜은 남동생의 어려운 숙제를 도와주었습니다.",
+          "exampleTarget": "Cole helped his younger brother with tough homework.",
+          "exampleMeaning": "콜은 남동생의 어려운 숙제를 도와주었습니다."
         },
         {
           "id": "en_14628",
@@ -88839,10 +88839,10 @@
           "pronunciation": "[스트애느르이]",
           "pron": "[스트애느르이]",
           "phonetic": "[스트애느르이]",
-          "example_en": "This is an example for stanley.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stanley.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Stanley works as an architect in Chicago now.",
+          "example_ko": "스탠리는 지금 시카고에서 건축가로 일하고 있습니다.",
+          "exampleTarget": "Stanley works as an architect in Chicago now.",
+          "exampleMeaning": "스탠리는 지금 시카고에서 건축가로 일하고 있습니다."
         },
         {
           "id": "en_14630",
@@ -88856,10 +88856,10 @@
           "pronunciation": "[르트어]",
           "pron": "[르트어]",
           "phonetic": "[르트어]",
-          "example_en": "This is an example for rita.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rita.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Rita planted colorful flowers in her front yard.",
+          "example_ko": "리타는 앞마당에 알록달록한 꽃들을 심었습니다.",
+          "exampleTarget": "Rita planted colorful flowers in her front yard.",
+          "exampleMeaning": "리타는 앞마당에 알록달록한 꽃들을 심었습니다."
         }
       ],
       "nodes": [
@@ -88973,9 +88973,9 @@
           "pron": "[스어드어르느]",
           "phonetic": "[스어드어르느]",
           "example_en": "the Southern States(.",
-          "example_ko": "미국의) 남부 여러 주. 4.《종종 Southern》《미》 남부 방언의. 5.〔천문〕 천구 적도보다 남쪽에 있는 남천의. 명사1.《주로 방언》 ＝southerner.2.《S-》 미국 남부 방언.",
+          "example_ko": "미국의) 남부 여러 주.",
           "exampleTarget": "the Southern States(.",
-          "exampleMeaning": "미국의) 남부 여러 주. 4.《종종 Southern》《미》 남부 방언의. 5.〔천문〕 천구 적도보다 남쪽에 있는 남천의. 명사1.《주로 방언》 ＝southerner.2.《S-》 미국 남부 방언."
+          "exampleMeaning": "미국의) 남부 여러 주."
         },
         {
           "id": "en_14702",
@@ -88989,10 +88989,10 @@
           "pronunciation": "[브이어느]",
           "pron": "[브이어느]",
           "phonetic": "[브이어느]",
-          "example_en": "This is an example for begun.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for begun.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "The new school year has begun.",
+          "example_ko": "새 학년이 새롭게 시작되었다.",
+          "exampleTarget": "The new school year has begun.",
+          "exampleMeaning": "새 학년이 새롭게 시작되었다."
         },
         {
           "id": "en_14703",
@@ -89006,10 +89006,10 @@
           "pronunciation": "[므아이아]",
           "pron": "[므아이아]",
           "phonetic": "[므아이아]",
-          "example_en": "This is an example for maya.",
-          "example_ko": "이것은 마야 환상의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for maya.",
-          "exampleMeaning": "이것은 마야 환상의 관련 실전 예문입니다."
+          "example_en": "Maya drinks a cup of green tea daily.",
+          "example_ko": "마야는 매일 녹차 한 잔을 마십니다.",
+          "exampleTarget": "Maya drinks a cup of green tea daily.",
+          "exampleMeaning": "마야는 매일 녹차 한 잔을 마십니다."
         },
         {
           "id": "en_14704",
@@ -89057,10 +89057,10 @@
           "pronunciation": "[스어르즈어느]",
           "pron": "[스어르즈어느]",
           "phonetic": "[스어르즈어느]",
-          "example_en": "This is an example for surgeon.",
-          "example_ko": "이것은 외과 의사 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for surgeon.",
-          "exampleMeaning": "이것은 외과 의사 관련 실전 예문입니다."
+          "example_en": "The skilled surgeon completed the operation on time.",
+          "example_ko": "숙련된 외과 의사가 제시간에 수술을 완료했습니다.",
+          "exampleTarget": "The skilled surgeon completed the operation on time.",
+          "exampleMeaning": "숙련된 외과 의사가 제시간에 수술을 완료했습니다."
         },
         {
           "id": "en_14707",
@@ -89091,10 +89091,10 @@
           "pronunciation": "[즈우르이]",
           "pron": "[즈우르이]",
           "phonetic": "[즈우르이]",
-          "example_en": "This is an example for july.",
-          "example_ko": "이것은 월 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for july.",
-          "exampleMeaning": "이것은 월 약자 관련 실전 예문입니다."
+          "example_en": "We will visit our grandparents in late July.",
+          "example_ko": "우리는 7월 말에 조부모님 댁을 방문할 예정입니다.",
+          "exampleTarget": "We will visit our grandparents in late July.",
+          "exampleMeaning": "우리는 7월 말에 조부모님 댁을 방문할 예정입니다."
         },
         {
           "id": "en_14709",
@@ -89143,9 +89143,9 @@
           "pron": "[트프이크어르]",
           "phonetic": "[트프이크어르]",
           "example_en": "the typical businessman.",
-          "example_ko": "전형적인 실업가. 2.〔…의〕 특색을 잘 나타내는 〔…에〕 특유한 〔of …〕; 〔…을〕 표상하는 상징적인〔of …〕; 여느 때의 평소의.",
+          "example_ko": "전형적인 실업가.",
           "exampleTarget": "the typical businessman.",
-          "exampleMeaning": "전형적인 실업가. 2.〔…의〕 특색을 잘 나타내는 〔…에〕 특유한 〔of …〕; 〔…을〕 표상하는 상징적인〔of …〕; 여느 때의 평소의."
+          "exampleMeaning": "전형적인 실업가."
         },
         {
           "id": "en_14712",
@@ -89176,10 +89176,10 @@
           "pronunciation": "[드애느스어르]",
           "pron": "[드애느스어르]",
           "phonetic": "[드애느스어르]",
-          "example_en": "This is an example for dancer.",
-          "example_ko": "이것은 춤추는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dancer.",
-          "exampleMeaning": "이것은 춤추는 사람 관련 실전 예문입니다."
+          "example_en": "She works as a professional dancer in London.",
+          "example_ko": "그녀는 런던에서 전문 무용수로 일하고 있습니다.",
+          "exampleTarget": "She works as a professional dancer in London.",
+          "exampleMeaning": "그녀는 런던에서 전문 무용수로 일하고 있습니다."
         },
         {
           "id": "en_14714",
@@ -89244,10 +89244,10 @@
           "pronunciation": "[트우브이]",
           "pron": "[트우브이]",
           "phonetic": "[트우브이]",
-          "example_en": "This is an example for toby.",
-          "example_ko": "이것은 땅딸보 노인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for toby.",
-          "exampleMeaning": "이것은 땅딸보 노인 관련 실전 예문입니다."
+          "example_en": "Toby adopted a playful puppy from the shelter.",
+          "example_ko": "토비는 보호소에서 장난기 많은 강아지를 입양했습니다.",
+          "exampleTarget": "Toby adopted a playful puppy from the shelter.",
+          "exampleMeaning": "토비는 보호소에서 장난기 많은 강아지를 입양했습니다."
         },
         {
           "id": "en_14718",
@@ -89279,9 +89279,9 @@
           "pron": "[드르애]",
           "phonetic": "[드르애]",
           "example_en": "drag a table over to the door.",
-          "example_ko": "탁자를 문까지 끌어당기다. ②《재귀 용법》 무거운 발을 질질 끌며 걷다 〔along〕.",
+          "example_ko": "탁자를 문까지 끌어당기다. ② 무거운 발을 질질 끌며 걷다 〔along〕.",
           "exampleTarget": "drag a table over to the door.",
-          "exampleMeaning": "탁자를 문까지 끌어당기다. ②《재귀 용법》 무거운 발을 질질 끌며 걷다 〔along〕."
+          "exampleMeaning": "탁자를 문까지 끌어당기다. ② 무거운 발을 질질 끌며 걷다 〔along〕."
         },
         {
           "id": "en_14720",
@@ -89291,14 +89291,14 @@
           "level": "C1",
           "unitId": "unit_147",
           "nodeId": "en_u147_n2",
-          "meaning": "jin",
+          "meaning": "진",
           "pronunciation": "[즈이느]",
           "pron": "[즈이느]",
           "phonetic": "[즈이느]",
-          "example_en": "This is an example for jin.",
-          "example_ko": "이것은 jin 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jin.",
-          "exampleMeaning": "이것은 jin 관련 실전 예문입니다."
+          "example_en": "Jin ordered lunch for our entire office team.",
+          "example_ko": "진이 우리 사무실 팀 전체를 위해 점심을 주문했습니다.",
+          "exampleTarget": "Jin ordered lunch for our entire office team.",
+          "exampleMeaning": "진이 우리 사무실 팀 전체를 위해 점심을 주문했습니다."
         },
         {
           "id": "en_14721",
@@ -89364,9 +89364,9 @@
           "pron": "[브어므]",
           "phonetic": "[브어므]",
           "example_en": "a bum on the plush.",
-          "example_ko": "돈 많은 게으름쟁이. 2.《주로 영·속어》 궁둥이. 3.《속어》 싸구려 매춘부. 4.부어라 마셔라의 술판; 난봉 방탕. 5.（스포츠·오락 등의） 열광자 …광.",
+          "example_ko": "돈 많은 게으름쟁이.",
           "exampleTarget": "a bum on the plush.",
-          "exampleMeaning": "돈 많은 게으름쟁이. 2.《주로 영·속어》 궁둥이. 3.《속어》 싸구려 매춘부. 4.부어라 마셔라의 술판; 난봉 방탕. 5.（스포츠·오락 등의） 열광자 …광."
+          "exampleMeaning": "돈 많은 게으름쟁이."
         },
         {
           "id": "en_14725",
@@ -89380,10 +89380,10 @@
           "pronunciation": "[즈오느]",
           "pron": "[즈오느]",
           "phonetic": "[즈오느]",
-          "example_en": "This is an example for joan.",
-          "example_ko": "이것은 웃음거리로 만들다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for joan.",
-          "exampleMeaning": "이것은 웃음거리로 만들다 관련 실전 예문입니다."
+          "example_en": "Joan enjoys reading mystery novels in the library.",
+          "example_ko": "조앤은 도서관에서 추리 소설 읽는 것을 즐깁니다.",
+          "exampleTarget": "Joan enjoys reading mystery novels in the library.",
+          "exampleMeaning": "조앤은 도서관에서 추리 소설 읽는 것을 즐깁니다."
         },
         {
           "id": "en_14726",
@@ -89397,10 +89397,10 @@
           "pronunciation": "[프오르트]",
           "pron": "[프오르트]",
           "phonetic": "[프오르트]",
-          "example_en": "This is an example for fort.",
-          "example_ko": "이것은 요새 성채 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fort.",
-          "exampleMeaning": "이것은 요새 성채 관련 실전 예문입니다."
+          "example_en": "Tourists visited the historic stone fort this morning.",
+          "example_ko": "관광객들이 오늘 아침 역사적인 석조 요새를 방문했습니다.",
+          "exampleTarget": "Tourists visited the historic stone fort this morning.",
+          "exampleMeaning": "관광객들이 오늘 아침 역사적인 석조 요새를 방문했습니다."
         },
         {
           "id": "en_14727",
@@ -89414,10 +89414,10 @@
           "pronunciation": "[애르이]",
           "pron": "[애르이]",
           "phonetic": "[애르이]",
-          "example_en": "This is an example for alley.",
-          "example_ko": "이것은 구슬 구슬치기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alley.",
-          "exampleMeaning": "이것은 구슬 구슬치기 관련 실전 예문입니다."
+          "example_en": "A narrow alley runs behind those brick buildings.",
+          "example_ko": "그 벽돌 건물들 뒤로 좁은 골목길이 이어져 있습니다.",
+          "exampleTarget": "A narrow alley runs behind those brick buildings.",
+          "exampleMeaning": "그 벽돌 건물들 뒤로 좁은 골목길이 이어져 있습니다."
         },
         {
           "id": "en_14728",
@@ -89448,10 +89448,10 @@
           "pronunciation": "[크오크]",
           "pron": "[크오크]",
           "phonetic": "[크오크]",
-          "example_en": "This is an example for coke.",
-          "example_ko": "이것은 코크스 코크스로 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for coke.",
-          "exampleMeaning": "이것은 코크스 코크스로 관련 실전 예문입니다."
+          "example_en": "He ordered a cold coke with his burger.",
+          "example_ko": "그는 햄버거와 함께 시원한 콜라를 주문했습니다.",
+          "exampleTarget": "He ordered a cold coke with his burger.",
+          "exampleMeaning": "그는 햄버거와 함께 시원한 콜라를 주문했습니다."
         },
         {
           "id": "en_14730",
@@ -89465,10 +89465,10 @@
           "pronunciation": "[스이어느트이스트]",
           "pron": "[스이어느트이스트]",
           "phonetic": "[스이어느트이스트]",
-          "example_en": "This is an example for scientist.",
-          "example_ko": "이것은 과학자 자연 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for scientist.",
-          "exampleMeaning": "이것은 과학자 자연 관련 실전 예문입니다."
+          "example_en": "The scientist discovered a new cure for disease.",
+          "example_ko": "그 과학자는 질병에 대한 새로운 치료법을 발견했습니다.",
+          "exampleTarget": "The scientist discovered a new cure for disease.",
+          "exampleMeaning": "그 과학자는 질병에 대한 새로운 치료법을 발견했습니다."
         }
       ],
       "nodes": [
@@ -89582,9 +89582,9 @@
           "pron": "[프이트어르]",
           "phonetic": "[프이트어르]",
           "example_en": "a fighter pilot.",
-          "example_ko": "전투기 조종사. 3.〔…에 대한〕 전사 （戰士） 투사〔against …〕; 전의가 있는 사람; 싸움을 좋아하는 사람. 4.투견 투계.",
+          "example_ko": "전투기 조종사.",
           "exampleTarget": "a fighter pilot.",
-          "exampleMeaning": "전투기 조종사. 3.〔…에 대한〕 전사 （戰士） 투사〔against …〕; 전의가 있는 사람; 싸움을 좋아하는 사람. 4.투견 투계."
+          "exampleMeaning": "전투기 조종사."
         },
         {
           "id": "en_14802",
@@ -89599,9 +89599,9 @@
           "pron": "[브르에이드]",
           "phonetic": "[브르에이드]",
           "example_en": "a knowing blade.",
-          "example_ko": "빈틈이 없는 사람. 숙어 eat ones corn in the blade 들어올 수입을 믿고 돈을 쓰다. in the blade （아직 이삭이 패지 않은） 잎사귀 때에; 젊은 시절에. 타∙자동사blade를 가진 불도저로 땅을 고르다.",
+          "example_ko": "빈틈이 없는 사람.",
           "exampleTarget": "a knowing blade.",
-          "exampleMeaning": "빈틈이 없는 사람. 숙어 eat ones corn in the blade 들어올 수입을 믿고 돈을 쓰다. in the blade （아직 이삭이 패지 않은） 잎사귀 때에; 젊은 시절에. 타∙자동사blade를 가진 불도저로 땅을 고르다."
+          "exampleMeaning": "빈틈이 없는 사람."
         },
         {
           "id": "en_14803",
@@ -89615,10 +89615,10 @@
           "pronunciation": "[애르프어]",
           "pron": "[애르프어]",
           "phonetic": "[애르프어]",
-          "example_en": "This is an example for alpha.",
-          "example_ko": "이것은 알파 그리스어 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alpha.",
-          "exampleMeaning": "이것은 알파 그리스어 관련 실전 예문입니다."
+          "example_en": "The engineers released an alpha version of software.",
+          "example_ko": "엔지니어들은 소프트웨어의 알파 버전을 출시했습니다.",
+          "exampleTarget": "The engineers released an alpha version of software.",
+          "exampleMeaning": "엔지니어들은 소프트웨어의 알파 버전을 출시했습니다."
         },
         {
           "id": "en_14804",
@@ -89667,9 +89667,9 @@
           "pron": "[우드오]",
           "phonetic": "[우드오]",
           "example_en": "a golf widow.",
-          "example_ko": "골프 과부. 3.〔카드놀이〕 도르고 남은 패 여분의 패. 4.〔인쇄〕 앞단에서 넘어온 짤막한 행; 짧은 행. 동사 타동사1.《보통 수동태》 …을 과부가 되게 하다.",
+          "example_ko": "골프 과부.",
           "exampleTarget": "a golf widow.",
-          "exampleMeaning": "골프 과부. 3.〔카드놀이〕 도르고 남은 패 여분의 패. 4.〔인쇄〕 앞단에서 넘어온 짤막한 행; 짧은 행. 동사 타동사1.《보통 수동태》 …을 과부가 되게 하다."
+          "exampleMeaning": "골프 과부."
         },
         {
           "id": "en_14807",
@@ -89683,10 +89683,10 @@
           "pronunciation": "[프르이프]",
           "pron": "[프르이프]",
           "phonetic": "[프르이프]",
-          "example_en": "This is an example for philip.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for philip.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Philip walked his dog in the quiet park.",
+          "example_ko": "필립은 조용한 공원에서 개를 산책시켰습니다.",
+          "exampleTarget": "Philip walked his dog in the quiet park.",
+          "exampleMeaning": "필립은 조용한 공원에서 개를 산책시켰습니다."
         },
         {
           "id": "en_14808",
@@ -89700,10 +89700,10 @@
           "pronunciation": "[크애르이]",
           "pron": "[크애르이]",
           "phonetic": "[크애르이]",
-          "example_en": "This is an example for carrie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carrie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Carrie will lead our morning meeting today.",
+          "example_ko": "Carrie가 오늘 아침 회의를 이끌 예정입니다.",
+          "exampleTarget": "Carrie will lead our morning meeting today.",
+          "exampleMeaning": "Carrie가 오늘 아침 회의를 이끌 예정입니다."
         },
         {
           "id": "en_14809",
@@ -89718,9 +89718,9 @@
           "pron": "[스어르스트이]",
           "phonetic": "[스어르스트이]",
           "example_en": "be thirsty from working.",
-          "example_ko": "일을 해서 목이 마르다. 2.〈땅·식물·피부 등이〉 마른 건조한.",
+          "example_ko": "일을 해서 목이 마르다.",
           "exampleTarget": "be thirsty from working.",
-          "exampleMeaning": "일을 해서 목이 마르다. 2.〈땅·식물·피부 등이〉 마른 건조한."
+          "exampleMeaning": "일을 해서 목이 마르다."
         },
         {
           "id": "en_14810",
@@ -89734,10 +89734,10 @@
           "pronunciation": "[애쉬르이]",
           "pron": "[애쉬르이]",
           "phonetic": "[애쉬르이]",
-          "example_en": "This is an example for ashley.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ashley.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Ashley works at the front desk downstairs.",
+          "example_ko": "Ashley는 아래층 안내 데스크에서 일합니다.",
+          "exampleTarget": "Ashley works at the front desk downstairs.",
+          "exampleMeaning": "Ashley는 아래층 안내 데스크에서 일합니다."
         },
         {
           "id": "en_14811",
@@ -89768,10 +89768,10 @@
           "pronunciation": "[즈르이어느]",
           "pron": "[즈르이어느]",
           "phonetic": "[즈르이어느]",
-          "example_en": "This is an example for julian.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for julian.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Julian will send the updated report tomorrow.",
+          "example_ko": "Julian이 내일 업데이트된 보고서를 보낼 것입니다.",
+          "exampleTarget": "Julian will send the updated report tomorrow.",
+          "exampleMeaning": "Julian이 내일 업데이트된 보고서를 보낼 것입니다."
         },
         {
           "id": "en_14813",
@@ -89802,10 +89802,10 @@
           "pronunciation": "[드르브어느]",
           "pron": "[드르브어느]",
           "phonetic": "[드르브어느]",
-          "example_en": "This is an example for driven.",
-          "example_ko": "이것은 과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for driven.",
-          "exampleMeaning": "이것은 과거 분사형 관련 실전 예문입니다."
+          "example_en": "He is driven by great ambition.",
+          "example_ko": "그는 커다란 야망에 이끌리고 있다.",
+          "exampleTarget": "He is driven by great ambition.",
+          "exampleMeaning": "그는 커다란 야망에 이끌리고 있다."
         },
         {
           "id": "en_14815",
@@ -89837,9 +89837,9 @@
           "pron": "[headache]",
           "phonetic": "[headache]",
           "example_en": "have a splitting headache.",
-          "example_ko": "머리가 빠개질 듯이 아프다. 2.《비격식》 난처한 사람 골칫거리.",
+          "example_ko": "머리가 빠개질 듯이 아프다.",
           "exampleTarget": "have a splitting headache.",
-          "exampleMeaning": "머리가 빠개질 듯이 아프다. 2.《비격식》 난처한 사람 골칫거리."
+          "exampleMeaning": "머리가 빠개질 듯이 아프다."
         },
         {
           "id": "en_14817",
@@ -89870,10 +89870,10 @@
           "pronunciation": "[애르이즈애느드어르]",
           "pron": "[애르이즈애느드어르]",
           "phonetic": "[애르이즈애느드어르]",
-          "example_en": "This is an example for alexander.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alexander.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Alexander called you while you were outside.",
+          "example_ko": "외출하신 동안 Alexander가 전화를 걸었습니다.",
+          "exampleTarget": "Alexander called you while you were outside.",
+          "exampleMeaning": "외출하신 동안 Alexander가 전화를 걸었습니다."
         },
         {
           "id": "en_14819",
@@ -89921,10 +89921,10 @@
           "pronunciation": "[르크느]",
           "pron": "[르크느]",
           "phonetic": "[르크느]",
-          "example_en": "This is an example for lookin.",
-          "example_ko": "이것은 흘끗 보기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lookin.",
-          "exampleMeaning": "이것은 흘끗 보기 관련 실전 예문입니다."
+          "example_en": "What are you lookin at right now?",
+          "example_ko": "지금 무엇을 쳐다보고 있는 거예요?",
+          "exampleTarget": "What are you lookin at right now?",
+          "exampleMeaning": "지금 무엇을 쳐다보고 있는 거예요?"
         },
         {
           "id": "en_14822",
@@ -89972,10 +89972,10 @@
           "pronunciation": "[흐어므이으]",
           "pron": "[흐어므이으]",
           "phonetic": "[흐어므이으]",
-          "example_en": "This is an example for humming.",
-          "example_ko": "이것은 윙윙 거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for humming.",
-          "exampleMeaning": "이것은 윙윙 거리는 관련 실전 예문입니다."
+          "example_en": "The old refrigerator is humming quite loudly.",
+          "example_ko": "오래된 냉장고가 꽤 크게 웅웅거리고 있습니다.",
+          "exampleTarget": "The old refrigerator is humming quite loudly.",
+          "exampleMeaning": "오래된 냉장고가 꽤 크게 웅웅거리고 있습니다."
         },
         {
           "id": "en_14825",
@@ -89989,10 +89989,10 @@
           "pronunciation": "[르이]",
           "pron": "[르이]",
           "phonetic": "[르이]",
-          "example_en": "This is an example for li.",
-          "example_ko": "이것은 이 중국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for li.",
-          "exampleMeaning": "이것은 이 중국의 관련 실전 예문입니다."
+          "example_en": "Mr. Li joined our finance department recently.",
+          "example_ko": "Li 씨가 최근 우리 재무 부서에 합류했습니다.",
+          "exampleTarget": "Mr. Li joined our finance department recently.",
+          "exampleMeaning": "Li 씨가 최근 우리 재무 부서에 합류했습니다."
         },
         {
           "id": "en_14826",
@@ -90023,10 +90023,10 @@
           "pronunciation": "[스이브즈]",
           "pron": "[스이브즈]",
           "phonetic": "[스이브즈]",
-          "example_en": "This is an example for thieves.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for thieves.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "The police caught the thieves quickly.",
+          "example_ko": "경찰이 도둑들을 신속히 체포했다.",
+          "exampleTarget": "The police caught the thieves quickly.",
+          "exampleMeaning": "경찰이 도둑들을 신속히 체포했다."
         },
         {
           "id": "en_14828",
@@ -90190,10 +90190,10 @@
           "pronunciation": "[프르오르이드어]",
           "pron": "[프르오르이드어]",
           "phonetic": "[프르오르이드어]",
-          "example_en": "This is an example for florida.",
-          "example_ko": "이것은 플로리다 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for florida.",
-          "exampleMeaning": "이것은 플로리다 미국 관련 실전 예문입니다."
+          "example_en": "They plan to visit Florida next winter.",
+          "example_ko": "그들은 다음 겨울에 플로리다를 방문할 계획입니다.",
+          "exampleTarget": "They plan to visit Florida next winter.",
+          "exampleMeaning": "그들은 다음 겨울에 플로리다를 방문할 계획입니다."
         },
         {
           "id": "en_14902",
@@ -90224,10 +90224,10 @@
           "pronunciation": "[드르스이으]",
           "pron": "[드르스이으]",
           "phonetic": "[드르스이으]",
-          "example_en": "This is an example for dressing.",
-          "example_ko": "이것은 옷치장 매무새 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dressing.",
-          "exampleMeaning": "이것은 옷치장 매무새 관련 실전 예문입니다."
+          "example_en": "Please put the salad dressing on top.",
+          "example_ko": "샐러드 드레싱을 위에 뿌려 주세요.",
+          "exampleTarget": "Please put the salad dressing on top.",
+          "exampleMeaning": "샐러드 드레싱을 위에 뿌려 주세요."
         },
         {
           "id": "en_14904",
@@ -90241,10 +90241,10 @@
           "pronunciation": "[에어르어느]",
           "pron": "[에어르어느]",
           "phonetic": "[에어르어느]",
-          "example_en": "This is an example for aaron.",
-          "example_ko": "이것은 아론 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for aaron.",
-          "exampleMeaning": "이것은 아론 남자 관련 실전 예문입니다."
+          "example_en": "Aaron forgot his umbrella in the taxi.",
+          "example_ko": "Aaron은 택시에 우산을 두고 내렸습니다.",
+          "exampleTarget": "Aaron forgot his umbrella in the taxi.",
+          "exampleMeaning": "Aaron은 택시에 우산을 두고 내렸습니다."
         },
         {
           "id": "en_14905",
@@ -90275,10 +90275,10 @@
           "pronunciation": "[르우이스]",
           "pron": "[르우이스]",
           "phonetic": "[르우이스]",
-          "example_en": "This is an example for lois.",
-          "example_ko": "이것은 로이스 여자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lois.",
-          "exampleMeaning": "이것은 로이스 여자 관련 실전 예문입니다."
+          "example_en": "Lois bought some fresh bread for breakfast.",
+          "example_ko": "Lois는 아침 식사로 신선한 빵을 샀습니다.",
+          "exampleTarget": "Lois bought some fresh bread for breakfast.",
+          "exampleMeaning": "Lois는 아침 식사로 신선한 빵을 샀습니다."
         },
         {
           "id": "en_14907",
@@ -90292,10 +90292,10 @@
           "pronunciation": "[브이크트오르이어]",
           "pron": "[브이크트오르이어]",
           "phonetic": "[브이크트오르이어]",
-          "example_en": "This is an example for victoria.",
-          "example_ko": "이것은 빅토리아 경장한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for victoria.",
-          "exampleMeaning": "이것은 빅토리아 경장한 관련 실전 예문입니다."
+          "example_en": "Victoria moved to a quiet suburban town.",
+          "example_ko": "Victoria는 조용한 교외 마을로 이사했습니다.",
+          "exampleTarget": "Victoria moved to a quiet suburban town.",
+          "exampleMeaning": "Victoria는 조용한 교외 마을로 이사했습니다."
         },
         {
           "id": "en_14908",
@@ -90310,9 +90310,9 @@
           "pron": "[프애브유르어스]",
           "phonetic": "[프애브유르어스]",
           "example_en": "a fabulous sum of money.",
-          "example_ko": "엄청난 돈. 2.《비격식》 굉장히 좋은 멋진; 놀라운.",
+          "example_ko": "엄청난 돈.",
           "exampleTarget": "a fabulous sum of money.",
-          "exampleMeaning": "엄청난 돈. 2.《비격식》 굉장히 좋은 멋진; 놀라운."
+          "exampleMeaning": "엄청난 돈."
         },
         {
           "id": "en_14909",
@@ -90322,14 +90322,14 @@
           "level": "C1",
           "unitId": "unit_149",
           "nodeId": "en_u149_n1",
-          "meaning": "ln",
+          "meaning": "길",
           "pronunciation": "[ln]",
           "pron": "[ln]",
           "phonetic": "[ln]",
-          "example_en": "This is an example for ln.",
-          "example_ko": "이것은 ln 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ln.",
-          "exampleMeaning": "이것은 ln 관련 실전 예문입니다."
+          "example_en": "Turn right onto Maple Ln after school.",
+          "example_ko": "방과 후에 메이플 골목길에서 우회전하세요.",
+          "exampleTarget": "Turn right onto Maple Ln after school.",
+          "exampleMeaning": "방과 후에 메이플 골목길에서 우회전하세요."
         },
         {
           "id": "en_14910",
@@ -90343,10 +90343,10 @@
           "pronunciation": "[르우스]",
           "pron": "[르우스]",
           "phonetic": "[르우스]",
-          "example_en": "This is an example for ruth.",
-          "example_ko": "이것은 연민 동정 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ruth.",
-          "exampleMeaning": "이것은 연민 동정 관련 실전 예문입니다."
+          "example_en": "Ruth baked fresh cookies for the children.",
+          "example_ko": "Ruth가 아이들을 위해 신선한 쿠키를 구웠습니다.",
+          "exampleTarget": "Ruth baked fresh cookies for the children.",
+          "exampleMeaning": "Ruth가 아이들을 위해 신선한 쿠키를 구웠습니다."
         },
         {
           "id": "en_14911",
@@ -90394,10 +90394,10 @@
           "pronunciation": "[드아이애느]",
           "pron": "[드아이애느]",
           "phonetic": "[드아이애느]",
-          "example_en": "This is an example for diane.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for diane.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Diane booked two tickets for the concert.",
+          "example_ko": "Diane이 콘서트 티켓 두 장을 예매했습니다.",
+          "exampleTarget": "Diane booked two tickets for the concert.",
+          "exampleMeaning": "Diane이 콘서트 티켓 두 장을 예매했습니다."
         },
         {
           "id": "en_14914",
@@ -90411,10 +90411,10 @@
           "pronunciation": "[르아크어르]",
           "pron": "[르아크어르]",
           "phonetic": "[르아크어르]",
-          "example_en": "This is an example for locker.",
-          "example_ko": "이것은 자물쇠 채우는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for locker.",
-          "exampleMeaning": "이것은 자물쇠 채우는 관련 실전 예문입니다."
+          "example_en": "Keep your gym bag inside your locker.",
+          "example_ko": "체육관 가방을 사물함 안에 보관하세요.",
+          "exampleTarget": "Keep your gym bag inside your locker.",
+          "exampleMeaning": "체육관 가방을 사물함 안에 보관하세요."
         },
         {
           "id": "en_14915",
@@ -90446,9 +90446,9 @@
           "pron": "[프르이크]",
           "phonetic": "[프르이크]",
           "example_en": "feel the pricks of conscience.",
-          "example_ko": "양심의 가책을 받다. 3.박차의 돌출부; 돌출한 기관; 뾰족한 것 가시. 4.《비어》 ①음경. ②불쾌한 녀석. 5.《고어》 （소를 모는） 막대. 동사 타동사1. 〈손가락·사람 등을〉 〔…으로〕 찌르다 찔러서 상처나게 하다〔with on …〕; 〈구멍 등을〉 〔…에〕 내다 뚫다〔in …〕.",
+          "example_ko": "양심의 가책을 받다.",
           "exampleTarget": "feel the pricks of conscience.",
-          "exampleMeaning": "양심의 가책을 받다. 3.박차의 돌출부; 돌출한 기관; 뾰족한 것 가시. 4.《비어》 ①음경. ②불쾌한 녀석. 5.《고어》 （소를 모는） 막대. 동사 타동사1. 〈손가락·사람 등을〉 〔…으로〕 찌르다 찔러서 상처나게 하다〔with on …〕; 〈구멍 등을〉 〔…에〕 내다 뚫다〔in …〕."
+          "exampleMeaning": "양심의 가책을 받다."
         },
         {
           "id": "en_14917",
@@ -90496,10 +90496,10 @@
           "pronunciation": "[크르에이]",
           "pron": "[크르에이]",
           "phonetic": "[크르에이]",
-          "example_en": "This is an example for craig.",
-          "example_ko": "이것은 크레이그 세계적인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for craig.",
-          "exampleMeaning": "이것은 크레이그 세계적인 관련 실전 예문입니다."
+          "example_en": "Craig always arrives at the office early.",
+          "example_ko": "Craig은 항상 사무실에 일찍 도착합니다.",
+          "exampleTarget": "Craig always arrives at the office early.",
+          "exampleMeaning": "Craig은 항상 사무실에 일찍 도착합니다."
         },
         {
           "id": "en_14920",
@@ -90513,10 +90513,10 @@
           "pronunciation": "[흐애르어르드]",
           "pron": "[흐애르어르드]",
           "phonetic": "[흐애르어르드]",
-          "example_en": "This is an example for harold.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for harold.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Harold fixed the broken chair yesterday afternoon.",
+          "example_ko": "Harold는 어제 오후에 부서진 의자를 고쳤습니다.",
+          "exampleTarget": "Harold fixed the broken chair yesterday afternoon.",
+          "exampleMeaning": "Harold는 어제 오후에 부서진 의자를 고쳤습니다."
         },
         {
           "id": "en_14921",
@@ -90530,10 +90530,10 @@
           "pronunciation": "[므아느이크어]",
           "pron": "[므아느이크어]",
           "phonetic": "[므아느이크어]",
-          "example_en": "This is an example for monica.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for monica.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Monica submitted her project proposal on time.",
+          "example_ko": "Monica는 프로젝트 제안서를 제시간에 제출했습니다.",
+          "exampleTarget": "Monica submitted her project proposal on time.",
+          "exampleMeaning": "Monica는 프로젝트 제안서를 제시간에 제출했습니다."
         },
         {
           "id": "en_14922",
@@ -90547,10 +90547,10 @@
           "pronunciation": "[크아느스트어느트르이]",
           "pron": "[크아느스트어느트르이]",
           "phonetic": "[크아느스트어느트르이]",
-          "example_en": "This is an example for constantly.",
-          "example_ko": "이것은 끊임없이 계속 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for constantly.",
-          "exampleMeaning": "이것은 끊임없이 계속 관련 실전 예문입니다."
+          "example_en": "Prices are constantly rising in the market.",
+          "example_ko": "시장에서 물가가 끊임없이 오르고 있습니다.",
+          "exampleTarget": "Prices are constantly rising in the market.",
+          "exampleMeaning": "시장에서 물가가 끊임없이 오르고 있습니다."
         },
         {
           "id": "en_14923",
@@ -90564,10 +90564,10 @@
           "pronunciation": "[르애느이]",
           "pron": "[르애느이]",
           "phonetic": "[르애느이]",
-          "example_en": "This is an example for granny.",
-          "example_ko": "이것은 할머니 할망구 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for granny.",
-          "exampleMeaning": "이것은 할머니 할망구 관련 실전 예문입니다."
+          "example_en": "My granny knitted this warm wool scarf.",
+          "example_ko": "우리 할머니께서 이 따뜻한 울 목도리를 짜 주셨어요.",
+          "exampleTarget": "My granny knitted this warm wool scarf.",
+          "exampleMeaning": "우리 할머니께서 이 따뜻한 울 목도리를 짜 주셨어요."
         },
         {
           "id": "en_14924",
@@ -90633,9 +90633,9 @@
           "pron": "[스어르브이브어르]",
           "phonetic": "[스어르브이브어르]",
           "example_en": "the survival of the fittest.",
-          "example_ko": "적자생존. 2.생존자 잔존자 （특히 옛날의） 유물 유풍.",
+          "example_ko": "적자생존.",
           "exampleTarget": "the survival of the fittest.",
-          "exampleMeaning": "적자생존. 2.생존자 잔존자 （특히 옛날의） 유물 유풍."
+          "exampleMeaning": "적자생존."
         },
         {
           "id": "en_14928",
@@ -90649,10 +90649,10 @@
           "pronunciation": "[트르애크이으]",
           "pron": "[트르애크이으]",
           "phonetic": "[트르애크이으]",
-          "example_en": "This is an example for tracking.",
-          "example_ko": "이것은 추적 트래킹 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tracking.",
-          "exampleMeaning": "이것은 추적 트래킹 관련 실전 예문입니다."
+          "example_en": "Check the parcel tracking number online now.",
+          "example_ko": "지금 온라인으로 택배 송장 추적 번호를 확인하세요.",
+          "exampleTarget": "Check the parcel tracking number online now.",
+          "exampleMeaning": "지금 온라인으로 택배 송장 추적 번호를 확인하세요."
         },
         {
           "id": "en_14929",
@@ -90666,10 +90666,10 @@
           "pronunciation": "[즈우이]",
           "pron": "[즈우이]",
           "phonetic": "[즈우이]",
-          "example_en": "This is an example for zoe.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for zoe.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Zoe ordered a warm coffee with milk.",
+          "example_ko": "Zoe는 따뜻한 라떼 한 잔을 주문했습니다.",
+          "exampleTarget": "Zoe ordered a warm coffee with milk.",
+          "exampleMeaning": "Zoe는 따뜻한 라떼 한 잔을 주문했습니다."
         },
         {
           "id": "en_14930",
@@ -90800,9 +90800,9 @@
           "pron": "[르드어르]",
           "phonetic": "[르드어르]",
           "example_en": "I have an elder brother.",
-          "example_ko": "형이 있다. ※영어에서는 일반적으로 형제의 순서를 나타내지 않고 단순히 brother sister라고만 밝힘. 2.《the elder》①두 형제 중 연장자.",
+          "example_ko": "형이 있다.",
           "exampleTarget": "I have an elder brother.",
-          "exampleMeaning": "형이 있다. ※영어에서는 일반적으로 형제의 순서를 나타내지 않고 단순히 brother sister라고만 밝힘. 2.《the elder》①두 형제 중 연장자."
+          "exampleMeaning": "형이 있다."
         },
         {
           "id": "en_15002",
@@ -90816,10 +90816,10 @@
           "pronunciation": "[애드므어르어르]",
           "pron": "[애드므어르어르]",
           "phonetic": "[애드므어르어르]",
-          "example_en": "This is an example for admiral.",
-          "example_ko": "이것은 대장 해군 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for admiral.",
-          "exampleMeaning": "이것은 대장 해군 관련 실전 예문입니다."
+          "example_en": "The admiral gave clear orders yesterday morning.",
+          "example_ko": "제독은 어제 아침에 분명한 명령을 내렸습니다.",
+          "exampleTarget": "The admiral gave clear orders yesterday morning.",
+          "exampleMeaning": "제독은 어제 아침에 분명한 명령을 내렸습니다."
         },
         {
           "id": "en_15003",
@@ -90833,10 +90833,10 @@
           "pronunciation": "[드아이애느어]",
           "pron": "[드아이애느어]",
           "phonetic": "[드아이애느어]",
-          "example_en": "This is an example for diana.",
-          "example_ko": "이것은 디아나 달의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for diana.",
-          "exampleMeaning": "이것은 디아나 달의 관련 실전 예문입니다."
+          "example_en": "Diana will finish her homework before dinner.",
+          "example_ko": "Diana는 저녁 식사 전에 숙제를 끝낼 것입니다.",
+          "exampleTarget": "Diana will finish her homework before dinner.",
+          "exampleMeaning": "Diana는 저녁 식사 전에 숙제를 끝낼 것입니다."
         },
         {
           "id": "en_15004",
@@ -90850,10 +90850,10 @@
           "pronunciation": "[프르오]",
           "pron": "[프르오]",
           "phonetic": "[프르오]",
-          "example_en": "This is an example for pro.",
-          "example_ko": "이것은 ｛라틴어｝ 위하여 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pro.",
-          "exampleMeaning": "이것은 ｛라틴어｝ 위하여 관련 실전 예문입니다."
+          "example_en": "He plays tennis like a true pro.",
+          "example_ko": "그는 진정한 프로처럼 테니스를 칩니다.",
+          "exampleTarget": "He plays tennis like a true pro.",
+          "exampleMeaning": "그는 진정한 프로처럼 테니스를 칩니다."
         },
         {
           "id": "en_15005",
@@ -90868,9 +90868,9 @@
           "pron": "[브이츠]",
           "phonetic": "[브이츠]",
           "example_en": "a bitch wolf.",
-          "example_ko": "암늑대. 2.《비격식·경멸》 《여성을 경멸하여》 음란한 여자; 화냥년 매춘부. cf. SON OF A BITCH. 3.《미·비격식》 불평; 골치 아픈 것 불쾌한 것; 《비꼼》 굉장히 좋은 것.",
+          "example_ko": "암늑대.",
           "exampleTarget": "a bitch wolf.",
-          "exampleMeaning": "암늑대. 2.《비격식·경멸》 《여성을 경멸하여》 음란한 여자; 화냥년 매춘부. cf. SON OF A BITCH. 3.《미·비격식》 불평; 골치 아픈 것 불쾌한 것; 《비꼼》 굉장히 좋은 것."
+          "exampleMeaning": "암늑대."
         },
         {
           "id": "en_15006",
@@ -90897,14 +90897,14 @@
           "level": "C1",
           "unitId": "unit_150",
           "nodeId": "en_u150_n1",
-          "meaning": "과거형",
+          "meaning": "노래했다",
           "pronunciation": "[스애으]",
           "pron": "[스애으]",
           "phonetic": "[스애으]",
-          "example_en": "This is an example for sang.",
-          "example_ko": "이것은 과거형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sang.",
-          "exampleMeaning": "이것은 과거형 관련 실전 예문입니다."
+          "example_en": "The choir sang beautifully in church.",
+          "example_ko": "성가대가 교회에서 아름답게 노래했다.",
+          "exampleTarget": "The choir sang beautifully in church.",
+          "exampleMeaning": "성가대가 교회에서 아름답게 노래했다."
         },
         {
           "id": "en_15008",
@@ -90918,10 +90918,10 @@
           "pronunciation": "[므이]",
           "pron": "[므이]",
           "phonetic": "[므이]",
-          "example_en": "This is an example for gimme.",
-          "example_ko": "이것은 금품을 조르는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gimme.",
-          "exampleMeaning": "이것은 금품을 조르는 관련 실전 예문입니다."
+          "example_en": "Gimme a few minutes to get ready.",
+          "example_ko": "준비할 시간을 몇 분만 주세요.",
+          "exampleTarget": "Gimme a few minutes to get ready.",
+          "exampleMeaning": "준비할 시간을 몇 분만 주세요."
         },
         {
           "id": "en_15009",
@@ -90931,14 +90931,14 @@
           "level": "C1",
           "unitId": "unit_150",
           "nodeId": "en_u150_n1",
-          "meaning": "과거·과거",
+          "meaning": "불탄",
           "pronunciation": "[브어르느트]",
           "pron": "[브어르느트]",
           "phonetic": "[브어르느트]",
-          "example_en": "This is an example for burnt.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for burnt.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "The toast was slightly burnt.",
+          "example_ko": "토스트가 약간 타 버렸다.",
+          "exampleTarget": "The toast was slightly burnt.",
+          "exampleMeaning": "토스트가 약간 타 버렸다."
         },
         {
           "id": "en_15010",
@@ -90986,10 +90986,10 @@
           "pronunciation": "[므아이애므이]",
           "pron": "[므아이애므이]",
           "phonetic": "[므아이애므이]",
-          "example_en": "This is an example for miami.",
-          "example_ko": "이것은 마이애미족 미국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for miami.",
-          "exampleMeaning": "이것은 마이애미족 미국 관련 실전 예문입니다."
+          "example_en": "We spent our summer vacation in Miami.",
+          "example_ko": "우리는 여름 휴가를 마이애미에서 보냈습니다.",
+          "exampleTarget": "We spent our summer vacation in Miami.",
+          "exampleMeaning": "우리는 여름 휴가를 마이애미에서 보냈습니다."
         },
         {
           "id": "en_15013",
@@ -91004,9 +91004,9 @@
           "pron": "[프프트느]",
           "phonetic": "[프프트느]",
           "example_en": "a Rugby fifteen(15.",
-          "example_ko": "명 한 조의) 럭비 팀. 3.〔테니스〕 피프틴 （최초의 득점).",
+          "example_ko": "명 한 조의) 럭비 팀.",
           "exampleTarget": "a Rugby fifteen(15.",
-          "exampleMeaning": "명 한 조의) 럭비 팀. 3.〔테니스〕 피프틴 （최초의 득점)."
+          "exampleMeaning": "명 한 조의) 럭비 팀."
         },
         {
           "id": "en_15014",
@@ -91033,14 +91033,14 @@
           "level": "C1",
           "unitId": "unit_150",
           "nodeId": "en_u150_n2",
-          "meaning": "bo",
+          "meaning": "보우",
           "pronunciation": "[브오]",
           "pron": "[브오]",
           "phonetic": "[브오]",
-          "example_en": "This is an example for bo.",
-          "example_ko": "이것은 bo 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bo.",
-          "exampleMeaning": "이것은 bo 관련 실전 예문입니다."
+          "example_en": "Bo washed the dishes after dinner yesterday.",
+          "example_ko": "Bo는 어제 저녁 식사 후 설거지를 했습니다.",
+          "exampleTarget": "Bo washed the dishes after dinner yesterday.",
+          "exampleMeaning": "Bo는 어제 저녁 식사 후 설거지를 했습니다."
         },
         {
           "id": "en_15016",
@@ -91054,10 +91054,10 @@
           "pronunciation": "[우이느]",
           "pron": "[우이느]",
           "phonetic": "[우이느]",
-          "example_en": "This is an example for owen.",
-          "example_ko": "이것은 오언 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for owen.",
-          "exampleMeaning": "이것은 오언 남자 관련 실전 예문입니다."
+          "example_en": "Owen forgot his wallet at the restaurant.",
+          "example_ko": "Owen은 식당에 지갑을 두고 왔습니다.",
+          "exampleTarget": "Owen forgot his wallet at the restaurant.",
+          "exampleMeaning": "Owen은 식당에 지갑을 두고 왔습니다."
         },
         {
           "id": "en_15017",
@@ -91105,10 +91105,10 @@
           "pronunciation": "[브애으이으]",
           "pron": "[브애으이으]",
           "phonetic": "[브애으이으]",
-          "example_en": "This is an example for banging.",
-          "example_ko": "이것은 좋은 신이 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for banging.",
-          "exampleMeaning": "이것은 좋은 신이 관련 실전 예문입니다."
+          "example_en": "Stop banging on the door so loudly.",
+          "example_ko": "문을 그렇게 시끄럽게 두드리지 마세요.",
+          "exampleTarget": "Stop banging on the door so loudly.",
+          "exampleMeaning": "문을 그렇게 시끄럽게 두드리지 마세요."
         },
         {
           "id": "en_15020",
@@ -91139,10 +91139,10 @@
           "pronunciation": "[므아르쉬어르]",
           "pron": "[므아르쉬어르]",
           "phonetic": "[므아르쉬어르]",
-          "example_en": "This is an example for marshall.",
-          "example_ko": "이것은 타∙ 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for marshall.",
-          "exampleMeaning": "이것은 타∙ 관련 실전 예문입니다."
+          "example_en": "Marshall greeted everyone with a bright smile.",
+          "example_ko": "Marshall은 밝은 미소로 모든 사람을 맞이했습니다.",
+          "exampleTarget": "Marshall greeted everyone with a bright smile.",
+          "exampleMeaning": "Marshall은 밝은 미소로 모든 사람을 맞이했습니다."
         },
         {
           "id": "en_15022",
@@ -91174,9 +91174,9 @@
           "pron": "[크르이이트]",
           "phonetic": "[크르이이트]",
           "example_en": "God created man.",
-          "example_ko": "신은 인간을 창조했다. 2.〈사람이〉 …을 창작하다 （사고력·상상력으로） 만들어 내다; 〈제도 등을〉 창설하다; 〔연극〕 〈배우가〉 〈…역을〉 처음 맡아서 그 전형을 만들다 초연하다.",
+          "example_ko": "신은 인간을 창조했다.",
           "exampleTarget": "God created man.",
-          "exampleMeaning": "신은 인간을 창조했다. 2.〈사람이〉 …을 창작하다 （사고력·상상력으로） 만들어 내다; 〈제도 등을〉 창설하다; 〔연극〕 〈배우가〉 〈…역을〉 처음 맡아서 그 전형을 만들다 초연하다."
+          "exampleMeaning": "신은 인간을 창조했다."
         },
         {
           "id": "en_15024",
@@ -91190,10 +91190,10 @@
           "pronunciation": "[스크아트르어느드]",
           "pron": "[스크아트르어느드]",
           "phonetic": "[스크아트르어느드]",
-          "example_en": "This is an example for scotland.",
-          "example_ko": "이것은 스코틀랜드 영국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for scotland.",
-          "exampleMeaning": "이것은 스코틀랜드 영국 관련 실전 예문입니다."
+          "example_en": "She traveled across Scotland by train alone.",
+          "example_ko": "그녀는 혼자 기차를 타고 스코틀랜드를 여행했습니다.",
+          "exampleTarget": "She traveled across Scotland by train alone.",
+          "exampleMeaning": "그녀는 혼자 기차를 타고 스코틀랜드를 여행했습니다."
         },
         {
           "id": "en_15025",
@@ -91208,9 +91208,9 @@
           "pron": "[크르에이느]",
           "phonetic": "[크르에이느]",
           "example_en": "She craned her neck to look for her mother in the crowd.",
-          "example_ko": "그녀는 군중 속에서 자기 어머니를 찾으려고 목을 길게 뺐다. 자동사1.목을 빼다 를 수반함). 2.《비격식》 〈사람이〉 〔위험·난관 등에 직면하여〕 망설이다 주저하다 꽁무니빼다 〈말이〉 〔…앞에서〕 머뭇거리다〔at …〕. 3.〈카메라가〉 （크레인에 의해） 이동하다.",
+          "example_ko": "그녀는 군중 속에서 자기 어머니를 찾으려고 목을 길게 뺐다. 자동사1.목을 빼다 를 수반함).",
           "exampleTarget": "She craned her neck to look for her mother in the crowd.",
-          "exampleMeaning": "그녀는 군중 속에서 자기 어머니를 찾으려고 목을 길게 뺐다. 자동사1.목을 빼다 를 수반함). 2.《비격식》 〈사람이〉 〔위험·난관 등에 직면하여〕 망설이다 주저하다 꽁무니빼다 〈말이〉 〔…앞에서〕 머뭇거리다〔at …〕. 3.〈카메라가〉 （크레인에 의해） 이동하다."
+          "exampleMeaning": "그녀는 군중 속에서 자기 어머니를 찾으려고 목을 길게 뺐다. 자동사1.목을 빼다 를 수반함)."
         },
         {
           "id": "en_15026",
@@ -91271,14 +91271,14 @@
           "level": "C1",
           "unitId": "unit_150",
           "nodeId": "en_u150_n5",
-          "meaning": "nicole",
+          "meaning": "니콜",
           "pronunciation": "[nicole]",
           "pron": "[nicole]",
           "phonetic": "[nicole]",
-          "example_en": "I use the word nicole in daily life.",
-          "example_ko": "나는 일상에서 nicole 단어를 사용합니다.",
-          "exampleTarget": "I use the word nicole in daily life.",
-          "exampleMeaning": "나는 일상에서 nicole 단어를 사용합니다."
+          "example_en": "Nicole prepared a delicious dinner for us.",
+          "example_ko": "니콜은 우리를 위해 맛있는 저녁 식사를 준비했다.",
+          "exampleTarget": "Nicole prepared a delicious dinner for us.",
+          "exampleMeaning": "니콜은 우리를 위해 맛있는 저녁 식사를 준비했다."
         },
         {
           "id": "en_15030",
@@ -91511,9 +91511,9 @@
           "pron": "[어스이느므어느트]",
           "phonetic": "[어스이느므어느트]",
           "example_en": "do a history assignment.",
-          "example_ko": "역사 숙제를 하다. 3.지시 지정; （기원·동기 등을） 〔…에〕 돌리기 귀인〔to …〕. 4.〔법률〕 （권리·재산 등의） 양도; 양도 증서; （관재인에게의 재산권의） 이전.",
+          "example_ko": "역사 숙제를 하다.",
           "exampleTarget": "do a history assignment.",
-          "exampleMeaning": "역사 숙제를 하다. 3.지시 지정; （기원·동기 등을） 〔…에〕 돌리기 귀인〔to …〕. 4.〔법률〕 （권리·재산 등의） 양도; 양도 증서; （관재인에게의 재산권의） 이전."
+          "exampleMeaning": "역사 숙제를 하다."
         },
         {
           "id": "en_15108",
@@ -91528,9 +91528,9 @@
           "pron": "[크애츠이으]",
           "phonetic": "[크애츠이으]",
           "example_en": "Yawning is catching.",
-          "example_ko": "하품은 전염성이 있다. 2.매력적인 황홀해지는; 유혹적인.",
+          "example_ko": "하품은 전염성이 있다.",
           "exampleTarget": "Yawning is catching.",
-          "exampleMeaning": "하품은 전염성이 있다. 2.매력적인 황홀해지는; 유혹적인."
+          "exampleMeaning": "하품은 전염성이 있다."
         },
         {
           "id": "en_15109",
@@ -91544,10 +91544,10 @@
           "pronunciation": "[크애느어드어]",
           "pron": "[크애느어드어]",
           "phonetic": "[크애느어드어]",
-          "example_en": "This is an example for canada.",
-          "example_ko": "이것은 캐나다 영연방 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for canada.",
-          "exampleMeaning": "이것은 캐나다 영연방 관련 실전 예문입니다."
+          "example_en": "My brother lives and studies in Canada.",
+          "example_ko": "내 남동생은 캐나다에서 살며 공부합니다.",
+          "exampleTarget": "My brother lives and studies in Canada.",
+          "exampleMeaning": "내 남동생은 캐나다에서 살며 공부합니다."
         },
         {
           "id": "en_15110",
@@ -91561,10 +91561,10 @@
           "pronunciation": "[드오느트]",
           "pron": "[드오느트]",
           "phonetic": "[드오느트]",
-          "example_en": "This is an example for dont.",
-          "example_ko": "이것은 not의 단축형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dont.",
-          "exampleMeaning": "이것은 not의 단축형 관련 실전 예문입니다."
+          "example_en": "Please dont forget to lock the door.",
+          "example_ko": "문 잠그는 것을 절대 잊지 마세요.",
+          "exampleTarget": "Please dont forget to lock the door.",
+          "exampleMeaning": "문 잠그는 것을 절대 잊지 마세요."
         },
         {
           "id": "en_15111",
@@ -91578,10 +91578,10 @@
           "pronunciation": "[흐아느]",
           "pron": "[흐아느]",
           "phonetic": "[흐아느]",
-          "example_en": "This is an example for han.",
-          "example_ko": "이것은 한 한민족 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for han.",
-          "exampleMeaning": "이것은 한 한민족 관련 실전 예문입니다."
+          "example_en": "Han walked along the quiet river path.",
+          "example_ko": "Han은 조용한 강변 산책로를 걸었습니다.",
+          "exampleTarget": "Han walked along the quiet river path.",
+          "exampleMeaning": "Han은 조용한 강변 산책로를 걸었습니다."
         },
         {
           "id": "en_15112",
@@ -91595,10 +91595,10 @@
           "pronunciation": "[브아느]",
           "pron": "[브아느]",
           "phonetic": "[브아느]",
-          "example_en": "This is an example for von.",
-          "example_ko": "이것은 으로부터 독일인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for von.",
-          "exampleMeaning": "이것은 으로부터 독일인 관련 실전 예문입니다."
+          "example_en": "Professor von Keller gave an interesting lecture.",
+          "example_ko": "von Keller 교수님이 흥미로운 강의를 해 주셨습니다.",
+          "exampleTarget": "Professor von Keller gave an interesting lecture.",
+          "exampleMeaning": "von Keller 교수님이 흥미로운 강의를 해 주셨습니다."
         },
         {
           "id": "en_15113",
@@ -91612,10 +91612,10 @@
           "pronunciation": "[므아르크오]",
           "pron": "[므아르크오]",
           "phonetic": "[므아르크오]",
-          "example_en": "This is an example for marco.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for marco.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Marco ordered a slice of cheese pizza.",
+          "example_ko": "Marco는 치즈 피자 한 조각을 주문했습니다.",
+          "exampleTarget": "Marco ordered a slice of cheese pizza.",
+          "exampleMeaning": "Marco는 치즈 피자 한 조각을 주문했습니다."
         },
         {
           "id": "en_15114",
@@ -91629,10 +91629,10 @@
           "pronunciation": "[우스르이으]",
           "pron": "[우스르이으]",
           "phonetic": "[우스르이으]",
-          "example_en": "This is an example for whistling.",
-          "example_ko": "이것은 휘파람 휙휙 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for whistling.",
-          "exampleMeaning": "이것은 휘파람 휙휙 관련 실전 예문입니다."
+          "example_en": "He was whistling a cheerful melody happily.",
+          "example_ko": "그는 기분 좋게 경쾌한 멜로디로 휘파람을 불고 있었습니다.",
+          "exampleTarget": "He was whistling a cheerful melody happily.",
+          "exampleMeaning": "그는 기분 좋게 경쾌한 멜로디로 휘파람을 불고 있었습니다."
         },
         {
           "id": "en_15115",
@@ -91647,9 +91647,9 @@
           "pron": "[브르드이으]",
           "phonetic": "[브르드이으]",
           "example_en": "a wooden building.",
-          "example_ko": "목조 건물. 2.건축 건조; 건축술; 《형용사적》 건축의.",
+          "example_ko": "목조 건물.",
           "exampleTarget": "a wooden building.",
-          "exampleMeaning": "목조 건물. 2.건축 건조; 건축술; 《형용사적》 건축의."
+          "exampleMeaning": "목조 건물."
         },
         {
           "id": "en_15116",
@@ -91663,10 +91663,10 @@
           "pronunciation": "[쉬이크이으]",
           "pron": "[쉬이크이으]",
           "phonetic": "[쉬이크이으]",
-          "example_en": "This is an example for shaking.",
-          "example_ko": "이것은 흔들기 한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shaking.",
-          "exampleMeaning": "이것은 흔들기 한 관련 실전 예문입니다."
+          "example_en": "Her hands were shaking from the cold.",
+          "example_ko": "추위 때문에 그녀의 손이 덜덜 떨리고 있었습니다.",
+          "exampleTarget": "Her hands were shaking from the cold.",
+          "exampleMeaning": "추위 때문에 그녀의 손이 덜덜 떨리고 있었습니다."
         },
         {
           "id": "en_15117",
@@ -91715,9 +91715,9 @@
           "pron": "[드르오느]",
           "phonetic": "[드르오느]",
           "example_en": "a face drawn with pain.",
-          "example_ko": "통증으로 일그러진 얼굴. 2.〈승부가〉 비긴.",
+          "example_ko": "통증으로 일그러진 얼굴.",
           "exampleTarget": "a face drawn with pain.",
-          "exampleMeaning": "통증으로 일그러진 얼굴. 2.〈승부가〉 비긴."
+          "exampleMeaning": "통증으로 일그러진 얼굴."
         },
         {
           "id": "en_15120",
@@ -91731,10 +91731,10 @@
           "pronunciation": "[트이트스]",
           "pron": "[트이트스]",
           "phonetic": "[트이트스]",
-          "example_en": "This is an example for tits.",
-          "example_ko": "이것은 훌륭한 굉장한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tits.",
-          "exampleMeaning": "이것은 훌륭한 굉장한 관련 실전 예문입니다."
+          "example_en": "Tiny blue tits rested on the branch.",
+          "example_ko": "작은 박새들이 나뭇가지 위에 앉아 쉬었습니다.",
+          "exampleTarget": "Tiny blue tits rested on the branch.",
+          "exampleMeaning": "작은 박새들이 나뭇가지 위에 앉아 쉬었습니다."
         },
         {
           "id": "en_15121",
@@ -91749,9 +91749,9 @@
           "pron": "[크르이크]",
           "phonetic": "[크르이크]",
           "example_en": "I fired till the revolver went click.",
-          "example_ko": "권총이 찰깍할 때까지 쏘아댔다. 2.〔기계〕 제륜자 클릭. 3.〔음성학〕 혀차는 소리. 4.（말을 모는） 이러 소리; （키스할 때의） 쪽 소리. 5.도당 파벌. 6.《a click》〔컴퓨터〕 （마우스의） 클릭. 동사 자동사1.찰깍 소리가 나다.",
+          "example_ko": "권총이 찰깍할 때까지 쏘아댔다.",
           "exampleTarget": "I fired till the revolver went click.",
-          "exampleMeaning": "권총이 찰깍할 때까지 쏘아댔다. 2.〔기계〕 제륜자 클릭. 3.〔음성학〕 혀차는 소리. 4.（말을 모는） 이러 소리; （키스할 때의） 쪽 소리. 5.도당 파벌. 6.《a click》〔컴퓨터〕 （마우스의） 클릭. 동사 자동사1.찰깍 소리가 나다."
+          "exampleMeaning": "권총이 찰깍할 때까지 쏘아댔다."
         },
         {
           "id": "en_15122",
@@ -91782,10 +91782,10 @@
           "pronunciation": "[프드이으]",
           "pron": "[프드이으]",
           "phonetic": "[프드이으]",
-          "example_en": "This is an example for feeding.",
-          "example_ko": "이것은 급식 사육 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for feeding.",
-          "exampleMeaning": "이것은 급식 사육 관련 실전 예문입니다."
+          "example_en": "Feeding the stray cats is her habit.",
+          "example_ko": "길고양이들에게 밥을 주는 것이 그녀의 습관입니다.",
+          "exampleTarget": "Feeding the stray cats is her habit.",
+          "exampleMeaning": "길고양이들에게 밥을 주는 것이 그녀의 습관입니다."
         },
         {
           "id": "en_15124",
@@ -91800,9 +91800,9 @@
           "pron": "[스우드어]",
           "phonetic": "[스우드어]",
           "example_en": "baking soda.",
-          "example_ko": "중조. 2.소다수 탄산수; 소다수에 과일·아이스크림·우유 등을 넣은 음료.",
+          "example_ko": "중조.",
           "exampleTarget": "baking soda.",
-          "exampleMeaning": "중조. 2.소다수 탄산수; 소다수에 과일·아이스크림·우유 등을 넣은 음료."
+          "exampleMeaning": "중조."
         },
         {
           "id": "en_15125",
@@ -91816,10 +91816,10 @@
           "pronunciation": "[스르어트]",
           "pron": "[스르어트]",
           "phonetic": "[스르어트]",
-          "example_en": "This is an example for slut.",
-          "example_ko": "이것은 단정치 못한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for slut.",
-          "exampleMeaning": "이것은 단정치 못한 관련 실전 예문입니다."
+          "example_en": "Never call any woman a slut please.",
+          "example_ko": "어떤 여성에게도 그런 천박한 비하 발언을 쓰지 마세요.",
+          "exampleTarget": "Never call any woman a slut please.",
+          "exampleMeaning": "어떤 여성에게도 그런 천박한 비하 발언을 쓰지 마세요."
         },
         {
           "id": "en_15126",
@@ -91850,10 +91850,10 @@
           "pronunciation": "[스트에프트]",
           "pron": "[스트에프트]",
           "phonetic": "[스트에프트]",
-          "example_en": "This is an example for stepped.",
-          "example_ko": "이것은 계단이 있는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for stepped.",
-          "exampleMeaning": "이것은 계단이 있는 관련 실전 예문입니다."
+          "example_en": "He stepped outside to get fresh air.",
+          "example_ko": "그는 신선한 공기를 쐬러 밖으로 걸어 나왔습니다.",
+          "exampleTarget": "He stepped outside to get fresh air.",
+          "exampleMeaning": "그는 신선한 공기를 쐬러 밖으로 걸어 나왔습니다."
         },
         {
           "id": "en_15128",
@@ -91901,10 +91901,10 @@
           "pronunciation": "[흐어르]",
           "pron": "[흐어르]",
           "phonetic": "[흐어르]",
-          "example_en": "This is an example for herr.",
-          "example_ko": "이것은 군 씨 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for herr.",
-          "exampleMeaning": "이것은 군 씨 관련 실전 예문입니다."
+          "example_en": "Herr Schmidt will attend the annual conference.",
+          "example_ko": "Schmidt 씨가 이번 연례 콘퍼런스에 참석할 예정입니다.",
+          "exampleTarget": "Herr Schmidt will attend the annual conference.",
+          "exampleMeaning": "Schmidt 씨가 이번 연례 콘퍼런스에 참석할 예정입니다."
         }
       ],
       "nodes": [
@@ -92035,9 +92035,9 @@
           "pron": "[크어르어느트르이]",
           "phonetic": "[크어르어느트르이]",
           "example_en": "I am currently working on the problem.",
-          "example_ko": "지금 그 문제를 다루고 있다. 2.일반적으로 널리.",
+          "example_ko": "지금 그 문제를 다루고 있다.",
           "exampleTarget": "I am currently working on the problem.",
-          "exampleMeaning": "지금 그 문제를 다루고 있다. 2.일반적으로 널리."
+          "exampleMeaning": "지금 그 문제를 다루고 있다."
         },
         {
           "id": "en_15203",
@@ -92102,10 +92102,10 @@
           "pronunciation": "[크아르]",
           "pron": "[크아르]",
           "phonetic": "[크아르]",
-          "example_en": "This is an example for karl.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for karl.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Karl bought a new bicycle last weekend.",
+          "example_ko": "Karl은 지난 주말에 새 자전거를 샀습니다.",
+          "exampleTarget": "Karl bought a new bicycle last weekend.",
+          "exampleMeaning": "Karl은 지난 주말에 새 자전거를 샀습니다."
         },
         {
           "id": "en_15207",
@@ -92170,10 +92170,10 @@
           "pronunciation": "[아드이스]",
           "pron": "[아드이스]",
           "phonetic": "[아드이스]",
-          "example_en": "This is an example for goddess.",
-          "example_ko": "이것은 여신 오곡의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for goddess.",
-          "exampleMeaning": "이것은 여신 오곡의 관련 실전 예문입니다."
+          "example_en": "Ancient people worshipped the goddess of love.",
+          "example_ko": "고대인들은 사랑의 여신을 숭배했습니다.",
+          "exampleTarget": "Ancient people worshipped the goddess of love.",
+          "exampleMeaning": "고대인들은 사랑의 여신을 숭배했습니다."
         },
         {
           "id": "en_15211",
@@ -92187,10 +92187,10 @@
           "pronunciation": "[스에프트므브어르]",
           "pron": "[스에프트므브어르]",
           "phonetic": "[스에프트므브어르]",
-          "example_en": "This is an example for september.",
-          "example_ko": "이것은 월 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for september.",
-          "exampleMeaning": "이것은 월 약자 관련 실전 예문입니다."
+          "example_en": "Our school semester begins in early September.",
+          "example_ko": "우리 학교 새 학기는 구월 초에 시작합니다.",
+          "exampleTarget": "Our school semester begins in early September.",
+          "exampleMeaning": "우리 학교 새 학기는 구월 초에 시작합니다."
         },
         {
           "id": "en_15212",
@@ -92234,14 +92234,14 @@
           "level": "C1",
           "unitId": "unit_152",
           "nodeId": "en_u152_n2",
-          "meaning": "aii",
+          "meaning": "아이쿠",
           "pronunciation": "[aii]",
           "pron": "[aii]",
           "phonetic": "[aii]",
-          "example_en": "I use the word aii in daily life.",
-          "example_ko": "나는 일상에서 aii 단어를 사용합니다.",
-          "exampleTarget": "I use the word aii in daily life.",
-          "exampleMeaning": "나는 일상에서 aii 단어를 사용합니다."
+          "example_en": "Aii  I bumped my knee against the desk.",
+          "example_ko": "아이쿠  책상에 무릎을 세게 부딪쳤어.",
+          "exampleTarget": "Aii  I bumped my knee against the desk.",
+          "exampleMeaning": "아이쿠  책상에 무릎을 세게 부딪쳤어."
         },
         {
           "id": "en_15215",
@@ -92255,10 +92255,10 @@
           "pronunciation": "[쉬오느]",
           "pron": "[쉬오느]",
           "phonetic": "[쉬오느]",
-          "example_en": "This is an example for shawn.",
-          "example_ko": "이것은 숀 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shawn.",
-          "exampleMeaning": "이것은 숀 미국의 관련 실전 예문입니다."
+          "example_en": "Shawn plays the acoustic guitar very well.",
+          "example_ko": "Shawn은 통기타를 아주 잘 연주합니다.",
+          "exampleTarget": "Shawn plays the acoustic guitar very well.",
+          "exampleMeaning": "Shawn은 통기타를 아주 잘 연주합니다."
         },
         {
           "id": "en_15216",
@@ -92273,9 +92273,9 @@
           "pron": "[크어므이느어크이쉬어느]",
           "phonetic": "[크어므이느어크이쉬어느]",
           "example_en": "mass communications media.",
-          "example_ko": "매스커뮤니케이션 매스컴. 4.교통; 교통 수단.",
+          "example_ko": "매스커뮤니케이션 매스컴.",
           "exampleTarget": "mass communications media.",
-          "exampleMeaning": "매스커뮤니케이션 매스컴. 4.교통; 교통 수단."
+          "exampleMeaning": "매스커뮤니케이션 매스컴."
         },
         {
           "id": "en_15217",
@@ -92306,10 +92306,10 @@
           "pronunciation": "[프이프어르우어르크]",
           "pron": "[프이프어르우어르크]",
           "phonetic": "[프이프어르우어르크]",
-          "example_en": "This is an example for paperwork.",
-          "example_ko": "이것은 기록·서류의 정리·보존 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for paperwork.",
-          "exampleMeaning": "이것은 기록·서류의 정리·보존 관련 실전 예문입니다."
+          "example_en": "I need to complete this paperwork today.",
+          "example_ko": "나는 오늘 이 서류 작업을 완료해야 합니다.",
+          "exampleTarget": "I need to complete this paperwork today.",
+          "exampleMeaning": "나는 오늘 이 서류 작업을 완료해야 합니다."
         },
         {
           "id": "en_15219",
@@ -92341,9 +92341,9 @@
           "pron": "[애크트어르]",
           "phonetic": "[애크트어르]",
           "example_en": "a film actor.",
-          "example_ko": "영화 배우. 2.행위자; （사건 등의） 관여자 관계자. 3.비행자; 망나니. 4.《형용사와 함께》 믿지못할 사람; 고약한 사람.",
+          "example_ko": "영화 배우.",
           "exampleTarget": "a film actor.",
-          "exampleMeaning": "영화 배우. 2.행위자; （사건 등의） 관여자 관계자. 3.비행자; 망나니. 4.《형용사와 함께》 믿지못할 사람; 고약한 사람."
+          "exampleMeaning": "영화 배우."
         },
         {
           "id": "en_15221",
@@ -92358,9 +92358,9 @@
           "pron": "[므애즈이크어르]",
           "phonetic": "[므애즈이크어르]",
           "example_en": "that magical evening.",
-          "example_ko": "저 꿈처럼 멋진 밤. 2.마술적인 신기한 불가사의한; 이상한.",
+          "example_ko": "저 꿈처럼 멋진 밤.",
           "exampleTarget": "that magical evening.",
-          "exampleMeaning": "저 꿈처럼 멋진 밤. 2.마술적인 신기한 불가사의한; 이상한."
+          "exampleMeaning": "저 꿈처럼 멋진 밤."
         },
         {
           "id": "en_15222",
@@ -92426,9 +92426,9 @@
           "pron": "[프르즈이으]",
           "phonetic": "[프르즈이으]",
           "example_en": "freezing rain.",
-          "example_ko": "착빙성 비. 2.혹한의 얼어붙을 것 같은. 3.〈태도 등이〉 냉담한 쌀쌀한; 간담이 서늘한.",
+          "example_ko": "착빙성 비.",
           "exampleTarget": "freezing rain.",
-          "exampleMeaning": "착빙성 비. 2.혹한의 얼어붙을 것 같은. 3.〈태도 등이〉 냉담한 쌀쌀한; 간담이 서늘한."
+          "exampleMeaning": "착빙성 비."
         },
         {
           "id": "en_15226",
@@ -92442,10 +92442,10 @@
           "pronunciation": "[느오르므어느]",
           "pron": "[느오르므어느]",
           "phonetic": "[느오르므어느]",
-          "example_en": "This is an example for norman.",
-          "example_ko": "이것은 노르만인 세기에 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for norman.",
-          "exampleMeaning": "이것은 노르만인 세기에 관련 실전 예문입니다."
+          "example_en": "Norman fixed the garage door this morning.",
+          "example_ko": "Norman은 오늘 아침 차고 문을 수리했습니다.",
+          "exampleTarget": "Norman fixed the garage door this morning.",
+          "exampleMeaning": "Norman은 오늘 아침 차고 문을 수리했습니다."
         },
         {
           "id": "en_15227",
@@ -92493,10 +92493,10 @@
           "pronunciation": "[므오트르]",
           "pron": "[므오트르]",
           "phonetic": "[므오트르]",
-          "example_en": "This is an example for motel.",
-          "example_ko": "이것은 모텔 무료 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for motel.",
-          "exampleMeaning": "이것은 모텔 무료 관련 실전 예문입니다."
+          "example_en": "We stayed at a roadside motel overnight.",
+          "example_ko": "우리는 길가의 모텔에서 하룻밤을 묵었습니다.",
+          "exampleTarget": "We stayed at a roadside motel overnight.",
+          "exampleMeaning": "우리는 길가의 모텔에서 하룻밤을 묵었습니다."
         },
         {
           "id": "en_15230",
@@ -92510,10 +92510,10 @@
           "pronunciation": "[르어므브르이으]",
           "pron": "[르어므브르이으]",
           "phonetic": "[르어므브르이으]",
-          "example_en": "This is an example for rumbling.",
-          "example_ko": "이것은 우르르 거리는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rumbling.",
-          "exampleMeaning": "이것은 우르르 거리는 관련 실전 예문입니다."
+          "example_en": "My hungry stomach is rumbling right now.",
+          "example_ko": "지금 배가 고파서 배에서 꼬르륵 소리가 납니다.",
+          "exampleTarget": "My hungry stomach is rumbling right now.",
+          "exampleMeaning": "지금 배가 고파서 배에서 꼬르륵 소리가 납니다."
         }
       ],
       "nodes": [
@@ -92677,10 +92677,10 @@
           "pronunciation": "[프르이즈]",
           "pron": "[프르이즈]",
           "phonetic": "[프르이즈]",
-          "example_en": "This is an example for fridge.",
-          "example_ko": "이것은 냉장고 refrigerator의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fridge.",
-          "exampleMeaning": "이것은 냉장고 refrigerator의 관련 실전 예문입니다."
+          "example_en": "Put the fresh milk inside the fridge.",
+          "example_ko": "신선한 우유를 냉장고 안에 넣어 두세요.",
+          "exampleTarget": "Put the fresh milk inside the fridge.",
+          "exampleMeaning": "신선한 우유를 냉장고 안에 넣어 두세요."
         },
         {
           "id": "en_15305",
@@ -92694,10 +92694,10 @@
           "pronunciation": "[느애트어르이]",
           "pron": "[느애트어르이]",
           "phonetic": "[느애트어르이]",
-          "example_en": "This is an example for natalie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for natalie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Natalie sings beautifully in the school choir.",
+          "example_ko": "Natalie는 학교 합창단에서 노래를 아름답게 부릅니다.",
+          "exampleTarget": "Natalie sings beautifully in the school choir.",
+          "exampleMeaning": "Natalie는 학교 합창단에서 노래를 아름답게 부릅니다."
         },
         {
           "id": "en_15306",
@@ -92711,10 +92711,10 @@
           "pronunciation": "[느르스어느]",
           "pron": "[느르스어느]",
           "phonetic": "[느르스어느]",
-          "example_en": "This is an example for nelson.",
-          "example_ko": "이것은 목 공격 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nelson.",
-          "exampleMeaning": "이것은 목 공격 관련 실전 예문입니다."
+          "example_en": "Mr. Nelson teaches history at our highschool.",
+          "example_ko": "Nelson 선생님은 우리 고등학교에서 역사를 가르치십니다.",
+          "exampleTarget": "Mr. Nelson teaches history at our highschool.",
+          "exampleMeaning": "Nelson 선생님은 우리 고등학교에서 역사를 가르치십니다."
         },
         {
           "id": "en_15307",
@@ -92728,10 +92728,10 @@
           "pronunciation": "[크어르어]",
           "pron": "[크어르어]",
           "phonetic": "[크어르어]",
-          "example_en": "This is an example for korea.",
-          "example_ko": "이것은 한국 대한민국 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for korea.",
-          "exampleMeaning": "이것은 한국 대한민국 관련 실전 예문입니다."
+          "example_en": "Many tourists visit Korea during autumn months.",
+          "example_ko": "많은 관광객들이 가을철에 한국을 방문합니다.",
+          "exampleTarget": "Many tourists visit Korea during autumn months.",
+          "exampleMeaning": "많은 관광객들이 가을철에 한국을 방문합니다."
         },
         {
           "id": "en_15308",
@@ -92745,10 +92745,10 @@
           "pronunciation": "[즈애느이트]",
           "pron": "[즈애느이트]",
           "phonetic": "[즈애느이트]",
-          "example_en": "This is an example for janet.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for janet.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Janet works at the local public library.",
+          "example_ko": "Janet은 지역 공립 도서관에서 일합니다.",
+          "exampleTarget": "Janet works at the local public library.",
+          "exampleMeaning": "Janet은 지역 공립 도서관에서 일합니다."
         },
         {
           "id": "en_15309",
@@ -92763,9 +92763,9 @@
           "pron": "[므오르]",
           "phonetic": "[므오르]",
           "example_en": "a pedestrian mall.",
-          "example_ko": "산책용 보행자 도로; 보행자 천국. 2.몰 프롬나드식 상점가; 《미》 쇼핑센터. mall은 「나무 그늘의 산책로」라는 원래의 뜻에서 출발하여 요즈음은 미국 문화에서 빼놓을 수 없는 거대한 쇼핑 단지를 일컫게 되었으며 상업 용어로는 쇼핑센터 등의 통로를 뜻하기도 함. 단지 쇼핑 상점만 아니라 영화관 오락실 레스토랑 잡화점 및 개인 병원까지 있음. 따라서 쇼핑몰은 상점가 전체를 건축적 구성에 의해 종합한 것으로 광대한 주차장과 보행자의 쇼핑로를 중심으로 지붕이 있는 아케이드로 이루어져 있거나 건물내에 산책로 겸 통로가 설비되어 있어서 기후에 관계없이 쾌적한 시설로 휴일에 즐겨 찾는 장소임.3.《미》 （고속도로 등의） 중앙 분리대. 4.〔역사〕 펠멜 구기.",
+          "example_ko": "산책용 보행자 도로; 보행자 천국.",
           "exampleTarget": "a pedestrian mall.",
-          "exampleMeaning": "산책용 보행자 도로; 보행자 천국. 2.몰 프롬나드식 상점가; 《미》 쇼핑센터. mall은 「나무 그늘의 산책로」라는 원래의 뜻에서 출발하여 요즈음은 미국 문화에서 빼놓을 수 없는 거대한 쇼핑 단지를 일컫게 되었으며 상업 용어로는 쇼핑센터 등의 통로를 뜻하기도 함. 단지 쇼핑 상점만 아니라 영화관 오락실 레스토랑 잡화점 및 개인 병원까지 있음. 따라서 쇼핑몰은 상점가 전체를 건축적 구성에 의해 종합한 것으로 광대한 주차장과 보행자의 쇼핑로를 중심으로 지붕이 있는 아케이드로 이루어져 있거나 건물내에 산책로 겸 통로가 설비되어 있어서 기후에 관계없이 쾌적한 시설로 휴일에 즐겨 찾는 장소임.3.《미》 （고속도로 등의） 중앙 분리대. 4.〔역사〕 펠멜 구기."
+          "exampleMeaning": "산책용 보행자 도로; 보행자 천국."
         },
         {
           "id": "en_15310",
@@ -92831,9 +92831,9 @@
           "pron": "[드이스크르프쉬어느]",
           "phonetic": "[드이스크르프쉬어느]",
           "example_en": "a beautiful sight beyond description.",
-          "example_ko": "이루 형언할 수 없는 아름다운 광경. 2.（물품의） 설명서 명세서; 인상서.",
+          "example_ko": "이루 형언할 수 없는 아름다운 광경.",
           "exampleTarget": "a beautiful sight beyond description.",
-          "exampleMeaning": "이루 형언할 수 없는 아름다운 광경. 2.（물품의） 설명서 명세서; 인상서."
+          "exampleMeaning": "이루 형언할 수 없는 아름다운 광경."
         },
         {
           "id": "en_15314",
@@ -92865,9 +92865,9 @@
           "pron": "[흐이프]",
           "phonetic": "[흐이프]",
           "example_en": "hip pain.",
-          "example_ko": "허리의 통증. 2.《hips》고관절. 3.〔곤충〕 기절. 4.〔건축〕 （지붕의） 추녀 마루. 숙어 down in the hips 〈말 등이〉 허리뼈를 다친; 의기소침한. fire from the hip; shoot from the hip ①권총을 허리에서 빼서 갑자기 쏘다. ②《비격식》 충동적으로 말하다. get a person on the hip; take a person on the hip; have a person on the hip 《고어》 남의 우위에 서다 남에게 이기다 남을 지배하다. smite hip and thigh 때려눕히다. cf. 〔성서〕 사사기 15:8. 형용사〈특히 옷이〉 엉덩이에 닿는. 동사 타동사1.〈특히 가축의〉 고관절을 탈구시키다. 2.〔건축〕 …에 추녀 마루를 달다. 3.〔스포츠〕 〈상대방에게〉 엉덩이로 부딪치다; …에게 허리치기를 걸다. 4.《미》 〈권총 등을〉 허리에 차다.",
+          "example_ko": "허리의 통증.",
           "exampleTarget": "hip pain.",
-          "exampleMeaning": "허리의 통증. 2.《hips》고관절. 3.〔곤충〕 기절. 4.〔건축〕 （지붕의） 추녀 마루. 숙어 down in the hips 〈말 등이〉 허리뼈를 다친; 의기소침한. fire from the hip; shoot from the hip ①권총을 허리에서 빼서 갑자기 쏘다. ②《비격식》 충동적으로 말하다. get a person on the hip; take a person on the hip; have a person on the hip 《고어》 남의 우위에 서다 남에게 이기다 남을 지배하다. smite hip and thigh 때려눕히다. cf. 〔성서〕 사사기 15:8. 형용사〈특히 옷이〉 엉덩이에 닿는. 동사 타동사1.〈특히 가축의〉 고관절을 탈구시키다. 2.〔건축〕 …에 추녀 마루를 달다. 3.〔스포츠〕 〈상대방에게〉 엉덩이로 부딪치다; …에게 허리치기를 걸다. 4.《미》 〈권총 등을〉 허리에 차다."
+          "exampleMeaning": "허리의 통증."
         },
         {
           "id": "en_15316",
@@ -92881,10 +92881,10 @@
           "pronunciation": "[느드이스트으크트르이]",
           "pron": "[느드이스트으크트르이]",
           "phonetic": "[느드이스트으크트르이]",
-          "example_en": "This is an example for indistinctly.",
-          "example_ko": "이것은 분명하게 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for indistinctly.",
-          "exampleMeaning": "이것은 분명하게 관련 실전 예문입니다."
+          "example_en": "He spoke indistinctly because of his cold.",
+          "example_ko": "그는 감기 때문에 발음을 분명하지 않게 웅얼거렸습니다.",
+          "exampleTarget": "He spoke indistinctly because of his cold.",
+          "exampleMeaning": "그는 감기 때문에 발음을 분명하지 않게 웅얼거렸습니다."
         },
         {
           "id": "en_15317",
@@ -92898,10 +92898,10 @@
           "pronunciation": "[흐애르이스]",
           "pron": "[흐애르이스]",
           "phonetic": "[흐애르이스]",
-          "example_en": "This is an example for harris.",
-          "example_ko": "이것은 해리스 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for harris.",
-          "exampleMeaning": "이것은 해리스 남자 관련 실전 예문입니다."
+          "example_en": "Harris booked a table for five tonight.",
+          "example_ko": "Harris가 오늘 밤 다섯 명 자리를 예약했습니다.",
+          "exampleTarget": "Harris booked a table for five tonight.",
+          "exampleMeaning": "Harris가 오늘 밤 다섯 명 자리를 예약했습니다."
         },
         {
           "id": "en_15318",
@@ -92932,10 +92932,10 @@
           "pronunciation": "[우르이]",
           "pron": "[우르이]",
           "phonetic": "[우르이]",
-          "example_en": "This is an example for willie.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for willie.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Willie walks his small puppy every evening.",
+          "example_ko": "Willie는 매일 저녁 어린 강아지를 산책시킵니다.",
+          "exampleTarget": "Willie walks his small puppy every evening.",
+          "exampleMeaning": "Willie는 매일 저녁 어린 강아지를 산책시킵니다."
         },
         {
           "id": "en_15320",
@@ -92950,9 +92950,9 @@
           "pron": "[우이트어르]",
           "phonetic": "[우이트어르]",
           "example_en": "Waiter! Check please.",
-          "example_ko": "웨이터 계산서 주세요! 3.（음식을 나르는） 쟁반.",
+          "example_ko": "웨이터 계산서 주세요!",
           "exampleTarget": "Waiter! Check please.",
-          "exampleMeaning": "웨이터 계산서 주세요! 3.（음식을 나르는） 쟁반."
+          "exampleMeaning": "웨이터 계산서 주세요!"
         },
         {
           "id": "en_15321",
@@ -92984,9 +92984,9 @@
           "pron": "[unfortunate]",
           "phonetic": "[unfortunate]",
           "example_en": "an unfortunate marriage.",
-          "example_ko": "불행한 결혼. 2.《격식》 부적당한 적절하지 않은 빗나간.",
+          "example_ko": "불행한 결혼.",
           "exampleTarget": "an unfortunate marriage.",
-          "exampleMeaning": "불행한 결혼. 2.《격식》 부적당한 적절하지 않은 빗나간."
+          "exampleMeaning": "불행한 결혼."
         },
         {
           "id": "en_15323",
@@ -93018,9 +93018,9 @@
           "pron": "[르]",
           "phonetic": "[르]",
           "example_en": "start giggling at a persons joke.",
-          "example_ko": "남의 농담에 낄낄 웃기 시작하다. 명사낄낄 웃음 ; 재미있는 사람 농담; 《주로 영·비격식》 대수롭지 않은 장난.",
+          "example_ko": "남의 농담에 낄낄 웃기 시작하다.",
           "exampleTarget": "start giggling at a persons joke.",
-          "exampleMeaning": "남의 농담에 낄낄 웃기 시작하다. 명사낄낄 웃음 ; 재미있는 사람 농담; 《주로 영·비격식》 대수롭지 않은 장난."
+          "exampleMeaning": "남의 농담에 낄낄 웃기 시작하다."
         },
         {
           "id": "en_15325",
@@ -93034,10 +93034,10 @@
           "pronunciation": "[mia]",
           "pron": "[mia]",
           "phonetic": "[mia]",
-          "example_en": "This is an example for mia.",
-          "example_ko": "이것은 전투 중 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mia.",
-          "exampleMeaning": "이것은 전투 중 관련 실전 예문입니다."
+          "example_en": "Mia paints colorful landscapes in her studio.",
+          "example_ko": "Mia는 작업실에서 다채로운 풍경화를 그립니다.",
+          "exampleTarget": "Mia paints colorful landscapes in her studio.",
+          "exampleMeaning": "Mia는 작업실에서 다채로운 풍경화를 그립니다."
         },
         {
           "id": "en_15326",
@@ -93051,10 +93051,10 @@
           "pronunciation": "[르이므어느드]",
           "pron": "[르이므어느드]",
           "phonetic": "[르이므어느드]",
-          "example_en": "This is an example for raymond.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for raymond.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Raymond repaired the computer screen for free.",
+          "example_ko": "Raymond가 컴퓨터 화면을 무료로 수리해 주었습니다.",
+          "exampleTarget": "Raymond repaired the computer screen for free.",
+          "exampleMeaning": "Raymond가 컴퓨터 화면을 무료로 수리해 주었습니다."
         },
         {
           "id": "en_15327",
@@ -93068,10 +93068,10 @@
           "pronunciation": "[즈어르즈이]",
           "pron": "[즈어르즈이]",
           "phonetic": "[즈어르즈이]",
-          "example_en": "This is an example for jersey.",
-          "example_ko": "이것은 저지 메리야스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jersey.",
-          "exampleMeaning": "이것은 저지 메리야스 관련 실전 예문입니다."
+          "example_en": "He wore a clean football team jersey.",
+          "example_ko": "그는 깨끗한 축구 팀 유니폼 저지를 입었습니다.",
+          "exampleTarget": "He wore a clean football team jersey.",
+          "exampleMeaning": "그는 깨끗한 축구 팀 유니폼 저지를 입었습니다."
         },
         {
           "id": "en_15328",
@@ -93103,9 +93103,9 @@
           "pron": "[츠애프트어르]",
           "phonetic": "[츠애프트어르]",
           "example_en": "open a new chapter in ones life.",
-          "example_ko": "인생의 새 장을 열다. 2.《주로 미》 （협회·조합·동창회 등의） （지방） 지부 분회. 3.〔교회〕 수도원 수사회; 주교좌 성당 참사회; 《집합적》 교구 대표단. 4.수도회 총회 목사단 회의; （일반적으로） 총회. 5.《영》 〔일련의〕 사건 〔…의〕 연속〔of …〕. 6.《미·속어》 〔야구〕 회.",
+          "example_ko": "인생의 새 장을 열다.",
           "exampleTarget": "open a new chapter in ones life.",
-          "exampleMeaning": "인생의 새 장을 열다. 2.《주로 미》 （협회·조합·동창회 등의） （지방） 지부 분회. 3.〔교회〕 수도원 수사회; 주교좌 성당 참사회; 《집합적》 교구 대표단. 4.수도회 총회 목사단 회의; （일반적으로） 총회. 5.《영》 〔일련의〕 사건 〔…의〕 연속〔of …〕. 6.《미·속어》 〔야구〕 회."
+          "exampleMeaning": "인생의 새 장을 열다."
         },
         {
           "id": "en_15330",
@@ -93287,9 +93287,9 @@
           "pron": "[프아르므어르]",
           "phonetic": "[프아르므어르]",
           "example_en": "a landed farmer.",
-          "example_ko": "자작농 . ②양식가. 2.（세금 등의） 징수 도급인. 3.（아이·빈민 등을 보수를 받고） 돌보는 사람.",
+          "example_ko": "자작농 . ②양식가.",
           "exampleTarget": "a landed farmer.",
-          "exampleMeaning": "자작농 . ②양식가. 2.（세금 등의） 징수 도급인. 3.（아이·빈민 등을 보수를 받고） 돌보는 사람."
+          "exampleMeaning": "자작농 . ②양식가."
         },
         {
           "id": "en_15405",
@@ -93303,10 +93303,10 @@
           "pronunciation": "[크르애느]",
           "pron": "[크르애느]",
           "phonetic": "[크르애느]",
-          "example_en": "This is an example for clan.",
-          "example_ko": "이것은 씨족 문중 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for clan.",
-          "exampleMeaning": "이것은 씨족 문중 관련 실전 예문입니다."
+          "example_en": "The whole clan gathered for New Year.",
+          "example_ko": "새해를 맞아 온 씨족 집안 식구들이 모였습니다.",
+          "exampleTarget": "The whole clan gathered for New Year.",
+          "exampleMeaning": "새해를 맞아 온 씨족 집안 식구들이 모였습니다."
         },
         {
           "id": "en_15406",
@@ -93337,10 +93337,10 @@
           "pronunciation": "[스어느이]",
           "pron": "[스어느이]",
           "phonetic": "[스어느이]",
-          "example_en": "This is an example for sonny.",
-          "example_ko": "이것은 아 얘야 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sonny.",
-          "exampleMeaning": "이것은 아 얘야 관련 실전 예문입니다."
+          "example_en": "Listen carefully to what I say sonny.",
+          "example_ko": "얘야 내가 하는 말을 주의 깊게 잘 들으렴.",
+          "exampleTarget": "Listen carefully to what I say sonny.",
+          "exampleMeaning": "얘야 내가 하는 말을 주의 깊게 잘 들으렴."
         },
         {
           "id": "en_15408",
@@ -93354,10 +93354,10 @@
           "pronunciation": "[우느드이]",
           "pron": "[우느드이]",
           "phonetic": "[우느드이]",
-          "example_en": "This is an example for wendy.",
-          "example_ko": "이것은 웬디 여자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wendy.",
-          "exampleMeaning": "이것은 웬디 여자 관련 실전 예문입니다."
+          "example_en": "Wendy baked a sweet blueberry pie yesterday.",
+          "example_ko": "Wendy는 어제 달콤한 블루베리 파이를 구웠습니다.",
+          "exampleTarget": "Wendy baked a sweet blueberry pie yesterday.",
+          "exampleMeaning": "Wendy는 어제 달콤한 블루베리 파이를 구웠습니다."
         },
         {
           "id": "en_15409",
@@ -93371,10 +93371,10 @@
           "pronunciation": "[흐우아느]",
           "pron": "[흐우아느]",
           "phonetic": "[흐우아느]",
-          "example_en": "This is an example for juan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for juan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Juan drinks hot green tea every morning.",
+          "example_ko": "Juan은 매일 아침 따뜻한 녹차를 마십니다.",
+          "exampleTarget": "Juan drinks hot green tea every morning.",
+          "exampleMeaning": "Juan은 매일 아침 따뜻한 녹차를 마십니다."
         },
         {
           "id": "en_15410",
@@ -93388,10 +93388,10 @@
           "pronunciation": "[르이르이]",
           "pron": "[르이르이]",
           "phonetic": "[르이르이]",
-          "example_en": "This is an example for riley.",
-          "example_ko": "이것은 흐려진 화난 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for riley.",
-          "exampleMeaning": "이것은 흐려진 화난 관련 실전 예문입니다."
+          "example_en": "Riley adopted a cute rescue puppy yesterday.",
+          "example_ko": "Riley는 어제 귀여운 유기견 강아지를 입양했습니다.",
+          "exampleTarget": "Riley adopted a cute rescue puppy yesterday.",
+          "exampleMeaning": "Riley는 어제 귀여운 유기견 강아지를 입양했습니다."
         },
         {
           "id": "en_15411",
@@ -93439,10 +93439,10 @@
           "pronunciation": "[스드느이]",
           "pron": "[스드느이]",
           "phonetic": "[스드느이]",
-          "example_en": "This is an example for sydney.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sydney.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Sydney is famous for its Opera House.",
+          "example_ko": "시드니는 오페라 하우스로 아주 유명합니다.",
+          "exampleTarget": "Sydney is famous for its Opera House.",
+          "exampleMeaning": "시드니는 오페라 하우스로 아주 유명합니다."
         },
         {
           "id": "en_15414",
@@ -93456,10 +93456,10 @@
           "pronunciation": "[느이르]",
           "pron": "[느이르]",
           "phonetic": "[느이르]",
-          "example_en": "This is an example for neil.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for neil.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Neil plays the piano after finishing dinner.",
+          "example_ko": "Neil은 저녁 식사를 마친 후 피아노를 칩니다.",
+          "exampleTarget": "Neil plays the piano after finishing dinner.",
+          "exampleMeaning": "Neil은 저녁 식사를 마친 후 피아노를 칩니다."
         },
         {
           "id": "en_15415",
@@ -93508,9 +93508,9 @@
           "pron": "[느어르]",
           "phonetic": "[느어르]",
           "example_en": "an inner pocket.",
-          "example_ko": "안주머니. 2.〈감정 등이〉 개인적인 내밀한 보다 친한.",
+          "example_ko": "안주머니.",
           "exampleTarget": "an inner pocket.",
-          "exampleMeaning": "안주머니. 2.〈감정 등이〉 개인적인 내밀한 보다 친한."
+          "exampleMeaning": "안주머니."
         },
         {
           "id": "en_15418",
@@ -93525,9 +93525,9 @@
           "pron": "[스에느트]",
           "phonetic": "[스에느트]",
           "example_en": "cent per cent100.",
-          "example_ko": "퍼센트. 3.《a cent》《보통 부정문》 《미》 동전 한 닢 푼돈.",
+          "example_ko": "퍼센트.",
           "exampleTarget": "cent per cent100.",
-          "exampleMeaning": "퍼센트. 3.《a cent》《보통 부정문》 《미》 동전 한 닢 푼돈."
+          "exampleMeaning": "퍼센트."
         },
         {
           "id": "en_15419",
@@ -93575,10 +93575,10 @@
           "pronunciation": "[므트어르]",
           "pron": "[므트어르]",
           "phonetic": "[므트어르]",
-          "example_en": "This is an example for meters.",
-          "example_ko": "이것은 미터 미터법에서 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for meters.",
-          "exampleMeaning": "이것은 미터 미터법에서 관련 실전 예문입니다."
+          "example_en": "The finish line is fifty meters ahead.",
+          "example_ko": "결승선은 오십 미터 앞에 있습니다.",
+          "exampleTarget": "The finish line is fifty meters ahead.",
+          "exampleMeaning": "결승선은 오십 미터 앞에 있습니다."
         },
         {
           "id": "en_15422",
@@ -93592,10 +93592,10 @@
           "pronunciation": "[르오르이어]",
           "pron": "[르오르이어]",
           "phonetic": "[르오르이어]",
-          "example_en": "This is an example for gloria.",
-          "example_ko": "이것은 영광의 찬 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gloria.",
-          "exampleMeaning": "이것은 영광의 찬 관련 실전 예문입니다."
+          "example_en": "Gloria solved the complex puzzle very quickly.",
+          "example_ko": "Gloria는 복잡한 퍼즐을 아주 빠르게 풀었습니다.",
+          "exampleTarget": "Gloria solved the complex puzzle very quickly.",
+          "exampleMeaning": "Gloria는 복잡한 퍼즐을 아주 빠르게 풀었습니다."
         },
         {
           "id": "en_15423",
@@ -93609,10 +93609,10 @@
           "pronunciation": "[트오르느]",
           "pron": "[트오르느]",
           "phonetic": "[트오르느]",
-          "example_en": "This is an example for torn.",
-          "example_ko": "이것은 ²의 과거 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for torn.",
-          "exampleMeaning": "이것은 ²의 과거 관련 실전 예문입니다."
+          "example_en": "He wore a pair of torn jeans.",
+          "example_ko": "그는 찢어진 청바지를 입고 있었다.",
+          "exampleTarget": "He wore a pair of torn jeans.",
+          "exampleMeaning": "그는 찢어진 청바지를 입고 있었다."
         },
         {
           "id": "en_15424",
@@ -93627,9 +93627,9 @@
           "pron": "[르아크이]",
           "phonetic": "[르아크이]",
           "example_en": "a rocky path.",
-          "example_ko": "돌길. 2.（무게·굳기 등이） 바위 같은.",
+          "example_ko": "돌길.",
           "exampleTarget": "a rocky path.",
-          "exampleMeaning": "돌길. 2.（무게·굳기 등이） 바위 같은."
+          "exampleMeaning": "돌길."
         },
         {
           "id": "en_15425",
@@ -93678,9 +93678,9 @@
           "pron": "[드이스크어브어르이]",
           "phonetic": "[드이스크어브어르이]",
           "example_en": "We cannot tell what new discoveries will be made.",
-          "example_ko": "장래에 어떤 새 발견이 이루어질지 알 수 없다. 2.발견된 것 새로운 발견물; （예능·스포츠 등의） 신인. 3.（연극 등 줄거리의） 전개; 《드물게》 탄로 발각. 4.〔법률〕 （증거） 공표 발표: 증거나 사실을 당사자의 요구에 따라 제시하기.",
+          "example_ko": "장래에 어떤 새 발견이 이루어질지 알 수 없다.",
           "exampleTarget": "We cannot tell what new discoveries will be made.",
-          "exampleMeaning": "장래에 어떤 새 발견이 이루어질지 알 수 없다. 2.발견된 것 새로운 발견물; （예능·스포츠 등의） 신인. 3.（연극 등 줄거리의） 전개; 《드물게》 탄로 발각. 4.〔법률〕 （증거） 공표 발표: 증거나 사실을 당사자의 요구에 따라 제시하기."
+          "exampleMeaning": "장래에 어떤 새 발견이 이루어질지 알 수 없다."
         },
         {
           "id": "en_15428",
@@ -93694,10 +93694,10 @@
           "pronunciation": "[크우브오이]",
           "pron": "[크우브오이]",
           "phonetic": "[크우브오이]",
-          "example_en": "This is an example for cowboy.",
-          "example_ko": "이것은 카우보이 목동 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cowboy.",
-          "exampleMeaning": "이것은 카우보이 목동 관련 실전 예문입니다."
+          "example_en": "The cowboy rode his horse across fields.",
+          "example_ko": "카우보이가 들판을 가로질러 말을 달렸습니다.",
+          "exampleTarget": "The cowboy rode his horse across fields.",
+          "exampleMeaning": "카우보이가 들판을 가로질러 말을 달렸습니다."
         },
         {
           "id": "en_15429",
@@ -93711,10 +93711,10 @@
           "pronunciation": "[스트크이으]",
           "pron": "[스트크이으]",
           "phonetic": "[스트크이으]",
-          "example_en": "This is an example for sticking.",
-          "example_ko": "이것은 끈적끈적한 달라붙는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sticking.",
-          "exampleMeaning": "이것은 끈적끈적한 달라붙는 관련 실전 예문입니다."
+          "example_en": "Wet leaves are sticking to the windshield.",
+          "example_ko": "젖은 낙엽들이 자동차 앞유리에 달라붙어 있습니다.",
+          "exampleTarget": "Wet leaves are sticking to the windshield.",
+          "exampleMeaning": "젖은 낙엽들이 자동차 앞유리에 달라붙어 있습니다."
         },
         {
           "id": "en_15430",
@@ -93728,10 +93728,10 @@
           "pronunciation": "[쉬에이느]",
           "pron": "[쉬에이느]",
           "phonetic": "[쉬에이느]",
-          "example_en": "This is an example for shane.",
-          "example_ko": "이것은 셰인 Shaefer작의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shane.",
-          "exampleMeaning": "이것은 셰인 Shaefer작의 관련 실전 예문입니다."
+          "example_en": "Shane repaired the garden wooden fence yesterday.",
+          "example_ko": "Shane은 어제 정원의 나무 울타리를 수리했습니다.",
+          "exampleTarget": "Shane repaired the garden wooden fence yesterday.",
+          "exampleMeaning": "Shane은 어제 정원의 나무 울타리를 수리했습니다."
         }
       ],
       "nodes": [
@@ -93861,10 +93861,10 @@
           "pronunciation": "[프르아스이크이트어르]",
           "pron": "[프르아스이크이트어르]",
           "phonetic": "[프르아스이크이트어르]",
-          "example_en": "This is an example for prosecutor.",
-          "example_ko": "이것은 소추자 검찰관 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for prosecutor.",
-          "exampleMeaning": "이것은 소추자 검찰관 관련 실전 예문입니다."
+          "example_en": "The prosecutor presented strong evidence in court.",
+          "example_ko": "검사는 법정에서 강력한 증거를 제시했습니다.",
+          "exampleTarget": "The prosecutor presented strong evidence in court.",
+          "exampleMeaning": "검사는 법정에서 강력한 증거를 제시했습니다."
         },
         {
           "id": "en_15503",
@@ -93895,10 +93895,10 @@
           "pronunciation": "[크우이느]",
           "pron": "[크우이느]",
           "phonetic": "[크우이느]",
-          "example_en": "This is an example for quinn.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for quinn.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Quinn answered all the interview questions calmly.",
+          "example_ko": "Quinn은 모든 면접 질문에 차분하게 대답했습니다.",
+          "exampleTarget": "Quinn answered all the interview questions calmly.",
+          "exampleMeaning": "Quinn은 모든 면접 질문에 차분하게 대답했습니다."
         },
         {
           "id": "en_15505",
@@ -93929,10 +93929,10 @@
           "pronunciation": "[프르이크스]",
           "pron": "[프르이크스]",
           "phonetic": "[프르이크스]",
-          "example_en": "This is an example for felix.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for felix.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Felix brought delicious cookies to the party.",
+          "example_ko": "Felix는 파티에 맛있는 쿠키를 가져왔습니다.",
+          "exampleTarget": "Felix brought delicious cookies to the party.",
+          "exampleMeaning": "Felix는 파티에 맛있는 쿠키를 가져왔습니다."
         },
         {
           "id": "en_15507",
@@ -93946,10 +93946,10 @@
           "pronunciation": "[브애르어느트이느]",
           "pron": "[브애르어느트이느]",
           "phonetic": "[브애르어느트이느]",
-          "example_en": "This is an example for valentine.",
-          "example_ko": "이것은 성 발렌타인의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for valentine.",
-          "exampleMeaning": "이것은 성 발렌타인의 관련 실전 예문입니다."
+          "example_en": "He bought flowers for Valentine Day early.",
+          "example_ko": "그는 밸런타인데이를 위해 일찍 꽃을 샀습니다.",
+          "exampleTarget": "He bought flowers for Valentine Day early.",
+          "exampleMeaning": "그는 밸런타인데이를 위해 일찍 꽃을 샀습니다."
         },
         {
           "id": "en_15508",
@@ -93963,10 +93963,10 @@
           "pronunciation": "[크우느트어르]",
           "pron": "[크우느트어르]",
           "phonetic": "[크우느트어르]",
-          "example_en": "This is an example for counter.",
-          "example_ko": "이것은 접두사「역 의」 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for counter.",
-          "exampleMeaning": "이것은 접두사「역 의」 관련 실전 예문입니다."
+          "example_en": "Pay for the goods at the counter.",
+          "example_ko": "계산대에서 물건값을 지불하세요.",
+          "exampleTarget": "Pay for the goods at the counter.",
+          "exampleMeaning": "계산대에서 물건값을 지불하세요."
         },
         {
           "id": "en_15509",
@@ -93980,10 +93980,10 @@
           "pronunciation": "[우오르어느]",
           "pron": "[우오르어느]",
           "phonetic": "[우오르어느]",
-          "example_en": "This is an example for warren.",
-          "example_ko": "이것은 토끼의 번식지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for warren.",
-          "exampleMeaning": "이것은 토끼의 번식지 관련 실전 예문입니다."
+          "example_en": "Warren checked the engine oil this morning.",
+          "example_ko": "Warren은 오늘 아침 엔진 오일을 점검했습니다.",
+          "exampleTarget": "Warren checked the engine oil this morning.",
+          "exampleMeaning": "Warren은 오늘 아침 엔진 오일을 점검했습니다."
         },
         {
           "id": "en_15510",
@@ -94015,9 +94015,9 @@
           "pron": "[브이드]",
           "phonetic": "[브이드]",
           "example_en": "What am I bid for this old book?",
-          "example_ko": "이 고서에다 얼마를 매기면 될까요? 2. 《문어》 〈남에게〉 （…하도록） 명령하다.",
+          "example_ko": "이 고서에다 얼마를 매기면 될까요?",
           "exampleTarget": "What am I bid for this old book?",
-          "exampleMeaning": "이 고서에다 얼마를 매기면 될까요? 2. 《문어》 〈남에게〉 （…하도록） 명령하다."
+          "exampleMeaning": "이 고서에다 얼마를 매기면 될까요?"
         },
         {
           "id": "en_15512",
@@ -94031,10 +94031,10 @@
           "pronunciation": "[므아스크오]",
           "pron": "[므아스크오]",
           "phonetic": "[므아스크오]",
-          "example_en": "This is an example for moscow.",
-          "example_ko": "이것은 모스크바 구 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for moscow.",
-          "exampleMeaning": "이것은 모스크바 구 관련 실전 예문입니다."
+          "example_en": "Winters in Moscow can be extremely cold.",
+          "example_ko": "모스크바의 겨울은 극도로 추울 수 있습니다.",
+          "exampleTarget": "Winters in Moscow can be extremely cold.",
+          "exampleMeaning": "모스크바의 겨울은 극도로 추울 수 있습니다."
         },
         {
           "id": "en_15513",
@@ -94066,9 +94066,9 @@
           "pron": "[우아쉬이으]",
           "phonetic": "[우아쉬이으]",
           "example_en": "I gave myself a good washing.",
-          "example_ko": "몸을 충분히 씻었다. 2.《the washing》《집합적》 세탁물 빨랫감.",
+          "example_ko": "몸을 충분히 씻었다.",
           "exampleTarget": "I gave myself a good washing.",
-          "exampleMeaning": "몸을 충분히 씻었다. 2.《the washing》《집합적》 세탁물 빨랫감."
+          "exampleMeaning": "몸을 충분히 씻었다."
         },
         {
           "id": "en_15515",
@@ -94082,10 +94082,10 @@
           "pronunciation": "[므우]",
           "pron": "[므우]",
           "phonetic": "[므우]",
-          "example_en": "This is an example for mo.",
-          "example_ko": "이것은 절 」의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mo.",
-          "exampleMeaning": "이것은 절 」의 관련 실전 예문입니다."
+          "example_en": "Just wait a mo while I check.",
+          "example_ko": "제가 확인하는 동안 잠깐만 기다려 주세요.",
+          "exampleTarget": "Just wait a mo while I check.",
+          "exampleMeaning": "제가 확인하는 동안 잠깐만 기다려 주세요."
         },
         {
           "id": "en_15516",
@@ -94100,9 +94100,9 @@
           "pron": "[드오프]",
           "phonetic": "[드오프]",
           "example_en": "on dope.",
-          "example_ko": "마약을 하는. ②《속어》 마약 환자; 《구어》 얼간이 멍청이 늙다리. 3.《속어》 내부 소식 （경마의） 승리마 예상 （일반적으로） 비밀 정보.",
+          "example_ko": "마약을 하는. ② 마약 환자; 얼간이 멍청이 늙다리.",
           "exampleTarget": "on dope.",
-          "exampleMeaning": "마약을 하는. ②《속어》 마약 환자; 《구어》 얼간이 멍청이 늙다리. 3.《속어》 내부 소식 （경마의） 승리마 예상 （일반적으로） 비밀 정보."
+          "exampleMeaning": "마약을 하는. ② 마약 환자; 얼간이 멍청이 늙다리."
         },
         {
           "id": "en_15517",
@@ -94112,14 +94112,14 @@
           "level": "C1",
           "unitId": "unit_155",
           "nodeId": "en_u155_n2",
-          "meaning": "logan",
+          "meaning": "로건",
           "pronunciation": "[르우어느]",
           "pron": "[르우어느]",
           "phonetic": "[르우어느]",
-          "example_en": "This is an example for logan.",
-          "example_ko": "이것은 logan 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for logan.",
-          "exampleMeaning": "이것은 logan 관련 실전 예문입니다."
+          "example_en": "Logan carried the heavy groceries inside home.",
+          "example_ko": "Logan은 무거운 식료품을 집 안으로 옮겼습니다.",
+          "exampleTarget": "Logan carried the heavy groceries inside home.",
+          "exampleMeaning": "Logan은 무거운 식료품을 집 안으로 옮겼습니다."
         },
         {
           "id": "en_15518",
@@ -94201,10 +94201,10 @@
           "pronunciation": "[느우어]",
           "pron": "[느우어]",
           "phonetic": "[느우어]",
-          "example_en": "This is an example for noah.",
-          "example_ko": "이것은 노아 히브리의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for noah.",
-          "exampleMeaning": "이것은 노아 히브리의 관련 실전 예문입니다."
+          "example_en": "Noah borrowed an interesting book from library.",
+          "example_ko": "Noah는 도서관에서 흥미로운 책을 빌렸습니다.",
+          "exampleTarget": "Noah borrowed an interesting book from library.",
+          "exampleMeaning": "Noah는 도서관에서 흥미로운 책을 빌렸습니다."
         },
         {
           "id": "en_15523",
@@ -94218,10 +94218,10 @@
           "pronunciation": "[브어느]",
           "pron": "[브어느]",
           "phonetic": "[브어느]",
-          "example_en": "This is an example for evan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for evan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Evan enjoys running in the park mornings.",
+          "example_ko": "Evan은 아침마다 공원에서 달리기하는 것을 즐깁니다.",
+          "exampleTarget": "Evan enjoys running in the park mornings.",
+          "exampleMeaning": "Evan은 아침마다 공원에서 달리기하는 것을 즐깁니다."
         },
         {
           "id": "en_15524",
@@ -94235,10 +94235,10 @@
           "pronunciation": "[크르이스트느]",
           "pron": "[크르이스트느]",
           "phonetic": "[크르이스트느]",
-          "example_en": "This is an example for christine.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for christine.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Christine bought fresh apples from the supermarket.",
+          "example_ko": "Christine은 슈퍼마켓에서 신선한 사과를 샀습니다.",
+          "exampleTarget": "Christine bought fresh apples from the supermarket.",
+          "exampleMeaning": "Christine은 슈퍼마켓에서 신선한 사과를 샀습니다."
         },
         {
           "id": "en_15525",
@@ -94286,10 +94286,10 @@
           "pronunciation": "[브아드크어]",
           "pron": "[브아드크어]",
           "phonetic": "[브아드크어]",
-          "example_en": "This is an example for vodka.",
-          "example_ko": "이것은 보드카 러시아산의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vodka.",
-          "exampleMeaning": "이것은 보드카 러시아산의 관련 실전 예문입니다."
+          "example_en": "He ordered a small glass of vodka.",
+          "example_ko": "그는 보드카 한 잔을 작은 잔으로 주문했습니다.",
+          "exampleTarget": "He ordered a small glass of vodka.",
+          "exampleMeaning": "그는 보드카 한 잔을 작은 잔으로 주문했습니다."
         },
         {
           "id": "en_15528",
@@ -94304,9 +94304,9 @@
           "pron": "[스우르어르]",
           "phonetic": "[스우르어르]",
           "example_en": "solar spots.",
-          "example_ko": "태양 흑점. 2.태양에 의한.",
+          "example_ko": "태양 흑점.",
           "exampleTarget": "solar spots.",
-          "exampleMeaning": "태양 흑점. 2.태양에 의한."
+          "exampleMeaning": "태양 흑점."
         },
         {
           "id": "en_15529",
@@ -94320,10 +94320,10 @@
           "pronunciation": "[이아르드]",
           "pron": "[이아르드]",
           "phonetic": "[이아르드]",
-          "example_en": "This is an example for yards.",
-          "example_ko": "이것은 집 정 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yards.",
-          "exampleMeaning": "이것은 집 정 관련 실전 예문입니다."
+          "example_en": "The ball landed twenty yards away outside.",
+          "example_ko": "공은 이십 야드 떨어진 바깥에 떨어졌습니다.",
+          "exampleTarget": "The ball landed twenty yards away outside.",
+          "exampleMeaning": "공은 이십 야드 떨어진 바깥에 떨어졌습니다."
         },
         {
           "id": "en_15530",
@@ -94487,10 +94487,10 @@
           "pronunciation": "[츠어르프]",
           "pron": "[츠어르프]",
           "phonetic": "[츠어르프]",
-          "example_en": "This is an example for chirping.",
-          "example_ko": "이것은 찍찍 울다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for chirping.",
-          "exampleMeaning": "이것은 찍찍 울다 관련 실전 예문입니다."
+          "example_en": "Birds were chirping outside the window cheerfully.",
+          "example_ko": "새들이 창밖에서 활기차게 짹짹 울고 있었습니다.",
+          "exampleTarget": "Birds were chirping outside the window cheerfully.",
+          "exampleMeaning": "새들이 창밖에서 활기차게 짹짹 울고 있었습니다."
         },
         {
           "id": "en_15604",
@@ -94505,9 +94505,9 @@
           "pron": "[우에브]",
           "phonetic": "[우에브]",
           "example_en": "a web of material on a loom.",
-          "example_ko": "베틀 위에 놓인 직물. 2.거미줄 ; 천막벌레나방의 집.",
+          "example_ko": "베틀 위에 놓인 직물.",
           "exampleTarget": "a web of material on a loom.",
-          "exampleMeaning": "베틀 위에 놓인 직물. 2.거미줄 ; 천막벌레나방의 집."
+          "exampleMeaning": "베틀 위에 놓인 직물."
         },
         {
           "id": "en_15605",
@@ -94521,10 +94521,10 @@
           "pronunciation": "[프르아므]",
           "pron": "[프르아므]",
           "phonetic": "[프르아므]",
-          "example_en": "This is an example for prom.",
-          "example_ko": "이것은 학년말 댄스 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for prom.",
-          "exampleMeaning": "이것은 학년말 댄스 관련 실전 예문입니다."
+          "example_en": "They danced together at high school prom.",
+          "example_ko": "그들은 고등학교 프롬 무도회에서 함께 춤을 추었습니다.",
+          "exampleTarget": "They danced together at high school prom.",
+          "exampleMeaning": "그들은 고등학교 프롬 무도회에서 함께 춤을 추었습니다."
         },
         {
           "id": "en_15606",
@@ -94556,9 +94556,9 @@
           "pron": "[프르이트]",
           "phonetic": "[프르이트]",
           "example_en": "combined fleet.",
-          "example_ko": "연합 함대. 2.（상선·어선의） 선단 선대.",
+          "example_ko": "연합 함대.",
           "exampleTarget": "combined fleet.",
-          "exampleMeaning": "연합 함대. 2.（상선·어선의） 선단 선대."
+          "exampleMeaning": "연합 함대."
         },
         {
           "id": "en_15608",
@@ -94623,10 +94623,10 @@
           "pronunciation": "[아크트우브어르]",
           "pron": "[아크트우브어르]",
           "phonetic": "[아크트우브어르]",
-          "example_en": "This is an example for october.",
-          "example_ko": "이것은 월에 빚은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for october.",
-          "exampleMeaning": "이것은 월에 빚은 관련 실전 예문입니다."
+          "example_en": "Leaves change color during October every year.",
+          "example_ko": "나뭇잎은 매년 시월에 색이 변합니다.",
+          "exampleTarget": "Leaves change color during October every year.",
+          "exampleMeaning": "나뭇잎은 매년 시월에 색이 변합니다."
         },
         {
           "id": "en_15612",
@@ -94640,10 +94640,10 @@
           "pronunciation": "[므에르]",
           "pron": "[므에르]",
           "phonetic": "[므에르]",
-          "example_en": "This is an example for mel.",
-          "example_ko": "이것은 벌꿀 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mel.",
-          "exampleMeaning": "이것은 벌꿀 관련 실전 예문입니다."
+          "example_en": "Mel prepared coffee for all office guests.",
+          "example_ko": "Mel은 모든 사무실 손님들을 위해 커피를 준비했습니다.",
+          "exampleTarget": "Mel prepared coffee for all office guests.",
+          "exampleMeaning": "Mel은 모든 사무실 손님들을 위해 커피를 준비했습니다."
         },
         {
           "id": "en_15613",
@@ -94657,10 +94657,10 @@
           "pronunciation": "[어므어으크스트]",
           "pron": "[어므어으크스트]",
           "phonetic": "[어므어으크스트]",
-          "example_en": "This is an example for amongst.",
-          "example_ko": "이것은 문어적임 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for amongst.",
-          "exampleMeaning": "이것은 문어적임 관련 실전 예문입니다."
+          "example_en": "She found the lost key amongst papers.",
+          "example_ko": "그녀는 서류 뭉치 속에서 잃어버린 열쇠를 찾았습니다.",
+          "exampleTarget": "She found the lost key amongst papers.",
+          "exampleMeaning": "그녀는 서류 뭉치 속에서 잃어버린 열쇠를 찾았습니다."
         },
         {
           "id": "en_15614",
@@ -94708,10 +94708,10 @@
           "pronunciation": "[sunshine]",
           "pron": "[sunshine]",
           "phonetic": "[sunshine]",
-          "example_en": "This is an example for sunshine.",
-          "example_ko": "이것은 햇빛 태양 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sunshine.",
-          "exampleMeaning": "이것은 햇빛 태양 관련 실전 예문입니다."
+          "example_en": "Bright morning sunshine streamed into our living room.",
+          "example_ko": "밝은 아침 햇빛이 우리 거실 안으로 쏟아져 들어왔습니다.",
+          "exampleTarget": "Bright morning sunshine streamed into our living room.",
+          "exampleMeaning": "밝은 아침 햇빛이 우리 거실 안으로 쏟아져 들어왔습니다."
         },
         {
           "id": "en_15617",
@@ -94759,10 +94759,10 @@
           "pronunciation": "[르프트]",
           "pron": "[르프트]",
           "phonetic": "[르프트]",
-          "example_en": "This is an example for wrapped.",
-          "example_ko": "이것은 매우 기뻐하는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wrapped.",
-          "exampleMeaning": "이것은 매우 기뻐하는 관련 실전 예문입니다."
+          "example_en": "She wrapped the delicate birthday gift with ribbon.",
+          "example_ko": "그녀는 리본으로 섬세한 생일 선물을 포장했습니다.",
+          "exampleTarget": "She wrapped the delicate birthday gift with ribbon.",
+          "exampleMeaning": "그녀는 리본으로 섬세한 생일 선물을 포장했습니다."
         },
         {
           "id": "en_15620",
@@ -94777,9 +94777,9 @@
           "pron": "[크어르어느]",
           "phonetic": "[크어르어느]",
           "example_en": "the Korean Peninsula.",
-          "example_ko": "한반도. 명사1.한국인. 2.한국어 한글.",
+          "example_ko": "한반도.",
           "exampleTarget": "the Korean Peninsula.",
-          "exampleMeaning": "한반도. 명사1.한국인. 2.한국어 한글."
+          "exampleMeaning": "한반도."
         },
         {
           "id": "en_15621",
@@ -94793,10 +94793,10 @@
           "pronunciation": "[르이어므]",
           "pron": "[르이어므]",
           "phonetic": "[르이어므]",
-          "example_en": "This is an example for graham.",
-          "example_ko": "이것은 전립분 전립분의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for graham.",
-          "exampleMeaning": "이것은 전립분 전립분의 관련 실전 예문입니다."
+          "example_en": "We bought sweet graham crackers for our camping.",
+          "example_ko": "우리는 캠핑을 위해 달콤한 그레이엄 크래커를 샀습니다.",
+          "exampleTarget": "We bought sweet graham crackers for our camping.",
+          "exampleMeaning": "우리는 캠핑을 위해 달콤한 그레이엄 크래커를 샀습니다."
         },
         {
           "id": "en_15622",
@@ -94810,10 +94810,10 @@
           "pronunciation": "[므이]",
           "pron": "[므이]",
           "phonetic": "[므이]",
-          "example_en": "This is an example for mi.",
-          "example_ko": "이것은 제 음 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mi.",
-          "exampleMeaning": "이것은 제 음 관련 실전 예문입니다."
+          "example_en": "Sing the notes do re mi with me.",
+          "example_ko": "나와 함께 도레미 음을 맞춰 불러 보세요.",
+          "exampleTarget": "Sing the notes do re mi with me.",
+          "exampleMeaning": "나와 함께 도레미 음을 맞춰 불러 보세요."
         },
         {
           "id": "en_15623",
@@ -94827,10 +94827,10 @@
           "pronunciation": "[프우]",
           "pron": "[프우]",
           "phonetic": "[프우]",
-          "example_en": "This is an example for fu.",
-          "example_ko": "이것은 마리화나 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fu.",
-          "exampleMeaning": "이것은 마리화나 관련 실전 예문입니다."
+          "example_en": "He practices kung fu every morning before work.",
+          "example_ko": "그는 출근하기 전 매일 아침 쿵푸를 연습합니다.",
+          "exampleTarget": "He practices kung fu every morning before work.",
+          "exampleMeaning": "그는 출근하기 전 매일 아침 쿵푸를 연습합니다."
         },
         {
           "id": "en_15624",
@@ -94844,10 +94844,10 @@
           "pronunciation": "[이브어느]",
           "pron": "[이브어느]",
           "phonetic": "[이브어느]",
-          "example_en": "This is an example for ivan.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ivan.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Ivan forgot his warm winter jacket at home.",
+          "example_ko": "이반은 따뜻한 겨울 외투를 집에 두고 왔습니다.",
+          "exampleTarget": "Ivan forgot his warm winter jacket at home.",
+          "exampleMeaning": "이반은 따뜻한 겨울 외투를 집에 두고 왔습니다."
         },
         {
           "id": "en_15625",
@@ -94857,14 +94857,14 @@
           "level": "C1",
           "unitId": "unit_156",
           "nodeId": "en_u156_n5",
-          "meaning": "liam",
+          "meaning": "리암",
           "pronunciation": "[liam]",
           "pron": "[liam]",
           "phonetic": "[liam]",
-          "example_en": "I use the word liam in daily life.",
-          "example_ko": "나는 일상에서 liam 단어를 사용합니다.",
-          "exampleTarget": "I use the word liam in daily life.",
-          "exampleMeaning": "나는 일상에서 liam 단어를 사용합니다."
+          "example_en": "Liam scored the winning goal in the final game.",
+          "example_ko": "리암이 결승전에서 결승골을 터뜨렸다.",
+          "exampleTarget": "Liam scored the winning goal in the final game.",
+          "exampleMeaning": "리암이 결승전에서 결승골을 터뜨렸다."
         },
         {
           "id": "en_15626",
@@ -94878,10 +94878,10 @@
           "pronunciation": "[크아르어]",
           "pron": "[크아르어]",
           "phonetic": "[크아르어]",
-          "example_en": "This is an example for carla.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carla.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Carla sent the quarterly financial report this morning.",
+          "example_ko": "카를라는 오늘 아침 분기 재무 보고서를 보냈습니다.",
+          "exampleTarget": "Carla sent the quarterly financial report this morning.",
+          "exampleMeaning": "카를라는 오늘 아침 분기 재무 보고서를 보냈습니다."
         },
         {
           "id": "en_15627",
@@ -94908,14 +94908,14 @@
           "level": "C1",
           "unitId": "unit_156",
           "nodeId": "en_u156_n5",
-          "meaning": "uhh",
+          "meaning": "글쎄",
           "pronunciation": "[uhh]",
           "pron": "[uhh]",
           "phonetic": "[uhh]",
-          "example_en": "I use the word uhh in daily life.",
-          "example_ko": "나는 일상에서 uhh 단어를 사용합니다.",
-          "exampleTarget": "I use the word uhh in daily life.",
-          "exampleMeaning": "나는 일상에서 uhh 단어를 사용합니다."
+          "example_en": "Uhh  I need a moment to think about it.",
+          "example_ko": "어  그것에 대해 생각할 시간이 잠시 필요해.",
+          "exampleTarget": "Uhh  I need a moment to think about it.",
+          "exampleMeaning": "어  그것에 대해 생각할 시간이 잠시 필요해."
         },
         {
           "id": "en_15629",
@@ -94929,10 +94929,10 @@
           "pronunciation": "[르으크어느]",
           "pron": "[르으크어느]",
           "phonetic": "[르으크어느]",
-          "example_en": "This is an example for lincoln.",
-          "example_ko": "이것은 링컨 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lincoln.",
-          "exampleMeaning": "이것은 링컨 남자 관련 실전 예문입니다."
+          "example_en": "We visited the Lincoln memorial during our vacation.",
+          "example_ko": "우리는 휴가 기간 동안 링컨 기념관을 방문했습니다.",
+          "exampleTarget": "We visited the Lincoln memorial during our vacation.",
+          "exampleMeaning": "우리는 휴가 기간 동안 링컨 기념관을 방문했습니다."
         },
         {
           "id": "en_15630",
@@ -95058,14 +95058,14 @@
           "level": "C1",
           "unitId": "unit_157",
           "nodeId": "en_u157_n1",
-          "meaning": "travis",
+          "meaning": "트래비스",
           "pronunciation": "[travis]",
           "pron": "[travis]",
           "phonetic": "[travis]",
-          "example_en": "I use the word travis in daily life.",
-          "example_ko": "나는 일상에서 travis 단어를 사용합니다.",
-          "exampleTarget": "I use the word travis in daily life.",
-          "exampleMeaning": "나는 일상에서 travis 단어를 사용합니다."
+          "example_en": "Travis works as a software engineer downtown.",
+          "example_ko": "트래비스는 도심에서 소프트웨어 엔지니어로 일한다.",
+          "exampleTarget": "Travis works as a software engineer downtown.",
+          "exampleMeaning": "트래비스는 도심에서 소프트웨어 엔지니어로 일한다."
         },
         {
           "id": "en_15702",
@@ -95114,9 +95114,9 @@
           "pron": "[스즈어르]",
           "phonetic": "[스즈어르]",
           "example_en": "Render therefore to Caesar the things that are Caesars and to God the things that are Gods.",
-          "example_ko": "그런즉 시저의 것은 시저에게 하나님의 것은 하나님께 바치라. cf. 〔성서〕 마태 복음 22:21. 5.《속어》 제왕 절개. 숙어 appeal to Caesar 최고 권력자에게 호소하다; 총선거에서 국민에게 호소하다.",
+          "example_ko": "그런즉 시저의 것은 시저에게 하나님의 것은 하나님께 바치라. cf. 〔성서〕 마태 복음 22:21.",
           "exampleTarget": "Render therefore to Caesar the things that are Caesars and to God the things that are Gods.",
-          "exampleMeaning": "그런즉 시저의 것은 시저에게 하나님의 것은 하나님께 바치라. cf. 〔성서〕 마태 복음 22:21. 5.《속어》 제왕 절개. 숙어 appeal to Caesar 최고 권력자에게 호소하다; 총선거에서 국민에게 호소하다."
+          "exampleMeaning": "그런즉 시저의 것은 시저에게 하나님의 것은 하나님께 바치라. cf. 〔성서〕 마태 복음 22:21."
         },
         {
           "id": "en_15705",
@@ -95126,14 +95126,14 @@
           "level": "C1",
           "unitId": "unit_157",
           "nodeId": "en_u157_n1",
-          "meaning": "sis",
+          "meaning": "여동생",
           "pronunciation": "[스이스]",
           "pron": "[스이스]",
           "phonetic": "[스이스]",
-          "example_en": "This is an example for sis.",
-          "example_ko": "이것은 sis 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sis.",
-          "exampleMeaning": "이것은 sis 관련 실전 예문입니다."
+          "example_en": "My little sis called me from university yesterday.",
+          "example_ko": "내 여동생이 어제 대학교에서 나에게 전화했습니다.",
+          "exampleTarget": "My little sis called me from university yesterday.",
+          "exampleMeaning": "내 여동생이 어제 대학교에서 나에게 전화했습니다."
         },
         {
           "id": "en_15706",
@@ -95165,9 +95165,9 @@
           "pron": "[츠이크]",
           "phonetic": "[츠이크]",
           "example_en": "a poor fatherless chick.",
-          "example_ko": "아버지가 없는 불쌍한 아이. 3.《속어》 젊은 여자 계집애. 4.《미·속어》 （불량배 사이에서） 교도소 음식.",
+          "example_ko": "아버지가 없는 불쌍한 아이.",
           "exampleTarget": "a poor fatherless chick.",
-          "exampleMeaning": "아버지가 없는 불쌍한 아이. 3.《속어》 젊은 여자 계집애. 4.《미·속어》 （불량배 사이에서） 교도소 음식."
+          "exampleMeaning": "아버지가 없는 불쌍한 아이."
         },
         {
           "id": "en_15708",
@@ -95182,9 +95182,9 @@
           "pron": "[트르어드쉬어느르]",
           "phonetic": "[트르어드쉬어느르]",
           "example_en": "a traditional Spanish festival.",
-          "example_ko": "전통을 본받은 스페인의 제전. 3.구식 재즈의.",
+          "example_ko": "전통을 본받은 스페인의 제전.",
           "exampleTarget": "a traditional Spanish festival.",
-          "exampleMeaning": "전통을 본받은 스페인의 제전. 3.구식 재즈의."
+          "exampleMeaning": "전통을 본받은 스페인의 제전."
         },
         {
           "id": "en_15709",
@@ -95215,10 +95215,10 @@
           "pronunciation": "[르스르이]",
           "pron": "[르스르이]",
           "phonetic": "[르스르이]",
-          "example_en": "This is an example for leslie.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for leslie.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Leslie prepared delicious homemade pasta for our dinner.",
+          "example_ko": "레슬리는 우리 저녁 식사로 맛있는 수제 파스타를 준비했습니다.",
+          "exampleTarget": "Leslie prepared delicious homemade pasta for our dinner.",
+          "exampleMeaning": "레슬리는 우리 저녁 식사로 맛있는 수제 파스타를 준비했습니다."
         },
         {
           "id": "en_15711",
@@ -95228,14 +95228,14 @@
           "level": "C1",
           "unitId": "unit_157",
           "nodeId": "en_u157_n2",
-          "meaning": "lauren",
+          "meaning": "로렌",
           "pronunciation": "[lauren]",
           "pron": "[lauren]",
           "phonetic": "[lauren]",
-          "example_en": "I use the word lauren in daily life.",
-          "example_ko": "나는 일상에서 lauren 단어를 사용합니다.",
-          "exampleTarget": "I use the word lauren in daily life.",
-          "exampleMeaning": "나는 일상에서 lauren 단어를 사용합니다."
+          "example_en": "Lauren plays the violin in the youth orchestra.",
+          "example_ko": "로렌은 청소년 오케스트라에서 바이올린을 연주한다.",
+          "exampleTarget": "Lauren plays the violin in the youth orchestra.",
+          "exampleMeaning": "로렌은 청소년 오케스트라에서 바이올린을 연주한다."
         },
         {
           "id": "en_15712",
@@ -95249,10 +95249,10 @@
           "pronunciation": "[르애느드스어느]",
           "pron": "[르애느드스어느]",
           "phonetic": "[르애느드스어느]",
-          "example_en": "This is an example for grandson.",
-          "example_ko": "이것은 손자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for grandson.",
-          "exampleMeaning": "이것은 손자 관련 실전 예문입니다."
+          "example_en": "His young grandson loves playing with toy trains.",
+          "example_ko": "그의 어린 손자는 장난감 기차를 가지고 노는 것을 좋아합니다.",
+          "exampleTarget": "His young grandson loves playing with toy trains.",
+          "exampleMeaning": "그의 어린 손자는 장난감 기차를 가지고 노는 것을 좋아합니다."
         },
         {
           "id": "en_15713",
@@ -95262,14 +95262,14 @@
           "level": "C1",
           "unitId": "unit_157",
           "nodeId": "en_u157_n2",
-          "meaning": "brandon",
+          "meaning": "브랜든",
           "pronunciation": "[brandon]",
           "pron": "[brandon]",
           "phonetic": "[brandon]",
-          "example_en": "I use the word brandon in daily life.",
-          "example_ko": "나는 일상에서 brandon 단어를 사용합니다.",
-          "exampleTarget": "I use the word brandon in daily life.",
-          "exampleMeaning": "나는 일상에서 brandon 단어를 사용합니다."
+          "example_en": "Brandon adopted a cute puppy from the shelter.",
+          "example_ko": "브랜든은 보호소에서 귀여운 강아지를 입양했다.",
+          "exampleTarget": "Brandon adopted a cute puppy from the shelter.",
+          "exampleMeaning": "브랜든은 보호소에서 귀여운 강아지를 입양했다."
         },
         {
           "id": "en_15714",
@@ -95283,10 +95283,10 @@
           "pronunciation": "[크아르이느]",
           "pron": "[크아르이느]",
           "phonetic": "[크아르이느]",
-          "example_en": "This is an example for colin.",
-          "example_ko": "이것은 콜린메추라기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for colin.",
-          "exampleMeaning": "이것은 콜린메추라기 관련 실전 예문입니다."
+          "example_en": "Colin started his new software engineering job today.",
+          "example_ko": "콜린은 오늘 새로운 소프트웨어 개발 업무를 시작했습니다.",
+          "exampleTarget": "Colin started his new software engineering job today.",
+          "exampleMeaning": "콜린은 오늘 새로운 소프트웨어 개발 업무를 시작했습니다."
         },
         {
           "id": "en_15715",
@@ -95300,10 +95300,10 @@
           "pronunciation": "[흐오므즈]",
           "pron": "[흐오므즈]",
           "phonetic": "[흐오므즈]",
-          "example_en": "This is an example for holmes.",
-          "example_ko": "이것은 홈스 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for holmes.",
-          "exampleMeaning": "이것은 홈스 남자 관련 실전 예문입니다."
+          "example_en": "Detective Holmes solved the mysterious crime very quickly.",
+          "example_ko": "홈스 탐정은 그 불가사의한 범죄를 매우 빠르게 해결했습니다.",
+          "exampleTarget": "Detective Holmes solved the mysterious crime very quickly.",
+          "exampleMeaning": "홈스 탐정은 그 불가사의한 범죄를 매우 빠르게 해결했습니다."
         },
         {
           "id": "en_15716",
@@ -95368,10 +95368,10 @@
           "pronunciation": "[이어르어프어느]",
           "pron": "[이어르어프어느]",
           "phonetic": "[이어르어프어느]",
-          "example_en": "This is an example for european.",
-          "example_ko": "이것은 유럽 사람의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for european.",
-          "exampleMeaning": "이것은 유럽 사람의 관련 실전 예문입니다."
+          "example_en": "They planned an exciting trip to European cities.",
+          "example_ko": "그들은 유럽 도시들로 떠나는 신나는 여행을 계획했습니다.",
+          "exampleTarget": "They planned an exciting trip to European cities.",
+          "exampleMeaning": "그들은 유럽 도시들로 떠나는 신나는 여행을 계획했습니다."
         },
         {
           "id": "en_15720",
@@ -95386,9 +95386,9 @@
           "pron": "[드이즈이]",
           "phonetic": "[드이즈이]",
           "example_en": "She is a daisy.",
-          "example_ko": "그녀는 굉장한 미인이다. 4.《D-》 여자 이름. 5.《속어》 겁 많은 남자; 남자 동성애자. 6.《미·속어》 주부. 숙어 fresh as a daisy 조금도 지치지 않고 원기 왕성하게 발랄하게 매우 신선하여. push up daisies 《구어》 죽다 죽어서 묻히다. under the daisies 《속어》 죽어 매장되어.",
+          "example_ko": "그녀는 굉장한 미인이다.",
           "exampleTarget": "She is a daisy.",
-          "exampleMeaning": "그녀는 굉장한 미인이다. 4.《D-》 여자 이름. 5.《속어》 겁 많은 남자; 남자 동성애자. 6.《미·속어》 주부. 숙어 fresh as a daisy 조금도 지치지 않고 원기 왕성하게 발랄하게 매우 신선하여. push up daisies 《구어》 죽다 죽어서 묻히다. under the daisies 《속어》 죽어 매장되어."
+          "exampleMeaning": "그녀는 굉장한 미인이다."
         },
         {
           "id": "en_15721",
@@ -95402,10 +95402,10 @@
           "pronunciation": "[스프이드어르]",
           "pron": "[스프이드어르]",
           "phonetic": "[스프이드어르]",
-          "example_en": "This is an example for spider.",
-          "example_ko": "이것은 거미 비슷한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spider.",
-          "exampleMeaning": "이것은 거미 비슷한 관련 실전 예문입니다."
+          "example_en": "A tiny brown spider crawled across the ceiling.",
+          "example_ko": "작은 갈색 거미 한 마리가 천장을 가로질러 기어갔습니다.",
+          "exampleTarget": "A tiny brown spider crawled across the ceiling.",
+          "exampleMeaning": "작은 갈색 거미 한 마리가 천장을 가로질러 기어갔습니다."
         },
         {
           "id": "en_15722",
@@ -95436,10 +95436,10 @@
           "pronunciation": "[praying]",
           "pron": "[praying]",
           "phonetic": "[praying]",
-          "example_en": "This is an example for praying.",
-          "example_ko": "이것은 기도 기원 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for praying.",
-          "exampleMeaning": "이것은 기도 기원 관련 실전 예문입니다."
+          "example_en": "She was praying quietly inside the historic chapel.",
+          "example_ko": "그녀는 유서 깊은 예배당 안에서 조용히 기도하고 있었습니다.",
+          "exampleTarget": "She was praying quietly inside the historic chapel.",
+          "exampleMeaning": "그녀는 유서 깊은 예배당 안에서 조용히 기도하고 있었습니다."
         },
         {
           "id": "en_15724",
@@ -95453,10 +95453,10 @@
           "pronunciation": "[애느트우느이우]",
           "pron": "[애느트우느이우]",
           "phonetic": "[애느트우느이우]",
-          "example_en": "This is an example for antonio.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for antonio.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Antonio cooked traditional Italian pizza for the party.",
+          "example_ko": "안토니오는 파티를 위해 전통 이탈리아 피자를 요리했습니다.",
+          "exampleTarget": "Antonio cooked traditional Italian pizza for the party.",
+          "exampleMeaning": "안토니오는 파티를 위해 전통 이탈리아 피자를 요리했습니다."
         },
         {
           "id": "en_15725",
@@ -95470,10 +95470,10 @@
           "pronunciation": "[크어느]",
           "pron": "[크어느]",
           "phonetic": "[크어느]",
-          "example_en": "This is an example for con.",
-          "example_ko": "이것은 접두사「함께」 「전혀」 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for con.",
-          "exampleMeaning": "이것은 접두사「함께」 「전혀」 관련 실전 예문입니다."
+          "example_en": "It turned out to be a clever con.",
+          "example_ko": "그것은 교묘한 속임수로 드러났다.",
+          "exampleTarget": "It turned out to be a clever con.",
+          "exampleMeaning": "그것은 교묘한 속임수로 드러났다."
         },
         {
           "id": "en_15726",
@@ -95487,10 +95487,10 @@
           "pronunciation": "[오스트르이르이어]",
           "pron": "[오스트르이르이어]",
           "phonetic": "[오스트르이르이어]",
-          "example_en": "This is an example for australia.",
-          "example_ko": "이것은 오스트레일리아 대륙 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for australia.",
-          "exampleMeaning": "이것은 오스트레일리아 대륙 관련 실전 예문입니다."
+          "example_en": "She moved to Australia to study marine biology.",
+          "example_ko": "그녀는 해양 생물학을 공부하기 위해 호주로 이주했습니다.",
+          "exampleTarget": "She moved to Australia to study marine biology.",
+          "exampleMeaning": "그녀는 해양 생물학을 공부하기 위해 호주로 이주했습니다."
         },
         {
           "id": "en_15727",
@@ -95522,9 +95522,9 @@
           "pron": "[즈느트르이]",
           "phonetic": "[즈느트르이]",
           "example_en": "talk gently to kids.",
-          "example_ko": "아이들에게 부드럽게 말하다. 2.조용히 평온하게; 서서히 완만하게.",
+          "example_ko": "아이들에게 부드럽게 말하다.",
           "exampleTarget": "talk gently to kids.",
-          "exampleMeaning": "아이들에게 부드럽게 말하다. 2.조용히 평온하게; 서서히 완만하게."
+          "exampleMeaning": "아이들에게 부드럽게 말하다."
         },
         {
           "id": "en_15729",
@@ -95555,10 +95555,10 @@
           "pronunciation": "[브어느이]",
           "pron": "[브어느이]",
           "phonetic": "[브어느이]",
-          "example_en": "This is an example for bunny.",
-          "example_ko": "이것은 토끼 다람쥐 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bunny.",
-          "exampleMeaning": "이것은 토끼 다람쥐 관련 실전 예문입니다."
+          "example_en": "The fluffy white bunny hopped across green grass.",
+          "example_ko": "푹신한 흰색 토끼가 푸른 잔디밭을 뛰어다녔습니다.",
+          "exampleTarget": "The fluffy white bunny hopped across green grass.",
+          "exampleMeaning": "푹신한 흰색 토끼가 푸른 잔디밭을 뛰어다녔습니다."
         }
       ],
       "nodes": [
@@ -95671,10 +95671,10 @@
           "pronunciation": "[gunfire]",
           "pron": "[gunfire]",
           "phonetic": "[gunfire]",
-          "example_en": "This is an example for gunfire.",
-          "example_ko": "이것은 발포 포화 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gunfire.",
-          "exampleMeaning": "이것은 발포 포화 관련 실전 예문입니다."
+          "example_en": "Sudden loud gunfire echoed through the empty streets.",
+          "example_ko": "갑작스러운 요란한 총성이 텅 빈 거리에 울려 퍼졌습니다.",
+          "exampleTarget": "Sudden loud gunfire echoed through the empty streets.",
+          "exampleMeaning": "갑작스러운 요란한 총성이 텅 빈 거리에 울려 퍼졌습니다."
         },
         {
           "id": "en_15802",
@@ -95705,10 +95705,10 @@
           "pronunciation": "[브애크우어르드즈]",
           "pron": "[브애크우어르드즈]",
           "phonetic": "[브애크우어르드즈]",
-          "example_en": "This is an example for backwards.",
-          "example_ko": "이것은 backwards 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for backwards.",
-          "exampleMeaning": "이것은 backwards 관련 실전 예문입니다."
+          "example_en": "The frightened child took two slow steps backwards.",
+          "example_ko": "겁먹은 아이는 천천히 뒤로 두 걸음 물러섰습니다.",
+          "exampleTarget": "The frightened child took two slow steps backwards.",
+          "exampleMeaning": "겁먹은 아이는 천천히 뒤로 두 걸음 물러섰습니다."
         },
         {
           "id": "en_15804",
@@ -95723,9 +95723,9 @@
           "pron": "[브애르어느]",
           "phonetic": "[브애르어느]",
           "example_en": "a baron of beef.",
-          "example_ko": "소의 등심. 4.대실업가; 《수식어와 함께》 …왕.",
+          "example_ko": "소의 등심.",
           "exampleTarget": "a baron of beef.",
-          "exampleMeaning": "소의 등심. 4.대실업가; 《수식어와 함께》 …왕."
+          "exampleMeaning": "소의 등심."
         },
         {
           "id": "en_15805",
@@ -95739,10 +95739,10 @@
           "pronunciation": "[크드느애프이으]",
           "pron": "[크드느애프이으]",
           "phonetic": "[크드느애프이으]",
-          "example_en": "This is an example for kidnapping.",
-          "example_ko": "이것은 유괴 납치 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for kidnapping.",
-          "exampleMeaning": "이것은 유괴 납치 관련 실전 예문입니다."
+          "example_en": "Police detectives investigated the suspicious kidnapping case yesterday.",
+          "example_ko": "경찰 수사관들은 어제 의심스러운 납치 사건을 조사했습니다.",
+          "exampleTarget": "Police detectives investigated the suspicious kidnapping case yesterday.",
+          "exampleMeaning": "경찰 수사관들은 어제 의심스러운 납치 사건을 조사했습니다."
         },
         {
           "id": "en_15806",
@@ -95752,14 +95752,14 @@
           "level": "C1",
           "unitId": "unit_158",
           "nodeId": "en_u158_n1",
-          "meaning": "iike",
+          "meaning": "좋아하다",
           "pronunciation": "[iike]",
           "pron": "[iike]",
           "phonetic": "[iike]",
-          "example_en": "I use the word iike in daily life.",
-          "example_ko": "나는 일상에서 iike 단어를 사용합니다.",
-          "exampleTarget": "I use the word iike in daily life.",
-          "exampleMeaning": "나는 일상에서 iike 단어를 사용합니다."
+          "example_en": "I feel like going for a walk in the park.",
+          "example_ko": "나는 공원에 산책하러 가고 싶다.",
+          "exampleTarget": "I feel like going for a walk in the park.",
+          "exampleMeaning": "나는 공원에 산책하러 가고 싶다."
         },
         {
           "id": "en_15807",
@@ -95808,9 +95808,9 @@
           "pron": "[므어스아지]",
           "phonetic": "[므어스아지]",
           "example_en": "give a massage.",
-          "example_ko": "마사지를 해 주다. 2.《비격식》 （숫자나 데이터의） 조작. 동사 타동사1.〈사람·몸의 일부를〉 마사지하다 안마를 하다. 2.《비격식》 〈숫자·데이터 등을〉 조작하다. 3.《속어》 〈남의〉 응석을 받다; 소중하게 다루다.",
+          "example_ko": "마사지를 해 주다.",
           "exampleTarget": "give a massage.",
-          "exampleMeaning": "마사지를 해 주다. 2.《비격식》 （숫자나 데이터의） 조작. 동사 타동사1.〈사람·몸의 일부를〉 마사지하다 안마를 하다. 2.《비격식》 〈숫자·데이터 등을〉 조작하다. 3.《속어》 〈남의〉 응석을 받다; 소중하게 다루다."
+          "exampleMeaning": "마사지를 해 주다."
         },
         {
           "id": "en_15810",
@@ -95824,10 +95824,10 @@
           "pronunciation": "[르이즈이으]",
           "pron": "[르이즈이으]",
           "phonetic": "[르이즈이으]",
-          "example_en": "This is an example for raising.",
-          "example_ko": "이것은 앞당김 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for raising.",
-          "exampleMeaning": "이것은 앞당김 관련 실전 예문입니다."
+          "example_en": "They are raising funds for local stray animals.",
+          "example_ko": "그들은 지역 유기 동물들을 위한 기금을 모으고 있습니다.",
+          "exampleTarget": "They are raising funds for local stray animals.",
+          "exampleMeaning": "그들은 지역 유기 동물들을 위한 기금을 모으고 있습니다."
         },
         {
           "id": "en_15811",
@@ -95841,10 +95841,10 @@
           "pronunciation": "[프어크어르]",
           "pron": "[프어크어르]",
           "phonetic": "[프어크어르]",
-          "example_en": "This is an example for fucker.",
-          "example_ko": "이것은 성교하는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for fucker.",
-          "exampleMeaning": "이것은 성교하는 사람 관련 실전 예문입니다."
+          "example_en": "Tell that dishonest fucker to leave immediately.",
+          "example_ko": "저 정직하지 못한 자식에게 당장 떠나라고 말해라.",
+          "exampleTarget": "Tell that dishonest fucker to leave immediately.",
+          "exampleMeaning": "저 정직하지 못한 자식에게 당장 떠나라고 말해라."
         },
         {
           "id": "en_15812",
@@ -95858,10 +95858,10 @@
           "pronunciation": "[우애어느]",
           "pron": "[우애어느]",
           "phonetic": "[우애어느]",
-          "example_en": "This is an example for wagon.",
-          "example_ko": "이것은 륜차 짐마차 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wagon.",
-          "exampleMeaning": "이것은 륜차 짐마차 관련 실전 예문입니다."
+          "example_en": "The wooden wagon carried heavy harvest from fields.",
+          "example_ko": "나무 수레가 밭에서 나온 무거운 수확물을 실어 날랐습니다.",
+          "exampleTarget": "The wooden wagon carried heavy harvest from fields.",
+          "exampleMeaning": "나무 수레가 밭에서 나온 무거운 수확물을 실어 날랐습니다."
         },
         {
           "id": "en_15813",
@@ -95875,10 +95875,10 @@
           "pronunciation": "[오드쉬어느]",
           "pron": "[오드쉬어느]",
           "phonetic": "[오드쉬어느]",
-          "example_en": "This is an example for audition.",
-          "example_ko": "이것은 심사 오디션 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for audition.",
-          "exampleMeaning": "이것은 심사 오디션 관련 실전 예문입니다."
+          "example_en": "She attended an important acting audition this morning.",
+          "example_ko": "그녀는 오늘 아침 중요한 연기 오디션에 참가했습니다.",
+          "exampleTarget": "She attended an important acting audition this morning.",
+          "exampleMeaning": "그녀는 오늘 아침 중요한 연기 오디션에 참가했습니다."
         },
         {
           "id": "en_15814",
@@ -95892,10 +95892,10 @@
           "pronunciation": "[므이츠]",
           "pron": "[므이츠]",
           "phonetic": "[므이츠]",
-          "example_en": "This is an example for mitch.",
-          "example_ko": "이것은 학교를 빼먹다 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mitch.",
-          "exampleMeaning": "이것은 학교를 빼먹다 관련 실전 예문입니다."
+          "example_en": "Mitch invited his close neighbors to dinner tonight.",
+          "example_ko": "미치는 오늘 밤 가까운 이웃들을 저녁 식사에 초대했습니다.",
+          "exampleTarget": "Mitch invited his close neighbors to dinner tonight.",
+          "exampleMeaning": "미치는 오늘 밤 가까운 이웃들을 저녁 식사에 초대했습니다."
         },
         {
           "id": "en_15815",
@@ -95909,10 +95909,10 @@
           "pronunciation": "[므크스이크어느]",
           "pron": "[므크스이크어느]",
           "phonetic": "[므크스이크어느]",
-          "example_en": "This is an example for mexican.",
-          "example_ko": "이것은 멕시코 멕시코어의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mexican.",
-          "exampleMeaning": "이것은 멕시코 멕시코어의 관련 실전 예문입니다."
+          "example_en": "We ordered delicious Mexican tacos for our lunch.",
+          "example_ko": "우리는 점심 식사로 맛있는 멕시코 타코를 주문했습니다.",
+          "exampleTarget": "We ordered delicious Mexican tacos for our lunch.",
+          "exampleMeaning": "우리는 점심 식사로 맛있는 멕시코 타코를 주문했습니다."
         },
         {
           "id": "en_15816",
@@ -95926,10 +95926,10 @@
           "pronunciation": "[크어스느오]",
           "pron": "[크어스느오]",
           "phonetic": "[크어스느오]",
-          "example_en": "This is an example for casino.",
-          "example_ko": "이것은 카지노 도박장 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for casino.",
-          "exampleMeaning": "이것은 카지노 도박장 관련 실전 예문입니다."
+          "example_en": "The glittering casino stayed open throughout the night.",
+          "example_ko": "화려하게 반짝이는 카지노는 밤새 문을 열어 두었습니다.",
+          "exampleTarget": "The glittering casino stayed open throughout the night.",
+          "exampleMeaning": "화려하게 반짝이는 카지노는 밤새 문을 열어 두었습니다."
         },
         {
           "id": "en_15817",
@@ -95943,10 +95943,10 @@
           "pronunciation": "[드이이오]",
           "pron": "[드이이오]",
           "phonetic": "[드이이오]",
-          "example_en": "This is an example for diego.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for diego.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Diego walked his playful dog through the park.",
+          "example_ko": "디에고는 공원에서 장난기 많은 개를 산책시켰습니다.",
+          "exampleTarget": "Diego walked his playful dog through the park.",
+          "exampleMeaning": "디에고는 공원에서 장난기 많은 개를 산책시켰습니다."
         },
         {
           "id": "en_15818",
@@ -95960,10 +95960,10 @@
           "pronunciation": "[드어츠]",
           "pron": "[드어츠]",
           "phonetic": "[드어츠]",
-          "example_en": "This is an example for dutch.",
-          "example_ko": "이것은 마누라 아내 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dutch.",
-          "exampleMeaning": "이것은 마누라 아내 관련 실전 예문입니다."
+          "example_en": "We agreed to go Dutch on our dinner.",
+          "example_ko": "우리는 저녁 식사 비용을 각자 부담하기로 합의했습니다.",
+          "exampleTarget": "We agreed to go Dutch on our dinner.",
+          "exampleMeaning": "우리는 저녁 식사 비용을 각자 부담하기로 합의했습니다."
         },
         {
           "id": "en_15819",
@@ -95978,9 +95978,9 @@
           "pron": "[프르어므우쉬어느]",
           "phonetic": "[프르어므우쉬어느]",
           "example_en": "obtain promotion.",
-          "example_ko": "승진하다. 2.조장 촉진 조성 증진; （보급） 진흥 장려; 자극.",
+          "example_ko": "승진하다.",
           "exampleTarget": "obtain promotion.",
-          "exampleMeaning": "승진하다. 2.조장 촉진 조성 증진; （보급） 진흥 장려; 자극."
+          "exampleMeaning": "승진하다."
         },
         {
           "id": "en_15820",
@@ -95995,9 +95995,9 @@
           "pron": "[프어르브느이스]",
           "phonetic": "[프어르브느이스]",
           "example_en": "ask for forgiveness for ones sins.",
-          "example_ko": "자신의 죄에 대하여 용서를 청하다. 2.관대함 관용.",
+          "example_ko": "자신의 죄에 대하여 용서를 청하다.",
           "exampleTarget": "ask for forgiveness for ones sins.",
-          "exampleMeaning": "자신의 죄에 대하여 용서를 청하다. 2.관대함 관용."
+          "exampleMeaning": "자신의 죄에 대하여 용서를 청하다."
         },
         {
           "id": "en_15821",
@@ -96012,9 +96012,9 @@
           "pron": "[츠애느트]",
           "phonetic": "[츠애느트]",
           "example_en": "The demonstrators chanted slogans as they marched.",
-          "example_ko": "데모대는 구호를 되풀이하면서 행진했다. 동사 자동사1.노래하다; 〈새가〉 지저귀다. 2.영창하다; 단조롭게 이야기하다. 3.〈사냥개가〉 짖다.",
+          "example_ko": "데모대는 구호를 되풀이하면서 행진했다.",
           "exampleTarget": "The demonstrators chanted slogans as they marched.",
-          "exampleMeaning": "데모대는 구호를 되풀이하면서 행진했다. 동사 자동사1.노래하다; 〈새가〉 지저귀다. 2.영창하다; 단조롭게 이야기하다. 3.〈사냥개가〉 짖다."
+          "exampleMeaning": "데모대는 구호를 되풀이하면서 행진했다."
         },
         {
           "id": "en_15822",
@@ -96028,10 +96028,10 @@
           "pronunciation": "[드애므이트]",
           "pron": "[드애므이트]",
           "phonetic": "[드애므이트]",
-          "example_en": "This is an example for dammit.",
-          "example_ko": "이것은 제기랄 빌어먹을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dammit.",
-          "exampleMeaning": "이것은 제기랄 빌어먹을 관련 실전 예문입니다."
+          "example_en": "Dammit I dropped my house keys on grass.",
+          "example_ko": "제기랄 내가 잔디밭에 집 열쇠를 떨어뜨렸네.",
+          "exampleTarget": "Dammit I dropped my house keys on grass.",
+          "exampleMeaning": "제기랄 내가 잔디밭에 집 열쇠를 떨어뜨렸네."
         },
         {
           "id": "en_15823",
@@ -96045,10 +96045,10 @@
           "pronunciation": "[스프느스어르]",
           "pron": "[스프느스어르]",
           "phonetic": "[스프느스어르]",
-          "example_en": "This is an example for spencer.",
-          "example_ko": "이것은 몸에 꼭 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spencer.",
-          "exampleMeaning": "이것은 몸에 꼭 관련 실전 예문입니다."
+          "example_en": "Spencer works at the local bank downtown everyday.",
+          "example_ko": "스펜서는 매일 시내에 있는 현지 은행에서 일합니다.",
+          "exampleTarget": "Spencer works at the local bank downtown everyday.",
+          "exampleMeaning": "스펜서는 매일 시내에 있는 현지 은행에서 일합니다."
         },
         {
           "id": "en_15824",
@@ -96096,10 +96096,10 @@
           "pronunciation": "[므애느]",
           "pron": "[므애느]",
           "phonetic": "[므애느]",
-          "example_en": "This is an example for superman.",
-          "example_ko": "이것은 초인 전제적 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for superman.",
-          "exampleMeaning": "이것은 초인 전제적 관련 실전 예문입니다."
+          "example_en": "The young kid wore a colorful Superman costume.",
+          "example_ko": "어린 꼬마가 화려한 슈퍼맨 의상을 입었습니다.",
+          "exampleTarget": "The young kid wore a colorful Superman costume.",
+          "exampleMeaning": "어린 꼬마가 화려한 슈퍼맨 의상을 입었습니다."
         },
         {
           "id": "en_15827",
@@ -96114,9 +96114,9 @@
           "pron": "[크우스츠어느이으]",
           "phonetic": "[크우스츠어느이으]",
           "example_en": "give a person a questioning look.",
-          "example_ko": "의아스러운 표정으로 남을 보다. 2.지적 호기심이 강한 연구심이 있는; 캐기 좋아하는. 명사의문 질문 연구 탐구.",
+          "example_ko": "의아스러운 표정으로 남을 보다.",
           "exampleTarget": "give a person a questioning look.",
-          "exampleMeaning": "의아스러운 표정으로 남을 보다. 2.지적 호기심이 강한 연구심이 있는; 캐기 좋아하는. 명사의문 질문 연구 탐구."
+          "exampleMeaning": "의아스러운 표정으로 남을 보다."
         },
         {
           "id": "en_15828",
@@ -96131,9 +96131,9 @@
           "pron": "[unfair]",
           "phonetic": "[unfair]",
           "example_en": "receive unfair treatment.",
-          "example_ko": "불공평한 대우를 받다. 2.균형 잡히지 않은 불균형의; 적당치 않은. 3.공정하지 못한 부당한; 부정한 교활한.",
+          "example_ko": "불공평한 대우를 받다.",
           "exampleTarget": "receive unfair treatment.",
-          "exampleMeaning": "불공평한 대우를 받다. 2.균형 잡히지 않은 불균형의; 적당치 않은. 3.공정하지 못한 부당한; 부정한 교활한."
+          "exampleMeaning": "불공평한 대우를 받다."
         },
         {
           "id": "en_15829",
@@ -96298,9 +96298,9 @@
           "pron": "[프르아이드]",
           "phonetic": "[프르아이드]",
           "example_en": "fried chicken.",
-          "example_ko": "프라이드 치킨; 기름에 튀긴 닭 요리. 2.《속어》 술취한 곤드레만드레한. 동사fry¹ 의 과거·과거 분사형.",
+          "example_ko": "프라이드 치킨; 기름에 튀긴 닭 요리.",
           "exampleTarget": "fried chicken.",
-          "exampleMeaning": "프라이드 치킨; 기름에 튀긴 닭 요리. 2.《속어》 술취한 곤드레만드레한. 동사fry¹ 의 과거·과거 분사형."
+          "exampleMeaning": "프라이드 치킨; 기름에 튀긴 닭 요리."
         },
         {
           "id": "en_15903",
@@ -96315,9 +96315,9 @@
           "pron": "[애브어느이]",
           "phonetic": "[애브어느이]",
           "example_en": "Fifth Avenue5.",
-          "example_ko": "번가 . 2.〔어떤 목적을 달성하기 위한〕 수단 방법 길〔to for of …〕; 〔어떤 장소에〕 이르는 길〔to …〕.",
+          "example_ko": "번가 .",
           "exampleTarget": "Fifth Avenue5.",
-          "exampleMeaning": "번가 . 2.〔어떤 목적을 달성하기 위한〕 수단 방법 길〔to for of …〕; 〔어떤 장소에〕 이르는 길〔to …〕."
+          "exampleMeaning": "번가 ."
         },
         {
           "id": "en_15904",
@@ -96332,9 +96332,9 @@
           "pron": "[프오르드]",
           "phonetic": "[프오르드]",
           "example_en": "The ford in the river is a mile away.",
-          "example_ko": "강의 여울은 1마일 거리에 있다. 동사 타동사〈강을〉 얕은 곳을 따라 걸어서 건너다.",
+          "example_ko": "강의 여울은 1마일 거리에 있다.",
           "exampleTarget": "The ford in the river is a mile away.",
-          "exampleMeaning": "강의 여울은 1마일 거리에 있다. 동사 타동사〈강을〉 얕은 곳을 따라 걸어서 건너다."
+          "exampleMeaning": "강의 여울은 1마일 거리에 있다."
         },
         {
           "id": "en_15905",
@@ -96348,10 +96348,10 @@
           "pronunciation": "[크어므프르이느이으]",
           "pron": "[크어므프르이느이으]",
           "phonetic": "[크어므프르이느이으]",
-          "example_en": "This is an example for complaining.",
-          "example_ko": "이것은 만 호소하는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for complaining.",
-          "exampleMeaning": "이것은 만 호소하는 관련 실전 예문입니다."
+          "example_en": "Stop complaining about the bad cold weather outside.",
+          "example_ko": "밖의 궂은 추운 날씨에 대해 불평하는 것을 멈추세요.",
+          "exampleTarget": "Stop complaining about the bad cold weather outside.",
+          "exampleMeaning": "밖의 궂은 추운 날씨에 대해 불평하는 것을 멈추세요."
         },
         {
           "id": "en_15906",
@@ -96383,9 +96383,9 @@
           "pron": "[르브이]",
           "phonetic": "[르브이]",
           "example_en": "above rubies.",
-          "example_ko": "아주 귀중한. 2.붉은 포도주. 3.심홍색. 4.〔인쇄〕 루비 활자. ①《영》 5½포인트 활자. ②《미》 3½포인트 활자. 5.《-ies》 《속어》 입술. 6.《영·속어》 피. 형용사1.루비색의.",
+          "example_ko": "아주 귀중한.",
           "exampleTarget": "above rubies.",
-          "exampleMeaning": "아주 귀중한. 2.붉은 포도주. 3.심홍색. 4.〔인쇄〕 루비 활자. ①《영》 5½포인트 활자. ②《미》 3½포인트 활자. 5.《-ies》 《속어》 입술. 6.《영·속어》 피. 형용사1.루비색의."
+          "exampleMeaning": "아주 귀중한."
         },
         {
           "id": "en_15908",
@@ -96417,9 +96417,9 @@
           "pron": "[르애므]",
           "phonetic": "[르애므]",
           "example_en": "ram ones head against a post.",
-          "example_ko": "기둥에 머리를 들이받다. 2. …을 심하게 연타하다; 〈말뚝 등을〉 〔…에〕 박아 넣다 밀어 넣다 〔down in into …〕; 〈기둥·묘목 등을〉 주위의 흙을 다져서 단단하게 서게 하다; 〈흙·땅을〉 다지다 굳히다.",
+          "example_ko": "기둥에 머리를 들이받다.",
           "exampleTarget": "ram ones head against a post.",
-          "exampleMeaning": "기둥에 머리를 들이받다. 2. …을 심하게 연타하다; 〈말뚝 등을〉 〔…에〕 박아 넣다 밀어 넣다 〔down in into …〕; 〈기둥·묘목 등을〉 주위의 흙을 다져서 단단하게 서게 하다; 〈흙·땅을〉 다지다 굳히다."
+          "exampleMeaning": "기둥에 머리를 들이받다."
         },
         {
           "id": "en_15910",
@@ -96433,10 +96433,10 @@
           "pronunciation": "[브아느이]",
           "pron": "[브아느이]",
           "phonetic": "[브아느이]",
-          "example_en": "This is an example for bonnie.",
-          "example_ko": "이것은 보아서 기분 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bonnie.",
-          "exampleMeaning": "이것은 보아서 기분 관련 실전 예문입니다."
+          "example_en": "Bonnie baked chocolate chip cookies for the kids.",
+          "example_ko": "보니는 아이들을 위해 초콜릿 칩 쿠키를 구웠습니다.",
+          "exampleTarget": "Bonnie baked chocolate chip cookies for the kids.",
+          "exampleMeaning": "보니는 아이들을 위해 초콜릿 칩 쿠키를 구웠습니다."
         },
         {
           "id": "en_15911",
@@ -96450,10 +96450,10 @@
           "pronunciation": "[르느어르드]",
           "pron": "[르느어르드]",
           "phonetic": "[르느어르드]",
-          "example_en": "This is an example for leonard.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for leonard.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Leonard plays classical violin in the community orchestra.",
+          "example_ko": "레너드는 지역 오케스트라에서 클래식 바이올린을 연주합니다.",
+          "exampleTarget": "Leonard plays classical violin in the community orchestra.",
+          "exampleMeaning": "레너드는 지역 오케스트라에서 클래식 바이올린을 연주합니다."
         },
         {
           "id": "en_15912",
@@ -96467,10 +96467,10 @@
           "pronunciation": "[르이어트]",
           "pron": "[르이어트]",
           "phonetic": "[르이어트]",
-          "example_en": "This is an example for elliot.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for elliot.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Elliot graduated from medical school with top honors.",
+          "example_ko": "엘리엇은 의과대학을 우수한 성적으로 졸업했습니다.",
+          "exampleTarget": "Elliot graduated from medical school with top honors.",
+          "exampleMeaning": "엘리엇은 의과대학을 우수한 성적으로 졸업했습니다."
         },
         {
           "id": "en_15913",
@@ -96484,10 +96484,10 @@
           "pronunciation": "[즈이르]",
           "pron": "[즈이르]",
           "phonetic": "[즈이르]",
-          "example_en": "This is an example for jill.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jill.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Jill helped her younger brother with difficult homework.",
+          "example_ko": "질은 남동생의 어려운 숙제를 도와주었습니다.",
+          "exampleTarget": "Jill helped her younger brother with difficult homework.",
+          "exampleMeaning": "질은 남동생의 어려운 숙제를 도와주었습니다."
         },
         {
           "id": "en_15914",
@@ -96502,9 +96502,9 @@
           "pron": "[르애느츠]",
           "phonetic": "[르애느츠]",
           "example_en": "a chicken ranch.",
-          "example_ko": "양계장. 2.《주로 미국 서부》 （대규모의） 목축장 （말·소·양 등의 방목장).",
+          "example_ko": "양계장.",
           "exampleTarget": "a chicken ranch.",
-          "exampleMeaning": "양계장. 2.《주로 미국 서부》 （대규모의） 목축장 （말·소·양 등의 방목장)."
+          "exampleMeaning": "양계장."
         },
         {
           "id": "en_15915",
@@ -96536,9 +96536,9 @@
           "pron": "[우오르느]",
           "phonetic": "[우오르느]",
           "example_en": "a worn coat.",
-          "example_ko": "닳아서 해진 외투. 2.〈사람이〉 지쳐빠진; 야윈.",
+          "example_ko": "닳아서 해진 외투.",
           "exampleTarget": "a worn coat.",
-          "exampleMeaning": "닳아서 해진 외투. 2.〈사람이〉 지쳐빠진; 야윈."
+          "exampleMeaning": "닳아서 해진 외투."
         },
         {
           "id": "en_15917",
@@ -96552,10 +96552,10 @@
           "pronunciation": "[크르애쉬이으]",
           "pron": "[크르애쉬이으]",
           "phonetic": "[크르애쉬이으]",
-          "example_en": "This is an example for crashing.",
-          "example_ko": "이것은 최고의 훌륭한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for crashing.",
-          "exampleMeaning": "이것은 최고의 훌륭한 관련 실전 예문입니다."
+          "example_en": "Huge ocean waves were crashing against rocky cliffs.",
+          "example_ko": "거대한 바다 파도가 바위 절벽에 거세게 부딪치고 있었습니다.",
+          "exampleTarget": "Huge ocean waves were crashing against rocky cliffs.",
+          "exampleMeaning": "거대한 바다 파도가 바위 절벽에 거세게 부딪치고 있었습니다."
         },
         {
           "id": "en_15918",
@@ -96569,10 +96569,10 @@
           "pronunciation": "[흐드어르]",
           "pron": "[흐드어르]",
           "phonetic": "[흐드어르]",
-          "example_en": "This is an example for heather.",
-          "example_ko": "이것은 각종 히스의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for heather.",
-          "exampleMeaning": "이것은 각종 히스의 관련 실전 예문입니다."
+          "example_en": "Heather arranged fresh flowers in a ceramic vase.",
+          "example_ko": "헤더는 도자기 꽃병에 생화를 꽂아 정돈했습니다.",
+          "exampleTarget": "Heather arranged fresh flowers in a ceramic vase.",
+          "exampleMeaning": "헤더는 도자기 꽃병에 생화를 꽂아 정돈했습니다."
         },
         {
           "id": "en_15919",
@@ -96620,10 +96620,10 @@
           "pronunciation": "[드이느어]",
           "pron": "[드이느어]",
           "phonetic": "[드이느어]",
-          "example_en": "This is an example for dana.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dana.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Dana accepted the exciting new graphic design job.",
+          "example_ko": "다나는 신나는 새로운 그래픽 디자인 일자리를 수락했습니다.",
+          "exampleTarget": "Dana accepted the exciting new graphic design job.",
+          "exampleMeaning": "다나는 신나는 새로운 그래픽 디자인 일자리를 수락했습니다."
         },
         {
           "id": "en_15922",
@@ -96655,9 +96655,9 @@
           "pron": "[스애으크스브이으]",
           "phonetic": "[스애으크스브이으]",
           "example_en": "harvest thanksgiving.",
-          "example_ko": "추수 감사제. 3.《T-》 《미》 ＝Thanksgiving Day.",
+          "example_ko": "추수 감사제.",
           "exampleTarget": "harvest thanksgiving.",
-          "exampleMeaning": "추수 감사제. 3.《T-》 《미》 ＝Thanksgiving Day."
+          "exampleMeaning": "추수 감사제."
         },
         {
           "id": "en_15924",
@@ -96671,10 +96671,10 @@
           "pronunciation": "[프이어르]",
           "pron": "[프이어르]",
           "phonetic": "[프이어르]",
-          "example_en": "This is an example for pierre.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pierre.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Pierre owns a charming French bakery on Main.",
+          "example_ko": "피에르는 메인 거리에서 매력적인 프랑스 빵집을 운영합니다.",
+          "exampleTarget": "Pierre owns a charming French bakery on Main.",
+          "exampleMeaning": "피에르는 메인 거리에서 매력적인 프랑스 빵집을 운영합니다."
         },
         {
           "id": "en_15925",
@@ -96688,10 +96688,10 @@
           "pronunciation": "[이에느]",
           "pron": "[이에느]",
           "phonetic": "[이에느]",
-          "example_en": "This is an example for yen.",
-          "example_ko": "이것은 엔 일본의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yen.",
-          "exampleMeaning": "이것은 엔 일본의 관련 실전 예문입니다."
+          "example_en": "She exchanged five hundred dollars into Japanese yen.",
+          "example_ko": "그녀는 오백 달러를 일본 엔화로 환전했습니다.",
+          "exampleTarget": "She exchanged five hundred dollars into Japanese yen.",
+          "exampleMeaning": "그녀는 오백 달러를 일본 엔화로 환전했습니다."
         },
         {
           "id": "en_15926",
@@ -96701,14 +96701,14 @@
           "level": "C1",
           "unitId": "unit_159",
           "nodeId": "en_u159_n5",
-          "meaning": "megan",
+          "meaning": "메건",
           "pronunciation": "[megan]",
           "pron": "[megan]",
           "phonetic": "[megan]",
-          "example_en": "I use the word megan in daily life.",
-          "example_ko": "나는 일상에서 megan 단어를 사용합니다.",
-          "exampleTarget": "I use the word megan in daily life.",
-          "exampleMeaning": "나는 일상에서 megan 단어를 사용합니다."
+          "example_en": "Megan is reading an exciting mystery novel.",
+          "example_ko": "메건은 흥미진진한 추리 소설을 읽고 있다.",
+          "exampleTarget": "Megan is reading an exciting mystery novel.",
+          "exampleMeaning": "메건은 흥미진진한 추리 소설을 읽고 있다."
         },
         {
           "id": "en_15927",
@@ -96740,9 +96740,9 @@
           "pron": "[misunderstanding]",
           "phonetic": "[misunderstanding]",
           "example_en": "misunderstandings between friends.",
-          "example_ko": "친구 사이의 불화. 2.〔…에 대한〕 오해 틀린 해석〔about of …〕.",
+          "example_ko": "친구 사이의 불화.",
           "exampleTarget": "misunderstandings between friends.",
-          "exampleMeaning": "친구 사이의 불화. 2.〔…에 대한〕 오해 틀린 해석〔about of …〕."
+          "exampleMeaning": "친구 사이의 불화."
         },
         {
           "id": "en_15929",
@@ -96769,14 +96769,14 @@
           "level": "C1",
           "unitId": "unit_159",
           "nodeId": "en_u159_n5",
-          "meaning": "kang",
+          "meaning": "강씨",
           "pronunciation": "[kang]",
           "pron": "[kang]",
           "phonetic": "[kang]",
-          "example_en": "I use the word kang in daily life.",
-          "example_ko": "나는 일상에서 kang 단어를 사용합니다.",
-          "exampleTarget": "I use the word kang in daily life.",
-          "exampleMeaning": "나는 일상에서 kang 단어를 사용합니다."
+          "example_en": "Professor Kang gave an inspiring lecture today.",
+          "example_ko": "강 교수님은 오늘 깊은 영감을 주는 강의를 하셨다.",
+          "exampleTarget": "Professor Kang gave an inspiring lecture today.",
+          "exampleMeaning": "강 교수님은 오늘 깊은 영감을 주는 강의를 하셨다."
         }
       ],
       "nodes": [
@@ -96890,9 +96890,9 @@
           "pron": "[크르우스르이]",
           "phonetic": "[크르우스르이]",
           "example_en": "She closely resembles her mother.",
-          "example_ko": "그녀는 어머니를 꼭 닮았다. 2.빈틈없이 꽉 꼭.",
+          "example_ko": "그녀는 어머니를 꼭 닮았다.",
           "exampleTarget": "She closely resembles her mother.",
-          "exampleMeaning": "그녀는 어머니를 꼭 닮았다. 2.빈틈없이 꽉 꼭."
+          "exampleMeaning": "그녀는 어머니를 꼭 닮았다."
         },
         {
           "id": "en_16002",
@@ -96923,10 +96923,10 @@
           "pronunciation": "[이드르이어느]",
           "pron": "[이드르이어느]",
           "phonetic": "[이드르이어느]",
-          "example_en": "This is an example for adrian.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for adrian.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Adrian scored two goals during the championship match.",
+          "example_ko": "에이드리언은 결승전 경기 동안 두 골을 넣었습니다.",
+          "exampleTarget": "Adrian scored two goals during the championship match.",
+          "exampleMeaning": "에이드리언은 결승전 경기 동안 두 골을 넣었습니다."
         },
         {
           "id": "en_16004",
@@ -96957,10 +96957,10 @@
           "pronunciation": "[드아느어르드]",
           "pron": "[드아느어르드]",
           "phonetic": "[드아느어르드]",
-          "example_en": "This is an example for donald.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for donald.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Donald repaired the broken wooden fence yesterday afternoon.",
+          "example_ko": "도널드는 어제 오후에 부서진 나무 울타리를 수리했습니다.",
+          "exampleTarget": "Donald repaired the broken wooden fence yesterday afternoon.",
+          "exampleMeaning": "도널드는 어제 오후에 부서진 나무 울타리를 수리했습니다."
         },
         {
           "id": "en_16006",
@@ -96991,10 +96991,10 @@
           "pronunciation": "[크아느]",
           "pron": "[크아느]",
           "phonetic": "[크아느]",
-          "example_en": "This is an example for khan.",
-          "example_ko": "이것은 칸 한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for khan.",
-          "exampleMeaning": "이것은 칸 한 관련 실전 예문입니다."
+          "example_en": "Genghis Khan conquered vast lands across ancient Asia.",
+          "example_ko": "칭기즈 칸은 고대 아시아 전역의 광대한 영토를 정복했습니다.",
+          "exampleTarget": "Genghis Khan conquered vast lands across ancient Asia.",
+          "exampleMeaning": "칭기즈 칸은 고대 아시아 전역의 광대한 영토를 정복했습니다."
         },
         {
           "id": "en_16008",
@@ -97042,10 +97042,10 @@
           "pronunciation": "[느오브므브어르]",
           "pron": "[느오브므브어르]",
           "phonetic": "[느오브므브어르]",
-          "example_en": "This is an example for november.",
-          "example_ko": "이것은 월 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for november.",
-          "exampleMeaning": "이것은 월 약자 관련 실전 예문입니다."
+          "example_en": "Our annual family reunion happens in late November.",
+          "example_ko": "우리의 연례 가족 모임은 십일월 말에 열립니다.",
+          "exampleTarget": "Our annual family reunion happens in late November.",
+          "exampleMeaning": "우리의 연례 가족 모임은 십일월 말에 열립니다."
         },
         {
           "id": "en_16011",
@@ -97055,14 +97055,14 @@
           "level": "C1",
           "unitId": "unit_160",
           "nodeId": "en_u160_n2",
-          "meaning": "debbie",
+          "meaning": "데비",
           "pronunciation": "[드브이]",
           "pron": "[드브이]",
           "phonetic": "[드브이]",
-          "example_en": "This is an example for debbie.",
-          "example_ko": "이것은 debbie 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for debbie.",
-          "exampleMeaning": "이것은 debbie 관련 실전 예문입니다."
+          "example_en": "Debbie adopted a friendly shelter puppy last Saturday.",
+          "example_ko": "데비는 지난 토요일에 다정한 보호소 강아지를 입양했습니다.",
+          "exampleTarget": "Debbie adopted a friendly shelter puppy last Saturday.",
+          "exampleMeaning": "데비는 지난 토요일에 다정한 보호소 강아지를 입양했습니다."
         },
         {
           "id": "en_16012",
@@ -97077,9 +97077,9 @@
           "pron": "[츠르이]",
           "phonetic": "[츠르이]",
           "example_en": "Life is no bag of cherries.",
-          "example_ko": "인생에는 즐거움만 있는 것은 아니다. 2.벚나무 ; 벚나무 재목. 3.버찌색. 4.《속어》 처녀.",
+          "example_ko": "인생에는 즐거움만 있는 것은 아니다.",
           "exampleTarget": "Life is no bag of cherries.",
-          "exampleMeaning": "인생에는 즐거움만 있는 것은 아니다. 2.벚나무 ; 벚나무 재목. 3.버찌색. 4.《속어》 처녀."
+          "exampleMeaning": "인생에는 즐거움만 있는 것은 아니다."
         },
         {
           "id": "en_16013",
@@ -97093,10 +97093,10 @@
           "pronunciation": "[흐아으크이으]",
           "pron": "[흐아으크이으]",
           "phonetic": "[흐아으크이으]",
-          "example_en": "This is an example for honking.",
-          "example_ko": "이것은 아주 큰 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for honking.",
-          "exampleMeaning": "이것은 아주 큰 관련 실전 예문입니다."
+          "example_en": "Impatient drivers were honking in heavy morning traffic.",
+          "example_ko": "성급한 운전자들이 혼잡한 아침 출근길에 경적을 울려댔습니다.",
+          "exampleTarget": "Impatient drivers were honking in heavy morning traffic.",
+          "exampleMeaning": "성급한 운전자들이 혼잡한 아침 출근길에 경적을 울려댔습니다."
         },
         {
           "id": "en_16014",
@@ -97128,9 +97128,9 @@
           "pron": "[어느크아느쉬어스]",
           "phonetic": "[어느크아느쉬어스]",
           "example_en": "be unconscious of a change.",
-          "example_ko": "변화를 깨닫지 못하고 있다. 2.（일시적으로） 의식을 잃은 의식 불명의.",
+          "example_ko": "변화를 깨닫지 못하고 있다.",
           "exampleTarget": "be unconscious of a change.",
-          "exampleMeaning": "변화를 깨닫지 못하고 있다. 2.（일시적으로） 의식을 잃은 의식 불명의."
+          "exampleMeaning": "변화를 깨닫지 못하고 있다."
         },
         {
           "id": "en_16016",
@@ -97145,9 +97145,9 @@
           "pron": "[프에어르이]",
           "phonetic": "[프에어르이]",
           "example_en": "act fairly by all men.",
-          "example_ko": "모든 사람에게 공정하게 행동하다. 2.꽤 상당히 어지간하게.",
+          "example_ko": "모든 사람에게 공정하게 행동하다.",
           "exampleTarget": "act fairly by all men.",
-          "exampleMeaning": "모든 사람에게 공정하게 행동하다. 2.꽤 상당히 어지간하게."
+          "exampleMeaning": "모든 사람에게 공정하게 행동하다."
         },
         {
           "id": "en_16017",
@@ -97196,9 +97196,9 @@
           "pron": "[르이드이이쉬어느]",
           "phonetic": "[르이드이이쉬어느]",
           "example_en": "radiation of heat.",
-          "example_ko": "열의 방사. 2.방사물.",
+          "example_ko": "열의 방사.",
           "exampleTarget": "radiation of heat.",
-          "exampleMeaning": "열의 방사. 2.방사물."
+          "exampleMeaning": "열의 방사."
         },
         {
           "id": "en_16020",
@@ -97263,10 +97263,10 @@
           "pronunciation": "[스프이스프이크어르이]",
           "pron": "[스프이스프이크어르이]",
           "phonetic": "[스프이스프이크어르이]",
-          "example_en": "This is an example for specifically.",
-          "example_ko": "이것은 명확하게 확실하게 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for specifically.",
-          "exampleMeaning": "이것은 명확하게 확실하게 관련 실전 예문입니다."
+          "example_en": "The doctor specifically warned against eating junk food.",
+          "example_ko": "의사는 정크 푸드를 먹지 말라고 구체적으로 경고했습니다.",
+          "exampleTarget": "The doctor specifically warned against eating junk food.",
+          "exampleMeaning": "의사는 정크 푸드를 먹지 말라고 구체적으로 경고했습니다."
         },
         {
           "id": "en_16024",
@@ -97276,14 +97276,14 @@
           "level": "C1",
           "unitId": "unit_160",
           "nodeId": "en_u160_n5",
-          "meaning": "sarge",
+          "meaning": "중사",
           "pronunciation": "[스아르즈]",
           "pron": "[스아르즈]",
           "phonetic": "[스아르즈]",
-          "example_en": "This is an example for sarge.",
-          "example_ko": "이것은 sarge 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sarge.",
-          "exampleMeaning": "이것은 sarge 관련 실전 예문입니다."
+          "example_en": "The sarge instructed all soldiers to stand ready.",
+          "example_ko": "중사는 모든 군인들에게 대기하라고 지시했습니다.",
+          "exampleTarget": "The sarge instructed all soldiers to stand ready.",
+          "exampleMeaning": "중사는 모든 군인들에게 대기하라고 지시했습니다."
         },
         {
           "id": "en_16025",
@@ -97310,14 +97310,14 @@
           "level": "C1",
           "unitId": "unit_160",
           "nodeId": "en_u160_n5",
-          "meaning": "gina",
+          "meaning": "지나",
           "pronunciation": "[gina]",
           "pron": "[gina]",
           "phonetic": "[gina]",
-          "example_en": "I use the word gina in daily life.",
-          "example_ko": "나는 일상에서 gina 단어를 사용합니다.",
-          "exampleTarget": "I use the word gina in daily life.",
-          "exampleMeaning": "나는 일상에서 gina 단어를 사용합니다."
+          "example_en": "Gina visited the local art museum yesterday.",
+          "example_ko": "지나는 어제 지역 미술관을 방문했다.",
+          "exampleTarget": "Gina visited the local art museum yesterday.",
+          "exampleMeaning": "지나는 어제 지역 미술관을 방문했다."
         },
         {
           "id": "en_16027",
@@ -97331,10 +97331,10 @@
           "pronunciation": "[르애느스]",
           "pron": "[르애느스]",
           "phonetic": "[르애느스]",
-          "example_en": "This is an example for lance.",
-          "example_ko": "이것은 창 창기병 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lance.",
-          "exampleMeaning": "이것은 창 창기병 관련 실전 예문입니다."
+          "example_en": "The knight charged forward holding a steel lance.",
+          "example_ko": "기사는 강철 창을 쥐고 앞으로 돌격했습니다.",
+          "exampleTarget": "The knight charged forward holding a steel lance.",
+          "exampleMeaning": "기사는 강철 창을 쥐고 앞으로 돌격했습니다."
         },
         {
           "id": "en_16028",
@@ -97348,10 +97348,10 @@
           "pronunciation": "[브르오크]",
           "pron": "[브르오크]",
           "phonetic": "[브르오크]",
-          "example_en": "This is an example for bloke.",
-          "example_ko": "이것은 녀석 놈 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for bloke.",
-          "exampleMeaning": "이것은 녀석 놈 관련 실전 예문입니다."
+          "example_en": "That friendly bloke offered helpful directions to tourists.",
+          "example_ko": "그 친절한 남자가 관광객들에게 유용한 길 안내를 해주었습니다.",
+          "exampleTarget": "That friendly bloke offered helpful directions to tourists.",
+          "exampleMeaning": "그 친절한 남자가 관광객들에게 유용한 길 안내를 해주었습니다."
         },
         {
           "id": "en_16029",
@@ -97378,7 +97378,7 @@
           "level": "C1",
           "unitId": "unit_160",
           "nodeId": "en_u160_n5",
-          "meaning": "di",
+          "meaning": "출신의",
           "pronunciation": "[드이]",
           "pron": "[드이]",
           "phonetic": "[드이]",
@@ -97516,9 +97516,9 @@
           "pron": "[크아므브어느이쉬어느]",
           "phonetic": "[크아므브어느이쉬어느]",
           "example_en": "make a good combination.",
-          "example_ko": "좋은 결합이 되다. 2.（몇 개를 합친） 결합체 짜 맞춘 것; 《주로 미》 복합 기능을 가진 것.",
+          "example_ko": "좋은 결합이 되다.",
           "exampleTarget": "make a good combination.",
-          "exampleMeaning": "좋은 결합이 되다. 2.（몇 개를 합친） 결합체 짜 맞춘 것; 《주로 미》 복합 기능을 가진 것."
+          "exampleMeaning": "좋은 결합이 되다."
         },
         {
           "id": "en_16103",
@@ -97532,10 +97532,10 @@
           "pronunciation": "[느애느이]",
           "pron": "[느애느이]",
           "phonetic": "[느애느이]",
-          "example_en": "This is an example for nanny.",
-          "example_ko": "이것은 유모 아이보는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nanny.",
-          "exampleMeaning": "이것은 유모 아이보는 관련 실전 예문입니다."
+          "example_en": "The caring nanny read bedtime stories every evening.",
+          "example_ko": "자상한 유모는 매일 저녁 잠자리 동화를 읽어주었습니다.",
+          "exampleTarget": "The caring nanny read bedtime stories every evening.",
+          "exampleMeaning": "자상한 유모는 매일 저녁 잠자리 동화를 읽어주었습니다."
         },
         {
           "id": "en_16104",
@@ -97549,10 +97549,10 @@
           "pronunciation": "[스에스]",
           "pron": "[스에스]",
           "phonetic": "[스에스]",
-          "example_en": "This is an example for seth.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for seth.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Seth submitted his final research paper ahead time.",
+          "example_ko": "세스는 마감 시간보다 앞서 최종 연구 보고서를 제출했습니다.",
+          "exampleTarget": "Seth submitted his final research paper ahead time.",
+          "exampleMeaning": "세스는 마감 시간보다 앞서 최종 연구 보고서를 제출했습니다."
         },
         {
           "id": "en_16105",
@@ -97566,10 +97566,10 @@
           "pronunciation": "[이브르이어르]",
           "pron": "[이브르이어르]",
           "phonetic": "[이브르이어르]",
-          "example_en": "This is an example for gabriel.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gabriel.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Gabriel plays trumpet in the high school band.",
+          "example_ko": "가브리엘은 고등학교 밴드에서 트럼펫을 연주합니다.",
+          "exampleTarget": "Gabriel plays trumpet in the high school band.",
+          "exampleMeaning": "가브리엘은 고등학교 밴드에서 트럼펫을 연주합니다."
         },
         {
           "id": "en_16106",
@@ -97600,10 +97600,10 @@
           "pronunciation": "[에느]",
           "pron": "[에느]",
           "phonetic": "[에느]",
-          "example_en": "This is an example for en.",
-          "example_ko": "이것은 n자 반각 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for en.",
-          "exampleMeaning": "이것은 n자 반각 관련 실전 예문입니다."
+          "example_en": "The delivery package is en route right now.",
+          "example_ko": "배송 패키지가 지금 바로 배달 중입니다.",
+          "exampleTarget": "The delivery package is en route right now.",
+          "exampleMeaning": "배송 패키지가 지금 바로 배달 중입니다."
         },
         {
           "id": "en_16108",
@@ -97634,10 +97634,10 @@
           "pronunciation": "[프르애으크르이느]",
           "pron": "[프르애으크르이느]",
           "phonetic": "[프르애으크르이느]",
-          "example_en": "This is an example for franklin.",
-          "example_ko": "이것은 자유 토지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for franklin.",
-          "exampleMeaning": "이것은 자유 토지 관련 실전 예문입니다."
+          "example_en": "Franklin walked his golden retriever along the river.",
+          "example_ko": "프랭클린은 강을 따라 골든 리트리버를 산책시켰습니다.",
+          "exampleTarget": "Franklin walked his golden retriever along the river.",
+          "exampleMeaning": "프랭클린은 강을 따라 골든 리트리버를 산책시켰습니다."
         },
         {
           "id": "en_16110",
@@ -97681,14 +97681,14 @@
           "level": "C1",
           "unitId": "unit_161",
           "nodeId": "en_u161_n2",
-          "meaning": "pm",
+          "meaning": "오후",
           "pronunciation": "[pm]",
           "pron": "[pm]",
           "phonetic": "[pm]",
-          "example_en": "This is an example for pm.",
-          "example_ko": "이것은 pm 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for pm.",
-          "exampleMeaning": "이것은 pm 관련 실전 예문입니다."
+          "example_en": "Our team meeting begins sharp at three pm.",
+          "example_ko": "우리 팀 회의는 오후 세 시 정각에 시작합니다.",
+          "exampleTarget": "Our team meeting begins sharp at three pm.",
+          "exampleMeaning": "우리 팀 회의는 오후 세 시 정각에 시작합니다."
         },
         {
           "id": "en_16113",
@@ -97702,10 +97702,10 @@
           "pronunciation": "[이아으]",
           "pron": "[이아으]",
           "phonetic": "[이아으]",
-          "example_en": "This is an example for yang.",
-          "example_ko": "이것은 양 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for yang.",
-          "exampleMeaning": "이것은 양 관련 실전 예문입니다."
+          "example_en": "Yin and yang represent balance in Asian philosophy.",
+          "example_ko": "음과 양은 동양 철학에서 균형을 나타냅니다.",
+          "exampleTarget": "Yin and yang represent balance in Asian philosophy.",
+          "exampleMeaning": "음과 양은 동양 철학에서 균형을 나타냅니다."
         },
         {
           "id": "en_16114",
@@ -97719,10 +97719,10 @@
           "pronunciation": "[흐애르오느]",
           "pron": "[흐애르오느]",
           "phonetic": "[흐애르오느]",
-          "example_en": "This is an example for halloween.",
-          "example_ko": "이것은 핼로윈 만성절 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for halloween.",
-          "exampleMeaning": "이것은 핼로윈 만성절 관련 실전 예문입니다."
+          "example_en": "Children wore spooky costumes for Halloween trick or treating.",
+          "example_ko": "아이들은 핼로윈 사탕 놀이를 위해 무서운 의상을 입었습니다.",
+          "exampleTarget": "Children wore spooky costumes for Halloween trick or treating.",
+          "exampleMeaning": "아이들은 핼로윈 사탕 놀이를 위해 무서운 의상을 입었습니다."
         },
         {
           "id": "en_16115",
@@ -97736,10 +97736,10 @@
           "pronunciation": "[르이]",
           "pron": "[르이]",
           "phonetic": "[르이]",
-          "example_en": "This is an example for ellie.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ellie.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Ellie won first place in the speech contest.",
+          "example_ko": "엘리는 웅변 대회에서 일등상을 수상했습니다.",
+          "exampleTarget": "Ellie won first place in the speech contest.",
+          "exampleMeaning": "엘리는 웅변 대회에서 일등상을 수상했습니다."
         },
         {
           "id": "en_16116",
@@ -97771,9 +97771,9 @@
           "pron": "[크아므르애드]",
           "phonetic": "[크아므르애드]",
           "example_en": "a comrade in arms.",
-          "example_ko": "전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지.",
+          "example_ko": "전우.",
           "exampleTarget": "a comrade in arms.",
-          "exampleMeaning": "전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지."
+          "exampleMeaning": "전우."
         },
         {
           "id": "en_16118",
@@ -97821,10 +97821,10 @@
           "pronunciation": "[흐아르프어르]",
           "pron": "[흐아르프어르]",
           "phonetic": "[흐아르프어르]",
-          "example_en": "This is an example for harper.",
-          "example_ko": "이것은 하프 연주자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for harper.",
-          "exampleMeaning": "이것은 하프 연주자 관련 실전 예문입니다."
+          "example_en": "Harper planted colorful tulip bulbs in her backyard.",
+          "example_ko": "하퍼는 뒷마당에 알록달록한 튤립 구근을 심었습니다.",
+          "exampleTarget": "Harper planted colorful tulip bulbs in her backyard.",
+          "exampleMeaning": "하퍼는 뒷마당에 알록달록한 튤립 구근을 심었습니다."
         },
         {
           "id": "en_16121",
@@ -97838,10 +97838,10 @@
           "pronunciation": "[크아르스느]",
           "pron": "[크아르스느]",
           "phonetic": "[크아르스느]",
-          "example_en": "This is an example for carson.",
-          "example_ko": "이것은 카슨 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for carson.",
-          "exampleMeaning": "이것은 카슨 남자 관련 실전 예문입니다."
+          "example_en": "Carson bought fresh organic vegetables from farmers market.",
+          "example_ko": "카슨은 농산물 직판장에서 신선한 유기농 채소를 샀습니다.",
+          "exampleTarget": "Carson bought fresh organic vegetables from farmers market.",
+          "exampleMeaning": "카슨은 농산물 직판장에서 신선한 유기농 채소를 샀습니다."
         },
         {
           "id": "en_16122",
@@ -97855,10 +97855,10 @@
           "pronunciation": "[브느이]",
           "pron": "[브느이]",
           "phonetic": "[브느이]",
-          "example_en": "This is an example for benny.",
-          "example_ko": "이것은 남자용 외투 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for benny.",
-          "exampleMeaning": "이것은 남자용 외투 관련 실전 예문입니다."
+          "example_en": "Benny cleans the store counters before opening hours.",
+          "example_ko": "베니는 영업 시작 전에 매장 계산대를 청소합니다.",
+          "exampleTarget": "Benny cleans the store counters before opening hours.",
+          "exampleMeaning": "베니는 영업 시작 전에 매장 계산대를 청소합니다."
         },
         {
           "id": "en_16123",
@@ -97873,9 +97873,9 @@
           "pron": "[프르오]",
           "phonetic": "[프르오]",
           "example_en": "She put the picture under her pillow.",
-          "example_ko": "그녀는 그 사진을 베개 밑에 놓았다. 2.베개 구실을 하는 것; （이발용 의자 등의） 머리받이. 3.손뜨개질 레이스의 받침대. 4.〔공학〕 （물건을 앉히는） 받침. 숙어 take counsel of ones pillow; consult with ones pillow; take counsel with ones pillow 하룻밤 자며 차분히 생각하다. 동사 타동사1.〈머리를〉 베개에 얹다; 〈머리·몸 등을〉 기대다.",
+          "example_ko": "그녀는 그 사진을 베개 밑에 놓았다.",
           "exampleTarget": "She put the picture under her pillow.",
-          "exampleMeaning": "그녀는 그 사진을 베개 밑에 놓았다. 2.베개 구실을 하는 것; （이발용 의자 등의） 머리받이. 3.손뜨개질 레이스의 받침대. 4.〔공학〕 （물건을 앉히는） 받침. 숙어 take counsel of ones pillow; consult with ones pillow; take counsel with ones pillow 하룻밤 자며 차분히 생각하다. 동사 타동사1.〈머리를〉 베개에 얹다; 〈머리·몸 등을〉 기대다."
+          "exampleMeaning": "그녀는 그 사진을 베개 밑에 놓았다."
         },
         {
           "id": "en_16124",
@@ -97889,10 +97889,10 @@
           "pronunciation": "[트르오이]",
           "pron": "[트르오이]",
           "phonetic": "[트르오이]",
-          "example_en": "This is an example for troy.",
-          "example_ko": "이것은 트로이형 으로 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for troy.",
-          "exampleMeaning": "이것은 트로이형 으로 관련 실전 예문입니다."
+          "example_en": "Historians studied ancient legends about the city Troy.",
+          "example_ko": "역사학자들은 트로이 도시에 관한 고대 전설을 연구했습니다.",
+          "exampleTarget": "Historians studied ancient legends about the city Troy.",
+          "exampleMeaning": "역사학자들은 트로이 도시에 관한 고대 전설을 연구했습니다."
         },
         {
           "id": "en_16125",
@@ -97907,9 +97907,9 @@
           "pron": "[에이스]",
           "phonetic": "[에이스]",
           "example_en": "the ace of hearts.",
-          "example_ko": "하트의 에이스. 2.（테니스·배드민턴·송구·배구 등에서） 상대방이 받을 수 없는 곳에 쳐 넣기; （특히） 《비격식》 service ace. 3.〔골프〕 홀인원. 4.《비격식》 〔스포츠·댄스 등의〕 전문가 명수 명인 고수 제 1인자 에이스〔at …〕.",
+          "example_ko": "하트의 에이스.",
           "exampleTarget": "the ace of hearts.",
-          "exampleMeaning": "하트의 에이스. 2.（테니스·배드민턴·송구·배구 등에서） 상대방이 받을 수 없는 곳에 쳐 넣기; （특히） 《비격식》 service ace. 3.〔골프〕 홀인원. 4.《비격식》 〔스포츠·댄스 등의〕 전문가 명수 명인 고수 제 1인자 에이스〔at …〕."
+          "exampleMeaning": "하트의 에이스."
         },
         {
           "id": "en_16126",
@@ -97923,10 +97923,10 @@
           "pronunciation": "[느애프]",
           "pron": "[느애프]",
           "phonetic": "[느애프]",
-          "example_en": "This is an example for nap.",
-          "example_ko": "이것은 「유괴하다」의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nap.",
-          "exampleMeaning": "이것은 「유괴하다」의 관련 실전 예문입니다."
+          "example_en": "Grandpa enjoys taking a peaceful afternoon nap daily.",
+          "example_ko": "할아버지는 매일 오후 평화로운 낮잠을 즐기십니다.",
+          "exampleTarget": "Grandpa enjoys taking a peaceful afternoon nap daily.",
+          "exampleMeaning": "할아버지는 매일 오후 평화로운 낮잠을 즐기십니다."
         },
         {
           "id": "en_16127",
@@ -97936,14 +97936,14 @@
           "level": "C1",
           "unitId": "unit_161",
           "nodeId": "en_u161_n5",
-          "meaning": "chan",
+          "meaning": "찬씨",
           "pronunciation": "[chan]",
           "pron": "[chan]",
           "phonetic": "[chan]",
-          "example_en": "I use the word chan in daily life.",
-          "example_ko": "나는 일상에서 chan 단어를 사용합니다.",
-          "exampleTarget": "I use the word chan in daily life.",
-          "exampleMeaning": "나는 일상에서 chan 단어를 사용합니다."
+          "example_en": "Jackie Chan is famous for his martial arts movies.",
+          "example_ko": "성룡은 무술 영화로 유명하다.",
+          "exampleTarget": "Jackie Chan is famous for his martial arts movies.",
+          "exampleMeaning": "성룡은 무술 영화로 유명하다."
         },
         {
           "id": "en_16128",
@@ -97958,9 +97958,9 @@
           "pron": "[흐애므]",
           "phonetic": "[흐애므]",
           "example_en": "ham and eggs.",
-          "example_ko": "햄에그. ②《미; 영 고어》 （다리의） 오금; 《종종 hams》넓적다리 뒷부분 넓적다리와 궁둥이.",
+          "example_ko": "햄에그. ② （다리의） 오금; 넓적다리 뒷부분 넓적다리와 궁둥이.",
           "exampleTarget": "ham and eggs.",
-          "exampleMeaning": "햄에그. ②《미; 영 고어》 （다리의） 오금; 《종종 hams》넓적다리 뒷부분 넓적다리와 궁둥이."
+          "exampleMeaning": "햄에그. ② （다리의） 오금; 넓적다리 뒷부분 넓적다리와 궁둥이."
         },
         {
           "id": "en_16129",
@@ -97975,9 +97975,9 @@
           "pron": "[애르어크스이]",
           "phonetic": "[애르어크스이]",
           "example_en": "a galaxy of movie stars.",
-          "example_ko": "기라성 같은 영화 스타들의 모임. 3.《a galaxy》〔…의〕 집단 집합〔of …〕.",
+          "example_ko": "기라성 같은 영화 스타들의 모임.",
           "exampleTarget": "a galaxy of movie stars.",
-          "exampleMeaning": "기라성 같은 영화 스타들의 모임. 3.《a galaxy》〔…의〕 집단 집합〔of …〕."
+          "exampleMeaning": "기라성 같은 영화 스타들의 모임."
         },
         {
           "id": "en_16130",
@@ -97991,10 +97991,10 @@
           "pronunciation": "[므어프르드]",
           "pron": "[므어프르드]",
           "phonetic": "[므어프르드]",
-          "example_en": "This is an example for muffled.",
-          "example_ko": "이것은 우물거리는 알아듣기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for muffled.",
-          "exampleMeaning": "이것은 우물거리는 알아듣기 관련 실전 예문입니다."
+          "example_en": "We heard muffled whispers behind the closed door.",
+          "example_ko": "우리는 닫힌 문 뒤에서 웅얼거리는 속삭임을 들었습니다.",
+          "exampleTarget": "We heard muffled whispers behind the closed door.",
+          "exampleMeaning": "우리는 닫힌 문 뒤에서 웅얼거리는 속삭임을 들었습니다."
         }
       ],
       "nodes": [
@@ -98107,10 +98107,10 @@
           "pronunciation": "[스이브애스츠어느]",
           "pron": "[스이브애스츠어느]",
           "phonetic": "[스이브애스츠어느]",
-          "example_en": "This is an example for sebastian.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sebastian.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Sebastian scored top marks on his calculus exam.",
+          "example_ko": "세바스티안은 미적분학 시험에서 최고 점수를 받았습니다.",
+          "exampleTarget": "Sebastian scored top marks on his calculus exam.",
+          "exampleMeaning": "세바스티안은 미적분학 시험에서 최고 점수를 받았습니다."
         },
         {
           "id": "en_16202",
@@ -98124,10 +98124,10 @@
           "pronunciation": "[즈어르이]",
           "pron": "[즈어르이]",
           "phonetic": "[즈어르이]",
-          "example_en": "This is an example for jewelry.",
-          "example_ko": "이것은 보석류 장신구류 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jewelry.",
-          "exampleMeaning": "이것은 보석류 장신구류 관련 실전 예문입니다."
+          "example_en": "She keeps precious silver jewelry inside velvet box.",
+          "example_ko": "그녀는 귀중한 은 장신구를 벨벳 상자 안에 보관합니다.",
+          "exampleTarget": "She keeps precious silver jewelry inside velvet box.",
+          "exampleMeaning": "그녀는 귀중한 은 장신구를 벨벳 상자 안에 보관합니다."
         },
         {
           "id": "en_16203",
@@ -98159,9 +98159,9 @@
           "pron": "[르우므]",
           "phonetic": "[르우므]",
           "example_en": "the bride and groom.",
-          "example_ko": "신랑 신부. 2.마부 말 사육 담당자. 3.（영국 궁정 시종직의） 궁내관.",
+          "example_ko": "신랑 신부.",
           "exampleTarget": "the bride and groom.",
-          "exampleMeaning": "신랑 신부. 2.마부 말 사육 담당자. 3.（영국 궁정 시종직의） 궁내관."
+          "exampleMeaning": "신랑 신부."
         },
         {
           "id": "en_16205",
@@ -98175,10 +98175,10 @@
           "pronunciation": "[우프스]",
           "pron": "[우프스]",
           "phonetic": "[우프스]",
-          "example_en": "This is an example for oops.",
-          "example_ko": "이것은 이런 아차 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for oops.",
-          "exampleMeaning": "이것은 이런 아차 관련 실전 예문입니다."
+          "example_en": "Oops I dropped my favorite mug on floor.",
+          "example_ko": "이런 내가 가장 좋아하는 머그잔을 바닥에 떨어뜨렸네요.",
+          "exampleTarget": "Oops I dropped my favorite mug on floor.",
+          "exampleMeaning": "이런 내가 가장 좋아하는 머그잔을 바닥에 떨어뜨렸네요."
         },
         {
           "id": "en_16206",
@@ -98192,10 +98192,10 @@
           "pronunciation": "[르이트어르]",
           "pron": "[르이트어르]",
           "phonetic": "[르이트어르]",
-          "example_en": "This is an example for lighter.",
-          "example_ko": "이것은 점등부 점화자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lighter.",
-          "exampleMeaning": "이것은 점등부 점화자 관련 실전 예문입니다."
+          "example_en": "He used a metal pocket lighter for candles.",
+          "example_ko": "그는 양초에 불을 붙이기 위해 금속 주머니 라이터를 사용했습니다.",
+          "exampleTarget": "He used a metal pocket lighter for candles.",
+          "exampleMeaning": "그는 양초에 불을 붙이기 위해 금속 주머니 라이터를 사용했습니다."
         },
         {
           "id": "en_16207",
@@ -98210,9 +98210,9 @@
           "pron": "[어르이어느스]",
           "phonetic": "[어르이어느스]",
           "example_en": "arrange an alliance.",
-          "example_ko": "결연을 성립시키다. 2.〔국가간의〕 동맹 〔…과의〕 협정〔between among with …〕.",
+          "example_ko": "결연을 성립시키다.",
           "exampleTarget": "arrange an alliance.",
-          "exampleMeaning": "결연을 성립시키다. 2.〔국가간의〕 동맹 〔…과의〕 협정〔between among with …〕."
+          "exampleMeaning": "결연을 성립시키다."
         },
         {
           "id": "en_16208",
@@ -98307,14 +98307,14 @@
           "level": "C1",
           "unitId": "unit_162",
           "nodeId": "en_u162_n2",
-          "meaning": "햄버거스테이크",
+          "meaning": "햄버거",
           "pronunciation": "[브어르어르]",
           "pron": "[브어르어르]",
           "phonetic": "[브어르어르]",
-          "example_en": "This is an example for burger.",
-          "example_ko": "이것은 햄버거 고기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for burger.",
-          "exampleMeaning": "이것은 햄버거 고기 관련 실전 예문입니다."
+          "example_en": "I ordered a delicious beef burger.",
+          "example_ko": "나는 맛있는 소고기 햄버거를 주문했다.",
+          "exampleTarget": "I ordered a delicious beef burger.",
+          "exampleMeaning": "나는 맛있는 소고기 햄버거를 주문했다."
         },
         {
           "id": "en_16214",
@@ -98345,10 +98345,10 @@
           "pronunciation": "[어르쉬어]",
           "pron": "[어르쉬어]",
           "phonetic": "[어르쉬어]",
-          "example_en": "This is an example for alicia.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for alicia.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Alicia teaches high school chemistry with great passion.",
+          "example_ko": "알리시아는 깊은 열정으로 고등학교 화학을 가르칩니다.",
+          "exampleTarget": "Alicia teaches high school chemistry with great passion.",
+          "exampleMeaning": "알리시아는 깊은 열정으로 고등학교 화학을 가르칩니다."
         },
         {
           "id": "en_16216",
@@ -98362,10 +98362,10 @@
           "pronunciation": "[크르이스트느어]",
           "pron": "[크르이스트느어]",
           "phonetic": "[크르이스트느어]",
-          "example_en": "This is an example for christina.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for christina.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Christina showed her beautiful landscape paintings at gallery.",
+          "example_ko": "크리스티나는 미술관에서 아름다운 풍경화를 선보였습니다.",
+          "exampleTarget": "Christina showed her beautiful landscape paintings at gallery.",
+          "exampleMeaning": "크리스티나는 미술관에서 아름다운 풍경화를 선보였습니다."
         },
         {
           "id": "en_16217",
@@ -98380,9 +98380,9 @@
           "pron": "[프즈이크어르이]",
           "phonetic": "[프즈이크어르이]",
           "example_en": "Its physically impossible to travel faster than the speed of light.",
-          "example_ko": "빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다. 2.《비격식》 완전히 전혀.",
+          "example_ko": "빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다.",
           "exampleTarget": "Its physically impossible to travel faster than the speed of light.",
-          "exampleMeaning": "빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다. 2.《비격식》 완전히 전혀."
+          "exampleMeaning": "빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다."
         },
         {
           "id": "en_16218",
@@ -98396,10 +98396,10 @@
           "pronunciation": "[르아이]",
           "pron": "[르아이]",
           "phonetic": "[르아이]",
-          "example_en": "This is an example for eli.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for eli.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Eli fixed his squeaky bicycle chain before riding.",
+          "example_ko": "엘리는 자전거를 타기 전에 삐걱거리는 체인을 고쳤습니다.",
+          "exampleTarget": "Eli fixed his squeaky bicycle chain before riding.",
+          "exampleMeaning": "엘리는 자전거를 타기 전에 삐걱거리는 체인을 고쳤습니다."
         },
         {
           "id": "en_16219",
@@ -98413,10 +98413,10 @@
           "pronunciation": "[스어므애느스어]",
           "pron": "[스어므애느스어]",
           "phonetic": "[스어므애느스어]",
-          "example_en": "This is an example for samantha.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for samantha.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Samantha works as a pediatric nurse at hospital.",
+          "example_ko": "사만다는 병원에서 소아과 간호사로 근무합니다.",
+          "exampleTarget": "Samantha works as a pediatric nurse at hospital.",
+          "exampleMeaning": "사만다는 병원에서 소아과 간호사로 근무합니다."
         },
         {
           "id": "en_16220",
@@ -98447,10 +98447,10 @@
           "pronunciation": "[스아이어르]",
           "pron": "[스아이어르]",
           "phonetic": "[스아이어르]",
-          "example_en": "This is an example for sire.",
-          "example_ko": "이것은 아비 부수 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sire.",
-          "exampleMeaning": "이것은 아비 부수 관련 실전 예문입니다."
+          "example_en": "The loyal knight addressed the noble royal sire.",
+          "example_ko": "충성스러운 기사는 고귀한 국왕 폐하께 예를 갖추어 말씀드렸습니다.",
+          "exampleTarget": "The loyal knight addressed the noble royal sire.",
+          "exampleMeaning": "충성스러운 기사는 고귀한 국왕 폐하께 예를 갖추어 말씀드렸습니다."
         },
         {
           "id": "en_16222",
@@ -98499,9 +98499,9 @@
           "pron": "[이느츠]",
           "phonetic": "[이느츠]",
           "example_en": "an inch of rain1.",
-          "example_ko": "인치의 강우량. ③＝water-inch.2.《inches》키 신장.",
+          "example_ko": "인치의 강우량. ③＝water-inch.2.키 신장.",
           "exampleTarget": "an inch of rain1.",
-          "exampleMeaning": "인치의 강우량. ③＝water-inch.2.《inches》키 신장."
+          "exampleMeaning": "인치의 강우량. ③＝water-inch.2.키 신장."
         },
         {
           "id": "en_16225",
@@ -98567,9 +98567,9 @@
           "pron": "[흐우므프어르]",
           "phonetic": "[흐우므프어르]",
           "example_en": "A little boy whimpered with cold.",
-          "example_ko": "작은 사내아이가 추워서 훌쩍훌쩍 울고 있었다. 동사 타동사…을 우는 소리로 말하다. 명사흐느껴 우는 소리 코를 킁킁거리는 소리.",
+          "example_ko": "작은 사내아이가 추워서 훌쩍훌쩍 울고 있었다.",
           "exampleTarget": "A little boy whimpered with cold.",
-          "exampleMeaning": "작은 사내아이가 추워서 훌쩍훌쩍 울고 있었다. 동사 타동사…을 우는 소리로 말하다. 명사흐느껴 우는 소리 코를 킁킁거리는 소리."
+          "exampleMeaning": "작은 사내아이가 추워서 훌쩍훌쩍 울고 있었다."
         },
         {
           "id": "en_16229",
@@ -98600,10 +98600,10 @@
           "pronunciation": "[흐우므어르]",
           "pron": "[흐우므어르]",
           "phonetic": "[흐우므어르]",
-          "example_en": "This is an example for homer.",
-          "example_ko": "이것은 호메르 고대 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for homer.",
-          "exampleMeaning": "이것은 호메르 고대 관련 실전 예문입니다."
+          "example_en": "The slugger hit a dramatic ninth inning homer.",
+          "example_ko": "그 강타자는 극적인 구회말 홈런을 쳐냈습니다.",
+          "exampleTarget": "The slugger hit a dramatic ninth inning homer.",
+          "exampleMeaning": "그 강타자는 극적인 구회말 홈런을 쳐냈습니다."
         }
       ],
       "nodes": [
@@ -98716,10 +98716,10 @@
           "pronunciation": "[트애르어]",
           "pron": "[트애르어]",
           "phonetic": "[트애르어]",
-          "example_en": "This is an example for tara.",
-          "example_ko": "이것은 타라 아일랜드 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tara.",
-          "exampleMeaning": "이것은 타라 아일랜드 관련 실전 예문입니다."
+          "example_en": "Tara adopted a sweet rescue kitten last Sunday.",
+          "example_ko": "타라는 지난 일요일에 다정한 유기 새끼 고양이를 입양했습니다.",
+          "exampleTarget": "Tara adopted a sweet rescue kitten last Sunday.",
+          "exampleMeaning": "타라는 지난 일요일에 다정한 유기 새끼 고양이를 입양했습니다."
         },
         {
           "id": "en_16302",
@@ -98733,10 +98733,10 @@
           "pronunciation": "[크르스트어프어르]",
           "pron": "[크르스트어프어르]",
           "phonetic": "[크르스트어프어르]",
-          "example_en": "This is an example for christopher.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for christopher.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Christopher walked across town to meet his friend.",
+          "example_ko": "크리스토퍼는 친구를 만나기 위해 마을을 가로질러 걸어갔습니다.",
+          "exampleTarget": "Christopher walked across town to meet his friend.",
+          "exampleMeaning": "크리스토퍼는 친구를 만나기 위해 마을을 가로질러 걸어갔습니다."
         },
         {
           "id": "en_16303",
@@ -98767,10 +98767,10 @@
           "pronunciation": "[쉬트어르]",
           "pron": "[쉬트어르]",
           "phonetic": "[쉬트어르]",
-          "example_en": "This is an example for shooter.",
-          "example_ko": "이것은 쏘는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for shooter.",
-          "exampleMeaning": "이것은 쏘는 사람 관련 실전 예문입니다."
+          "example_en": "The talented three point shooter scored thirty points.",
+          "example_ko": "그 재능 있는 삼점슛 전문 선수는 삼십 점을 득점했습니다.",
+          "exampleTarget": "The talented three point shooter scored thirty points.",
+          "exampleMeaning": "그 재능 있는 삼점슛 전문 선수는 삼십 점을 득점했습니다."
         },
         {
           "id": "en_16305",
@@ -98819,9 +98819,9 @@
           "pron": "[스이어르어느]",
           "phonetic": "[스이어르어느]",
           "example_en": "a siren song.",
-          "example_ko": "감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌.",
+          "example_ko": "감미로운 유혹 저항할 수 없는 매력.",
           "exampleTarget": "a siren song.",
-          "exampleMeaning": "감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌."
+          "exampleMeaning": "감미로운 유혹 저항할 수 없는 매력."
         },
         {
           "id": "en_16308",
@@ -98835,10 +98835,10 @@
           "pronunciation": "[드오르어스어]",
           "pron": "[드오르어스어]",
           "phonetic": "[드오르어스어]",
-          "example_en": "This is an example for dorothy.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dorothy.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Dorothy baked delicious warm apple pie for guests.",
+          "example_ko": "도로시는 손님들을 위해 맛있는 따뜻한 사과 파이를 구웠습니다.",
+          "exampleTarget": "Dorothy baked delicious warm apple pie for guests.",
+          "exampleMeaning": "도로시는 손님들을 위해 맛있는 따뜻한 사과 파이를 구웠습니다."
         },
         {
           "id": "en_16309",
@@ -98869,10 +98869,10 @@
           "pronunciation": "[흐르오이느]",
           "pron": "[흐르오이느]",
           "phonetic": "[흐르오이느]",
-          "example_en": "This is an example for heroin.",
-          "example_ko": "이것은 헤로인 마취제·마약의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for heroin.",
-          "exampleMeaning": "이것은 헤로인 마취제·마약의 관련 실전 예문입니다."
+          "example_en": "Police seized dangerous illegal heroin during the raid.",
+          "example_ko": "경찰은 단속 과정에서 위험한 불법 헤로인을 압수했습니다.",
+          "exampleTarget": "Police seized dangerous illegal heroin during the raid.",
+          "exampleMeaning": "경찰은 단속 과정에서 위험한 불법 헤로인을 압수했습니다."
         },
         {
           "id": "en_16311",
@@ -98886,10 +98886,10 @@
           "pronunciation": "[트르이스이]",
           "pron": "[트르이스이]",
           "phonetic": "[트르이스이]",
-          "example_en": "This is an example for tracy.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for tracy.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Tracy accepted a senior managerial position in London.",
+          "example_ko": "트레이시는 런던에서 고위 관리직 직책을 수락했습니다.",
+          "exampleTarget": "Tracy accepted a senior managerial position in London.",
+          "exampleMeaning": "트레이시는 런던에서 고위 관리직 직책을 수락했습니다."
         },
         {
           "id": "en_16312",
@@ -98903,10 +98903,10 @@
           "pronunciation": "[르에크스]",
           "pron": "[르에크스]",
           "phonetic": "[르에크스]",
-          "example_en": "This is an example for rex.",
-          "example_ko": "이것은 ｛라틴어｝ 왕 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rex.",
-          "exampleMeaning": "이것은 ｛라틴어｝ 왕 관련 실전 예문입니다."
+          "example_en": "Rex is a friendly golden retriever living next.",
+          "example_ko": "렉스는 옆집에 사는 다정한 골든 리트리버입니다.",
+          "exampleTarget": "Rex is a friendly golden retriever living next.",
+          "exampleMeaning": "렉스는 옆집에 사는 다정한 골든 리트리버입니다."
         },
         {
           "id": "en_16313",
@@ -98920,10 +98920,10 @@
           "pronunciation": "[브아르느이]",
           "pron": "[브아르느이]",
           "phonetic": "[브아르느이]",
-          "example_en": "This is an example for barney.",
-          "example_ko": "이것은 토론 언쟁 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for barney.",
-          "exampleMeaning": "이것은 토론 언쟁 관련 실전 예문입니다."
+          "example_en": "Barney ordered fresh black coffee at neighborhood cafe.",
+          "example_ko": "바니는 동네 카페에서 신선한 블랙커피를 주문했습니다.",
+          "exampleTarget": "Barney ordered fresh black coffee at neighborhood cafe.",
+          "exampleMeaning": "바니는 동네 카페에서 신선한 블랙커피를 주문했습니다."
         },
         {
           "id": "en_16314",
@@ -98971,10 +98971,10 @@
           "pronunciation": "[크르에어르어]",
           "pron": "[크르에어르어]",
           "phonetic": "[크르에어르어]",
-          "example_en": "This is an example for clara.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for clara.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Clara practiced the piano piece for two hours.",
+          "example_ko": "클라라는 두 시간 동안 그 피아노 곡을 연습했습니다.",
+          "exampleTarget": "Clara practiced the piano piece for two hours.",
+          "exampleMeaning": "클라라는 두 시간 동안 그 피아노 곡을 연습했습니다."
         },
         {
           "id": "en_16317",
@@ -99005,10 +99005,10 @@
           "pronunciation": "[에트에]",
           "pron": "[에트에]",
           "phonetic": "[에트에]",
-          "example_en": "This is an example for et.",
-          "example_ko": "이것은 ｛프랑스어｝ 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for et.",
-          "exampleMeaning": "이것은 ｛프랑스어｝ 관련 실전 예문입니다."
+          "example_en": "We brought snacks fruit juice et cetera outside.",
+          "example_ko": "우리는 야외로 간식 과일 주스 등을 챙겨 왔습니다.",
+          "exampleTarget": "We brought snacks fruit juice et cetera outside.",
+          "exampleMeaning": "우리는 야외로 간식 과일 주스 등을 챙겨 왔습니다."
         },
         {
           "id": "en_16319",
@@ -99023,9 +99023,9 @@
           "pron": "[스어프르므]",
           "phonetic": "[스어프르므]",
           "example_en": "the supreme ruler.",
-          "example_ko": "최고 통치자. 2.《한정적》 （품질·정도·성격·중요성 등이） 최고의 지고의; 최대의 극도의 대단한.",
+          "example_ko": "최고 통치자.",
           "exampleTarget": "the supreme ruler.",
-          "exampleMeaning": "최고 통치자. 2.《한정적》 （품질·정도·성격·중요성 등이） 최고의 지고의; 최대의 극도의 대단한."
+          "exampleMeaning": "최고 통치자."
         },
         {
           "id": "en_16320",
@@ -99056,10 +99056,10 @@
           "pronunciation": "[므츠어르]",
           "pron": "[므츠어르]",
           "phonetic": "[므츠어르]",
-          "example_en": "This is an example for mitchell.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for mitchell.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Mitchell repaired the damaged roof after heavy wind.",
+          "example_ko": "미첼은 거센 바람이 분 후 파손된 지붕을 수리했습니다.",
+          "exampleTarget": "Mitchell repaired the damaged roof after heavy wind.",
+          "exampleMeaning": "미첼은 거센 바람이 분 후 파손된 지붕을 수리했습니다."
         },
         {
           "id": "en_16322",
@@ -99091,9 +99091,9 @@
           "pron": "[에서]",
           "phonetic": "[에서]",
           "example_en": "Mankind can destroy itself now.",
-          "example_ko": "인류는 이제 스스로를 파괴할 수가 있다 . 2.《드물게》 남성; 《집합적》 남자.",
+          "example_ko": "인류는 이제 스스로를 파괴할 수가 있다 .",
           "exampleTarget": "Mankind can destroy itself now.",
-          "exampleMeaning": "인류는 이제 스스로를 파괴할 수가 있다 . 2.《드물게》 남성; 《집합적》 남자."
+          "exampleMeaning": "인류는 이제 스스로를 파괴할 수가 있다 ."
         },
         {
           "id": "en_16324",
@@ -99107,10 +99107,10 @@
           "pronunciation": "[브에트느아므]",
           "pron": "[브에트느아므]",
           "phonetic": "[브에트느아므]",
-          "example_en": "This is an example for vietnam.",
-          "example_ko": "이것은 베트남 아시아 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for vietnam.",
-          "exampleMeaning": "이것은 베트남 아시아 관련 실전 예문입니다."
+          "example_en": "Our company opened a regional office in Vietnam.",
+          "example_ko": "우리 회사는 베트남에 새로운 지사를 설립했습니다.",
+          "exampleTarget": "Our company opened a regional office in Vietnam.",
+          "exampleMeaning": "우리 회사는 베트남에 새로운 지사를 설립했습니다."
         },
         {
           "id": "en_16325",
@@ -99120,14 +99120,14 @@
           "level": "C1",
           "unitId": "unit_163",
           "nodeId": "en_u163_n5",
-          "meaning": "과거·과거",
+          "meaning": "불을 붙였다",
           "pronunciation": "[르이트]",
           "pron": "[르이트]",
           "phonetic": "[르이트]",
-          "example_en": "This is an example for lit.",
-          "example_ko": "이것은 과거·과거 분사형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lit.",
-          "exampleMeaning": "이것은 과거·과거 분사형 관련 실전 예문입니다."
+          "example_en": "She lit a candle in the dark room.",
+          "example_ko": "그녀는 어두운 방에서 촛불을 켰다.",
+          "exampleTarget": "She lit a candle in the dark room.",
+          "exampleMeaning": "그녀는 어두운 방에서 촛불을 켰다."
         },
         {
           "id": "en_16326",
@@ -99141,10 +99141,10 @@
           "pronunciation": "[드에이르]",
           "pron": "[드에이르]",
           "phonetic": "[드에이르]",
-          "example_en": "This is an example for dale.",
-          "example_ko": "이것은 골짜기 넓은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dale.",
-          "exampleMeaning": "이것은 골짜기 넓은 관련 실전 예문입니다."
+          "example_en": "Wild flowers bloomed across the peaceful green dale.",
+          "example_ko": "평화롭고 푸른 골짜기 곳곳에 야생화가 활짝 피었습니다.",
+          "exampleTarget": "Wild flowers bloomed across the peaceful green dale.",
+          "exampleMeaning": "평화롭고 푸른 골짜기 곳곳에 야생화가 활짝 피었습니다."
         },
         {
           "id": "en_16327",
@@ -99158,10 +99158,10 @@
           "pronunciation": "[크르어르]",
           "pron": "[크르어르]",
           "phonetic": "[크르어르]",
-          "example_en": "This is an example for killers.",
-          "example_ko": "이것은 죽이는 사람 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for killers.",
-          "exampleMeaning": "이것은 죽이는 사람 관련 실전 예문입니다."
+          "example_en": "Cold winter frost proves harsh killers of crops.",
+          "example_ko": "매서운 겨울 서리는 작물들을 혹독하게 죽이는 원인이 됩니다.",
+          "exampleTarget": "Cold winter frost proves harsh killers of crops.",
+          "exampleMeaning": "매서운 겨울 서리는 작물들을 혹독하게 죽이는 원인이 됩니다."
         },
         {
           "id": "en_16328",
@@ -99175,10 +99175,10 @@
           "pronunciation": "[크아느어르]",
           "pron": "[크아느어르]",
           "phonetic": "[크아느어르]",
-          "example_en": "This is an example for connor.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for connor.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Connor works long hours at the architecture firm.",
+          "example_ko": "코너는 건축 설계 사무소에서 긴 시간 근무합니다.",
+          "exampleTarget": "Connor works long hours at the architecture firm.",
+          "exampleMeaning": "코너는 건축 설계 사무소에서 긴 시간 근무합니다."
         },
         {
           "id": "en_16329",
@@ -99188,14 +99188,14 @@
           "level": "C1",
           "unitId": "unit_163",
           "nodeId": "en_u163_n5",
-          "meaning": "mario",
+          "meaning": "마리오",
           "pronunciation": "[mario]",
           "pron": "[mario]",
           "phonetic": "[mario]",
-          "example_en": "I use the word mario in daily life.",
-          "example_ko": "나는 일상에서 mario 단어를 사용합니다.",
-          "exampleTarget": "I use the word mario in daily life.",
-          "exampleMeaning": "나는 일상에서 mario 단어를 사용합니다."
+          "example_en": "Mario runs a cozy Italian restaurant downtown.",
+          "example_ko": "마리오는 시내에서 아늑한 이탈리아 식당을 운영한다.",
+          "exampleTarget": "Mario runs a cozy Italian restaurant downtown.",
+          "exampleMeaning": "마리오는 시내에서 아늑한 이탈리아 식당을 운영한다."
         },
         {
           "id": "en_16330",
@@ -99342,10 +99342,10 @@
           "pronunciation": "[르이이으]",
           "pron": "[르이이으]",
           "phonetic": "[르이이으]",
-          "example_en": "This is an example for laying.",
-          "example_ko": "이것은 쌓기 두기 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for laying.",
-          "exampleMeaning": "이것은 쌓기 두기 관련 실전 예문입니다."
+          "example_en": "Workers were laying fresh bricks along garden path.",
+          "example_ko": "작업자들은 정원 산책로를 따라 새 벽돌을 깔고 있었습니다.",
+          "exampleTarget": "Workers were laying fresh bricks along garden path.",
+          "exampleMeaning": "작업자들은 정원 산책로를 따라 새 벽돌을 깔고 있었습니다."
         },
         {
           "id": "en_16403",
@@ -99376,10 +99376,10 @@
           "pronunciation": "[프오르어]",
           "pron": "[프오르어]",
           "phonetic": "[프오르어]",
-          "example_en": "This is an example for paula.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for paula.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Paula teaches morning yoga classes at community center.",
+          "example_ko": "폴라는 주민 문화센터에서 아침 요가 수업을 가르칩니다.",
+          "exampleTarget": "Paula teaches morning yoga classes at community center.",
+          "exampleMeaning": "폴라는 주민 문화센터에서 아침 요가 수업을 가르칩니다."
         },
         {
           "id": "en_16405",
@@ -99393,10 +99393,10 @@
           "pronunciation": "[크오크이느]",
           "pron": "[크오크이느]",
           "phonetic": "[크오크이느]",
-          "example_en": "This is an example for cocaine.",
-          "example_ko": "이것은 코카인 국부 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for cocaine.",
-          "exampleMeaning": "이것은 코카인 국부 관련 실전 예문입니다."
+          "example_en": "Officers confiscated hidden illegal cocaine at the border.",
+          "example_ko": "경찰관들은 국경에서 숨겨진 불법 코카인을 압수했습니다.",
+          "exampleTarget": "Officers confiscated hidden illegal cocaine at the border.",
+          "exampleMeaning": "경찰관들은 국경에서 숨겨진 불법 코카인을 압수했습니다."
         },
         {
           "id": "en_16406",
@@ -99427,10 +99427,10 @@
           "pronunciation": "[어느우느스므어느트]",
           "pron": "[어느우느스므어느트]",
           "phonetic": "[어느우느스므어느트]",
-          "example_en": "This is an example for announcement.",
-          "example_ko": "이것은 공고 고지 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for announcement.",
-          "exampleMeaning": "이것은 공고 고지 관련 실전 예문입니다."
+          "example_en": "The principal made an important announcement during assembly.",
+          "example_ko": "교장 선생님은 전체 조회 시간에 중요한 안내 발표를 하셨습니다.",
+          "exampleTarget": "The principal made an important announcement during assembly.",
+          "exampleMeaning": "교장 선생님은 전체 조회 시간에 중요한 안내 발표를 하셨습니다."
         },
         {
           "id": "en_16408",
@@ -99495,10 +99495,10 @@
           "pronunciation": "[즈에느]",
           "pron": "[즈에느]",
           "phonetic": "[즈에느]",
-          "example_en": "This is an example for jen.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jen.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Jen organized her colorful bookshelf by author name.",
+          "example_ko": "젠은 작가 이름순으로 알록달록한 책장을 정리했습니다.",
+          "exampleTarget": "Jen organized her colorful bookshelf by author name.",
+          "exampleMeaning": "젠은 작가 이름순으로 알록달록한 책장을 정리했습니다."
         },
         {
           "id": "en_16412",
@@ -99529,10 +99529,10 @@
           "pronunciation": "[이]",
           "pron": "[이]",
           "phonetic": "[이]",
-          "example_en": "This is an example for gig.",
-          "example_ko": "이것은 기그 긴 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gig.",
-          "exampleMeaning": "이것은 기그 긴 관련 실전 예문입니다."
+          "example_en": "The jazz band performed a lively club gig.",
+          "example_ko": "그 재즈 밴드는 활기찬 클럽 공연을 선보였습니다.",
+          "exampleTarget": "The jazz band performed a lively club gig.",
+          "exampleMeaning": "그 재즈 밴드는 활기찬 클럽 공연을 선보였습니다."
         },
         {
           "id": "en_16414",
@@ -99546,10 +99546,10 @@
           "pronunciation": "[스크느이]",
           "pron": "[스크느이]",
           "phonetic": "[스크느이]",
-          "example_en": "This is an example for skinny.",
-          "example_ko": "이것은 피골이 상접한 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for skinny.",
-          "exampleMeaning": "이것은 피골이 상접한 관련 실전 예문입니다."
+          "example_en": "She bought a pair of skinny jeans today.",
+          "example_ko": "그녀는 오늘 스키니 청바지 한 벌을 샀습니다.",
+          "exampleTarget": "She bought a pair of skinny jeans today.",
+          "exampleMeaning": "그녀는 오늘 스키니 청바지 한 벌을 샀습니다."
         },
         {
           "id": "en_16415",
@@ -99563,10 +99563,10 @@
           "pronunciation": "[르오]",
           "pron": "[르오]",
           "phonetic": "[르오]",
-          "example_en": "This is an example for lo.",
-          "example_ko": "이것은 보라 오늘날에는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for lo.",
-          "exampleMeaning": "이것은 보라 오늘날에는 관련 실전 예문입니다."
+          "example_en": "Lo and behold he finally arrived on time.",
+          "example_ko": "놀랍게도 그가 드디어 제시간에 도착했습니다.",
+          "exampleTarget": "Lo and behold he finally arrived on time.",
+          "exampleMeaning": "놀랍게도 그가 드디어 제시간에 도착했습니다."
         },
         {
           "id": "en_16416",
@@ -99614,10 +99614,10 @@
           "pronunciation": "[트르어르이스트]",
           "pron": "[트르어르이스트]",
           "phonetic": "[트르어르이스트]",
-          "example_en": "This is an example for terrorists.",
-          "example_ko": "이것은 테러리스트 테러 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for terrorists.",
-          "exampleMeaning": "이것은 테러리스트 테러 관련 실전 예문입니다."
+          "example_en": "The police stopped the terrorists before any attack.",
+          "example_ko": "경찰은 어떠한 공격도 일어나기 전에 테러리스트들을 막았습니다.",
+          "exampleTarget": "The police stopped the terrorists before any attack.",
+          "exampleMeaning": "경찰은 어떠한 공격도 일어나기 전에 테러리스트들을 막았습니다."
         },
         {
           "id": "en_16419",
@@ -99648,10 +99648,10 @@
           "pronunciation": "[어드오르어브르]",
           "pron": "[어드오르어브르]",
           "phonetic": "[어드오르어브르]",
-          "example_en": "This is an example for adorable.",
-          "example_ko": "이것은 숭배 할 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for adorable.",
-          "exampleMeaning": "이것은 숭배 할 관련 실전 예문입니다."
+          "example_en": "Your new puppy is really adorable and friendly.",
+          "example_ko": "당신의 새 강아지는 정말 사랑스럽고 다정합니다.",
+          "exampleTarget": "Your new puppy is really adorable and friendly.",
+          "exampleMeaning": "당신의 새 강아지는 정말 사랑스럽고 다정합니다."
         },
         {
           "id": "en_16421",
@@ -99666,9 +99666,9 @@
           "pron": "[르어브어르]",
           "phonetic": "[르어브어르]",
           "example_en": "rubber boots.",
-          "example_ko": "고무 장화. 동사 타동사…에 고무를 입히다. 자동사《미 속어》 ＝rubberneck.",
+          "example_ko": "고무 장화.",
           "exampleTarget": "rubber boots.",
-          "exampleMeaning": "고무 장화. 동사 타동사…에 고무를 입히다. 자동사《미 속어》 ＝rubberneck."
+          "exampleMeaning": "고무 장화."
         },
         {
           "id": "en_16422",
@@ -99682,10 +99682,10 @@
           "pronunciation": "[아프어르이트이으]",
           "pron": "[아프어르이트이으]",
           "phonetic": "[아프어르이트이으]",
-          "example_en": "This is an example for operating.",
-          "example_ko": "이것은 작용하는 수술 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for operating.",
-          "exampleMeaning": "이것은 작용하는 수술 관련 실전 예문입니다."
+          "example_en": "The surgeons entered the operating room this morning.",
+          "example_ko": "외과 의사들은 오늘 아침 수술실로 들어갔습니다.",
+          "exampleTarget": "The surgeons entered the operating room this morning.",
+          "exampleMeaning": "외과 의사들은 오늘 아침 수술실로 들어갔습니다."
         },
         {
           "id": "en_16423",
@@ -99734,9 +99734,9 @@
           "pron": "[크우느스어르어르오느이르와발음이같음]",
           "phonetic": "[크우느스어르어르오느이르와발음이같음]",
           "example_en": "a juridical counselor.",
-          "example_ko": "법률 고문. 2.①《미》 카운슬러 지도 교사: 고교생 등의 개인·학습 문제에 관하여 조언·지도를 담당하는 교사. ②아동 캠프의 지도원. 3.《미》 변호사 （특히） 법정 변론 변호사. 4.（대사관의） 참사관.",
+          "example_ko": "법률 고문.",
           "exampleTarget": "a juridical counselor.",
-          "exampleMeaning": "법률 고문. 2.①《미》 카운슬러 지도 교사: 고교생 등의 개인·학습 문제에 관하여 조언·지도를 담당하는 교사. ②아동 캠프의 지도원. 3.《미》 변호사 （특히） 법정 변론 변호사. 4.（대사관의） 참사관."
+          "exampleMeaning": "법률 고문."
         },
         {
           "id": "en_16426",
@@ -99750,10 +99750,10 @@
           "pronunciation": "[애르어느]",
           "pron": "[애르어느]",
           "phonetic": "[애르어느]",
-          "example_en": "This is an example for allen.",
-          "example_ko": "이것은 알렌 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for allen.",
-          "exampleMeaning": "이것은 알렌 남자 관련 실전 예문입니다."
+          "example_en": "Please pass this file to Allen right away.",
+          "example_ko": "이 서류를 앨런에게 지금 바로 전해주세요.",
+          "exampleTarget": "Please pass this file to Allen right away.",
+          "exampleMeaning": "이 서류를 앨런에게 지금 바로 전해주세요."
         },
         {
           "id": "en_16427",
@@ -99767,10 +99767,10 @@
           "pronunciation": "[오드르이]",
           "pron": "[오드르이]",
           "phonetic": "[오드르이]",
-          "example_en": "This is an example for audrey.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for audrey.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Audrey called me about the project earlier today.",
+          "example_ko": "오드리가 오늘 일찍 프로젝트에 대해 내게 전화했습니다.",
+          "exampleTarget": "Audrey called me about the project earlier today.",
+          "exampleMeaning": "오드리가 오늘 일찍 프로젝트에 대해 내게 전화했습니다."
         },
         {
           "id": "en_16428",
@@ -99784,10 +99784,10 @@
           "pronunciation": "[스프아트이드]",
           "pron": "[스프아트이드]",
           "phonetic": "[스프아트이드]",
-          "example_en": "This is an example for spotted.",
-          "example_ko": "이것은 반점이 있는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for spotted.",
-          "exampleMeaning": "이것은 반점이 있는 관련 실전 예문입니다."
+          "example_en": "We spotted a rare bird in the forest.",
+          "example_ko": "우리는 숲에서 희귀한 새 한 마리를 발견했습니다.",
+          "exampleTarget": "We spotted a rare bird in the forest.",
+          "exampleMeaning": "우리는 숲에서 희귀한 새 한 마리를 발견했습니다."
         },
         {
           "id": "en_16429",
@@ -99818,10 +99818,10 @@
           "pronunciation": "[즈어르느어르이스트]",
           "pron": "[즈어르느어르이스트]",
           "phonetic": "[즈어르느어르이스트]",
-          "example_en": "This is an example for journalist.",
-          "example_ko": "이것은 저널리스트 기자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for journalist.",
-          "exampleMeaning": "이것은 저널리스트 기자 관련 실전 예문입니다."
+          "example_en": "The young journalist interviewed the famous film director.",
+          "example_ko": "그 젊은 기자는 유명한 영화감독을 인터뷰했습니다.",
+          "exampleTarget": "The young journalist interviewed the famous film director.",
+          "exampleMeaning": "그 젊은 기자는 유명한 영화감독을 인터뷰했습니다."
         }
       ],
       "nodes": [
@@ -99947,14 +99947,14 @@
           "level": "C1",
           "unitId": "unit_165",
           "nodeId": "en_u165_n1",
-          "meaning": "singh",
+          "meaning": "싱씨",
           "pronunciation": "[singh]",
           "pron": "[singh]",
           "phonetic": "[singh]",
-          "example_en": "I use the word singh in daily life.",
-          "example_ko": "나는 일상에서 singh 단어를 사용합니다.",
-          "exampleTarget": "I use the word singh in daily life.",
-          "exampleMeaning": "나는 일상에서 singh 단어를 사용합니다."
+          "example_en": "Dr. Singh published a new research paper this month.",
+          "example_ko": "싱 박사는 이번 달에 새로운 연구 논문을 발표했다.",
+          "exampleTarget": "Dr. Singh published a new research paper this month.",
+          "exampleMeaning": "싱 박사는 이번 달에 새로운 연구 논문을 발표했다."
         },
         {
           "id": "en_16503",
@@ -99968,10 +99968,10 @@
           "pronunciation": "[르어느]",
           "pron": "[르어느]",
           "phonetic": "[르어느]",
-          "example_en": "This is an example for leon.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for leon.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Leon joined our company as a new designer.",
+          "example_ko": "레온은 신입 디자이너로 우리 회사에 입사했습니다.",
+          "exampleTarget": "Leon joined our company as a new designer.",
+          "exampleMeaning": "레온은 신입 디자이너로 우리 회사에 입사했습니다."
         },
         {
           "id": "en_16504",
@@ -99985,10 +99985,10 @@
           "pronunciation": "[우오르트]",
           "pron": "[우오르트]",
           "phonetic": "[우오르트]",
-          "example_en": "This is an example for walt.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for walt.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Walt visited the new amusement park with his family.",
+          "example_ko": "월트는 가족과 함께 새로운 놀이공원을 방문했습니다.",
+          "exampleTarget": "Walt visited the new amusement park with his family.",
+          "exampleMeaning": "월트는 가족과 함께 새로운 놀이공원을 방문했습니다."
         },
         {
           "id": "en_16505",
@@ -100019,10 +100019,10 @@
           "pronunciation": "[에이]",
           "pron": "[에이]",
           "phonetic": "[에이]",
-          "example_en": "This is an example for ay.",
-          "example_ko": "이것은 아아 어머나 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ay.",
-          "exampleMeaning": "이것은 아아 어머나 관련 실전 예문입니다."
+          "example_en": "Ay I completely forgot to bring my wallet today.",
+          "example_ko": "아아 내가 오늘 지갑을 챙겨오는 것을 깜빡했네요.",
+          "exampleTarget": "Ay I completely forgot to bring my wallet today.",
+          "exampleMeaning": "아아 내가 오늘 지갑을 챙겨오는 것을 깜빡했네요."
         },
         {
           "id": "en_16507",
@@ -100053,10 +100053,10 @@
           "pronunciation": "[애느드어르스느]",
           "pron": "[애느드어르스느]",
           "phonetic": "[애느드어르스느]",
-          "example_en": "This is an example for anderson.",
-          "example_ko": "이것은 앤더슨 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for anderson.",
-          "exampleMeaning": "이것은 앤더슨 미국의 관련 실전 예문입니다."
+          "example_en": "Mr Anderson will lead the meeting this afternoon.",
+          "example_ko": "앤더슨 씨가 오늘 오후 회의를 진행할 것입니다.",
+          "exampleTarget": "Mr Anderson will lead the meeting this afternoon.",
+          "exampleMeaning": "앤더슨 씨가 오늘 오후 회의를 진행할 것입니다."
         },
         {
           "id": "en_16509",
@@ -100070,10 +100070,10 @@
           "pronunciation": "[느오르어]",
           "pron": "[느오르어]",
           "phonetic": "[느오르어]",
-          "example_en": "This is an example for nora.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for nora.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Nora prepared a delicious dinner for all guests.",
+          "example_ko": "노라는 모든 손님들을 위해 맛있는 저녁을 준비했습니다.",
+          "exampleTarget": "Nora prepared a delicious dinner for all guests.",
+          "exampleMeaning": "노라는 모든 손님들을 위해 맛있는 저녁을 준비했습니다."
         },
         {
           "id": "en_16510",
@@ -100087,10 +100087,10 @@
           "pronunciation": "[스이]",
           "pron": "[스이]",
           "phonetic": "[스이]",
-          "example_en": "This is an example for si.",
-          "example_ko": "이것은 시 B음 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for si.",
-          "exampleMeaning": "이것은 시 B음 관련 실전 예문입니다."
+          "example_en": "He played the note si on his violin perfectly.",
+          "example_ko": "그는 바이올린으로 시 음을 완벽하게 연주했습니다.",
+          "exampleTarget": "He played the note si on his violin perfectly.",
+          "exampleMeaning": "그는 바이올린으로 시 음을 완벽하게 연주했습니다."
         },
         {
           "id": "en_16511",
@@ -100104,10 +100104,10 @@
           "pronunciation": "[드이스므브어르]",
           "pron": "[드이스므브어르]",
           "phonetic": "[드이스므브어르]",
-          "example_en": "This is an example for december.",
-          "example_ko": "이것은 월 약자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for december.",
-          "exampleMeaning": "이것은 월 약자 관련 실전 예문입니다."
+          "example_en": "Our family usually travels somewhere warm in December.",
+          "example_ko": "우리 가족은 보통 십이월에 따뜻한 곳으로 여행을 갑니다.",
+          "exampleTarget": "Our family usually travels somewhere warm in December.",
+          "exampleMeaning": "우리 가족은 보통 십이월에 따뜻한 곳으로 여행을 갑니다."
         },
         {
           "id": "en_16512",
@@ -100189,10 +100189,10 @@
           "pronunciation": "[르이프오르트이으]",
           "pron": "[르이프오르트이으]",
           "phonetic": "[르이프오르트이으]",
-          "example_en": "This is an example for reporting.",
-          "example_ko": "이것은 정보 제공 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for reporting.",
-          "exampleMeaning": "이것은 정보 제공 관련 실전 예문입니다."
+          "example_en": "The reporter is reporting live from the scene.",
+          "example_ko": "그 기자는 현장에서 생방송으로 취재 내용을 전하고 있습니다.",
+          "exampleTarget": "The reporter is reporting live from the scene.",
+          "exampleMeaning": "그 기자는 현장에서 생방송으로 취재 내용을 전하고 있습니다."
         },
         {
           "id": "en_16517",
@@ -100206,10 +100206,10 @@
           "pronunciation": "[즈이프트]",
           "pron": "[즈이프트]",
           "phonetic": "[즈이프트]",
-          "example_en": "This is an example for egypt.",
-          "example_ko": "이것은 이집트 아프리카 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for egypt.",
-          "exampleMeaning": "이것은 이집트 아프리카 관련 실전 예문입니다."
+          "example_en": "They spent their summer vacation exploring ancient Egypt.",
+          "example_ko": "그들은 고대 이집트를 탐험하며 여름휴가를 보냈습니다.",
+          "exampleTarget": "They spent their summer vacation exploring ancient Egypt.",
+          "exampleMeaning": "그들은 고대 이집트를 탐험하며 여름휴가를 보냈습니다."
         },
         {
           "id": "en_16518",
@@ -100223,10 +100223,10 @@
           "pronunciation": "[즈우르즈]",
           "pron": "[즈우르즈]",
           "phonetic": "[즈우르즈]",
-          "example_en": "This is an example for jules.",
-          "example_ko": "이것은 남자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jules.",
-          "exampleMeaning": "이것은 남자 이름 관련 실전 예문입니다."
+          "example_en": "Jules borrowed my favorite mystery novel yesterday afternoon.",
+          "example_ko": "쥘은 어제 오후 내가 가장 좋아하는 추리소설을 빌려갔습니다.",
+          "exampleTarget": "Jules borrowed my favorite mystery novel yesterday afternoon.",
+          "exampleMeaning": "쥘은 어제 오후 내가 가장 좋아하는 추리소설을 빌려갔습니다."
         },
         {
           "id": "en_16519",
@@ -100240,10 +100240,10 @@
           "pronunciation": "[roommate]",
           "pron": "[roommate]",
           "phonetic": "[roommate]",
-          "example_en": "This is an example for roommate.",
-          "example_ko": "이것은 한 방을 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for roommate.",
-          "exampleMeaning": "이것은 한 방을 관련 실전 예문입니다."
+          "example_en": "My roommate always keeps the living room clean.",
+          "example_ko": "내 룸메이트는 항상 거실을 깨끗하게 유지합니다.",
+          "exampleTarget": "My roommate always keeps the living room clean.",
+          "exampleMeaning": "내 룸메이트는 항상 거실을 깨끗하게 유지합니다."
         },
         {
           "id": "en_16520",
@@ -100253,14 +100253,14 @@
           "level": "C1",
           "unitId": "unit_165",
           "nodeId": "en_u165_n2",
-          "meaning": "더껑이",
+          "meaning": "찌꺼기",
           "pronunciation": "[스크어므]",
           "pron": "[스크어므]",
           "phonetic": "[스크어므]",
-          "example_en": "milk scum(.",
-          "example_ko": "뜨거워졌을 때 생기는) 우유의 더껑이. 2.찌꺼기 쓰레기. 3.《종종 집합적》 《구어》 인간 쓰레기 오합지졸.",
-          "exampleTarget": "milk scum(.",
-          "exampleMeaning": "뜨거워졌을 때 생기는) 우유의 더껑이. 2.찌꺼기 쓰레기. 3.《종종 집합적》 《구어》 인간 쓰레기 오합지졸."
+          "example_en": "Clear the scum off the boiling water.",
+          "example_ko": "끓는 물 위의 거품 찌꺼기를 걷어내라.",
+          "exampleTarget": "Clear the scum off the boiling water.",
+          "exampleMeaning": "끓는 물 위의 거품 찌꺼기를 걷어내라."
         },
         {
           "id": "en_16521",
@@ -100292,9 +100292,9 @@
           "pron": "[르]",
           "phonetic": "[르]",
           "example_en": "start giggling at a persons joke.",
-          "example_ko": "남의 농담에 낄낄 웃기 시작하다. 명사낄낄 웃음 ; 재미있는 사람 농담; 《주로 영·비격식》 대수롭지 않은 장난.",
+          "example_ko": "남의 농담에 낄낄 웃기 시작하다.",
           "exampleTarget": "start giggling at a persons joke.",
-          "exampleMeaning": "남의 농담에 낄낄 웃기 시작하다. 명사낄낄 웃음 ; 재미있는 사람 농담; 《주로 영·비격식》 대수롭지 않은 장난."
+          "exampleMeaning": "남의 농담에 낄낄 웃기 시작하다."
         },
         {
           "id": "en_16523",
@@ -100308,10 +100308,10 @@
           "pronunciation": "[즈이즈]",
           "pron": "[즈이즈]",
           "phonetic": "[즈이즈]",
-          "example_en": "This is an example for geez.",
-          "example_ko": "이것은 쳇 이런 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for geez.",
-          "exampleMeaning": "이것은 쳇 이런 관련 실전 예문입니다."
+          "example_en": "Geez you really scared me with that loud noise.",
+          "example_ko": "이런 그 큰 소리로 나를 정말 깜짝 놀라게 했네요.",
+          "exampleTarget": "Geez you really scared me with that loud noise.",
+          "exampleMeaning": "이런 그 큰 소리로 나를 정말 깜짝 놀라게 했네요."
         },
         {
           "id": "en_16524",
@@ -100326,9 +100326,9 @@
           "pron": "[이느츠]",
           "phonetic": "[이느츠]",
           "example_en": "an inch of rain1.",
-          "example_ko": "인치의 강우량. ③＝water-inch.2.《inches》키 신장.",
+          "example_ko": "인치의 강우량. ③＝water-inch.2.키 신장.",
           "exampleTarget": "an inch of rain1.",
-          "exampleMeaning": "인치의 강우량. ③＝water-inch.2.《inches》키 신장."
+          "exampleMeaning": "인치의 강우량. ③＝water-inch.2.키 신장."
         },
         {
           "id": "en_16525",
@@ -100359,10 +100359,10 @@
           "pronunciation": "[흐어르크유르즈]",
           "pron": "[흐어르크유르즈]",
           "phonetic": "[흐어르크유르즈]",
-          "example_en": "This is an example for hercules.",
-          "example_ko": "이것은 헤르쿨레스 Zeus의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hercules.",
-          "exampleMeaning": "이것은 헤르쿨레스 Zeus의 관련 실전 예문입니다."
+          "example_en": "Hercules was famous for his incredible physical strength.",
+          "example_ko": "헤라클레스는 그의 엄청난 육체적 힘으로 유명했습니다.",
+          "exampleTarget": "Hercules was famous for his incredible physical strength.",
+          "exampleMeaning": "헤라클레스는 그의 엄청난 육체적 힘으로 유명했습니다."
         },
         {
           "id": "en_16527",
@@ -100394,9 +100394,9 @@
           "pron": "[스에프트]",
           "phonetic": "[스에프트]",
           "example_en": "commit a theft.",
-          "example_ko": "도둑질하다. 2.〔야구〕 도루.",
+          "example_ko": "도둑질하다.",
           "exampleTarget": "commit a theft.",
-          "exampleMeaning": "도둑질하다. 2.〔야구〕 도루."
+          "exampleMeaning": "도둑질하다."
         },
         {
           "id": "en_16529",
@@ -100411,9 +100411,9 @@
           "pron": "[드아르느]",
           "phonetic": "[드아르느]",
           "example_en": "Darn up the hole in this sock.",
-          "example_ko": "이 양말의 구멍을 꿰매 줘요. 명사꿰매기 짜깁기; 꿰맨 자리.",
+          "example_ko": "이 양말의 구멍을 꿰매 줘요.",
           "exampleTarget": "Darn up the hole in this sock.",
-          "exampleMeaning": "이 양말의 구멍을 꿰매 줘요. 명사꿰매기 짜깁기; 꿰맨 자리."
+          "exampleMeaning": "이 양말의 구멍을 꿰매 줘요."
         },
         {
           "id": "en_16530",
@@ -100427,10 +100427,10 @@
           "pronunciation": "[애느드르이어]",
           "pron": "[애느드르이어]",
           "phonetic": "[애느드르이어]",
-          "example_en": "This is an example for andrea.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for andrea.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Andrea submitted the weekly sales report on time.",
+          "example_ko": "앤드리아는 주간 매출 보고서를 제시간에 제출했습니다.",
+          "exampleTarget": "Andrea submitted the weekly sales report on time.",
+          "exampleMeaning": "앤드리아는 주간 매출 보고서를 제시간에 제출했습니다."
         }
       ],
       "nodes": [
@@ -100560,10 +100560,10 @@
           "pronunciation": "[흐크트어르]",
           "pron": "[흐크트어르]",
           "phonetic": "[흐크트어르]",
-          "example_en": "This is an example for hector.",
-          "example_ko": "이것은 헥토르 Priam의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hector.",
-          "exampleMeaning": "이것은 헥토르 Priam의 관련 실전 예문입니다."
+          "example_en": "Hector will arrive at the train station soon.",
+          "example_ko": "헥터는 곧 기차역에 도착할 것입니다.",
+          "exampleTarget": "Hector will arrive at the train station soon.",
+          "exampleMeaning": "헥터는 곧 기차역에 도착할 것입니다."
         },
         {
           "id": "en_16603",
@@ -100578,9 +100578,9 @@
           "pron": "[스이르크]",
           "phonetic": "[스이르크]",
           "example_en": "raw silk.",
-          "example_ko": "생사. 2.《종종 silks》비단 옷.",
+          "example_ko": "생사.",
           "exampleTarget": "raw silk.",
-          "exampleMeaning": "생사. 2.《종종 silks》비단 옷."
+          "exampleMeaning": "생사."
         },
         {
           "id": "en_16604",
@@ -100594,10 +100594,10 @@
           "pronunciation": "[프어트아르어프어르]",
           "pron": "[프어트아르어프어르]",
           "phonetic": "[프어트아르어프어르]",
-          "example_en": "This is an example for photographer.",
-          "example_ko": "이것은 사진사 사진찍는 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for photographer.",
-          "exampleMeaning": "이것은 사진사 사진찍는 관련 실전 예문입니다."
+          "example_en": "The photographer took beautiful photos of the sunset.",
+          "example_ko": "사진작가는 아름다운 일몰 사진을 여러 장 찍었습니다.",
+          "exampleTarget": "The photographer took beautiful photos of the sunset.",
+          "exampleMeaning": "사진작가는 아름다운 일몰 사진을 여러 장 찍었습니다."
         },
         {
           "id": "en_16605",
@@ -100607,14 +100607,14 @@
           "level": "C1",
           "unitId": "unit_166",
           "nodeId": "en_u166_n1",
-          "meaning": "trevor",
+          "meaning": "트레버",
           "pronunciation": "[trevor]",
           "pron": "[trevor]",
           "phonetic": "[trevor]",
-          "example_en": "I use the word trevor in daily life.",
-          "example_ko": "나는 일상에서 trevor 단어를 사용합니다.",
-          "exampleTarget": "I use the word trevor in daily life.",
-          "exampleMeaning": "나는 일상에서 trevor 단어를 사용합니다."
+          "example_en": "Trevor loves taking photos of natural scenery.",
+          "example_ko": "트레버는 자연 풍경 사진을 찍는 것을 아주 좋아한다.",
+          "exampleTarget": "Trevor loves taking photos of natural scenery.",
+          "exampleMeaning": "트레버는 자연 풍경 사진을 찍는 것을 아주 좋아한다."
         },
         {
           "id": "en_16606",
@@ -100662,10 +100662,10 @@
           "pronunciation": "[즈우]",
           "pron": "[즈우]",
           "phonetic": "[즈우]",
-          "example_en": "This is an example for jew.",
-          "example_ko": "이것은 유대인 이스라엘인 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for jew.",
-          "exampleMeaning": "이것은 유대인 이스라엘인 관련 실전 예문입니다."
+          "example_en": "My best friend is a proud practicing Jew.",
+          "example_ko": "내 가장 친한 친구는 신앙심 깊은 유대인입니다.",
+          "exampleTarget": "My best friend is a proud practicing Jew.",
+          "exampleMeaning": "내 가장 친한 친구는 신앙심 깊은 유대인입니다."
         },
         {
           "id": "en_16609",
@@ -100713,10 +100713,10 @@
           "pronunciation": "[드에르]",
           "pron": "[드에르]",
           "phonetic": "[드에르]",
-          "example_en": "This is an example for del.",
-          "example_ko": "이것은 기호 벡터 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for del.",
-          "exampleMeaning": "이것은 기호 벡터 관련 실전 예문입니다."
+          "example_en": "Press the del key to remove the unwanted text.",
+          "example_ko": "원하지 않는 텍스트를 삭제하려면 델 키를 누르세요.",
+          "exampleTarget": "Press the del key to remove the unwanted text.",
+          "exampleMeaning": "원하지 않는 텍스트를 삭제하려면 델 키를 누르세요."
         },
         {
           "id": "en_16612",
@@ -100731,9 +100731,9 @@
           "pron": "[르애프]",
           "phonetic": "[르애프]",
           "example_en": "rap a person on the shoulder.",
-          "example_ko": "남의 어깨를 톡톡 치다. 2.《미》 …을 소리질러 말하다 심하게 소리치다 준엄하게 말하다〔out〕. 3.《속어》 〈남을〉 체포하다 〈남에게〉 형을 선고하다. 4.〈남을〉 꾸짖다 비난하다. 자동사1. 〔…을〕 가볍게 두드리다〔on at …〕.",
+          "example_ko": "남의 어깨를 톡톡 치다.",
           "exampleTarget": "rap a person on the shoulder.",
-          "exampleMeaning": "남의 어깨를 톡톡 치다. 2.《미》 …을 소리질러 말하다 심하게 소리치다 준엄하게 말하다〔out〕. 3.《속어》 〈남을〉 체포하다 〈남에게〉 형을 선고하다. 4.〈남을〉 꾸짖다 비난하다. 자동사1. 〔…을〕 가볍게 두드리다〔on at …〕."
+          "exampleMeaning": "남의 어깨를 톡톡 치다."
         },
         {
           "id": "en_16613",
@@ -100781,10 +100781,10 @@
           "pronunciation": "[트어느]",
           "pron": "[트어느]",
           "phonetic": "[트어느]",
-          "example_en": "This is an example for ton.",
-          "example_ko": "이것은 기 바이트 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ton.",
-          "exampleMeaning": "이것은 기 바이트 관련 실전 예문입니다."
+          "example_en": "We have a ton of work to finish today.",
+          "example_ko": "우리는 오늘 끝내야 할 일이 정말 산더미처럼 많습니다.",
+          "exampleTarget": "We have a ton of work to finish today.",
+          "exampleMeaning": "우리는 오늘 끝내야 할 일이 정말 산더미처럼 많습니다."
         },
         {
           "id": "en_16616",
@@ -100794,14 +100794,14 @@
           "level": "C1",
           "unitId": "unit_166",
           "nodeId": "en_u166_n2",
-          "meaning": "대접을",
+          "meaning": "연회",
           "pronunciation": "[프이스트]",
           "pron": "[프이스트]",
           "phonetic": "[프이스트]",
-          "example_en": "a movable feast(.",
-          "example_ko": "부활절 등과 같은) 이동 축제일; 《익살》 이따금 먹는 맛있는 음식.",
-          "exampleTarget": "a movable feast(.",
-          "exampleMeaning": "부활절 등과 같은) 이동 축제일; 《익살》 이따금 먹는 맛있는 음식."
+          "example_en": "They prepared a magnificent feast.",
+          "example_ko": "그들은 성대한 연회를 준비했다.",
+          "exampleTarget": "They prepared a magnificent feast.",
+          "exampleMeaning": "그들은 성대한 연회를 준비했다."
         },
         {
           "id": "en_16617",
@@ -100832,10 +100832,10 @@
           "pronunciation": "[어흐므]",
           "pron": "[어흐므]",
           "phonetic": "[어흐므]",
-          "example_en": "This is an example for ahem.",
-          "example_ko": "이것은 에헴 으흠 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for ahem.",
-          "exampleMeaning": "이것은 에헴 으흠 관련 실전 예문입니다."
+          "example_en": "Ahem may I have your attention for a moment.",
+          "example_ko": "에헴 잠시 여러분의 주목을 받을 수 있을까요.",
+          "exampleTarget": "Ahem may I have your attention for a moment.",
+          "exampleMeaning": "에헴 잠시 여러분의 주목을 받을 수 있을까요."
         },
         {
           "id": "en_16619",
@@ -100850,9 +100850,9 @@
           "pron": "[스크아우트]",
           "phonetic": "[스크아우트]",
           "example_en": "a trusty scout.",
-          "example_ko": "신뢰할 수 있는 녀석. 6.《영》 교직원. 숙어 Scouts honor 《비격식》 맹세코 반드시. 동사 자동사 정찰하다; 척후하다; 감시하다; 찾아다니다〔about around〕; 〔…을〕 찾다〔for …〕.",
+          "example_ko": "신뢰할 수 있는 녀석. 6. 교직원.",
           "exampleTarget": "a trusty scout.",
-          "exampleMeaning": "신뢰할 수 있는 녀석. 6.《영》 교직원. 숙어 Scouts honor 《비격식》 맹세코 반드시. 동사 자동사 정찰하다; 척후하다; 감시하다; 찾아다니다〔about around〕; 〔…을〕 찾다〔for …〕."
+          "exampleMeaning": "신뢰할 수 있는 녀석. 6. 교직원."
         },
         {
           "id": "en_16620",
@@ -100879,14 +100879,14 @@
           "level": "C1",
           "unitId": "unit_166",
           "nodeId": "en_u166_n5",
-          "meaning": "hon",
+          "meaning": "여보",
           "pronunciation": "[흐어느]",
           "pron": "[흐어느]",
           "phonetic": "[흐어느]",
-          "example_en": "This is an example for hon.",
-          "example_ko": "이것은 hon 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for hon.",
-          "exampleMeaning": "이것은 hon 관련 실전 예문입니다."
+          "example_en": "Can you help me with this box hon?",
+          "example_ko": "여보 이 상자 옮기는 것 좀 도와줄래요?",
+          "exampleTarget": "Can you help me with this box hon?",
+          "exampleMeaning": "여보 이 상자 옮기는 것 좀 도와줄래요?"
         },
         {
           "id": "en_16622",
@@ -100934,10 +100934,10 @@
           "pronunciation": "[드어으크어느]",
           "pron": "[드어으크어느]",
           "phonetic": "[드어으크어느]",
-          "example_en": "This is an example for duncan.",
-          "example_ko": "이것은 덩컨 남자 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for duncan.",
-          "exampleMeaning": "이것은 덩컨 남자 관련 실전 예문입니다."
+          "example_en": "Duncan shared his travel stories during our dinner.",
+          "example_ko": "던컨은 저녁 식사 자리에서 자신의 여행 이야기를 들려주었습니다.",
+          "exampleTarget": "Duncan shared his travel stories during our dinner.",
+          "exampleMeaning": "던컨은 저녁 식사 자리에서 자신의 여행 이야기를 들려주었습니다."
         },
         {
           "id": "en_16625",
@@ -100947,14 +100947,14 @@
           "level": "C1",
           "unitId": "unit_166",
           "nodeId": "en_u166_n5",
-          "meaning": "defence",
+          "meaning": "방어",
           "pronunciation": "[드이프느스]",
           "pron": "[드이프느스]",
           "phonetic": "[드이프느스]",
-          "example_en": "This is an example for defence.",
-          "example_ko": "이것은 defence 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for defence.",
-          "exampleMeaning": "이것은 defence 관련 실전 예문입니다."
+          "example_en": "A strong defence is important.",
+          "example_ko": "강력한 방어가 중요하다.",
+          "exampleTarget": "A strong defence is important.",
+          "exampleMeaning": "강력한 방어가 중요하다."
         },
         {
           "id": "en_16626",
@@ -100985,10 +100985,10 @@
           "pronunciation": "[브즈]",
           "pron": "[브즈]",
           "phonetic": "[브즈]",
-          "example_en": "This is an example for gibbs.",
-          "example_ko": "이것은 기브스 미국의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for gibbs.",
-          "exampleMeaning": "이것은 기브스 미국의 관련 실전 예문입니다."
+          "example_en": "Professor Gibbs gave a fascinating lecture on modern physics.",
+          "example_ko": "깁스 교수님은 현대 물리학에 대해 대단히 흥미로운 강의를 하셨습니다.",
+          "exampleTarget": "Professor Gibbs gave a fascinating lecture on modern physics.",
+          "exampleMeaning": "깁스 교수님은 현대 물리학에 대해 대단히 흥미로운 강의를 하셨습니다."
         },
         {
           "id": "en_16628",
@@ -101002,10 +101002,10 @@
           "pronunciation": "[우우르브즈]",
           "pron": "[우우르브즈]",
           "phonetic": "[우우르브즈]",
-          "example_en": "This is an example for wolves.",
-          "example_ko": "이것은 복수형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for wolves.",
-          "exampleMeaning": "이것은 복수형 관련 실전 예문입니다."
+          "example_en": "The wolves ran across the cold forest.",
+          "example_ko": "늑대들이 차가운 숲속을 가로질러 달렸다.",
+          "exampleTarget": "The wolves ran across the cold forest.",
+          "exampleMeaning": "늑대들이 차가운 숲속을 가로질러 달렸다."
         },
         {
           "id": "en_16629",
@@ -101019,10 +101019,10 @@
           "pronunciation": "[프르므이으]",
           "pron": "[프르므이으]",
           "phonetic": "[프르므이으]",
-          "example_en": "This is an example for filming.",
-          "example_ko": "이것은 촬영 영화 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for filming.",
-          "exampleMeaning": "이것은 촬영 영화 관련 실전 예문입니다."
+          "example_en": "They are filming a new movie in our neighborhood.",
+          "example_ko": "그들은 우리 동네에서 새로운 영화를 촬영하고 있습니다.",
+          "exampleTarget": "They are filming a new movie in our neighborhood.",
+          "exampleMeaning": "그들은 우리 동네에서 새로운 영화를 촬영하고 있습니다."
         },
         {
           "id": "en_16630",
@@ -101032,14 +101032,14 @@
           "level": "C1",
           "unitId": "unit_166",
           "nodeId": "en_u166_n5",
-          "meaning": "know의",
+          "meaning": "모르다",
           "pronunciation": "[드어느우]",
           "pron": "[드어느우]",
           "phonetic": "[드어느우]",
-          "example_en": "This is an example for dunno.",
-          "example_ko": "이것은 know의 단축형 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for dunno.",
-          "exampleMeaning": "이것은 know의 단축형 관련 실전 예문입니다."
+          "example_en": "I dunno what to say.",
+          "example_ko": "무슨 말을 해야 할지 모르겠어.",
+          "exampleTarget": "I dunno what to say.",
+          "exampleMeaning": "무슨 말을 해야 할지 모르겠어."
         }
       ],
       "nodes": [
@@ -101170,9 +101170,9 @@
           "pron": "[브오르트]",
           "phonetic": "[브오르트]",
           "example_en": "a barrel vault.",
-          "example_ko": "반원 천장. 2.（특히 지하에 있는） 아치형 방. 3.（식량·술의） 지하 저장실; （강철을 입힌） 보관실 금고실 （특히 은행의） 귀중품 보관실; （교회·묘소의） 지하 납골소 매장실.",
+          "example_ko": "반원 천장.",
           "exampleTarget": "a barrel vault.",
-          "exampleMeaning": "반원 천장. 2.（특히 지하에 있는） 아치형 방. 3.（식량·술의） 지하 저장실; （강철을 입힌） 보관실 금고실 （특히 은행의） 귀중품 보관실; （교회·묘소의） 지하 납골소 매장실."
+          "exampleMeaning": "반원 천장."
         },
         {
           "id": "en_16703",
@@ -101186,10 +101186,10 @@
           "pronunciation": "[우아트스느]",
           "pron": "[우아트스느]",
           "phonetic": "[우아트스느]",
-          "example_en": "This is an example for watson.",
-          "example_ko": "이것은 왓슨 Doyle의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for watson.",
-          "exampleMeaning": "이것은 왓슨 Doyle의 관련 실전 예문입니다."
+          "example_en": "Doctor Watson helped Holmes solve the difficult case.",
+          "example_ko": "왓슨 박사는 홈즈가 어려운 사건을 해결하도록 도왔습니다.",
+          "exampleTarget": "Doctor Watson helped Holmes solve the difficult case.",
+          "exampleMeaning": "왓슨 박사는 홈즈가 어려운 사건을 해결하도록 도왔습니다."
         },
         {
           "id": "en_16704",
@@ -101288,10 +101288,10 @@
           "pronunciation": "[프르이]",
           "pron": "[프르이]",
           "phonetic": "[프르이]",
-          "example_en": "This is an example for perry.",
-          "example_ko": "이것은 배로 빚은 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for perry.",
-          "exampleMeaning": "이것은 배로 빚은 관련 실전 예문입니다."
+          "example_en": "Perry showed us around his hometown yesterday afternoon.",
+          "example_ko": "페리는 어제 오후 우리에게 자신의 고향을 구경시켜 주었습니다.",
+          "exampleTarget": "Perry showed us around his hometown yesterday afternoon.",
+          "exampleMeaning": "페리는 어제 오후 우리에게 자신의 고향을 구경시켜 주었습니다."
         },
         {
           "id": "en_16710",
@@ -101322,10 +101322,10 @@
           "pronunciation": "[애프르이크어느]",
           "pron": "[애프르이크어느]",
           "phonetic": "[애프르이크어느]",
-          "example_en": "This is an example for african.",
-          "example_ko": "이것은 아프리카 아프리카인의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for african.",
-          "exampleMeaning": "이것은 아프리카 아프리카인의 관련 실전 예문입니다."
+          "example_en": "We enjoyed listening to traditional African music today.",
+          "example_ko": "우리는 오늘 전통 아프리카 음악을 즐겁게 들었습니다.",
+          "exampleTarget": "We enjoyed listening to traditional African music today.",
+          "exampleMeaning": "우리는 오늘 전통 아프리카 음악을 즐겁게 들었습니다."
         },
         {
           "id": "en_16712",
@@ -101356,10 +101356,10 @@
           "pronunciation": "[브이르브이으]",
           "pron": "[브이르브이으]",
           "phonetic": "[브이르브이으]",
-          "example_en": "This is an example for believing.",
-          "example_ko": "이것은 믿는 신앙심 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for believing.",
-          "exampleMeaning": "이것은 믿는 신앙심 관련 실전 예문입니다."
+          "example_en": "Seeing is believing when it comes to magic.",
+          "example_ko": "마술에 관해서는 직접 보는 것이 곧 믿는 것입니다.",
+          "exampleTarget": "Seeing is believing when it comes to magic.",
+          "exampleMeaning": "마술에 관해서는 직접 보는 것이 곧 믿는 것입니다."
         },
         {
           "id": "en_16714",
@@ -101373,10 +101373,10 @@
           "pronunciation": "[르우즈어]",
           "pron": "[르우즈어]",
           "phonetic": "[르우즈어]",
-          "example_en": "This is an example for rosa.",
-          "example_ko": "이것은 여자 이름 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for rosa.",
-          "exampleMeaning": "이것은 여자 이름 관련 실전 예문입니다."
+          "example_en": "Rosa walked her friendly dog in the park.",
+          "example_ko": "로사는 공원에서 다정한 반려견을 산책시켰습니다.",
+          "exampleTarget": "Rosa walked her friendly dog in the park.",
+          "exampleMeaning": "로사는 공원에서 다정한 반려견을 산책시켰습니다."
         },
         {
           "id": "en_16715",
@@ -101386,14 +101386,14 @@
           "level": "C1",
           "unitId": "unit_167",
           "nodeId": "en_u167_n2",
-          "meaning": "jenna",
+          "meaning": "제나",
           "pronunciation": "[jenna]",
           "pron": "[jenna]",
           "phonetic": "[jenna]",
-          "example_en": "I use the word jenna in daily life.",
-          "example_ko": "나는 일상에서 jenna 단어를 사용합니다.",
-          "exampleTarget": "I use the word jenna in daily life.",
-          "exampleMeaning": "나는 일상에서 jenna 단어를 사용합니다."
+          "example_en": "Jenna baked fresh apple pie for the picnic.",
+          "example_ko": "제나는 소풍을 위해 갓 구운 사과 파이를 구웠다.",
+          "exampleTarget": "Jenna baked fresh apple pie for the picnic.",
+          "exampleMeaning": "제나는 소풍을 위해 갓 구운 사과 파이를 구웠다."
         },
         {
           "id": "en_16716",
@@ -101424,10 +101424,10 @@
           "pronunciation": "[스아느이크]",
           "pron": "[스아느이크]",
           "phonetic": "[스아느이크]",
-          "example_en": "This is an example for sonic.",
-          "example_ko": "이것은 소리 음속의 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for sonic.",
-          "exampleMeaning": "이것은 소리 음속의 관련 실전 예문입니다."
+          "example_en": "The jet plane produced a loud sonic boom.",
+          "example_ko": "제트기가 엄청나게 큰 음속 폭음을 발생시켰습니다.",
+          "exampleTarget": "The jet plane produced a loud sonic boom.",
+          "exampleMeaning": "제트기가 엄청나게 큰 음속 폭음을 발생시켰습니다."
         },
         {
           "id": "en_16718",
@@ -101441,10 +101441,10 @@
           "pronunciation": "[르우므이]",
           "pron": "[르우므이]",
           "phonetic": "[르우므이]",
-          "example_en": "This is an example for romeo.",
-          "example_ko": "이것은 고무로 만든 관련 실전 예문입니다.",
-          "exampleTarget": "This is an example for romeo.",
-          "exampleMeaning": "이것은 고무로 만든 관련 실전 예문입니다."
+          "example_en": "Romeo loved Juliet deeply.",
+          "example_ko": "로미오는 줄리엣을 깊이 사랑했다.",
+          "exampleTarget": "Romeo loved Juliet deeply.",
+          "exampleMeaning": "로미오는 줄리엣을 깊이 사랑했다."
         }
       ],
       "nodes": [
