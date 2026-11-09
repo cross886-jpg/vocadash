@@ -26,8 +26,8 @@
       "unitNumber": 1,
       "id": 1,
       "unit": 1,
-      "title": "Unit 1",
-      "desc": "",
+      "title": "Unit 1. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 1~44위 단어 44개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -123,7 +123,7 @@
           "level": "A1",
           "unitId": "unit_001",
           "nodeId": "es_u1_n1",
-          "meaning": "의",
+          "meaning": "출신",
           "pronunciation": "[데]",
           "pron": "[데]",
           "phonetic": "[데]",
@@ -786,7 +786,7 @@
           "level": "A1",
           "unitId": "unit_001",
           "nodeId": "es_u1_n3",
-          "meaning": "는",
+          "meaning": "그들",
           "pronunciation": "[라스]",
           "pron": "[라스]",
           "phonetic": "[라스]",
@@ -874,8 +874,8 @@
       "unitNumber": 2,
       "id": 2,
       "unit": 2,
-      "title": "Unit 2",
-      "desc": "",
+      "title": "Unit 2. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 31~57위 단어 27개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -903,7 +903,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n1",
-          "meaning": "의",
+          "meaning": "~의",
           "pronunciation": "[델]",
           "pron": "[델]",
           "phonetic": "[델]",
@@ -988,7 +988,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n1",
-          "meaning": "더",
+          "meaning": "더많은",
           "pronunciation": "[마스]",
           "pron": "[마스]",
           "phonetic": "[마스]",
@@ -1022,7 +1022,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n1",
-          "meaning": "이",
+          "meaning": "이것",
           "pronunciation": "[에스토]",
           "pron": "[에스토]",
           "phonetic": "[에스토]",
@@ -1107,7 +1107,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n2",
-          "meaning": "하",
+          "meaning": "했다",
           "pronunciation": "[아]",
           "pron": "[아]",
           "phonetic": "[아]",
@@ -1124,7 +1124,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n2",
-          "meaning": "이",
+          "meaning": "이번",
           "pronunciation": "[에스타]",
           "pron": "[에스타]",
           "phonetic": "[에스타]",
@@ -1345,7 +1345,7 @@
           "level": "A1",
           "unitId": "unit_002",
           "nodeId": "es_u2_n3",
-          "meaning": "이",
+          "meaning": "이것",
           "pronunciation": "[에스테]",
           "pron": "[에스테]",
           "phonetic": "[에스테]",
@@ -1430,8 +1430,8 @@
       "unitNumber": 3,
       "id": 3,
       "unit": 3,
-      "title": "Unit 3",
-      "desc": "",
+      "title": "Unit 3. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 61~87위 단어 27개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -1493,7 +1493,7 @@
           "level": "A1",
           "unitId": "unit_003",
           "nodeId": "es_u3_n1",
-          "meaning": "있다",
+          "meaning": "이다",
           "pronunciation": "[세르]",
           "pron": "[세르]",
           "phonetic": "[세르]",
@@ -1646,7 +1646,7 @@
           "level": "A1",
           "unitId": "unit_003",
           "nodeId": "es_u3_n2",
-          "meaning": "만",
+          "meaning": "오직",
           "pronunciation": "[소로]",
           "pron": "[소로]",
           "phonetic": "[소로]",
@@ -1986,8 +1986,8 @@
       "unitNumber": 4,
       "id": 4,
       "unit": 4,
-      "title": "Unit 4",
-      "desc": "",
+      "title": "Unit 4. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 91~119위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -2372,7 +2372,7 @@
           "level": "A1",
           "unitId": "unit_004",
           "nodeId": "es_u4_n3",
-          "meaning": "약",
+          "meaning": "위에",
           "pronunciation": "[소브레]",
           "pron": "[소브레]",
           "phonetic": "[소브레]",
@@ -2578,8 +2578,8 @@
       "unitNumber": 5,
       "id": 5,
       "unit": 5,
-      "title": "Unit 5",
-      "desc": "",
+      "title": "Unit 5. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 121~148위 단어 28개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -2726,7 +2726,7 @@
           "level": "A1",
           "unitId": "unit_005",
           "nodeId": "es_u5_n1",
-          "meaning": "살",
+          "meaning": "나이",
           "pronunciation": "[아뇨스]",
           "pron": "[아뇨스]",
           "phonetic": "[아뇨스]",
@@ -3032,7 +3032,7 @@
           "level": "A1",
           "unitId": "unit_005",
           "nodeId": "es_u5_n3",
-          "meaning": "봐",
+          "meaning": "보아라",
           "pronunciation": "[미라]",
           "pron": "[미라]",
           "phonetic": "[미라]",
@@ -3152,8 +3152,8 @@
       "unitNumber": 6,
       "id": 6,
       "unit": 6,
-      "title": "Unit 6",
-      "desc": "",
+      "title": "Unit 6. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 151~179위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -3232,7 +3232,7 @@
           "level": "A1",
           "unitId": "unit_006",
           "nodeId": "es_u6_n1",
-          "meaning": "이야기",
+          "meaning": "말하다",
           "pronunciation": "[아블라르]",
           "pron": "[아블라르]",
           "phonetic": "[아블라르]",
@@ -3744,8 +3744,8 @@
       "unitNumber": 7,
       "id": 7,
       "unit": 7,
-      "title": "Unit 7",
-      "desc": "",
+      "title": "Unit 7. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 181~209위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -3926,7 +3926,7 @@
           "level": "A1",
           "unitId": "unit_007",
           "nodeId": "es_u7_n1",
-          "meaning": "덜",
+          "meaning": "더적은",
           "pronunciation": "[메노스]",
           "pron": "[메노스]",
           "phonetic": "[메노스]",
@@ -4062,7 +4062,7 @@
           "level": "A1",
           "unitId": "unit_007",
           "nodeId": "es_u7_n2",
-          "meaning": "일",
+          "meaning": "날들",
           "pronunciation": "[디아스]",
           "pron": "[디아스]",
           "phonetic": "[디아스]",
@@ -4249,7 +4249,7 @@
           "level": "A1",
           "unitId": "unit_007",
           "nodeId": "es_u7_n3",
-          "meaning": "가지고 있다",
+          "meaning": "있다",
           "pronunciation": "[아베르]",
           "pron": "[아베르]",
           "phonetic": "[아베르]",
@@ -4336,8 +4336,8 @@
       "unitNumber": 8,
       "id": 8,
       "unit": 8,
-      "title": "Unit 8",
-      "desc": "",
+      "title": "Unit 8. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 211~240위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -4552,7 +4552,7 @@
           "level": "A1",
           "unitId": "unit_008",
           "nodeId": "es_u8_n2",
-          "meaning": "이",
+          "meaning": "이것들",
           "pronunciation": "[에스타스]",
           "pron": "[에스타스]",
           "phonetic": "[에스타스]",
@@ -4946,8 +4946,8 @@
       "unitNumber": 9,
       "id": 9,
       "unit": 9,
-      "title": "Unit 9",
-      "desc": "",
+      "title": "Unit 9. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 241~269위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -5538,8 +5538,8 @@
       "unitNumber": 10,
       "id": 10,
       "unit": 10,
-      "title": "Unit 10",
-      "desc": "",
+      "title": "Unit 10. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 271~300위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -6148,8 +6148,8 @@
       "unitNumber": 11,
       "id": 11,
       "unit": 11,
-      "title": "Unit 11",
-      "desc": "",
+      "title": "Unit 11. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 301~330위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -6177,7 +6177,7 @@
           "level": "A1",
           "unitId": "unit_011",
           "nodeId": "es_u11_n1",
-          "meaning": "반환",
+          "meaning": "돌아가다",
           "pronunciation": "[볼베르]",
           "pron": "[볼베르]",
           "phonetic": "[볼베르]",
@@ -6758,8 +6758,8 @@
       "unitNumber": 12,
       "id": 12,
       "unit": 12,
-      "title": "Unit 12",
-      "desc": "",
+      "title": "Unit 12. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 331~359위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -7144,7 +7144,7 @@
           "level": "A1",
           "unitId": "unit_012",
           "nodeId": "es_u12_n3",
-          "meaning": "다",
+          "meaning": "주다",
           "pronunciation": "[다]",
           "pron": "[다]",
           "phonetic": "[다]",
@@ -7350,8 +7350,8 @@
       "unitNumber": 13,
       "id": 13,
       "unit": 13,
-      "title": "Unit 13",
-      "desc": "",
+      "title": "Unit 13. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 361~390위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -7396,7 +7396,7 @@
           "level": "A1",
           "unitId": "unit_013",
           "nodeId": "es_u13_n1",
-          "meaning": "힘",
+          "meaning": "할수있다",
           "pronunciation": "[포데르]",
           "pron": "[포데르]",
           "phonetic": "[포데르]",
@@ -7566,7 +7566,7 @@
           "level": "A1",
           "unitId": "unit_013",
           "nodeId": "es_u13_n2",
-          "meaning": "찾기",
+          "meaning": "찾다",
           "pronunciation": "[엔콘트라르]",
           "pron": "[엔콘트라르]",
           "phonetic": "[엔콘트라르]",
@@ -7960,8 +7960,8 @@
       "unitNumber": 14,
       "id": 14,
       "unit": 14,
-      "title": "Unit 14",
-      "desc": "",
+      "title": "Unit 14. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 391~420위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -8057,7 +8057,7 @@
           "level": "A1",
           "unitId": "unit_014",
           "nodeId": "es_u14_n1",
-          "meaning": "팔로우",
+          "meaning": "계속하다",
           "pronunciation": "[시게]",
           "pron": "[시게]",
           "phonetic": "[시게]",
@@ -8346,7 +8346,7 @@
           "level": "A1",
           "unitId": "unit_014",
           "nodeId": "es_u14_n3",
-          "meaning": "더",
+          "meaning": "그러나",
           "pronunciation": "[마스]",
           "pron": "[마스]",
           "phonetic": "[마스]",
@@ -8570,8 +8570,8 @@
       "unitNumber": 15,
       "id": 15,
       "unit": 15,
-      "title": "Unit 15",
-      "desc": "",
+      "title": "Unit 15. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 421~450위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -8769,7 +8769,7 @@
           "level": "A1",
           "unitId": "unit_015",
           "nodeId": "es_u15_n2",
-          "meaning": "일",
+          "meaning": "일하다",
           "pronunciation": "[트라바하르]",
           "pron": "[트라바하르]",
           "phonetic": "[트라바하르]",
@@ -9180,8 +9180,8 @@
       "unitNumber": 16,
       "id": 16,
       "unit": 16,
-      "title": "Unit 16",
-      "desc": "",
+      "title": "Unit 16. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 451~480위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -9243,7 +9243,7 @@
           "level": "A1",
           "unitId": "unit_016",
           "nodeId": "es_u16_n1",
-          "meaning": "라이브",
+          "meaning": "살다",
           "pronunciation": "[비비르]",
           "pron": "[비비르]",
           "phonetic": "[비비르]",
@@ -9790,8 +9790,8 @@
       "unitNumber": 17,
       "id": 17,
       "unit": 17,
-      "title": "Unit 17",
-      "desc": "",
+      "title": "Unit 17. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 481~510위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -10400,8 +10400,8 @@
       "unitNumber": 18,
       "id": 18,
       "unit": 18,
-      "title": "Unit 18",
-      "desc": "",
+      "title": "Unit 18. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 511~540위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -10429,7 +10429,7 @@
           "level": "A1",
           "unitId": "unit_018",
           "nodeId": "es_u18_n1",
-          "meaning": "팔로우",
+          "meaning": "계속하다",
           "pronunciation": "[세기르]",
           "pron": "[세기르]",
           "phonetic": "[세기르]",
@@ -10599,7 +10599,7 @@
           "level": "A1",
           "unitId": "unit_018",
           "nodeId": "es_u18_n2",
-          "meaning": "잠깐",
+          "meaning": "기다리다",
           "pronunciation": "[에스페라르]",
           "pron": "[에스페라르]",
           "phonetic": "[에스페라르]",
@@ -11010,8 +11010,8 @@
       "unitNumber": 19,
       "id": 19,
       "unit": 19,
-      "title": "Unit 19",
-      "desc": "",
+      "title": "Unit 19. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 541~570위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -11158,7 +11158,7 @@
           "level": "A1",
           "unitId": "unit_019",
           "nodeId": "es_u19_n1",
-          "meaning": "약",
+          "meaning": "관하여",
           "pronunciation": "[아세르카]",
           "pron": "[아세르카]",
           "phonetic": "[아세르카]",
@@ -11328,7 +11328,7 @@
           "level": "A1",
           "unitId": "unit_019",
           "nodeId": "es_u19_n2",
-          "meaning": "도움",
+          "meaning": "돕다",
           "pronunciation": "[아유다르]",
           "pron": "[아유다르]",
           "phonetic": "[아유다르]",
@@ -11620,8 +11620,8 @@
       "unitNumber": 20,
       "id": 20,
       "unit": 20,
-      "title": "Unit 20",
-      "desc": "",
+      "title": "Unit 20. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 571~600위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -11802,7 +11802,7 @@
           "level": "A1",
           "unitId": "unit_020",
           "nodeId": "es_u20_n1",
-          "meaning": "전화",
+          "meaning": "부르다",
           "pronunciation": "[야마르]",
           "pron": "[야마르]",
           "phonetic": "[야마르]",
@@ -12230,8 +12230,8 @@
       "unitNumber": 21,
       "id": 21,
       "unit": 21,
-      "title": "Unit 21",
-      "desc": "",
+      "title": "Unit 21. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 601~629위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -12327,7 +12327,7 @@
           "level": "A1",
           "unitId": "unit_021",
           "nodeId": "es_u21_n1",
-          "meaning": "넣어",
+          "meaning": "놓다",
           "pronunciation": "[포네르]",
           "pron": "[포네르]",
           "phonetic": "[포네르]",
@@ -12497,7 +12497,7 @@
           "level": "A1",
           "unitId": "unit_021",
           "nodeId": "es_u21_n2",
-          "meaning": "내",
+          "meaning": "내 것",
           "pronunciation": "[미아]",
           "pron": "[미아]",
           "phonetic": "[미아]",
@@ -12531,7 +12531,7 @@
           "level": "A1",
           "unitId": "unit_021",
           "nodeId": "es_u21_n2",
-          "meaning": "시작",
+          "meaning": "시작하다",
           "pronunciation": "[엠페사르]",
           "pron": "[엠페사르]",
           "phonetic": "[엠페사르]",
@@ -12582,7 +12582,7 @@
           "level": "A1",
           "unitId": "unit_021",
           "nodeId": "es_u21_n3",
-          "meaning": "개",
+          "meaning": "강아지",
           "pronunciation": "[페로]",
           "pron": "[페로]",
           "phonetic": "[페로]",
@@ -12822,8 +12822,8 @@
       "unitNumber": 22,
       "id": 22,
       "unit": 22,
-      "title": "Unit 22",
-      "desc": "",
+      "title": "Unit 22. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 631~660위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -12902,7 +12902,7 @@
           "level": "A1",
           "unitId": "unit_022",
           "nodeId": "es_u22_n1",
-          "meaning": "검색",
+          "meaning": "찾다",
           "pronunciation": "[부스카르]",
           "pron": "[부스카르]",
           "phonetic": "[부스카르]",
@@ -12970,7 +12970,7 @@
           "level": "A1",
           "unitId": "unit_022",
           "nodeId": "es_u22_n1",
-          "meaning": "놀이",
+          "meaning": "놀다",
           "pronunciation": "[후가르]",
           "pron": "[후가르]",
           "phonetic": "[후가르]",
@@ -13432,8 +13432,8 @@
       "unitNumber": 23,
       "id": 23,
       "unit": 23,
-      "title": "Unit 23",
-      "desc": "",
+      "title": "Unit 23. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 661~689위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -14024,8 +14024,8 @@
       "unitNumber": 24,
       "id": 24,
       "unit": 24,
-      "title": "Unit 24",
-      "desc": "",
+      "title": "Unit 24. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 691~719위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -14172,7 +14172,7 @@
           "level": "A1",
           "unitId": "unit_024",
           "nodeId": "es_u24_n1",
-          "meaning": "변화",
+          "meaning": "바꾸다",
           "pronunciation": "[캄비아르]",
           "pron": "[캄비아르]",
           "phonetic": "[캄비아르]",
@@ -14616,8 +14616,8 @@
       "unitNumber": 25,
       "id": 25,
       "unit": 25,
-      "title": "Unit 25",
-      "desc": "",
+      "title": "Unit 25. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 721~750위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -15226,8 +15226,8 @@
       "unitNumber": 26,
       "id": 26,
       "unit": 26,
-      "title": "Unit 26",
-      "desc": "",
+      "title": "Unit 26. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 751~780위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -15391,7 +15391,7 @@
           "level": "A2",
           "unitId": "unit_026",
           "nodeId": "es_u26_n1",
-          "meaning": "봐",
+          "meaning": "보세요",
           "pronunciation": "[미레]",
           "pron": "[미레]",
           "phonetic": "[미레]",
@@ -15836,8 +15836,8 @@
       "unitNumber": 27,
       "id": 27,
       "unit": 27,
-      "title": "Unit 27",
-      "desc": "",
+      "title": "Unit 27. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 781~810위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -16120,7 +16120,7 @@
           "level": "A2",
           "unitId": "unit_027",
           "nodeId": "es_u27_n2",
-          "meaning": "느낌",
+          "meaning": "느끼다",
           "pronunciation": "[센티르]",
           "pron": "[센티르]",
           "phonetic": "[센티르]",
@@ -16290,7 +16290,7 @@
           "level": "A2",
           "unitId": "unit_027",
           "nodeId": "es_u27_n3",
-          "meaning": "라이브",
+          "meaning": "살다",
           "pronunciation": "[비베]",
           "pron": "[비베]",
           "phonetic": "[비베]",
@@ -16446,8 +16446,8 @@
       "unitNumber": 28,
       "id": 28,
       "unit": 28,
-      "title": "Unit 28",
-      "desc": "",
+      "title": "Unit 28. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 811~840위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -17056,8 +17056,8 @@
       "unitNumber": 29,
       "id": 29,
       "unit": 29,
-      "title": "Unit 29",
-      "desc": "",
+      "title": "Unit 29. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 841~870위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -17666,8 +17666,8 @@
       "unitNumber": 30,
       "id": 30,
       "unit": 30,
-      "title": "Unit 30",
-      "desc": "",
+      "title": "Unit 30. A1 기초 핵심 어휘",
+      "desc": "빈도수 상위 871~900위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -17933,7 +17933,7 @@
           "level": "A2",
           "unitId": "unit_030",
           "nodeId": "es_u30_n2",
-          "meaning": "들어봐",
+          "meaning": "듣다",
           "pronunciation": "[에스쿠차르]",
           "pron": "[에스쿠차르]",
           "phonetic": "[에스쿠차르]",
@@ -18276,8 +18276,8 @@
       "unitNumber": 31,
       "id": 31,
       "unit": 31,
-      "title": "Unit 31",
-      "desc": "",
+      "title": "Unit 31. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 901~930위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -18390,7 +18390,7 @@
           "level": "A2",
           "unitId": "unit_031",
           "nodeId": "es_u31_n1",
-          "meaning": "마무리",
+          "meaning": "끝내다",
           "pronunciation": "[테르미나르]",
           "pron": "[테르미나르]",
           "phonetic": "[테르미나르]",
@@ -18886,8 +18886,8 @@
       "unitNumber": 32,
       "id": 32,
       "unit": 32,
-      "title": "Unit 32",
-      "desc": "",
+      "title": "Unit 32. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 931~960위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -19496,8 +19496,8 @@
       "unitNumber": 33,
       "id": 33,
       "unit": 33,
-      "title": "Unit 33",
-      "desc": "",
+      "title": "Unit 33. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 961~990위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -19899,7 +19899,7 @@
           "level": "A2",
           "unitId": "unit_033",
           "nodeId": "es_u33_n3",
-          "meaning": "봐",
+          "meaning": "보아라",
           "pronunciation": "[미렌]",
           "pron": "[미렌]",
           "phonetic": "[미렌]",
@@ -20106,8 +20106,8 @@
       "unitNumber": 34,
       "id": 34,
       "unit": 34,
-      "title": "Unit 34",
-      "desc": "",
+      "title": "Unit 34. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 991~1020위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -20716,8 +20716,8 @@
       "unitNumber": 35,
       "id": 35,
       "unit": 35,
-      "title": "Unit 35",
-      "desc": "",
+      "title": "Unit 35. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1021~1050위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -21326,8 +21326,8 @@
       "unitNumber": 36,
       "id": 36,
       "unit": 36,
-      "title": "Unit 36",
-      "desc": "",
+      "title": "Unit 36. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1051~1080위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -21491,7 +21491,7 @@
           "level": "A2",
           "unitId": "unit_036",
           "nodeId": "es_u36_n1",
-          "meaning": "반환",
+          "meaning": "돌아가다",
           "pronunciation": "[레그레사르]",
           "pron": "[레그레사르]",
           "phonetic": "[레그레사르]",
@@ -21542,7 +21542,7 @@
           "level": "A2",
           "unitId": "unit_036",
           "nodeId": "es_u36_n2",
-          "meaning": "봐",
+          "meaning": "보다",
           "pronunciation": "[미라르]",
           "pron": "[미라르]",
           "phonetic": "[미라르]",
@@ -21559,7 +21559,7 @@
           "level": "A2",
           "unitId": "unit_036",
           "nodeId": "es_u36_n2",
-          "meaning": "테이크 아웃",
+          "meaning": "꺼내다",
           "pronunciation": "[사카르]",
           "pron": "[사카르]",
           "phonetic": "[사카르]",
@@ -21936,8 +21936,8 @@
       "unitNumber": 37,
       "id": 37,
       "unit": 37,
-      "title": "Unit 37",
-      "desc": "",
+      "title": "Unit 37. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1081~1110위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -22118,7 +22118,7 @@
           "level": "A2",
           "unitId": "unit_037",
           "nodeId": "es_u37_n1",
-          "meaning": "저장",
+          "meaning": "구하다",
           "pronunciation": "[살바르]",
           "pron": "[살바르]",
           "phonetic": "[살바르]",
@@ -22169,7 +22169,7 @@
           "level": "A2",
           "unitId": "unit_037",
           "nodeId": "es_u37_n2",
-          "meaning": "씨발",
+          "meaning": "귀찮게하다",
           "pronunciation": "[호데르]",
           "pron": "[호데르]",
           "phonetic": "[호데르]",
@@ -22237,7 +22237,7 @@
           "level": "A2",
           "unitId": "unit_037",
           "nodeId": "es_u37_n2",
-          "meaning": "저녁 식사",
+          "meaning": "저녁먹다",
           "pronunciation": "[세나르]",
           "pron": "[세나르]",
           "phonetic": "[세나르]",
@@ -22546,8 +22546,8 @@
       "unitNumber": 38,
       "id": 38,
       "unit": 38,
-      "title": "Unit 38",
-      "desc": "",
+      "title": "Unit 38. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1111~1140위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -23156,8 +23156,8 @@
       "unitNumber": 39,
       "id": 39,
       "unit": 39,
-      "title": "Unit 39",
-      "desc": "",
+      "title": "Unit 39. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1141~1170위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -23661,7 +23661,7 @@
           "level": "A2",
           "unitId": "unit_039",
           "nodeId": "es_u39_n3",
-          "meaning": "중지",
+          "meaning": "멈추다",
           "pronunciation": "[파라르]",
           "pron": "[파라르]",
           "phonetic": "[파라르]",
@@ -23766,8 +23766,8 @@
       "unitNumber": 40,
       "id": 40,
       "unit": 40,
-      "title": "Unit 40",
-      "desc": "",
+      "title": "Unit 40. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1171~1200위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -24271,7 +24271,7 @@
           "level": "A2",
           "unitId": "unit_040",
           "nodeId": "es_u40_n3",
-          "meaning": "신뢰",
+          "meaning": "신뢰하다",
           "pronunciation": "[콘피아르]",
           "pron": "[콘피아르]",
           "phonetic": "[콘피아르]",
@@ -24376,8 +24376,8 @@
       "unitNumber": 41,
       "id": 41,
       "unit": 41,
-      "title": "Unit 41",
-      "desc": "",
+      "title": "Unit 41. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1201~1230위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -24711,7 +24711,7 @@
           "level": "A2",
           "unitId": "unit_041",
           "nodeId": "es_u41_n2",
-          "meaning": "댄스",
+          "meaning": "춤추다",
           "pronunciation": "[바이라르]",
           "pron": "[바이라르]",
           "phonetic": "[바이라르]",
@@ -24986,8 +24986,8 @@
       "unitNumber": 42,
       "id": 42,
       "unit": 42,
-      "title": "Unit 42",
-      "desc": "",
+      "title": "Unit 42. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1231~1260위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -25304,7 +25304,7 @@
           "level": "A2",
           "unitId": "unit_042",
           "nodeId": "es_u42_n2",
-          "meaning": "일",
+          "meaning": "작품",
           "pronunciation": "[오브라]",
           "pron": "[오브라]",
           "phonetic": "[오브라]",
@@ -25491,7 +25491,7 @@
           "level": "A2",
           "unitId": "unit_042",
           "nodeId": "es_u42_n3",
-          "meaning": "접촉",
+          "meaning": "만지다",
           "pronunciation": "[토카르]",
           "pron": "[토카르]",
           "phonetic": "[토카르]",
@@ -25596,8 +25596,8 @@
       "unitNumber": 43,
       "id": 43,
       "unit": 43,
-      "title": "Unit 43",
-      "desc": "",
+      "title": "Unit 43. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1261~1290위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -25625,7 +25625,7 @@
           "level": "A2",
           "unitId": "unit_043",
           "nodeId": "es_u43_n1",
-          "meaning": "카운트",
+          "meaning": "세다",
           "pronunciation": "[콘타르]",
           "pron": "[콘타르]",
           "phonetic": "[콘타르]",
@@ -26206,8 +26206,8 @@
       "unitNumber": 44,
       "id": 44,
       "unit": 44,
-      "title": "Unit 44",
-      "desc": "",
+      "title": "Unit 44. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1291~1320위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -26490,7 +26490,7 @@
           "level": "A2",
           "unitId": "unit_044",
           "nodeId": "es_u44_n2",
-          "meaning": "너의 것",
+          "meaning": "그의 것",
           "pronunciation": "[수요]",
           "pron": "[수요]",
           "phonetic": "[수요]",
@@ -26816,8 +26816,8 @@
       "unitNumber": 45,
       "id": 45,
       "unit": 45,
-      "title": "Unit 45",
-      "desc": "",
+      "title": "Unit 45. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1321~1350위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -27426,8 +27426,8 @@
       "unitNumber": 46,
       "id": 46,
       "unit": 46,
-      "title": "Unit 46",
-      "desc": "",
+      "title": "Unit 46. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1351~1380위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -28036,8 +28036,8 @@
       "unitNumber": 47,
       "id": 47,
       "unit": 47,
-      "title": "Unit 47",
-      "desc": "",
+      "title": "Unit 47. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1381~1410위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -28065,7 +28065,7 @@
           "level": "A2",
           "unitId": "unit_047",
           "nodeId": "es_u47_n1",
-          "meaning": "탈출",
+          "meaning": "탈출하다",
           "pronunciation": "[에스카파르]",
           "pron": "[에스카파르]",
           "phonetic": "[에스카파르]",
@@ -28646,8 +28646,8 @@
       "unitNumber": 48,
       "id": 48,
       "unit": 48,
-      "title": "Unit 48",
-      "desc": "",
+      "title": "Unit 48. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1411~1440위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -28998,7 +28998,7 @@
           "level": "A2",
           "unitId": "unit_048",
           "nodeId": "es_u48_n2",
-          "meaning": "너의 것",
+          "meaning": "그녀의 것",
           "pronunciation": "[수야]",
           "pron": "[수야]",
           "phonetic": "[수야]",
@@ -29032,7 +29032,7 @@
           "level": "A2",
           "unitId": "unit_048",
           "nodeId": "es_u48_n3",
-          "meaning": "마무리",
+          "meaning": "끝내다",
           "pronunciation": "[아카바르]",
           "pron": "[아카바르]",
           "phonetic": "[아카바르]",
@@ -29134,7 +29134,7 @@
           "level": "A2",
           "unitId": "unit_048",
           "nodeId": "es_u48_n3",
-          "meaning": "개",
+          "meaning": "강아지들",
           "pronunciation": "[페로스]",
           "pron": "[페로스]",
           "phonetic": "[페로스]",
@@ -29256,8 +29256,8 @@
       "unitNumber": 49,
       "id": 49,
       "unit": 49,
-      "title": "Unit 49",
-      "desc": "",
+      "title": "Unit 49. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1441~1470위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -29866,8 +29866,8 @@
       "unitNumber": 50,
       "id": 50,
       "unit": 50,
-      "title": "Unit 50",
-      "desc": "",
+      "title": "Unit 50. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1471~1500위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -30337,7 +30337,7 @@
           "level": "A2",
           "unitId": "unit_050",
           "nodeId": "es_u50_n3",
-          "meaning": "만",
+          "meaning": "단지",
           "pronunciation": "[소라멘테]",
           "pron": "[소라멘테]",
           "phonetic": "[소라멘테]",
@@ -30476,8 +30476,8 @@
       "unitNumber": 51,
       "id": 51,
       "unit": 51,
-      "title": "Unit 51",
-      "desc": "",
+      "title": "Unit 51. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1501~1530위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -30862,7 +30862,7 @@
           "level": "A2",
           "unitId": "unit_051",
           "nodeId": "es_u51_n3",
-          "meaning": "싸움",
+          "meaning": "싸우다",
           "pronunciation": "[루차르]",
           "pron": "[루차르]",
           "phonetic": "[루차르]",
@@ -30998,7 +30998,7 @@
           "level": "A2",
           "unitId": "unit_051",
           "nodeId": "es_u51_n3",
-          "meaning": "파리",
+          "meaning": "날다",
           "pronunciation": "[보라르]",
           "pron": "[보라르]",
           "phonetic": "[보라르]",
@@ -31086,8 +31086,8 @@
       "unitNumber": 52,
       "id": 52,
       "unit": 52,
-      "title": "Unit 52",
-      "desc": "",
+      "title": "Unit 52. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1531~1560위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -31696,8 +31696,8 @@
       "unitNumber": 53,
       "id": 53,
       "unit": 53,
-      "title": "Unit 53",
-      "desc": "",
+      "title": "Unit 53. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1561~1590위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -31725,7 +31725,7 @@
           "level": "A2",
           "unitId": "unit_053",
           "nodeId": "es_u53_n1",
-          "meaning": "잡기",
+          "meaning": "잡다",
           "pronunciation": "[코헤르]",
           "pron": "[코헤르]",
           "phonetic": "[코헤르]",
@@ -32306,8 +32306,8 @@
       "unitNumber": 54,
       "id": 54,
       "unit": 54,
-      "title": "Unit 54",
-      "desc": "",
+      "title": "Unit 54. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1591~1620위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -32916,8 +32916,8 @@
       "unitNumber": 55,
       "id": 55,
       "unit": 55,
-      "title": "Unit 55",
-      "desc": "",
+      "title": "Unit 55. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1621~1650위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -33526,8 +33526,8 @@
       "unitNumber": 56,
       "id": 56,
       "unit": 56,
-      "title": "Unit 56",
-      "desc": "",
+      "title": "Unit 56. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1651~1680위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -33895,7 +33895,7 @@
           "level": "A2",
           "unitId": "unit_056",
           "nodeId": "es_u56_n3",
-          "meaning": "싸움",
+          "meaning": "싸우다",
           "pronunciation": "[페레아르]",
           "pron": "[페레아르]",
           "phonetic": "[페레아르]",
@@ -33929,7 +33929,7 @@
           "level": "A2",
           "unitId": "unit_056",
           "nodeId": "es_u56_n3",
-          "meaning": "캐스트",
+          "meaning": "던지다",
           "pronunciation": "[에차르]",
           "pron": "[에차르]",
           "phonetic": "[에차르]",
@@ -34136,8 +34136,8 @@
       "unitNumber": 57,
       "id": 57,
       "unit": 57,
-      "title": "Unit 57",
-      "desc": "",
+      "title": "Unit 57. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1681~1710위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -34471,7 +34471,7 @@
           "level": "A2",
           "unitId": "unit_057",
           "nodeId": "es_u57_n2",
-          "meaning": "배려",
+          "meaning": "돌보다",
           "pronunciation": "[쿠이다르]",
           "pron": "[쿠이다르]",
           "phonetic": "[쿠이다르]",
@@ -34746,8 +34746,8 @@
       "unitNumber": 58,
       "id": 58,
       "unit": 58,
-      "title": "Unit 58",
-      "desc": "",
+      "title": "Unit 58. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1711~1740위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -34843,7 +34843,7 @@
           "level": "A2",
           "unitId": "unit_058",
           "nodeId": "es_u58_n1",
-          "meaning": "드라이브",
+          "meaning": "운전하다",
           "pronunciation": "[콘두시르]",
           "pron": "[콘두시르]",
           "phonetic": "[콘두시르]",
@@ -35356,8 +35356,8 @@
       "unitNumber": 59,
       "id": 59,
       "unit": 59,
-      "title": "Unit 59",
-      "desc": "",
+      "title": "Unit 59. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1741~1770위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -35657,7 +35657,7 @@
           "level": "B1",
           "unitId": "unit_059",
           "nodeId": "es_u59_n2",
-          "meaning": "도움",
+          "meaning": "도와주다",
           "pronunciation": "[아유데]",
           "pron": "[아유데]",
           "phonetic": "[아유데]",
@@ -35966,8 +35966,8 @@
       "unitNumber": 60,
       "id": 60,
       "unit": 60,
-      "title": "Unit 60",
-      "desc": "",
+      "title": "Unit 60. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1771~1800위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -36386,7 +36386,7 @@
           "level": "B1",
           "unitId": "unit_060",
           "nodeId": "es_u60_n3",
-          "meaning": "닫기",
+          "meaning": "닫다",
           "pronunciation": "[세라르]",
           "pron": "[세라르]",
           "phonetic": "[세라르]",
@@ -36576,8 +36576,8 @@
       "unitNumber": 61,
       "id": 61,
       "unit": 61,
-      "title": "Unit 61",
-      "desc": "",
+      "title": "Unit 61. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1801~1830위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -36741,7 +36741,7 @@
           "level": "B1",
           "unitId": "unit_061",
           "nodeId": "es_u61_n1",
-          "meaning": "행위",
+          "meaning": "행동하다",
           "pronunciation": "[아크투아르]",
           "pron": "[아크투아르]",
           "phonetic": "[아크투아르]",
@@ -36758,7 +36758,7 @@
           "level": "B1",
           "unitId": "unit_061",
           "nodeId": "es_u61_n1",
-          "meaning": "팔로우",
+          "meaning": "따라가다",
           "pronunciation": "[시가]",
           "pron": "[시가]",
           "phonetic": "[시가]",
@@ -36843,7 +36843,7 @@
           "level": "B1",
           "unitId": "unit_061",
           "nodeId": "es_u61_n2",
-          "meaning": "봐",
+          "meaning": "시선",
           "pronunciation": "[미라다]",
           "pron": "[미라다]",
           "phonetic": "[미라다]",
@@ -36945,7 +36945,7 @@
           "level": "B1",
           "unitId": "unit_061",
           "nodeId": "es_u61_n3",
-          "meaning": "휴식",
+          "meaning": "깨뜨리다",
           "pronunciation": "[롬페르]",
           "pron": "[롬페르]",
           "phonetic": "[롬페르]",
@@ -37186,8 +37186,8 @@
       "unitNumber": 62,
       "id": 62,
       "unit": 62,
-      "title": "Unit 62",
-      "desc": "",
+      "title": "Unit 62. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1831~1860위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -37215,7 +37215,7 @@
           "level": "B1",
           "unitId": "unit_062",
           "nodeId": "es_u62_n1",
-          "meaning": "시작",
+          "meaning": "시작하다",
           "pronunciation": "[코멘사르]",
           "pron": "[코멘사르]",
           "phonetic": "[코멘사르]",
@@ -37796,8 +37796,8 @@
       "unitNumber": 63,
       "id": 63,
       "unit": 63,
-      "title": "Unit 63",
-      "desc": "",
+      "title": "Unit 63. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1861~1890위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -37876,7 +37876,7 @@
           "level": "B1",
           "unitId": "unit_063",
           "nodeId": "es_u63_n1",
-          "meaning": "에",
+          "meaning": "~로",
           "pronunciation": "[토]",
           "pron": "[토]",
           "phonetic": "[토]",
@@ -38406,8 +38406,8 @@
       "unitNumber": 64,
       "id": 64,
       "unit": 64,
-      "title": "Unit 64",
-      "desc": "",
+      "title": "Unit 64. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1891~1920위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -39016,8 +39016,8 @@
       "unitNumber": 65,
       "id": 65,
       "unit": 65,
-      "title": "Unit 65",
-      "desc": "",
+      "title": "Unit 65. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1921~1950위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -39215,7 +39215,7 @@
           "level": "B1",
           "unitId": "unit_065",
           "nodeId": "es_u65_n2",
-          "meaning": "휴식",
+          "meaning": "쉬다",
           "pronunciation": "[데스칸사르]",
           "pron": "[데스칸사르]",
           "phonetic": "[데스칸사르]",
@@ -39626,8 +39626,8 @@
       "unitNumber": 66,
       "id": 66,
       "unit": 66,
-      "title": "Unit 66",
-      "desc": "",
+      "title": "Unit 66. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1951~1980위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -39859,7 +39859,7 @@
           "level": "B1",
           "unitId": "unit_066",
           "nodeId": "es_u66_n2",
-          "meaning": "의무",
+          "meaning": "해야한다",
           "pronunciation": "[데베르]",
           "pron": "[데베르]",
           "phonetic": "[데베르]",
@@ -40046,7 +40046,7 @@
           "level": "B1",
           "unitId": "unit_066",
           "nodeId": "es_u66_n3",
-          "meaning": "깨끗한",
+          "meaning": "청소하다",
           "pronunciation": "[림피아르]",
           "pron": "[림피아르]",
           "phonetic": "[림피아르]",
@@ -40236,8 +40236,8 @@
       "unitNumber": 67,
       "id": 67,
       "unit": 67,
-      "title": "Unit 67",
-      "desc": "",
+      "title": "Unit 67. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 1981~2010위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -40299,7 +40299,7 @@
           "level": "B1",
           "unitId": "unit_067",
           "nodeId": "es_u67_n1",
-          "meaning": "일",
+          "meaning": "작동하다",
           "pronunciation": "[푼시오나르]",
           "pron": "[푼시오나르]",
           "phonetic": "[푼시오나르]",
@@ -40350,7 +40350,7 @@
           "level": "B1",
           "unitId": "unit_067",
           "nodeId": "es_u67_n1",
-          "meaning": "드라이브",
+          "meaning": "다루다",
           "pronunciation": "[마네하르]",
           "pron": "[마네하르]",
           "phonetic": "[마네하르]",
@@ -40846,8 +40846,8 @@
       "unitNumber": 68,
       "id": 68,
       "unit": 68,
-      "title": "Unit 68",
-      "desc": "",
+      "title": "Unit 68. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 2011~2040위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -41198,7 +41198,7 @@
           "level": "B1",
           "unitId": "unit_068",
           "nodeId": "es_u68_n2",
-          "meaning": "중지",
+          "meaning": "멈추다",
           "pronunciation": "[데테네르]",
           "pron": "[데테네르]",
           "phonetic": "[데테네르]",
@@ -41456,8 +41456,8 @@
       "unitNumber": 69,
       "id": 69,
       "unit": 69,
-      "title": "Unit 69",
-      "desc": "",
+      "title": "Unit 69. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 2041~2070위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -42066,8 +42066,8 @@
       "unitNumber": 70,
       "id": 70,
       "unit": 70,
-      "title": "Unit 70",
-      "desc": "",
+      "title": "Unit 70. A2 실전 도약 어휘",
+      "desc": "빈도수 상위 2071~2100위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -42676,8 +42676,8 @@
       "unitNumber": 71,
       "id": 71,
       "unit": 71,
-      "title": "Unit 71",
-      "desc": "",
+      "title": "Unit 71. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2101~2130위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -42722,7 +42722,7 @@
           "level": "B1",
           "unitId": "unit_071",
           "nodeId": "es_u71_n1",
-          "meaning": "복수",
+          "meaning": "보복",
           "pronunciation": "[벤간사]",
           "pron": "[벤간사]",
           "phonetic": "[벤간사]",
@@ -43286,8 +43286,8 @@
       "unitNumber": 72,
       "id": 72,
       "unit": 72,
-      "title": "Unit 72",
-      "desc": "",
+      "title": "Unit 72. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2131~2160위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -43332,7 +43332,7 @@
           "level": "B1",
           "unitId": "unit_072",
           "nodeId": "es_u72_n1",
-          "meaning": "테이크 아웃",
+          "meaning": "꺼내다",
           "pronunciation": "[사카]",
           "pron": "[사카]",
           "phonetic": "[사카]",
@@ -43896,8 +43896,8 @@
       "unitNumber": 73,
       "id": 73,
       "unit": 73,
-      "title": "Unit 73",
-      "desc": "",
+      "title": "Unit 73. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2161~2190위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -44506,8 +44506,8 @@
       "unitNumber": 74,
       "id": 74,
       "unit": 74,
-      "title": "Unit 74",
-      "desc": "",
+      "title": "Unit 74. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2191~2220위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -45116,8 +45116,8 @@
       "unitNumber": 75,
       "id": 75,
       "unit": 75,
-      "title": "Unit 75",
-      "desc": "",
+      "title": "Unit 75. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2221~2250위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -45570,7 +45570,7 @@
           "level": "B1",
           "unitId": "unit_075",
           "nodeId": "es_u75_n3",
-          "meaning": "빌드",
+          "meaning": "건설하다",
           "pronunciation": "[콘스트루이르]",
           "pron": "[콘스트루이르]",
           "phonetic": "[콘스트루이르]",
@@ -45726,8 +45726,8 @@
       "unitNumber": 76,
       "id": 76,
       "unit": 76,
-      "title": "Unit 76",
-      "desc": "",
+      "title": "Unit 76. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2251~2280위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -46336,8 +46336,8 @@
       "unitNumber": 77,
       "id": 77,
       "unit": 77,
-      "title": "Unit 77",
-      "desc": "",
+      "title": "Unit 77. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2281~2310위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -46416,7 +46416,7 @@
           "level": "B1",
           "unitId": "unit_077",
           "nodeId": "es_u77_n1",
-          "meaning": "절단",
+          "meaning": "자르다",
           "pronunciation": "[코르타르]",
           "pron": "[코르타르]",
           "phonetic": "[코르타르]",
@@ -46484,7 +46484,7 @@
           "level": "B1",
           "unitId": "unit_077",
           "nodeId": "es_u77_n1",
-          "meaning": "의",
+          "meaning": "~의",
           "pronunciation": "[오브]",
           "pron": "[오브]",
           "phonetic": "[오브]",
@@ -46946,8 +46946,8 @@
       "unitNumber": 78,
       "id": 78,
       "unit": 78,
-      "title": "Unit 78",
-      "desc": "",
+      "title": "Unit 78. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2311~2340위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -47383,7 +47383,7 @@
           "level": "B1",
           "unitId": "unit_078",
           "nodeId": "es_u78_n3",
-          "meaning": "일",
+          "meaning": "일하다",
           "pronunciation": "[트라바하스]",
           "pron": "[트라바하스]",
           "phonetic": "[트라바하스]",
@@ -47556,8 +47556,8 @@
       "unitNumber": 79,
       "id": 79,
       "unit": 79,
-      "title": "Unit 79",
-      "desc": "",
+      "title": "Unit 79. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2341~2370위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -47636,7 +47636,7 @@
           "level": "B1",
           "unitId": "unit_079",
           "nodeId": "es_u79_n1",
-          "meaning": "제어",
+          "meaning": "통제하다",
           "pronunciation": "[콘트로라르]",
           "pron": "[콘트로라르]",
           "phonetic": "[콘트로라르]",
@@ -47670,7 +47670,7 @@
           "level": "B1",
           "unitId": "unit_079",
           "nodeId": "es_u79_n1",
-          "meaning": "쇼",
+          "meaning": "보여주다",
           "pronunciation": "[모스트라르]",
           "pron": "[모스트라르]",
           "phonetic": "[모스트라르]",
@@ -48166,8 +48166,8 @@
       "unitNumber": 80,
       "id": 80,
       "unit": 80,
-      "title": "Unit 80",
-      "desc": "",
+      "title": "Unit 80. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2371~2400위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -48688,7 +48688,7 @@
           "level": "B1",
           "unitId": "unit_080",
           "nodeId": "es_u80_n3",
-          "meaning": "던져",
+          "meaning": "던지다",
           "pronunciation": "[티라르]",
           "pron": "[티라르]",
           "phonetic": "[티라르]",
@@ -48776,8 +48776,8 @@
       "unitNumber": 81,
       "id": 81,
       "unit": 81,
-      "title": "Unit 81",
-      "desc": "",
+      "title": "Unit 81. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2401~2430위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -49386,8 +49386,8 @@
       "unitNumber": 82,
       "id": 82,
       "unit": 82,
-      "title": "Unit 82",
-      "desc": "",
+      "title": "Unit 82. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2431~2460위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -49996,8 +49996,8 @@
       "unitNumber": 83,
       "id": 83,
       "unit": 83,
-      "title": "Unit 83",
-      "desc": "",
+      "title": "Unit 83. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2461~2490위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -50606,8 +50606,8 @@
       "unitNumber": 84,
       "id": 84,
       "unit": 84,
-      "title": "Unit 84",
-      "desc": "",
+      "title": "Unit 84. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2491~2520위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -50686,7 +50686,7 @@
           "level": "B1",
           "unitId": "unit_084",
           "nodeId": "es_u84_n1",
-          "meaning": "하",
+          "meaning": "하하",
           "pronunciation": "[하]",
           "pron": "[하]",
           "phonetic": "[하]",
@@ -51128,7 +51128,7 @@
           "level": "B1",
           "unitId": "unit_084",
           "nodeId": "es_u84_n3",
-          "meaning": "여행",
+          "meaning": "여행하다",
           "pronunciation": "[비아하르]",
           "pron": "[비아하르]",
           "phonetic": "[비아하르]",
@@ -51216,8 +51216,8 @@
       "unitNumber": 85,
       "id": 85,
       "unit": 85,
-      "title": "Unit 85",
-      "desc": "",
+      "title": "Unit 85. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2521~2550위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -51296,7 +51296,7 @@
           "level": "B1",
           "unitId": "unit_085",
           "nodeId": "es_u85_n1",
-          "meaning": "넣어",
+          "meaning": "넣다",
           "pronunciation": "[메테르]",
           "pron": "[메테르]",
           "phonetic": "[메테르]",
@@ -51381,7 +51381,7 @@
           "level": "B1",
           "unitId": "unit_085",
           "nodeId": "es_u85_n1",
-          "meaning": "연기",
+          "meaning": "담배피우다",
           "pronunciation": "[푸마르]",
           "pron": "[푸마르]",
           "phonetic": "[푸마르]",
@@ -51670,7 +51670,7 @@
           "level": "B1",
           "unitId": "unit_085",
           "nodeId": "es_u85_n3",
-          "meaning": "은",
+          "meaning": "은화",
           "pronunciation": "[플라타]",
           "pron": "[플라타]",
           "phonetic": "[플라타]",
@@ -51826,8 +51826,8 @@
       "unitNumber": 86,
       "id": 86,
       "unit": 86,
-      "title": "Unit 86",
-      "desc": "",
+      "title": "Unit 86. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2551~2580위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -52025,7 +52025,7 @@
           "level": "B1",
           "unitId": "unit_086",
           "nodeId": "es_u86_n2",
-          "meaning": "리프트",
+          "meaning": "일으키다",
           "pronunciation": "[레반타]",
           "pron": "[레반타]",
           "phonetic": "[레반타]",
@@ -52042,7 +52042,7 @@
           "level": "B1",
           "unitId": "unit_086",
           "nodeId": "es_u86_n2",
-          "meaning": "봐",
+          "meaning": "보지마라",
           "pronunciation": "[미레스]",
           "pron": "[미레스]",
           "phonetic": "[미레스]",
@@ -52436,8 +52436,8 @@
       "unitNumber": 87,
       "id": 87,
       "unit": 87,
-      "title": "Unit 87",
-      "desc": "",
+      "title": "Unit 87. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2581~2610위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -53046,8 +53046,8 @@
       "unitNumber": 88,
       "id": 88,
       "unit": 88,
-      "title": "Unit 88",
-      "desc": "",
+      "title": "Unit 88. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2611~2640위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -53381,7 +53381,7 @@
           "level": "B1",
           "unitId": "unit_088",
           "nodeId": "es_u88_n2",
-          "meaning": "검토",
+          "meaning": "검토하다",
           "pronunciation": "[레비사르]",
           "pron": "[레비사르]",
           "phonetic": "[레비사르]",
@@ -53551,7 +53551,7 @@
           "level": "B1",
           "unitId": "unit_088",
           "nodeId": "es_u88_n3",
-          "meaning": "점프",
+          "meaning": "뛰다",
           "pronunciation": "[살타르]",
           "pron": "[살타르]",
           "phonetic": "[살타르]",
@@ -53656,8 +53656,8 @@
       "unitNumber": 89,
       "id": 89,
       "unit": 89,
-      "title": "Unit 89",
-      "desc": "",
+      "title": "Unit 89. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2641~2671위 단어 31개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -53855,7 +53855,7 @@
           "level": "B1",
           "unitId": "unit_089",
           "nodeId": "es_u89_n2",
-          "meaning": "봐",
+          "meaning": "바라보아라",
           "pronunciation": "[미라드]",
           "pron": "[미라드]",
           "phonetic": "[미라드]",
@@ -54283,8 +54283,8 @@
       "unitNumber": 90,
       "id": 90,
       "unit": 90,
-      "title": "Unit 90",
-      "desc": "",
+      "title": "Unit 90. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2671~2699위 단어 29개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -54703,7 +54703,7 @@
           "level": "B1",
           "unitId": "unit_090",
           "nodeId": "es_u90_n3",
-          "meaning": "내",
+          "meaning": "내 것들",
           "pronunciation": "[미오스]",
           "pron": "[미오스]",
           "phonetic": "[미오스]",
@@ -54737,7 +54737,7 @@
           "level": "B1",
           "unitId": "unit_090",
           "nodeId": "es_u90_n3",
-          "meaning": "팔로우함",
+          "meaning": "연속적인",
           "pronunciation": "[세기도]",
           "pron": "[세기도]",
           "phonetic": "[세기도]",
@@ -54875,8 +54875,8 @@
       "unitNumber": 91,
       "id": 91,
       "unit": 91,
-      "title": "Unit 91",
-      "desc": "",
+      "title": "Unit 91. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2701~2730위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -55210,7 +55210,7 @@
           "level": "B1",
           "unitId": "unit_091",
           "nodeId": "es_u91_n2",
-          "meaning": "거짓말",
+          "meaning": "거짓말하다",
           "pronunciation": "[멘티르]",
           "pron": "[멘티르]",
           "phonetic": "[멘티르]",
@@ -55485,8 +55485,8 @@
       "unitNumber": 92,
       "id": 92,
       "unit": 92,
-      "title": "Unit 92",
-      "desc": "",
+      "title": "Unit 92. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2731~2760위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -55650,7 +55650,7 @@
           "level": "B1",
           "unitId": "unit_092",
           "nodeId": "es_u92_n1",
-          "meaning": "팔로우",
+          "meaning": "따르다",
           "pronunciation": "[시간]",
           "pron": "[시간]",
           "phonetic": "[시간]",
@@ -56095,8 +56095,8 @@
       "unitNumber": 93,
       "id": 93,
       "unit": 93,
-      "title": "Unit 93",
-      "desc": "",
+      "title": "Unit 93. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2761~2790위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -56583,7 +56583,7 @@
           "level": "B1",
           "unitId": "unit_093",
           "nodeId": "es_u93_n3",
-          "meaning": "비명",
+          "meaning": "소리치다",
           "pronunciation": "[그리타르]",
           "pron": "[그리타르]",
           "phonetic": "[그리타르]",
@@ -56705,8 +56705,8 @@
       "unitNumber": 94,
       "id": 94,
       "unit": 94,
-      "title": "Unit 94",
-      "desc": "",
+      "title": "Unit 94. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2791~2820위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -56989,7 +56989,7 @@
           "level": "B1",
           "unitId": "unit_094",
           "nodeId": "es_u94_n2",
-          "meaning": "기호",
+          "meaning": "서명하다",
           "pronunciation": "[피르마르]",
           "pron": "[피르마르]",
           "phonetic": "[피르마르]",
@@ -57315,8 +57315,8 @@
       "unitNumber": 95,
       "id": 95,
       "unit": 95,
-      "title": "Unit 95",
-      "desc": "",
+      "title": "Unit 95. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2821~2850위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -57667,7 +57667,7 @@
           "level": "B1",
           "unitId": "unit_095",
           "nodeId": "es_u95_n2",
-          "meaning": "사랑",
+          "meaning": "사랑하다",
           "pronunciation": "[아마르]",
           "pron": "[아마르]",
           "phonetic": "[아마르]",
@@ -57925,8 +57925,8 @@
       "unitNumber": 96,
       "id": 96,
       "unit": 96,
-      "title": "Unit 96",
-      "desc": "",
+      "title": "Unit 96. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2851~2880위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -58535,8 +58535,8 @@
       "unitNumber": 97,
       "id": 97,
       "unit": 97,
-      "title": "Unit 97",
-      "desc": "",
+      "title": "Unit 97. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2881~2910위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -59145,8 +59145,8 @@
       "unitNumber": 98,
       "id": 98,
       "unit": 98,
-      "title": "Unit 98",
-      "desc": "",
+      "title": "Unit 98. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2911~2940위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -59514,7 +59514,7 @@
           "level": "B1",
           "unitId": "unit_098",
           "nodeId": "es_u98_n3",
-          "meaning": "현재",
+          "meaning": "소개하다",
           "pronunciation": "[프레센타르]",
           "pron": "[프레센타르]",
           "phonetic": "[프레센타르]",
@@ -59667,7 +59667,7 @@
           "level": "B1",
           "unitId": "unit_098",
           "nodeId": "es_u98_n3",
-          "meaning": "이",
+          "meaning": "이것",
           "pronunciation": "[에스토]",
           "pron": "[에스토]",
           "phonetic": "[에스토]",
@@ -59755,8 +59755,8 @@
       "unitNumber": 99,
       "id": 99,
       "unit": 99,
-      "title": "Unit 99",
-      "desc": "",
+      "title": "Unit 99. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2941~2970위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -60365,8 +60365,8 @@
       "unitNumber": 100,
       "id": 100,
       "unit": 100,
-      "title": "Unit 100",
-      "desc": "",
+      "title": "Unit 100. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 2971~3000위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -60751,7 +60751,7 @@
           "level": "B1",
           "unitId": "unit_100",
           "nodeId": "es_u100_n3",
-          "meaning": "카운트",
+          "meaning": "백작",
           "pronunciation": "[콘데]",
           "pron": "[콘데]",
           "phonetic": "[콘데]",
@@ -60975,8 +60975,8 @@
       "unitNumber": 101,
       "id": 101,
       "unit": 101,
-      "title": "Unit 101",
-      "desc": "",
+      "title": "Unit 101. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3001~3030위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -61585,8 +61585,8 @@
       "unitNumber": 102,
       "id": 102,
       "unit": 102,
-      "title": "Unit 102",
-      "desc": "",
+      "title": "Unit 102. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3031~3060위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -62195,8 +62195,8 @@
       "unitNumber": 103,
       "id": 103,
       "unit": 103,
-      "title": "Unit 103",
-      "desc": "",
+      "title": "Unit 103. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3061~3090위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -62581,7 +62581,7 @@
           "level": "B1",
           "unitId": "unit_103",
           "nodeId": "es_u103_n3",
-          "meaning": "저장",
+          "meaning": "보관하다",
           "pronunciation": "[구아르다르]",
           "pron": "[구아르다르]",
           "phonetic": "[구아르다르]",
@@ -62805,8 +62805,8 @@
       "unitNumber": 104,
       "id": 104,
       "unit": 104,
-      "title": "Unit 104",
-      "desc": "",
+      "title": "Unit 104. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3091~3120위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -62953,7 +62953,7 @@
           "level": "B1",
           "unitId": "unit_104",
           "nodeId": "es_u104_n1",
-          "meaning": "잡기",
+          "meaning": "잡다",
           "pronunciation": "[아트라파르]",
           "pron": "[아트라파르]",
           "phonetic": "[아트라파르]",
@@ -63276,7 +63276,7 @@
           "level": "B1",
           "unitId": "unit_104",
           "nodeId": "es_u104_n3",
-          "meaning": "내",
+          "meaning": "내 것",
           "pronunciation": "[미나]",
           "pron": "[미나]",
           "phonetic": "[미나]",
@@ -63415,8 +63415,8 @@
       "unitNumber": 105,
       "id": 105,
       "unit": 105,
-      "title": "Unit 105",
-      "desc": "",
+      "title": "Unit 105. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3121~3150위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -63461,7 +63461,7 @@
           "level": "B1",
           "unitId": "unit_105",
           "nodeId": "es_u105_n1",
-          "meaning": "요리사",
+          "meaning": "요리하다",
           "pronunciation": "[코시나르]",
           "pron": "[코시나르]",
           "phonetic": "[코시나르]",
@@ -63614,7 +63614,7 @@
           "level": "B1",
           "unitId": "unit_105",
           "nodeId": "es_u105_n2",
-          "meaning": "수영",
+          "meaning": "수영하다",
           "pronunciation": "[나다르]",
           "pron": "[나다르]",
           "phonetic": "[나다르]",
@@ -64025,8 +64025,8 @@
       "unitNumber": 106,
       "id": 106,
       "unit": 106,
-      "title": "Unit 106",
-      "desc": "",
+      "title": "Unit 106. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3151~3180위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -64496,7 +64496,7 @@
           "level": "B1",
           "unitId": "unit_106",
           "nodeId": "es_u106_n3",
-          "meaning": "공격",
+          "meaning": "공격하다",
           "pronunciation": "[아타카르]",
           "pron": "[아타카르]",
           "phonetic": "[아타카르]",
@@ -64635,8 +64635,8 @@
       "unitNumber": 107,
       "id": 107,
       "unit": 107,
-      "title": "Unit 107",
-      "desc": "",
+      "title": "Unit 107. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3181~3210위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -65245,8 +65245,8 @@
       "unitNumber": 108,
       "id": 108,
       "unit": 108,
-      "title": "Unit 108",
-      "desc": "",
+      "title": "Unit 108. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3211~3240위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -65855,8 +65855,8 @@
       "unitNumber": 109,
       "id": 109,
       "unit": 109,
-      "title": "Unit 109",
-      "desc": "",
+      "title": "Unit 109. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3241~3270위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -66190,7 +66190,7 @@
           "level": "B2",
           "unitId": "unit_109",
           "nodeId": "es_u109_n2",
-          "meaning": "타고",
+          "meaning": "타다",
           "pronunciation": "[몬타르]",
           "pron": "[몬타르]",
           "phonetic": "[몬타르]",
@@ -66224,7 +66224,7 @@
           "level": "B2",
           "unitId": "unit_109",
           "nodeId": "es_u109_n3",
-          "meaning": "도",
+          "meaning": "도(온도)",
           "pronunciation": "[그라도스]",
           "pron": "[그라도스]",
           "phonetic": "[그라도스]",
@@ -66465,8 +66465,8 @@
       "unitNumber": 110,
       "id": 110,
       "unit": 110,
-      "title": "Unit 110",
-      "desc": "",
+      "title": "Unit 110. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3271~3300위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -66868,7 +66868,7 @@
           "level": "B2",
           "unitId": "unit_110",
           "nodeId": "es_u110_n3",
-          "meaning": "드라이브",
+          "meaning": "운전하다",
           "pronunciation": "[콘두세]",
           "pron": "[콘두세]",
           "phonetic": "[콘두세]",
@@ -67075,8 +67075,8 @@
       "unitNumber": 111,
       "id": 111,
       "unit": 111,
-      "title": "Unit 111",
-      "desc": "",
+      "title": "Unit 111. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3301~3330위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -67155,7 +67155,7 @@
           "level": "B2",
           "unitId": "unit_111",
           "nodeId": "es_u111_n1",
-          "meaning": "일",
+          "meaning": "날들",
           "pronunciation": "[디아스]",
           "pron": "[디아스]",
           "phonetic": "[디아스]",
@@ -67359,7 +67359,7 @@
           "level": "B2",
           "unitId": "unit_111",
           "nodeId": "es_u111_n2",
-          "meaning": "히트",
+          "meaning": "때리다",
           "pronunciation": "[골페아르]",
           "pron": "[골페아르]",
           "phonetic": "[골페아르]",
@@ -67685,8 +67685,8 @@
       "unitNumber": 112,
       "id": 112,
       "unit": 112,
-      "title": "Unit 112",
-      "desc": "",
+      "title": "Unit 112. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3331~3360위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -68295,8 +68295,8 @@
       "unitNumber": 113,
       "id": 113,
       "unit": 113,
-      "title": "Unit 113",
-      "desc": "",
+      "title": "Unit 113. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3361~3390위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -68905,8 +68905,8 @@
       "unitNumber": 114,
       "id": 114,
       "unit": 114,
-      "title": "Unit 114",
-      "desc": "",
+      "title": "Unit 114. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3391~3420위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -68934,7 +68934,7 @@
           "level": "B2",
           "unitId": "unit_114",
           "nodeId": "es_u114_n1",
-          "meaning": "에",
+          "meaning": "켜짐",
           "pronunciation": "[온]",
           "pron": "[온]",
           "phonetic": "[온]",
@@ -69515,8 +69515,8 @@
       "unitNumber": 115,
       "id": 115,
       "unit": 115,
-      "title": "Unit 115",
-      "desc": "",
+      "title": "Unit 115. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3421~3450위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -69544,7 +69544,7 @@
           "level": "B2",
           "unitId": "unit_115",
           "nodeId": "es_u115_n1",
-          "meaning": "일어나",
+          "meaning": "깨어나다",
           "pronunciation": "[데스페르타르]",
           "pron": "[데스페르타르]",
           "phonetic": "[데스페르타르]",
@@ -70125,8 +70125,8 @@
       "unitNumber": 116,
       "id": 116,
       "unit": 116,
-      "title": "Unit 116",
-      "desc": "",
+      "title": "Unit 116. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3451~3480위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -70735,8 +70735,8 @@
       "unitNumber": 117,
       "id": 117,
       "unit": 117,
-      "title": "Unit 117",
-      "desc": "",
+      "title": "Unit 117. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3481~3510위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -71172,7 +71172,7 @@
           "level": "B2",
           "unitId": "unit_117",
           "nodeId": "es_u117_n3",
-          "meaning": "리프트",
+          "meaning": "들어올리다",
           "pronunciation": "[레반타르]",
           "pron": "[레반타르]",
           "phonetic": "[레반타르]",
@@ -71223,7 +71223,7 @@
           "level": "B2",
           "unitId": "unit_117",
           "nodeId": "es_u117_n3",
-          "meaning": "수입",
+          "meaning": "중요하다",
           "pronunciation": "[임포르타르]",
           "pron": "[임포르타르]",
           "phonetic": "[임포르타르]",
@@ -71345,8 +71345,8 @@
       "unitNumber": 118,
       "id": 118,
       "unit": 118,
-      "title": "Unit 118",
-      "desc": "",
+      "title": "Unit 118. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3511~3540위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -71391,7 +71391,7 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "es_u118_n1",
-          "meaning": "확인",
+          "meaning": "확인하다",
           "pronunciation": "[콤프로바르]",
           "pron": "[콤프로바르]",
           "phonetic": "[콤프로바르]",
@@ -71408,7 +71408,7 @@
           "level": "B2",
           "unitId": "unit_118",
           "nodeId": "es_u118_n1",
-          "meaning": "일",
+          "meaning": "작동하다",
           "pronunciation": "[푼시오네]",
           "pron": "[푼시오네]",
           "phonetic": "[푼시오네]",
@@ -71955,8 +71955,8 @@
       "unitNumber": 119,
       "id": 119,
       "unit": 119,
-      "title": "Unit 119",
-      "desc": "",
+      "title": "Unit 119. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3541~3570위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -72565,8 +72565,8 @@
       "unitNumber": 120,
       "id": 120,
       "unit": 120,
-      "title": "Unit 120",
-      "desc": "",
+      "title": "Unit 120. B1 중급 심화 어휘",
+      "desc": "빈도수 상위 3571~3600위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -73175,8 +73175,8 @@
       "unitNumber": 121,
       "id": 121,
       "unit": 121,
-      "title": "Unit 121",
-      "desc": "",
+      "title": "Unit 121. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3601~3630위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -73697,7 +73697,7 @@
           "level": "B2",
           "unitId": "unit_121",
           "nodeId": "es_u121_n3",
-          "meaning": "소리",
+          "meaning": "소리나다",
           "pronunciation": "[소나르]",
           "pron": "[소나르]",
           "phonetic": "[소나르]",
@@ -73785,8 +73785,8 @@
       "unitNumber": 122,
       "id": 122,
       "unit": 122,
-      "title": "Unit 122",
-      "desc": "",
+      "title": "Unit 122. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3631~3660위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -74395,8 +74395,8 @@
       "unitNumber": 123,
       "id": 123,
       "unit": 123,
-      "title": "Unit 123",
-      "desc": "",
+      "title": "Unit 123. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3661~3690위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -75005,8 +75005,8 @@
       "unitNumber": 124,
       "id": 124,
       "unit": 124,
-      "title": "Unit 124",
-      "desc": "",
+      "title": "Unit 124. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3691~3720위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -75615,8 +75615,8 @@
       "unitNumber": 125,
       "id": 125,
       "unit": 125,
-      "title": "Unit 125",
-      "desc": "",
+      "title": "Unit 125. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3721~3750위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -76225,8 +76225,8 @@
       "unitNumber": 126,
       "id": 126,
       "unit": 126,
-      "title": "Unit 126",
-      "desc": "",
+      "title": "Unit 126. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3751~3780위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -76835,8 +76835,8 @@
       "unitNumber": 127,
       "id": 127,
       "unit": 127,
-      "title": "Unit 127",
-      "desc": "",
+      "title": "Unit 127. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3781~3810위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -76898,7 +76898,7 @@
           "level": "B2",
           "unitId": "unit_127",
           "nodeId": "es_u127_n1",
-          "meaning": "내",
+          "meaning": "내 것",
           "pronunciation": "[미아]",
           "pron": "[미아]",
           "phonetic": "[미아]",
@@ -77445,8 +77445,8 @@
       "unitNumber": 128,
       "id": 128,
       "unit": 128,
-      "title": "Unit 128",
-      "desc": "",
+      "title": "Unit 128. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3811~3840위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -77865,7 +77865,7 @@
           "level": "B2",
           "unitId": "unit_128",
           "nodeId": "es_u128_n3",
-          "meaning": "파멸",
+          "meaning": "망치다",
           "pronunciation": "[아루이나르]",
           "pron": "[아루이나르]",
           "phonetic": "[아루이나르]",
@@ -78055,8 +78055,8 @@
       "unitNumber": 129,
       "id": 129,
       "unit": 129,
-      "title": "Unit 129",
-      "desc": "",
+      "title": "Unit 129. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3841~3870위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -78665,8 +78665,8 @@
       "unitNumber": 130,
       "id": 130,
       "unit": 130,
-      "title": "Unit 130",
-      "desc": "",
+      "title": "Unit 130. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3871~3900위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -79275,8 +79275,8 @@
       "unitNumber": 131,
       "id": 131,
       "unit": 131,
-      "title": "Unit 131",
-      "desc": "",
+      "title": "Unit 131. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3901~3930위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -79885,8 +79885,8 @@
       "unitNumber": 132,
       "id": 132,
       "unit": 132,
-      "title": "Unit 132",
-      "desc": "",
+      "title": "Unit 132. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3931~3960위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -80016,7 +80016,7 @@
           "level": "B2",
           "unitId": "unit_132",
           "nodeId": "es_u132_n1",
-          "meaning": "반환",
+          "meaning": "반납하다",
           "pronunciation": "[데볼베르]",
           "pron": "[데볼베르]",
           "phonetic": "[데볼베르]",
@@ -80495,8 +80495,8 @@
       "unitNumber": 133,
       "id": 133,
       "unit": 133,
-      "title": "Unit 133",
-      "desc": "",
+      "title": "Unit 133. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3961~3990위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -81105,8 +81105,8 @@
       "unitNumber": 134,
       "id": 134,
       "unit": 134,
-      "title": "Unit 134",
-      "desc": "",
+      "title": "Unit 134. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 3991~4020위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -81715,8 +81715,8 @@
       "unitNumber": 135,
       "id": 135,
       "unit": 135,
-      "title": "Unit 135",
-      "desc": "",
+      "title": "Unit 135. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4021~4050위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -82325,8 +82325,8 @@
       "unitNumber": 136,
       "id": 136,
       "unit": 136,
-      "title": "Unit 136",
-      "desc": "",
+      "title": "Unit 136. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4051~4080위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -82745,7 +82745,7 @@
           "level": "B2",
           "unitId": "unit_136",
           "nodeId": "es_u136_n3",
-          "meaning": "던져",
+          "meaning": "출시하다",
           "pronunciation": "[란사르]",
           "pron": "[란사르]",
           "phonetic": "[란사르]",
@@ -82847,7 +82847,7 @@
           "level": "B2",
           "unitId": "unit_136",
           "nodeId": "es_u136_n3",
-          "meaning": "커버",
+          "meaning": "덮다",
           "pronunciation": "[쿠브리르]",
           "pron": "[쿠브리르]",
           "phonetic": "[쿠브리르]",
@@ -82935,8 +82935,8 @@
       "unitNumber": 137,
       "id": 137,
       "unit": 137,
-      "title": "Unit 137",
-      "desc": "",
+      "title": "Unit 137. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4081~4110위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -83545,8 +83545,8 @@
       "unitNumber": 138,
       "id": 138,
       "unit": 138,
-      "title": "Unit 138",
-      "desc": "",
+      "title": "Unit 138. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4111~4140위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -83778,7 +83778,7 @@
           "level": "B2",
           "unitId": "unit_138",
           "nodeId": "es_u138_n2",
-          "meaning": "찾기",
+          "meaning": "발견하다",
           "pronunciation": "[아야르]",
           "pron": "[아야르]",
           "phonetic": "[아야르]",
@@ -83812,7 +83812,7 @@
           "level": "B2",
           "unitId": "unit_138",
           "nodeId": "es_u138_n2",
-          "meaning": "거래",
+          "meaning": "다스리다",
           "pronunciation": "[리디아르]",
           "pron": "[리디아르]",
           "phonetic": "[리디아르]",
@@ -83999,7 +83999,7 @@
           "level": "B2",
           "unitId": "unit_138",
           "nodeId": "es_u138_n3",
-          "meaning": "속임수",
+          "meaning": "속이다",
           "pronunciation": "[엔가냐르]",
           "pron": "[엔가냐르]",
           "phonetic": "[엔가냐르]",
@@ -84155,8 +84155,8 @@
       "unitNumber": 139,
       "id": 139,
       "unit": 139,
-      "title": "Unit 139",
-      "desc": "",
+      "title": "Unit 139. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4141~4170위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -84660,7 +84660,7 @@
           "level": "B2",
           "unitId": "unit_139",
           "nodeId": "es_u139_n3",
-          "meaning": "봐",
+          "meaning": "살펴보아라",
           "pronunciation": "[미라로]",
           "pron": "[미라로]",
           "phonetic": "[미라로]",
@@ -84765,8 +84765,8 @@
       "unitNumber": 140,
       "id": 140,
       "unit": 140,
-      "title": "Unit 140",
-      "desc": "",
+      "title": "Unit 140. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4171~4200위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -85185,7 +85185,7 @@
           "level": "B2",
           "unitId": "unit_140",
           "nodeId": "es_u140_n3",
-          "meaning": "인터럽트",
+          "meaning": "방해하다",
           "pronunciation": "[인테룸피르]",
           "pron": "[인테룸피르]",
           "phonetic": "[인테룸피르]",
@@ -85375,8 +85375,8 @@
       "unitNumber": 141,
       "id": 141,
       "unit": 141,
-      "title": "Unit 141",
-      "desc": "",
+      "title": "Unit 141. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4201~4230위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -85404,7 +85404,7 @@
           "level": "B2",
           "unitId": "unit_141",
           "nodeId": "es_u141_n1",
-          "meaning": "내기",
+          "meaning": "내기하다",
           "pronunciation": "[아포스타르]",
           "pron": "[아포스타르]",
           "phonetic": "[아포스타르]",
@@ -85506,7 +85506,7 @@
           "level": "B2",
           "unitId": "unit_141",
           "nodeId": "es_u141_n1",
-          "meaning": "같은",
+          "meaning": "좋아하다",
           "pronunciation": "[구스타르]",
           "pron": "[구스타르]",
           "phonetic": "[구스타르]",
@@ -85676,7 +85676,7 @@
           "level": "B2",
           "unitId": "unit_141",
           "nodeId": "es_u141_n2",
-          "meaning": "투표",
+          "meaning": "투표하다",
           "pronunciation": "[보타르]",
           "pron": "[보타르]",
           "phonetic": "[보타르]",
@@ -85812,7 +85812,7 @@
           "level": "B2",
           "unitId": "unit_141",
           "nodeId": "es_u141_n3",
-          "meaning": "제안",
+          "meaning": "제공하다",
           "pronunciation": "[오프레세르]",
           "pron": "[오프레세르]",
           "phonetic": "[오프레세르]",
@@ -85985,8 +85985,8 @@
       "unitNumber": 142,
       "id": 142,
       "unit": 142,
-      "title": "Unit 142",
-      "desc": "",
+      "title": "Unit 142. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4231~4260위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -86595,8 +86595,8 @@
       "unitNumber": 143,
       "id": 143,
       "unit": 143,
-      "title": "Unit 143",
-      "desc": "",
+      "title": "Unit 143. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4261~4290위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -86692,7 +86692,7 @@
           "level": "B2",
           "unitId": "unit_143",
           "nodeId": "es_u143_n1",
-          "meaning": "삭제",
+          "meaning": "삭제하다",
           "pronunciation": "[에리미나르]",
           "pron": "[에리미나르]",
           "phonetic": "[에리미나르]",
@@ -86743,7 +86743,7 @@
           "level": "B2",
           "unitId": "unit_143",
           "nodeId": "es_u143_n1",
-          "meaning": "원인",
+          "meaning": "일으키다",
           "pronunciation": "[카우사르]",
           "pron": "[카우사르]",
           "phonetic": "[카우사르]",
@@ -87205,8 +87205,8 @@
       "unitNumber": 144,
       "id": 144,
       "unit": 144,
-      "title": "Unit 144",
-      "desc": "",
+      "title": "Unit 144. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4291~4320위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -87302,7 +87302,7 @@
           "level": "B2",
           "unitId": "unit_144",
           "nodeId": "es_u144_n1",
-          "meaning": "형태",
+          "meaning": "형성하다",
           "pronunciation": "[포르마르]",
           "pron": "[포르마르]",
           "phonetic": "[포르마르]",
@@ -87815,8 +87815,8 @@
       "unitNumber": 145,
       "id": 145,
       "unit": 145,
-      "title": "Unit 145",
-      "desc": "",
+      "title": "Unit 145. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4321~4350위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -88425,8 +88425,8 @@
       "unitNumber": 146,
       "id": 146,
       "unit": 146,
-      "title": "Unit 146",
-      "desc": "",
+      "title": "Unit 146. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4351~4380위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -88794,7 +88794,7 @@
           "level": "B2",
           "unitId": "unit_146",
           "nodeId": "es_u146_n3",
-          "meaning": "사냥",
+          "meaning": "사냥하다",
           "pronunciation": "[카사르]",
           "pron": "[카사르]",
           "phonetic": "[카사르]",
@@ -88862,7 +88862,7 @@
           "level": "B2",
           "unitId": "unit_146",
           "nodeId": "es_u146_n3",
-          "meaning": "물고기",
+          "meaning": "낚시하다",
           "pronunciation": "[페스카르]",
           "pron": "[페스카르]",
           "phonetic": "[페스카르]",
@@ -89035,8 +89035,8 @@
       "unitNumber": 147,
       "id": 147,
       "unit": 147,
-      "title": "Unit 147",
-      "desc": "",
+      "title": "Unit 147. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4381~4410위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -89540,7 +89540,7 @@
           "level": "B2",
           "unitId": "unit_147",
           "nodeId": "es_u147_n3",
-          "meaning": "너의 것",
+          "meaning": "그들의 것",
           "pronunciation": "[수요스]",
           "pron": "[수요스]",
           "phonetic": "[수요스]",
@@ -89645,8 +89645,8 @@
       "unitNumber": 148,
       "id": 148,
       "unit": 148,
-      "title": "Unit 148",
-      "desc": "",
+      "title": "Unit 148. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4411~4440위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -90255,8 +90255,8 @@
       "unitNumber": 149,
       "id": 149,
       "unit": 149,
-      "title": "Unit 149",
-      "desc": "",
+      "title": "Unit 149. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4441~4470위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -90865,8 +90865,8 @@
       "unitNumber": 150,
       "id": 150,
       "unit": 150,
-      "title": "Unit 150",
-      "desc": "",
+      "title": "Unit 150. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4471~4500위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -90928,7 +90928,7 @@
           "level": "B2",
           "unitId": "unit_150",
           "nodeId": "es_u150_n1",
-          "meaning": "부하",
+          "meaning": "충전하다",
           "pronunciation": "[카르가르]",
           "pron": "[카르가르]",
           "phonetic": "[카르가르]",
@@ -91475,8 +91475,8 @@
       "unitNumber": 151,
       "id": 151,
       "unit": 151,
-      "title": "Unit 151",
-      "desc": "",
+      "title": "Unit 151. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4501~4530위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -91776,7 +91776,7 @@
           "level": "B2",
           "unitId": "unit_151",
           "nodeId": "es_u151_n2",
-          "meaning": "연습",
+          "meaning": "연습하다",
           "pronunciation": "[프라크티카르]",
           "pron": "[프라크티카르]",
           "phonetic": "[프라크티카르]",
@@ -92085,8 +92085,8 @@
       "unitNumber": 152,
       "id": 152,
       "unit": 152,
-      "title": "Unit 152",
-      "desc": "",
+      "title": "Unit 152. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4531~4560위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -92352,7 +92352,7 @@
           "level": "B2",
           "unitId": "unit_152",
           "nodeId": "es_u152_n2",
-          "meaning": "키스",
+          "meaning": "입맞추다",
           "pronunciation": "[베사르]",
           "pron": "[베사르]",
           "phonetic": "[베사르]",
@@ -92695,8 +92695,8 @@
       "unitNumber": 153,
       "id": 153,
       "unit": 153,
-      "title": "Unit 153",
-      "desc": "",
+      "title": "Unit 153. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4561~4590위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -92894,7 +92894,7 @@
           "level": "B2",
           "unitId": "unit_153",
           "nodeId": "es_u153_n2",
-          "meaning": "내",
+          "meaning": "내 것들",
           "pronunciation": "[미아스]",
           "pron": "[미아스]",
           "phonetic": "[미아스]",
@@ -93305,8 +93305,8 @@
       "unitNumber": 154,
       "id": 154,
       "unit": 154,
-      "title": "Unit 154",
-      "desc": "",
+      "title": "Unit 154. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4591~4620위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -93915,8 +93915,8 @@
       "unitNumber": 155,
       "id": 155,
       "unit": 155,
-      "title": "Unit 155",
-      "desc": "",
+      "title": "Unit 155. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4621~4650위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -94525,8 +94525,8 @@
       "unitNumber": 156,
       "id": 156,
       "unit": 156,
-      "title": "Unit 156",
-      "desc": "",
+      "title": "Unit 156. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4651~4680위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -94724,7 +94724,7 @@
           "level": "B2",
           "unitId": "unit_156",
           "nodeId": "es_u156_n2",
-          "meaning": "카운트",
+          "meaning": "세다",
           "pronunciation": "[쿠엔테]",
           "pron": "[쿠엔테]",
           "phonetic": "[쿠엔테]",
@@ -95135,8 +95135,8 @@
       "unitNumber": 157,
       "id": 157,
       "unit": 157,
-      "title": "Unit 157",
-      "desc": "",
+      "title": "Unit 157. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4681~4710위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -95745,8 +95745,8 @@
       "unitNumber": 158,
       "id": 158,
       "unit": 158,
-      "title": "Unit 158",
-      "desc": "",
+      "title": "Unit 158. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4711~4740위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -95876,7 +95876,7 @@
           "level": "B2",
           "unitId": "unit_158",
           "nodeId": "es_u158_n1",
-          "meaning": "리드",
+          "meaning": "이끌다",
           "pronunciation": "[디리히르]",
           "pron": "[디리히르]",
           "phonetic": "[디리히르]",
@@ -96355,8 +96355,8 @@
       "unitNumber": 159,
       "id": 159,
       "unit": 159,
-      "title": "Unit 159",
-      "desc": "",
+      "title": "Unit 159. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4741~4770위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -96965,8 +96965,8 @@
       "unitNumber": 160,
       "id": 160,
       "unit": 160,
-      "title": "Unit 160",
-      "desc": "",
+      "title": "Unit 160. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4771~4800위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -97575,8 +97575,8 @@
       "unitNumber": 161,
       "id": 161,
       "unit": 161,
-      "title": "Unit 161",
-      "desc": "",
+      "title": "Unit 161. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4801~4830위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -98185,8 +98185,8 @@
       "unitNumber": 162,
       "id": 162,
       "unit": 162,
-      "title": "Unit 162",
-      "desc": "",
+      "title": "Unit 162. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4831~4860위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -98795,8 +98795,8 @@
       "unitNumber": 163,
       "id": 163,
       "unit": 163,
-      "title": "Unit 163",
-      "desc": "",
+      "title": "Unit 163. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4861~4890위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -98892,7 +98892,7 @@
           "level": "B2",
           "unitId": "unit_163",
           "nodeId": "es_u163_n1",
-          "meaning": "살인",
+          "meaning": "살해하다",
           "pronunciation": "[아세시나르]",
           "pron": "[아세시나르]",
           "phonetic": "[아세시나르]",
@@ -99405,8 +99405,8 @@
       "unitNumber": 164,
       "id": 164,
       "unit": 164,
-      "title": "Unit 164",
-      "desc": "",
+      "title": "Unit 164. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4891~4920위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -100015,8 +100015,8 @@
       "unitNumber": 165,
       "id": 165,
       "unit": 165,
-      "title": "Unit 165",
-      "desc": "",
+      "title": "Unit 165. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4921~4950위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -100214,7 +100214,7 @@
           "level": "B2",
           "unitId": "unit_165",
           "nodeId": "es_u165_n2",
-          "meaning": "릴리스",
+          "meaning": "해방하다",
           "pronunciation": "[리베라르]",
           "pron": "[리베라르]",
           "phonetic": "[리베라르]",
@@ -100265,7 +100265,7 @@
           "level": "B2",
           "unitId": "unit_165",
           "nodeId": "es_u165_n2",
-          "meaning": "페인트",
+          "meaning": "그리다",
           "pronunciation": "[핀타르]",
           "pron": "[핀타르]",
           "phonetic": "[핀타르]",
@@ -100625,8 +100625,8 @@
       "unitNumber": 166,
       "id": 166,
       "unit": 166,
-      "title": "Unit 166",
-      "desc": "",
+      "title": "Unit 166. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4951~4980위 단어 30개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -100756,7 +100756,7 @@
           "level": "B2",
           "unitId": "unit_166",
           "nodeId": "es_u166_n1",
-          "meaning": "에",
+          "meaning": "미국",
           "pronunciation": "[에에]",
           "pron": "[에에]",
           "phonetic": "[에에]",
@@ -100926,7 +100926,7 @@
           "level": "B2",
           "unitId": "unit_166",
           "nodeId": "es_u166_n2",
-          "meaning": "얼굴",
+          "meaning": "직면하다",
           "pronunciation": "[엔프렌타르]",
           "pron": "[엔프렌타르]",
           "phonetic": "[엔프렌타르]",
@@ -101147,7 +101147,7 @@
           "level": "B2",
           "unitId": "unit_166",
           "nodeId": "es_u166_n3",
-          "meaning": "판사",
+          "meaning": "판단하다",
           "pronunciation": "[후스가르]",
           "pron": "[후스가르]",
           "phonetic": "[후스가르]",
@@ -101235,8 +101235,8 @@
       "unitNumber": 167,
       "id": 167,
       "unit": 167,
-      "title": "Unit 167",
-      "desc": "",
+      "title": "Unit 167. B2 고급 마스터 어휘",
+      "desc": "빈도수 상위 4981~4998위 단어 20개 집중 훈련",
       "stages": [
         {
           "stageNumber": 1,
@@ -101298,7 +101298,7 @@
           "level": "B2",
           "unitId": "unit_167",
           "nodeId": "es_u167_n1",
-          "meaning": "화상",
+          "meaning": "태우다",
           "pronunciation": "[께마르]",
           "pron": "[께마르]",
           "phonetic": "[께마르]",

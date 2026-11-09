@@ -20,6 +20,22 @@ STAGE_TITLES_PRESET = {
     4: ("1과: 마트 계산과 결제", "2과: 식료품과 가격", "3과: 신선 식품과 매장 이용"),
 }
 
+def get_unit_metadata(u_num, word_count=30, total_words=4998):
+    if u_num <= 30:
+        lvl_name = "A1 기초 핵심 어휘"
+    elif u_num <= 70:
+        lvl_name = "A2 실전 도약 어휘"
+    elif u_num <= 120:
+        lvl_name = "B1 중급 심화 어휘"
+    else:
+        lvl_name = "B2 고급 마스터 어휘"
+
+    title = f"Unit {u_num}. {lvl_name}"
+    start_r = (u_num - 1) * 30 + 1
+    end_r = min(total_words, start_r + word_count - 1)
+    subtitle = f"빈도수 상위 {start_r}~{end_r}위 단어 {word_count}개 집중 훈련"
+    return title, subtitle
+
 def build_spanish_runtime_data():
     if not os.path.exists(INPUT_CSV):
         print(f"❌ 오류: 입력 파일 '{INPUT_CSV}'을 찾을 수 없습니다.")
@@ -113,6 +129,7 @@ def build_spanish_runtime_data():
     units = []
     for u_num in sorted(units_dict.keys()):
         u_words = units_dict[u_num]
+        u_title, u_desc = get_unit_metadata(u_num, len(u_words), total_rows)
 
         s1_title, s2_title, s3_title = STAGE_TITLES_PRESET.get(
             u_num,
@@ -168,8 +185,8 @@ def build_spanish_runtime_data():
             "unitNumber": u_num,
             "id": u_num,
             "unit": u_num,
-            "title": f"Unit {u_num}",
-            "desc": "",
+            "title": u_title,
+            "desc": u_desc,
             "stages": [
                 { "stageNumber": 1, "title": "1과 기초 런", "targetWords": len(stage1_words) },
                 { "stageNumber": 2, "title": "2과 실전 런", "targetWords": len(stage2_words) },

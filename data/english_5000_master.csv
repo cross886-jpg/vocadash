@@ -70,10 +70,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 69,back,A1,unit_003,en_u3_n1,다시,/bˈæk/,Anyway I should get back to work.,어쨌든 나는 다시 일하러 가야겠다.
 70,look,A1,unit_003,en_u3_n1,보다,/lˈʊk/,I’ve been looking forward to meeting you.,나는 너를 만나기를 몹시 기대해 왔어.
 71,where,A1,unit_003,en_u3_n2,어디에,/wˈɛr/,Where did she go to university?,그녀는 어디로 대학을 다녔어?
-72,take,A1,unit_003,en_u3_n2,가지고,/tˈeɪk/,Take care.,몸조심해.
+72,take,A1,unit_003,en_u3_n2,취하다,/tˈeɪk/,Take care.,몸조심해.
 73,or,A1,unit_003,en_u3_n2,또는,/ˈɔr/,Does anyone have any questions or comments?,질문이나 의견 있는 사람 있나요?
 74,tell,A1,unit_003,en_u3_n2,말하다,/tˈɛl/,Please tell me the truth.,나에게 진실을 말해줘.
-75,man,A1,unit_003,en_u3_n2,남자,/mˈæn/,The man over there is Mr. Kim.,저기 있는 남자분이 김 선생님이다.
+75,man,A1,unit_003,en_u3_n2,남성,/mˈæn/,The man over there is Mr. Kim.,저기 있는 남자분이 김 선생님이다.
 76,some,A1,unit_003,en_u3_n2,몇몇의,/sˈʌm/,Could you give me some advice?,조언 좀 해주실 수 있나요?
 77,say,A1,unit_003,en_u3_n2,말하다,/sˈeɪ/,Can I say something?,내가 뭐 좀 말해도 될까?
 78,could,A1,unit_003,en_u3_n2,할수있었다,/kˈʊd/,Could you give me some advice?,저에게 조언을 좀 해 주실 수 있나요?
@@ -83,7 +83,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 82,way,A1,unit_003,en_u3_n5,길,/wˈeɪ/,I feel the same way.,나도 같은 기분이야.
 83,down,A1,unit_003,en_u3_n5,아래로,/dˈaʊn/,Calm down!,진정해!
 84,very,A1,unit_003,en_u3_n5,매우,/vˈɛri/,That’s very disappointing.,그것은 정말 실망스럽다.
-85,never,A1,unit_003,en_u3_n5,결코,/nˈɛvɚ/,Never mind.,신경 쓰지 마.
+85,never,A1,unit_003,en_u3_n5,결코않다,/nˈɛvɚ/,Never mind.,신경 쓰지 마.
 86,only,A1,unit_003,en_u3_n5,오직,/ˈoʊnli/,I only have one dollar.,나는 겨우 1달러밖에 없다.
 87,people,A1,unit_003,en_u3_n5,사람들,/pˈipəl/,Many people live in this city.,많은 사람들이 이 도시에 산다.
 88,over,A1,unit_003,en_u3_n5,위에,/ˈoʊvɚ/,The man over there is Mr. Kim.,저기 저 남자가 김 선생님이야.
@@ -168,7 +168,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 167,car,A1,unit_006,en_u6_n2,자동차,/kˈɑr/,My dad drives a car.,우리 아빠는 차를 운전한다.
 168,son,A1,unit_006,en_u6_n2,아들,/sˈʌn/,They have two sons.,그들은 아들이 둘 있다.
 169,try,A1,unit_006,en_u6_n2,노력하다,/trˈaɪ/,Just try your best today.,오늘 최선을 다해 봐.
-170,woman,A1,unit_006,en_u6_n2,여자,/wˈʊmən/,The woman smiled at me.,그 여자는 나에게 미소 지었다.
+170,woman,A1,unit_006,en_u6_n2,여성,/wˈʊmən/,The woman smiled at me.,그 여자는 나에게 미소 지었다.
 171,dead,A1,unit_006,en_u6_n5,죽은,/dˈɛd/,The plant looks completely dead now.,그 식물은 이제 완전히 죽은 것처럼 보인다.
 172,many,A1,unit_006,en_u6_n5,많은,/mˈɛni/,It has 5 royal palaces and many historic sites.,그곳에는 궁궐 다섯 개와 많은 유적지가 있다.
 173,mind,A1,unit_006,en_u6_n5,마음,/mˈaɪnd/,Would you mind closing the window?,창문 좀 닫아주시겠어요?
@@ -199,7 +199,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 198,tomorrow,A1,unit_007,en_u7_n2,내일,/təmˈɑrˌoʊ/,See you again tomorrow.,내일 또 보자.
 199,meet,A1,unit_007,en_u7_n2,만나다,/mˈit/,pleased to meet you.,당신을 만나서 반갑습니다.
 200,bring,A1,unit_007,en_u7_n2,가져오다,/brˈɪŋ/,Please bring your book tomorrow.,내일 네 책을 가져와.
-201,tonight,A1,unit_007,en_u7_n5,오늘,/tənˈaɪt/,Lets watch a movie tonight.,오늘 밤에 영화 보자.
+201,tonight,A1,unit_007,en_u7_n5,오늘밤,/tənˈaɪt/,Lets watch a movie tonight.,오늘 밤에 영화 보자.
 202,run,A1,unit_007,en_u7_n5,달리다,/rˈʌn/,I run every morning.,나는 매일 아침 달린다.
 203,hard,A1,unit_007,en_u7_n5,단단한,/hˈɑrd/,This math problem is hard.,이 수학 문제는 어렵다.
 204,alone,A1,unit_007,en_u7_n5,혼자인,/əlˈoʊn/,She lives alone.,그녀는 혼자 산다.
@@ -267,7 +267,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 266,stand,A1,unit_009,en_u9_n5,서다,/stˈænd/,Stand up.,일어서라.
 267,read,A1,unit_009,en_u9_n5,읽다,/rˈɛd/,I read books every day.,나는 매일 책을 읽는다.
 268,cut,A1,unit_009,en_u9_n5,자르다,/kˈʌt/,She cut the paper with scissors.,그녀는 가위로 종이를 잘랐다.
-269,sister,A1,unit_009,en_u9_n5,여자,/sˈɪstɚ/,I have three sisters and one brother.,나는 자매가 셋 남자 형제가 하나 있다.
+269,sister,A1,unit_009,en_u9_n5,자매,/sˈɪstɚ/,I have three sisters and one brother.,나는 자매가 셋 남자 형제가 하나 있다.
 270,between,A1,unit_009,en_u9_n5,사이에,/bɪtwˈin/,The cat sat between us.,고양이가 우리 사이에 앉았다.
 271,child,A1,unit_010,en_u10_n1,아이,/tʃˈaɪld/,The child is playing outside.,그 아이는 밖에서 놀고 있다.
 272,speak,A1,unit_010,en_u10_n1,말하다,/spˈik/,Can you speak slowly?,좀 더 천천히 말씀해 주시겠어요?
@@ -297,7 +297,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 296,news,A1,unit_010,en_u10_n5,뉴스,/nˈuz/,I watch the news daily.,나는 매일 뉴스를 본다.
 297,bed,A1,unit_010,en_u10_n5,침대,/bˈɛd/,I go to bed at nine.,나는 9시에 잠자리에 든다.
 298,hurry,A1,unit_010,en_u10_n5,서두르다,/hˈɝi/,Please hurry the bus is here.,서둘러 버스가 왔어.
-299,full,A1,unit_010,en_u10_n5,가득,/fˈʊl/,My stomach is completely full.,내 배가 완전히 부르다.
+299,full,A1,unit_010,en_u10_n5,배부른,/fˈʊl/,My stomach is completely full.,내 배가 완전히 부르다.
 300,save,A1,unit_010,en_u10_n5,구하다,/sˈeɪv/,I save money every month.,나는 매달 돈을 저축한다.
 301,become,A1,unit_011,en_u11_n1,되다,/bɪkˈʌm/,I want to become a doctor.,나는 의사가 되고 싶다.
 302,along,A1,unit_011,en_u11_n1,따라,/əlˈɔŋ/,We walked along the beach.,우리는 해변을 따라 걸었다.
@@ -315,7 +315,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 314,ahead,A1,unit_011,en_u11_n2,앞으로,/əhˈɛd/,It’s straight ahead.,곧장 앞으로 가면 있어요.
 315,king,A1,unit_011,en_u11_n2,왕,/kˈɪŋ/,The king lives in a castle.,왕은 성에 산다.
 316,plan,A1,unit_011,en_u11_n2,계획,/plˈæn/,We have a plan.,우리는 계획이 있다.
-317,dinner,A1,unit_011,en_u11_n2,저녁,/dˈɪnɚ/,We eat dinner at seven.,우리는 7시에 저녁을 먹는다.
+317,dinner,A1,unit_011,en_u11_n2,저녁식사,/dˈɪnɚ/,We eat dinner at seven.,우리는 7시에 저녁을 먹는다.
 318,alright,A1,unit_011,en_u11_n2,괜찮은,/ˌɔlrˈaɪt/,Everything will be alright.,모든 게 다 괜찮을 거야.
 319,safe,A1,unit_011,en_u11_n2,안전한,/sˈeɪf/,This place is very safe.,이곳은 매우 안전하다.
 320,white,A1,unit_011,en_u11_n2,하얀,/wˈaɪt/,She wore a white dress.,그녀는 하얀 드레스를 입었다.
@@ -449,7 +449,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 448,camera,A1,unit_015,en_u15_n5,카메라,/kˈæmɚə/,I have a new camera.,나는 새 카메라를 가지고 있다.
 449,card,A1,unit_015,en_u15_n5,카드,/kˈɑrd/,Flip the card.,카드를 뒤집어라.
 450,fly,A1,unit_015,en_u15_n5,날다,/flˈaɪ/,Birds fly high in the sky.,새들은 하늘 높이 난다.
-451,smell,A1,unit_016,en_u16_n1,냄새가,/smˈɛl/,This flower smells so sweet.,이 꽃은 향이 아주 좋다.
+451,smell,A1,unit_016,en_u16_n1,냄새,/smˈɛl/,This flower smells so sweet.,이 꽃은 향이 아주 좋다.
 452,honest,A1,unit_016,en_u16_n1,정직한,/ˈɑnəst/,It was a mistake.,그것은 정직한 실수였다.
 453,often,A1,unit_016,en_u16_n1,자주,/ˈɔfən/,I often walk to school.,나는 자주 학교에 걸어간다.
 454,third,A1,unit_016,en_u16_n1,세번째,/θˈɝd/,I finished third in the race.,나는 경주에서 3등을 했다.
@@ -511,7 +511,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 510,cross,A1,unit_017,en_u17_n5,건너다,/krˈɔs/,I’ll keep my fingers crossed!,행운을 빌어 줄게!
 511,gas,A1,unit_018,en_u18_n1,기체,/ɡˈæs/,The stove uses natural gas.,그 스토브는 천연가스를 사용한다.
 512,energy,A1,unit_018,en_u18_n1,에너지,/ˈɛnɚdʒi/,This food gives me energy.,이 음식은 나에게 에너지를 준다.
-513,favorite,A1,unit_018,en_u18_n1,가장,/fˈeɪvɚɪt/,Pizza is my favorite food.,피자는 내가 가장 좋아하는 음식이다.
+513,favorite,A1,unit_018,en_u18_n1,가장좋아하는,/fˈeɪvɚɪt/,Pizza is my favorite food.,피자는 내가 가장 좋아하는 음식이다.
 514,taste,A1,unit_018,en_u18_n1,맛,/tˈeɪst/,This soup has a great taste.,이 수프는 맛이 훌륭하다.
 515,prince,A1,unit_018,en_u18_n1,왕자,/prˈɪns/,The prince lives in a castle.,왕자는 성에 산다.
 516,form,A1,unit_018,en_u18_n1,모양,/fˈɔrm/,Fill out this form please.,이 서식을 작성해 주세요.
@@ -519,7 +519,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 518,track,A1,unit_018,en_u18_n1,길,/trˈæk/,The runners raced around the track.,주자들은 트랙을 돌며 달렸다.
 519,leg,A1,unit_018,en_u18_n1,다리,/lˈɛɡ/,I hurt my leg.,나는 다리를 다쳤다.
 520,above,A1,unit_018,en_u18_n1,위에,/əbˈʌv/,The bird flew above the trees.,새가 나무들 위로 날았다.
-521,breakfast,A1,unit_018,en_u18_n2,아침,/brˈɛkfəst/,I eat breakfast at seven.,나는 일곱 시에 아침을 먹는다.
+521,breakfast,A1,unit_018,en_u18_n2,아침식사,/brˈɛkfəst/,I eat breakfast at seven.,나는 일곱 시에 아침을 먹는다.
 522,video,A1,unit_018,en_u18_n2,동영상,/vˈɪdioʊ/,I watched a funny video.,나는 재미있는 동영상을 봤다.
 523,however,A1,unit_018,en_u18_n2,그러나,/hˌaʊˈɛvɚ/,However I still love it.,그러나 나는 여전히 그것을 좋아한다.
 524,fresh,A1,unit_018,en_u18_n2,신선한,/frˈɛʃ/,These vegetables are very fresh.,이 채소들은 매우 신선하다.
@@ -639,7 +639,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 638,bath,A1,unit_022,en_u22_n1,목욕,/bˈæθ/,I take a bath every night.,나는 매일 밤 목욕을 한다.
 639,map,A1,unit_022,en_u22_n1,지도,/mˈæp/,Look at the map.,지도를 봐라.
 640,jacket,A1,unit_022,en_u22_n1,재킷,/dʒˈækət/,Wear your jacket its cold.,재킷을 입어라 춥다.
-641,tall,A1,unit_022,en_u22_n2,키가,/tˈɔl/,Tom is tall and slim.,톰은 키가 크고 날씬하다.
+641,tall,A1,unit_022,en_u22_n2,키가큰,/tˈɔl/,Tom is tall and slim.,톰은 키가 크고 날씬하다.
 642,television,A1,unit_022,en_u22_n2,텔레비전,/tˈɛləvˌɪʒən/,I watch television after dinner.,나는 저녁 식사 후에 텔레비전을 본다.
 643,pizza,A1,unit_022,en_u22_n2,피자,/pˈitsə/,I love cheese pizza.,나는 치즈 피자를 좋아한다.
 644,image,A1,unit_022,en_u22_n2,이미지,/ˈɪmədʒ/,I saved a nice image.,나는 멋진 이미지를 저장했다.
@@ -780,8 +780,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 779,restroom,A1,unit_026,en_u26_n5,화장실,/rˈɛstrˌum/,Where is the restroom?,화장실이 어디에 있나요?
 780,ribbon,A1,unit_026,en_u26_n5,리본,/rˈɪbən/,She tied a red ribbon.,그녀는 빨간 리본을 묶었다.
 781,scissors,A1,unit_027,en_u27_n1,가위,/sˈɪzɚz/,I cut the paper with scissors.,나는 가위로 종이를 잘랐다.
-782,skate,A1,unit_027,en_u27_n1,스케이트를,/skˈeɪt/,We skate on the frozen lake.,우리는 얼어붙은 호수에서 스케이트를 탄다.
-783,ski,A1,unit_027,en_u27_n1,스키를,/skˈi/,We ski every winter.,우리는 매년 겨울 스키를 탄다.
+782,skate,A1,unit_027,en_u27_n1,스케이트,/skˈeɪt/,We skate on the frozen lake.,우리는 얼어붙은 호수에서 스케이트를 탄다.
+783,ski,A1,unit_027,en_u27_n1,스키,/skˈi/,We ski every winter.,우리는 매년 겨울 스키를 탄다.
 784,sock,A1,unit_027,en_u27_n1,양말,/sˈɑk/,I lost one of my socks.,나는 양말 한 짝을 잃어버렸다.
 785,software,A1,unit_027,en_u27_n1,소프트웨어,/sˈɔftwˌɛr/,I bought new software.,나는 새 소프트웨어를 샀다.
 786,spaghetti,A1,unit_027,en_u27_n1,스파게티,/spəɡˈɛti/,I love eating spaghetti.,나는 스파게티 먹는 것을 좋아한다.
@@ -840,7 +840,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 839,deal,A2,unit_028,en_u28_n5,거래,/dˈil/,Not a big deal.,별일 아니야.
 840,quite,A2,unit_028,en_u28_n5,꽤,/kwˈaɪt/,The movie was quite interesting.,그 영화는 꽤 흥미로웠다.
 841,shall,A2,unit_029,en_u29_n1,할 것이다,/ʃˈæl/,Shall we go for a walk?,우리 산책하러 갈까요?
-842,hurt,A2,unit_029,en_u29_n1,다치게,/hˈɝt/,She hurt her knee while running yesterday.,그녀는 어제 달리다가 무릎을 다쳤다.
+842,hurt,A2,unit_029,en_u29_n1,다친,/hˈɝt/,She hurt her knee while running yesterday.,그녀는 어제 달리다가 무릎을 다쳤다.
 843,moment,A2,unit_029,en_u29_n1,순간,/mˈoʊmənt/,Can I interrupt you for a moment?,잠깐 방해해도 될까요?
 844,rest,A2,unit_029,en_u29_n1,휴식,/rˈɛst/,You need to rest after the long trip.,긴 여행 후에는 쉬어야 한다.
 845,though,A2,unit_029,en_u29_n1,비록,/ðˈoʊ/,Though it rained we went hiking anyway.,비가 왔지만 우리는 그래도 하이킹을 갔다.
@@ -889,10 +889,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 888,throw,A2,unit_030,en_u30_n2,던지다,/θrˈoʊ/,Can you throw the ball to me?,나에게 공을 던져 줄래?
 889,wonder,A2,unit_030,en_u30_n2,궁금해하다,/wˈʌndɚ/,Excuse me. I wonder if you could help me.,실례합니다. 저를 좀 도와주실 수 있는지 궁금해서요.
 890,worth,A2,unit_030,en_u30_n2,가치있는,/wˈɝθ/,This book is worth reading.,이 책은 읽을 가치가 있다.
-891,darling,A2,unit_030,en_u30_n5,사랑하는,/dˈɑrlɪŋ/,Good morning darling did you sleep well?,좋은 아침이야 자기야 잘 잤어?
+891,darling,A2,unit_030,en_u30_n5,사랑스러운,/dˈɑrlɪŋ/,Good morning darling did you sleep well?,좋은 아침이야 자기야 잘 잤어?
 892,figure,A2,unit_030,en_u30_n5,수치,/fˈɪɡjɚ/,The sales figures rose this month.,이번 달 매출 수치가 올랐다.
 893,state,A2,unit_030,en_u30_n5,상태,/stˈeɪt/,Texas is a state in America.,텍사스는 미국의 한 주이다.
-894,none,A2,unit_030,en_u30_n5,아무것도,/nˈʌn/,None of the students knew the answer.,학생들 중 아무도 답을 몰랐다.
+894,none,A2,unit_030,en_u30_n5,아무것도않다,/nˈʌn/,None of the students knew the answer.,학생들 중 아무도 답을 몰랐다.
 895,law,A2,unit_030,en_u30_n5,법,/lˈɔ/,Everyone must obey the law.,모든 사람은 법을 지켜야 한다.
 896,report,A2,unit_030,en_u30_n5,보고서,/ripˈɔrt/,She wrote a report about her trip.,그녀는 여행에 대한 보고서를 썼다.
 897,choice,A2,unit_030,en_u30_n5,선택,/tʃˈɔɪs/,You made a good choice.,너는 좋은 선택을 했다.
@@ -947,7 +947,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 946,record,A2,unit_032,en_u32_n2,기록,/rəkˈɔrd/,He set a new school record in swimming.,그는 수영에서 새로운 학교 기록을 세웠다.
 947,hide,A2,unit_032,en_u32_n2,숨다,/hˈaɪd/,The cat is hiding under the bed.,고양이가 침대 밑에 숨어 있다.
 948,whether,A2,unit_032,en_u32_n2,인지,/wˈɛðɚ/,I dont know whether he will come.,그가 올지 안 올지 모르겠다.
-949,relax,A2,unit_032,en_u32_n2,휴식을,/rɪlˈæks/,I like to relax on the weekend.,나는 주말에 휴식을 취하는 것을 좋아한다.
+949,relax,A2,unit_032,en_u32_n2,휴식,/rɪlˈæks/,I like to relax on the weekend.,나는 주말에 휴식을 취하는 것을 좋아한다.
 950,public,A2,unit_032,en_u32_n2,공공의,/pˈʌblɪk/,This is a public library.,이곳은 공공 도서관이다.
 951,list,A2,unit_032,en_u32_n5,목록,/lˈɪst/,I made a shopping list.,나는 쇼핑 목록을 만들었다.
 952,brain,A2,unit_032,en_u32_n5,뇌,/brˈeɪn/,The human brain controls the whole body.,인간의 뇌는 몸 전체를 조종한다.
@@ -1054,7 +1054,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 1053,interest,A2,unit_036,en_u36_n1,관심,/ˈɪntrəst/,What are you interested in?,너는 무엇에 관심이 있니?
 1054,band,A2,unit_036,en_u36_n1,밴드,/bˈænd/,He plays guitar in a band.,그는 밴드에서 기타를 연주한다.
 1055,flight,A2,unit_036,en_u36_n1,비행,/flˈaɪt/,Our flight leaves at noon.,우리 비행기는 정오에 출발한다.
-1056,raise,A2,unit_036,en_u36_n1,들어,/rˈeɪz/,Please raise your hand to answer.,대답하려면 손을 들어 주세요.
+1056,raise,A2,unit_036,en_u36_n1,기르다,/rˈeɪz/,Please raise your hand to answer.,대답하려면 손을 들어 주세요.
 1057,pop,A2,unit_036,en_u36_n1,펑,/pˈɑp/,The balloon popped loudly.,풍선이 요란하게 터졌다.
 1058,client,A2,unit_036,en_u36_n1,고객,/klˈaɪənt/,The lawyer met with a new client.,변호사는 새로운 의뢰인을 만났다.
 1059,bomb,A2,unit_036,en_u36_n1,폭탄,/bˈɑm/,The bomb exploded near the old building.,폭탄이 오래된 건물 근처에서 터졌다.
@@ -1073,7 +1073,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 1072,plenty,A2,unit_036,en_u36_n5,충분한,/plˈɛnti/,We have plenty of time.,우리는 시간이 충분하다.
 1073,faith,A2,unit_036,en_u36_n5,믿음,/fˈeɪθ/,I have faith in my best friend.,나는 가장 친한 친구를 믿는다.
 1074,beg,A2,unit_036,en_u36_n5,간청하다,/bˈɛɡ/,pardon?,죄송하지만 다시 한번 말씀해 주시겠어요?
-1075,responsible,A2,unit_036,en_u36_n5,책임이,/rispˈɑnsəbəl/,He is responsible for cleaning his room.,그는 자기 방을 청소할 책임이 있다.
+1075,responsible,A2,unit_036,en_u36_n5,책임,/rispˈɑnsəbəl/,He is responsible for cleaning his room.,그는 자기 방을 청소할 책임이 있다.
 1076,military,A2,unit_036,en_u36_n5,군사의,/mˈɪlətˌɛri/,His father serves in the military.,그의 아버지는 군대에서 복무한다.
 1077,common,A2,unit_036,en_u36_n5,흔한,/kˈɑmən/,This is a common mistake.,이것은 흔한 실수이다.
 1078,justice,A2,unit_036,en_u36_n5,정의,/dʒˈʌstəs/,The people demanded justice for the victims.,사람들은 피해자들을 위한 정의를 요구했다.
@@ -1088,7 +1088,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 1087,language,A2,unit_037,en_u37_n1,언어,/lˈæŋɡwədʒ/,English is a global language.,영어는 세계적인 언어이다.
 1088,fellow,A2,unit_037,en_u37_n1,동료,/fˈɛloʊ/,He greeted his fellow workers warmly.,그는 동료들을 따뜻하게 맞이했다.
 1089,several,A2,unit_037,en_u37_n1,몇몇의,/sˈɛvrəl/,I have visited several countries in Asia.,나는 아시아의 여러 나라를 방문했다.
-1090,blind,A2,unit_037,en_u37_n1,눈이,/blˈaɪnd/,The old dog is blind now.,그 늙은 개는 지금 눈이 멀었다.
+1090,blind,A2,unit_037,en_u37_n1,눈이먼,/blˈaɪnd/,The old dog is blind now.,그 늙은 개는 지금 눈이 멀었다.
 1091,ghost,A2,unit_037,en_u37_n2,유령,/ɡˈoʊst/,The girl said she saw a ghost in the house.,그 소녀는 집에서 유령을 봤다고 말했다.
 1092,tight,A2,unit_037,en_u37_n2,팽팽한,/tˈaɪt/,These shoes feel too tight for me.,이 신발은 나에게 너무 꽉 낀다.
 1093,nor,A2,unit_037,en_u37_n2,아니다,/nˈɔr/,She cant swim nor can she skate.,그녀는 수영도 못하고 스케이트도 못 탄다.
@@ -1606,7 +1606,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 1605,pin,B1,unit_054,en_u54_n2,핀,/pˈɪn/,She used a pin to fix her hair.,그녀는 머리를 고정하려고 핀을 사용했다.
 1606,strategy,B1,unit_054,en_u54_n2,전략,/strˈætədʒi/,The coach explained a new strategy before the game.,코치는 경기 전에 새로운 전략을 설명했다.
 1607,powder,B1,unit_054,en_u54_n2,가루,/pˈaʊdɚ/,Add some powder to the mix.,혼합물에 가루를 조금 넣어라.
-1608,supper,B1,unit_054,en_u54_n2,저녁,/sˈʌpɚ/,We usually have supper at seven oclock.,우리는 보통 7시에 저녁을 먹는다.
+1608,supper,B1,unit_054,en_u54_n2,저녁식사,/sˈʌpɚ/,We usually have supper at seven oclock.,우리는 보통 7시에 저녁을 먹는다.
 1609,pole,B1,unit_054,en_u54_n2,막대,/pˈoʊl/,The flag hangs on a tall pole.,깃발이 높은 기둥에 걸려 있다.
 1610,highway,B1,unit_054,en_u54_n2,고속도로,/hˈaɪwˌeɪ/,We drove on the highway to the beach.,우리는 고속도로를 타고 해변으로 갔다.
 1611,diet,B1,unit_054,en_u54_n5,식단,/dˈaɪət/,A healthy diet includes fruits and vegetables.,건강한 식단에는 과일과 채소가 포함된다.
@@ -3063,7 +3063,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3062,heard,B2,unit_103,en_u103_n1,과거·과거,[흐어르드],This is an example for heard.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 3063,knew,B2,unit_103,en_u103_n1,과거형,[느유],This is an example for knew.,이것은 과거형 관련 실전 예문입니다.
 3064,took,B2,unit_103,en_u103_n1,과거형,[트우크],This is an example for took.,이것은 과거형 관련 실전 예문입니다.
-3065,men,B2,unit_103,en_u103_n1,복수형,[므에느],This is an example for men.,이것은 복수형 관련 실전 예문입니다.
+3065,men,B2,unit_103,en_u103_n1,남자들,[므에느],This is an example for men.,이것은 복수형 관련 실전 예문입니다.
 3066,everyone,B2,unit_103,en_u103_n1,모두,[브르이우어느],Everyone of his family will go.,그의 가족은 모두 갈 것이다.
 3067,ah,B2,unit_103,en_u103_n1,아,[아],Ah me!,아! 슬프다! 명사아!라는 탄성. 동사 자동사아!라고 탄성을 지르다.
 3068,myself,B2,unit_103,en_u103_n1,나자신,[므아이스르프],He wrote to Richards and myself.,그는 리처즈와 내게 편지를 써 보냈다 . ③《than as but except 등의 뒤에서 I me 대신에》.
@@ -3120,7 +3120,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3119,living,B2,unit_104,en_u104_n5,생지옥,[르브이으],living persons.,생존자.
 3120,leaving,B2,unit_104,en_u104_n5,잔물,[르브이으],This is an example for leaving.,이것은 나머지 잔여 관련 실전 예문입니다.
 3121,running,B2,unit_105,en_u105_n1,경마용의,[르어느이으],excellent base running.,훌륭한 주루. 2.（회사의） 경영 운영 관리; （기계 등의） 운전.
-3122,taken,B2,unit_105,en_u105_n1,과거,[트이크어느],This is an example for taken.,이것은 과거 분사형 관련 실전 예문입니다.
+3122,taken,B2,unit_105,en_u105_n1,가져간,[트이크어느],This is an example for taken.,이것은 과거 분사형 관련 실전 예문입니다.
 3123,ma,B2,unit_105,en_u105_n1,엄마,[므아],This is an example for ma.,이것은 엄마 미국에서는 관련 실전 예문입니다.
 3124,sent,B2,unit_105,en_u105_n1,과거·과거,[스에느트],This is an example for sent.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 3125,anybody,B2,unit_105,en_u105_n1,누구도,[느이브아드이],There isnt anybody in the house.,집에는 아무도 없다.
@@ -3154,18 +3154,18 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3153,wonderful,B2,unit_106,en_u106_n1,신통,[우어느드어르프어르],a wonderful sight.,불가사의한 광경.
 3154,ladies,B2,unit_106,en_u106_n1,여성용,[르이드이즈],This is an example for ladies.,이것은 여성용 화장실 관련 실전 예문입니다.
 3155,absolutely,B2,unit_106,en_u106_n1,단연,[애브스어르트르이],absolutely impossible.,전혀 불가능한.
-3156,feet,B2,unit_106,en_u106_n1,복수형,[프이트],This is an example for feet.,이것은 복수형 관련 실전 예문입니다.
+3156,feet,B2,unit_106,en_u106_n1,발들,[프이트],This is an example for feet.,이것은 복수형 관련 실전 예문입니다.
 3157,speaking,B2,unit_106,en_u106_n1,논지,[스프크이으],a speaking evidence.,상황 등을 그대로 말해 주는 증거.
 3158,dude,B2,unit_106,en_u106_n1,젠체하는,[드유드],This is an example for dude.,이것은 젠체하는 사람 관련 실전 예문입니다.
 3159,giving,B2,unit_106,en_u106_n1,마음이,[브이으],This is an example for giving.,이것은 마음이 넓은 관련 실전 예문입니다.
 3160,president,B2,unit_106,en_u106_n1,대통령,[프르즈어드어느트],President Kennedy.,케네디 대통령.
 3161,moving,B2,unit_106,en_u106_n2,원동력의,[므브이으],a moving target.,이동 표적.
-3162,sam,B2,unit_106,en_u106_n2,남자,[스애므],This is an example for sam.,이것은 남자 이름 관련 실전 예문입니다.
+3162,sam,B2,unit_106,en_u106_n2,샘,[스애므],This is an example for sam.,이것은 남자 이름 관련 실전 예문입니다.
 3163,amazing,B2,unit_106,en_u106_n2,괄목하다,[어므이즈이으],It is amazing that they should have done so much already.,벌써 그렇게나 일을 했다니 놀랄 만하다.
 3164,worried,B2,unit_106,en_u106_n2,걱정스런,[우어르이드],Im worried about his health.,그의 건강이 염려스럽다.
 3165,missing,B2,unit_106,en_u106_n2,없어진,[므스이으],a missing child.,미아.
 3166,happening,B2,unit_106,en_u106_n2,우발사,[흐애프느이으],amusing happenings.,재미있는 사건. 2.《속어》 해프닝: 대본·진행표와 관계없이 진행 도중에 관객이 참가하는 연극·연기. 형용사《속어》 〈사람·물건·장소가〉 최신 유행의; 멋진.
-3167,kidding,B2,unit_106,en_u106_n2,새끼,[크이드],a book bound in kid.,키드 가죽으로 장정한 책. 3.《비격식》 어린이 ; 젊은이 ; 아들 딸; 젊고 미숙한 운동 선수.
+3167,kidding,B2,unit_106,en_u106_n2,농담하는,[크이드],a book bound in kid.,키드 가죽으로 장정한 책. 3.《비격식》 어린이 ; 젊은이 ; 아들 딸; 젊고 미숙한 운동 선수.
 3168,ya,B2,unit_106,en_u106_n2,한정사너의,[이어],What are ya plans now?,이제 네 계획은 어떻게 되냐?
 3169,kept,B2,unit_106,en_u106_n2,과거·과거,[크에프트],a kept politician.,어용 정치가. 2.〈토지·건물 등이〉 손질이 잘되어 있는. 3.〈남자·소년이〉 호모인.
 3170,worse,B2,unit_106,en_u106_n2,더욱,[우어르스],worse than useless customs.,유해 무익한 관습.
@@ -3179,7 +3179,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3178,totally,B2,unit_106,en_u106_n5,완전히,[트우트어르이],I am not totally unaware of these things.,이것을 다 모른다는 뜻은 아니다.
 3179,birthday,B2,unit_106,en_u106_n5,생신,[브어르스드이],a birthday gift.,생일 선물.
 3180,tv,B2,unit_106,en_u106_n5,tv,[tv],This is an example for tv.,이것은 tv 관련 실전 예문입니다.
-3181,born,B2,unit_107,en_u107_n1,과거,[브오르느],ones first born child.,첫아이. 2.타고난 선천적인 천성의; 여간해서 바뀌지 않는.
+3181,born,B2,unit_107,en_u107_n1,태어난,[브오르느],ones first born child.,첫아이. 2.타고난 선천적인 천성의; 여간해서 바뀌지 않는.
 3182,information,B2,unit_107,en_u107_n1,견문,[느프어르므이쉬어느],relevant information.,관련 있는 정보.
 3183,definitely,B2,unit_107,en_u107_n1,단연,[드프어느이트르이],answer definitely.,명확히 대답하다.
 3184,security,B2,unit_107,en_u107_n1,보장,[스이크이어르어트이],national security.,국가의 안전.
@@ -3211,7 +3211,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3210,enjoy,B2,unit_107,en_u107_n5,누리다,[이느즈오이],enjoy life.,인생을 즐기다.
 3211,mike,B2,unit_108,en_u108_n1,마이크,[므아이크],This is an example for mike.,이것은 마이크 현미경 관련 실전 예문입니다.
 3212,american,B2,unit_108,en_u108_n1,미국의,[어므르이크어느],the American flag.,미국 국기.
-3213,miles,B2,unit_108,en_u108_n1,남자,[므아이르즈],This is an example for miles.,이것은 남자 이름 관련 실전 예문입니다.
+3213,miles,B2,unit_108,en_u108_n1,마일스,[므아이르즈],This is an example for miles.,이것은 남자 이름 관련 실전 예문입니다.
 3214,idiot,B2,unit_108,en_u108_n1,바보,[드이어트],You idiot!,이 바보야.
 3215,quickly,B2,unit_108,en_u108_n1,걸핏,[크우크르이],make dinner quickly.,얼른 저녁을 짓다.
 3216,tom,B2,unit_108,en_u108_n1,동물의,[트아므],This is an example for tom.,이것은 수컷 수고양이 관련 실전 예문입니다.
@@ -3228,7 +3228,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3227,fighting,B2,unit_108,en_u108_n2,아귀다툼,[프이트이으],a fighting formation.,전투 대형. 2.전투적인 호전적인 덤벼드는 듯한; 용기 있는.
 3228,peter,B2,unit_108,en_u108_n2,베드로,[프트어르],This is an example for peter.,이것은 점차 늘어지다 관련 실전 예문입니다.
 3229,paul,B2,unit_108,en_u108_n2,바울,[프오르],This is an example for paul.,이것은 남자 이름 관련 실전 예문입니다.
-3230,mary,B2,unit_108,en_u108_n2,여자,[므에어르이],This is an example for mary.,이것은 여자 이름 관련 실전 예문입니다.
+3230,mary,B2,unit_108,en_u108_n2,메리,[므에어르이],This is an example for mary.,이것은 여자 이름 관련 실전 예문입니다.
 3231,killing,B2,unit_108,en_u108_n5,뇌쇄적인,[크르이으],The police are investigating the killing in the park.,경찰은 공원에서 일어난 살인 사건을 수사하고 있다. 2.사냥감. 3.《a killing》《비격식》 〔주식 등에 의한〕 큰 벌이 횡재〔in on …〕.
 3232,standing,B2,unit_108,en_u108_n5,관에,[스트애느드이으],a member in good standing.,정회원.
 3233,mm,B2,unit_108,en_u108_n5,음,[므],This is an example for mm.,이것은 음 흥 관련 실전 예문입니다.
@@ -3316,7 +3316,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3315,london,B2,unit_111,en_u111_n2,런던,[london],Its London to a brick theres a hidden agenda somewhere.,어딘가 숨겨진 안건이 있음이 아주 확실하다.
 3316,feelings,B2,unit_111,en_u111_n2,감정,[프르이으],a feeling of coldness.,추운 느낌.
 3317,ourselves,B2,unit_111,en_u111_n2,우리자신,[아르스르브즈],We seated ourselves.,우리는 자리에 앉았다. 2.《강조 용법》 우리 자신.
-3318,alex,B2,unit_111,en_u111_n2,남자,[애르이크스],This is an example for alex.,이것은 남자 이름 관련 실전 예문입니다.
+3318,alex,B2,unit_111,en_u111_n2,알렉스,[애르이크스],This is an example for alex.,이것은 남자 이름 관련 실전 예문입니다.
 3319,dollars,B2,unit_111,en_u111_n2,달러,[드아르어르],a five-dollar bill5.,달러 지폐.
 3320,gay,B2,unit_111,en_u111_n2,화류계,[에이],gay rights.,동성애자의 권리.
 3321,department,B2,unit_111,en_u111_n5,부서,[드이프아르트므어느트],the public relations department.,홍보 부문.
@@ -3335,7 +3335,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3334,sold,B2,unit_112,en_u112_n1,과거·과거,[스오르드],This is an example for sold.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 3335,ringing,B2,unit_112,en_u112_n1,울림,[르으이으],a ringing voice.,잘 울리는 목소리. 명사울리는 소리; 귀울음.
 3336,hiding,B2,unit_112,en_u112_n1,은닉,[흐이드이으],be in hiding.,숨어 있다; 남의 눈을 피해 살고 있다.
-3337,steve,B2,unit_112,en_u112_n1,남자,[스트이브],This is an example for steve.,이것은 남자 이름 관련 실전 예문입니다.
+3337,steve,B2,unit_112,en_u112_n1,스티브,[스트이브],This is an example for steve.,이것은 남자 이름 관련 실전 예문입니다.
 3338,written,B2,unit_112,en_u112_n1,문어,[르트느],a written evaluation.,서면상의 평가.
 3339,applause,B2,unit_112,en_u112_n1,박수,[어프르오즈],thunderous applause.,우레와 같은 박수.
 3340,pressure,B2,unit_112,en_u112_n1,곤경,[프르쉬어르],blood pressure.,혈압; 《비격식》 고혈압. 2.고민 중압; （물리적·정신적인） 고난 고생 궁핍.
@@ -3382,10 +3382,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3381,apologize,B2,unit_113,en_u113_n5,사과하다,[어프아르어즈이즈],apologize for oneself.,자기의 행위를 해명하다.
 3382,faster,B2,unit_113,en_u113_n5,빠른,[프애스트],a fast speaker.,입이 잰 사람.
 3383,bullshit,B2,unit_113,en_u113_n5,별소리,[bullshit],This is an example for bullshit.,이것은 되는대로의 엉터리의 관련 실전 예문입니다.
-3384,grandma,B2,unit_113,en_u113_n5,grandma,[르애느드므아],This is an example for grandma.,이것은 grandma 관련 실전 예문입니다.
+3384,grandma,B2,unit_113,en_u113_n5,할머니,[르애느드므아],This is an example for grandma.,이것은 grandma 관련 실전 예문입니다.
 3385,leader,B2,unit_113,en_u113_n5,굴지,[르드어르],the leader of a party.,정당의 당수.
 3386,shouting,B2,unit_113,en_u113_n5,고함,[쉬우트이으],This is an example for shouting.,이것은 외침 갈채 관련 실전 예문입니다.
-3387,gotten,B2,unit_113,en_u113_n5,과거,[아트느],This is an example for gotten.,이것은 과거 분사형 관련 실전 예문입니다.
+3387,gotten,B2,unit_113,en_u113_n5,얻은,[아트느],This is an example for gotten.,이것은 과거 분사형 관련 실전 예문입니다.
 3388,conversation,B2,unit_113,en_u113_n5,대화,[크아느브어르스이쉬어느],a brisk conversation.,활발한 대화.
 3389,hanging,B2,unit_113,en_u113_n5,걸린,[흐애으이으],put a person to death by hanging.,남을 교수형에 처하다. 2.매달기 걸기. 3.《종종 hangings》（방의 벽 등을） 가리는 물건 벽걸이.
 3390,stories,B2,unit_113,en_u113_n5,이야기들,[스트오르이],a house of one story.,단층집.
@@ -3404,14 +3404,14 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3403,national,B2,unit_114,en_u114_n2,국립의,[느애쉬어느르],national affairs.,국사 국무.
 3404,minister,B2,unit_114,en_u114_n2,각료,[므느어스트어르],the Minister of Education.,교육부 장관.
 3405,taught,B2,unit_114,en_u114_n2,과거·과거,[트오트],This is an example for taught.,이것은 과거·과거 분사형 관련 실전 예문입니다.
-3406,robert,B2,unit_114,en_u114_n2,남자,[르아브어르트],This is an example for robert.,이것은 남자 이름 관련 실전 예문입니다.
+3406,robert,B2,unit_114,en_u114_n2,로버트,[르아브어르트],This is an example for robert.,이것은 남자 이름 관련 실전 예문입니다.
 3407,biggest,B2,unit_114,en_u114_n2,가장큰,[브이],a big tree.,큰 나무.
 3408,natural,B2,unit_114,en_u114_n2,그냥,[느애츠어르어르],natural rubber.,천연 고무. ②〈사물이〉 자연 그대로의 가공하지 않은 사람이 손대지 않은; 자연계의; 〈토지 등이〉 미개간의; 〈동물이〉 야생의 〈식물이〉 자생의; 〈음식이〉 미처리의.
 3409,dancing,B2,unit_114,en_u114_n2,무도,[드애느스이으],This is an example for dancing.,이것은 춤 무도 관련 실전 예문입니다.
 3410,martin,B2,unit_114,en_u114_n2,흰털발제비,[므아르트어느],This is an example for martin.,이것은 몇 종의 관련 실전 예문입니다.
 3411,freedom,B2,unit_114,en_u114_n5,자유,[프르드어므],give a slave his freedom.,노예를 해방하다.
 3412,operation,B2,unit_114,en_u114_n5,가동,[아프어르이쉬어느],mental operations.,두뇌 작용.
-3413,chris,B2,unit_114,en_u114_n5,남자,[크르이스],This is an example for chris.,이것은 남자 이름 관련 실전 예문입니다.
+3413,chris,B2,unit_114,en_u114_n5,크리스,[크르이스],This is an example for chris.,이것은 남자 이름 관련 실전 예문입니다.
 3414,bringing,B2,unit_114,en_u114_n5,져오다,[브르이으],The dishes were brought to her.,접시가 그녀에게로 운반되어 왔다. ② 〈남을〉 〔장소로〕 데려가다 〈물건을〉 〔장소로〕 가져오다〔to …〕.
 3415,dropped,B2,unit_114,en_u114_n5,방울,[드르아프],a drop of water.,물방울.
 3416,student,B2,unit_114,en_u114_n5,생도,[스트유드느트],a student movement.,학생 운동.
@@ -3429,11 +3429,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3428,doc,B2,unit_115,en_u115_n1,선생님,[드아크],This is an example for doc.,이것은 선생님 관련 실전 예문입니다.
 3429,training,B2,unit_115,en_u115_n1,조교,[트르이느이으],academic training.,학교 교육.
 3430,incredible,B2,unit_115,en_u115_n1,굉장한,[이느크르드어브르],an incredible story(.,도저히) 믿어지지 않는 이야기.
-3431,grandpa,B2,unit_115,en_u115_n2,grandpa,[르애느드프아],This is an example for grandpa.,이것은 grandpa 관련 실전 예문입니다.
+3431,grandpa,B2,unit_115,en_u115_n2,할아버지,[르애느드프아],This is an example for grandpa.,이것은 grandpa 관련 실전 예문입니다.
 3432,paying,B2,unit_115,en_u115_n2,지불,[프이이으],This is an example for paying.,이것은 지 하는 관련 실전 예문입니다.
-3433,teeth,B2,unit_115,en_u115_n2,복수형,[트이스],This is an example for teeth.,이것은 복수형 관련 실전 예문입니다.
+3433,teeth,B2,unit_115,en_u115_n2,치아들,[트이스],This is an example for teeth.,이것은 복수형 관련 실전 예문입니다.
 3434,criminal,B2,unit_115,en_u115_n2,범인,[크르므어느르],a criminal case.,형사 사건.
-3435,charles,B2,unit_115,en_u115_n2,남자,[츠아르즈],This is an example for charles.,이것은 남자 이름 관련 실전 예문입니다.
+3435,charles,B2,unit_115,en_u115_n2,찰스,[츠아르즈],This is an example for charles.,이것은 남자 이름 관련 실전 예문입니다.
 3436,chinese,B2,unit_115,en_u115_n2,고립어,[츠이느즈],the Chinese Communist Party.,중국 공산당.
 3437,truly,B2,unit_115,en_u115_n2,성실히,[트르이],testify truly.,사실대로 증언하다.
 3438,honestly,B2,unit_115,en_u115_n2,정직하게,[아느이스트르이],Answer the following questions honestly.,다음 질문에 정직하게 대답해라. 2.《문장 전체를 수식하여》 《비판적 발언을 이끌어서》 솔직하게 말하면; 《질문을 이끌어서》 솔직하게 묻지만.
@@ -3443,7 +3443,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3442,sweetie,B2,unit_115,en_u115_n5,자기야,[스우트이],This is an example for sweetie.,이것은 캔디 사탕 관련 실전 예문입니다.
 3443,whoo,B2,unit_115,en_u115_n5,와우,[후],Whoo that was exciting.,와우 그것은 정말 신나는 일이었습니다.
 3444,perfectly,B2,unit_115,en_u115_n5,더할,[프어르프이크트르이],She speaks French perfectly.,그녀는 불어를 완벽하게 구사한다.
-3445,amy,B2,unit_115,en_u115_n5,여자,[이므이],This is an example for amy.,이것은 여자 이름 관련 실전 예문입니다.
+3445,amy,B2,unit_115,en_u115_n5,에이미,[이므이],This is an example for amy.,이것은 여자 이름 관련 실전 예문입니다.
 3446,forgotten,B2,unit_115,en_u115_n5,황무지,[프어르아트느],This is an example for forgotten.,이것은 과거 분사형 관련 실전 예문입니다.
 3447,original,B2,unit_115,en_u115_n5,독창적,[어르즈어느르],an original meaning.,원뜻.
 3448,papa,B2,unit_115,en_u115_n5,아빠,[프아프어],This is an example for papa.,이것은 아빠 현재는 관련 실전 예문입니다.
@@ -3453,7 +3453,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3452,roger,B2,unit_116,en_u116_n1,오케이,[르아즈어르],This is an example for roger.,이것은 좋아 알았다 관련 실전 예문입니다.
 3453,dr,B2,unit_116,en_u116_n1,dr,[dr],This is an example for dr.,이것은 dr 관련 실전 예문입니다.
 3454,sheriff,B2,unit_116,en_u116_n1,보안관,[쉬르이프],a deputy sheriff.,군 보안관 대리. 2.《보통 High Sheriff》《영》 （주 및 몇몇 도시의） 사법 장관 . 3.《스코》 주 법원의 법관.
-3455,kim,B2,unit_116,en_u116_n1,남자,[크이므],This is an example for kim.,이것은 남자 이름 관련 실전 예문입니다.
+3455,kim,B2,unit_116,en_u116_n1,김,[크이므],This is an example for kim.,이것은 남자 이름 관련 실전 예문입니다.
 3456,turning,B2,unit_116,en_u116_n1,굴곡,[트어르느이으],Take the next turning on the right.,다음 모퉁이에서 오른쪽으로 도시오. 3.선반 세공; 《turnings》（선반·녹로의） 깎아낸 부스러기. 4.선반의 회전 부분: 굴대 등. 5.《the turning》（비문·문학 작품 등의） 형성 구성.
 3457,jealous,B2,unit_116,en_u116_n1,불신앙을,[즈르어스],He is jealous of his friends success.,그는 친구의 성공을 시샘하고 있다. 2.〈남이〉 질투심이 많은 투기가 심한; 〈언행 등이〉 시기에 의한.
 3458,finding,B2,unit_116,en_u116_n1,발견,[프이느드이으],the findings of the committee.,위원회의 답신.
@@ -3462,7 +3462,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3461,letting,B2,unit_116,en_u116_n2,임대,[르트이으],This is an example for letting.,이것은 셋집 임대 관련 실전 예문입니다.
 3462,began,B2,unit_116,en_u116_n2,과거형,[브이애느],This is an example for began.,이것은 과거형 관련 실전 예문입니다.
 3463,aye,B2,unit_116,en_u116_n2,예,[아이],vote aye.,찬성 투표하다. 명사（특히 영국 의회에서） 찬성 찬성 투표.
-3464,jeff,B2,unit_116,en_u116_n2,남자,[즈에프],This is an example for jeff.,이것은 남자 이름 관련 실전 예문입니다.
+3464,jeff,B2,unit_116,en_u116_n2,제프,[즈에프],This is an example for jeff.,이것은 남자 이름 관련 실전 예문입니다.
 3465,ho,B2,unit_116,en_u116_n2,호,[흐오],Westward ho!,이봐 서쪽이야!
 3466,unfortunately,B2,unit_116,en_u116_n2,불행하게도,[unfortunately],Unfortunately this is the best I could do.,불행히도 이것이 내가 할 수 있는 최선입니다.
 3467,usual,B2,unit_116,en_u116_n2,심상하다,[이지우어르],the usual time for dinner.,평소의 저녁 식사 시간.
@@ -3503,7 +3503,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3502,expecting,B2,unit_117,en_u117_n5,예기하다,[이크스프크트],expect to find a good job.,좋은 일자리를 얻으리라고 생각하다.
 3503,kinda,B2,unit_117,en_u117_n5,kinda,[크이느드어어르],This is an example for kinda.,이것은 kinda 관련 실전 예문입니다.
 3504,babe,B2,unit_117,en_u117_n5,숫보기,[브에이브],Whatre you doing tonight babe?,너 오늘밤에 뭐 할 거야? 숙어 babe in arms ①젖먹이. ②（젖먹이처럼） 미숙한 사람 풋내기. babe in the wood 《미》 순진하여 남을 잘 믿는 사람.
-3505,thomas,B2,unit_117,en_u117_n5,남자,[트아므어스],This is an example for thomas.,이것은 남자 이름 관련 실전 예문입니다.
+3505,thomas,B2,unit_117,en_u117_n5,토머스,[트아므어스],This is an example for thomas.,이것은 남자 이름 관련 실전 예문입니다.
 3506,saturday,B2,unit_117,en_u117_n5,토요,[스애트어르드이],We do our shopping on Saturdays.,우리는 토요일마다 쇼핑을 한다. 부사《비격식》 토요일에.
 3507,recently,B2,unit_117,en_u117_n5,근래에,[르스느트르이],recently published autobiography.,최근에 출판된 자서전.
 3508,slowly,B2,unit_117,en_u117_n5,굼뜨다,[스르우르이],slowly but surely.,느리지만 확실하게.
@@ -3526,12 +3526,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3525,pete,B2,unit_118,en_u118_n2,금고,[프이트],This is an example for pete.,이것은 금고 관련 실전 예문입니다.
 3526,ed,B2,unit_118,en_u118_n2,접미사규칙,[ed],This is an example for ed.,이것은 접미사규칙 과거 관련 실전 예문입니다.
 3527,nah,B2,unit_118,en_u118_n2,nah,[느애],This is an example for nah.,이것은 nah 관련 실전 예문입니다.
-3528,kate,B2,unit_118,en_u118_n2,여자,[크에이트],This is an example for kate.,이것은 여자 이름 관련 실전 예문입니다.
+3528,kate,B2,unit_118,en_u118_n2,케이트,[크에이트],This is an example for kate.,이것은 여자 이름 관련 실전 예문입니다.
 3529,safety,B2,unit_118,en_u118_n2,안부,[스이프트이],traffic safety.,교통 안전.
 3530,harder,B2,unit_118,en_u118_n2,숭어,[흐아르드어르],This is an example for harder.,이것은 숭어 관련 실전 예문입니다.
 3531,fbi,B2,unit_118,en_u118_n5,fbi,[fbi],This is an example for fbi.,이것은 fbi 관련 실전 예문입니다.
 3532,showing,B2,unit_118,en_u118_n5,명시,[쉬우이으],make a good showing.,좋은 성과를 거두다. 3.《단수형으로》 설명 표시.
-3533,dave,B2,unit_118,en_u118_n5,남자,[드이브],This is an example for dave.,이것은 남자 이름 관련 실전 예문입니다.
+3533,dave,B2,unit_118,en_u118_n5,데이브,[드이브],This is an example for dave.,이것은 남자 이름 관련 실전 예문입니다.
 3534,buried,B2,unit_118,en_u118_n5,과거·과거,[브르이드],This is an example for buried.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 3535,maria,B2,unit_118,en_u118_n5,³의,[므아르이어],This is an example for maria.,이것은 ³의 복수형 관련 실전 예문입니다.
 3536,reality,B2,unit_118,en_u118_n5,박진성,[르이애르어트이],the reality of God.,신의 실재.
@@ -3540,7 +3540,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3539,outta,B2,unit_118,en_u118_n5,outta,[우트어],This is an example for outta.,이것은 outta 관련 실전 예문입니다.
 3540,japanese,B2,unit_118,en_u118_n5,일본말의,[즈애프어느즈],the Japanese language.,일본어.
 3541,sooner,B2,unit_119,en_u119_n1,선손,[스느어르],This is an example for sooner.,이것은 선점 이주자 관련 실전 예문입니다.
-3542,simon,B2,unit_119,en_u119_n1,남자,[스이므어느],This is an example for simon.,이것은 남자 이름 관련 실전 예문입니다.
+3542,simon,B2,unit_119,en_u119_n1,사이먼,[스이므어느],This is an example for simon.,이것은 남자 이름 관련 실전 예문입니다.
 3543,hidden,B2,unit_119,en_u119_n1,숨겨놓다,[흐드느],a hidden tax.,간접세.
 3544,cos,B2,unit_119,en_u119_n1,상추의,[크어즈],This is an example for cos.,이것은 cos 관련 실전 예문입니다.
 3545,personally,B2,unit_119,en_u119_n1,손수,[프어르스어느어르이],Personally Im not convinced hes the right man for the job.,나로서는 그가 그 일에 적임자라는 확신이 서지 않습니다 . 2.《문중 또는 문미에서》 개인적으로 개인으로서; 몸소 친히 직접 （만나서）.
@@ -3551,7 +3551,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3550,barely,B2,unit_119,en_u119_n1,드러내놓고,[브에어르이],He barely escaped disaster.,그는 가까스로 재난을 모면했다.
 3551,goin,B2,unit_119,en_u119_n2,goin,[goin],This is an example for goin.,이것은 goin 관련 실전 예문입니다.
 3552,lover,B2,unit_119,en_u119_n2,애인,[르어브어르],a beautiful lover.,섹스 테크닉이 능숙한 사람.
-3553,andy,B2,unit_119,en_u119_n2,남자,[애느드이],This is an example for andy.,이것은 남자 이름 관련 실전 예문입니다.
+3553,andy,B2,unit_119,en_u119_n2,앤디,[애느드이],This is an example for andy.,이것은 남자 이름 관련 실전 예문입니다.
 3554,growing,B2,unit_119,en_u119_n2,발육,[르우이으],her growing reputation as a dancer.,무용가로서 높아지고 있는 그녀의 명성. 2.성장하고 있는 나 있는; 성장의.
 3555,owner,B2,unit_119,en_u119_n2,임자,[우느어르],an owner of lost property.,분실물의 임자.
 3556,beeping,B2,unit_119,en_u119_n2,경적,[브이프],Please leave a message after the beep.,발신음 후에 용건을 말하시오 . 동사 자동사삑 소리를 내다.
@@ -3567,9 +3567,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3566,ate,B2,unit_119,en_u119_n5,과거형,[에이트],This is an example for ate.,이것은 과거형 관련 실전 예문입니다.
 3567,grew,B2,unit_119,en_u119_n5,과거형,[르우],This is an example for grew.,이것은 과거형 관련 실전 예문입니다.
 3568,professional,B2,unit_119,en_u119_n5,지적,[프르어프쉬어느르],professional jealousy.,동업자끼리의 질시. 2.《한정적》 지적 직업에 종사하는 전문직의.
-3569,tim,B2,unit_119,en_u119_n5,남자,[트이므],This is an example for tim.,이것은 남자 이름 관련 실전 예문입니다.
+3569,tim,B2,unit_119,en_u119_n5,팀,[트이므],This is an example for tim.,이것은 남자 이름 관련 실전 예문입니다.
 3570,goodness,B2,unit_119,en_u119_n5,미덕,[드느이스],the goodness of man.,인간의 선량함.
-3571,alan,B2,unit_120,en_u120_n1,남자,[애르어느],This is an example for alan.,이것은 남자 이름 관련 실전 예문입니다.
+3571,alan,B2,unit_120,en_u120_n1,앨런,[애르어느],This is an example for alan.,이것은 남자 이름 관련 실전 예문입니다.
 3572,europe,B2,unit_120,en_u120_n1,유럽,[이어르어프],go into Europe EU.,의 가맹국이 된다.
 3573,memories,B2,unit_120,en_u120_n1,기억,[므므어르이],a photographic memory.,사진과 같이 정확한 기억.
 3574,da,B2,unit_120,en_u120_n1,da,[da],This is an example for da.,이것은 da 관련 실전 예문입니다.
@@ -3577,12 +3577,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3576,dna,B2,unit_120,en_u120_n1,디옥시리보,[드느이],This is an example for dna.,이것은 dna 관련 실전 예문입니다.
 3577,liar,B2,unit_120,en_u120_n1,거짓말쟁이,[르이어르],a bad liar.,거짓말에 서투른 사람.
 3578,bleep,B2,unit_120,en_u120_n1,삑,[브르이프],This is an example for bleep.,이것은 삑 울리다 관련 실전 예문입니다.
-3579,lisa,B2,unit_120,en_u120_n1,여자,[르스어],This is an example for lisa.,이것은 여자 이름 관련 실전 예문입니다.
+3579,lisa,B2,unit_120,en_u120_n1,리사,[르스어],This is an example for lisa.,이것은 여자 이름 관련 실전 예문입니다.
 3580,including,B2,unit_120,en_u120_n1,포함한,[이느크르드이으],an international group including two Americans five Chinese and three Koreans.,미국인 2명 중국인 5명 한국인 3명을 포함한 국제적 그룹.
 3581,competition,B2,unit_120,en_u120_n2,각축,[크아므프어트쉬어느],the competition for good marks.,좋은 성적을 거두기 위한 경쟁.
 3582,smith,B2,unit_120,en_u120_n2,대장장이,[스므이스],This is an example for smith.,이것은 금속 세공인 관련 실전 예문입니다.
 3583,planned,B2,unit_120,en_u120_n2,계획되다,[프르애느드],This is an example for planned.,이것은 계획된 정연한 관련 실전 예문입니다.
-3584,emily,B2,unit_120,en_u120_n2,여자,[이므르이어],This is an example for emily.,이것은 여자 이름 관련 실전 예문입니다.
+3584,emily,B2,unit_120,en_u120_n2,에밀리,[이므르이어],This is an example for emily.,이것은 여자 이름 관련 실전 예문입니다.
 3585,boring,B2,unit_120,en_u120_n2,구멍뚫기,[브오르이으],This is an example for boring.,이것은 구멍뚫기 시굴 관련 실전 예문입니다.
 3586,warning,B2,unit_120,en_u120_n2,경계,[우오르느이으],a hurricane warning.,허리케인 경보.
 3587,knocking,B2,unit_120,en_u120_n2,노킹,[느아크이으],This is an example for knocking.,이것은 문을 두드리는 관련 실전 예문입니다.
@@ -3596,7 +3596,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3595,burning,B2,unit_120,en_u120_n5,연소,[브어르느이으],burning hot water.,열탕. 2.이글거리는 타오르는 듯한.
 3596,alice,B2,unit_120,en_u120_n5,앨리스,[애르이스],This is an example for alice.,이것은 여자 이름 관련 실전 예문입니다.
 3597,grown,B2,unit_120,en_u120_n5,grow의,[르오느],A grown man wouldnt do things like that.,어른은 그런 일은 하지 않는다.
-3598,walter,B2,unit_120,en_u120_n5,남자,[우오르트어르],This is an example for walter.,이것은 남자 이름 관련 실전 예문입니다.
+3598,walter,B2,unit_120,en_u120_n5,월터,[우오르트어르],This is an example for walter.,이것은 남자 이름 관련 실전 예문입니다.
 3599,insurance,B2,unit_120,en_u120_n5,보험,[이느쉬어르어느스],insurance against loss by fire.,화재로 인한 손해에 대한 보험.
 3600,political,B2,unit_120,en_u120_n5,당략의,[프어르트이크어르],political theory.,정치학 이론.
 3601,player,B2,unit_121,en_u121_n1,경기자,[프르이어르],a football player.,축구 선수.
@@ -3641,7 +3641,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3640,phil,B2,unit_122,en_u122_n1,「…을,[프르],This is an example for phil.,이것은 「…을 사랑하는 관련 실전 예문입니다.
 3641,butt,B2,unit_122,en_u122_n2,꽁초,[브어트],a cigar butt.,엽궐련 꽁초. 3.《속어》 궐련. 4.《속어》 궁둥이. 5.《미 속어》 （병역 복무 기간의） 마지막 해 마지막 몇 개월. 6.《미 속어》 단기간 짧은 복무 기간.
 3642,drove,B2,unit_122,en_u122_n2,과거형,[드르오브],This is an example for drove.,이것은 과거형 관련 실전 예문입니다.
-3643,yourselves,B2,unit_122,en_u122_n2,복수형,[이오르스르브즈],This is an example for yourselves.,이것은 복수형 관련 실전 예문입니다.
+3643,yourselves,B2,unit_122,en_u122_n2,너희자신,[이오르스르브즈],This is an example for yourselves.,이것은 복수형 관련 실전 예문입니다.
 3644,babies,B2,unit_122,en_u122_n2,아기,[브이브이],weak as a baby.,무력하여.
 3645,picking,B2,unit_122,en_u122_n2,채집물,[프크이으],rich pickings.,큰 벌이.
 3646,sat,B2,unit_122,en_u122_n2,학력,[스애트],We were sat.,우리는 술이 취해 있었다.
@@ -3656,7 +3656,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3655,jenny,B2,unit_122,en_u122_n5,암컷,[즈느이],This is an example for jenny.,이것은 암컷 제니 관련 실전 예문입니다.
 3656,chose,B2,unit_122,en_u122_n5,과거형,[츠오즈],This is an example for chose.,이것은 과거형 관련 실전 예문입니다.
 3657,healthy,B2,unit_122,en_u122_n5,건실,[흐르스이],a healthy mind.,건전한 정신.
-3658,carl,B2,unit_122,en_u122_n5,남자,[크아르],This is an example for carl.,이것은 남자 이름 관련 실전 예문입니다.
+3658,carl,B2,unit_122,en_u122_n5,칼,[크아르],This is an example for carl.,이것은 남자 이름 관련 실전 예문입니다.
 3659,rick,B2,unit_122,en_u122_n5,짚가리,[르이크],This is an example for rick.,이것은 건초 리 관련 실전 예문입니다.
 3660,stood,B2,unit_122,en_u122_n5,과거·과거,[스트우드],This is an example for stood.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 3661,disgusting,B2,unit_123,en_u123_n1,메스꺼운,[드이스어스트이으],What a disgusting smell!,메스꺼운 냄새!
@@ -3673,7 +3673,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3672,vacation,B2,unit_123,en_u123_n2,휴정기,[브에이크이쉬어느],He is on vacation now.,그는 지금 휴가 중이다.
 3673,violence,B2,unit_123,en_u123_n2,난폭,[브이어르어느스],an act of violence.,폭력 행위.
 3674,leo,B2,unit_123,en_u123_n2,사자궁,[르오],This is an example for leo.,이것은 사자자리 사자궁 관련 실전 예문입니다.
-3675,grandmother,B2,unit_123,en_u123_n2,어하다,[르애느드므어드어르],This is an example for grandmother.,이것은 조모 할머니 관련 실전 예문입니다.
+3675,grandmother,B2,unit_123,en_u123_n2,할머니,[르애느드므어드어르],This is an example for grandmother.,이것은 조모 할머니 관련 실전 예문입니다.
 3676,luke,B2,unit_123,en_u123_n2,누가,[르우크],This is an example for luke.,이것은 누 예수의 관련 실전 예문입니다.
 3677,heh,B2,unit_123,en_u123_n2,엣!경멸,[흐에],Heh heh heh fooled you.,헤 헤 헤 속았지.
 3678,whore,B2,unit_123,en_u123_n2,매춘,[흐오르],This is an example for whore.,이것은 매춘부 정조 관련 실전 예문입니다.
@@ -3683,8 +3683,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3682,central,B2,unit_123,en_u123_n5,미주,[스느트르어르],in the central part of the city.,시의 중심부에.
 3683,union,B2,unit_123,en_u123_n5,결합,[이느이어느],the union of two states.,두 나라의 합병.
 3684,media,B2,unit_123,en_u123_n5,매개체,[므드이어],This is an example for media.,이것은 복수형 매스 관련 실전 예문입니다.
-3685,claire,B2,unit_123,en_u123_n5,여자,[크르어르],This is an example for claire.,이것은 여자 이름 관련 실전 예문입니다.
-3686,fred,B2,unit_123,en_u123_n5,남자,[프르에드],This is an example for fred.,이것은 남자 이름 관련 실전 예문입니다.
+3685,claire,B2,unit_123,en_u123_n5,클레어,[크르어르],This is an example for claire.,이것은 여자 이름 관련 실전 예문입니다.
+3686,fred,B2,unit_123,en_u123_n5,프레드,[프르에드],This is an example for fred.,이것은 남자 이름 관련 실전 예문입니다.
 3687,washington,B2,unit_123,en_u123_n5,워싱턴,[우아쉬이으트어느],This is an example for washington.,이것은 워싱턴 미국의 관련 실전 예문입니다.
 3688,joking,B2,unit_123,en_u123_n5,장난치는,[즈오크],a dirty joke.,외설스런 농담.
 3689,christian,B2,unit_123,en_u123_n5,기독교도,[크르스츠어느],Christian art.,기독교 예술.
@@ -3713,8 +3713,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3712,unbelievable,B2,unit_124,en_u124_n5,믿기,[unbelievable],a woman of almost unbelievable beauty.,거의 믿을 수 없을 정도로 아름다운 여자.
 3713,ted,B2,unit_124,en_u124_n5,펴서,[트에드],This is an example for ted.,이것은 펴서 말리다 관련 실전 예문입니다.
 3714,dean,B2,unit_124,en_u124_n5,대학의,[드이느],This is an example for dean.,이것은 학장 학생감 관련 실전 예문입니다.
-3715,sean,B2,unit_124,en_u124_n5,남자,[쉬오느],This is an example for sean.,이것은 남자 이름 관련 실전 예문입니다.
-3716,susan,B2,unit_124,en_u124_n5,여자,[스즈느],This is an example for susan.,이것은 여자 이름 관련 실전 예문입니다.
+3715,sean,B2,unit_124,en_u124_n5,숀,[쉬오느],This is an example for sean.,이것은 남자 이름 관련 실전 예문입니다.
+3716,susan,B2,unit_124,en_u124_n5,수잔,[스즈느],This is an example for susan.,이것은 여자 이름 관련 실전 예문입니다.
 3717,ahh,B2,unit_124,en_u124_n5,ahh,[아],This is an example for ahh.,이것은 ahh 관련 실전 예문입니다.
 3718,riding,B2,unit_124,en_u124_n5,승마,[르이드이으],riding boots.,승마화.
 3719,scoffs,B2,unit_124,en_u124_n5,비웃음,[스크오프],This is an example for scoffs.,이것은 비웃음 조롱 관련 실전 예문입니다.
@@ -3773,7 +3773,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3772,ll,B2,unit_126,en_u126_n5,ll,[ll],This is an example for ll.,이것은 ll 관련 실전 예문입니다.
 3773,elizabeth,B2,unit_126,en_u126_n5,엘리자베스,[이르즈어브어스],This is an example for elizabeth.,이것은 여자 이름 관련 실전 예문입니다.
 3774,chicago,B2,unit_126,en_u126_n5,시카고,[쉬이크아오],This is an example for chicago.,이것은 시카고 미국 관련 실전 예문입니다.
-3775,karen,B2,unit_126,en_u126_n5,여자,[크애르어느],This is an example for karen.,이것은 여자 이름 관련 실전 예문입니다.
+3775,karen,B2,unit_126,en_u126_n5,카렌,[크애르어느],This is an example for karen.,이것은 여자 이름 관련 실전 예문입니다.
 3776,jackson,B2,unit_126,en_u126_n5,잭슨,[즈애크스느],This is an example for jackson.,이것은 잭슨 미국의 관련 실전 예문입니다.
 3777,darkness,B2,unit_126,en_u126_n5,암흑,[드아르크느이스],in the gathering darkness.,땅거미 질 때에.
 3778,thy,B2,unit_126,en_u126_n5,너의,[드아이],This is an example for thy.,이것은 그대의 당신의 관련 실전 예문입니다.
@@ -3781,12 +3781,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3780,helen,B2,unit_126,en_u126_n5,헬렌,[흐르어느],This is an example for helen.,이것은 여자 이름 관련 실전 예문입니다.
 3781,solution,B2,unit_127,en_u127_n1,용액,[스어르쉬어느],a peaceful solution to a problem.,문제에 대한 평화적 해결책.
 3782,explosion,B2,unit_127,en_u127_n1,급증,[이크스프르우지어느],an atomic explosion.,핵폭발. ②폭음.
-3783,julie,B2,unit_127,en_u127_n1,여자,[즈르이],This is an example for julie.,이것은 여자 이름 관련 실전 예문입니다.
+3783,julie,B2,unit_127,en_u127_n1,줄리,[즈르이],This is an example for julie.,이것은 여자 이름 관련 실전 예문입니다.
 3784,blew,B2,unit_127,en_u127_n1,²의,[브르우],This is an example for blew.,이것은 ²의 과거형 관련 실전 예문입니다.
 3785,victor,B2,unit_127,en_u127_n1,승리자,[브크트어르],This is an example for victor.,이것은 정복자 전승자 관련 실전 예문입니다.
 3786,prisoner,B2,unit_127,en_u127_n1,붙잡힌,[프르즈어느어르],a prisoner (.,공판에 회부된) 형사 피고인.
 3787,youth,B2,unit_127,en_u127_n1,연소,[유스],eternal youth.,영원한 젊음 불로불사.
-3788,eaten,B2,unit_127,en_u127_n1,과거,[트느],This is an example for eaten.,이것은 과거 분사형 관련 실전 예문입니다.
+3788,eaten,B2,unit_127,en_u127_n1,먹은,[트느],This is an example for eaten.,이것은 과거 분사형 관련 실전 예문입니다.
 3789,taylor,B2,unit_127,en_u127_n1,테일러,[트이르어르],This is an example for taylor.,이것은 테일러 영국의 관련 실전 예문입니다.
 3790,parking,B2,unit_127,en_u127_n1,주차,[프아르크이으],illegal parking.,불법 주차.
 3791,staring,B2,unit_127,en_u127_n2,응시하는,[스트에어르이으],a picture painted in staring colors.,화려한 색으로 그린 그림. 3.털이 곤두선. 부사아주 전혀.
@@ -3804,10 +3804,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3803,mexico,B2,unit_127,en_u127_n5,멕시코,[므크스이크우],This is an example for mexico.,이것은 멕시코 북미 관련 실전 예문입니다.
 3804,lily,B2,unit_127,en_u127_n5,백합,[르이],gild the lily(.,아름다운 것에) 멋없는 장식을 하다. 5.（특히 화장품의） 백합 향기. 6.남자답지 않은 남자; 호모. 숙어 gild the lily; paint the lily 이미 완벽한 것에 쓸데없이 손을 보다. lilies and roses 《비유》 흰 얼굴빛 미모. 형용사1.백합의 백합같이 흰. 2.〈여성이〉 섬세하고 아름다운; 순수한; 티 없는 오점 없는.
 3805,actor,B2,unit_127,en_u127_n5,배우,[애크트어르],a film actor.,영화 배우. 2.행위자; （사건 등의） 관여자 관계자. 3.비행자; 망나니. 4.《형용사와 함께》 믿지못할 사람; 고약한 사람.
-3806,greg,B2,unit_127,en_u127_n5,남자,[르에],This is an example for greg.,이것은 남자 이름 관련 실전 예문입니다.
+3806,greg,B2,unit_127,en_u127_n5,그렉,[르에],This is an example for greg.,이것은 남자 이름 관련 실전 예문입니다.
 3807,leading,B2,unit_127,en_u127_n5,세력있는,[르드이으],a leading figure.,주요인물.
 3808,friendly,B2,unit_127,en_u127_n5,극진하다,[프르느드르이],friendly advice.,친절한 충고.
-3809,jones,B2,unit_127,en_u127_n5,남자,[즈오느즈],keep up with the Jones.,헤로인을 상용하다. ②강한 흥미. 숙어 get ones Jones 간절히 원하는 것을 얻다. keep up with the Joneses 《구어》 이웃에 지지 않으려고 허세를 부리다.
+3809,jones,B2,unit_127,en_u127_n5,존스,[즈오느즈],keep up with the Jones.,헤로인을 상용하다. ②강한 흥미. 숙어 get ones Jones 간절히 원하는 것을 얻다. keep up with the Joneses 《구어》 이웃에 지지 않으려고 허세를 부리다.
 3810,chosen,B2,unit_127,en_u127_n5,선택한,[츠우즈느],a chosen few.,선택된 소수의 엘리트. 2.좋아하는.
 3811,julia,B2,unit_128,en_u128_n1,여자이름,[즈르이어],This is an example for julia.,이것은 여자이름 Julius에서 관련 실전 예문입니다.
 3812,charming,B2,unit_128,en_u128_n1,마법을,[츠아르므이으],a charming gentleman.,매력적인 신사.
@@ -3816,7 +3816,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3815,learning,B2,unit_128,en_u128_n1,박식,[르어르느이으],a man of profound learning.,학문에 조예가 깊은 사람. 2.학습 배우기 익히기 외기 습득; 〔심리학〕 학습.
 3816,elevator,B2,unit_128,en_u128_n1,곡물창고,[르어브이트어르],go up in an elevator.,엘리베이터로 올라가다.
 3817,kingdom,B2,unit_128,en_u128_n1,왕국,[크으드어므],the United Kingdom.,연합 왕국 영국.
-3818,jamie,B2,unit_128,en_u128_n1,남자,[즈이므이],This is an example for jamie.,이것은 남자 이름 관련 실전 예문입니다.
+3818,jamie,B2,unit_128,en_u128_n1,제이미,[즈이므이],This is an example for jamie.,이것은 남자 이름 관련 실전 예문입니다.
 3819,squad,B2,unit_128,en_u128_n1,부대,[스크우아드],a squad room(.,경찰의) 경찰관 대기실.
 3820,highness,B2,unit_128,en_u128_n1,고가,[흐이느이스],the highness of the wall.,벽이 높음.
 3821,fishing,B2,unit_128,en_u128_n2,고기잡이,[프쉬이으],do fishing.,낚시질을 하다. 2.어장 낚시터.
@@ -3837,7 +3837,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3836,loser,B2,unit_128,en_u128_n5,손실자,[르즈어르],a good loser.,지고도 떳떳한 사람.
 3837,sobbing,B2,unit_128,en_u128_n5,흐느껴,[스아브],sob with fear.,무서워서 흐느껴 울다. 2.〈바람·물결·기계가〉 흐느끼듯 소리내다; 〈동물이〉 흐느끼듯 신음하다. 타동사1. …을 흐느끼며 말하다〔out〕.
 3838,conference,B2,unit_128,en_u128_n5,경기연맹,[크아느프어르어느스],attend an international conference.,국제 회의에 출석하다.
-3839,marty,B2,unit_128,en_u128_n5,여자,[므아르트이],This is an example for marty.,이것은 여자 이름 관련 실전 예문입니다.
+3839,marty,B2,unit_128,en_u128_n5,마티,[므아르트이],This is an example for marty.,이것은 여자 이름 관련 실전 예문입니다.
 3840,trash,B2,unit_128,en_u128_n5,쓰레기,[트르애쉬],Some people dump their trash on the street.,쓰레기를 길에 버리는 사람들도 있다. 2.《비격식》 하찮은 것; 쓸데없는 생각 허튼소리 시시한 이야기 잡담; （예술·문학의） 졸작.
 3841,howard,B2,unit_129,en_u129_n1,하워드,[흐우어르드],This is an example for howard.,이것은 하워드 남자 관련 실전 예문입니다.
 3842,episode,B2,unit_129,en_u129_n1,에피소드,[프어스우드],This is an example for episode.,이것은 삽화적인 사건 관련 실전 예문입니다.
@@ -3851,7 +3851,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3850,bravo,B2,unit_129,en_u129_n1,브라보,[브르아브오],This is an example for bravo.,이것은 브라보 잘한다 관련 실전 예문입니다.
 3851,rape,B2,unit_129,en_u129_n2,강간,[르에이프],a partial rape.,강간 미수. 2.《고어·시어》 강탈 （행위） 약탈; （자연의） 파괴; （정의 등의） 침범.
 3852,growling,B2,unit_129,en_u129_n2,으르렁거리는,[르우르이으],This is an example for growling.,이것은 으르렁 거리는 관련 실전 예문입니다.
-3853,thrown,B2,unit_129,en_u129_n2,과거,[스르오느],This is an example for thrown.,이것은 과거 분사형 관련 실전 예문입니다.
+3853,thrown,B2,unit_129,en_u129_n2,던져진,[스르오느],This is an example for thrown.,이것은 과거 분사형 관련 실전 예문입니다.
 3854,exhales,B2,unit_129,en_u129_n2,숨을,[에크스흐이르],a fragrance exhaling from the flowers.,꽃에서 발산하는 향기. 타동사1.〈숨 등을〉 내쉬다 내뿜다; 〈기체·소리·향기 등을〉 발산하다; …을 증발시키다.
 3855,authority,B2,unit_129,en_u129_n2,권능,[어스오르어트이],a person in authority.,권력을 쥐고 있는 사람.
 3856,failure,B2,unit_129,en_u129_n2,감퇴,[프이르이어르],a failure in business.,사업의 실패.
@@ -3862,7 +3862,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3861,yard,B2,unit_129,en_u129_n5,울안,[이아르드],This is an example for yard.,이것은 집 정 관련 실전 예문입니다.
 3862,beloved,B2,unit_129,en_u129_n5,가장,[브이르어브이드],find time for ones beloved reading.,아주 좋아하는 독서에 시간을 내다.
 3863,actual,B2,unit_129,en_u129_n5,실재의,[애크츠우어르],an actual case of bribery.,실제의 수회죄.
-3864,anne,B2,unit_129,en_u129_n5,여자,[애느],This is an example for anne.,이것은 여자 이름 관련 실전 예문입니다.
+3864,anne,B2,unit_129,en_u129_n5,앤,[애느],This is an example for anne.,이것은 여자 이름 관련 실전 예문입니다.
 3865,highly,B2,unit_129,en_u129_n5,크게,[흐이르이],highly painted.,짙은 화장을 한.
 3866,emotional,B2,unit_129,en_u129_n5,감정적,[이므우쉬어느르],an emotional disturbance.,정서 장애. 2.《보통 서술적》 〈사람이〉 감정적인 정에 약한 마음이 여린.
 3867,setting,B2,unit_129,en_u129_n5,배경,[스트이으],the setting of the moon.,달의 짐. 3.《보통 단수형》 주위의 상태 환경.
@@ -3913,8 +3913,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3912,hurting,B2,unit_131,en_u131_n2,쓸리다,[흐어르트이으],This is an example for hurting.,이것은 아주 보기 관련 실전 예문입니다.
 3913,counting,B2,unit_131,en_u131_n2,개표,[크우느트이으],This is an example for counting.,이것은 계산 집계 관련 실전 예문입니다.
 3914,drew,B2,unit_131,en_u131_n2,과거형,[드르우],This is an example for drew.,이것은 과거형 관련 실전 예문입니다.
-3915,marie,B2,unit_131,en_u131_n2,여자,[므어르],This is an example for marie.,이것은 여자 이름 관련 실전 예문입니다.
-3916,doug,B2,unit_131,en_u131_n2,남자,[드어],This is an example for doug.,이것은 남자 이름 관련 실전 예문입니다.
+3915,marie,B2,unit_131,en_u131_n2,마리,[므어르],This is an example for marie.,이것은 여자 이름 관련 실전 예문입니다.
+3916,doug,B2,unit_131,en_u131_n2,더그,[드어],This is an example for doug.,이것은 남자 이름 관련 실전 예문입니다.
 3917,urgent,B2,unit_131,en_u131_n2,절박하다,[어르즈어느트],an urgent meeting.,긴급 회의.
 3918,threatened,B2,unit_131,en_u131_n2,위협당한,[스르트어느드],This is an example for threatened.,이것은 위협당한 위험에 관련 실전 예문입니다.
 3919,behavior,B2,unit_131,en_u131_n2,행동,[브이흐이브이어르],an odd bit of behavior.,좀 이상한 행동.
@@ -3931,13 +3931,13 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3930,approaching,B2,unit_131,en_u131_n5,다가오는,[어프르우츠],approach a castle.,성에 다가가다.
 3931,jo,B2,unit_132,en_u132_n1,애인,[즈오],This is an example for jo.,이것은 애인 연인 관련 실전 예문입니다.
 3932,firing,B2,unit_132,en_u132_n1,구워,[프이어르이으],This is an example for firing.,이것은 발포 발사 관련 실전 예문입니다.
-3933,abby,B2,unit_132,en_u132_n1,여자,[애브이],This is an example for abby.,이것은 여자 이름 관련 실전 예문입니다.
+3933,abby,B2,unit_132,en_u132_n1,애비,[애브이],This is an example for abby.,이것은 여자 이름 관련 실전 예문입니다.
 3934,stopping,B2,unit_132,en_u132_n1,멈칫,[스트아프이으],This is an example for stopping.,이것은 중지 휴지 관련 실전 예문입니다.
 3935,jean,B2,unit_132,en_u132_n1,청바지,[즈이느],This is an example for jean.,이것은 능직 무명천 관련 실전 예문입니다.
 3936,swimming,B2,unit_132,en_u132_n1,수영,[스우므이으],The swimming in his head would not stop.,현기증이 좀처럼 멎지 않았다. 형용사1.수영용의 수영에 쓰는.
 3937,daily,B2,unit_132,en_u132_n1,날마다,[드이르이],daily life.,일상 생활.
 3938,basement,B2,unit_132,en_u132_n1,지계,[브이스므어느트],This is an example for basement.,이것은 지하층 지하실 관련 실전 예문입니다.
-3939,linda,B2,unit_132,en_u132_n1,여자,[르느드어],This is an example for linda.,이것은 여자 이름 관련 실전 예문입니다.
+3939,linda,B2,unit_132,en_u132_n1,린다,[르느드어],This is an example for linda.,이것은 여자 이름 관련 실전 예문입니다.
 3940,erm,B2,unit_132,en_u132_n1,환율,[erm],This is an example for erm.,이것은 환율 조정 관련 실전 예문입니다.
 3941,bound,B2,unit_132,en_u132_n2,되퇸,[브아우느드],bound hands.,묶인 손.
 3942,guts,B2,unit_132,en_u132_n2,허겁지겁,[어트스],This is an example for guts.,이것은 허겁지겁 먹다 관련 실전 예문입니다.
@@ -3954,18 +3954,18 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 3953,bruce,B2,unit_132,en_u132_n5,스코틀랜드,[브르우스],This is an example for bruce.,이것은 브루스 남자 관련 실전 예문입니다.
 3954,siren,B2,unit_132,en_u132_n5,경적,[스이어르어느],a siren song.,감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌.
 3955,prisoners,B2,unit_132,en_u132_n5,죄수,[프르즈어느어르],a prisoner (.,공판에 회부된) 형사 피고인.
-3956,katie,B2,unit_132,en_u132_n5,여자,[크애스이크이트이],This is an example for katie.,이것은 여자 이름 관련 실전 예문입니다.
+3956,katie,B2,unit_132,en_u132_n5,케이티,[크애스이크이트이],This is an example for katie.,이것은 여자 이름 관련 실전 예문입니다.
 3957,sensitive,B2,unit_132,en_u132_n5,민감한,[스느스어트이브],sensitive skin.,민감한 피부.
 3958,hopefully,B2,unit_132,en_u132_n5,잘만,[흐우프프어르이],This is an example for hopefully.,이것은 희망 지고 관련 실전 예문입니다.
 3959,rolling,B2,unit_132,en_u132_n5,구르기,[르우르이으],rolling hills.,기복하는 구릉들. 3.〈배가〉 옆질하는; 《한정적》 〈사람이〉 （취하거나 하여） 비틀거리는.
-3960,roy,B2,unit_132,en_u132_n5,남자,[르오이],This is an example for roy.,이것은 남자 이름 관련 실전 예문입니다.
+3960,roy,B2,unit_132,en_u132_n5,로이,[르오이],This is an example for roy.,이것은 남자 이름 관련 실전 예문입니다.
 3961,dollar,B2,unit_133,en_u133_n1,달러,[드아르어르],a five-dollar bill5.,달러 지폐.
 3962,cheating,B2,unit_133,en_u133_n1,협작,[츠이트],The land sale turned out to be a cheat.,그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.
 3963,unknown,B2,unit_133,en_u133_n1,미지,[unknown],an unknown country.,미지의 나라.
 3964,suspicious,B2,unit_133,en_u133_n1,괴이쩍은,[스어스프쉬어스],suspicious circumstances.,미심쩍은 상황. 2.의심이 많은; 〔…을〕 나쁜 쪽으로 짐작하기 쉬운 〔…에 대하여〕 의심에 찬〔of about …〕.
-3965,todd,B2,unit_133,en_u133_n1,남자,[트아드],This is an example for todd.,이것은 남자 이름 관련 실전 예문입니다.
+3965,todd,B2,unit_133,en_u133_n1,토드,[트아드],This is an example for todd.,이것은 남자 이름 관련 실전 예문입니다.
 3966,frightened,B2,unit_133,en_u133_n1,겁먹은,[프르이트느드],be frightened at the noise.,소리를 듣고 깜짝 놀라다.
-3967,lou,B2,unit_133,en_u133_n1,남자,[르우],This is an example for lou.,이것은 남자 이름 관련 실전 예문입니다.
+3967,lou,B2,unit_133,en_u133_n1,루,[르우],This is an example for lou.,이것은 남자 이름 관련 실전 예문입니다.
 3968,particularly,B2,unit_133,en_u133_n1,각별히,[프어르트크유르어르이],She likes the country particularly in the spring.,그녀는 시골 특히 봄의 전원을 좋아한다 (※부정어 앞에 놓이는지 뒤에 놓이는지에 따라 의미의 차이가 생김.
 3969,bullets,B2,unit_133,en_u133_n1,총알,[브르이트],bullet wounds.,총상.
 3970,package,B2,unit_133,en_u133_n1,소포,[프애크이즈],a package of processed cheese.,가공 치즈 한 상자.
@@ -4002,10 +4002,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4001,jay,B2,unit_134,en_u134_n2,어치,[즈에이],This is an example for jay.,이것은 어치 수다스러운 관련 실전 예문입니다.
 4002,favour,B2,unit_134,en_u134_n2,favour,[프이브어르],This is an example for favour.,이것은 favour 관련 실전 예문입니다.
 4003,reaction,B2,unit_134,en_u134_n2,대응,[르이애크쉬어느],reaction against militarism.,군국주의에 대한 반발. 2.（정치상의） 반동 보수적 경향; 역행. 3.〔사건·영향·자극 등에 대한〕 반응 받아들이기 태도〔to …〕.
-4004,jessica,B2,unit_134,en_u134_n2,여자,[즈스이크어],This is an example for jessica.,이것은 여자 이름 관련 실전 예문입니다.
+4004,jessica,B2,unit_134,en_u134_n2,제시카,[즈스이크어],This is an example for jessica.,이것은 여자 이름 관련 실전 예문입니다.
 4005,singer,B2,unit_134,en_u134_n2,가수,[스으어르발음에주의],a male singer.,남자 가수.
 4006,diamond,B2,unit_134,en_u134_n2,금강석,[드이어므어느드],a small diamond.,점수가 낮은 다이아 패. 5.〔야구〕 내야; 야구장. 숙어 diamond cut diamond （기지·책략 등이） 막상막하의 호적수의 대결 난형난제의 명승부. ※ It is diamond cut diamond. 처럼 씀. 형용사1.다이아로 만든.
-4007,steven,B2,unit_134,en_u134_n2,남자,[스트브어느],This is an example for steven.,이것은 남자 이름 관련 실전 예문입니다.
+4007,steven,B2,unit_134,en_u134_n2,스티븐,[스트브어느],This is an example for steven.,이것은 남자 이름 관련 실전 예문입니다.
 4008,anytime,B2,unit_134,en_u134_n2,언제든지,[느이트이므],You can borrow my car anytime.,언제든지 내 차를 빌려주겠다.
 4009,charlotte,B2,unit_134,en_u134_n2,샬럿,[쉬아르어트],This is an example for charlotte.,이것은 샤를로트 디저트용 관련 실전 예문입니다.
 4010,ceremony,B2,unit_134,en_u134_n2,식전,[스르어므우느이],a coronation ceremony.,대관식.
@@ -4016,7 +4016,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4015,rip,B2,unit_134,en_u134_n5,격랑,[르이프],rip open an old wound.,묵은 상처를 절개하다.
 4016,mysterious,B2,unit_134,en_u134_n5,신비의,[므이스트어르이어스],the mysterious universe.,신비의 우주. 1. mysterious 정체를 몰라서 호기심·두려움·놀라움을 갖게 하는 것을 가리킴. 2. inscrutable 불가해하고 수수께끼 같아서 이해하기 어려운 ◇ keep an inscrutable face 짐작도 할 수 없는 표정을 유지하다. 3. mystical 의식·표상 등의 안에 은밀한 뜻을 가진것. 종교적·영적으로 쓰는 경우가 많음 ◇ mystical rite 비밀 의식.2.（성질·의미·원인 등이） 분명치 않은 모호한; 불가사의한.
 4017,entrance,B2,unit_134,en_u134_n5,가입,[느트르어느스],entrance into a club.,클럽 가입.
-4018,justin,B2,unit_134,en_u134_n5,남자,[즈어스트어느],This is an example for justin.,이것은 남자 이름 관련 실전 예문입니다.
+4018,justin,B2,unit_134,en_u134_n5,저스틴,[즈어스트어느],This is an example for justin.,이것은 남자 이름 관련 실전 예문입니다.
 4019,dreaming,B2,unit_134,en_u134_n5,꿈을,[드르므이으],This is an example for dreaming.,이것은 꿈을 꾸고 관련 실전 예문입니다.
 4020,bust,B2,unit_134,en_u134_n5,반신상,[브어스트],bust measurement.,가슴둘레의 치수.
 4021,el,B2,unit_135,en_u135_n1,접두사l앞에서의,[르],This is an example for el.,이것은 접두사l앞에서의 ²의 관련 실전 예문입니다.
@@ -4031,20 +4031,20 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4030,pee,B2,unit_135,en_u135_n1,쉬하다,[프이],This is an example for pee.,이것은 소변 관련 실전 예문입니다.
 4031,jordan,B2,unit_135,en_u135_n2,요르단,[즈오르드어느],This is an example for jordan.,이것은 jordan 관련 실전 예문입니다.
 4032,comrade,B2,unit_135,en_u135_n2,동료,[크아므르애드],a comrade in arms.,전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지.
-4033,betty,B2,unit_135,en_u135_n2,여자,[브트이],This is an example for betty.,이것은 여자 이름 관련 실전 예문입니다.
+4033,betty,B2,unit_135,en_u135_n2,베티,[브트이],This is an example for betty.,이것은 여자 이름 관련 실전 예문입니다.
 4034,imagination,B2,unit_135,en_u135_n2,가상,[이므애즈어느이쉬어느],a man of remarkable imagination.,상상력이 풍부한 사람.
 4035,kissing,B2,unit_135,en_u135_n2,키스를,[크이스],kiss the Bible.,성경에 입맞추고 맹세하다.
-4036,edward,B2,unit_135,en_u135_n2,남자,[드우어르드],This is an example for edward.,이것은 남자 이름 관련 실전 예문입니다.
+4036,edward,B2,unit_135,en_u135_n2,에드워드,[드우어르드],This is an example for edward.,이것은 남자 이름 관련 실전 예문입니다.
 4037,texas,B2,unit_135,en_u135_n2,최상부,[트크스어스],This is an example for texas.,이것은 최상부 갑판 관련 실전 예문입니다.
-4038,marcus,B2,unit_135,en_u135_n2,남자,[므아르크어스],This is an example for marcus.,이것은 남자 이름 관련 실전 예문입니다.
+4038,marcus,B2,unit_135,en_u135_n2,마커스,[므아르크어스],This is an example for marcus.,이것은 남자 이름 관련 실전 예문입니다.
 4039,classic,B2,unit_135,en_u135_n2,전통적인,[크르애스이크],a classic case.,전형적인 사례.
 4040,selfish,B2,unit_135,en_u135_n2,얌체,[스르프이쉬],Hes a selfish devil.,그는 자기밖에 모르는 사람이다.
 4041,skull,B2,unit_135,en_u135_n5,두개골,[스크어르],have a thick skull.,머리가 둔하다.
-4042,shown,B2,unit_135,en_u135_n5,과거,[쉬오느],This is an example for shown.,이것은 과거 분사형 관련 실전 예문입니다.
+4042,shown,B2,unit_135,en_u135_n5,보여준,[쉬오느],This is an example for shown.,이것은 과거 분사형 관련 실전 예문입니다.
 4043,lifetime,B2,unit_135,en_u135_n5,평생,[lifetime],the chance of a lifetime.,일생에 한 번 있는 기회.
 4044,throughout,B2,unit_135,en_u135_n5,내처,[스르우우트],throughout the land.,전국의 방방곡곡에 이르기까지.
-4045,nathan,B2,unit_135,en_u135_n5,남자,[느이스어느],This is an example for nathan.,이것은 남자 이름 관련 실전 예문입니다.
-4046,margaret,B2,unit_135,en_u135_n5,여자,[므아르어르이트],This is an example for margaret.,이것은 여자 이름 관련 실전 예문입니다.
+4045,nathan,B2,unit_135,en_u135_n5,네이선,[느이스어느],This is an example for nathan.,이것은 남자 이름 관련 실전 예문입니다.
+4046,margaret,B2,unit_135,en_u135_n5,마가렛,[므아르어르이트],This is an example for margaret.,이것은 여자 이름 관련 실전 예문입니다.
 4047,ross,B2,unit_135,en_u135_n5,꺼칠꺼칠한,[르오스],This is an example for ross.,이것은 꺼칠꺼칠한 외피 관련 실전 예문입니다.
 4048,cheat,B2,unit_135,en_u135_n5,바람피우다,[츠이트],The land sale turned out to be a cheat.,그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.
 4049,lewis,B2,unit_135,en_u135_n5,쐐기,[르이스],This is an example for lewis.,이것은 쐐기 볼트 관련 실전 예문입니다.
@@ -4052,7 +4052,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4051,tyler,B2,unit_136,en_u136_n1,집회소,[트이르어르],This is an example for tyler.,이것은 집회소 문지기 관련 실전 예문입니다.
 4052,bible,B2,unit_136,en_u136_n1,성경,[브이브르],This is an example for bible.,이것은 성서 성경 관련 실전 예문입니다.
 4053,practically,B2,unit_136,en_u136_n1,실무적,[프르애크트이크어르이방언빠른말투프르애크르이],behave practically.,실제적으로 행동하다. 2.《문장 전체를 수식하여》 실질적으로 사실상 실제상.
-4054,catherine,B2,unit_136,en_u136_n1,여자,[크애스어르이느],This is an example for catherine.,이것은 여자 이름 관련 실전 예문입니다.
+4054,catherine,B2,unit_136,en_u136_n1,캐서린,[크애스어르이느],This is an example for catherine.,이것은 여자 이름 관련 실전 예문입니다.
 4055,generation,B2,unit_136,en_u136_n1,대대로,[즈느어르이쉬어느],the present generation.,현대의 사람들.
 4056,cabin,B2,unit_136,en_u136_n1,거주,[크애브이느],a log cabin.,통나무 오두막집. 2.《미》 （트레일러에 붙은） 거실 （케이블카의） 객실. 3. 객실; （군함 내의） 장교실; （비행기의） 기실; （우주선의） 선실.
 4057,financial,B2,unit_136,en_u136_n1,금융,[프이느애느쉬어르],financial affairs.,재무 금전문제.
@@ -4286,7 +4286,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4285,companies,C1,unit_143,en_u143_n5,사귐,[크어므프어느이],in each others company.,둘이서만.
 4286,fantasy,C1,unit_143,en_u143_n5,공상,[프애느트어스이],sexual fantasies.,성적 공상.
 4287,homicide,C1,unit_143,en_u143_n5,살해범,[흐아므어스이드],This is an example for homicide.,이것은 살인 살인범 관련 실전 예문입니다.
-4288,casey,C1,unit_143,en_u143_n5,남자,[크이즈이],This is an example for casey.,이것은 남자 이름 관련 실전 예문입니다.
+4288,casey,C1,unit_143,en_u143_n5,케이시,[크이즈이],This is an example for casey.,이것은 남자 이름 관련 실전 예문입니다.
 4289,flew,C1,unit_143,en_u143_n5,¹의,[프르우],This is an example for flew.,이것은 ¹의 과거형 관련 실전 예문입니다.
 4290,jacob,C1,unit_143,en_u143_n5,야곱,[즈이크어브],This is an example for jacob.,이것은 남자 이름 관련 실전 예문입니다.
 4291,slap,C1,unit_144,en_u144_n1,손바닥으로,[스르애프],get a slap on the cheek.,따귀를 한 대 맞다. 2.따귀 때리는 （것 같은） 소리. 3.（통렬한） 비난 비방; 모욕; 〔…에 대한〕 거절〔at …〕. 숙어 a slap and tickle 《영·비격식》 소란스러운 여흥; （남녀의） 시시덕거림 농탕치기. a slap in the face 《비격식》 ①얼굴을 찰싹 때리기. ②모욕 창피; 거절; 비난; 실망. a slap on the back （찬성·격려 등의 표시로） 등을 가볍게 두드리기. a slap on the wrist 《비격식》 온건하고 효과 없는 질책. have a slap at … 《비격식》 …을 해 보다. 동사타동사 1.…을 （손바닥으로） 찰싹 때리다; 〈남의〉 〔얼굴을〕 찰싹 때리다〔in on …〕 ; 왕복으로 따귀를 때리다〔around〕; 〈어깨 등을〉 가볍게 두드리다.
@@ -4305,7 +4305,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4304,messing,C1,unit_144,en_u144_n2,혼란,[므에스],a mess of papers.,마구 흩어진 서류.
 4305,hood,C1,unit_144,en_u144_n2,덮개,[hood],This is still Internet Explorer under the hood so all other plug-ins are equally supported.,이것이 아직도 프로그램밍 작업 중에 있는 인터넷 익스플로러이다. 그러니 모든 다른 플러그인들이 동일하게 지원을 받는다.
 4306,cheated,C1,unit_144,en_u144_n2,사기,[츠이트],The land sale turned out to be a cheat.,그 토지의 매각은 나중에 사기임이 드러났다. 3.〔식물〕 참새귀리속의 잡초: 볏과. 동사 타동사1. 〈남을〉 속이다 기만하다 사기치다; 〈남에게서〉〔물건을〕 속여 빼앗다〔of out of …〕; 〈남을〉 속여 〔…〕 시키다〔into …〕.
-4307,liz,C1,unit_144,en_u144_n2,여자,[르이즈르이즈어],This is an example for liz.,이것은 여자 이름 관련 실전 예문입니다.
+4307,liz,C1,unit_144,en_u144_n2,리즈,[르이즈르이즈어],This is an example for liz.,이것은 여자 이름 관련 실전 예문입니다.
 4308,humanity,C1,unit_144,en_u144_n2,라틴,[흐유므애느어트이],Poetry redeems humanity.,시는 인간성을 회복한다. 2.《집합적》 인류; 인간.
 4309,producer,C1,unit_144,en_u144_n2,생산자,[프르어드이스어르],a producer price index.,생산자 물가 지수. 2.（극·영화·방송 등의） 프로듀서 제작자; 흥행주; 《영》 〔연극〕 연출가. cf. DIRECTOR 3. 3.가스 발생로. 4.〔생물〕 유기물 생성 생물.
 4310,technically,C1,unit_144,en_u144_n2,기술적으로,[트크느이크어르이],This is an example for technically.,이것은 엄밀한 사실 관련 실전 예문입니다.
@@ -4325,7 +4325,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4324,talkin,C1,unit_145,en_u145_n1,격의,[talkin],I use the word talkin in daily life.,나는 일상에서 talkin 단어를 사용합니다.
 4325,terrorist,C1,unit_145,en_u145_n1,테러리스트,[트르어르이스트],This is an example for terrorist.,이것은 테러리스트 테러 관련 실전 예문입니다.
 4326,invitation,C1,unit_145,en_u145_n1,권유,[느브이트이쉬어느],accept an invitation to dinner.,정찬에의 초대에 응하다.
-4327,gus,C1,unit_145,en_u145_n1,남자,[어스],This is an example for gus.,이것은 남자 이름 관련 실전 예문입니다.
+4327,gus,C1,unit_145,en_u145_n1,거스,[어스],This is an example for gus.,이것은 남자 이름 관련 실전 예문입니다.
 4328,gambling,C1,unit_145,en_u145_n1,노름,[애므브르이으],This is an example for gambling.,이것은 도박 관련 실전 예문입니다.
 4329,procedure,C1,unit_145,en_u145_n1,굼뜨다,[프르어스즈어르],follow the prearranged procedure.,미리 정한 순서대로 해나가다. 2.（법률·의회 등의） （정식） 절차; 소송 절차 cf. PROCEEDING 2.
 4330,tragedy,C1,unit_145,en_u145_n1,비극,[트르애즈어드이],the tragedy of war.,전쟁의 비극.
@@ -4336,9 +4336,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4335,artists,C1,unit_145,en_u145_n2,예술,[아르트이스트],a professional artist.,전문 예술가. 2.명인 명수.
 4336,highest,C1,unit_145,en_u145_n2,가장높은,[흐이이스트],This is an example for highest.,이것은 장 높은 관련 실전 예문입니다.
 4337,whirring,C1,unit_145,en_u145_n2,윙윙거리는,[흐우어르],the whir of the sewing machine.,재봉틀의 윙윙거리는 소리. 2.《비유》 대소동; （마음의） 동요.
-4338,nate,C1,unit_145,en_u145_n2,남자,[느에이트],This is an example for nate.,이것은 남자 이름 관련 실전 예문입니다.
+4338,nate,C1,unit_145,en_u145_n2,네이트,[느에이트],This is an example for nate.,이것은 남자 이름 관련 실전 예문입니다.
 4339,grabbed,C1,unit_145,en_u145_n2,잡히다,[르애브],Grab a chair.,의자에 앉아요. ②《속어》 〈남의〉 마음을 사로잡다 〈남에게〉 （강한） 인상을 주다.
-4340,olivia,C1,unit_145,en_u145_n2,여자,[오르브이어],This is an example for olivia.,이것은 여자 이름 관련 실전 예문입니다.
+4340,olivia,C1,unit_145,en_u145_n2,올리비아,[오르브이어],This is an example for olivia.,이것은 여자 이름 관련 실전 예문입니다.
 4341,reverend,C1,unit_145,en_u145_n5,거룩한,[르브어르어느드],the Reverend James Wilson.,제임스 윌슨 신부. 2.거룩한 공경 받아 마땅한; 성직의. Reverend는 the를 생략하여 Reverend Robert Cranston으로 하는 경우가 있으나 the를 붙이는 편이 공손함. 편지 등의 수신인명으로 쓰이는 경우 the는 생략됨. 약자로 Rev. 또는 Revd.를 씀. Rev.Robert Cranston으로 하는 것은 신문 어법이나 격식차린 표현에 한함. professor와 달리 호칭일 때 성이나 이름을 붙이지 않고 Reverend만으로 하는 것은 피해야 함. 따라서 반드시 성과 이름 또는 성과 이니셜을 수반하며 성뿐일 때는 Mr. 또는 Dr.를 the Reverend 다음에 둠 ◇ the Reverend Mr. H. Clark.명사《보통 reverends》《비격식》 신부 목사 성직자.
 4342,commercial,C1,unit_145,en_u145_n5,광고,[크어므어르쉬어르],commercial correspondence.,상업 통신.
 4343,escort,C1,unit_145,en_u145_n5,동반,[스크오르트],The VIP was provided with a security escort.,그 중요 인물은 경호를 받고 있었다. 2.（개인의） 보호자 수행원; （여성을） 에스코트하는 남자. 3.（고관 등의） 경호; （여행자의） 안내; （죄수의） 호송. 숙어 under escort 호위되어. 동사 | iskɔ́ːrt | 타동사 1.〈사람·선박 등을〉 호위하다; 〈남성이〉 〈여성을〉 〔파티 등에〕 바래다주다 에스코트하다 〈범인 등을〉 〔교도소 등으로〕 호송하다〔to …〕.
@@ -4358,12 +4358,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4357,creepy,C1,unit_146,en_u146_n1,괴상하다,[크르프이],This is an example for creepy.,이것은 기는 느릿느릿 관련 실전 예문입니다.
 4358,studies,C1,unit_146,en_u146_n1,공부,[스트어드이],be very fond of study.,공부를 무척 좋아하다.
 4359,destruction,C1,unit_146,en_u146_n1,멸망,[드이스트르어크쉬어느],Greed is the destruction of all.,욕심은 파멸의 원인이다.
-4360,keith,C1,unit_146,en_u146_n1,남자,[크이스],This is an example for keith.,이것은 남자 이름 관련 실전 예문입니다.
+4360,keith,C1,unit_146,en_u146_n1,키스,[크이스],This is an example for keith.,이것은 남자 이름 관련 실전 예문입니다.
 4361,joining,C1,unit_146,en_u146_n2,가맹,[즈오이느이으],This is an example for joining.,이것은 접합 연결 관련 실전 예문입니다.
 4362,lightning,C1,unit_146,en_u146_n2,번개,[르이트느이으],forked lightning.,분기 전광.
-4363,malcolm,C1,unit_146,en_u146_n2,남자,[므애르크어므],This is an example for malcolm.,이것은 남자 이름 관련 실전 예문입니다.
+4363,malcolm,C1,unit_146,en_u146_n2,말콤,[므애르크어므],This is an example for malcolm.,이것은 남자 이름 관련 실전 예문입니다.
 4364,fascinating,C1,unit_146,en_u146_n2,흐드러지다,[프애스어느이트이으],a fascinating novel.,흥미진진한 소설.
-4365,ethan,C1,unit_146,en_u146_n2,남자,[스어느],This is an example for ethan.,이것은 남자 이름 관련 실전 예문입니다.
+4365,ethan,C1,unit_146,en_u146_n2,에단,[스어느],This is an example for ethan.,이것은 남자 이름 관련 실전 예문입니다.
 4366,romance,C1,unit_146,en_u146_n2,공상벽,[르오므애느스],a whirlwind romance.,단숨에 타오르는 사랑. 2.전기 소설; 연애 소설; （문학의 한 장르로서의） 로맨스.
 4367,jumping,C1,unit_146,en_u146_n2,건너뜀,[즈어므프이으],This is an example for jumping.,이것은 뛰는 튀는 관련 실전 예문입니다.
 4368,testify,C1,unit_146,en_u146_n2,유감의,[트스트어프이],testify to a persons ability.,남의 능력을 증명하다.
@@ -4371,16 +4371,16 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4370,walker,C1,unit_146,en_u146_n2,말도,[우오크어르],a great walker.,산책을 몹시 좋아하는 사람. 3.（개 등을） 산책시키는 사람. 4.《보통 walkers》보행용 구두.
 4371,investigating,C1,unit_146,en_u146_n5,조사의,[investigating],This is an example for investigating.,이것은 조사의 연구의 관련 실전 예문입니다.
 4372,ye,C1,unit_146,en_u146_n5,그대들,[이이강이],Ye are the salt of the earth.,너희는 세상의 소금이다 〈〔성서〕 마태 복음 5:13〉. ②《호칭》.
-4373,elena,C1,unit_146,en_u146_n5,여자,[어르이느어],This is an example for elena.,이것은 여자 이름 관련 실전 예문입니다.
+4373,elena,C1,unit_146,en_u146_n5,엘레나,[어르이느어],This is an example for elena.,이것은 여자 이름 관련 실전 예문입니다.
 4374,necklace,C1,unit_146,en_u146_n5,네크리스,[느크르이스],This is an example for necklace.,이것은 목걸이 네크리스 관련 실전 예문입니다.
 4375,loyalty,C1,unit_146,en_u146_n5,로열티,[르오이어르트이],ones loyalty to the cause.,그 신조에 대한 충실함. 2.〔국왕·정부·주의 등에의〕 충성 〔to for …〕 cf. ALLEGIANCE FIDELITY 2.
 4376,junk,C1,unit_146,en_u146_n5,고철,[junk],This is an example for junk.,이것은 성기 자지 관련 실전 예문입니다.
 4377,cole,C1,unit_146,en_u146_n5,서양평지,[크오르],This is an example for cole.,이것은 십자화과 유채속 관련 실전 예문입니다.
 4378,cries,C1,unit_146,en_u146_n5,소리치다,[크르아이],cry with pain.,아파서 소리치다.
-4379,stanley,C1,unit_146,en_u146_n5,남자,[스트애느르이],This is an example for stanley.,이것은 남자 이름 관련 실전 예문입니다.
-4380,rita,C1,unit_146,en_u146_n5,여자,[르트어],This is an example for rita.,이것은 여자 이름 관련 실전 예문입니다.
+4379,stanley,C1,unit_146,en_u146_n5,스탠리,[스트애느르이],This is an example for stanley.,이것은 남자 이름 관련 실전 예문입니다.
+4380,rita,C1,unit_146,en_u146_n5,리타,[르트어],This is an example for rita.,이것은 여자 이름 관련 실전 예문입니다.
 4381,southern,C1,unit_147,en_u147_n1,남주,[스어드어르느],the Southern States(.,미국의) 남부 여러 주. 4.《종종 Southern》《미》 남부 방언의. 5.〔천문〕 천구 적도보다 남쪽에 있는 남천의. 명사1.《주로 방언》 ＝southerner.2.《S-》 미국 남부 방언.
-4382,begun,C1,unit_147,en_u147_n1,과거,[브이어느],This is an example for begun.,이것은 과거 분사형 관련 실전 예문입니다.
+4382,begun,C1,unit_147,en_u147_n1,시작된,[브이어느],This is an example for begun.,이것은 과거 분사형 관련 실전 예문입니다.
 4383,maya,C1,unit_147,en_u147_n1,마야말,[므아이아],This is an example for maya.,이것은 마야 환상의 관련 실전 예문입니다.
 4384,liver,C1,unit_147,en_u147_n1,간,[르브어르],a liver transplant.,간 이식.
 4385,serving,C1,unit_147,en_u147_n1,일인분,[스어르브이으],How many servings does the recipe make?,그 요리법은 몇 사람용이냐? 형용사〈그릇 등이〉 （요리를) 나누어 담기 위한.
@@ -4416,13 +4416,13 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4415,jet,C1,unit_148,en_u148_n1,분출,[즈에트],a jet of light.,한 줄기 빛.
 4416,widow,C1,unit_148,en_u148_n1,과부,[우드오],a golf widow.,골프 과부. 3.〔카드놀이〕 도르고 남은 패 여분의 패. 4.〔인쇄〕 앞단에서 넘어온 짤막한 행; 짧은 행. 동사 타동사1.《보통 수동태》 …을 과부가 되게 하다.
 4417,philip,C1,unit_148,en_u148_n1,빌립,[프르이프],This is an example for philip.,이것은 남자 이름 관련 실전 예문입니다.
-4418,carrie,C1,unit_148,en_u148_n1,여자,[크애르이],This is an example for carrie.,이것은 여자 이름 관련 실전 예문입니다.
+4418,carrie,C1,unit_148,en_u148_n1,캐리,[크애르이],This is an example for carrie.,이것은 여자 이름 관련 실전 예문입니다.
 4419,thirsty,C1,unit_148,en_u148_n1,목마른,[스어르스트이],be thirsty from working.,일을 해서 목이 마르다. 2.〈땅·식물·피부 등이〉 마른 건조한.
-4420,ashley,C1,unit_148,en_u148_n1,남자,[애쉬르이],This is an example for ashley.,이것은 남자 이름 관련 실전 예문입니다.
+4420,ashley,C1,unit_148,en_u148_n1,애슐리,[애쉬르이],This is an example for ashley.,이것은 남자 이름 관련 실전 예문입니다.
 4421,intention,C1,unit_148,en_u148_n2,결혼할,[이느트느쉬어느],partly with intention partly by accident.,반은 고의로 반은 우연히.
-4422,julian,C1,unit_148,en_u148_n2,남자,[즈르이어느],This is an example for julian.,이것은 남자 이름 관련 실전 예문입니다.
+4422,julian,C1,unit_148,en_u148_n2,줄리안,[즈르이어느],This is an example for julian.,이것은 남자 이름 관련 실전 예문입니다.
 4423,active,C1,unit_148,en_u148_n2,민활하다,[애크트이브],an active man.,활동적인 사람.
-4424,driven,C1,unit_148,en_u148_n2,과거,[드르브어느],This is an example for driven.,이것은 과거 분사형 관련 실전 예문입니다.
+4424,driven,C1,unit_148,en_u148_n2,운전된,[드르브어느],This is an example for driven.,이것은 과거 분사형 관련 실전 예문입니다.
 4425,trauma,C1,unit_148,en_u148_n2,외상,[트르우므어],a childhood trauma(.,어릴 때 체험한) 정신적 쇼크.
 4426,headache,C1,unit_148,en_u148_n2,두통,[headache],have a splitting headache.,머리가 빠개질 듯이 아프다. 2.《비격식》 난처한 사람 골칫거리.
 4427,safely,C1,unit_148,en_u148_n2,도망할우려가,[스이프르이],drive safely.,안전하게 운전하다.
@@ -4435,7 +4435,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4434,humming,C1,unit_148,en_u148_n5,거품,[흐어므이으],This is an example for humming.,이것은 윙윙 거리는 관련 실전 예문입니다.
 4435,li,C1,unit_148,en_u148_n5,리,[르이],This is an example for li.,이것은 이 중국의 관련 실전 예문입니다.
 4436,serial,C1,unit_148,en_u148_n5,연재물,[스어르이어르],a six-part serial6.,부작.
-4437,thieves,C1,unit_148,en_u148_n5,복수형,[스이브즈],This is an example for thieves.,이것은 복수형 관련 실전 예문입니다.
+4437,thieves,C1,unit_148,en_u148_n5,도둑들,[스이브즈],This is an example for thieves.,이것은 복수형 관련 실전 예문입니다.
 4438,guessing,C1,unit_148,en_u148_n5,추측,[에스],Guess how many kids there are in my family.,우리집 애들이 몇이나 되는지 알아맞혀 보렴.
 4439,objection,C1,unit_148,en_u148_n5,난점,[어브즈크쉬어느],He raised a strong objection against our plan.,그는 우리 계획에 강력한 이의를 제기했다.
 4440,whiskey,C1,unit_148,en_u148_n5,위스키,[흐우스크이],a bottle of whiskey.,위스키 한 병.
@@ -4451,15 +4451,15 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4450,ruth,C1,unit_149,en_u149_n1,루스,[르우스],This is an example for ruth.,이것은 연민 동정 관련 실전 예문입니다.
 4451,naughty,C1,unit_149,en_u149_n2,못된,[느오트이],He is being naughty again.,그는 또 말썽을 피우고 있다.
 4452,stabbed,C1,unit_149,en_u149_n2,찌르다,[스트애브],stab a person to death.,남을 찔러 죽이다.
-4453,diane,C1,unit_149,en_u149_n2,여자,[드아이애느],This is an example for diane.,이것은 여자 이름 관련 실전 예문입니다.
+4453,diane,C1,unit_149,en_u149_n2,다이앤,[드아이애느],This is an example for diane.,이것은 여자 이름 관련 실전 예문입니다.
 4454,locker,C1,unit_149,en_u149_n2,로커,[르아크어르],This is an example for locker.,이것은 자물쇠 채우는 관련 실전 예문입니다.
 4455,development,C1,unit_149,en_u149_n2,개발,[드이브르어프므어느트],the development of ones talents.,재능을 발달시키기.
 4456,prick,C1,unit_149,en_u149_n2,구멍을,[프르이크],feel the pricks of conscience.,양심의 가책을 받다. 3.박차의 돌출부; 돌출한 기관; 뾰족한 것 가시. 4.《비어》 ①음경. ②불쾌한 녀석. 5.《고어》 （소를 모는） 막대. 동사 타동사1. 〈손가락·사람 등을〉 〔…으로〕 찌르다 찔러서 상처나게 하다〔with on …〕; 〈구멍 등을〉 〔…에〕 내다 뚫다〔in …〕.
 4457,global,C1,unit_149,en_u149_n2,글로벌,[르우브어르],the global market.,세계 시장.
 4458,sharing,C1,unit_149,en_u149_n2,나눔,[쉬에어르이으],cost sharing.,비용의 공동 부담.
 4459,craig,C1,unit_149,en_u149_n2,크레이그,[크르에이],This is an example for craig.,이것은 크레이그 세계적인 관련 실전 예문입니다.
-4460,harold,C1,unit_149,en_u149_n2,남자,[흐애르어르드],This is an example for harold.,이것은 남자 이름 관련 실전 예문입니다.
-4461,monica,C1,unit_149,en_u149_n5,여자,[므아느이크어],This is an example for monica.,이것은 여자 이름 관련 실전 예문입니다.
+4460,harold,C1,unit_149,en_u149_n2,해럴드,[흐애르어르드],This is an example for harold.,이것은 남자 이름 관련 실전 예문입니다.
+4461,monica,C1,unit_149,en_u149_n5,모니카,[므아느이크어],This is an example for monica.,이것은 여자 이름 관련 실전 예문입니다.
 4462,constantly,C1,unit_149,en_u149_n5,노상,[크아느스트어느트르이],This is an example for constantly.,이것은 끊임없이 계속 관련 실전 예문입니다.
 4463,granny,C1,unit_149,en_u149_n5,노파,[르애느이],This is an example for granny.,이것은 할머니 할망구 관련 실전 예문입니다.
 4464,nicely,C1,unit_149,en_u149_n5,꼼꼼하게,[느이스르이],The room was nicely furnished.,그 방은 가구가 잘 갖추어져 있다.
@@ -4467,7 +4467,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4466,relatives,C1,unit_149,en_u149_n5,친척,[르어트이브],a near relative.,근친자.
 4467,survival,C1,unit_149,en_u149_n5,살아남음,[스어르브이브어르],the survival of the fittest.,적자생존. 2.생존자 잔존자 （특히 옛날의） 유물 유풍.
 4468,tracking,C1,unit_149,en_u149_n5,추적,[트르애크이으],This is an example for tracking.,이것은 추적 트래킹 관련 실전 예문입니다.
-4469,zoe,C1,unit_149,en_u149_n5,여자,[즈우이],This is an example for zoe.,이것은 여자 이름 관련 실전 예문입니다.
+4469,zoe,C1,unit_149,en_u149_n5,조이,[즈우이],This is an example for zoe.,이것은 여자 이름 관련 실전 예문입니다.
 4470,review,C1,unit_149,en_u149_n5,검열하다,[르이브이],a book review.,서평.
 4471,elder,C1,unit_150,en_u150_n1,손위의,[르드어르],I have an elder brother.,형이 있다. ※영어에서는 일반적으로 형제의 순서를 나타내지 않고 단순히 brother sister라고만 밝힘. 2.《the elder》①두 형제 중 연장자.
 4472,admiral,C1,unit_150,en_u150_n1,제독,[애드므어르어르],This is an example for admiral.,이것은 대장 해군 관련 실전 예문입니다.
@@ -4511,7 +4511,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4510,dont,C1,unit_151,en_u151_n1,not의,[드오느트],This is an example for dont.,이것은 not의 단축형 관련 실전 예문입니다.
 4511,han,C1,unit_151,en_u151_n2,한조,[흐아느],This is an example for han.,이것은 한 한민족 관련 실전 예문입니다.
 4512,von,C1,unit_151,en_u151_n2,으로부터,[브아느],This is an example for von.,이것은 으로부터 독일인 관련 실전 예문입니다.
-4513,marco,C1,unit_151,en_u151_n2,남자,[므아르크오],This is an example for marco.,이것은 남자 이름 관련 실전 예문입니다.
+4513,marco,C1,unit_151,en_u151_n2,마르코,[므아르크오],This is an example for marco.,이것은 남자 이름 관련 실전 예문입니다.
 4514,whistling,C1,unit_151,en_u151_n2,휘파람,[우스르이으],This is an example for whistling.,이것은 휘파람 휙휙 관련 실전 예문입니다.
 4515,buildings,C1,unit_151,en_u151_n2,건축물,[브르드이으],a wooden building.,목조 건물. 2.건축 건조; 건축술; 《형용사적》 건축의.
 4516,shaking,C1,unit_151,en_u151_n2,흔들림,[쉬이크이으],This is an example for shaking.,이것은 흔들기 한 관련 실전 예문입니다.
@@ -4534,7 +4534,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4533,throne,C1,unit_152,en_u152_n1,옥좌,[스르오느],orders from the throne.,왕명 칙명.
 4534,deadly,C1,unit_152,en_u152_n1,용서,[드드르이],a deadly wound.,치명상.
 4535,centuries,C1,unit_152,en_u152_n1,수세기,[스느츠어르이],a quarter of a century4.,반세기.
-4536,karl,C1,unit_152,en_u152_n1,남자,[크아르],This is an example for karl.,이것은 남자 이름 관련 실전 예문입니다.
+4536,karl,C1,unit_152,en_u152_n1,칼,[크아르],This is an example for karl.,이것은 남자 이름 관련 실전 예문입니다.
 4537,poetry,C1,unit_152,en_u152_n1,시,[프우이트르이],Wordsworths poetry.,워즈워스의 시.
 4538,shortly,C1,unit_152,en_u152_n1,무뚝뚝하게,[쉬오르트르이],shortly after his arrival in Paris.,그가 파리에 도착하자 바로.
 4539,fingerprints,C1,unit_152,en_u152_n1,지문,[fingerprints],leave fingerprints.,지문을 남기다.
@@ -4563,10 +4563,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4562,rifle,C1,unit_153,en_u153_n1,강선,[르이프르],rifle a single to center field.,센터 필드에 통렬한 싱글 히트를 날리다.
 4563,reception,C1,unit_153,en_u153_n1,감득,[르이스프쉬어느],the reception of ones friend into a club.,어떤 클럽에 친구를 가입시키기.
 4564,fridge,C1,unit_153,en_u153_n1,냉장고,[프르이즈],This is an example for fridge.,이것은 냉장고 refrigerator의 관련 실전 예문입니다.
-4565,natalie,C1,unit_153,en_u153_n1,여자,[느애트어르이],This is an example for natalie.,이것은 여자 이름 관련 실전 예문입니다.
+4565,natalie,C1,unit_153,en_u153_n1,나탈리,[느애트어르이],This is an example for natalie.,이것은 여자 이름 관련 실전 예문입니다.
 4566,nelson,C1,unit_153,en_u153_n1,넬슨,[느르스어느],This is an example for nelson.,이것은 목 공격 관련 실전 예문입니다.
 4567,korea,C1,unit_153,en_u153_n1,우리나라,[크어르어],This is an example for korea.,이것은 한국 대한민국 관련 실전 예문입니다.
-4568,janet,C1,unit_153,en_u153_n1,여자,[즈애느이트],This is an example for janet.,이것은 여자 이름 관련 실전 예문입니다.
+4568,janet,C1,unit_153,en_u153_n1,자넷,[즈애느이트],This is an example for janet.,이것은 여자 이름 관련 실전 예문입니다.
 4569,mall,C1,unit_153,en_u153_n1,런던의,[므오르],a pedestrian mall.,산책용 보행자 도로; 보행자 천국. 2.몰 프롬나드식 상점가; 《미》 쇼핑센터. mall은 「나무 그늘의 산책로」라는 원래의 뜻에서 출발하여 요즈음은 미국 문화에서 빼놓을 수 없는 거대한 쇼핑 단지를 일컫게 되었으며 상업 용어로는 쇼핑센터 등의 통로를 뜻하기도 함. 단지 쇼핑 상점만 아니라 영화관 오락실 레스토랑 잡화점 및 개인 병원까지 있음. 따라서 쇼핑몰은 상점가 전체를 건축적 구성에 의해 종합한 것으로 광대한 주차장과 보행자의 쇼핑로를 중심으로 지붕이 있는 아케이드로 이루어져 있거나 건물내에 산책로 겸 통로가 설비되어 있어서 기후에 관계없이 쾌적한 시설로 휴일에 즐겨 찾는 장소임.3.《미》 （고속도로 등의） 중앙 분리대. 4.〔역사〕 펠멜 구기.
 4570,complaint,C1,unit_153,en_u153_n1,고소,[크어므프르이느트],a complaint about rising taxes.,세금이 오른 것에 대한 불평.
 4571,baker,C1,unit_153,en_u153_n2,제빵사,[브이크어르],These potatoes are good bakers.,이 감자는 구우면 맛이 있다.
@@ -4584,25 +4584,25 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4583,meetings,C1,unit_153,en_u153_n5,집합,[므트이으],meeting of minds.,합의.
 4584,giggles,C1,unit_153,en_u153_n5,낄낄,[르],start giggling at a persons joke.,남의 농담에 낄낄 웃기 시작하다. 명사낄낄 웃음 ; 재미있는 사람 농담; 《주로 영·비격식》 대수롭지 않은 장난.
 4585,mia,C1,unit_153,en_u153_n5,전투,[mia],This is an example for mia.,이것은 전투 중 관련 실전 예문입니다.
-4586,raymond,C1,unit_153,en_u153_n5,남자,[르이므어느드],This is an example for raymond.,이것은 남자 이름 관련 실전 예문입니다.
+4586,raymond,C1,unit_153,en_u153_n5,레이몬드,[르이므어느드],This is an example for raymond.,이것은 남자 이름 관련 실전 예문입니다.
 4587,jersey,C1,unit_153,en_u153_n5,여자용,[즈어르즈이],This is an example for jersey.,이것은 저지 메리야스 관련 실전 예문입니다.
 4588,eagle,C1,unit_153,en_u153_n5,수리표,[르],bold as an eagle.,아주 대담한.
 4589,chapter,C1,unit_153,en_u153_n5,분회,[츠애프트어르],open a new chapter in ones life.,인생의 새 장을 열다. 2.《주로 미》 （협회·조합·동창회 등의） （지방） 지부 분회. 3.〔교회〕 수도원 수사회; 주교좌 성당 참사회; 《집합적》 교구 대표단. 4.수도회 총회 목사단 회의; （일반적으로） 총회. 5.《영》 〔일련의〕 사건 〔…의〕 연속〔of …〕. 6.《미·속어》 〔야구〕 회.
 4590,treating,C1,unit_153,en_u153_n5,대우하다,[트르이트],treat animals badly.,동물을 학대하다.
 4591,wisdom,C1,unit_154,en_u154_n1,분별,[우즈드어므],worldly wisdom.,처세술.
-4592,entering,C1,unit_154,en_u154_n1,들어,[느트어르],enter at the door.,문으로 들어가다.
+4592,entering,C1,unit_154,en_u154_n1,들어가는,[느트어르],enter at the door.,문으로 들어가다.
 4593,barn,C1,unit_154,en_u154_n1,헛간,[브아르느],Most nuclei have a cross section of less than 1 barn.,대부분의 핵인은 단면의 크기가 1반이 못 된다.
 4594,farmer,C1,unit_154,en_u154_n1,농민,[프아르므어르],a landed farmer.,자작농 . ②양식가. 2.（세금 등의） 징수 도급인. 3.（아이·빈민 등을 보수를 받고） 돌보는 사람.
 4595,clan,C1,unit_154,en_u154_n1,당파,[크르애느],This is an example for clan.,이것은 씨족 문중 관련 실전 예문입니다.
 4596,effective,C1,unit_154,en_u154_n1,유효하다,[이프크트이브],an effective medical treatment.,효과적인 치료법.
 4597,sonny,C1,unit_154,en_u154_n1,아가,[스어느이],This is an example for sonny.,이것은 아 얘야 관련 실전 예문입니다.
 4598,wendy,C1,unit_154,en_u154_n1,웬디,[우느드이],This is an example for wendy.,이것은 웬디 여자 관련 실전 예문입니다.
-4599,juan,C1,unit_154,en_u154_n1,남자,[흐우아느],This is an example for juan.,이것은 남자 이름 관련 실전 예문입니다.
+4599,juan,C1,unit_154,en_u154_n1,후안,[흐우아느],This is an example for juan.,이것은 남자 이름 관련 실전 예문입니다.
 4600,riley,C1,unit_154,en_u154_n1,흐려진,[르이르이],This is an example for riley.,이것은 흐려진 화난 관련 실전 예문입니다.
 4601,proposal,C1,unit_154,en_u154_n2,건의,[프르어프우즈어르],make a proposal that we adjourn for the day.,그 날을 휴회로 하자는 제안을 하다.
 4602,blessing,C1,unit_154,en_u154_n2,가호,[브르스이으],a mixed blessing.,좋기도 하고 나쁘기도 한 것.
 4603,sydney,C1,unit_154,en_u154_n2,오스트레일리아,[스드느이],This is an example for sydney.,이것은 남자 이름 관련 실전 예문입니다.
-4604,neil,C1,unit_154,en_u154_n2,남자,[느이르],This is an example for neil.,이것은 남자 이름 관련 실전 예문입니다.
+4604,neil,C1,unit_154,en_u154_n2,닐,[느이르],This is an example for neil.,이것은 남자 이름 관련 실전 예문입니다.
 4605,catholic,C1,unit_154,en_u154_n2,가톨릭,[크애스어르이크],be catholic in ones studies.,연구가 편파적이 아니다.
 4606,sighing,C1,unit_154,en_u154_n2,한숨,[스아이],sigh with regret.,후회하여 한숨 짓다.
 4607,inner,C1,unit_154,en_u154_n2,과녁의,[느어르],an inner pocket.,안주머니. 2.〈감정 등이〉 개인적인 내밀한 보다 친한.
@@ -4622,9 +4622,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4621,radar,C1,unit_155,en_u155_n1,레이더,[르이드아르],radar signals.,레이더의 신호.
 4622,prosecutor,C1,unit_155,en_u155_n1,검찰관,[프르아스이크이트어르],This is an example for prosecutor.,이것은 소추자 검찰관 관련 실전 예문입니다.
 4623,amber,C1,unit_155,en_u155_n1,호박,[애므브어르],cross an amber light.,황색 신호를 보고 건너다.
-4624,quinn,C1,unit_155,en_u155_n1,남자,[크우이느],This is an example for quinn.,이것은 남자 이름 관련 실전 예문입니다.
+4624,quinn,C1,unit_155,en_u155_n1,퀸,[크우이느],This is an example for quinn.,이것은 남자 이름 관련 실전 예문입니다.
 4625,finest,C1,unit_155,en_u155_n1,최상,[프이느이스트],the citys finest.,시의 경찰.
-4626,felix,C1,unit_155,en_u155_n1,남자,[프르이크스],This is an example for felix.,이것은 남자 이름 관련 실전 예문입니다.
+4626,felix,C1,unit_155,en_u155_n1,펠릭스,[프르이크스],This is an example for felix.,이것은 남자 이름 관련 실전 예문입니다.
 4627,valentine,C1,unit_155,en_u155_n1,선물,[브애르어느트이느],This is an example for valentine.,이것은 성 발렌타인의 관련 실전 예문입니다.
 4628,counter,C1,unit_155,en_u155_n1,계산계,[크우느트어르],This is an example for counter.,이것은 접두사「역 의」 관련 실전 예문입니다.
 4629,warren,C1,unit_155,en_u155_n1,양토장,[우오르어느],This is an example for warren.,이것은 토끼의 번식지 관련 실전 예문입니다.
@@ -4641,8 +4641,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4640,gravity,C1,unit_155,en_u155_n2,만유인력,[르애브어트이],the center of gravity.,무게 중심.
 4641,booze,C1,unit_155,en_u155_n5,알코올,[브우즈],on the booze.,술을 늘 마셔; 취하여.
 4642,noah,C1,unit_155,en_u155_n5,노아,[느우어],This is an example for noah.,이것은 노아 히브리의 관련 실전 예문입니다.
-4643,evan,C1,unit_155,en_u155_n5,남자,[브어느],This is an example for evan.,이것은 남자 이름 관련 실전 예문입니다.
-4644,christine,C1,unit_155,en_u155_n5,여자,[크르이스트느],This is an example for christine.,이것은 여자 이름 관련 실전 예문입니다.
+4643,evan,C1,unit_155,en_u155_n5,에반,[브어느],This is an example for evan.,이것은 남자 이름 관련 실전 예문입니다.
+4644,christine,C1,unit_155,en_u155_n5,크리스틴,[크르이스트느],This is an example for christine.,이것은 여자 이름 관련 실전 예문입니다.
 4645,rising,C1,unit_155,en_u155_n5,기립,[르이즈이으],rising smoke.,피어오르는 연기.
 4646,employee,C1,unit_155,en_u155_n5,고용인,[이므프르오이이],hire an employee.,종업원을 고용하다.
 4647,vodka,C1,unit_155,en_u155_n5,보드카,[브아드크어],This is an example for vodka.,이것은 보드카 러시아산의 관련 실전 예문입니다.
@@ -4672,9 +4672,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4671,graham,C1,unit_156,en_u156_n5,헌맥,[르이어므],This is an example for graham.,이것은 전립분 전립분의 관련 실전 예문입니다.
 4672,mi,C1,unit_156,en_u156_n5,마일,[므이],This is an example for mi.,이것은 제 음 관련 실전 예문입니다.
 4673,fu,C1,unit_156,en_u156_n5,마리화나,[프우],This is an example for fu.,이것은 마리화나 관련 실전 예문입니다.
-4674,ivan,C1,unit_156,en_u156_n5,남자,[이브어느],This is an example for ivan.,이것은 남자 이름 관련 실전 예문입니다.
+4674,ivan,C1,unit_156,en_u156_n5,이반,[이브어느],This is an example for ivan.,이것은 남자 이름 관련 실전 예문입니다.
 4675,liam,C1,unit_156,en_u156_n5,liam,[liam],I use the word liam in daily life.,나는 일상에서 liam 단어를 사용합니다.
-4676,carla,C1,unit_156,en_u156_n5,여자,[크아르어],This is an example for carla.,이것은 여자 이름 관련 실전 예문입니다.
+4676,carla,C1,unit_156,en_u156_n5,카를라,[크아르어],This is an example for carla.,이것은 여자 이름 관련 실전 예문입니다.
 4677,entertainment,C1,unit_156,en_u156_n5,마음에,[느트어르트이느므어느트],good entertainment.,융숭한 대접.
 4678,uhh,C1,unit_156,en_u156_n5,uhh,[uhh],I use the word uhh in daily life.,나는 일상에서 uhh 단어를 사용합니다.
 4679,lincoln,C1,unit_156,en_u156_n5,링컨,[르으크어느],This is an example for lincoln.,이것은 링컨 남자 관련 실전 예문입니다.
@@ -4688,7 +4688,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4687,chicks,C1,unit_157,en_u157_n1,병아리,[츠이크],a poor fatherless chick.,아버지가 없는 불쌍한 아이. 3.《속어》 젊은 여자 계집애. 4.《미·속어》 （불량배 사이에서） 교도소 음식.
 4688,traditional,C1,unit_157,en_u157_n1,재래,[트르어드쉬어느르],a traditional Spanish festival.,전통을 본받은 스페인의 제전. 3.구식 재즈의.
 4689,independent,C1,unit_157,en_u157_n1,남에게,[느드이프느드어느트],an independent country.,독립국.
-4690,leslie,C1,unit_157,en_u157_n1,남자,[르스르이],This is an example for leslie.,이것은 남자 이름 관련 실전 예문입니다.
+4690,leslie,C1,unit_157,en_u157_n1,레슬리,[르스르이],This is an example for leslie.,이것은 남자 이름 관련 실전 예문입니다.
 4691,lauren,C1,unit_157,en_u157_n2,lauren,[lauren],I use the word lauren in daily life.,나는 일상에서 lauren 단어를 사용합니다.
 4692,grandson,C1,unit_157,en_u157_n2,손자,[르애느드스어느],This is an example for grandson.,이것은 손자 관련 실전 예문입니다.
 4693,brandon,C1,unit_157,en_u157_n2,brandon,[brandon],I use the word brandon in daily life.,나는 일상에서 brandon 단어를 사용합니다.
@@ -4702,7 +4702,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4701,spider,C1,unit_157,en_u157_n5,거미,[스프이드어르],This is an example for spider.,이것은 거미 비슷한 관련 실전 예문입니다.
 4702,northern,C1,unit_157,en_u157_n5,북부,[느오르드어르느],Northern Europe.,북유럽.
 4703,praying,C1,unit_157,en_u157_n5,기도,[praying],This is an example for praying.,이것은 기도 기원 관련 실전 예문입니다.
-4704,antonio,C1,unit_157,en_u157_n5,남자,[애느트우느이우],This is an example for antonio.,이것은 남자 이름 관련 실전 예문입니다.
+4704,antonio,C1,unit_157,en_u157_n5,안토니오,[애느트우느이우],This is an example for antonio.,이것은 남자 이름 관련 실전 예문입니다.
 4705,con,C1,unit_157,en_u157_n5,사기,[크어느],This is an example for con.,이것은 접두사「함께」 「전혀」 관련 실전 예문입니다.
 4706,australia,C1,unit_157,en_u157_n5,호주,[오스트르이르이어],This is an example for australia.,이것은 오스트레일리아 대륙 관련 실전 예문입니다.
 4707,cellphone,C1,unit_157,en_u157_n5,휴대,[cellphone],Call me on my cellphone around six please.6.,시쯤에 내 휴대 전화로 전화해 주세요.
@@ -4725,7 +4725,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4724,mitch,C1,unit_158,en_u158_n2,학교를,[므이츠],This is an example for mitch.,이것은 학교를 빼먹다 관련 실전 예문입니다.
 4725,mexican,C1,unit_158,en_u158_n2,멕시코,[므크스이크어느],This is an example for mexican.,이것은 멕시코 멕시코어의 관련 실전 예문입니다.
 4726,casino,C1,unit_158,en_u158_n2,소별장,[크어스느오],This is an example for casino.,이것은 카지노 도박장 관련 실전 예문입니다.
-4727,diego,C1,unit_158,en_u158_n2,남자,[드이이오],This is an example for diego.,이것은 남자 이름 관련 실전 예문입니다.
+4727,diego,C1,unit_158,en_u158_n2,디에고,[드이이오],This is an example for diego.,이것은 남자 이름 관련 실전 예문입니다.
 4728,dutch,C1,unit_158,en_u158_n2,마누라,[드어츠],This is an example for dutch.,이것은 마누라 아내 관련 실전 예문입니다.
 4729,promotion,C1,unit_158,en_u158_n2,진흥,[프르어므우쉬어느],obtain promotion.,승진하다. 2.조장 촉진 조성 증진; （보급） 진흥 장려; 자극.
 4730,forgiveness,C1,unit_158,en_u158_n2,관대,[프어르브느이스],ask for forgiveness for ones sins.,자신의 죄에 대하여 용서를 청하다. 2.관대함 관용.
@@ -4749,9 +4749,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4748,celebrating,C1,unit_159,en_u159_n1,축하,[스르어브르이트],celebrate ones birthday.,생일을 축하하다.
 4749,ram,C1,unit_159,en_u159_n1,격돌하다,[르애므],ram ones head against a post.,기둥에 머리를 들이받다. 2. …을 심하게 연타하다; 〈말뚝 등을〉 〔…에〕 박아 넣다 밀어 넣다 〔down in into …〕; 〈기둥·묘목 등을〉 주위의 흙을 다져서 단단하게 서게 하다; 〈흙·땅을〉 다지다 굳히다.
 4750,bonnie,C1,unit_159,en_u159_n1,보아서,[브아느이],This is an example for bonnie.,이것은 보아서 기분 관련 실전 예문입니다.
-4751,leonard,C1,unit_159,en_u159_n2,남자,[르느어르드],This is an example for leonard.,이것은 남자 이름 관련 실전 예문입니다.
-4752,elliot,C1,unit_159,en_u159_n2,남자,[르이어트],This is an example for elliot.,이것은 남자 이름 관련 실전 예문입니다.
-4753,jill,C1,unit_159,en_u159_n2,여자,[즈이르],This is an example for jill.,이것은 여자 이름 관련 실전 예문입니다.
+4751,leonard,C1,unit_159,en_u159_n2,레너드,[르느어르드],This is an example for leonard.,이것은 남자 이름 관련 실전 예문입니다.
+4752,elliot,C1,unit_159,en_u159_n2,엘리엇,[르이어트],This is an example for elliot.,이것은 남자 이름 관련 실전 예문입니다.
+4753,jill,C1,unit_159,en_u159_n2,질,[즈이르],This is an example for jill.,이것은 여자 이름 관련 실전 예문입니다.
 4754,ranch,C1,unit_159,en_u159_n2,대목장,[르애느츠],a chicken ranch.,양계장. 2.《주로 미국 서부》 （대규모의） 목축장 （말·소·양 등의 방목장).
 4755,safer,C1,unit_159,en_u159_n2,안전한,[스에이프],a safe place to swim.,안심하고 수영할 수 있는 곳.
 4756,worn,C1,unit_159,en_u159_n2,닳아빠지다,[우오르느],a worn coat.,닳아서 해진 외투. 2.〈사람이〉 지쳐빠진; 야윈.
@@ -4759,10 +4759,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4758,heather,C1,unit_159,en_u159_n2,히스속의,[흐드어르],This is an example for heather.,이것은 각종 히스의 관련 실전 예문입니다.
 4759,ash,C1,unit_159,en_u159_n2,양풀푸레나무,[애쉬],white as ashes(.,얼굴이) 창백하여.
 4760,assuming,C1,unit_159,en_u159_n2,젠체하는,[어스므이으],assuming there is not going to be a nuclear war.,핵전쟁은 일어나지 않는다고 일단 가정하여.
-4761,dana,C1,unit_159,en_u159_n5,남자,[드이느어],This is an example for dana.,이것은 남자 이름 관련 실전 예문입니다.
+4761,dana,C1,unit_159,en_u159_n5,다나,[드이느어],This is an example for dana.,이것은 남자 이름 관련 실전 예문입니다.
 4762,conspiracy,C1,unit_159,en_u159_n5,공모,[크어느스프르어스이],a conspiracy of silence(.,자기 편에 이롭지 못한 일에 대한) 묵살하자는 결탁.
 4763,thanksgiving,C1,unit_159,en_u159_n5,사은,[스애으크스브이으],harvest thanksgiving.,추수 감사제. 3.《T-》 《미》 ＝Thanksgiving Day.
-4764,pierre,C1,unit_159,en_u159_n5,남자,[프이어르],This is an example for pierre.,이것은 남자 이름 관련 실전 예문입니다.
+4764,pierre,C1,unit_159,en_u159_n5,피에르,[프이어르],This is an example for pierre.,이것은 남자 이름 관련 실전 예문입니다.
 4765,yen,C1,unit_159,en_u159_n5,엔화,[이에느],This is an example for yen.,이것은 엔 일본의 관련 실전 예문입니다.
 4766,megan,C1,unit_159,en_u159_n5,megan,[megan],I use the word megan in daily life.,나는 일상에서 megan 단어를 사용합니다.
 4767,ashes,C1,unit_159,en_u159_n5,재,[애쉬],white as ashes(.,얼굴이) 창백하여.
@@ -4771,9 +4771,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4770,kang,C1,unit_159,en_u159_n5,kang,[kang],I use the word kang in daily life.,나는 일상에서 kang 단어를 사용합니다.
 4771,closely,C1,unit_160,en_u160_n1,면밀히,[크르우스르이],She closely resembles her mother.,그녀는 어머니를 꼭 닮았다. 2.빈틈없이 꽉 꼭.
 4772,pearl,C1,unit_160,en_u160_n1,진주,[프어르],a pearl fishery.,진주 양식장.
-4773,adrian,C1,unit_160,en_u160_n1,남자,[이드르이어느],This is an example for adrian.,이것은 남자 이름 관련 실전 예문입니다.
+4773,adrian,C1,unit_160,en_u160_n1,아드리안,[이드르이어느],This is an example for adrian.,이것은 남자 이름 관련 실전 예문입니다.
 4774,priority,C1,unit_160,en_u160_n1,교통순위우선,[프르아이오르어트이],priority of birth.,먼저 태어남.
-4775,donald,C1,unit_160,en_u160_n1,남자,[드아느어르드],This is an example for donald.,이것은 남자 이름 관련 실전 예문입니다.
+4775,donald,C1,unit_160,en_u160_n1,도널드,[드아느어르드],This is an example for donald.,이것은 남자 이름 관련 실전 예문입니다.
 4776,happier,C1,unit_160,en_u160_n1,기쁜,[흐애프이],Im happy to hear your voice.,당신 목소리를 들으니 기쁘군요.
 4777,khan,C1,unit_160,en_u160_n1,대상의,[크아느],This is an example for khan.,이것은 칸 한 관련 실전 예문입니다.
 4778,struggling,C1,unit_160,en_u160_n1,기를쓰는,[스트르어르이으],a struggling painter.,분투하는 화가.
@@ -4802,7 +4802,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4801,closest,C1,unit_161,en_u161_n1,닫다,[크르오즈],close an umbrella.,우산을 접다.
 4802,combination,C1,unit_161,en_u161_n1,공동,[크아므브어느이쉬어느],make a good combination.,좋은 결합이 되다. 2.（몇 개를 합친） 결합체 짜 맞춘 것; 《주로 미》 복합 기능을 가진 것.
 4803,nanny,C1,unit_161,en_u161_n1,유모,[느애느이],This is an example for nanny.,이것은 유모 아이보는 관련 실전 예문입니다.
-4804,seth,C1,unit_161,en_u161_n1,남자,[스에스],This is an example for seth.,이것은 남자 이름 관련 실전 예문입니다.
+4804,seth,C1,unit_161,en_u161_n1,세스,[스에스],This is an example for seth.,이것은 남자 이름 관련 실전 예문입니다.
 4805,gabriel,C1,unit_161,en_u161_n1,천사,[이브르이어르],This is an example for gabriel.,이것은 남자 이름 관련 실전 예문입니다.
 4806,detectives,C1,unit_161,en_u161_n1,탐정,[드이트크트이브],a private detective.,사립 탐정.
 4807,en,C1,unit_161,en_u161_n1,n자,[에느],This is an example for en.,이것은 n자 반각 관련 실전 예문입니다.
@@ -4813,7 +4813,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4812,pm,C1,unit_161,en_u161_n2,pm,[pm],This is an example for pm.,이것은 pm 관련 실전 예문입니다.
 4813,yang,C1,unit_161,en_u161_n2,양,[이아으],This is an example for yang.,이것은 양 관련 실전 예문입니다.
 4814,halloween,C1,unit_161,en_u161_n2,제성절의,[흐애르오느],This is an example for halloween.,이것은 핼로윈 만성절 관련 실전 예문입니다.
-4815,ellie,C1,unit_161,en_u161_n2,여자,[르이],This is an example for ellie.,이것은 여자 이름 관련 실전 예문입니다.
+4815,ellie,C1,unit_161,en_u161_n2,엘리,[르이],This is an example for ellie.,이것은 여자 이름 관련 실전 예문입니다.
 4816,vulnerable,C1,unit_161,en_u161_n2,취약한,[브어르느어르어브르],His moral position is vulnerable to criticism.,그는 도덕면에서 비난을 받기 쉬운 입장에 있다.
 4817,comrades,C1,unit_161,en_u161_n2,동료,[크아므르애드],a comrade in arms.,전우. 2.（같은 정당 등에 속하는） 당원 단원 동지; 《the comrades》《특히》 공산당원 극좌적인 사고 방식을 가진 사람; 《호칭·칭호로서》 동지.
 4818,bureau,C1,unit_161,en_u161_n2,사무국,[브이어르오],the Bureau of the Mint(.,미국 재무부의) 조폐국.
@@ -4843,11 +4843,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4842,relative,C1,unit_162,en_u162_n2,관계대명사,[르어트이브],a near relative.,근친자.
 4843,burger,C1,unit_162,en_u162_n2,햄버거스테이크,[브어르어르],This is an example for burger.,이것은 햄버거 고기 관련 실전 예문입니다.
 4844,dough,C1,unit_162,en_u162_n2,반죽,[드오],throw ones dough around.,돈을 낭비하다.
-4845,alicia,C1,unit_162,en_u162_n2,여자,[어르쉬어],This is an example for alicia.,이것은 여자 이름 관련 실전 예문입니다.
-4846,christina,C1,unit_162,en_u162_n2,여자,[크르이스트느어],This is an example for christina.,이것은 여자 이름 관련 실전 예문입니다.
+4845,alicia,C1,unit_162,en_u162_n2,알리시아,[어르쉬어],This is an example for alicia.,이것은 여자 이름 관련 실전 예문입니다.
+4846,christina,C1,unit_162,en_u162_n2,크리스티나,[크르이스트느어],This is an example for christina.,이것은 여자 이름 관련 실전 예문입니다.
 4847,physically,C1,unit_162,en_u162_n2,자연,[프즈이크어르이],Its physically impossible to travel faster than the speed of light.,빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다. 2.《비격식》 완전히 전혀.
-4848,eli,C1,unit_162,en_u162_n2,남자,[르아이],This is an example for eli.,이것은 남자 이름 관련 실전 예문입니다.
-4849,samantha,C1,unit_162,en_u162_n2,여자,[스어므애느스어],This is an example for samantha.,이것은 여자 이름 관련 실전 예문입니다.
+4848,eli,C1,unit_162,en_u162_n2,엘리,[르아이],This is an example for eli.,이것은 남자 이름 관련 실전 예문입니다.
+4849,samantha,C1,unit_162,en_u162_n2,사만다,[스어므애느스어],This is an example for samantha.,이것은 여자 이름 관련 실전 예문입니다.
 4850,spiritual,C1,unit_162,en_u162_n2,신성하다,[스프르이츠우어르],ones spiritual presence.,정신적 존재.
 4851,sire,C1,unit_162,en_u162_n5,폐하,[스아이어르],This is an example for sire.,이것은 아비 부수 관련 실전 예문입니다.
 4852,roaring,C1,unit_162,en_u162_n5,굉굉히,[르오르이으],roaring applause.,떠나갈 듯한 갈채.
@@ -4860,21 +4860,21 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4859,stink,C1,unit_162,en_u162_n5,냄새를,[스트이으크],a dirty refrigerator that stinks.,악취 나는 더러운 냉장고.
 4860,homer,C1,unit_162,en_u162_n5,전서비둘기,[흐우므어르],This is an example for homer.,이것은 호메르 고대 관련 실전 예문입니다.
 4861,tara,C1,unit_163,en_u163_n1,타라,[트애르어],This is an example for tara.,이것은 타라 아일랜드 관련 실전 예문입니다.
-4862,christopher,C1,unit_163,en_u163_n1,남자,[크르스트어프어르],This is an example for christopher.,이것은 남자 이름 관련 실전 예문입니다.
+4862,christopher,C1,unit_163,en_u163_n1,크리스토퍼,[크르스트어프어르],This is an example for christopher.,이것은 남자 이름 관련 실전 예문입니다.
 4863,shield,C1,unit_163,en_u163_n1,방패,[쉬이르드],both sides of the shield.,방패의 양면; 사물의 표리.
 4864,shooter,C1,unit_163,en_u163_n1,포수,[쉬트어르],This is an example for shooter.,이것은 쏘는 사람 관련 실전 예문입니다.
 4865,rehearsal,C1,unit_163,en_u163_n1,낭송,[르이흐어르스어르],a concert rehearsal.,음악회의 연습.
 4866,disturbing,C1,unit_163,en_u163_n1,평온을,[드이스트어르브이으],a disturbing report.,사람을 불안하게 하는 보고.
 4867,sirens,C1,unit_163,en_u163_n1,사이렌,[스이어르어느],a siren song.,감미로운 유혹 저항할 수 없는 매력. 2.매혹적인 미녀; 요부; 목소리가 아름다운 여가수. 3.호적 경적 사이렌.
-4868,dorothy,C1,unit_163,en_u163_n1,여자,[드오르어스어],This is an example for dorothy.,이것은 여자 이름 관련 실전 예문입니다.
+4868,dorothy,C1,unit_163,en_u163_n1,도로시,[드오르어스어],This is an example for dorothy.,이것은 여자 이름 관련 실전 예문입니다.
 4869,bait,C1,unit_163,en_u163_n1,먹이를,[브에이트],a live bait.,산 미끼.
 4870,heroin,C1,unit_163,en_u163_n1,모르핀,[흐르오이느],This is an example for heroin.,이것은 헤로인 마취제·마약의 관련 실전 예문입니다.
-4871,tracy,C1,unit_163,en_u163_n2,여자,[트르이스이],This is an example for tracy.,이것은 여자 이름 관련 실전 예문입니다.
+4871,tracy,C1,unit_163,en_u163_n2,트레이시,[트르이스이],This is an example for tracy.,이것은 여자 이름 관련 실전 예문입니다.
 4872,rex,C1,unit_163,en_u163_n2,현국왕,[르에크스],This is an example for rex.,이것은 ｛라틴어｝ 왕 관련 실전 예문입니다.
 4873,barney,C1,unit_163,en_u163_n2,짜고,[브아르느이],This is an example for barney.,이것은 토론 언쟁 관련 실전 예문입니다.
 4874,gossip,C1,unit_163,en_u163_n2,수다,[아스어프],a bit of gossip.,짤막한 가십.
 4875,humble,C1,unit_163,en_u163_n2,스스로를,[흐어므브르],a humble attitude.,겸손한 태도.
-4876,clara,C1,unit_163,en_u163_n2,여자,[크르에어르어],This is an example for clara.,이것은 여자 이름 관련 실전 예문입니다.
+4876,clara,C1,unit_163,en_u163_n2,클라라,[크르에어르어],This is an example for clara.,이것은 여자 이름 관련 실전 예문입니다.
 4877,threaten,C1,unit_163,en_u163_n2,닥치고,[스르트느],threaten dismissal.,해고하겠다고 위협하다.
 4878,et,C1,unit_163,en_u163_n2,｛프랑스어｝,[에트에],This is an example for et.,이것은 ｛프랑스어｝ 관련 실전 예문입니다.
 4879,supreme,C1,unit_163,en_u163_n2,지고의,[스어프르므],the supreme ruler.,최고 통치자. 2.《한정적》 （품질·정도·성격·중요성 등이） 최고의 지고의; 최대의 극도의 대단한.
@@ -4886,20 +4886,20 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4885,lit,C1,unit_163,en_u163_n5,과거·과거,[르이트],This is an example for lit.,이것은 과거·과거 분사형 관련 실전 예문입니다.
 4886,dale,C1,unit_163,en_u163_n5,골짜기,[드에이르],This is an example for dale.,이것은 골짜기 넓은 관련 실전 예문입니다.
 4887,killers,C1,unit_163,en_u163_n5,죽이는,[크르어르],This is an example for killers.,이것은 죽이는 사람 관련 실전 예문입니다.
-4888,connor,C1,unit_163,en_u163_n5,남자,[크아느어르],This is an example for connor.,이것은 남자 이름 관련 실전 예문입니다.
+4888,connor,C1,unit_163,en_u163_n5,코너,[크아느어르],This is an example for connor.,이것은 남자 이름 관련 실전 예문입니다.
 4889,mario,C1,unit_163,en_u163_n5,mario,[mario],I use the word mario in daily life.,나는 일상에서 mario 단어를 사용합니다.
 4890,foul,C1,unit_163,en_u163_n5,충돌하다,[프아우르],a foul odor.,악취.
 4891,coma,C1,unit_164,en_u164_n1,씨의,[크우므어],fall into a coma.,혼수 상태에 빠지다.
 4892,laying,C1,unit_164,en_u164_n1,꼬는,[르이이으],This is an example for laying.,이것은 쌓기 두기 관련 실전 예문입니다.
 4893,coffin,C1,unit_164,en_u164_n1,관,[크오프이느],in ones coffin.,죽어서 매장되어.
-4894,paula,C1,unit_164,en_u164_n1,여자,[프오르어],This is an example for paula.,이것은 여자 이름 관련 실전 예문입니다.
+4894,paula,C1,unit_164,en_u164_n1,폴라,[프오르어],This is an example for paula.,이것은 여자 이름 관련 실전 예문입니다.
 4895,cocaine,C1,unit_164,en_u164_n1,코카인,[크오크이느],This is an example for cocaine.,이것은 코카인 국부 관련 실전 예문입니다.
 4896,louder,C1,unit_164,en_u164_n1,더큰,[르아우드],in a loud voice.,크게 잘 들리는 소리로.
 4897,announcement,C1,unit_164,en_u164_n1,발표,[어느우느스므어느트],This is an example for announcement.,이것은 공고 고지 관련 실전 예문입니다.
 4898,oath,C1,unit_164,en_u164_n1,선서하다,[오스],a false oath.,거짓 맹세.
 4899,mob,C1,unit_164,en_u164_n1,군중,[므아브],mob psychology.,군중 심리.
 4900,injuries,C1,unit_164,en_u164_n1,상해,[느즈어르이],internal injuries.,내상.
-4901,jen,C1,unit_164,en_u164_n2,여자,[즈에느],This is an example for jen.,이것은 여자 이름 관련 실전 예문입니다.
+4901,jen,C1,unit_164,en_u164_n2,젠,[즈에느],This is an example for jen.,이것은 여자 이름 관련 실전 예문입니다.
 4902,autopsy,C1,unit_164,en_u164_n2,검시,[오트아프스이],carry out an autopsy.,부검을 실시하다.
 4903,gig,C1,unit_164,en_u164_n2,가벼운,[이],This is an example for gig.,이것은 기그 긴 관련 실전 예문입니다.
 4904,skinny,C1,unit_164,en_u164_n2,날씬한,[스크느이],This is an example for skinny.,이것은 피골이 상접한 관련 실전 예문입니다.
@@ -4915,19 +4915,19 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4914,personnel,C1,unit_164,en_u164_n5,요원,[프어르스어느르],medical personnel.,의료 직원.
 4915,counselor,C1,unit_164,en_u164_n5,고문,[크우느스어르어르오느이르와발음이같음],a juridical counselor.,법률 고문. 2.①《미》 카운슬러 지도 교사: 고교생 등의 개인·학습 문제에 관하여 조언·지도를 담당하는 교사. ②아동 캠프의 지도원. 3.《미》 변호사 （특히） 법정 변론 변호사. 4.（대사관의） 참사관.
 4916,allen,C1,unit_164,en_u164_n5,알렌,[애르어느],This is an example for allen.,이것은 알렌 남자 관련 실전 예문입니다.
-4917,audrey,C1,unit_164,en_u164_n5,여자,[오드르이],This is an example for audrey.,이것은 여자 이름 관련 실전 예문입니다.
+4917,audrey,C1,unit_164,en_u164_n5,오드리,[오드르이],This is an example for audrey.,이것은 여자 이름 관련 실전 예문입니다.
 4918,spotted,C1,unit_164,en_u164_n5,반점이,[스프아트이드],This is an example for spotted.,이것은 반점이 있는 관련 실전 예문입니다.
 4919,floating,C1,unit_164,en_u164_n5,두둥실,[프르우트이으],a floating pier.,부잔교.
 4920,journalist,C1,unit_164,en_u164_n5,기자,[즈어르느어르이스트],This is an example for journalist.,이것은 저널리스트 기자 관련 실전 예문입니다.
 4921,operator,C1,unit_165,en_u165_n1,교환수,[아프어르이트어르],a cinema operator.,영사 기사.
 4922,singh,C1,unit_165,en_u165_n1,singh,[singh],I use the word singh in daily life.,나는 일상에서 singh 단어를 사용합니다.
-4923,leon,C1,unit_165,en_u165_n1,남자,[르어느],This is an example for leon.,이것은 남자 이름 관련 실전 예문입니다.
-4924,walt,C1,unit_165,en_u165_n1,남자,[우오르트],This is an example for walt.,이것은 남자 이름 관련 실전 예문입니다.
+4923,leon,C1,unit_165,en_u165_n1,레온,[르어느],This is an example for leon.,이것은 남자 이름 관련 실전 예문입니다.
+4924,walt,C1,unit_165,en_u165_n1,월트,[우오르트],This is an example for walt.,이것은 남자 이름 관련 실전 예문입니다.
 4925,eastern,C1,unit_165,en_u165_n1,동쪽,[스트어르느],the Eastern States.,미국 동부의 여러 주.
 4926,ay,C1,unit_165,en_u165_n1,아아,[에이],This is an example for ay.,이것은 아아 어머나 관련 실전 예문입니다.
 4927,remaining,C1,unit_165,en_u165_n1,남아,[르이므이느이으],remaining problems.,남겨진 문제.
 4928,anderson,C1,unit_165,en_u165_n1,앤더슨,[애느드어르스느],This is an example for anderson.,이것은 앤더슨 미국의 관련 실전 예문입니다.
-4929,nora,C1,unit_165,en_u165_n1,여자,[느오르어],This is an example for nora.,이것은 여자 이름 관련 실전 예문입니다.
+4929,nora,C1,unit_165,en_u165_n1,노라,[느오르어],This is an example for nora.,이것은 여자 이름 관련 실전 예문입니다.
 4930,si,C1,unit_165,en_u165_n1,예,[스이],This is an example for si.,이것은 시 B음 관련 실전 예문입니다.
 4931,december,C1,unit_165,en_u165_n2,십이월,[드이스므브어르],This is an example for december.,이것은 월 약자 관련 실전 예문입니다.
 4932,anonymous,C1,unit_165,en_u165_n2,작자불명의,[어느아느어므어스],an anonymous letter.,익명의 편지.
@@ -4936,7 +4936,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4935,error,C1,unit_165,en_u165_n2,과실,[르어르],a grave error.,심각한 오류.
 4936,reporting,C1,unit_165,en_u165_n2,정보,[르이프오르트이으],This is an example for reporting.,이것은 정보 제공 관련 실전 예문입니다.
 4937,egypt,C1,unit_165,en_u165_n2,이집트,[즈이프트],This is an example for egypt.,이것은 이집트 아프리카 관련 실전 예문입니다.
-4938,jules,C1,unit_165,en_u165_n2,남자,[즈우르즈],This is an example for jules.,이것은 남자 이름 관련 실전 예문입니다.
+4938,jules,C1,unit_165,en_u165_n2,줄스,[즈우르즈],This is an example for jules.,이것은 남자 이름 관련 실전 예문입니다.
 4939,roommate,C1,unit_165,en_u165_n2,동거인,[roommate],This is an example for roommate.,이것은 한 방을 관련 실전 예문입니다.
 4940,scum,C1,unit_165,en_u165_n2,더껑이,[스크어므],milk scum(.,뜨거워졌을 때 생기는) 우유의 더껑이. 2.찌꺼기 쓰레기. 3.《종종 집합적》 《구어》 인간 쓰레기 오합지졸.
 4941,visitor,C1,unit_165,en_u165_n5,장학사,[브즈이트어르],visitors at a hotel.,호텔의 숙박객.
@@ -4948,7 +4948,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4947,misery,C1,unit_165,en_u165_n5,비참,[므즈어르이],live in misery.,비참한 생활을 하다.
 4948,theft,C1,unit_165,en_u165_n5,도둑질,[스에프트],commit a theft.,도둑질하다. 2.〔야구〕 도루.
 4949,darn,C1,unit_165,en_u165_n5,꿰메,[드아르느],Darn up the hole in this sock.,이 양말의 구멍을 꿰매 줘요. 명사꿰매기 짜깁기; 꿰맨 자리.
-4950,andrea,C1,unit_165,en_u165_n5,여자,[애느드르이어],This is an example for andrea.,이것은 여자 이름 관련 실전 예문입니다.
+4950,andrea,C1,unit_165,en_u165_n5,안드레아,[애느드르이어],This is an example for andrea.,이것은 여자 이름 관련 실전 예문입니다.
 4951,faithful,C1,unit_166,en_u166_n1,참되다,[프이스프어르],a faithful wife.,정숙한 아내.
 4952,hector,C1,unit_166,en_u166_n1,헥토르,[흐크트어르],This is an example for hector.,이것은 헥토르 Priam의 관련 실전 예문입니다.
 4953,silk,C1,unit_166,en_u166_n1,견직물,[스이르크],raw silk.,생사. 2.《종종 silks》비단 옷.
@@ -4959,7 +4959,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4958,jew,C1,unit_166,en_u166_n1,유대인,[즈우],This is an example for jew.,이것은 유대인 이스라엘인 관련 실전 예문입니다.
 4959,corporal,C1,unit_166,en_u166_n1,상등병,[크오르프어르어르],corporal infirmities.,육체적 결함.
 4960,realised,C1,unit_166,en_u166_n1,깨닫다,[르어르이즈],realize ones errors.,자기의 실패를 깨닫다.
-4961,del,C1,unit_166,en_u166_n2,기호,[드에르],This is an example for del.,이것은 기호 벡터 관련 실전 예문입니다.
+4961,del,C1,unit_166,en_u166_n2,델연산자,[드에르],This is an example for del.,이것은 기호 벡터 관련 실전 예문입니다.
 4962,rap,C1,unit_166,en_u166_n2,고소,[르애프],rap a person on the shoulder.,남의 어깨를 톡톡 치다. 2.《미》 …을 소리질러 말하다 심하게 소리치다 준엄하게 말하다〔out〕. 3.《속어》 〈남을〉 체포하다 〈남에게〉 형을 선고하다. 4.〈남을〉 꾸짖다 비난하다. 자동사1. 〔…을〕 가볍게 두드리다〔on at …〕.
 4963,hopeless,C1,unit_166,en_u166_n2,가망없는,[흐우프르이스],a hopeless illness.,불치의 병.
 4964,luckily,C1,unit_166,en_u166_n2,상서롭게,[르어크이르이],Luckily he knows the answer.,다행히도 그는 답을 알고 있다.
@@ -4976,7 +4976,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4975,defence,C1,unit_166,en_u166_n5,defence,[드이프느스],This is an example for defence.,이것은 defence 관련 실전 예문입니다.
 4976,cabinet,C1,unit_166,en_u166_n5,가구용의,[크애브어느이트],a single-party Cabinet.,단독 내각.
 4977,gibbs,C1,unit_166,en_u166_n5,기브스,[브즈],This is an example for gibbs.,이것은 기브스 미국의 관련 실전 예문입니다.
-4978,wolves,C1,unit_166,en_u166_n5,복수형,[우우르브즈],This is an example for wolves.,이것은 복수형 관련 실전 예문입니다.
+4978,wolves,C1,unit_166,en_u166_n5,늑대들,[우우르브즈],This is an example for wolves.,이것은 복수형 관련 실전 예문입니다.
 4979,filming,C1,unit_166,en_u166_n5,촬영,[프르므이으],This is an example for filming.,이것은 촬영 영화 관련 실전 예문입니다.
 4980,dunno,C1,unit_166,en_u166_n5,know의,[드어느우],This is an example for dunno.,이것은 know의 단축형 관련 실전 예문입니다.
 4981,sorrow,C1,unit_167,en_u167_n1,고난,[스아르오],in deep sorrow.,깊은 슬픔에서.
@@ -4992,7 +4992,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_EN,Example_KO
 4991,african,C1,unit_167,en_u167_n2,아프리카,[애프르이크어느],This is an example for african.,이것은 아프리카 아프리카인의 관련 실전 예문입니다.
 4992,arrangements,C1,unit_167,en_u167_n2,채비,[어르이느즈므어느트],flower arrangement.,꽃꽂이.
 4993,believing,C1,unit_167,en_u167_n2,믿음이,[브이르브이으],This is an example for believing.,이것은 믿는 신앙심 관련 실전 예문입니다.
-4994,rosa,C1,unit_167,en_u167_n2,여자,[르우즈어],This is an example for rosa.,이것은 여자 이름 관련 실전 예문입니다.
+4994,rosa,C1,unit_167,en_u167_n2,로사,[르우즈어],This is an example for rosa.,이것은 여자 이름 관련 실전 예문입니다.
 4995,jenna,C1,unit_167,en_u167_n2,jenna,[jenna],I use the word jenna in daily life.,나는 일상에서 jenna 단어를 사용합니다.
 4996,attacking,C1,unit_167,en_u167_n2,공격하다,[어트애크],attack a city.,도시를 공격하다.
 4997,sonic,C1,unit_167,en_u167_n2,음속의,[스아느이크],This is an example for sonic.,이것은 소리 음속의 관련 실전 예문입니다.

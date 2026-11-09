@@ -19,6 +19,23 @@ OUTPUT_CSV_PATH = os.path.join("data", "english_5000_master.csv")
 
 # 1순위 대표 뜻 지정 단어 (다의어/오염 방지)
 SPECIAL_MEANINGS = {
+    # 가족 및 핵심 인칭 어휘
+    'sister': '자매',
+    'brother': '형제',
+    'mother': '어머니',
+    'father': '아버지',
+    'parent': '부모',
+    'son': '아들',
+    'daughter': '딸',
+    'cousin': '사촌',
+    'woman': '여성',
+    'man': '남성',
+    'girl': '소녀',
+    'boy': '소년',
+    'grandmother': '할머니',
+    'grandfather': '할아버지',
+    'grandma': '할머니',
+    'grandpa': '할아버지',
     'club': '클럽',
     'kid': '아이',
     'red': '빨간색',
@@ -135,14 +152,77 @@ def clean_text_field(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-def clean_meaning_field(text, word):
+ABSTRACT_WORDS = {
+    '여자', '남자', '사람', '것', '때', '일', '곳', '점', '새끼', '곤봉', '개', '수', '등', '년', '쪽', '말',
+    '과거', '복수형', '과거분사', '이름', '사전', '단위', '기호'
+}
+DIRECT_CONCEPTS = {
+    'man': '남성', 'woman': '여성', 'person': '사람', 'human': '인간', 'thing': '것',
+    'time': '시간', 'work': '일', 'job': '직업', 'place': '장소', 'point': '점',
+    'horse': '말', 'year': '해', 'side': '쪽', 'name': '이름', 'past': '과거',
+    'unit': '단원', 'dictionary': '사전', 'guy': '남자'
+}
+TRAILING_JOSA = ('을', '를', '에', '의', '으로', '로', '와', '과', '에서', '에게', '이', '가')
+DISALLOWED_PARTICLES = {'을', '를', '에', '의', '로', '와', '과', '서', '도', '은', '는', '이', '가', '만', '게', '할', '일', '고', '며', '랑', '않', '하', '되', '인', '된', '1'}
+
+def clean_korean_definition(all_definitions, word, example_ko=''):
+    """
+    사전 정의 리스트를 순회하여 가장 상식적이고 구체적인 대표 어휘를 자동 선택하는 폴백 알고리즘.
+    - 단순히 첫 번째 정의의 첫 단어(split()[0])를 취하지 않음.
+    - 1차 뜻이 너무 일반적이거나(예: '여자', '것', '사람'), 1글자이거나, 조사 파편인 경우
+      2순위, 3순위 의미를 순회하여 구체적이고 적합한 어휘(예: '자매', '어린이', '모임')를 자동 선택.
+    - 예문 해석(example_ko)과 일치하는 후보가 있을 경우 문맥상 최적 후보로 우선 채택.
+    """
     w_lower = word.lower().strip()
-    if w_lower in SPECIAL_MEANINGS:
-        return SPECIAL_MEANINGS[w_lower]
-    cleaned = clean_text_field(text)
-    # 단일 대표 뜻 추출
-    cleaned = cleaned.split()[0] if cleaned.split() else w_lower
-    return cleaned
+    if w_lower in DIRECT_CONCEPTS:
+        return DIRECT_CONCEPTS[w_lower]
+
+    clean_defs = []
+    for d in all_definitions:
+        cd = clean_text_field(d)
+        cd = re.sub(r'^(?:을|를|에|의|로|으로|와|과|보다|에서)\s+', '', cd).strip()
+        if cd:
+            clean_defs.append(cd)
+
+    if not clean_defs:
+        return w_lower
+
+    # 1단계: 단일어이면서 추상어가 아니고 조사 파편이 아닌 온전한 어휘 탐색
+    clean_singles = []
+    for d in clean_defs:
+        if ' ' not in d:
+            if d not in ABSTRACT_WORDS and not any(d.endswith(j) for j in TRAILING_JOSA) and d not in DISALLOWED_PARTICLES:
+                clean_singles.append(d)
+
+    if clean_singles:
+        # 예문 해석에 포함된 단어가 있으면 1순위 채택
+        if example_ko:
+            for sw in clean_singles:
+                if sw in example_ko:
+                    return sw
+        return clean_singles[0]
+
+    # 2단계: 구문(Phrase) 형태인 경우, 추상 수식어 배제 및 핵심 명사/어간 추출 또는 복합어 응축
+    for d in clean_defs:
+        tokens = d.split()
+        # 선두 수식어가 추상어인 경우(예: '여자 형제'), 후미의 핵심 명사('자매' or '형제') 추출
+        if tokens[0] in ABSTRACT_WORDS and len(tokens) >= 2:
+            head = tokens[-1]
+            if head not in ABSTRACT_WORDS and not any(head.endswith(j) for j in TRAILING_JOSA) and head not in DISALLOWED_PARTICLES:
+                return head
+        # 첫 단어의 조사를 제거하여 온전한 명사 추출 시도 (예: '스케이트를 타다' -> '스케이트')
+        first = tokens[0]
+        for j in ('을', '를', '가', '이'):
+            if first.endswith(j) and len(first) > len(j):
+                stem = first[:-len(j)]
+                if stem not in ABSTRACT_WORDS and len(stem) >= 2 and stem not in DISALLOWED_PARTICLES:
+                    return stem
+        # 자연스러운 복합어로 응축 (예: '아침 식사' -> '아침식사', '키가 큰' -> '키가큰')
+        condensed = d.replace(' ', '')
+        if not any(condensed.endswith(j) for j in ('을', '를', '가', '이')) and condensed not in DISALLOWED_PARTICLES:
+            return condensed
+
+    return clean_defs[0].split()[0]
 
 def load_kengdic(filepath):
     kengdic = {}
@@ -226,26 +306,7 @@ def build_clean_master():
             return None
         seen_words.add(w)
 
-        # 뜻 추출
-        meaning = ""
-        if w in SPECIAL_MEANINGS:
-            meaning = SPECIAL_MEANINGS[w]
-        else:
-            for mg in item.get('meanings', []):
-                for k in mg.get('ko', []):
-                    k_cl = clean_meaning_field(k, w)
-                    if k_cl:
-                        meaning = k_cl
-                        break
-                if meaning:
-                    break
-        if not meaning:
-            meaning = clean_meaning_field(item.get('meanings', [{}])[0].get('ko', [''])[0], w)
-
-        # 발음기호
-        pron = item.get('ipa', '').strip()
-
-        # 예문 및 해석
+        # 예문 및 해석 선제 추출 (의미 매칭에 활용)
         if w in SPECIAL_EXAMPLES:
             ex_en, ex_ko = SPECIAL_EXAMPLES[w]
         else:
@@ -253,6 +314,25 @@ def build_clean_master():
             if exs:
                 ex_en = clean_text_field(exs[0].get('en', ''))
                 ex_ko = clean_text_field(exs[0].get('ko', ''))
+            else:
+                ex_en = f"I use the word {w} every day."
+                ex_ko = ""
+
+        # 뜻 추출 (다단계 지능형 폴백 알고리즘 적용)
+        meaning = ""
+        if w in SPECIAL_MEANINGS:
+            meaning = SPECIAL_MEANINGS[w]
+        else:
+            all_defs = []
+            for mg in item.get('meanings', []):
+                all_defs.extend(mg.get('ko', []))
+            meaning = clean_korean_definition(all_defs, w, ex_ko)
+
+        if not ex_ko:
+            ex_ko = f"나는 매일 {meaning} 뜻의 단어를 사용한다."
+
+        # 발음기호
+        pron = item.get('ipa', '').strip()
             else:
                 ex_en = f"I use the word {w} every day."
                 ex_ko = f"나는 매일 {meaning} 뜻의 단어를 사용한다."

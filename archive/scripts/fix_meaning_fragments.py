@@ -9,6 +9,24 @@ import sys
 INPUT_CSV = 'data/english_5000_master.csv'
 
 AUTHORITATIVE_ENRICHED = {
+    # 가족 및 핵심 인칭 어휘
+    'sister': '자매',
+    'brother': '형제',
+    'mother': '어머니',
+    'father': '아버지',
+    'parent': '부모',
+    'son': '아들',
+    'daughter': '딸',
+    'cousin': '사촌',
+    'woman': '여성',
+    'man': '남성',
+    'girl': '소녀',
+    'boy': '소년',
+    'grandmother': '할머니',
+    'grandfather': '할아버지',
+    'grandma': '할머니',
+    'grandpa': '할아버지',
+
     # 1. Prepositions & Conjunctions & Modals (Explicit Prompt Requirements)
     'through': '통해',
     'against': '맞서',

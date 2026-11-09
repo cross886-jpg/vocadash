@@ -3,7 +3,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2,gracias,A1,unit_001,es_u1_n1,감사합니다,[그라시아스],Muchas gracias por su ayuda.,도와주셔서 대단히 감사합니다.
 3,sí,A1,unit_001,es_u1_n1,네,[시],Sí. estoy de acuerdo.,네 동의합니다.
 4,no,A1,unit_001,es_u1_n1,아니요,[노],No. gracias.,아니요 괜찮습니다.
-5,de,A1,unit_001,es_u1_n1,의,[데],Soy de Corea.,저는 한국 출신입니다.
+5,de,A1,unit_001,es_u1_n1,출신,[데],Soy de Corea.,저는 한국 출신입니다.
 6,amigo,A1,unit_001,es_u1_n1,친구,[아미고],Juan es mi mejor amigo.,후안은 내 가장 친한 친구다.
 7,café,A1,unit_001,es_u1_n1,커피,[카페],Tomo una taza de café caliente.,따뜻한 커피 한 잔을 마신다.
 8,es,A1,unit_001,es_u1_n2,이다,[에스],Es una buena idea.,좋은 생각이다.
@@ -42,21 +42,21 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 41,si,A1,unit_001,es_u1_n3,만약 라면,[시],,
 42,eso,A1,unit_001,es_u1_n3,그,[에소],Quiero eso.,저거 원해요.
 43,su,A1,unit_001,es_u1_n3,그의,[수],Este es su libro.,이것은 그분의 책입니다.
-44,las,A1,unit_001,es_u1_n3,는,[라스],Las flores son hermosas.,꽃들이 아름답다.
-45,del,A1,unit_002,es_u2_n1,의,[델],Vengo del trabajo.,일 끝나고 오는 길입니다.
+44,las,A1,unit_001,es_u1_n3,그들,[라스],Las flores son hermosas.,꽃들이 아름답다.
+45,del,A1,unit_002,es_u2_n1,~의,[델],Vengo del trabajo.,일 끝나고 오는 길입니다.
 46,como,A1,unit_002,es_u2_n1,처럼,[코모],Hazlo como quieras.,원하는 대로 해봐.
 47,aquí,A1,unit_002,es_u2_n1,여기,[아키],Vivo aquí en Alicante.,저는 여기 알리칸테에 삽니다.
 48,tu,A1,unit_002,es_u2_n1,당신,[투],¿Cuál es tu nombre?,네 이름이 뭐니?
 49,al,A1,unit_002,es_u2_n1,에게,[알],Voy al parque.,공원에 갑니다.
-50,más,A1,unit_002,es_u2_n1,더,[마스],Quiero más café.,커피 더 마시고 싶어요.
+50,más,A1,unit_002,es_u2_n1,더많은,[마스],Quiero más café.,커피 더 마시고 싶어요.
 51,le,A1,unit_002,es_u2_n1,그 사람,[레],Le compré un regalo.,그에게 선물을 샀어.
-52,esto,A1,unit_002,es_u2_n1,이,[에스토],Esto es muy importante.,이것은 매우 중요하다.
+52,esto,A1,unit_002,es_u2_n1,이것,[에스토],Esto es muy importante.,이것은 매우 중요하다.
 53,ya,A1,unit_002,es_u2_n1,이미,[야],Ya es tarde.,벌써 늦었다.
 54,estoy,A1,unit_002,es_u2_n2,있다,[에스토이],Estoy cansado hoy.,오늘 피곤해요.
 55,ahora,A1,unit_002,es_u2_n2,지금,[아오라],Hablemos ahora.,지금 얘기합시다.
 56,muy,A1,unit_002,es_u2_n2,매우,[무이],Hoy hace muy buen día.,오늘 날씨가 아주 좋네요.
-57,ha,A1,unit_002,es_u2_n2,하,[아],Ella ha salido.,그녀가 외출했다.
-58,esta,A1,unit_002,es_u2_n2,이,[에스타],Esta semana estaré ocupado.,이번 주는 바쁠 것이다.
+57,ha,A1,unit_002,es_u2_n2,했다,[아],Ella ha salido.,그녀가 외출했다.
+58,esta,A1,unit_002,es_u2_n2,이번,[에스타],Esta semana estaré ocupado.,이번 주는 바쁠 것이다.
 59,así,A1,unit_002,es_u2_n2,이렇게,[아시],Hazlo así.,이렇게 해보세요.
 60,vamos,A1,unit_002,es_u2_n2,가자,[바모스],¡Vamos a la playa!,해변으로 가자!
 61,algo,A1,unit_002,es_u2_n2,무언가,[알고],Quiero comer algo.,뭔가 좀 먹고 싶어요.
@@ -69,10 +69,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 68,nos,A1,unit_002,es_u2_n3,우리,[노스],Nos gusta viajar.,우리는 여행하는 것을 좋아한다.
 69,nada,A1,unit_002,es_u2_n3,아무것도,[나다],No pasa nada.,괜찮습니다 아무 일도 아니에요.
 70,cómo,A1,unit_002,es_u2_n3,어떻게,[코모],¿Cómo te llamas?,성함이 어떻게 되세요?
-71,este,A1,unit_002,es_u2_n3,이,[에스테],Este libro es interesante.,이 책은 재미있다.
+71,este,A1,unit_002,es_u2_n3,이것,[에스테],Este libro es interesante.,이 책은 재미있다.
 72,o,A1,unit_003,es_u3_n1,또는,[오],¿Prefieres agua o zumo?,물 마실래 아니면 주스 마실래?
 73,he,A1,unit_003,es_u3_n1,가지고 있다,[에],He comprado una bicicleta.,나는 자전거를 샀다.
-74,ser,A1,unit_003,es_u3_n1,있다,[세르],Quiero ser profesor.,선생님이 되고 싶다.
+74,ser,A1,unit_003,es_u3_n1,이다,[세르],Quiero ser profesor.,선생님이 되고 싶다.
 75,tiene,A1,unit_003,es_u3_n1,가지고 있다,[티에네],Ella tiene un gato blanco.,그녀는 흰 고양이를 키운다.
 76,puedo,A1,unit_003,es_u3_n1,할 수 있다,[푸에도],¿Puedo entrar?,들어가도 될까요?
 77,ella,A1,unit_003,es_u3_n1,그녀,[에야],Ella vive en Barcelona.,그녀는 바르셀로나에 산다.
@@ -81,7 +81,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 80,vez,A1,unit_003,es_u3_n2,시간,[베스],Otra vez por favor.,한 번 더 부탁드립니다.
 81,era,A1,unit_003,es_u3_n2,이었다,[에라],Era una noche tranquila.,조용한 밤이었다.
 82,soy,A1,unit_003,es_u3_n2,나는,[소이],Soy de Corea del Sur.,저는 한국 출신입니다.
-83,sólo,A1,unit_003,es_u3_n2,만,[소로],Sólo tengo cinco euros.,나는 겨우 5유로밖에 없다.
+83,sólo,A1,unit_003,es_u3_n2,오직,[소로],Sólo tengo cinco euros.,나는 겨우 5유로밖에 없다.
 84,todos,A1,unit_003,es_u3_n2,모두,[토도스],Todos están en casa.,모두 집에 있습니다.
 85,porque,A1,unit_003,es_u3_n2,왜냐하면,[포르께],No fui porque llovía.,비가 와서 가지 않았다.
 86,son,A1,unit_003,es_u3_n2,이다,[손],Ellos son muy amables.,그들은 매우 친절하다.
@@ -118,7 +118,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 117,has,A1,unit_004,es_u4_n2,당신은,[아스],¿Has visto mis llaves?,내 열쇠 봤니?
 118,decir,A1,unit_004,es_u4_n3,말하다,[데시르],Quiero decir la verdad.,진실을 말하고 싶다.
 119,también,A1,unit_004,es_u4_n3,또한,[탐비엔],Yo también estudio español.,나도 스페인어를 공부한다.
-120,sobre,A1,unit_004,es_u4_n3,약,[소브레],El libro está sobre la mesa.,책이 탁자 위에 있다.
+120,sobre,A1,unit_004,es_u4_n3,위에,[소브레],El libro está sobre la mesa.,책이 탁자 위에 있다.
 121,dios,A1,unit_004,es_u4_n3,신,[디오스],¡Dios mío qué sorpresa!,세상에나 깜짝이야!
 122,sin,A1,unit_004,es_u4_n3,없이,[신],Un café sin azúcar por favor.,설탕 뺀 커피 한 잔 주세요.
 123,tenemos,A1,unit_004,es_u4_n3,가지고 있다,[테네모스],Tenemos una casa bonita.,우리는 예쁜 집이 있다.
@@ -133,7 +133,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 132,siempre,A1,unit_005,es_u5_n1,항상,[시엠프레],Siempre desayuno a las siete.,항상 7시에 아침을 먹는다.
 133,hasta,A1,unit_005,es_u5_n1,까지,[아스타],Hasta mañana. que descanses.,내일 봐요 푹 쉬세요.
 134,ahí,A1,unit_005,es_u5_n1,거기,[아이],Mi bolso está ahí.,제 가방은 거기 있어요.
-135,años,A1,unit_005,es_u5_n1,살,[아뇨스],Tengo veinticinco años.,저는 25살입니다.
+135,años,A1,unit_005,es_u5_n1,나이,[아뇨스],Tengo veinticinco años.,저는 25살입니다.
 136,antes,A1,unit_005,es_u5_n1,전에,[안테스],Llámame antes de salir.,출발하기 전에 전화해 줘.
 137,ni,A1,unit_005,es_u5_n2,도 아니다,[니],No tengo ni tiempo ni dinero.,시간도 돈도 없다.
 138,poco,A1,unit_005,es_u5_n2,적은,[포코],Hablo un poco de español.,스페인어를 조금 할 줄 안다.
@@ -151,13 +151,13 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 150,gente,A1,unit_005,es_u5_n3,사람들,[헨테],Hay mucha gente en la calle.,거리에 사람이 많다.
 151,sea,A1,unit_005,es_u5_n3,있다,[세아],Sea lo que sea.,무슨 일이 있더라도.
 152,padre,A1,unit_005,es_u5_n3,아버지,[파드레],Mi padre trabaja mucho.,아버지는 일을 많이 하신다.
-153,mira,A1,unit_005,es_u5_n3,봐,[미라],Mira ese perro tan lindo.,저 귀여운 개 좀 봐.
+153,mira,A1,unit_005,es_u5_n3,보아라,[미라],Mira ese perro tan lindo.,저 귀여운 개 좀 봐.
 154,mismo,A1,unit_005,es_u5_n3,같은,[미스모],Es lo mismo de siempre.,언제나와 마찬가지다.
 155,dijo,A1,unit_005,es_u5_n3,말했다,[디호],Él dijo que vendría.,그는 올 거라고 말했다.
 156,nadie,A1,unit_006,es_u6_n1,아무도,[나디에],Nadie sabe la respuesta.,아무도 정답을 모른다.
 157,quiere,A1,unit_006,es_u6_n1,원한다,[키에레],Ella quiere un helado.,그녀는 아이스크림을 원한다.
 158,podría,A1,unit_006,es_u6_n1,할 수 있다,[포드리아],¿Podría ayudarme por favor?,저 좀 도와주실 수 있나요?
-159,hablar,A1,unit_006,es_u6_n1,이야기,[아블라르],Quiero hablar contigo.,너와 이야기하고 싶다.
+159,hablar,A1,unit_006,es_u6_n1,말하다,[아블라르],Quiero hablar contigo.,너와 이야기하고 싶다.
 160,vas,A1,unit_006,es_u6_n1,간다,[바스],¿Adónde vas ahora?,지금 어디 가니?
 161,ellos,A1,unit_006,es_u6_n1,그들,[에요스],Ellos juegan al fútbol.,그들은 축구를 한다.
 162,sr.,A1,unit_006,es_u6_n1,씨,[스르.],Buenos días Sr. Pérez.,안녕하세요 페레스 선생님.
@@ -192,7 +192,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 191,cosa,A1,unit_007,es_u7_n1,것,[코사],Es una cosa muy fácil.,아주 쉬운 일이다.
 192,hijo,A1,unit_007,es_u7_n1,아들,[이호],Mi hijo juega en el parque.,우리 아들은 공원에서 논다.
 193,allí,A1,unit_007,es_u7_n1,저기,[아이],Mi coche está allí.,내 차는 저기에 있다.
-194,menos,A1,unit_007,es_u7_n1,덜,[메노스],Cuesta diez euros o menos.,10유로 또는 그 이하이다.
+194,menos,A1,unit_007,es_u7_n1,더적은,[메노스],Cuesta diez euros o menos.,10유로 또는 그 이하이다.
 195,tipo,A1,unit_007,es_u7_n2,유형,[티포],Es un tipo muy simpático.,그는 아주 상냥한 친구다.
 196,gran,A1,unit_007,es_u7_n2,대단해,[그란],Es una gran noticia.,아주 좋은 소식이다.
 197,nuestro,A1,unit_007,es_u7_n2,우리의,[누에스트로],Este es nuestro equipo.,이것은 우리 팀이다.
@@ -200,7 +200,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 199,mamá,A1,unit_007,es_u7_n2,엄마,[마마],Mamá prepara la cena.,엄마가 저녁을 준비하신다.
 200,luego,A1,unit_007,es_u7_n2,그럼,[루에고],Nos vemos luego amigo.,친구야 나중에 보자.
 201,papá,A1,unit_007,es_u7_n2,아빠,[파파],Papá lee el periódico.,아빠가 신문을 읽으신다.
-202,días,A1,unit_007,es_u7_n2,일,[디아스],Paso unos días de descanso.,며칠 쉬는 날을 보낸다.
+202,días,A1,unit_007,es_u7_n2,날들,[디아스],Paso unos días de descanso.,며칠 쉬는 날을 보낸다.
 203,dice,A1,unit_007,es_u7_n2,말하다,[디세],El profesor dice la verdad.,선생님은 진실을 말씀하신다.
 204,hoy,A1,unit_007,es_u7_n3,오늘,[오이],Hoy hace un día soleado.,오늘 화창한 날씨다.
 205,tres,A1,unit_007,es_u7_n3,세,[트레스],Tengo tres gatos en casa.,집에 고양이가 세 마리 있다.
@@ -211,7 +211,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 210,gusta,A1,unit_007,es_u7_n3,좋아하다,[구스타],Me gusta mucho viajar.,나는 여행하는 것을 참 좋아한다.
 211,quería,A1,unit_007,es_u7_n3,원했다,[께리아],Quería pedir un favor.,부탁 하나 드리고 싶었어요.
 212,será,A1,unit_007,es_u7_n3,될 것이다,[세라],Mañana será un día mejor.,내일은 더 좋은 날이 될 것이다.
-213,haber,A1,unit_007,es_u7_n3,가지고 있다,[아베르],Debe haber una salida.,출구가 틀림없이 있을 것이다.
+213,haber,A1,unit_007,es_u7_n3,있다,[아베르],Debe haber una salida.,출구가 틀림없이 있을 것이다.
 214,parte,A1,unit_008,es_u8_n1,부분,[파르테],Esta es la mejor parte.,여기가 제일 좋은 부분이야.
 215,todas,A1,unit_008,es_u8_n1,모든,[토다스],Están todas listas.,모두 준비되었어요.
 216,crees,A1,unit_008,es_u8_n1,생각하다,[크레에스],¿Qué crees tú?,너는 어떻게 생각해?
@@ -223,7 +223,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 222,mal,A1,unit_008,es_u8_n1,나쁘게,[말],No está nada mal.,전혀 나쁘지 않아.
 223,debe,A1,unit_008,es_u8_n1,해야 한다,[데베],Debe ser verdad.,틀림없이 사실일 거야.
 224,realmente,A1,unit_008,es_u8_n2,정말,[레알멘떼],Es realmente bueno.,그거 정말 좋아요.
-225,estas,A1,unit_008,es_u8_n2,이,[에스타스],Estas flores son muy bonitas.,이 꽃들 참 예쁘다.
+225,estas,A1,unit_008,es_u8_n2,이것들,[에스타스],Estas flores son muy bonitas.,이 꽃들 참 예쁘다.
 226,aún,A1,unit_008,es_u8_n2,아직도,[아운],Aún no lo sé.,아직은 잘 모르겠어.
 227,mío,A1,unit_008,es_u8_n2,나의 것,[미오],Este libro es mío.,이 책은 내 거야.
 228,toda,A1,unit_008,es_u8_n2,모든,[토다],Toda la familia está bien.,가족 모두 잘 지내요.
@@ -301,7 +301,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 300,muchas,A1,unit_010,es_u10_n3,많은,[무차스],Muchas gracias por la ayuda.,도와주셔서 대단히 감사합니다.
 301,personas,A1,unit_010,es_u10_n3,사람들,[페르소나스],Había diez personas allí.,거기에 사람이 열 명 있었다.
 302,señora,A1,unit_010,es_u10_n3,아가씨,[세뇨라],Buenas tardes señora Gómez.,안녕하세요 고메스 부인.
-303,volver,A1,unit_011,es_u11_n1,반환,[볼베르],Quiero volver a casa pronto.,집에 일찍 돌아가고 싶다.
+303,volver,A1,unit_011,es_u11_n1,돌아가다,[볼베르],Quiero volver a casa pronto.,집에 일찍 돌아가고 싶다.
 304,esas,A1,unit_011,es_u11_n1,그,[에사스],Esas manzanas son muy dulces.,저 사과들은 아주 달콤하다.
 305,quizá,A1,unit_011,es_u11_n1,어쩌면,[끼사],Quizá llueva esta tarde.,오늘 오후에 비가 올지도 모른다.
 306,contra,A1,unit_011,es_u11_n1,반대하다,[콘트라],El partido es contra ellos.,경기는 그들과의 대결이다.
@@ -352,7 +352,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 351,deja,A1,unit_012,es_u12_n2,하자,[데하],Deja las cosas en la mesa.,물건들을 탁자 위에 둬라.
 352,problemas,A1,unit_012,es_u12_n2,문제,[프로블레마스],No quiero tener problemas.,문제를 일으키고 싶지 않다.
 353,vi,A1,unit_012,es_u12_n3,보았다,[비],Vi una película interesante.,흥미로운 영화를 한 편 봤다.
-354,da,A1,unit_012,es_u12_n3,다,[다],El sol da mucha luz.,태양이 많은 빛을 준다.
+354,da,A1,unit_012,es_u12_n3,주다,[다],El sol da mucha luz.,태양이 많은 빛을 준다.
 355,importante,A1,unit_012,es_u12_n3,중요한,[임포르탄테],Es muy importante practicar.,연습하는 것은 매우 중요하다.
 356,dijiste,A1,unit_012,es_u12_n3,말했다,[디히스테],¿Qué dijiste hace poco?,조금 전에 뭐라고 말했니?
 357,corazón,A1,unit_012,es_u12_n3,심장,[코라손],Te quiero de todo corazón.,진심으로 너를 좋아해.
@@ -361,7 +361,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 360,haré,A1,unit_012,es_u12_n3,할 것이다,[아레],Lo haré mañana temprano.,내일 아침 일찍 하겠습니다.
 361,justo,A1,unit_012,es_u12_n3,박람회,[후스토],Llegaste justo a tiempo hoy.,오늘 딱 제시간에 도착했구나.
 362,horas,A1,unit_013,es_u13_n1,시간,[오라스],Dormí ocho horas anoche.,어젯밤 여덟 시간을 잤다.
-363,poder,A1,unit_013,es_u13_n1,힘,[포데르],El conocimiento es poder.,지식은 힘이다.
+363,poder,A1,unit_013,es_u13_n1,할수있다,[포데르],El conocimiento es poder.,지식은 힘이다.
 364,buenos,A1,unit_013,es_u13_n1,좋아,[부에노스],Buenos días a todos hoy.,오늘 모두 좋은 아침입니다.
 365,esposa,A1,unit_013,es_u13_n1,아내,[에스포사],Mi esposa cocina delicioso.,내 아내는 요리를 맛있게 한다.
 366,manos,A1,unit_013,es_u13_n1,손,[마노스],Lávate bien las manos.,손을 깨끗이 씻어라.
@@ -371,7 +371,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 370,nuestros,A1,unit_013,es_u13_n1,우리의,[누에스트로스],Nuestros amigos son buenos.,우리 친구들은 좋은 사람들이다.
 371,ojos,A1,unit_013,es_u13_n1,눈,[오호스],Ella tiene ojos oscuros.,그녀는 짙은 눈을 가졌다.
 372,adelante,A1,unit_013,es_u13_n2,앞으로,[아데란테],Siga siempre hacia adelante.,항상 앞으로 나아가세요.
-373,encontrar,A1,unit_013,es_u13_n2,찾기,[엔콘트라르],Quiero encontrar mis llaves.,내 열쇠를 찾고 싶다.
+373,encontrar,A1,unit_013,es_u13_n2,찾다,[엔콘트라르],Quiero encontrar mis llaves.,내 열쇠를 찾고 싶다.
 374,mano,A1,unit_013,es_u13_n2,손,[마노],Dame la mano al cruzar.,길을 건널 때 손을 잡아라.
 375,cinco,A1,unit_013,es_u13_n2,다섯,[신코],Son las cinco en punto.,정각 다섯 시입니다.
 376,niño,A1,unit_013,es_u13_n2,아이,[니뇨],El niño come una manzana.,아이가 사과를 먹는다.
@@ -394,7 +394,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 393,suficiente,A1,unit_014,es_u14_n1,충분히,[수피시엔테],Eso es suficiente por hoy.,그것으로 오늘은 충분하다.
 394,punto,A1,unit_014,es_u14_n1,포인트,[푼토],Ese es un buen punto de vista.,그것은 좋은 관점이다.
 395,cuándo,A1,unit_014,es_u14_n1,언제,[쿠안도],¿Cuándo empieza la clase?,수업은 언제 시작하나요?
-396,sigue,A1,unit_014,es_u14_n1,팔로우,[시게],Sigue estudiando con ganas.,열심히 계속 공부해라.
+396,sigue,A1,unit_014,es_u14_n1,계속하다,[시게],Sigue estudiando con ganas.,열심히 계속 공부해라.
 397,haya,A1,unit_014,es_u14_n1,있다,[아야],Espero que haya comida rica.,맛있는 음식이 있기를 바란다.
 398,equipo,A1,unit_014,es_u14_n1,팀,[에끼포],Nuestro equipo juega muy bien.,우리 팀은 경기를 참 잘한다.
 399,grande,A1,unit_014,es_u14_n1,큰,[그란데],Compré una mesa muy grande.,아주 큰 탁자를 하나 샀다.
@@ -411,7 +411,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 410,hago,A1,unit_014,es_u14_n2,하다,[아고],Hago deporte por las mañanas.,아침마다 운동을 한다.
 411,clase,A1,unit_014,es_u14_n2,수업,[클라세],La clase termina a las dos.,수업은 두 시에 끝난다.
 412,cuatro,A1,unit_014,es_u14_n3,네,[쿠아트로],Tengo cuatro sillas en el salón.,거실에 의자가 네 개 있다.
-413,mas,A1,unit_014,es_u14_n3,더,[마스],Quisiera ir mas no puedo.,가고 싶지만 갈 수가 없다.
+413,mas,A1,unit_014,es_u14_n3,그러나,[마스],Quisiera ir mas no puedo.,가고 싶지만 갈 수가 없다.
 414,dices,A1,unit_014,es_u14_n3,말하다,[디세스],¿Qué dices sobre este plan?,이 계획에 대해 어떻게 생각하니?
 415,pequeño,A1,unit_014,es_u14_n3,작은,[페께뇨],Tengo un perro muy pequeño.,아주 작은 개를 한 마리 키운다.
 416,llama,A1,unit_014,es_u14_n3,전화,[야마],Ella llama a su madre hoy.,그녀는 오늘 어머니께 전화한다.
@@ -430,7 +430,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 429,mujeres,A1,unit_015,es_u15_n1,여자들,[무헤레스],Las mujeres preparan el evento.,여성분들이 행사를 준비한다.
 430,vuelta,A1,unit_015,es_u15_n1,반환,[부엘타],Vamos a dar una vuelta.,산책 한 바퀴 돌러 가자.
 431,fui,A1,unit_015,es_u15_n1,갔다,[푸이],Ayer fui a comprar pan.,어제 빵을 사러 갔다.
-432,trabajar,A1,unit_015,es_u15_n2,일,[트라바하르],Me gusta trabajar por la mañana.,아침에 일하는 것을 좋아한다.
+432,trabajar,A1,unit_015,es_u15_n2,일하다,[트라바하르],Me gusta trabajar por la mañana.,아침에 일하는 것을 좋아한다.
 433,tenido,A1,unit_015,es_u15_n2,가지고 있었다,[테니도],He tenido mucha suerte hoy.,오늘 운이 정말 좋았다.
 434,juego,A1,unit_015,es_u15_n2,게임,[후에고],Este juego es muy divertido.,이 게임은 매우 재미있다.
 435,deberías,A1,unit_015,es_u15_n2,당신은해야,[데베리아스],Deberías comer más fruta.,과일을 더 많이 먹는 게 좋겠다.
@@ -452,7 +452,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 451,vete,A1,unit_015,es_u15_n3,떠나다,[베테],Vete con cuidado a casa.,조심해서 집에 가거라.
 452,auto,A1,unit_016,es_u16_n1,자동차,[아우토],Compré un auto de segunda mano.,중고차를 한 대 샀다.
 453,dar,A1,unit_016,es_u16_n1,주다,[다르],Quiero dar las gracias a todos.,모두에게 감사를 전하고 싶다.
-454,vivir,A1,unit_016,es_u16_n1,라이브,[비비르],Es un lugar agradable para vivir.,살기에 참 쾌적한 곳이다.
+454,vivir,A1,unit_016,es_u16_n1,살다,[비비르],Es un lugar agradable para vivir.,살기에 참 쾌적한 곳이다.
 455,posible,A1,unit_016,es_u16_n1,가능,[포시블레],Llegaré lo antes posible.,가능한 한 일찍 도착하겠다.
 456,ok,A1,unit_016,es_u16_n1,알았어,[오크],Ok nos vemos a las tres.,좋아 세 시에 만나자.
 457,hermana,A1,unit_016,es_u16_n1,여동생,[에르마나],Mi hermana vive en Sevilla.,내 누나는 세비야에 산다.
@@ -510,7 +510,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 509,par,A1,unit_017,es_u17_n3,쌍,[파르],Compré un par de zapatos nuevos.,새 신발 한 켤레를 샀다.
 510,única,A1,unit_017,es_u17_n3,독특한,[우니카],Esta es mi única oportunidad hoy.,이것이 오늘 나의 유일한 기회이다.
 511,hacen,A1,unit_017,es_u17_n3,하다,[아센],Ellos hacen ejercicio cada mañana.,그들은 매일 아침 운동을 한다.
-512,seguir,A1,unit_018,es_u18_n1,팔로우,[세기르],Quiero seguir estudiando español.,스페인어 공부를 계속하고 싶다.
+512,seguir,A1,unit_018,es_u18_n1,계속하다,[세기르],Quiero seguir estudiando español.,스페인어 공부를 계속하고 싶다.
 513,dr.,A1,unit_018,es_u18_n1,의사 선생님,[드르.],El Dr. Gómez trabaja en el hospital.,고메스 의사 선생님은 병원에서 일하신다.
 514,simplemente,A1,unit_018,es_u18_n1,단순히,[심플레멘테],Simplemente quiero descansar un poco.,단지 휴식을 조금 취하고 싶을 뿐이다.
 515,dicen,A1,unit_018,es_u18_n1,말한다,[디센],Todos dicen que es una buena idea.,모두가 그것이 좋은 생각이라고 말한다.
@@ -520,7 +520,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 519,sentido,A1,unit_018,es_u18_n1,감각,[센티도],Esta frase no tiene sentido.,이 문장은 말이 되지 않는다.
 520,hagas,A1,unit_018,es_u18_n1,하다,[아가스],No hagas ruido por la noche.,밤에는 소음을 내지 마라.
 521,segura,A1,unit_018,es_u18_n1,안전하다,[세구라],Esta calle es muy segura de noche.,이 거리는 밤에도 매우 안전하다.
-522,esperar,A1,unit_018,es_u18_n2,잠깐,[에스페라르],Tenemos que esperar el autobús.,우리는 버스를 기다려야 한다.
+522,esperar,A1,unit_018,es_u18_n2,기다리다,[에스페라르],Tenemos que esperar el autobús.,우리는 버스를 기다려야 한다.
 523,lejos,A1,unit_018,es_u18_n2,먼,[레호스],La playa no está lejos de aquí.,해변은 여기서 멀지 않다.
 524,arma,A1,unit_018,es_u18_n2,무기,[아르마],El libro es la mejor arma del saber.,책은 배움의 가장 훌륭한 무기다.
 525,alto,A1,unit_018,es_u18_n2,키가 큰,[알토],Ese árbol del parque es muy alto.,공원에 있는 저 나무는 매우 키가 크다.
@@ -547,7 +547,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 546,dio,A1,unit_019,es_u19_n1,준,[디오],Ella me dio un buen consejo ayer.,그녀는 어제 나에게 좋은 조언을 해 주었다.
 547,recuerdo,A1,unit_019,es_u19_n1,기억한다,[레쿠에르도],Recuerdo muy bien ese día soleado.,그 화창했던 날을 아주 잘 기억한다.
 548,siendo,A1,unit_019,es_u19_n1,존재,[시엔도],Él sigue siendo un gran amigo.,그는 여전히 좋은 친구로 남아 있다.
-549,acerca,A1,unit_019,es_u19_n1,약,[아세르카],Hablamos acerca de los planes futuros.,우리는 미래 계획에 대해 이야기했다.
+549,acerca,A1,unit_019,es_u19_n1,관하여,[아세르카],Hablamos acerca de los planes futuros.,우리는 미래 계획에 대해 이야기했다.
 550,tenga,A1,unit_019,es_u19_n1,가지고 있다,[텐가],Espero que tenga un buen viaje hoy.,오늘 좋은 여행이 되시기를 바랍니다.
 551,luz,A1,unit_019,es_u19_n1,빛,[루스],Entra mucha luz por la ventana.,창문을 통해 많은 햇빛이 들어온다.
 552,correcto,A1,unit_019,es_u19_n2,맞다,[코레크토],Tu número de teléfono es correcto.,네 전화번호가 정확하다.
@@ -557,7 +557,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 556,verte,A1,unit_019,es_u19_n2,또 만나요,[베르테],Me alegro mucho de verte hoy.,오늘 너를 만나서 정말 반갑다.
 557,dormir,A1,unit_019,es_u19_n2,자다,[도르미르],Necesito dormir al menos siete horas.,적어도 일곱 시간은 자야 한다.
 558,sitio,A1,unit_019,es_u19_n2,사이트,[시티오],Este es un buen sitio para leer.,여기는 책 읽기에 좋은 장소이다.
-559,ayudar,A1,unit_019,es_u19_n2,도움,[아유다르],Quiero ayudar a limpiar la mesa.,탁자 치우는 것을 돕고 싶다.
+559,ayudar,A1,unit_019,es_u19_n2,돕다,[아유다르],Quiero ayudar a limpiar la mesa.,탁자 치우는 것을 돕고 싶다.
 560,conseguir,A1,unit_019,es_u19_n2,얻다,[콘세기르],Voy a conseguir las entradas del partido.,경기 입장권을 구해볼 것이다.
 561,di,A1,unit_019,es_u19_n2,주었다,[디],Le di una manzana a mi amigo.,친구에게 사과 한 개를 주었다.
 562,marido,A1,unit_019,es_u19_n3,남편,[마리도],Su marido trabaja en un banco.,그녀의 남편은 은행에서 근무한다.
@@ -579,7 +579,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 578,diga,A1,unit_020,es_u20_n1,말하다,[디가],Diga lo que necesita con claridad.,필요한 것을 명확하게 말씀해 주세요.
 579,minuto,A1,unit_020,es_u20_n1,분,[미누토],Espérame un minuto en la entrada.,입구에서 1분만 기다려 주세요.
 580,anoche,A1,unit_020,es_u20_n1,어젯밤,[아노체],Anoche cenamos una sopa caliente.,어젯밤 우리는 따뜻한 수프를 먹었다.
-581,llamar,A1,unit_020,es_u20_n1,전화,[야마르],Voy a llamar a mi familia luego.,나중에 가족들에게 전화를 걸 것이다.
+581,llamar,A1,unit_020,es_u20_n1,부르다,[야마르],Voy a llamar a mi familia luego.,나중에 가족들에게 전화를 걸 것이다.
 582,piensa,A1,unit_020,es_u20_n2,생각하다,[피엔사],Él piensa antes de tomar decisiones.,그는 결정을 내리기 전에 생각한다.
 583,país,A1,unit_020,es_u20_n2,국가,[파이스],España es un país con rica cultura.,스페인은 풍부한 문화를 가진 나라이다.
 584,digas,A1,unit_020,es_u20_n2,말하다,[디가스],No digas mentiras a tus amigos.,친구들에게 거짓말을 하지 마라.
@@ -604,7 +604,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 603,fuego,A1,unit_021,es_u21_n1,불,[푸에고],El fuego de la chimenea calienta bien.,벽난로의 불이 따뜻하게 덥혀준다.
 604,aqui,A1,unit_021,es_u21_n1,여기,[아끼],Puedes dejar tus cosas aquí.,네 물건들을 여기에 두어도 좋다.
 605,tuvo,A1,unit_021,es_u21_n1,가지고 있었다,[투보],Ella tuvo que estudiar anoche.,그녀는 어젯밤에 공부해야만 했다.
-606,poner,A1,unit_021,es_u21_n1,넣어,[포네르],Voy a poner los vasos en la mesa.,탁자 위에 컵들을 올려놓을 것이다.
+606,poner,A1,unit_021,es_u21_n1,놓다,[포네르],Voy a poner los vasos en la mesa.,탁자 위에 컵들을 올려놓을 것이다.
 607,calle,A1,unit_021,es_u21_n1,길,[카예],Cruza la calle con cuidado.,조심해서 길을 건너라.
 608,acaba,A1,unit_021,es_u21_n1,마무리,[아카바],La clase de baile acaba a las seis.,댄스 수업은 6시에 끝난다.
 609,prueba,A1,unit_021,es_u21_n1,테스트,[프루에바],Prueba este postre casero hoy.,오늘 이 홈메이드 디저트를 먹어봐라.
@@ -614,12 +614,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 613,orden,A1,unit_021,es_u21_n2,순서,[오르덴],Pon tus papeles en orden por favor.,서류들을 순서대로 정리해 주세요.
 614,semanas,A1,unit_021,es_u21_n2,주,[세마나스],Estuve de viaje tres semanas.,세 주 동안 여행을 다녀왔다.
 615,especial,A1,unit_021,es_u21_n2,특별한,[에스페시알],Hoy es un día especial para mí.,오늘은 나에게 특별한 날이다.
-616,mía,A1,unit_021,es_u21_n2,내,[미아],Esa chaqueta azul es mía.,저 파란색 재킷은 내 것이다.
+616,mía,A1,unit_021,es_u21_n2,내 것,[미아],Esa chaqueta azul es mía.,저 파란색 재킷은 내 것이다.
 617,duro,A1,unit_021,es_u21_n2,열심히,[두로],El pan viejo está muy duro.,오래된 빵이 매우 딱딱하다.
-618,empezar,A1,unit_021,es_u21_n2,시작,[엠페사르],Vamos a empezar la reunión ahora.,지금 회의를 시작합시다.
+618,empezar,A1,unit_021,es_u21_n2,시작하다,[엠페사르],Vamos a empezar la reunión ahora.,지금 회의를 시작합시다.
 619,afuera,A1,unit_021,es_u21_n2,외부,[아푸에라],Los niños juegan afuera en el patio.,아이들이 밖마당에서 놀고 있다.
 620,queremos,A1,unit_021,es_u21_n2,원한다,[께레모스],Queremos aprender muchas palabras nuevas.,우리는 많은 새 단어를 배우고 싶다.
-621,perro,A1,unit_021,es_u21_n3,개,[페로],Paseo al perro todas las tardes.,매일 오후에 개를 산책시킨다.
+621,perro,A1,unit_021,es_u21_n3,강아지,[페로],Paseo al perro todas las tardes.,매일 오후에 개를 산책시킨다.
 622,cielo,A1,unit_021,es_u21_n3,천국,[시에로],El cielo está despejado hoy.,오늘 하늘이 맑게 개어 있다.
 623,jack,A1,unit_021,es_u21_n3,잭,[하크크],Jack lee un libro en su cuarto.,잭은 자기 방에서 책을 읽는다.
 624,puesto,A1,unit_021,es_u21_n3,위치,[푸에스토],He puesto el plato en la mesa.,식탁 위에 접시를 놓았다.
@@ -632,11 +632,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 631,piensas,A1,unit_022,es_u22_n1,생각하니?,[피엔사스],¿Qué piensas sobre esta nueva idea?,이 새로운 생각에 대해 어떻게 생각하니?
 632,querido,A1,unit_022,es_u22_n1,친애하는,[께리도],Es un amigo muy querido por todos.,모두에게 참 아낌을 받는 친구이다.
 633,libre,A1,unit_022,es_u22_n1,무료,[리브레],Esta tarde tengo tiempo libre.,오늘 오후에 한가한 자유 시간이 있다.
-634,buscar,A1,unit_022,es_u22_n1,검색,[부스카르],Tengo que buscar mis gafas viejas.,내 낡은 안경을 찾아야 한다.
+634,buscar,A1,unit_022,es_u22_n1,찾다,[부스카르],Tengo que buscar mis gafas viejas.,내 낡은 안경을 찾아야 한다.
 635,cual,A1,unit_022,es_u22_n1,어느,[쿠알],Ese es el motivo por el cual vine.,그것이 바로 내가 온 이유이다.
 636,diré,A1,unit_022,es_u22_n1,말할 것이다,[디레],Te diré toda la verdad mañana.,내일 너에게 모든 진실을 말해줄게.
 637,suena,A1,unit_022,es_u22_n1,소리,[수에나],Esa canción suena muy bien aquí.,그 노래는 여기서 들으니 참 좋다.
-638,jugar,A1,unit_022,es_u22_n1,놀이,[후가르],Vamos a jugar un partido de fútbol.,축구 한 경기 하러 가자.
+638,jugar,A1,unit_022,es_u22_n1,놀다,[후가르],Vamos a jugar un partido de fútbol.,축구 한 경기 하러 가자.
 639,cambio,A1,unit_022,es_u22_n1,거스름돈,[캄비오],Aquí tiene el cambio de su compra.,여기 구매하신 거스름돈이 있습니다.
 640,película,A1,unit_022,es_u22_n1,영화,[페리쿠라],Vimos una película cómica en el cine.,영화관에서 코미디 영화를 한 편 봤다.
 641,millones,A1,unit_022,es_u22_n2,백만,[미요네스],La ciudad tiene dos millones de personas.,그 도시에는 200만 명의 사람이 산다.
@@ -695,7 +695,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 694,escuela,A1,unit_024,es_u24_n1,학교,[에스쿠에라],La escuela está cerca.,학교가 가까이에 있습니다.
 695,daño,A1,unit_024,es_u24_n1,손상,[다뇨],No quiero hacer daño a nadie.,누구에게도 상처나 피해를 주고 싶지 않다.
 696,sucede,A1,unit_024,es_u24_n1,발생,[수세데],¿Qué sucede en la sala contigua?,옆방에서 무슨 일이 일어나고 있니?
-697,cambiar,A1,unit_024,es_u24_n1,변화,[캄비아르],Quiero cambiar mi vieja bicicleta.,낡은 자전거를 바꾸고 싶다.
+697,cambiar,A1,unit_024,es_u24_n1,바꾸다,[캄비아르],Quiero cambiar mi vieja bicicleta.,낡은 자전거를 바꾸고 싶다.
 698,siguiente,A1,unit_024,es_u24_n1,다음,[시기엔테],Pasamos a la siguiente página ahora.,이제 다음 페이지로 넘어갑니다.
 699,sino,A1,unit_024,es_u24_n1,하지만,[시노],No quiero té sino café caliente.,차가 아니라 따뜻한 커피를 원한다.
 700,profesor,A1,unit_024,es_u24_n2,선생님,[프로페소르],El profesor habla español.,선생님은 스페인어를 하십니다.
@@ -755,7 +755,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 754,mente,A2,unit_026,es_u26_n1,마음,[멘테],Tengo muchas ideas en la mente.,머릿속에 아이디어가 많이 떠오른다.
 755,tuyo,A2,unit_026,es_u26_n1,너의 것,[투요],Este paraguas no es el tuyo.,이 우산은 네 것이 아니다.
 756,campo,A2,unit_026,es_u26_n1,필드,[캄포],Paseamos por el campo los domingos.,일요일마다 들판을 산책한다.
-757,mire,A2,unit_026,es_u26_n1,봐,[미레],Mire ese cuadro de la pared.,벽에 걸린 저 그림을 한번 보세요.
+757,mire,A2,unit_026,es_u26_n1,보세요,[미레],Mire ese cuadro de la pared.,벽에 걸린 저 그림을 한번 보세요.
 758,situación,A2,unit_026,es_u26_n1,상황,[시투아시온],La situación en el trabajo mejoró.,직장 내 상황이 나아졌다.
 759,tras,A2,unit_026,es_u26_n2,이후,[트라스],Llegó a casa tras un largo viaje.,긴 여행 끝에 집에 도착했다.
 760,hotel,A2,unit_026,es_u26_n2,호텔,[오텔],El hotel está junto a la playa.,호텔이 해변 바로 옆에 있다.
@@ -792,7 +792,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 791,mejores,A2,unit_027,es_u27_n2,최고,[메호레스],Ellos son mis mejores amigos del colegio.,그들은 나의 가장 친한 학교 친구들이다.
 792,creí,A2,unit_027,es_u27_n2,믿었다,[크레이],Creí que vendrías más temprano hoy.,오늘 네가 더 일찍 올 줄 알았다.
 793,cena,A2,unit_027,es_u27_n2,저녁 식사,[세나],Preparamos una cena ligera y rica.,가볍고 맛있는 저녁 식사를 준비했다.
-794,sentir,A2,unit_027,es_u27_n2,느낌,[센티르],Me hace sentir muy bien pasear.,산책을 하면 기분이 아주 상쾌해진다.
+794,sentir,A2,unit_027,es_u27_n2,느끼다,[센티르],Me hace sentir muy bien pasear.,산책을 하면 기분이 아주 상쾌해진다.
 795,través,A2,unit_027,es_u27_n2,통해,[트라베스],Miro el mar a través del cristal.,유리창을 통해 바다를 바라본다.
 796,accidente,A2,unit_027,es_u27_n2,사고,[아크시덴테],Fue solo un pequeño accidente doméstico.,그저 가벼운 집안 내 실수였을 뿐이다.
 797,ellas,A2,unit_027,es_u27_n2,그녀들,[에야스],Ellas estudian juntos en la biblioteca.,그녀들은 도서관에서 함께 공부한다.
@@ -802,7 +802,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 801,eras,A2,unit_027,es_u27_n3,당신은,[에라스],Tú eras muy buen estudiante antes.,너는 예전에 참 모범적인 학생이었다.
 802,asi,A2,unit_027,es_u27_n3,그래서,[아시],Haz el dibujo así como este modelo.,이 모델처럼 이렇게 그림을 그려봐라.
 803,pudo,A2,unit_027,es_u27_n3,할 수 있었다,[푸도],Nadie pudo abrir esa caja pesada.,아무도 그 무거운 상자를 열지 못했다.
-804,vive,A2,unit_027,es_u27_n3,라이브,[비베],Mi abuela vive cerca de la plaza.,우리 할머니는 광장 근처에 사신다.
+804,vive,A2,unit_027,es_u27_n3,살다,[비베],Mi abuela vive cerca de la plaza.,우리 할머니는 광장 근처에 사신다.
 805,vista,A2,unit_027,es_u27_n3,보기,[비스타],Desde la terraza hay buena vista.,테라스에서 바라보는 경치가 훌륭하다.
 806,estúpido,A2,unit_027,es_u27_n3,바보,[에스투피도],No hagas caso a ese comentario estúpido.,그런 터무니없는 말에는 신경 쓰지 마라.
 807,línea,A2,unit_027,es_u27_n3,라인,[리네아],Toma la línea tres de autobús directo.,직행 3번 버스 노선을 타라.
@@ -881,7 +881,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 880,embargo,A2,unit_030,es_u30_n2,그러나,[엠바르고],Estaba cansado sin embargo fui al gimnasio.,피곤했지만 그럼에도 체육관에 갔다.
 881,interesante,A2,unit_030,es_u30_n2,흥미로운,[인테레산테],Leí un artículo muy interesante hoy.,오늘 매우 흥미로운 기사 하나를 읽었다.
 882,tendrás,A2,unit_030,es_u30_n2,가질 것이다,[텐드라스],Tendrás un gran futuro por delante.,앞으로 너에게 밝은 미래가 펼쳐질 것이다.
-883,escuchar,A2,unit_030,es_u30_n2,들어봐,[에스쿠차르],Me gusta escuchar el sonido de las olas.,파도 소리를 귀 기울여 듣는 것을 좋아한다.
+883,escuchar,A2,unit_030,es_u30_n2,듣다,[에스쿠차르],Me gusta escuchar el sonido de las olas.,파도 소리를 귀 기울여 듣는 것을 좋아한다.
 884,abuela,A2,unit_030,es_u30_n2,할머니,[아부에라],Mi abuela prepara pasteles deliciosos.,우리 할머니는 맛있는 파이를 만들어주신다.
 885,hicieron,A2,unit_030,es_u30_n2,했다,[이시에론],Ellos hicieron un trabajo excelente hoy.,그들은 오늘 아주 훌륭한 결과물을 냈다.
 886,detective,A2,unit_030,es_u30_n2,형사,[데테크티베],El detective buscó pistas en el salón.,형사가 거실에서 단서를 수색했다.
@@ -902,7 +902,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 901,capaz,A2,unit_031,es_u31_n1,유능한,[카파스],Él es capaz de resolver el problema.,그는 그 문제를 해결할 능력이 있다.
 902,salió,A2,unit_031,es_u31_n1,나왔다,[사리오],El sol salió temprano esta mañana.,오늘 아침 해가 일찍 떴다.
 903,club,A2,unit_031,es_u31_n1,클럽,[클루브],Entreno en el club deportivo local.,지역 스포츠 클럽에서 훈련을 한다.
-904,terminar,A2,unit_031,es_u31_n1,마무리,[테르미나르],Quiero terminar este dibujo hoy.,오늘 이 그림을 다 완성하고 싶다.
+904,terminar,A2,unit_031,es_u31_n1,끝내다,[테르미나르],Quiero terminar este dibujo hoy.,오늘 이 그림을 다 완성하고 싶다.
 905,temo,A2,unit_031,es_u31_n1,두려워한다,[테모],Temo que vaya a llover esta tarde.,오늘 오후에 비가 올까 봐 걱정된다.
 906,broma,A2,unit_031,es_u31_n1,농담,[브로마],No te enfades que era solo una broma.,그냥 농담이었으니 화내지 마라.
 907,gobierno,A2,unit_031,es_u31_n1,정부,[고비에르노],El gobierno anunció nuevas medidas hoy.,정부가 오늘 새로운 정책을 발표했다.
@@ -979,7 +979,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 978,salud,A2,unit_033,es_u33_n2,건강,[사루드],Cuidar la salud con deporte es esencial.,운동으로 건강을 챙기는 것은 필수적이다.
 979,sorpresa,A2,unit_033,es_u33_n3,놀람,[소르프레사],Fue una grata sorpresa encontrar a Pablo.,파블로를 우연히 만난 것은 반가운 놀라움이었다.
 980,ninguno,A2,unit_033,es_u33_n3,없음,[닌구노],Ninguno de los vasos estaba roto en la caja.,상자 안에 깨진 컵은 하나도 없었다.
-981,miren,A2,unit_033,es_u33_n3,봐,[미렌],Miren hacia la pizarra con atención niños.,아이들아 칠판을 주의 깊게 보아라.
+981,miren,A2,unit_033,es_u33_n3,보아라,[미렌],Miren hacia la pizarra con atención niños.,아이들아 칠판을 주의 깊게 보아라.
 982,triste,A2,unit_033,es_u33_n3,슬픈,[트리스테],Esa melodía tiene un tono muy triste.,그 선율은 매우 구슬프고 슬픈 느낌을 준다.
 983,aun,A2,unit_033,es_u33_n3,아직도,[아운],Aun con frío salimos a pasear al perro.,날씨가 쌀쌀했음에도 반려견 산책을 나섰다.
 984,pensado,A2,unit_033,es_u33_n3,생각,[펜사도],He pensado en preparar tortilla para cenar.,저녁으로 스페인식 오믈렛을 만들까 생각했다.
@@ -1055,11 +1055,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1054,puedas,A2,unit_036,es_u36_n1,할 수,[푸에다스],Llámame en cuanto puedas por favor.,시간 되는 대로 바로 전화 부탁해.
 1055,puso,A2,unit_036,es_u36_n1,넣어,[푸소],Él puso los platos limpios en el estante.,그는 깨끗한 접시들을 선반 위에 올려놓았다.
 1056,creía,A2,unit_036,es_u36_n1,믿었다,[크레이아],Yo creía que la tienda abría más tarde.,가게가 더 늦게 문을 열 줄 알았다.
-1057,regresar,A2,unit_036,es_u36_n1,반환,[레그레사르],Queremos regresar a casa antes de anochecer.,어두워지기 전에 집으로 돌아가고 싶다.
+1057,regresar,A2,unit_036,es_u36_n1,돌아가다,[레그레사르],Queremos regresar a casa antes de anochecer.,어두워지기 전에 집으로 돌아가고 싶다.
 1058,llega,A2,unit_036,es_u36_n1,도착하다,[예가],El tren llega puntual a las tres.,기차는 3시 정각에 도착한다.
 1059,entender,A2,unit_036,es_u36_n2,이해하다,[엔텐데르],Es fácil entender esta regla básica.,이 기본 규칙을 이해하는 것은 쉽다.
-1060,mirar,A2,unit_036,es_u36_n2,봐,[미라르],Me gusta mirar los barcos desde el puerto.,항구에서 배들을 구경하는 것을 좋아한다.
-1061,sacar,A2,unit_036,es_u36_n2,테이크 아웃,[사카르],Voy a sacar dinero del cajero automático.,현금인출기에서 돈을 좀 인출할 것이다.
+1060,mirar,A2,unit_036,es_u36_n2,보다,[미라르],Me gusta mirar los barcos desde el puerto.,항구에서 배들을 구경하는 것을 좋아한다.
+1061,sacar,A2,unit_036,es_u36_n2,꺼내다,[사카르],Voy a sacar dinero del cajero automático.,현금인출기에서 돈을 좀 인출할 것이다.
 1062,cambiado,A2,unit_036,es_u36_n2,변경됨,[캄비아도],La ciudad ha cambiado mucho estos años.,이 도시는 최근 몇 년 사이에 많이 변했다.
 1063,trae,A2,unit_036,es_u36_n2,가져옵니다,[트라에],El cartero trae una carta para ti.,우체부 아저씨가 너에게 온 편지를 가져오셨다.
 1064,hermoso,A2,unit_036,es_u36_n2,아름다운,[에르모소],Vimos un atardecer hermoso junto al mar.,바닷가에서 아름다운 일몰을 보았다.
@@ -1086,14 +1086,14 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1085,público,A2,unit_037,es_u37_n1,대중,[푸블리코],El parque está abierto a todo el público.,공원은 모든 일반인에게 개방되어 있다.
 1086,ocurrió,A2,unit_037,es_u37_n1,일어났다,[오쿠리오],¿Cuándo ocurrió ese suceso en la calle?,길거리에서 그 일이 언제 일어났니?
 1087,veré,A2,unit_037,es_u37_n1,볼 것이다,[베레],Te veré mañana en la puerta del colegio.,내일 학교 정문 앞에서 너를 만날 것이다.
-1088,salvar,A2,unit_037,es_u37_n1,저장,[살바르],El bombero logró salvar al perro atrapado.,소방관이 갇혀 있던 개를 구해냈다.
+1088,salvar,A2,unit_037,es_u37_n1,구하다,[살바르],El bombero logró salvar al perro atrapado.,소방관이 갇혀 있던 개를 구해냈다.
 1089,partido,A2,unit_037,es_u37_n2,경기,[파르티도],El partido de fútbol empieza a las cinco.,축구 경기는 다섯 시에 시작한다.
 1090,bonita,A2,unit_037,es_u37_n2,예쁜,[보니타],Compramos una lámpara muy bonita para el salón.,거실에 둘 아주 예쁜 조명을 하나 샀다.
-1091,joder,A2,unit_037,es_u37_n2,씨발,[호데르],¡No me jodas con ese cuento otra vez!,그런 뻔한 소리로 또 귀찮게 굴지 마라!
+1091,joder,A2,unit_037,es_u37_n2,귀찮게하다,[호데르],¡No me jodas con ese cuento otra vez!,그런 뻔한 소리로 또 귀찮게 굴지 마라!
 1092,causa,A2,unit_037,es_u37_n2,원인,[카우사],La lluvia fue la causa del retraso.,비가 바로 지연의 원인이었다.
 1093,caliente,A2,unit_037,es_u37_n2,뜨거운,[카리엔테],Me gusta tomar una sopa caliente en invierno.,겨울에는 따뜻한 국물을 먹는 것을 좋아한다.
 1094,sargento,A2,unit_037,es_u37_n2,상사,[사르헨토],El sargento dio instrucciones a los soldados.,상사가 군인들에게 행동 지침을 내렸다.
-1095,cenar,A2,unit_037,es_u37_n2,저녁 식사,[세나르],Vamos a cenar juntos a un restaurante italiano.,이탈리아 식당에 같이 저녁을 먹으러 가자.
+1095,cenar,A2,unit_037,es_u37_n2,저녁먹다,[세나르],Vamos a cenar juntos a un restaurante italiano.,이탈리아 식당에 같이 저녁을 먹으러 가자.
 1096,compañero,A2,unit_037,es_u37_n2,동반자,[콤파녜로],Mi compañero de trabajo me ayudó mucho hoy.,직장 동료가 오늘 나를 많이 도와주었다.
 1097,llevó,A2,unit_037,es_u37_n2,데려갔다,[예보],Mi padre me llevó en coche a la estación.,아버지께서 차로 나를 역까지 태워다 주셨다.
 1098,banco,A2,unit_037,es_u37_n2,은행,[반코],Tengo que ir al banco a abrir una cuenta.,계좌를 개설하러 은행에 가야 한다.
@@ -1165,7 +1165,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1164,seré,A2,unit_039,es_u39_n3,될 것이다,[세레],Algún día seré un gran cocinero profesional.,언젠가 훌륭한 전문 요리사가 될 것이다.
 1165,tenían,A2,unit_039,es_u39_n3,가지고 있었다,[테니안],Ellos tenían muchas ganas de ir a la playa.,그들은 바다에 가고 싶은 마음이 굴뚝같았다.
 1166,leer,A2,unit_039,es_u39_n3,읽다,[레에르],Me gusta leer un rato antes de acostarme.,잠자리에 들기 전에 잠깐 책 읽는 것을 좋아한다.
-1167,parar,A2,unit_039,es_u39_n3,중지,[파라르],El autobús tuvo que parar en el arcén.,버스는 길가 갓길에 정차해야만 했다.
+1167,parar,A2,unit_039,es_u39_n3,멈추다,[파라르],El autobús tuvo que parar en el arcén.,버스는 길가 갓길에 정차해야만 했다.
 1168,lleno,A2,unit_039,es_u39_n3,가득 찬,[예노],El vaso está completamente lleno de zumo.,유리잔에 주스가 가득 차 있다.
 1169,dejé,A2,unit_040,es_u40_n1,떠났다,[데헤],Dejé las gafas sobre la mesa del comedor.,식탁 위에 안경을 두고 나왔다.
 1170,respeto,A2,unit_040,es_u40_n1,존경,[레스페토],Trato a todos mis vecinos con mucho respeto.,모든 이웃을 각별한 존중심을 갖고 대한다.
@@ -1195,7 +1195,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1194,darte,A2,unit_040,es_u40_n3,당신에게,[다르테],Quiero darte un buen consejo de amigo.,친구로서 너에게 좋은 조언 하나를 해주고 싶다.
 1195,salida,A2,unit_040,es_u40_n3,출구,[사리다],La salida del metro está a la derecha.,지하철 출구는 오른편에 위치해 있다.
 1196,decirlo,A2,unit_040,es_u40_n3,말해봐,[데시르로],Es muy fácil decirlo pero difícil cumplirlo.,말로 하기는 참 쉽지만 실천하기는 어렵다.
-1197,confiar,A2,unit_040,es_u40_n3,신뢰,[콘피아르],Puedes confiar plenamente en mis palabras.,내 말을 온전히 믿고 신뢰해도 좋다.
+1197,confiar,A2,unit_040,es_u40_n3,신뢰하다,[콘피아르],Puedes confiar plenamente en mis palabras.,내 말을 온전히 믿고 신뢰해도 좋다.
 1198,hacerte,A2,unit_040,es_u40_n3,당신을,[아세르테],Quiero hacerte una pregunta sobre la lección.,수업 내용과 관련해 너에게 질문 하나를 하고 싶다.
 1199,necesitaba,A2,unit_041,es_u41_n1,필요했다,[네세시타바],Ayer necesitaba descansar tras tanto esfuerzo.,어제는 그렇게 애를 쓴 뒤라 휴식이 절실했다.
 1200,hermanos,A2,unit_041,es_u41_n1,형제,[에르마노스],Tengo dos hermanos que viven en Madrid.,나에게는 마드리드에 거주하는 형제가 둘 있다.
@@ -1215,7 +1215,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1214,jugando,A2,unit_041,es_u41_n2,연주하다,[후간도],Los niños están jugando en el patio verde.,아이들이 초록빛 마당에서 즐겁게 놀고 있다.
 1215,llevas,A2,unit_041,es_u41_n2,가지고,[예바스],¿Qué llevas dentro de esa mochila pesada?,그 무거운 배낭 안에 무엇을 넣고 다니니?
 1216,alegra,A2,unit_041,es_u41_n2,행복하다,[아레그라],Me alegra mucho verte tan bien de salud.,건강하고 활기찬 네 모습을 보니 참 기쁘다.
-1217,bailar,A2,unit_041,es_u41_n2,댄스,[바이라르],Vamos a bailar un poco en la fiesta.,파티에서 우리 춤 좀 추며 신나게 놀자.
+1217,bailar,A2,unit_041,es_u41_n2,춤추다,[바이라르],Vamos a bailar un poco en la fiesta.,파티에서 우리 춤 좀 추며 신나게 놀자.
 1218,diablo,A2,unit_041,es_u41_n2,악마,[디아블로],¡Qué demonios y qué diablo pasa por aquí!,도대체 여기서 무슨 일들이 벌어지고 있는 거야!
 1219,oí,A2,unit_041,es_u41_n3,내가 들었어,[오이],Oí un ruido fuerte afuera de la ventana.,창문 밖에서 쿵 하는 큰 소리를 똑똑히 들었다.
 1220,sepa,A2,unit_041,es_u41_n3,알고있다,[세파],Que yo sepa la tienda no abre los domingos.,내가 알기로 그 가게는 일요일에 문을 열지 않는다.
@@ -1244,7 +1244,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1243,comandante,A2,unit_042,es_u42_n2,사령관,[코만단테],El comandante dirigió la maniobra con precisión.,지휘관은 작전을 한 치의 오차도 없이 지휘했다.
 1244,acción,A2,unit_042,es_u42_n2,행동,[아크시온],Me gustan las películas llenas de acción.,나는 박진감과 액션이 넘쳐나는 영화를 좋아한다.
 1245,reglas,A2,unit_042,es_u42_n2,규칙,[레글라스],Debemos respetar las reglas del juego limpio.,스포츠맨십에 입각하여 게임 규칙을 준수해야 한다.
-1246,obra,A2,unit_042,es_u42_n2,일,[오브라],Fuimos al teatro a ver una hermosa obra.,우리는 멋진 연극 한 편을 관람하러 극장에 갔다.
+1246,obra,A2,unit_042,es_u42_n2,작품,[오브라],Fuimos al teatro a ver una hermosa obra.,우리는 멋진 연극 한 편을 관람하러 극장에 갔다.
 1247,esperanza,A2,unit_042,es_u42_n2,희망,[에스페란사],Nunca pierdas la esperanza ante las dificultades.,어려움에 부딪히더라도 결코 희망의 끈을 놓지 마라.
 1248,cuestión,A2,unit_042,es_u42_n2,문제,[쿠에스티온],Es solo una cuestión de tiempo y paciencia.,그것은 단지 시간과 인내심이 걸린 문제일 뿐이다.
 1249,molesta,A2,unit_042,es_u42_n3,짜증나는,[모레스타],Ese ruido continuo molesta a los vecinos.,끊임없이 이어지는 소음이 이웃들에게 불편을 준다.
@@ -1255,9 +1255,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1254,río,A2,unit_042,es_u42_n3,강,[리오],Paseamos por la orilla del río al atardecer.,해 질 녘에 강변 산책로를 따라 한가로이 걸었다.
 1255,bienvenido,A2,unit_042,es_u42_n3,환영합니다,[비엔베니도],Sé muy bienvenido a nuestra acogedora casa.,우리의 아늑한 집에 오신 것을 진심으로 환영합니다.
 1256,abrir,A2,unit_042,es_u42_n3,열다,[아브리르],¿Puedes abrir la ventana para que entre aire?,공기가 통하도록 창문 좀 열어줄 수 있겠니?
-1257,tocar,A2,unit_042,es_u42_n3,접촉,[토카르],No debes tocar los cuadros del museo.,미술관에 걸린 그림들을 만져서는 안 된다.
+1257,tocar,A2,unit_042,es_u42_n3,만지다,[토카르],No debes tocar los cuadros del museo.,미술관에 걸린 그림들을 만져서는 안 된다.
 1258,bob,A2,unit_042,es_u42_n3,밥,[보브],Bob prepara un café delicioso en su cocina.,밥은 자기 주방에서 풍미 좋은 커피를 내린다.
-1259,contar,A2,unit_043,es_u43_n1,카운트,[콘타르],Puedes contar conmigo para lo que haga falta.,필요한 것이 있다면 언제든지 나에게 기대도 좋다.
+1259,contar,A2,unit_043,es_u43_n1,세다,[콘타르],Puedes contar conmigo para lo que haga falta.,필요한 것이 있다면 언제든지 나에게 기대도 좋다.
 1260,sigo,A2,unit_043,es_u43_n1,계속한다,[시고],Sigo estudiando español con muchas ganas hoy.,오늘도 열정을 쏟아 스페인어 공부를 계속하고 있다.
 1261,interior,A2,unit_043,es_u43_n1,인테리어,[인테리오르],El patio interior de la casa tiene muchas flores.,집 안뜰 중정에는 다채로운 꽃들이 활짝 피어 있다.
 1262,apartamento,A2,unit_043,es_u43_n1,아파트,[아파르타멘토],Alquilamos un apartamento soleado junto al mar.,바닷가 바로 옆에 위치한 볕 잘 드는 아파트를 빌렸다.
@@ -1302,7 +1302,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1301,humanos,A2,unit_044,es_u44_n2,인간,[우마노스],Los seres humanos necesitamos convivir en armonía.,인간은 조화롭게 어울려 살아가야 한다.
 1302,estaremos,A2,unit_044,es_u44_n2,될 것이다,[에스타레모스],Estaremos en casa a la hora de cenar.,우리는 저녁 식사 시간에 맞춰 집에 있을 것이다.
 1303,valor,A2,unit_044,es_u44_n2,가치,[바로르],Tu esfuerzo diario tiene un gran valor.,너의 매일의 노력은 커다란 가치를 지닌다.
-1304,suyo,A2,unit_044,es_u44_n2,너의 것,[수요],Ese paraguas azul sobre la mesa es suyo.,탁자 위에 놓인 저 파란 우산은 그의 것이다.
+1304,suyo,A2,unit_044,es_u44_n2,그의 것,[수요],Ese paraguas azul sobre la mesa es suyo.,탁자 위에 놓인 저 파란 우산은 그의 것이다.
 1305,objetivo,A2,unit_044,es_u44_n2,목표,[오브헤티보],Nuestro objetivo es terminar el trabajo hoy.,우리의 목표는 오늘 작업을 마치는 것이다.
 1306,repente,A2,unit_044,es_u44_n2,갑자기,[레펜테],De repente empezó a llover con mucha fuerza.,갑자기 비가 매우 세차게 쏟아지기 시작했다.
 1307,debía,A2,unit_044,es_u44_n2,해야한다,[데비아],Sabía que debía estudiar más para el examen.,시험을 위해 공부를 더 해야 한다는 것을 알고 있었다.
@@ -1377,7 +1377,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1376,hacerme,A2,unit_046,es_u46_n3,나를 만들어,[아세르메],¿Puedes hacerme un favor sencillo esta tarde?,오늘 오후에 간단한 부탁 하나만 들어줄 수 있니?
 1377,salga,A2,unit_046,es_u46_n3,나가다,[살가],Espera a que salga el sol para salir a correr.,달리기를 하러 나가려면 해가 뜰 때까지 기다려라.
 1378,recordar,A2,unit_046,es_u46_n3,기억하다,[레코르다르],Es fácil recordar las normas si practicas a diario.,매일 꾸준히 연습하면 규칙들을 기억하기가 쉽다.
-1379,escapar,A2,unit_047,es_u47_n1,탈출,[에스카파르],El gato ágil logró escapar por el patio.,날렵한 고양이가 마당 쪽으로 쏙 빠져나갔다.
+1379,escapar,A2,unit_047,es_u47_n1,탈출하다,[에스카파르],El gato ágil logró escapar por el patio.,날렵한 고양이가 마당 쪽으로 쏙 빠져나갔다.
 1380,bosque,A2,unit_047,es_u47_n1,숲,[보스께],Paseamos por el bosque verde lleno de pinos.,소나무가 울창한 푸른 숲길을 따라 산책했다.
 1381,gay,A2,unit_047,es_u47_n1,게이,[게이],La sociedad defiende el respeto hacia la comunidad gay.,사회는 모든 성소수자 공동체에 대한 존중을 지지한다.
 1382,señores,A2,unit_047,es_u47_n1,여러분,[세뇨레스],Buenas noches señores y bienvenidos al evento.,신사 여러분 좋은 저녁이며 행사에 오신 것을 환영합니다.
@@ -1426,15 +1426,15 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1425,depende,A2,unit_048,es_u48_n2,그것은 달려있다,[데펜데],La hora de salida depende del estado del tiempo.,출발 시간은 그날의 기상 상태에 달려 있다.
 1426,motivo,A2,unit_048,es_u48_n2,이유,[모티보],El motivo de mi visita es saludarte cordialmente.,내가 찾아온 까닭은 너에게 반갑게 인사하기 위함이다.
 1427,inglés,A2,unit_048,es_u48_n2,영어,[인글레스],Estudio inglés y español a la vez con entusiasmo.,영어와 스페인어를 동시에 열정적으로 공부하고 있다.
-1428,suya,A2,unit_048,es_u48_n2,너의 것,[수야],Esa mochila negra colocada en el banco es suya.,벤치 위에 놓인 저 검은 배낭은 그녀의 것이다.
+1428,suya,A2,unit_048,es_u48_n2,그녀의 것,[수야],Esa mochila negra colocada en el banco es suya.,벤치 위에 놓인 저 검은 배낭은 그녀의 것이다.
 1429,estudio,A2,unit_048,es_u48_n3,공부하다,[에스투디오],Paso varias horas al día en mi estudio luminoso.,채광 좋은 작업실에서 하루 중 여러 시간을 보낸다.
-1430,acabar,A2,unit_048,es_u48_n3,마무리,[아카바르],Queremos acabar esta tarea antes de las seis.,여섯 시가 되기 전에 이 업무를 마무리하고 싶다.
+1430,acabar,A2,unit_048,es_u48_n3,끝내다,[아카바르],Queremos acabar esta tarea antes de las seis.,여섯 시가 되기 전에 이 업무를 마무리하고 싶다.
 1431,sentimientos,A2,unit_048,es_u48_n3,감정,[센티미엔토스],Expresa tus sentimientos con serenidad y claridad.,차분하고 명확하게 너의 감정을 표현해라.
 1432,tomando,A2,unit_048,es_u48_n3,복용,[토만도],Estoy tomando una taza de té verde caliente.,따뜻한 녹차 한 잔을 마시는 중이다.
 1433,dieron,A2,unit_048,es_u48_n3,주었다,[디에론],Me dieron la bienvenida con una gran sonrisa abierta.,그들은 활짝 핀 미소로 나를 따뜻하게 맞아주었다.
 1434,parecen,A2,unit_048,es_u48_n3,보이다,[파레센],Esas nubes oscuras parecen traer lluvia fuerte.,저 짙은 먹구름은 굵은 비를 몰고 올 것처럼 보인다.
 1435,llaves,A2,unit_048,es_u48_n3,열쇠,[야베스],Guarda las llaves del piso en el bolsillo interior.,아파트 열쇠를 안주머니에 잘 넣어두어라.
-1436,perros,A2,unit_048,es_u48_n3,개,[페로스],Los dos perros juegan felices en el césped fresco.,두 마리의 개가 싱그러운 잔디밭에서 신나게 논다.
+1436,perros,A2,unit_048,es_u48_n3,강아지들,[페로스],Los dos perros juegan felices en el césped fresco.,두 마리의 개가 싱그러운 잔디밭에서 신나게 논다.
 1437,propósito,A2,unit_048,es_u48_n3,목적,[프로포시토],Mi propósito este año es hablar español con fluidez.,올해 내 다짐은 스페인어를 유창하게 구사하는 것이다.
 1438,noticia,A2,unit_048,es_u48_n3,뉴스,[노티시아],Recibimos la buena noticia de su pronta llegada.,그가 곧 도착한다는 기쁜 소식을 전해 들었다.
 1439,partir,A2,unit_049,es_u49_n1,떠나다,[파르티르],El autobús está a punto de partir hacia el norte.,버스가 곧 북쪽 방면으로 출발하려고 한다.
@@ -1493,7 +1493,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1492,prefiero,A2,unit_050,es_u50_n3,선호한다,[프레피에로],Prefiero café sin azúcar.,나는 설탕 없는 커피를 더 좋아한다.
 1493,red,A2,unit_050,es_u50_n3,네트워크,[레드],Comparto fotos en la red social.,소셜 네트워크에 사진을 공유한다.
 1494,viejos,A2,unit_050,es_u50_n3,늙은,[비에호스],Tengo muchos libros viejos.,나는 오래된 책이 많이 있다.
-1495,solamente,A2,unit_050,es_u50_n3,만,[소라멘테],Solamente necesito cinco minutos.,단지 5분만 필요할 뿐이다.
+1495,solamente,A2,unit_050,es_u50_n3,단지,[소라멘테],Solamente necesito cinco minutos.,단지 5분만 필요할 뿐이다.
 1496,oiga,A2,unit_050,es_u50_n3,안녕,[오이가],Oiga. ¿dónde está la estación?,저기요 역이 어디에 있나요?
 1497,estén,A2,unit_050,es_u50_n3,이다,[에스텐],Espero que todos estén bien.,모두 잘 지내고 계시기를 바랍니다.
 1498,cuentas,A2,unit_050,es_u50_n3,계산서,[쿠엔타스],Pagas las cuentas al final de mes.,월말에 공과금을 납부한다.
@@ -1518,7 +1518,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1517,vender,A2,unit_051,es_u51_n2,팔다,[벤데르],Quieren vender su viejo piso para comprar una casa con jardín.,그들은 마당 딸린 집을 사기 위해 낡은 아파트를 팔고 싶어 한다.
 1518,llame,A2,unit_051,es_u51_n2,전화,[야메],Dígale que me llame en cuanto termine la reunión.,회의가 끝나는 대로 저에게 전화를 달라고 전해 주십시오.
 1519,detente,A2,unit_051,es_u51_n3,중지,[데텐테],Detente un momento y observa el hermoso atardecer marino.,잠시 걸음을 멈추고 바다 위로 번지는 노을을 감상해봐라.
-1520,luchar,A2,unit_051,es_u51_n3,싸움,[루차르],Hay que luchar con constancia para alcanzar las metas.,목표를 이루기 위해서는 끈기를 갖고 꾸준히 노력해야 한다.
+1520,luchar,A2,unit_051,es_u51_n3,싸우다,[루차르],Hay que luchar con constancia para alcanzar las metas.,목표를 이루기 위해서는 끈기를 갖고 꾸준히 노력해야 한다.
 1521,cabo,A2,unit_051,es_u51_n3,곶,[카보],Llevamos a cabo todas las mejoras previstas en la aplicación.,앱에 예정되어 있던 모든 개선 사항들을 차질 없이 완료했다.
 1522,ruido,A2,unit_051,es_u51_n3,소음,[루이도],Cierra la ventana para aislar el molesto ruido de la calle.,시끄러운 길거리 소음을 차단하기 위해 창문을 닫아라.
 1523,lucha,A2,unit_051,es_u51_n3,싸움,[루차],El deportista mantuvo una gran lucha hasta el pitido final.,선수는 경기 종료 휘슬이 울릴 때까지 치열한 승부를 펼쳤다.
@@ -1526,7 +1526,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1525,reloj,A2,unit_051,es_u51_n3,시계,[레로흐],Miro el reloj de pulsera para no llegar con retraso.,지각하지 않기 위해 손목시계를 수시로 확인한다.
 1526,gato,A2,unit_051,es_u51_n3,고양이,[가토],El gato duerme plácidamente sobre el cojín del sofá.,고양이가 소파 방석 위에서 곤히 낮잠을 자고 있다.
 1527,averiguar,A2,unit_051,es_u51_n3,알아내다,[아베리구아르],Quiero averiguar qué autobús llega antes al centro urbano.,시내 중심부까지 어느 버스가 더 일찍 도착하는지 알아보고 싶다.
-1528,volar,A2,unit_051,es_u51_n3,파리,[보라르],Las gaviotas disfrutan al volar sobre el oleaje marino.,갈매기들이 넘실대는 파도 위를 유유히 날아오른다.
+1528,volar,A2,unit_051,es_u51_n3,날다,[보라르],Las gaviotas disfrutan al volar sobre el oleaje marino.,갈매기들이 넘실대는 파도 위를 유유히 날아오른다.
 1529,vayamos,A2,unit_052,es_u52_n1,가자,[바야모스],Vayamos al mercado temprano para comprar pescado muy fresco.,가장 신선한 생선을 사러 아침 일찍 시장으로 가자.
 1530,tanta,A2,unit_052,es_u52_n1,너무 많이,[탄타],No comas tanta comida pesada antes de ir a dormir.,잠자리에 들기 전에 기름진 음식을 너무 많이 먹지 마라.
 1531,vendrá,A2,unit_052,es_u52_n1,올 것이다,[벤드라],El fontanero vendrá a reparar el grifo mañana por la mañana.,배관공 아저씨가 내일 아침에 수도꼭지를 고치러 오실 것이다.
@@ -1557,7 +1557,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1556,televisión,A2,unit_052,es_u52_n3,텔레비전,[테레비시온],Apaga la televisión y ven a cenar en familia a la mesa.,TV를 끄고 식탁으로 와서 가족과 함께 저녁을 먹어라.
 1557,pasará,A2,unit_052,es_u52_n3,통과할 것이다,[파사라],El tren rápido pasará por la estación sin detenerse.,고속열차는 정차하지 않고 역을 그대로 통과해 지나갈 것이다.
 1558,momentos,A2,unit_052,es_u52_n3,순간들,[모멘토스],Compartimos momentos inolvidables durante aquel viaje costero.,그 해안 여행길에서 우리는 잊지 못할 소중한 순간들을 함께 나누었다.
-1559,coger,A2,unit_053,es_u53_n1,잡기,[코헤르],Vamos a coger el autobús de las diez para ir al centro.,시내로 가기 위해 10시 정각 버스를 타도록 하자.
+1559,coger,A2,unit_053,es_u53_n1,잡다,[코헤르],Vamos a coger el autobús de las diez para ir al centro.,시내로 가기 위해 10시 정각 버스를 타도록 하자.
 1560,posibilidad,A2,unit_053,es_u53_n1,가능성,[포시비리다드],Existe la posibilidad de que llueva un poco esta tarde.,오늘 오후에 비가 약간 내릴 가능성이 있다.
 1561,hubiese,A2,unit_053,es_u53_n1,그랬을 것이다,[우비에세],Si hubiese sabido que venías habría preparado más comida.,네가 올 줄 미리 알았더라면 음식을 더 넉넉하게 장만했을 텐데.
 1562,mark,A2,unit_053,es_u53_n1,마크,[마르크],Mark estudia diseño interactivo con herramientas digitales modernas.,마크는 최신 디지털 툴을 활용하여 인터랙티브 디자인을 공부한다.
@@ -1667,9 +1667,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1666,distancia,A2,unit_056,es_u56_n2,거리,[디스탄시아],La distancia entre la casa y el colegio es de pocos pasos.,집과 학교 사이의 거리는 불과 몇 걸음 되지 않는다.
 1667,desea,A2,unit_056,es_u56_n2,원하다,[데세아],¿Desea tomar algo de postre o un café cortado señor?,손님 디저트나 에스프레소에 우유를 살짝 탄 커피를 드시겠습니까?
 1668,dejarlo,A2,unit_056,es_u56_n2,놔둬,[데하르로],Es mejor dejarlo reposar unos minutos antes de servir el guiso.,스튜를 그릇에 담아내기 전에 몇 분간 뜸 들이도록 두는 편이 낫다.
-1669,pelear,A2,unit_056,es_u56_n3,싸움,[페레아르],No vale la pena pelear por motivos tan insignificantes hoy.,오늘 이렇게 사소한 이유로 서로 다투며 힘을 뺄 가치는 없다.
+1669,pelear,A2,unit_056,es_u56_n3,싸우다,[페레아르],No vale la pena pelear por motivos tan insignificantes hoy.,오늘 이렇게 사소한 이유로 서로 다투며 힘을 뺄 가치는 없다.
 1670,pierna,A2,unit_056,es_u56_n3,다리,[피에르나],Apoya bien la pierna izquierda para mantener el equilibrio corporal.,몸의 균형을 유지하기 위해 왼쪽 다리를 단단히 딛어라.
-1671,echar,A2,unit_056,es_u56_n3,캐스트,[에차르],Voy a echar una siesta corta después de comer ligero.,가벼운 점심 식사를 마친 후 잠깐 짧은 낮잠을 잘 생각이다.
+1671,echar,A2,unit_056,es_u56_n3,던지다,[에차르],Voy a echar una siesta corta después de comer ligero.,가벼운 점심 식사를 마친 후 잠깐 짧은 낮잠을 잘 생각이다.
 1672,descanso,A2,unit_056,es_u56_n3,휴식,[데스칸소],Hacemos un breve descanso a mitad de la jornada matutina.,오전 일과 중간에 잠시 짬을 내어 꿀맛 같은 휴식을 취한다.
 1673,américa,A2,unit_056,es_u56_n3,미국,[아메리카],Mi tío vivió muchos años en varios países de América del Sur.,우리 삼촌은 남아메리카의 여러 국가에서 오랫동안 거주하셨다.
 1674,área,A2,unit_056,es_u56_n3,지역,[아레아],Esta área residencial cuenta con amplios parques infantiles verdes.,이 주거 단지 구역은 넓고 푸른 어린이 놀이터를 갖추고 있다.
@@ -1695,7 +1695,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1694,monstruo,A2,unit_057,es_u57_n2,괴물,[몬스트루오],El niño dibujó un simpático monstruo de color verde en su libreta.,아이는 공책에 귀엽고 친근한 초록빛 괴물을 한 마리 그렸다.
 1695,princesa,A2,unit_057,es_u57_n2,공주,[프린세사],La niña se disfrazó de princesa para la fiesta escolar de carnaval.,아이는 학교 카니발 축제를 위해 화려한 공주 옷으로 분장했다.
 1696,autobús,A2,unit_057,es_u57_n2,버스,[아우토부스],Subí al autobús municipal para ir al centro comercial de compras.,쇼핑몰로 장을 보러 가기 위해 시내버스에 올라탔다.
-1697,cuidar,A2,unit_057,es_u57_n2,배려,[쿠이다르],Debemos cuidar la alimentación y el descanso diario de calidad.,식단을 바르게 챙기고 질 높은 매일의 수면과 휴식을 돌보아야 한다.
+1697,cuidar,A2,unit_057,es_u57_n2,돌보다,[쿠이다르],Debemos cuidar la alimentación y el descanso diario de calidad.,식단을 바르게 챙기고 질 높은 매일의 수면과 휴식을 돌보아야 한다.
 1698,ei,A2,unit_057,es_u57_n2,안녕,[에이],¡Ei ven aquí que acaban de servir el arroz caliente recién hecho!,이봐 이리 와 방금 갓 지은 따끈한 밥상이 차려졌어!
 1699,huevos,A2,unit_057,es_u57_n3,달걀,[우에보스],Compré media docena de huevos frescos de campo en la granja.,농장에서 갓 낳은 신선한 방사 유정란 반 다스를 샀다.
 1700,pocos,A2,unit_057,es_u57_n3,거의,[포코스],Quedan pocos minutos para que arranque el partido de fútbol.,축구 경기가 킥오프를 알리기까지 이제 몇 분 남지 않았다.
@@ -1711,7 +1711,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1710,envió,A2,unit_058,es_u58_n1,보냈습니다,[엔비오],Ella me envió un mensaje cordial felicitándome por el nuevo proyecto.,그녀는 새 프로젝트 시작을 축하하며 다정한 메시지를 보내왔다.
 1711,puntos,A2,unit_058,es_u58_n1,포인트,[푼토스],Nuestro equipo sumó tres valiosos puntos tras una brillante victoria.,우리 팀은 값진 승리를 거두며 승점 3점을 알차게 챙겼다.
 1712,ministro,A2,unit_058,es_u58_n1,장관,[미니스트로],El ministro compareció ante los medios para explicar las medidas económicas.,장관은 경제 정책 방안을 브리핑하기 위해 언론 앞에 섰다.
-1713,conducir,A2,unit_058,es_u58_n1,드라이브,[콘두시르],Es fundamental mantener la atención plena al conducir por autopista.,고속도로에서 차량을 운전할 때는 온전히 집중하는 것이 필수적이다.
+1713,conducir,A2,unit_058,es_u58_n1,운전하다,[콘두시르],Es fundamental mantener la atención plena al conducir por autopista.,고속도로에서 차량을 운전할 때는 온전히 집중하는 것이 필수적이다.
 1714,aceptar,A2,unit_058,es_u58_n1,받아들이다,[아세프타르],Decidí aceptar la interesante propuesta laboral que me ofrecieron ayer.,어제 제안받은 흥미로운 직무 채용 제의를 수락하기로 결심했다.
 1715,borracho,A2,unit_058,es_u58_n1,취한,[보라초],Aquel hombre bebió demasiado vino y terminó visiblemente borracho.,그 남자는 포도주를 과하게 마신 탓에 눈에 띄게 취해버렸다.
 1716,animal,A2,unit_058,es_u58_n1,동물,[아니말],El perro es un noble animal conocido por su gran lealtad humana.,개는 인간을 향한 깊은 충성심으로 널리 알려진 고결한 동물이다.
@@ -1753,7 +1753,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1752,oeste,B1,unit_059,es_u59_n2,서쪽,[오에스테],El sol dorado se oculta lentamente por el horizonte del oeste.,황금빛 태양이 서쪽 지평선 너머로 뉘엿뉘엿 저물어간다.
 1753,herida,B1,unit_059,es_u59_n2,상처,[에리다],Limpió la pequeña herida del brazo con agua y desinfectante.,팔에 난 작은 찰과상 상처를 깨끗한 물과 소독약으로 치료했다.
 1754,despacio,B1,unit_059,es_u59_n2,천천히,[데스파시오],Camina despacio y con paso firme para no resbalar en las rocas.,바위틈에서 미끄러지지 않도록 보폭을 좁히고 천천히 발을 디뎌라.
-1755,ayude,B1,unit_059,es_u59_n2,도움,[아유데],Pídele que te ayude a cargar los paquetes pesados en el maletero.,트렁크에 무거운 짐들을 싣는 것을 좀 도와달라고 그에게 부탁해라.
+1755,ayude,B1,unit_059,es_u59_n2,도와주다,[아유데],Pídele que te ayude a cargar los paquetes pesados en el maletero.,트렁크에 무거운 짐들을 싣는 것을 좀 도와달라고 그에게 부탁해라.
 1756,supe,B1,unit_059,es_u59_n2,알고 있었다,[수페],En cuanto probé aquel plato supe que era una receta tradicional.,그 음식을 한술 뜨자마자 유서 깊은 전통 비법 레시피임을 단번에 알아챘다.
 1757,directamente,B1,unit_059,es_u59_n2,직접,[디레크타멘테],Fuimos directamente a la terminal de salidas sin detenernos en tiendas.,상점가에 들르지 않고 출국장 터미널로 곧장 발걸음을 옮겼다.
 1758,inmediato,B1,unit_059,es_u59_n2,즉각적인,[인메디아토],Su respuesta ante el problema técnico fue de un acierto inmediato.,기술적 결함에 대한 그의 대처와 피드백은 즉각적이며 정확했다.
@@ -1790,7 +1790,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1789,and,B1,unit_060,es_u60_n3,그리고,[안드],Esa conocida marca internacional usa el lema rock and roll clásico.,그 유명 글로벌 브랜드는 고전 록앤롤을 상징 슬로건으로 채택하고 있다.
 1790,ángeles,B1,unit_060,es_u60_n3,천사들,[안헤레스],Los ángeles esculpidos en piedra blanca decoran la fachada del templo.,하얀 석조로 정교하게 조각된 천사상들이 사원 전면부를 아름답게 장식한다.
 1791,querría,B1,unit_060,es_u60_n3,원한다,[께리아],Querría pedir una jarra de agua fresca y dos copas de cristal.,시원한 생수 한 병과 유리잔 두 개를 정중히 부탁드리고 싶습니다.
-1792,cerrar,B1,unit_060,es_u60_n3,닫기,[세라르],Acuérdate de cerrar bien las ventanas si sales de casa por la tarde.,오후에 외출할 일이 생기면 창문들을 꼼꼼하게 닫는 것을 잊지 마라.
+1792,cerrar,B1,unit_060,es_u60_n3,닫다,[세라르],Acuérdate de cerrar bien las ventanas si sales de casa por la tarde.,오후에 외출할 일이 생기면 창문들을 꼼꼼하게 닫는 것을 잊지 마라.
 1793,conseguido,B1,unit_060,es_u60_n3,달성,[콘세기도],Hemos conseguido alcanzar todos los hitos marcados para este mes.,우리는 이번 달에 수립해 두었던 모든 주요 마일스톤 과업들을 달성해냈다.
 1794,peso,B1,unit_060,es_u60_n3,무게,[페소],Lleva una mochila ligera para no cargar un exceso de peso innecesario.,불필요하게 과중한 무게를 짊어지지 않도록 가벼운 배낭을 챙겨라.
 1795,víctimas,B1,unit_060,es_u60_n3,피해자,[비크티마스],Los servicios de rescate evacuaron con rapidez a las posibles víctimas.,긴급 구호 구조팀은 사고 피해자들을 신속하고 안전하게 대피시켰다.
@@ -1805,19 +1805,19 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1804,llevan,B1,unit_061,es_u61_n1,가지고 다닌다,[예반],Los niños llevan sus libros de lectura en mochilas ergonómicas ligeras.,아이들은 가볍고 편안한 인체공학 배낭에 읽을 책들을 챙겨 다닌다.
 1805,podré,B1,unit_061,es_u61_n1,할 수 있을 것이다,[포드레],Mañana por la tarde podré dedicar un par de horas al estudio sereno.,내일 오후에는 차분하게 한두 시간 정도 학습에 온전히 몰두할 수 있을 것이다.
 1806,oscuridad,B1,unit_061,es_u61_n1,어둠,[오스쿠리다드],Una pequeña vela encendida disipó por completo la profunda oscuridad.,작은 촛불 한 자루가 칠흑 같은 짙은 어둠을 온전히 밝혀주었다.
-1807,actuar,B1,unit_061,es_u61_n1,행위,[아크투아르],Ante cualquier emergencia imprevista es fundamental actuar con prudencia y calma.,예기치 못한 돌발 상황 앞에서는 신중하고 침착하게 행동하는 것이 가장 중요하다.
-1808,siga,B1,unit_061,es_u61_n1,팔로우,[시가],Siga todo recto por esta avenida principal hasta divisar el puerto marítimo.,바닷가 항구가 보일 때까지 이 메인 대로를 따라 쭉 곧장 걸어가십시오.
+1807,actuar,B1,unit_061,es_u61_n1,행동하다,[아크투아르],Ante cualquier emergencia imprevista es fundamental actuar con prudencia y calma.,예기치 못한 돌발 상황 앞에서는 신중하고 침착하게 행동하는 것이 가장 중요하다.
+1808,siga,B1,unit_061,es_u61_n1,따라가다,[시가],Siga todo recto por esta avenida principal hasta divisar el puerto marítimo.,바닷가 항구가 보일 때까지 이 메인 대로를 따라 쭉 곧장 걸어가십시오.
 1809,llevado,B1,unit_061,es_u61_n2,운반,[예바도],He llevado las cajas ordenadas al trastero del edificio esta mañana.,오늘 아침 가지런히 정리한 상자들을 건물 지하 창고로 옮겨두었다.
 1810,comenzó,B1,unit_061,es_u61_n2,시작했다,[코멘소],La función teatral comenzó puntual tras apagarse las luces del escenario.,무대 조명이 서서히 꺼진 후 연극 공연이 정시에 막을 올렸다.
 1811,regresa,B1,unit_061,es_u61_n2,돌아와,[레그레사],Mi hermana regresa de su estancia de estudios el próximo fin de semana.,우리 누나는 다음 주말에 유학 생활을 마치고 고향 집으로 귀환한다.
 1812,privado,B1,unit_061,es_u61_n2,비공개,[프리바도],Mantuvieron un encuentro privado para tratar asuntos de carácter familiar.,가족 간의 대소사를 논의하기 위해 비공개로 조용한 만남을 가졌다.
-1813,mirada,B1,unit_061,es_u61_n2,봐,[미라다],Dirigió una mirada atenta al horizonte marino para ver las velas lejanas.,먼바다에 뜬 돛단배들을 조망하기 위해 수평선을 향해 시선을 던졌다.
+1813,mirada,B1,unit_061,es_u61_n2,시선,[미라다],Dirigió una mirada atenta al horizonte marino para ver las velas lejanas.,먼바다에 뜬 돛단배들을 조망하기 위해 수평선을 향해 시선을 던졌다.
 1814,demonio,B1,unit_061,es_u61_n2,악마,[데모니오],¡Qué demonio de ruido tan molesto proviene del piso superior hoy!,도대체 오늘 위층에서 나는 저 시끄러운 소음의 정체가 뭐란 말인가!
 1815,abierta,B1,unit_061,es_u61_n2,열다,[아비에르타],Dejamos la ventana del salón abierta para que corra el aire fresco.,상쾌하고 시원한 바람이 통하도록 거실 창문을 활짝 열어두었다.
 1816,kevin,B1,unit_061,es_u61_n2,케빈,[크에빈],Kevin programa aplicaciones interactivas en su portátil de alto rendimiento.,케빈은 고성능 노트북으로 인터랙티브 애플리케이션 코드를 작성한다.
 1817,llámame,B1,unit_061,es_u61_n2,나에게 전화해,[야마메],Llámame en cuanto llegues a casa para saber que estás bien.,무사히 도착했는지 확인할 수 있게 집에 당도하는 대로 전화 한 통 걸어다오.
 1818,siguen,B1,unit_061,es_u61_n2,계속한다,[시겐],Los alumnos siguen repasando las notas para el examen de mañana.,학생들은 내일 치를 시험을 위해 정리 노트를 계속 복습하고 있다.
-1819,romper,B1,unit_061,es_u61_n3,휴식,[롬페르],Ten cuidado con la copa de cristal para no romperla al lavarla.,설거지할 때 얇은 유리잔이 깨지지 않도록 각별히 조심해라.
+1819,romper,B1,unit_061,es_u61_n3,깨뜨리다,[롬페르],Ten cuidado con la copa de cristal para no romperla al lavarla.,설거지할 때 얇은 유리잔이 깨지지 않도록 각별히 조심해라.
 1820,cambia,B1,unit_061,es_u61_n3,변화,[캄비아],El clima mediterráneo cambia a más templado con la llegada de la primavera.,봄이 찾아오면 지중해성 기후는 한층 온화하고 따스하게 바뀐다.
 1821,fiscal,B1,unit_061,es_u61_n3,검사,[피스칼],El fiscal expuso los documentos probatorios ante el tribunal de justicia.,검사는 법정 재판부 앞에서 객관적인 증거 서류들을 차분히 제시했다.
 1822,jardín,B1,unit_061,es_u61_n3,정원,[하르딘],Cuidamos las flores y los limoneros de nuestro soleado jardín trasero.,볕 잘 드는 뒷마당 정원에 심은 꽃들과 레몬나무들을 정성껏 가꾼다.
@@ -1827,7 +1827,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1826,amenaza,B1,unit_061,es_u61_n3,위협,[아메나사],Los nubarrones oscuros del horizonte no suponen una amenaza de lluvia inmediata.,먼 수평선의 먹구름이 당장 비를 뿌릴 위협적인 징조는 아니다.
 1827,pon,B1,unit_061,es_u61_n3,넣어,[폰],Pon las manzanas rojas lavadas en la cesta del centro de mesa.,깨끗이 씻은 빨간 사과들을 식탁 한가운데 바구니에 담아두어라.
 1828,marca,B1,unit_061,es_u61_n3,브랜드,[마르카],Esta marca artesanal elabora aceite de oliva virgen extra de gran calidad.,이 전통 장인 브랜드는 최고급 품질의 엑스트라 버진 올리브유를 짠다.
-1829,comenzar,B1,unit_062,es_u62_n1,시작,[코멘사르],Vamos a comenzar la reunión puntual para aprovechar bien la mañana.,오전 시간을 알차게 쓰기 위해 정각에 회의를 시작하도록 합시다.
+1829,comenzar,B1,unit_062,es_u62_n1,시작하다,[코멘사르],Vamos a comenzar la reunión puntual para aprovechar bien la mañana.,오전 시간을 알차게 쓰기 위해 정각에 회의를 시작하도록 합시다.
 1830,ponte,B1,unit_062,es_u62_n1,입다,[폰테],Ponte el abrigo de lana que sopla una brisa fresca en la calle.,길거리에 쌀쌀한 바람이 부니 따뜻한 모직 외투를 챙겨 입어라.
 1831,medicina,B1,unit_062,es_u62_n1,의학,[메디시나],Toma la medicina pautada por el facultativo con un gran vaso de agua.,의사 선생님이 처방해 준 약을 시원한 물 한 컵과 함께 복용해라.
 1832,podremos,B1,unit_062,es_u62_n1,할 수 있을 것이다,[포드레모스],Si nos organizamos con orden podremos terminar la tarea sin agobios.,체계적으로 분담하여 정리하면 부담 없이 과제를 매듭지을 수 있을 것이다.
@@ -1860,7 +1860,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1859,menor,B1,unit_063,es_u63_n1,미성년자,[메노르],Mi hermano menor estudia diseño gráfico interactivo en la universidad.,내 남동생은 대학교에서 인터랙티브 그래픽 디자인을 공부하고 있다.
 1860,recibido,B1,unit_063,es_u63_n1,받은,[레시비도],He recibido una carta muy afectuosa de mis viejos amigos de colegio.,학창 시절 옛 친구들로부터 온 정성이 가득 담긴 편지 한 통을 받았다.
 1861,negra,B1,unit_063,es_u63_n1,검정색,[네그라],Llevaba puesta una chaqueta negra de cuero de corte clásico y limpio.,심플하고 클래식한 디자인의 검은색 가죽 재킷을 단정하게 걸치고 있었다.
-1862,to,B1,unit_063,es_u63_n1,에,[토],El cartel bilingüe incluía la expresión welcome to Spain en su bienvenida.,이중 언어로 표기된 안내 간판에는 환영의 의미로 welcome to Spain 문구가 적혀 있었다.
+1862,to,B1,unit_063,es_u63_n1,~로,[토],El cartel bilingüe incluía la expresión welcome to Spain en su bienvenida.,이중 언어로 표기된 안내 간판에는 환영의 의미로 welcome to Spain 문구가 적혀 있었다.
 1863,habido,B1,unit_063,es_u63_n1,되었습니다,[아비도],Ha habido una gran afluencia de público en la feria gastronómica local.,지역 미식 박람회 행사장에는 수많은 인파의 발길이 북적이며 이어졌다.
 1864,limpio,B1,unit_063,es_u63_n1,깨끗한,[림피오],Mantén tu escritorio limpio y ordenado para concentrarte mejor en el estudio.,학업에 더 깊이 몰입할 수 있도록 공부 책상을 늘 말끔하고 정갈하게 치워라.
 1865,china,B1,unit_063,es_u63_n1,중국어,[치나],Degustamos una deliciosa cena de fideos tradicionales en una fonda china.,중국 전통 국숫집에서 감칠맛 나는 수타면 요리를 맛있게 맛보았다.
@@ -1927,7 +1927,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1926,agujero,B1,unit_065,es_u65_n1,구멍,[아구헤로],El ratón travieso escapó rápidamente por un pequeño agujero de la pared.,장난꾸러기 생쥐는 벽에 난 조그만 쥐구멍을 통해 잽싸게 빠져나갔다.
 1927,aspecto,B1,unit_065,es_u65_n1,외관,[아스페크토],La fachada de piedra del edificio antiguo conserva un aspecto imponente y noble.,오래된 건물의 석조 외벽은 여전히 웅장하고 기품 있는 외관을 자랑한다.
 1928,campamento,B1,unit_065,es_u65_n1,캠프,[캄파멘토],Los jóvenes montaron las tiendas de lona en el campamento scout forestal.,청소년들이 숲속 스카우트 야영장 캠프에 튼튼한 텐트들을 설치했다.
-1929,descansar,B1,unit_065,es_u65_n2,휴식,[데스칸사르],Es imprescindible descansar al menos ocho horas para rendir bien al día siguiente.,다음 날 제 실력을 발휘하려면 최소 8시간은 푹 자고 쉬어주는 것이 필수다.
+1929,descansar,B1,unit_065,es_u65_n2,쉬다,[데스칸사르],Es imprescindible descansar al menos ocho horas para rendir bien al día siguiente.,다음 날 제 실력을 발휘하려면 최소 8시간은 푹 자고 쉬어주는 것이 필수다.
 1930,matarme,B1,unit_065,es_u65_n2,나를 죽여라,[마타르메],Tanta carga de trabajo acumulada va a terminar por matarme de puro cansancio.,밀려드는 과중한 업무 때문에 정말이지 피로로 쓰러져 죽을 지경이다.
 1931,metido,B1,unit_065,es_u65_n2,넣어,[메티도],He metido los documentos importantes en una carpeta clasificada impermeable.,중요한 서류 파일들을 방수 기능이 있는 분류용 바인더에 잘 챙겨 넣었다.
 1932,quiso,B1,unit_065,es_u65_n2,구함,[끼소],Él no quiso aceptar el dinero extra porque consideraba que era su deber cívico.,그는 당연한 시민의 도리라 생각하여 사례금 받기를 한사코 마다했다.
@@ -1959,7 +1959,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1958,mata,B1,unit_066,es_u66_n1,죽이다,[마타],La falta prolongada de riego mata las plantas jóvenes durante los meses de sequía.,가뭄이 이어지는 계절에 물주기를 소홀히 하면 어린 식물들이 말라 죽는다.
 1959,sr,B1,unit_066,es_u66_n2,씨,[스르],El Sr. Moreno atendió amablemente a los nuevos clientes en la recepción de la sede.,모레노 씨는 본사 접견실에서 새로 찾아온 고객들을 깍듯하게 맞이했다.
 1960,valiente,B1,unit_066,es_u66_n2,용감한,[바리엔테],Fue un gesto muy valiente defender la verdad a pesar de las dificultades del entorno.,주변의 난관에도 굴하지 않고 끝까지 진실을 수호한 것은 매우 용기 있는 행동이었다.
-1961,deber,B1,unit_066,es_u66_n2,의무,[데베르],Cumplir con nuestro deber ciudadano fortalece la convivencia pacífica de todos.,시민으로서의 의무를 성실히 이행하는 것은 우리 모두의 평화로운 공존을 지탱한다.
+1961,deber,B1,unit_066,es_u66_n2,해야한다,[데베르],Cumplir con nuestro deber ciudadano fortalece la convivencia pacífica de todos.,시민으로서의 의무를 성실히 이행하는 것은 우리 모두의 평화로운 공존을 지탱한다.
 1962,pecho,B1,unit_066,es_u66_n2,가슴,[페초],Sintió un profundo alivio en el pecho al comprobar que todo estaba en perfecto orden.,모든 것이 제자리를 찾은 것을 확인하자 가슴속 깊은 곳에서 안도의 한숨이 나왔다.
 1963,gustó,B1,unit_066,es_u66_n2,좋아했다,[구스토],Me gustó mucho el tono natural y ameno de la conferencia sobre historia costera.,해안 역사에 관한 특강 강연이 매우 자연스럽고 흥미진진해서 참 마음에 들었다.
 1964,oyes,B1,unit_066,es_u66_n2,듣고,[오예스],¿Oyes el suave rumor de las olas rompiendo contra las rocas del muelle?,방파제 바위틈에 부서지는 은은한 파도 소리가 네 귀에도 또렷이 들리니?
@@ -1970,7 +1970,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1969,washington,B1,unit_066,es_u66_n3,워싱턴,[워싱턴],Washington alberga monumentos históricos y museos nacionales de gran renombre.,워싱턴은 유서 깊은 역사 기념비와 세계적으로 명성 높은 국립 박물관들을 품고 있다.
 1970,tv,B1,unit_066,es_u66_n3,텔레비젼,[트브],Vemos el informativo vespertino en la TV del salón antes de cenar en familia.,온 가족이 모여 저녁 식사를 하기 전에 거실 TV로 저녁 메인 뉴스를 시청한다.
 1971,cansada,B1,unit_066,es_u66_n3,피곤하다,[칸사다],Ella llegó muy cansada a casa tras una intensa jornada de trabajo en el hospital.,병원에서 고된 교대 근무를 마친 뒤 그녀는 녹초가 되어 집으로 귀가했다.
-1972,limpiar,B1,unit_066,es_u66_n3,깨끗한,[림피아르],Dedico la mañana del sábado a limpiar a fondo la cocina y organizar la despensa.,토요일 오전 시간을 온전히 할애하여 주방을 구석구석 닦고 팬트리를 정리한다.
+1972,limpiar,B1,unit_066,es_u66_n3,청소하다,[림피아르],Dedico la mañana del sábado a limpiar a fondo la cocina y organizar la despensa.,토요일 오전 시간을 온전히 할애하여 주방을 구석구석 닦고 팬트리를 정리한다.
 1973,crear,B1,unit_066,es_u66_n3,창조하다,[크레아르],El objetivo principal del taller es crear soluciones visuales sencillas y efectivas.,이 워크숍의 핵심 취지는 단순하면서도 강력한 시각적 해법을 창조해내는 것이다.
 1974,explicar,B1,unit_066,es_u66_n3,설명하다,[에스플리카르],El profesor volvió a explicar la regla con ejemplos prácticos para despejar dudas.,선생님은 학생들의 의문을 해소하고자 실용적인 예시를 들어 규칙을 재차 설명하셨다.
 1975,robado,B1,unit_066,es_u66_n3,도난당한,[로바도],La policía recuperó la bicicleta que le habían robado en la puerta de la biblioteca.,경찰은 도서관 정문 앞 거치대에서 도난당했던 자전거를 온전하게 회수했다.
@@ -1979,10 +1979,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 1978,guapo,B1,unit_066,es_u66_n3,잘생겼다,[구아포],Ese chico viste con elegancia y es un muchacho muy educado y guapo.,저 청년은 옷차림이 단정하고 깔끔할 뿐만 아니라 예의 바르고 아주 준수하다.
 1979,continuar,B1,unit_067,es_u67_n1,계속하다,[콘티누아르],Queremos continuar avanzando en la catalogación rigurosa de todo el vocabulario.,우리는 모든 어휘의 엄격한 데이터 정규화 작업을 중단 없이 계속 이어가고자 한다.
 1980,sheriff,B1,unit_067,es_u67_n1,보안관,[셰리프],El sheriff del condado patrullaba las calles polvorientas del pueblo con paso firme.,카운티 보안관은 묵직하고 당당한 걸음걸이로 마을의 흙먼지 이는 거리를 순찰했다.
-1981,funcionar,B1,unit_067,es_u67_n1,일,[푼시오나르],El motor reacondicionado empezó a funcionar como un reloj con sonido limpio.,새로 손본 엔진은 군더더기 없는 맑은 구동음을 내며 시계처럼 매끄럽게 돌아갔다.
+1981,funcionar,B1,unit_067,es_u67_n1,작동하다,[푼시오나르],El motor reacondicionado empezó a funcionar como un reloj con sonido limpio.,새로 손본 엔진은 군더더기 없는 맑은 구동음을 내며 시계처럼 매끄럽게 돌아갔다.
 1982,extra,B1,unit_067,es_u67_n1,추가,[에스트라],El hotel nos ofreció una toalla extra y un juego de llaves de repuesto sin coste.,호텔 측은 추가 수건과 여분의 카드 키를 별도 비용 없이 흔쾌히 제공해 주었다.
 1983,primo,B1,unit_067,es_u67_n1,사촌,[프리모],Mi primo Carlos entrena con constancia en el equipo cadete de fútbol regional.,사촌 카를로스는 지역 유소년 축구단 카데테 팀에서 굵은 땀방울을 흘리며 훈련한다.
-1984,manejar,B1,unit_067,es_u67_n1,드라이브,[마네하르],Aprender a manejar con soltura herramientas digitales ahorra muchísimo tiempo diario.,디지털 작업 도구를 능숙하게 다루는 법을 익혀두면 매일 엄청난 시간을 절약할 수 있다.
+1984,manejar,B1,unit_067,es_u67_n1,다루다,[마네하르],Aprender a manejar con soltura herramientas digitales ahorra muchísimo tiempo diario.,디지털 작업 도구를 능숙하게 다루는 법을 익혀두면 매일 엄청난 시간을 절약할 수 있다.
 1985,primeros,B1,unit_067,es_u67_n1,먼저,[프리메로스],Completamos los primeros diez niveles del juego educativo con una puntuación perfecta.,우리는 교육용 퀴즈 게임의 초반 10개 레벨 스테이지를 만점으로 완벽히 통과했다.
 1986,acto,B1,unit_067,es_u67_n1,행위,[아크토],El solemne acto de entrega de diplomas universitarios se celebró en el paraninfo.,엄숙한 대학 학위 수여식 기념행사가 본관 대강당 홀에서 성대히 거행되었다.
 1987,poniendo,B1,unit_067,es_u67_n1,퍼팅,[포니엔도],Estamos poniendo mucho esmero y dedicación en la revisión de cada registro de datos.,우리는 데이터 레코드 한 줄 한 줄을 면밀히 검수하는 데 심혈과 정성을 기울이고 있다.
@@ -2026,7 +2026,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2025,pones,B1,unit_068,es_u68_n2,당신이 넣어,[포네스],Si pones dedicación y cariño en lo que haces el resultado siempre será de gran calidad.,네가 하는 일에 애정과 정성을 쏟아붓는다면 그 결과물은 언제나 최고가 될 것이다.
 2026,modelo,B1,unit_068,es_u68_n2,모델,[모데로],Ese coche híbrido compacto es un modelo muy eficiente para los desplazamientos urbanos.,그 소형 하이브리드 자동차는 복잡한 도심 통근에 대단히 알맞고 실용적인 모델이다.
 2027,fútbol,B1,unit_068,es_u68_n2,축구,[푸트볼],Jugamos un emocionante partido de fútbol en el campo de césped del polideportivo.,종합 스포츠센터 천연잔디 구장에서 박진감 넘치는 축구 한판 승부를 펼쳤다.
-2028,detener,B1,unit_068,es_u68_n2,중지,[데테네르],El conductor tuvo la prudencia de detener el vehículo antes del paso peatonal señalizado.,운전자는 표지판이 세워진 횡단보도 정지선 앞에서 차량을 멈춰 세우는 배려를 보였다.
+2028,detener,B1,unit_068,es_u68_n2,멈추다,[데테네르],El conductor tuvo la prudencia de detener el vehículo antes del paso peatonal señalizado.,운전자는 표지판이 세워진 횡단보도 정지선 앞에서 차량을 멈춰 세우는 배려를 보였다.
 2029,lados,B1,unit_068,es_u68_n3,측면,[라도스],Mira bien a ambos lados antes de cruzar la calzada aunque el semáforo esté verde.,보행 신호등이 초록불이라 할지라도 도로를 건널 때는 항상 좌우 양쪽을 살펴라.
 2030,miembros,B1,unit_068,es_u68_n3,회원,[미엠브로스],Todos los miembros del equipo colaboraron activamente en la redacción del documento.,팀의 구성원 전원이 문서를 작성하고 정리하는 일에 주도적으로 힘을 보탰다.
 2031,sábado,B1,unit_068,es_u68_n3,토요일,[사바도],El sábado por la tarde solemos dar un largo paseo por el sendero del litoral costero.,토요일 오후면 보통 해안선을 따라 길게 이어진 산책로를 걸으며 힐링하곤 한다.
@@ -2098,7 +2098,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2097,protección,B1,unit_070,es_u70_n3,보호,[프로테크시온],Usa crema solar con factor alto de protección para cuidar la piel durante los días de playa.,해변에서 피부를 건강하게 보호하려면 차단 지수가 높은 자외선 차단제를 발라라.
 2098,médicos,B1,unit_070,es_u70_n3,의사들,[메디코스],Los médicos del hospital universitario atienden con rigor y vocación a cada paciente.,대학병원 의사들은 투철한 소명의식과 전문성을 바탕으로 환자 한 분 한 분을 돌본다.
 2099,lisa,B1,unit_071,es_u71_n1,매끄러운,[리사],La superficie de madera pulida quedó completamente lisa y suave al tacto fino.,원목 표면을 매끄럽게 사포질하여 만졌을 때 결이 아주 보드랍고 매끈하다.
-2100,venganza,B1,unit_071,es_u71_n1,복수,[벤간사],El perdón sincero trae mucha más paz interior que cualquier deseo ciego de venganza.,진심 어린 용서는 눈먼 복수심보다 훨씬 깊은 마음의 평안을 가져다준다.
+2100,venganza,B1,unit_071,es_u71_n1,보복,[벤간사],El perdón sincero trae mucha más paz interior que cualquier deseo ciego de venganza.,진심 어린 용서는 눈먼 복수심보다 훨씬 깊은 마음의 평안을 가져다준다.
 2101,pensamos,B1,unit_071,es_u71_n1,생각한다,[펜사모스],Nosotros pensamos que esa propuesta de diseño interactivo es la más acertada y moderna.,우리는 그 인터랙티브 디자인 기획안이 가장 세련되고 완성도 높다고 생각한다.
 2102,walter,B1,unit_071,es_u71_n1,월터,[월터],Walter repara instrumentos musicales antiguos en su taller artesanal del casco histórico.,월터는 유서 깊은 구도심 공방에서 고풍스러운 전통 악기들을 수리한다.
 2103,contó,B1,unit_071,es_u71_n1,이야기했다,[콘토],El cajero contó las monedas con cuidado antes de guardarlas en la caja.,계산원은 상자에 넣기 전에 동전들을 주의 깊게 세었다.
@@ -2128,7 +2128,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2127,rostro,B1,unit_071,es_u71_n3,얼굴,[로스트로],Una sonrisa radiante de gratitud sincera iluminó su rostro al recibir la grata sorpresa.,뜻밖의 반가운 선물을 받았을 때 진심 어린 감사의 환한 미소가 그의 얼굴에 번졌다.
 2128,crédito,B1,unit_071,es_u71_n3,신용,[크레디토],Pagué el billete de tren de cercanías con tarjeta de crédito en la máquina automática.,승차권 자동 발매기에서 신용카드를 사용하여 근교선 기차표를 간편하게 결제했다.
 2129,compartir,B1,unit_072,es_u72_n1,공유하다,[콤파르티르],Es un auténtico placer compartir una mesa bien surtida con la familia y los amigos.,사랑하는 가족 친구들과 푸짐한 식탁에 둘러앉아 음식을 나누는 것은 크나큰 기쁨이다.
-2130,saca,B1,unit_072,es_u72_n1,테이크 아웃,[사카],Saca la bandeja con los pasteles recién horneados y colócala sobre el mármol frío.,오븐에서 갓 구워낸 파이 쟁반을 꺼내어 차가운 대리석 조리대 위에 올려두어라.
+2130,saca,B1,unit_072,es_u72_n1,꺼내다,[사카],Saca la bandeja con los pasteles recién horneados y colócala sobre el mármol frío.,오븐에서 갓 구워낸 파이 쟁반을 꺼내어 차가운 대리석 조리대 위에 올려두어라.
 2131,irás,B1,unit_072,es_u72_n1,너는 갈 것이다,[이라스],Si terminas tus tareas escolares temprano irás al parque a jugar al balón con tus primos.,학교 숙제를 일찍 끝마치면 사촌들과 공놀이하러 공원에 다녀올 수 있을 것이다.
 2132,pequeñas,B1,unit_072,es_u72_n1,작은,[페께냐스],Guardamos las semillas secas en pequeñas cajas de madera etiquetadas a mano con orden.,말린 씨앗들을 라벨을 붙인 아담한 작은 나무 상자에 종류별로 가지런히 보관했다.
 2133,veía,B1,unit_072,es_u72_n1,보았다,[베이아],Desde la ventana de mi habitación se veía la silueta del monte recortada al anochecer.,내 방 창문 너머로 땅거미가 질 무렵 산등성이의 그윽한 능선 실루엣이 내다보였다.
@@ -2242,7 +2242,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2241,computadora,B1,unit_075,es_u75_n3,컴퓨터,[콤푸타도라],Encendí la computadora portátil para redactar el acta de la reunión del comité editorial.,편집위원회 회의록을 정리하여 문서화하기 위해 노트북 컴퓨터 전원을 켰다.
 2242,estudiante,B1,unit_075,es_u75_n3,학생,[에스투디안테],Aquel estudiante aplicado repasaba sus notas de gramática aprovechando el viaje en tren.,그 모범적인 학생은 열차로 통학하는 자투리 시간을 활용해 문법 요약 노트를 복습했다.
 2243,muriendo,B1,unit_075,es_u75_n3,죽어가는,[무리엔도],Las ramas periféricas del sauce viejo se estaban muriendo por la falta prolongada de agua.,극심한 가뭄으로 수분이 고갈되자 오래된 버드나무 바깥쪽 가지들이 차츰 시들어 죽어가고 있었다.
-2244,construir,B1,unit_075,es_u75_n3,빌드,[콘스트루이르],Planean construir un paseo peatonal con carril bici que una las dos playas del municipio.,지자체는 관내 두 해변을 하나로 연결하는 자전거 도로 겸용 보행자 산책로 조성을 추진 중이다.
+2244,construir,B1,unit_075,es_u75_n3,건설하다,[콘스트루이르],Planean construir un paseo peatonal con carril bici que una las dos playas del municipio.,지자체는 관내 두 해변을 하나로 연결하는 자전거 도로 겸용 보행자 산책로 조성을 추진 중이다.
 2245,conocen,B1,unit_075,es_u75_n3,알고 있다,[코노센],Los pescadores veteranos conocen a la perfección las corrientes y los fondos rocosos de la rada.,베테랑 어부들은 연안 포구의 물길 흐름과 수중 암초 지형을 손바닥 들여다보듯 훤히 안다.
 2246,clara,B1,unit_075,es_u75_n3,명확한,[클라라],Su explicación de las reglas del juego fue tan clara que nadie tuvo la menor duda.,게임 규칙에 대한 그의 안내는 군더더기 없이 명확해서 누구도 고개를 갸웃거리지 않았다.
 2247,solución,B1,unit_075,es_u75_n3,해결책,[소루시온],Hallamos una solución técnica muy elegante que redujo el tiempo de carga de las páginas web.,웹페이지 로딩 속도를 획기적으로 단축해 주는 대단히 스마트하고 깔끔한 기술적 해법을 찾아냈다.
@@ -2280,11 +2280,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2279,molesto,B1,unit_077,es_u77_n1,짜증나는,[모레스토],El ruido constante del tráfico en hora punta resulta muy molesto para los vecinos del barrio.,출퇴근 혼잡 시간대에 꼬리를 무는 차량 경적과 주행 소음은 주민들에게 무척이나 신경 쓰인다.
 2280,acabamos,B1,unit_077,es_u77_n1,끝났다,[아카바모스],Acabamos de verificar la integridad de todos los campos de datos y el archivo quedó impecable.,모든 데이터 필드의 규격 무결성을 방금 최종 검증하여 파일 정리를 완벽하게 끝마쳤다.
 2281,sabéis,B1,unit_077,es_u77_n1,알고 있다,[사베이스],¿Vosotros sabéis a qué hora zarpa el catamarán turístico que recorre las calas de la costa?,너희들 해안가를 유람하는 관광용 쌍동선 카타마란 배가 몇 시에 출항하는지 알고 있니?
-2282,cortar,B1,unit_077,es_u77_n1,절단,[코르타르],Utiliza una tabla de madera limpia y un cuchillo bien afilado para cortar las verduras finas.,신선한 채소를 가지런히 썰기 위해 도마를 받치고 날이 잘 선 전용 칼을 사용해라.
+2282,cortar,B1,unit_077,es_u77_n1,자르다,[코르타르],Utiliza una tabla de madera limpia y un cuchillo bien afilado para cortar las verduras finas.,신선한 채소를 가지런히 썰기 위해 도마를 받치고 날이 잘 선 전용 칼을 사용해라.
 2283,seria,B1,unit_077,es_u77_n1,될 것이다,[세리아],Sería muy conveniente revisar la copia de seguridad antes de aplicar cualquier modificación.,그 어떤 시스템 수정을 가하기에 앞서 백업본을 먼저 확인해 두는 것이 대단히 현명한 선택이다.
 2284,muevas,B1,unit_077,es_u77_n1,움직이다,[무에바스],No te muevas de este banco a la sombra mientras voy a comprar un par de botellas de agua fría.,시원한 물 두 병을 사 올 동안 그늘진 이 벤치에서 어디 다른 데로 가지 말고 가만히 기다려라.
 2285,fortuna,B1,unit_077,es_u77_n1,행운,[포르투나],Por fortuna encontramos una mesa libre en la terraza del restaurante sin necesidad de reserva.,천만다행으로 따로 예약하지 않고도 야외 테라스에 비어 있는 명당 테이블을 잡을 수 있었다.
-2286,of,B1,unit_077,es_u77_n1,의,[오브],El panel informativo del aeropuerto incluía la frase state of the art para describir la terminal.,공항 안내 전광판에는 터미널의 최첨단 시설을 소개하는 영문 문구가 큼직하게 표기되어 있었다.
+2286,of,B1,unit_077,es_u77_n1,~의,[오브],El panel informativo del aeropuerto incluía la frase state of the art para describir la terminal.,공항 안내 전광판에는 터미널의 최첨단 시설을 소개하는 영문 문구가 큼직하게 표기되어 있었다.
 2287,imaginar,B1,unit_077,es_u77_n1,상상하다,[이마히나르],Cuesta imaginar cómo era la vida cotidiana en esta villa marinera antes de la llegada del ferrocarril.,철도가 개통되기 이전 이 한적한 포구 마을의 일상 풍경이 어떠했을지 상상하기란 쉽지 않다.
 2288,archivos,B1,unit_077,es_u77_n1,파일,[아르치보스],Organizó todos los archivos digitales en carpetas jerarquizadas por fechas y categorías de uso.,모든 디지털 데이터 파일을 날짜와 용도별로 계층화된 디렉터리 폴더에 일목요연하게 정리했다.
 2289,presencia,B1,unit_077,es_u77_n2,존재,[프레센시아],Su presencia discreta y su trato cercano aportaron una gran tranquilidad a todo el equipo reunido.,그의 겸손한 태도와 다정한 눈빛은 자리에 모인 팀원 모두에게 크나큰 심리적 안정감을 주었다.
@@ -2331,7 +2331,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2330,cirugía,B1,unit_078,es_u78_n3,수술,[시루히아],La intervención de cirugía menor se desarrolló con absoluta normalidad y sin incidencias.,간단한 당일 외과 소수술은 아무런 돌발 문제없이 지극히 순조롭고 성공적으로 끝났다.
 2331,dejamos,B1,unit_078,es_u78_n3,떠난다,[데하모스],Dejamos las bicicletas bien aseguradas con candado en el aparcamiento de la estación.,기차역 자전거 전용 거치대에 자물쇠를 단단히 채워 우리 자전거들을 안전하게 묶어두었다.
 2332,busco,B1,unit_078,es_u78_n3,찾고있다,[부스코],Busco un cuaderno de dibujo con papel de alto gramaje para pintar con acuarelas.,수채화 물감이 번지지 않고 잘 먹는 도톰한 평량의 드로잉 전용 스케치북을 찾고 있다.
-2333,trabajas,B1,unit_078,es_u78_n3,일,[트라바하스],Sé bien que trabajas con gran rigor y por eso confío plenamente en tus criterios.,네가 매사 얼마나 철저하게 일하는지 잘 알고 있기에 너의 실무적 판단을 굳게 신뢰한다.
+2333,trabajas,B1,unit_078,es_u78_n3,일하다,[트라바하스],Sé bien que trabajas con gran rigor y por eso confío plenamente en tus criterios.,네가 매사 얼마나 철저하게 일하는지 잘 알고 있기에 너의 실무적 판단을 굳게 신뢰한다.
 2334,clave,B1,unit_078,es_u78_n3,열쇠,[클라베],La constancia diaria es el elemento clave para dominar con soltura cualquier disciplina.,매일 조금씩 거르지 않는 성실함이야말로 어떠한 분야든 유창하게 마스터하는 핵심 비결이다.
 2335,aparentemente,B1,unit_078,es_u78_n3,분명히,[아파렌테멘테],Aparentemente el problema del motor era grave pero solo requería cambiar un fusible básico.,겉보기에는 엔진 고장이 심각해 보였지만 실상은 단순한 소모품 퓨즈 하나만 갈면 되는 일이었다.
 2336,bravo,B1,unit_078,es_u78_n3,브라보,[브라보],¡Bravo por esa magnífica exposición oral que despejó con claridad todas las dudas técnicas!,모든 기술적 의문을 한 방에 날려버린 훌륭하고 명쾌한 프레젠테이션 발표에 박수를 보낸다!
@@ -2340,9 +2340,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2339,cerrada,B1,unit_079,es_u79_n1,폐쇄,[세라다],La puerta principal de la biblioteca provincial permanece cerrada durante los días festivos.,도립 도서관의 메인 정문 출입구는 법정 공휴일 기간 동안 굳게 닫혀 있다.
 2340,new,B1,unit_079,es_u79_n1,새로운,[뉴],Esa librería internacional abrió una sección titulada new arrivals con las novedades editoriales.,그 외서 전문 서점은 신간 출간 도서들을 엄선한 new arrivals 코너를 새로 열었다.
 2341,chicago,B1,unit_079,es_u79_n1,시카고,[치카고],Chicago es famosa por su impresionante arquitectura moderna y sus vientos característicos.,시카고는 웅장하고 수려한 현대 건축물들과 특유의 거센 바람으로 널리 알려져 있다.
-2342,controlar,B1,unit_079,es_u79_n1,제어,[콘트로라르],Es fundamental aprender a controlar el ritmo respiratorio durante las carreras de fondo.,장거리 마라톤 달리기를 뛸 때는 자신만의 호흡 리듬을 안정적으로 조절하는 법이 핵심이다.
+2342,controlar,B1,unit_079,es_u79_n1,통제하다,[콘트로라르],Es fundamental aprender a controlar el ritmo respiratorio durante las carreras de fondo.,장거리 마라톤 달리기를 뛸 때는 자신만의 호흡 리듬을 안정적으로 조절하는 법이 핵심이다.
 2343,pregunté,B1,unit_079,es_u79_n1,물어보았다,[프레군테],Pregunté en la ventanilla de información cuál era el andén correspondiente a mi tren directo.,안내 창구 직원에게 내가 탈 직행열차가 출발하는 탑승 플랫폼 번호가 어디인지 물어보았다.
-2344,mostrar,B1,unit_079,es_u79_n1,쇼,[모스트라르],Quiero mostrar este prototipo interactivo a todo el equipo para recoger sus impresiones.,동료들의 피드백을 청취하기 위해 이 인터랙티브 프로토타입 시제품을 팀원들에게 선보이고 싶다.
+2344,mostrar,B1,unit_079,es_u79_n1,보여주다,[모스트라르],Quiero mostrar este prototipo interactivo a todo el equipo para recoger sus impresiones.,동료들의 피드백을 청취하기 위해 이 인터랙티브 프로토타입 시제품을 팀원들에게 선보이고 싶다.
 2345,piloto,B1,unit_079,es_u79_n1,조종사,[피로토],El veterano piloto aterrizó el avión comercial con enorme suavidad a pesar del viento racheado.,베테랑 기장은 거센 돌풍 속에서도 상용 여객기를 놀라울 만큼 부드럽게 활주로에 착륙시켰다.
 2346,pocas,B1,unit_079,es_u79_n1,거의,[포카스],Quedaban muy pocas mesas libres en la terraza sombreada del paseo a la hora del almuerzo.,점심 피크 시간이 되자 바닷가 산책로 그늘진 테라스에 빈 테이블이 거의 남아있지 않았다.
 2347,tuvieron,B1,unit_079,es_u79_n1,가지고 있었다,[투비에론],Los excursionistas tuvieron la prudencia de regresar al refugio antes de que cayera la niebla.,등산객들은 산안개가 짙게 깔리기 전에 서둘러 산장으로 발길을 돌리는 현명함을 발휘했다.
@@ -2396,7 +2396,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2395,comido,B1,unit_080,es_u80_n3,먹었다,[코미도],Hemos comido un menú ligero y saludable a base de ensalada fresca y pescado a la plancha.,우리는 신선한 채소 샐러드와 담백한 흰살생선 구이로 위에 부담 없는 가벼운 식사를 했다.
 2396,salgan,B1,unit_080,es_u80_n3,나오다,[살간],Esperen a que todos los pasajeros salgan del vagón antes de entrar en el tren por favor.,승강장에서 열차에 탑승하기 전에 안쪽 승객들이 먼저 하차할 수 있도록 기다려 주십시오.
 2397,empecé,B1,unit_080,es_u80_n3,시작했다,[엠페세],Empecé a estudiar español de forma autodidacta repasando fichas de vocabulario cada día.,매일 어휘 단어 카드를 조금씩 복습하는 독학 방식으로 스페인어 공부의 첫걸음을 뗐다.
-2398,tirar,B1,unit_080,es_u80_n3,던져,[티라르],Es una norma cívica elemental no tirar papeles ni envases fuera de las papeleras urbanas.,길거리 쓰레기통이 아닌 곳에 휴지나 빈 음료수 캔을 함부로 버리지 않는 것은 기본 예절이다.
+2398,tirar,B1,unit_080,es_u80_n3,던지다,[티라르],Es una norma cívica elemental no tirar papeles ni envases fuera de las papeleras urbanas.,길거리 쓰레기통이 아닌 곳에 휴지나 빈 음료수 캔을 함부로 버리지 않는 것은 기본 예절이다.
 2399,pasan,B1,unit_081,es_u81_n1,지나가다,[파산],Los trenes de cercanías pasan por esta estación intermedia con una frecuencia de diez minutos.,수도권 근교선 열차들은 10분 배차 간격으로 이 중간 환승역을 규칙적으로 통과해 지나간다.
 2400,cierta,B1,unit_081,es_u81_n1,사실,[시에르타],Hay una cierta ventaja en levantarse temprano y aprovechar las horas tranquilas de la mañana.,아침 일찍 일어나 방해받지 않는 고요한 새벽 시간대를 온전히 활용하는 데는 분명한 이점이 있다.
 2401,honesto,B1,unit_081,es_u81_n1,정직한,[오네스토],Fue un gesto muy honesto devolver la cartera encontrada con todo su dinero intacto.,주운 지갑 속에 든 현금을 단 1유로도 건드리지 않고 분실자에게 온전히 돌려준 것은 정직한 미덕이다.
@@ -2490,7 +2490,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2489,matarte,B1,unit_084,es_u84_n1,너를 죽여라,[마타르테],No te exijas tanto en el gimnasio que vas a matarte de puro agotamiento muscular.,근육에 무리가 가 피로로 쓰러질 지경까지 체육관에서 지나치게 무리해서 운동하지 마라.
 2490,palacio,B1,unit_084,es_u84_n1,궁전,[파라시오],Visitamos los hermosos jardines históricos que rodean el antiguo palacio ducal.,옛 공작 가문의 영지였던 궁전을 포근하게 감싸고 있는 유서 깊은 왕립 정원을 거닐었다.
 2491,convierte,B1,unit_084,es_u84_n1,개종하다,[콘비에르테],La práctica metódica de la lectura convierte el aprendizaje del idioma en un hábito ameno.,체계적인 독서 습관은 외국어 학습을 지루한 공부가 아닌 즐거운 매일의 일상으로 바꾼다.
-2492,ja,B1,unit_084,es_u84_n1,하,[하],¡Ja qué ocurrencia tan divertida y simpática tuviste para resolver el acertijo!,하하 수수께끼를 풀기 위해 네가 던진 그 아이디어는 정말 기발하고 유쾌했어!
+2492,ja,B1,unit_084,es_u84_n1,하하,[하],¡Ja qué ocurrencia tan divertida y simpática tuviste para resolver el acertijo!,하하 수수께끼를 풀기 위해 네가 던진 그 아이디어는 정말 기발하고 유쾌했어!
 2493,vivos,B1,unit_084,es_u84_n1,살아있다,[비보스],Nos sentimos muy vivos y llenos de energía tras nadar en las aguas claras del mar.,투명한 바닷물에 뛰어들어 수영을 즐기고 나니 온몸에 생생한 활력이 넘쳐흘렀다.
 2494,pasamos,B1,unit_084,es_u84_n1,통과했다,[파사모스],Pasamos una tarde de domingo inolvidable conversando frente a las aguas del puerto.,항구 앞바다를 바라보며 도란도란 이야기를 나누며 잊지 못할 일요일 오후를 보냈다.
 2495,firme,B1,unit_084,es_u84_n1,확고한,[피르메],Mantén un paso firme y constante para subir la senda pedregosa sin resbalar.,돌부리에 발이 미끄러지지 않도록 발을 딛을 때마다 단단하고 일정한 걸음걸이를 유지해라.
@@ -2516,16 +2516,16 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2515,acaban,B1,unit_084,es_u84_n3,끝낸다,[아카반],Los alumnos de la academia acaban sus clases a las dos en punto de la tarde.,어학원 학생들은 매일 오후 2시 정각이 되면 모든 정규 수업 일과를 마친다.
 2516,copia,B1,unit_084,es_u84_n3,복사,[코피아],Guarda siempre una copia de seguridad actualizada de todos tus archivos de trabajo.,모든 실무 작업 데이터 파일은 항상 최신 버전으로 안전하게 백업 복사본을 만들어두어라.
 2517,siguiendo,B1,unit_084,es_u84_n3,다음,[시기엔도],Fuimos siguiendo el sendero marcado con hitos de piedra blanca hasta alcanzar la cumbre.,정상에 도달할 때까지 하얀 돌탑 이정표가 안내하는 등산로를 차근차근 따라 올라갔다.
-2518,viajar,B1,unit_084,es_u84_n3,여행,[비아하르],Viajar en tren por la costa contemplando el mar azul es una experiencia muy relajante.,푸른 바다를 내다보며 해안선을 따라 기차 여행을 즐기는 것은 마음에 깊은 쉼을 준다.
+2518,viajar,B1,unit_084,es_u84_n3,여행하다,[비아하르],Viajar en tren por la costa contemplando el mar azul es una experiencia muy relajante.,푸른 바다를 내다보며 해안선을 따라 기차 여행을 즐기는 것은 마음에 깊은 쉼을 준다.
 2519,cadena,B1,unit_085,es_u85_n1,체인,[카데나],Aseguró la bicicleta al poste del aparcamiento con una cadena de acero resistente.,강철 소재의 튼튼한 체인 자물쇠로 자전거를 주차장 기둥에 단단히 묶어 고정했다.
 2520,fábrica,B1,unit_085,es_u85_n1,공장,[파브리카],La antigua fábrica textil fue rehabilitada como espacio multidisciplinar para creadores.,옛 방직공장 부지가 리모델링을 거쳐 신진 창작자들을 위한 다목적 문화 공간으로 거듭났다.
 2521,mantiene,B1,unit_085,es_u85_n1,유지하다,[만티에네],El termo hermético de acero inoxidable mantiene el café caliente durante toda la mañana.,밀폐형 스테인리스 보온병은 아침나절 내내 커피의 따뜻한 온도를 고스란히 지켜준다.
-2522,meter,B1,unit_085,es_u85_n1,넣어,[메테르],Acuérdate de meter la botella de agua fresca en la mochila antes de iniciar la ruta.,산행 코스를 밟기 전에 시원한 생수병을 배낭 속에 챙겨 넣는 것을 잊지 마라.
+2522,meter,B1,unit_085,es_u85_n1,넣다,[메테르],Acuérdate de meter la botella de agua fresca en la mochila antes de iniciar la ruta.,산행 코스를 밟기 전에 시원한 생수병을 배낭 속에 챙겨 넣는 것을 잊지 마라.
 2523,contenta,B1,unit_085,es_u85_n1,행복하다,[콘텐타],Ella estaba muy contenta tras recibir la confirmación oficial de su beca de investigación.,연구 장학금 수혜 대상자로 최종 선정되었다는 공식 통보를 받고 그녀는 뛸 듯이 기뻐했다.
 2524,comiendo,B1,unit_085,es_u85_n1,먹기,[코미엔도],Pasamos un rato muy distendido comiendo unas tapas marineras al sol en la terraza del bar.,노천 카페 테라스에서 따사로운 햇살을 쬐며 해물 타파스를 맛보고 유쾌한 시간을 보냈다.
 2525,educación,B1,unit_085,es_u85_n1,교육,[에두카시온],Una educación cívica basada en el respeto mutuo es el pilar de una convivencia pacífica.,상호 존중을 바탕으로 한 올바른 시민 교육은 평화로운 사회적 공존의 든든한 주춧돌이다.
 2526,maneras,B1,unit_085,es_u85_n1,방법,[마네라스],Hay muchas maneras distintas de abordar la resolución de este problema de optimización.,이 최적화 알고리즘 난제를 풀어내는 데는 여러 가지 다채로운 접근 방식이 존재한다.
-2527,fumar,B1,unit_085,es_u85_n1,연기,[푸마르],Está estrictamente prohibido fumar en todo el recinto de la biblioteca y en sus jardines.,도서관 건물 전체 실내 구역과 야외 정원 뜰 안에서는 금연 규정이 엄격히 적용된다.
+2527,fumar,B1,unit_085,es_u85_n1,담배피우다,[푸마르],Está estrictamente prohibido fumar en todo el recinto de la biblioteca y en sus jardines.,도서관 건물 전체 실내 구역과 야외 정원 뜰 안에서는 금연 규정이 엄격히 적용된다.
 2528,encantador,B1,unit_085,es_u85_n1,사랑스러운,[엔칸타도르],Descubrimos un rincón costero encantador donde las barcas de pesca reposan sobre la arena.,포구 모래사장 위에 나룻배들이 한가로이 쉬고 있는 참으로 매력적인 해변 길목을 발견했다.
 2529,cuantos,B1,unit_085,es_u85_n2,얼마나 많은,[쿠안토스],Invité a unos cuantos amigos cercanos a merendar una tarta casera de manzana y canela.,직접 구운 사과 계피 파이를 나누어 먹기 위해 몇몇 막역한 지인들을 집으로 초대했다.
 2530,homicidio,B1,unit_085,es_u85_n2,살인,[오미시디오],La brigada de homicidio recopiló pruebas periciales en el lugar de los hechos con sigilo.,살인 사건 수사대는 현장에 남아있는 모든 과학수사 감식 증거를 신중하게 확보했다.
@@ -2542,7 +2542,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2541,tira,B1,unit_085,es_u85_n3,조각,[티라],Coloca una tira de cinta adhesiva protectora en el borde para evitar roces molestos.,마찰로 인해 상처가 나지 않도록 가장자리 테두리에 보호 테이프 한 줄을 덧대어라.
 2542,fueran,B1,unit_085,es_u85_n3,있었다,[푸에란],Ojalá todos los días de invierno fueran tan apacibles y soleados como esta hermosa jornada.,겨울철 매일매일이 오늘처럼 온화하고 화창하기만 하다면 참으로 좋을 텐데.
 2543,cumplir,B1,unit_085,es_u85_n3,이행하다,[쿰플리르],Puso todo su empeño en cumplir los compromisos adquiridos con el equipo de desarrollo.,개발 실무팀과 맺은 약속과 마일스톤 기한을 철저히 이행하기 위해 온 힘을 다했다.
-2544,plata,B1,unit_085,es_u85_n3,은,[플라타],La artesana confeccionó un brazalete de plata pulida con un diseño geométrico moderno.,은공예 장인은 모던한 기하학 문양을 정교하게 새겨 넣은 매끄러운 은팔찌를 완성했다.
+2544,plata,B1,unit_085,es_u85_n3,은화,[플라타],La artesana confeccionó un brazalete de plata pulida con un diseño geométrico moderno.,은공예 장인은 모던한 기하학 문양을 정교하게 새겨 넣은 매끄러운 은팔찌를 완성했다.
 2545,quedará,B1,unit_085,es_u85_n3,남을 것이다,[께다라],Este bonito recuerdo de nuestro viaje costero quedará grabado en la memoria de todos.,우리 해안 여행길의 이 아련하고 고운 추억은 일행 모두의 기억 속에 깊이 남을 것이다.
 2546,quedaré,B1,unit_085,es_u85_n3,머물 것이다,[께다레],Me quedaré en casa esta tarde tranquila repasando el vocabulario de español con calma.,오늘 오후에는 외출하지 않고 집에서 차분하게 스페인어 단어를 복습하며 머무를 것이다.
 2547,aléjate,B1,unit_085,es_u85_n3,떨어져있어,[아레하테],Aléjate del borde del acantilado rocoso que sopla un viento racheado traicionero.,돌풍이 언제 세차게 불어 닥칠지 모르니 바위 절벽 가장자리에서 멀찌감치 떨어져라.
@@ -2557,8 +2557,8 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2556,leyes,B1,unit_086,es_u86_n1,법률,[레예스],El respeto a las leyes y a las normas cívicas compartidas asegura una convivencia armónica.,법률과 공공 기초 질서를 철저히 준수하는 태도는 조화로운 공동체 생활을 지탱한다.
 2557,funcionó,B1,unit_086,es_u86_n1,효과가 있었어,[푼시오노],El nuevo filtro de aire funcionó a la perfección y redujo el polvo dentro del taller.,새로 설치한 에어필터가 기대 이상으로 완벽히 작동하여 작업실 내 먼지를 싹 잡아냈다.
 2558,odia,B1,unit_086,es_u86_n1,증오,[오디아],Él odia llegar tarde a los compromisos y por eso siempre sale de casa con mucha antelación.,그는 약속 시간에 늦는 것을 몹시 싫어하기에 언제나 시간적 여유를 두고 일찍 나선다.
-2559,levanta,B1,unit_086,es_u86_n2,리프트,[레반타],El suave viento matinal levanta pequeñas olas plateadas sobre la superficie del agua.,싱그러운 아침 산들바람이 바다 수면 위에 은빛으로 찰랑이는 잔물결을 일으킨다.
-2560,mires,B1,unit_086,es_u86_n2,봐,[미레스],No mires atrás y concéntrate con serenidad en cada paso que das hacia tu objetivo.,지나간 일에 연연하며 뒤돌아보지 말고 목표를 향해 내딛는 한 걸음 한 걸음에 집중해라.
+2559,levanta,B1,unit_086,es_u86_n2,일으키다,[레반타],El suave viento matinal levanta pequeñas olas plateadas sobre la superficie del agua.,싱그러운 아침 산들바람이 바다 수면 위에 은빛으로 찰랑이는 잔물결을 일으킨다.
+2560,mires,B1,unit_086,es_u86_n2,보지마라,[미레스],No mires atrás y concéntrate con serenidad en cada paso que das hacia tu objetivo.,지나간 일에 연연하며 뒤돌아보지 말고 목표를 향해 내딛는 한 걸음 한 걸음에 집중해라.
 2561,respira,B1,unit_086,es_u86_n2,숨을 쉬다,[레스피라],Respira hondo mantén la calma y expón tus argumentos con voz firme y sosegada.,숨을 깊이 들이마시고 평정심을 유지한 채 흔들림 없고 차분한 목소리로 의견을 개진해라.
 2562,escaleras,B1,unit_086,es_u86_n2,계단,[에스카레라스],Subimos por las escaleras de piedra del castillo para contemplar las vistas desde la torre.,성곽 망루에서 시원한 전경을 감상하기 위해 오래된 돌계단을 밟고 위로 올라갔다.
 2563,decisiones,B1,unit_086,es_u86_n2,결정,[데시시오네스],Es preferible reflexionar con calma antes de tomar decisiones de gran trascendencia futura.,앞날에 중대한 영향을 미칠 결정을 내리기 전에는 차분하게 숙고하는 자세가 바람직하다.
@@ -2625,7 +2625,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2624,taylor,B1,unit_088,es_u88_n2,테일러,[테일러],Taylor diseña maquetas tridimensionales para proyectos de paisajismo urbano sostenible.,테일러는 친환경 도시 조경 프로젝트를 위한 정밀 3차원 축소 모형을 설계한다.
 2625,ocasión,B1,unit_088,es_u88_n2,기회,[오카시온],Esta feria editorial es una magnífica ocasión para descubrir nuevos autores locales.,이번 도서전 박람회는 지역 신진 문학 작가들의 작품을 접할 수 있는 절호의 기회이다.
 2626,cheque,B1,unit_088,es_u88_n2,확인,[체께],Ingresó el cheque bancario en su cuenta corriente a través de la aplicación móvil.,모바일 뱅킹 앱을 활용하여 수표 금액을 자신의 당좌 결제 계좌로 깔끔하게 입금했다.
-2627,revisar,B1,unit_088,es_u88_n2,검토,[레비사르],Es conveniente revisar la ortografía de cada frase antes de enviar la carta oficial.,공식 서한 문건을 발송하기에 앞서 각 문장의 맞춤법을 다시 꼼꼼히 검토하는 것이 좋다.
+2627,revisar,B1,unit_088,es_u88_n2,검토하다,[레비사르],Es conveniente revisar la ortografía de cada frase antes de enviar la carta oficial.,공식 서한 문건을 발송하기에 앞서 각 문장의 맞춤법을 다시 꼼꼼히 검토하는 것이 좋다.
 2628,ponerme,B1,unit_088,es_u88_n2,입다,[포네르메],Voy a ponerme una chaqueta de lana porque la brisa de la tarde refresca mucho.,오후 늦게 불어오는 바람이 제법 쌀쌀하니 따스한 모직 재킷을 챙겨 입어야겠다.
 2629,suceder,B1,unit_088,es_u88_n3,일어나다,[수세데르],Nadie podía prever lo que iba a suceder durante aquella insólita jornada festiva.,그 유례없이 화창했던 축제 날 어떤 뜻밖의 일들이 펼쳐질지 아무도 짐작하지 못했다.
 2630,acusado,B1,unit_088,es_u88_n3,피고인,[아쿠사도],El abogado expuso los argumentos de descargo en favor de su cliente acusado.,변호인은 억울하게 기소된 피고인 의뢰인을 위해 조리 있고 명백한 무죄 논거를 폈다.
@@ -2635,7 +2635,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2634,doc,B1,unit_088,es_u88_n3,문서,[도크],Exportó el informe final en formato doc para facilitar su edición colaborativa en línea.,팀원들과 온라인상에서 함께 문서를 수정하기 위해 최종 결과물을 doc 파일로 추출했다.
 2635,pesadilla,B1,unit_088,es_u88_n3,악몽,[페사디야],Aquel atasco interminable de tráfico bajo la lluvia resultó una auténtica pesadilla urbana.,장대비 속에 꼬리를 물고 꼼짝달싹 못 하던 도로 정체는 실로 지긋지긋한 악몽 같았다.
 2636,sopa,B1,unit_088,es_u88_n3,수프,[소파],Preparamos una reconfortante sopa casera de verduras de temporada y fideos finos.,신선한 제철 채소와 가는 소면을 듬뿍 넣고 따끈따끈한 홈메이드 야채수프를 끓였다.
-2637,saltar,B1,unit_088,es_u88_n3,점프,[살타르],Vimos a los peces plateados saltar sobre la superficie calma del mar al ponerse el sol.,해가 뉘엿뉘엿 저물 무렵 은빛 물고기들이 잔잔한 바다 수면 위로 펄쩍 뛰어오르는 것을 보았다.
+2637,saltar,B1,unit_088,es_u88_n3,뛰다,[살타르],Vimos a los peces plateados saltar sobre la superficie calma del mar al ponerse el sol.,해가 뉘엿뉘엿 저물 무렵 은빛 물고기들이 잔잔한 바다 수면 위로 펄쩍 뛰어오르는 것을 보았다.
 2638,heridas,B1,unit_088,es_u88_n3,상처,[에리다스],El médico desinfectó las pequeñas heridas de la rodilla con una solución antiséptica suave.,의사 선생님은 자극 없는 소독약을 솜에 적셔 무릎에 난 찰과상 상처를 깨끗이 닦아내셨다.
 2639,pienses,B1,unit_089,es_u89_n1,당신 생각에는,[피엔세스],No pienses tanto en los fallos pasados y céntrate en el trabajo bien planificado de hoy.,지나간 시행착오에 연연하지 말고 오늘 꼼꼼하게 세워둔 계획을 실행하는 데 집중해라.
 2640,suicidio,B1,unit_089,es_u89_n1,자살,[수이시디오],Salir a navegar en una barca frágil con este temporal severo sería un auténtico suicidio.,이런 사나운 폭풍우 속에 낡은 나룻배를 몰고 바다로 출항하는 것은 자살행위나 다름없다.
@@ -2647,7 +2647,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2646,recibí,B1,unit_089,es_u89_n1,받았다,[레시비],Recibí una afectuosa carta de felicitación enviada por mis antiguos compañeros de facultad.,대학 시절 학과 동기들이 정성을 담아 부쳐온 축하 편지 한 통을 받아보았다.
 2647,joey,B1,unit_089,es_u89_n1,조이,[조이],Joey ajusta los niveles de audio y mezcla los efectos sonoros en su mesa de trabajo.,조이는 작업 데스크에서 오디오 볼륨 레벨을 맞추고 효과음을 매끄럽게 믹싱한다.
 2648,escuchas,B1,unit_089,es_u89_n1,듣고,[에스쿠차스],Si escuchas con atención percibirás el canto alegre de los jilgueros entre los pinos.,조용히 귀를 기울여보면 소나무 숲 사이로 지저귀는 방울새의 맑은 울음소리가 들릴 것이다.
-2649,mirad,B1,unit_089,es_u89_n2,봐,[미라드],Mirad hacia el horizonte cómo los últimos rayos tiñen las nubes de tonos anaranjados y malvas.,수평선을 바라보아라 저녁 노을빛이 뭉게구름을 주홍빛과 보랏빛으로 물들이고 있다.
+2649,mirad,B1,unit_089,es_u89_n2,바라보아라,[미라드],Mirad hacia el horizonte cómo los últimos rayos tiñen las nubes de tonos anaranjados y malvas.,수평선을 바라보아라 저녁 노을빛이 뭉게구름을 주홍빛과 보랏빛으로 물들이고 있다.
 2650,pierde,B1,unit_089,es_u89_n2,잃다,[피에르데],Un deportista noble jamás pierde la compostura ni el respeto hacia su rival en el campo.,품격 있는 선수는 경기장 안에서 결코 평정심을 잃거나 상대를 향한 예의를 저버리지 않는다.
 2651,abogados,B1,unit_089,es_u89_n2,변호사,[아보가도스],El prestigioso bufete de abogados asesoró a la empresa comunitaria en materia de patentes.,그 명망 높은 법률사무소 변호인단은 지식재산권 특허 분쟁에 관하여 명쾌한 자문을 제공했다.
 2652,trataba,B1,unit_089,es_u89_n2,시도했다,[트라타바],El maestro de taller trataba a cada aprendiz con paciencia cercanía y gran dedicación pedagógica.,공방 마에스트로는 제자 한 사람 한 사람을 온화한 인내와 참된 정성으로 가르쳤다.
@@ -2691,9 +2691,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2690,desierto,B1,unit_090,es_u90_n3,사막,[데시에르토],El silencio imponente del desierto de dunas bajo el cielo nocturno estrellado conmovió a todos.,밤하늘의 은하수 아래 드넓게 펼쳐진 사막 모래언덕의 장엄한 적막은 깊은 감동을 안겼다.
 2691,asustada,B1,unit_090,es_u90_n3,무서워,[아수스타다],La pequeña ardilla asustada trepó ágilmente por el tronco del pino al oír nuestras pisadas.,우리의 발걸음 소리에 깜짝 놀란 작은 다람쥐가 소나무 기둥을 타고 잽싸게 기어올랐다.
 2692,cuerda,B1,unit_090,es_u90_n3,로프,[쿠에르다],Aseguró los fardos de lona sobre la baca del todoterreno con una cuerda trenzada resistente.,두껍게 꼰 튼튼한 밧줄 로프로 사륜구동 차량 루프랙 위에 짐 보따리들을 단단히 동여맸다.
-2693,míos,B1,unit_090,es_u90_n3,내,[미오스],Esos cuadernos de bocetos con tapas de cartón kraft colocados en la balda son míos.,서가 선반 위에 꽂혀 있는 저 크라프트지 표지의 드로잉 스케치북들은 모두 내 것이다.
+2693,míos,B1,unit_090,es_u90_n3,내 것들,[미오스],Esos cuadernos de bocetos con tapas de cartón kraft colocados en la balda son míos.,서가 선반 위에 꽂혀 있는 저 크라프트지 표지의 드로잉 스케치북들은 모두 내 것이다.
 2694,chuck,B1,unit_090,es_u90_n3,척,[추크크],Chuck repara amplificadores analógicos de válvulas en su taller especializado del centro.,척은 시내의 음향 전문 공방에서 빈티지 진공관 아날로그 앰프를 세밀하게 수리한다.
-2695,seguido,B1,unit_090,es_u90_n3,팔로우함,[세기도],Hemos seguido al pie de la letra las pautas técnicas para que el archivo CSV quede perfecto.,CSV 마스터 데이터가 한 치의 흠도 없도록 엔지니어링 가이드라인을 글자 그대로 엄수했다.
+2695,seguido,B1,unit_090,es_u90_n3,연속적인,[세기도],Hemos seguido al pie de la letra las pautas técnicas para que el archivo CSV quede perfecto.,CSV 마스터 데이터가 한 치의 흠도 없도록 엔지니어링 가이드라인을 글자 그대로 엄수했다.
 2696,seremos,B1,unit_090,es_u90_n3,될 것이다,[세레모스],Si mantenemos esta constancia diaria seremos capaces de completar todo el catálogo con éxito.,매일 이 페이스를 꾸준히 유지한다면 우리는 5천 단어 전체를 완벽하게 정복해낼 것이다.
 2697,morgan,B1,unit_090,es_u90_n3,모건,[모르간],Morgan analiza datos oceanográficos para evaluar la temperatura del agua en las bahías.,모건은 해안 만의 수온 변화 추이를 정밀 평가하기 위해 해양 관측 데이터를 분석한다.
 2698,pene,B1,unit_090,es_u90_n3,음경,[페네],El manual médico explicaba la anatomía del aparato reproductor masculino con rigor científico.,의학 교본은 과학적 엄밀성을 바탕으로 남성 비뇨 생식 계통의 해부학적 구조를 해설했다.
@@ -2715,7 +2715,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2714,escuchaste,B1,unit_091,es_u91_n2,들었어요,[에스쿠차스테],¿Escuchaste la interesante conferencia sobre diseño de videojuegos transmitida ayer por la tarde?,어제 오후 라이브로 방송된 비디오게임 개발 디자인에 관한 명강연을 너도 챙겨 들었니?
 2715,torre,B1,unit_091,es_u91_n2,탑,[토레],Subimos los empinados escalones de la torre del vigía para disfrutar de la vista panorámica.,탁 트인 해안 전경을 굽어보기 위해 가파른 돌계단을 밟고 해안 경비 망루 탑으로 올랐다.
 2716,sientas,B1,unit_091,es_u91_n2,느낌,[시엔타스],Cuando te sientas fatigado tómate un descanso reparador y da un breve paseo al aire libre.,몸과 마음에 피로감이 몰려올 때는 하던 일을 잠시 멈추고 바깥바람을 쐬며 한숨 돌려라.
-2717,mentir,B1,unit_091,es_u91_n2,거짓말,[멘티르],Recurrir a mentir para eludir responsabilidades solo deteriora la confianza entre compañeros.,책임을 피하고자 거짓말을 늘어놓는 것은 함께 일하는 동료 사이의 신뢰를 갉아먹을 뿐이다.
+2717,mentir,B1,unit_091,es_u91_n2,거짓말하다,[멘티르],Recurrir a mentir para eludir responsabilidades solo deteriora la confianza entre compañeros.,책임을 피하고자 거짓말을 늘어놓는 것은 함께 일하는 동료 사이의 신뢰를 갉아먹을 뿐이다.
 2718,pasillo,B1,unit_091,es_u91_n2,복도,[파시요],Caminó en silencio por el ancho pasillo del archivo histórico iluminado por ventanales altos.,채광창을 통해 햇살이 드는 유서 깊은 고문서 보관소의 넓은 복도를 발소리 없이 걸었다.
 2719,juega,B1,unit_091,es_u91_n3,놀이,[후에가],El equipo local juega con gran disciplina táctica y velocidad de circulación del balón.,우리 지역 연고 팀은 철저한 전술적 규율과 신속한 패스 플레이로 경기를 풀어나간다.
 2720,suéltame,B1,unit_091,es_u91_n3,나를 보내줘,[수엘타메],¡Suéltame el brazo que me estás apretando demasiado fuerte y me haces daño!,팔을 너무 세게 쥐어 통증이 느껴지니 제발 쥐고 있는 손을 좀 놓아다오!
@@ -2735,7 +2735,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2734,arthur,B1,unit_092,es_u92_n1,아서,[아르트우르],Arthur investiga manuscritos medievales en el archivo histórico catedralicio cada semana.,아서는 매주 대성당 문서고에 들러 중세 시대 양피지 필사본을 깊이 있게 연구한다.
 2735,virus,B1,unit_092,es_u92_n1,바이러스,[비루스],El cortafuegos corporativo neutralizó el archivo malicioso que contenía un virus informático.,사내 전산망 방화벽 체계가 악성 바이러스를 품은 위험한 첨부파일을 즉각 차단했다.
 2736,lárgate,B1,unit_092,es_u92_n1,나가다,[라르가테],Lárgate a tomar el aire si te sientes agobiado y regresa cuando hayas despejado la cabeza.,머리가 복잡하고 답답하다면 밖으로 나가 바람을 쐬고 머리를 식힌 뒤에 다시 오너라.
-2737,sigan,B1,unit_092,es_u92_n1,팔로우,[시간],Sigan siempre las indicaciones del guía para disfrutar del recorrido montañoso con total seguridad.,산악 트레킹 코스를 안전하게 만끽할 수 있도록 가이드의 인솔 지침을 철저히 따라주십시오.
+2737,sigan,B1,unit_092,es_u92_n1,따르다,[시간],Sigan siempre las indicaciones del guía para disfrutar del recorrido montañoso con total seguridad.,산악 트레킹 코스를 안전하게 만끽할 수 있도록 가이드의 인솔 지침을 철저히 따라주십시오.
 2738,compró,B1,unit_092,es_u92_n1,샀다,[콤프로],Él compró un juego de cuchillos de cocina forjados en acero inoxidable de primera calidad.,그는 최고급 스테인리스 스틸로 단조된 명품 주방용 칼 세트를 새로 하나 장만했다.
 2739,servir,B1,unit_092,es_u92_n2,봉사하다,[세르비르],Es un auténtico honor poder servir a la comunidad coordinando proyectos educativos abiertos.,공공 교육 나눔 프로젝트를 이끌며 지역 사회에 힘을 보탤 수 있다는 것은 크나큰 영광이다.
 2740,pongas,B1,unit_092,es_u92_n2,넣어,[폰가스],No pongas el ordenador portátil sobre superficies blandas para que no se caliente en exceso.,기기가 과열되지 않도록 푹신한 침구류 위에 노트북을 올려두고 작업하지 마라.
@@ -2784,7 +2784,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2783,versión,B1,unit_093,es_u93_n3,버전,[베르시온],La nueva versión del software optimiza la gestión de memoria y reduce el consumo de batería.,새로 빌드된 소프트웨어 버전은 메모리 누수를 잡고 배터리 소모량을 획기적으로 줄여준다.
 2784,incendio,B1,unit_093,es_u93_n3,불,[인센디오],Los bomberos forestales sofocaron con rapidez el conato de incendio en el pinar costero.,산림 소방대원들은 해변 솔밭에서 발생한 작은 불씨를 기민하게 진화하여 큰 화재를 막았다.
 2785,preferiría,B1,unit_093,es_u93_n3,선호한다,[프레페리리아],Yo preferiría almorzar en la terraza sombreada que dentro del comedor climatizado hoy.,오늘 같은 날에는 냉방이 돌아가는 실내보다 그늘진 야외 테라스에서 밥을 먹는 걸 더 선호한다.
-2786,gritar,B1,unit_093,es_u93_n3,비명,[그리타르],No es necesario gritar para defender tus ideas cuando los argumentos son sólidos y claros.,논거가 탄탄하고 명확하다면 자신의 주장을 설득하기 위해 굳이 언성을 높여 소리칠 필요가 없다.
+2786,gritar,B1,unit_093,es_u93_n3,소리치다,[그리타르],No es necesario gritar para defender tus ideas cuando los argumentos son sólidos y claros.,논거가 탄탄하고 명확하다면 자신의 주장을 설득하기 위해 굳이 언성을 높여 소리칠 필요가 없다.
 2787,recibió,B1,unit_093,es_u93_n3,받은,[레시비오],El autor recibió una calurosa ovación del público tras finalizar la lectura poética en el teatro.,작가는 극장에서 자작시 낭송을 마친 후 관객들로부터 우레와 같은 뜨거운 기립박수를 받았다.
 2788,concierto,B1,unit_093,es_u93_n3,콘서트,[콘시에르토],Asistimos a un concierto acústico de guitarra clásica en el claustro gótico del monasterio.,우리는 유서 깊은 수도원의 고딕 회랑에서 열린 어쿠스틱 클래식 기타 연주회에 참석했다.
 2789,casualidad,B1,unit_094,es_u94_n1,우연의 일치,[카수아리다드],Fue una feliz casualidad coincidir en el mismo vagón de tren de regreso a casa.,집으로 돌아오는 같은 기차 칸에서 옛 친구를 마주친 것은 참으로 기분 좋은 우연이었다.
@@ -2802,7 +2802,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2801,sombra,B1,unit_094,es_u94_n2,그림자,[솜브라],Nos cobijamos bajo la sombra densa y fresca de un gran pino mediterráneo a mediodía.,정오 무렵 커다란 지중해 해송이 드리운 울창하고 시원한 그늘 밑으로 들어가 더위를 피했다.
 2802,ganó,B1,unit_094,es_u94_n2,이겼다,[가노],El joven velocista ganó la carrera de cien metros lisos con una marca personal sobresaliente.,어린 단거리 육상 선수는 압도적인 개인 최고 기록을 수립하며 100미터 달리기에서 우승했다.
 2803,encantada,B1,unit_094,es_u94_n2,반갑습니다,[엔칸타다],Mucho gusto en conocerla señora Martínez encantada de colaborar con ustedes en el proyecto.,마르티네스 사장님 처음 뵙겠습니다 함께 프로젝트를 진행하게 되어 대단히 반갑습니다.
-2804,firmar,B1,unit_094,es_u94_n2,기호,[피르마르],Revisó cada una de las cláusulas del documento oficial antes de firmar la escritura del inmueble.,부동산 계약서에 정식으로 서명하기에 앞서 공증 문서의 모든 세부 조항을 꼼꼼히 살폈다.
+2804,firmar,B1,unit_094,es_u94_n2,서명하다,[피르마르],Revisó cada una de las cláusulas del documento oficial antes de firmar la escritura del inmueble.,부동산 계약서에 정식으로 서명하기에 앞서 공증 문서의 모든 세부 조항을 꼼꼼히 살폈다.
 2805,escritorio,B1,unit_094,es_u94_n2,책상,[에스크리토리오],Mantén la superficie del escritorio limpia y libre de papeles innecesarios para concentrarte.,잡다한 서류를 치우고 책상 위를 언제나 정갈하게 정돈해 두어야 깊은 몰입이 가능하다.
 2806,muñeca,B1,unit_094,es_u94_n2,손목,[무녜카],Lleva una pulsera artesanal de cuero trenzado ajustada a la muñeca izquierda con un broche.,왼쪽 손목에 버클 잠금장치가 달린 핸드메이드 꼬임 가죽 팔찌를 멋스럽게 차고 있다.
 2807,rastro,B1,unit_094,es_u94_n2,추적,[라스트로],El viento marino borró con rapidez cualquier rastro de pisadas sobre la arena húmeda.,밀려드는 바닷바람과 잔물결이 젖은 모래톱 위에 찍혀 있던 발자국 흔적을 말끔히 지워냈다.
@@ -2836,7 +2836,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2835,volveremos,B1,unit_095,es_u95_n2,돌아올 것이다,[볼베레모스],Volveremos a visitar esta hermosa cala mediterránea en cuanto llegue el calor del verano.,뜨거운 여름 햇살이 다시 찾아오면 이 아름다운 지중해 바닷가 만을 꼭 다시 찾아올 것이다.
 2836,voto,B1,unit_095,es_u95_n2,투표,[보토],Emitió su voto en la urna municipal tras reflexionar detenidamente sobre los programas cívicos.,후보들의 시민 공약을 꼼꼼히 비교 검토한 후 시립 투표소 투표함에 소중한 한 표를 행사했다.
 2837,méxico,B1,unit_095,es_u95_n2,멕시코,[메스이코],México posee un patrimonio cultural milenario y una gastronomía tradicional reconocida mundialmente.,멕시코는 찬란한 고대 문명 유적과 세계적으로 널리 인정받는 깊은 미식 문화를 자랑한다.
-2838,amar,B1,unit_095,es_u95_n2,사랑,[아마르],Amar lo que uno hace con dedicación y esmero diario es la clave del progreso profesional.,자신이 맡은 일에 애정을 품고 매일 정성을 쏟아붓는 것이야말로 진정한 프로의 성공 비결이다.
+2838,amar,B1,unit_095,es_u95_n2,사랑하다,[아마르],Amar lo que uno hace con dedicación y esmero diario es la clave del progreso profesional.,자신이 맡은 일에 애정을 품고 매일 정성을 쏟아붓는 것이야말로 진정한 프로의 성공 비결이다.
 2839,poderoso,B1,unit_095,es_u95_n3,강력한,[포데로소],El lenguaje preciso es un instrumento poderoso para transmitir ideas complejas con claridad.,정확하고 정돈된 언어는 복잡한 사유를 한눈에 명쾌하게 전달하는 가장 강력한 도구이다.
 2840,traigo,B1,unit_095,es_u95_n3,내가 가져온다,[트라이고],Traigo una cesta con frutas frescas recién recolectadas en el huerto familiar de la comarca.,동네 가족 과수원 텃밭에서 방금 갓 따온 싱싱한 제철 과일 한 바구니를 들고 왔다.
 2841,asesinatos,B1,unit_095,es_u95_n3,살인,[아세시나토스],La novela policíaca narra la investigación meticulosa de una serie de asesinatos misteriosos.,그 추리 소설은 미궁에 빠진 연쇄 살인 사건의 진상을 파헤치는 정밀한 과학수사를 그린다.
@@ -2927,7 +2927,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2926,explicación,B1,unit_098,es_u98_n2,설명,[에스플리카시온],El profesor ofreció una explicación gramatical muy nítida que despejó las dudas de la clase.,선생님은 학생들의 모든 의문을 단번에 풀어주는 아주 명쾌하고 깔끔한 문법 해설을 들려주셨다.
 2927,salen,B1,unit_098,es_u98_n2,나온다,[사렌],Los barcos de arrastre salen a faenar de madrugada antes de que asome el sol por el este.,저인망 어선들은 동쪽 지평선 너머로 해가 고개를 내밀기도 전인 꼭두새벽에 출항한다.
 2928,discúlpeme,B1,unit_098,es_u98_n2,실례합니다,[디스쿨페메],Discúlpeme señor pero este asiento de pasillo está reservado para personas con movilidad reducida.,손님 대단히 죄송하지만 이 통로 쪽 좌석은 교통약자 우선 배려석으로 지정되어 있습니다.
-2929,presentar,B1,unit_098,es_u98_n3,현재,[프레센타르],El equipo de desarrollo va a presentar el prototipo funcional ante los usuarios la próxima semana.,개발팀은 다음 주 실 사용자들 앞에서 실제 구동되는 프로토타입 시제품을 선보일 예정이다.
+2929,presentar,B1,unit_098,es_u98_n3,소개하다,[프레센타르],El equipo de desarrollo va a presentar el prototipo funcional ante los usuarios la próxima semana.,개발팀은 다음 주 실 사용자들 앞에서 실제 구동되는 프로토타입 시제품을 선보일 예정이다.
 2930,donna,B1,unit_098,es_u98_n3,도나,[돈나],Donna restaura muebles antiguos de roble aplicando ceras naturales con un paño de lino suave.,도나는 부드러운 린넨 천으로 천연 밀랍을 먹여가며 앤틱 참나무 가구를 정성껏 손질한다.
 2931,celebrar,B1,unit_098,es_u98_n3,축하하다,[세레브라르],Nos reunimos en familia para celebrar el rotundo éxito académico de mi hermano menor.,남동생의 훌륭한 학업 성취와 자격시험 합격을 축하하기 위해 온 가족이 둘러앉았다.
 2932,competencia,B1,unit_098,es_u98_n3,경쟁,[콤페텐시아],Los jóvenes remeros demostraron gran deportividad y compañerismo durante toda la competencia.,젊은 조정 노잡이 선수들은 경기 내내 뛰어난 스포츠맨십과 끈끈한 동료애를 뽐냈다.
@@ -2936,7 +2936,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2935,verlos,B1,unit_098,es_u98_n3,그들을 만나다,[베르로스],Fue una alegría inmensa verlos tan recuperados y llenos de vitalidad tras las vacaciones.,휴가를 마치고 돌아온 그들이 원기를 온전히 회복하여 건강한 모습을 보니 참 반가웠다.
 2936,biblioteca,B1,unit_098,es_u98_n3,도서관,[비블리오테카],Paso las tardes de estudio en la sala silenciosa de la biblioteca municipal del distrito.,구립 공공도서관의 고요한 열람실 좌석에 앉아 오후 공부에 깊이 몰입하곤 한다.
 2937,fila,B1,unit_098,es_u98_n3,행,[피라],Los viajeros esperaban su turno de embarque formando una fila ordenada frente a la pasarela.,승객들은 탑승교 게이트 앞에 질서정연하게 한 줄로 서서 차분히 탑승 차례를 기다렸다.
-2938,ésto,B1,unit_098,es_u98_n3,이,[에스토],Con ésto dejamos cerrado el bloque de quinientas palabras sin ningún fallo de sintaxis.,이것으로 문법 서식 오류 1건 없이 500개 단어 블록 정리를 완벽히 매듭짓게 된다.
+2938,ésto,B1,unit_098,es_u98_n3,이것,[에스토],Con ésto dejamos cerrado el bloque de quinientas palabras sin ningún fallo de sintaxis.,이것으로 문법 서식 오류 1건 없이 500개 단어 블록 정리를 완벽히 매듭짓게 된다.
 2939,misterio,B1,unit_099,es_u99_n1,미스터리,[미스테리오],La vieja leyenda sobre el galeón hundido en la ensenada sigue envuelta en un halo de misterio.,만 깊은 바닷속에 침몰한 범선에 얽힌 고대 전설은 여전히 신비로운 미스터리로 남아있다.
 2940,ganador,B1,unit_099,es_u99_n1,우승자,[가나도르],El comité organizador proclamó ganador del certamen de relato corto a un joven escritor novel.,행사 조직위원회는 청년 신진 문학 작가를 단편 소설 공모전의 최종 당선 우승자로 발표했다.
 2941,puerto,B1,unit_099,es_u99_n1,항구,[푸에르토],Las barcas pesqueras regresan al puerto cargadas de pescado fresco con el primer sol matinal.,아침 첫 햇살이 비칠 무렵 만선의 어선들이 싱싱한 해산물을 싣고 포구 항구로 귀항한다.
@@ -2988,7 +2988,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 2987,andrew,B1,unit_100,es_u100_n2,앤드류,[앤드루],Andrew programa rutinas de sincronización en la nube para garantizar la integridad de los datos.,앤드류는 사용자 데이터의 무결성을 보장하기 위해 클라우드 동기화 모듈을 개발한다.
 2988,dean,B1,unit_100,es_u100_n2,학장,[데안],El respetado dean de la facultad inauguró el simposio internacional con una disertación lúcida.,학부 학장님께서는 날카롭고 명쾌한 기조연설과 함께 국제 학술 심포지엄의 개막을 알리셨다.
 2989,ambiente,B1,unit_100,es_u100_n3,환경,[암비엔테],En esta biblioteca comunitaria se respira un ambiente sereno propicio para el estudio profundo.,이 동네 공공도서관에는 깊이 있는 학업 몰입에 더할 나위 없이 좋은 고요한 면학 분위기가 감돈다.
-2990,conde,B1,unit_100,es_u100_n3,카운트,[콘데],El palacio señorial del antiguo conde alberga hoy una rica pinacoteca de arte barroco.,옛 백작 가문의 웅장한 영지 저택은 오늘날 화려한 바로크 미술품들을 품은 미술관으로 쓰인다.
+2990,conde,B1,unit_100,es_u100_n3,백작,[콘데],El palacio señorial del antiguo conde alberga hoy una rica pinacoteca de arte barroco.,옛 백작 가문의 웅장한 영지 저택은 오늘날 화려한 바로크 미술품들을 품은 미술관으로 쓰인다.
 2991,urgente,B1,unit_100,es_u100_n3,긴급,[우르헨테],Es urgente corregir cualquier anomalía en los datos antes de exportar la base de producción.,운영 서버에 정식 배포하기에 앞서 데이터에 숨은 사소한 오차라도 긴급히 바로잡아야 한다.
 2992,impuestos,B1,unit_100,es_u100_n3,세금,[임푸에스토스],El ayuntamiento destina la recaudación de impuestos municipales al mantenimiento de parques y vías.,시청은 징수된 지방세를 시내 공원 녹지 조성과 보행자 도로망 유지보수 예산에 배정한다.
 2993,antonio,B1,unit_100,es_u100_n3,안토니오,[안토니오],Antonio enseña técnicas tradicionales de construcción con piedra seca en talleres de patrimonio.,안토니오는 문화유산 복원 워크숍에서 유서 깊은 전통 자연석 돌담 축조 기술을 전수한다.
@@ -3078,7 +3078,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3077,pare,B1,unit_103,es_u103_n2,중지,[파레],Es conveniente que el conductor pare el motor durante las paradas prolongadas de reparto urbano.,배송 화물을 내리기 위해 길가에 장시간 정차할 때는 공회전을 막고 시동을 끄는 것이 바람직하다.
 3078,peces,B1,unit_103,es_u103_n2,물고기,[페세스],Divisamos cientos de pequeños peces de colores nadando entre los fondos rocosos de la rada marina.,바닷가 방파제 밑 수중 암초 틈새를 떼 지어 유영하는 수백 마리의 알록달록한 물고기들을 보았다.
 3079,brown,B1,unit_103,es_u103_n3,갈색,[브라운],El profesor Brown imparte seminarios de literatura comparada en la facultad de humanidades.,브라운 교수님은 인문대학 강단에서 동서양 비교 문학 특강 세미나를 정기적으로 주재하신다.
-3080,guardar,B1,unit_103,es_u103_n3,저장,[구아르다르],Acuérdate de guardar el fichero con codificación UTF-8 para preservar todos los acentos y tildes.,스페인어 고유 악센트 부호가 깨지지 않도록 파일을 UTF-8 인코딩으로 저장하는 것을 잊지 마라.
+3080,guardar,B1,unit_103,es_u103_n3,보관하다,[구아르다르],Acuérdate de guardar el fichero con codificación UTF-8 para preservar todos los acentos y tildes.,스페인어 고유 악센트 부호가 깨지지 않도록 파일을 UTF-8 인코딩으로 저장하는 것을 잊지 마라.
 3081,podían,B1,unit_103,es_u103_n3,할 수 있었다,[포디안],Desde la terraza del mirador alto se podían contemplar los barcos veleros fondeados en la bahía.,전망대 루프탑에 서면 바다 만에 닻을 내리고 정박 중인 멋진 돛단배들의 풍경을 마음껏 감상할 수 있었다.
 3082,sabían,B1,unit_103,es_u103_n3,알고 있었다,[사비안],Los veteranos pescadores de la cofradía sabían interpretar los cambios de viento con exactitud.,어촌계의 노련한 고참 어부들은 하늘 구름의 흐름만 보고도 풍향이 어떻게 바뀔지 정확히 짚어냈다.
 3083,literalmente,B1,unit_103,es_u103_n3,말 그대로,[리테랄멘테],El libro sobre historia naval española nos atrapó literalmente desde la primera página leída.,스페인 해양사를 다룬 그 교양 서적은 말 그대로 첫 장을 펼치자마자 우리를 단숨에 사로잡았다.
@@ -3094,7 +3094,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3093,robin,B1,unit_104,es_u104_n1,로빈,[로빈],Robin prepara mezclas de especias aromáticas para aderezar platos tradicionales de pescado al horno.,로빈은 생선 오븐 구이에 풍미를 더할 향긋한 천연 허브 시즈닝 믹스를 손수 배합한다.
 3094,sales,B1,unit_104,es_u104_n1,소금,[사레스],Añadimos sales marinas aromáticas al agua caliente del baño para relajar los músculos tras el esfuerzo.,운동 후 뻐근해진 전신 근육을 부드럽게 풀기 위해 따뜻한 욕조 물에 천연 바다 입욕염을 풀었다.
 3095,clínica,B1,unit_104,es_u104_n1,진료소,[클리니카],La moderna clínica de fisioterapia deportiva cuenta con equipos avanzados de recuperación funcional.,스포츠 전문 물리치료 클리닉은 첨단 재활 장비를 갖추고 선수들의 신체 기능 회복을 돕는다.
-3096,atrapar,B1,unit_104,es_u104_n1,잡기,[아트라파르],El portero logró atrapar el balón por alto con total seguridad tras un saque de esquina peligroso.,골키퍼는 날카롭게 휘어 들어온 위협적인 코너킥 공중볼을 높은 타점에서 흔들림 없이 낚아챘다.
+3096,atrapar,B1,unit_104,es_u104_n1,잡다,[아트라파르],El portero logró atrapar el balón por alto con total seguridad tras un saque de esquina peligroso.,골키퍼는 날카롭게 휘어 들어온 위협적인 코너킥 공중볼을 높은 타점에서 흔들림 없이 낚아챘다.
 3097,experto,B1,unit_104,es_u104_n1,전문가,[에스페르토],Consultamos a un experto en lingüística computacional para validar el procesamiento del corpus de datos.,언어 말뭉치 데이터 처리 파이프라인의 완성도를 검증하기 위해 전산언어학 전문가의 감수를 거쳤다.
 3098,medida,B1,unit_104,es_u104_n1,측정하다,[메디다],Tomó la medida exacta del marco de madera antes de cortar la moldura.,몰딩을 자르기 전에 원목 액자 틀의 정확한 치수를 쟀다.
 3099,tele,B1,unit_104,es_u104_n2,텔레비젼,[테레],Apagó la tele del salón para disfrutar de una lectura tranquila al anochecer.,해 질 무렵 조용히 독서를 즐기기 위해 거실 텔레비전을 껐다.
@@ -3113,12 +3113,12 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3112,desgraciado,B1,unit_104,es_u104_n3,불행한,[데스그라시아도],Aquel desafortunado error tipográfico causó un desgraciado retraso en la impresión oficial.,오타 하나로 인해 공식 인쇄 작업 일정에 안타까운 차질이 빚어지고 말았다.
 3113,organización,B1,unit_104,es_u104_n3,조직,[오르가니사시온],La buena organización interna de los archivos permite localizar cualquier dato en segundos.,내부 파일 정리가 체계적으로 잘되어 있으면 어떤 데이터든 단 몇 초 만에 찾아낸다.
 3114,echa,B1,unit_104,es_u104_n3,캐스트,[에차],Echa un vistazo al mapa topográfico antes de tomar el sendero que sube hacia el collado.,고갯마루로 이어지는 등산로로 접어들기 전에 지형도 지도를 먼저 한 번 살펴봐라.
-3115,mina,B1,unit_104,es_u104_n3,내,[미나],Esa pequeña libreta de apuntes con cubierta de cuero marrón claro que ves sobre la mesa es mina.,탁자 위에 놓인 저 연한 갈색 가죽 표지의 작은 메모장은 내 것이다.
+3115,mina,B1,unit_104,es_u104_n3,내 것,[미나],Esa pequeña libreta de apuntes con cubierta de cuero marrón claro que ves sobre la mesa es mina.,탁자 위에 놓인 저 연한 갈색 가죽 표지의 작은 메모장은 내 것이다.
 3116,honestamente,B1,unit_104,es_u104_n3,솔직히,[오네스타멘테],Honestamente considero que este enfoque metodológico estructurado es el más riguroso y eficaz.,솔직히 말해 이 체계화된 정석 접근법이야말로 가장 빈틈없고 효과적이라고 판단한다.
 3117,deuda,B1,unit_104,es_u104_n3,부채,[데우다],Saldó la pequeña deuda pendiente con la tienda de barrio mediante una transferencia rápida.,동네 상점에 남아 있던 소액 외상 잔금을 간편 계좌이체로 깔끔하게 정리했다.
 3118,digan,B1,unit_104,es_u104_n3,말하다,[디간],Digan lo que digan las fuentes no contrastadas nosotros nos basamos en pruebas empíricas.,출처 불명의 풍문이 무어라 떠돌든 우리는 객관적으로 검증된 실증 데이터만 신뢰한다.
 3119,transporte,B1,unit_105,es_u105_n1,교통,[트란스포르테],El billete único facilita el acceso a toda la red integrada de transporte metropolitano.,통합 정기권 한 장으로 수도권 대중교통 환승 네트워크를 자유롭게 이용할 수 있다.
-3120,cocinar,B1,unit_105,es_u105_n1,요리사,[코시나르],Me gusta cocinar platos tradicionales con verduras frescas de temporada y aceite virgen.,제철 채소와 엑스트라 버진 올리브유를 듬뿍 넣고 향토 요리를 만드는 것을 즐긴다.
+3120,cocinar,B1,unit_105,es_u105_n1,요리하다,[코시나르],Me gusta cocinar platos tradicionales con verduras frescas de temporada y aceite virgen.,제철 채소와 엑스트라 버진 올리브유를 듬뿍 넣고 향토 요리를 만드는 것을 즐긴다.
 3121,delicioso,B1,unit_105,es_u105_n1,맛있다,[데리시오소],El arroz a banda con sepia y gambas rojas de lonja quedó sumamente sabroso y delicioso.,갓 잡은 갑오징어와 붉은 새우를 넣고 볶아낸 아로스 아 반다는 기가 막히게 맛이 좋았다.
 3122,podíamos,B1,unit_105,es_u105_n1,할 수 있었다,[포디아모스],Desde la terraza del mirador podíamos divisar las barcas fondeadas en la ensenada marina.,전망대 테라스에 서자 바다 만에 닻을 내리고 쉬고 있는 나룻배들이 시원스레 내다보였다.
 3123,greg,B1,unit_105,es_u105_n1,그렉,[그레그],Greg programa rutinas de sincronización en segundo plano para optimizar el consumo de batería.,그렉은 배터리 소모를 줄이기 위해 백그라운드 데이터 동기화 알고리즘을 짠다.
@@ -3127,7 +3127,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3126,sentimiento,B1,unit_105,es_u105_n1,느낌,[센티미엔토],El violonchelista interpretó el adagio con un sentimiento profundo que conmovió a la sala.,첼리스트는 객석의 심금을 울리는 짙은 호소력과 감정을 담아 아다지오 악장을 연주했다.
 3127,pudieras,B1,unit_105,es_u105_n1,할 수 있습니까?,[푸디에라스],Si pudieras acompañarme mañana a la biblioteca municipal te lo agradecería sinceramente.,내일 시립 도서관에 함께 동행해 줄 수 있다면 진심으로 고맙겠다.
 3128,golpes,B1,unit_105,es_u105_n1,불면,[골페스],El oleaje rompía con golpes secos y rítmicos contra las rocas basálticas del espigón portuario.,방파제의 단단한 암초 바위벽에 부딪힌 파도가 규칙적인 소리를 내며 하얗게 부서졌다.
-3129,nadar,B1,unit_105,es_u105_n2,수영,[나다르],Suelo nadar un par de series matinales en las aguas tranquilas de la cala protegida del viento.,바람이 들이치지 않는 아늑한 모래사장의 잔잔한 바닷물 속에서 아침 수영을 즐기곤 한다.
+3129,nadar,B1,unit_105,es_u105_n2,수영하다,[나다르],Suelo nadar un par de series matinales en las aguas tranquilas de la cala protegida del viento.,바람이 들이치지 않는 아늑한 모래사장의 잔잔한 바닷물 속에서 아침 수영을 즐기곤 한다.
 3130,operaciones,B1,unit_105,es_u105_n2,운영,[오페라시오네스],El centro logístico coordinó las operaciones de transporte terrestre con precisión cronométrica.,물류 허브 기지는 정밀한 시간 계획에 맞추어 육상 화물 운송 관제 작업을 총괄했다.
 3131,admitir,B1,unit_105,es_u105_n2,인정하다,[아드미티르],Es un signo de madurez profesional admitir los errores a tiempo y corregirlos sin demora.,시행착오를 솔직하게 시인하고 지체 없이 바로잡는 것은 성숙한 프로의 훌륭한 미덕이다.
 3132,templo,B1,unit_105,es_u105_n2,사원,[템플로],Visitamos las ruinas de un antiguo templo clásico con columnas de piedra muy bien conservadas.,웅장한 석조 기둥들이 원형 그대로 보존되어 있는 유서 깊은 고대 신전 유적을 답사했다.
@@ -3173,7 +3173,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3172,galletas,B1,unit_106,es_u106_n3,쿠키,[가예타스],Horneamos unas deliciosas galletas caseras de avena con trozos de almendra tostada para merendar.,오후 간식으로 곁들여 먹기 위해 고소한 아몬드 조각을 넣은 바삭한 수제 오트밀 쿠키를 구웠다.
 3173,hablarle,B1,unit_106,es_u106_n3,그에게 말을 걸어,[아블라르레],Voy a hablarle con franqueza y cercanía sobre la conveniencia de optimizar la base de datos.,데이터베이스 아키텍처를 최적화하는 것이 얼마나 유익한지 그에게 솔직하고 차분하게 설명하겠다.
 3174,delito,B1,unit_106,es_u106_n3,범죄,[데리토],El código penal sanciona de forma contundente cualquier delito contra el patrimonio cultural protegido.,형법은 국가 지정 보호 문화재를 훼손하거나 불법 반출하는 일체의 범죄 행위를 엄벌에 처한다.
-3175,atacar,B1,unit_106,es_u106_n3,공격,[아타카르],El equipo de fútbol sala cambió su planteamiento táctico para atacar con mayor velocidad por bandas.,풋살 팀은 측면 날개 진영을 활용해 한층 빠르고 날카롭게 공격을 전개하도록 전술을 수정했다.
+3175,atacar,B1,unit_106,es_u106_n3,공격하다,[아타카르],El equipo de fútbol sala cambió su planteamiento táctico para atacar con mayor velocidad por bandas.,풋살 팀은 측면 날개 진영을 활용해 한층 빠르고 날카롭게 공격을 전개하도록 전술을 수정했다.
 3176,objeto,B1,unit_106,es_u106_n3,물체,[오브헤토],Los arqueólogos desenterraron un antiguo objeto ceremonial de bronce labrado de gran valor histórico.,고고학 발굴단은 역사적 가치가 높은 정교하게 세공된 고대 청동 의례 제기 유물을 수습했다.
 3177,disparos,B1,unit_106,es_u106_n3,샷,[디스파로스],El delantero afinó la puntería en la sesión de entrenamiento practicando disparos colocados al poste.,공격수는 골포스트 구석을 정밀 타격하는 슈팅 훈련을 반복하며 골 결정력을 예리하게 가다듬었다.
 3178,museo,B1,unit_106,es_u106_n3,박물관,[무세오],Pasamos una tarde sumamente amena recorriendo las salas de pintura clásica del museo provincial.,도립 미술관의 고전 회화 전시실을 여유롭게 거닐며 참으로 뜻깊고 유익한 오후를 보냈다.
@@ -3255,9 +3255,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3254,fondos,B2,unit_109,es_u109_n2,자금,[폰도스],La asociación comunitaria destina los fondos recaudados a mantener los parques infantiles verdes.,주민 자치회는 모금된 공공 기금을 어린이 놀이터와 녹지 화단을 가꾸는 데 전액 집행한다.
 3255,ross,B2,unit_109,es_u109_n2,로스,[로스스],Ross investiga la evolución de los dialectos románicos peninsulares en el archivo universitario.,로스는 대학교 문헌 보관소에서 이베리아반도 로맨스어 방언의 변천사를 깊이 있게 연구한다.
 3256,bruce,B2,unit_109,es_u109_n2,브루스,[브루세],Bruce ajusta los frenos hidráulicos y la cadena de su bicicleta de montaña en el taller del garaje.,브루스는 차고 작업실에서 산악자전거의 유압 디스크 브레이크와 체인 장력을 세밀히 정비한다.
-3257,montar,B2,unit_109,es_u109_n2,타고,[몬타르],El manual de carpintería explica con esquemas gráficos cómo montar la estantería de madera maciza.,DIY 가구 설명서는 도면 다이어그램을 곁들여 통원목 수납 책장을 조립하는 법을 명쾌히 보여준다.
+3257,montar,B2,unit_109,es_u109_n2,타다,[몬타르],El manual de carpintería explica con esquemas gráficos cómo montar la estantería de madera maciza.,DIY 가구 설명서는 도면 다이어그램을 곁들여 통원목 수납 책장을 조립하는 법을 명쾌히 보여준다.
 3258,salvado,B2,unit_109,es_u109_n2,밀기울,[살바도],Compramos pan integral artesano horneado con salvado de trigo que tiene una textura crujiente y rica.,바삭한 식감과 고소한 풍미가 일품인 통밀 식이섬유 밀기울 수제 식빵을 사 왔다.
-3259,grados,B2,unit_109,es_u109_n3,도,[그라도스],El termómetro marcaba veinticinco grados a mediodía lo que permitía almorzar al sol en la terraza.,한낮의 기온이 영상 25도를 가리켜 따스한 햇볕을 받으며 테라스에서 점심을 먹기에 참 좋았다.
+3259,grados,B2,unit_109,es_u109_n3,도(온도),[그라도스],El termómetro marcaba veinticinco grados a mediodía lo que permitía almorzar al sol en la terraza.,한낮의 기온이 영상 25도를 가리켜 따스한 햇볕을 받으며 테라스에서 점심을 먹기에 참 좋았다.
 3260,dylan,B2,unit_109,es_u109_n3,딜런,[딜런],Dylan compone canciones acústicas con su guitarra española grabando maquetas en su estudio casero.,딜런은 홈 레코딩 스튜디오에서 클래식 기타를 퉁기며 어쿠스틱 자작곡 데모를 녹음한다.
 3261,moto,B2,unit_109,es_u109_n3,오토바이,[모토],Se desplaza al trabajo en una moto eléctrica compacta que le permite aparcar sin complicaciones.,그는 주차가 간편하고 기동성이 뛰어난 소형 친환경 전기 스쿠터 오토바이로 출퇴근한다.
 3262,instrucciones,B2,unit_109,es_u109_n3,지침,[인스트루크시오네스],Lee con atención las instrucciones técnicas antes de manipular cualquier componente de la placa base.,메인보드 부품을 건드리기 전에 기술 매뉴얼의 안전 주의 지침을 꼼꼼히 정독해라.
@@ -3289,7 +3289,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3288,tono,B2,unit_110,es_u110_n2,톤,[토노],Habló con un tono sereno y conciliador que disipó de inmediato la tensión en la reunión de trabajo.,그는 회의실의 팽팽했던 긴장감을 단숨에 녹이는 차분하고 온화한 어조로 발언을 이어갔다.
 3289,espía,B2,unit_110,es_u110_n3,스파이,[에스피아],La novela histórica narraba las peripecias de un hábil espía que descifraba códigos navales cifrados.,역사 소설은 암호화된 군사 해군 무전을 신들린 듯 해독해 내던 천재 스파이의 활약상을 그린다.
 3290,empleados,B2,unit_110,es_u110_n3,직원,[엠플레아도스],La cooperativa agrícola ofrece formación técnica continua a todos sus empleados de planta.,농업협동조합은 전 사업장 직원들에게 최신 농업 기술 재교육 프로그램을 정기적으로 지원한다.
-3291,conduce,B2,unit_110,es_u110_n3,드라이브,[콘두세],Conduce con extrema prudencia por la carretera costera especialmente si el asfalto está húmedo.,해안 도로를 주행할 때는 노면이 젖어 미끄러울 수 있으니 각별히 감속 운전해라.
+3291,conduce,B2,unit_110,es_u110_n3,운전하다,[콘두세],Conduce con extrema prudencia por la carretera costera especialmente si el asfalto está húmedo.,해안 도로를 주행할 때는 노면이 젖어 미끄러울 수 있으니 각별히 감속 운전해라.
 3292,detalle,B2,unit_110,es_u110_n3,세부 사항,[데타예],El artesano cuidó cada pequeño detalle del acabado puliendo los cantos de la mesa a mano.,가구 장인은 테이블 모서리 선을 손수 사포질하며 마감의 자잘한 디테일까지 정성껏 챙겼다.
 3293,estuvieras,B2,unit_110,es_u110_n3,당신은,[에스투비에라스],Me gustaría mucho que estuvieras presente en la inauguración del nuevo estudio de diseño mañana.,내일 열리는 새 디자인 아틀리에 개업식에 네가 자리를 함께 빛내준다면 참으로 기쁘겠다.
 3294,oliver,B2,unit_110,es_u110_n3,올리버,[오리베르],Oliver diseña tipografías vectoriales para cartelería cultural cuidando la legibilidad a distancia.,올리버는 원거리에서도 한눈에 쏙 들어오는 가독성 높은 문화 포스터용 벡터 폰트를 디자인한다.
@@ -3300,7 +3300,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3299,contesta,B2,unit_111,es_u111_n1,대답하다,[콘테스타],El alumno contesta a las preguntas del profesor con notable aplomo y corrección.,학생은 침착하고 조리 있는 태도로 선생님의 질문에 척척 답변한다.
 3300,casarte,B2,unit_111,es_u111_n1,결혼하다,[카사르테],Antes de casarte conviene dialogar con calma sobre los proyectos de vida comunes.,결혼하기 전에 앞으로의 공동 인생 계획에 대해 차분히 대화를 나누는 것이 좋다.
 3301,manda,B2,unit_111,es_u111_n1,명령,[만다],El capitán manda asegurar todas las amarras del barco velero ante la tormenta inminente.,선장은 거센 비바람에 대비하여 돛단배의 모든 계류 밧줄을 단단히 매라고 지시한다.
-3302,dias,B2,unit_111,es_u111_n1,일,[디아스],Pasamos unos dias inolvidables recorriendo los senderos costeros y las calas tranquilas.,호젓한 해안 둘레길과 조용한 만을 거닐며 잊지 못할 며칠간의 휴가를 보냈다.
+3302,dias,B2,unit_111,es_u111_n1,날들,[디아스],Pasamos unos dias inolvidables recorriendo los senderos costeros y las calas tranquilas.,호젓한 해안 둘레길과 조용한 만을 거닐며 잊지 못할 며칠간의 휴가를 보냈다.
 3303,prisioneros,B2,unit_111,es_u111_n1,죄수,[프리시오네로스],El pacto humanitario internacional garantizó el trato digno a los prisioneros de guerra.,국제 인도주의 협약은 전쟁 포로들에 대한 인간적인 대우를 확실히 보장했다.
 3304,echado,B2,unit_111,es_u111_n1,캐스트,[에차도],El gato se ha echado una siesta muy plácida sobre la alfombra suave del salón soleado.,고양이는 햇볕이 드는 거실의 폭신한 카펫 위에 웅크려 곤히 낮잠을 잤다.
 3305,trajiste,B2,unit_111,es_u111_n1,당신이 가져왔어,[트라히스테],Qué gran acierto que trajiste esa toalla amplia para sentarnos cómodamente en la arena.,모래사장에 편히 앉을 수 있도록 널찍한 비치 타월을 챙겨온 것은 참 훌륭한 선택이었다.
@@ -3312,7 +3312,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3311,platos,B2,unit_111,es_u111_n2,요리,[플라토스],Ese mesón tradicional sirve platos de pescado fresco cocinados según las recetas de la abuela.,그 전통 식당은 옛 할머니의 손맛 비법 그대로 조리한 신선한 생선 요리를 낸다.
 3312,crímenes,B2,unit_111,es_u111_n2,범죄,[크리메네스],La brigada de policía judicial investiga los crímenes económicos con tecnología forense avanzada.,사법경찰 전담반은 첨단 디지털 포렌식 기술을 동원해 지능형 경제 범죄를 수사한다.
 3313,cometido,B2,unit_111,es_u111_n2,헌신하다,[코메티도],Cumplió con su cometido profesional entregando todos los archivos limpios y sin retraso.,모든 데이터 파일을 지연 없이 깔끔하게 납품하며 맡은 바 직무 소임을 완수했다.
-3314,golpear,B2,unit_111,es_u111_n2,히트,[골페아르],El oleaje atlántico comenzó a golpear con enorme fuerza contra el muro exterior del dique.,대서양의 거센 파도가 방파제 외벽을 향해 무서운 기세로 부딪치기 시작했다.
+3314,golpear,B2,unit_111,es_u111_n2,때리다,[골페아르],El oleaje atlántico comenzó a golpear con enorme fuerza contra el muro exterior del dique.,대서양의 거센 파도가 방파제 외벽을 향해 무서운 기세로 부딪치기 시작했다.
 3315,igualmente,B2,unit_111,es_u111_n2,마찬가지로,[이구알멘테],Muchas gracias por su valiosa ayuda profesional igualmente le deseo una excelente jornada.,전문적인 도움에 깊이 감사드리며 선생님께서도 아주 보람찬 하루를 보내시기를 바랍니다.
 3316,dispararon,B2,unit_111,es_u111_n2,그들이 쐈어,[디스파라론],Los atletas dispararon su velocidad en los últimos cien metros de la recta de meta.,육상 선수들은 결승선을 눈앞에 둔 마지막 100미터 직선 주로에서 폭발적인 스퍼트를 올렸다.
 3317,dejará,B2,unit_111,es_u111_n2,떠날 것이다,[데하라],El tren de cercanías te dejará en el centro neurálgico de la ciudad en veinte minutos.,근교선 열차를 타면 도시의 심장부 시내 한복판까지 20분 만에 편안하게 데려다줄 것이다.
@@ -3387,7 +3387,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3386,almacén,B2,unit_113,es_u113_n3,창고,[알마센],Guardamos las cajas de madera con libros históricos en la zona seca y ventilada del almacén.,귀중한 역사 서적이 든 원목 보관 상자들을 통풍이 잘되고 건조한 물류 창고 안쪽에 두었다.
 3387,sabor,B2,unit_113,es_u113_n3,풍미,[사보르],El aceite de oliva virgen extra de cosecha temprana aporta un sabor afrutado exquisito al plato.,이른 시기에 갓 수확해 짠 엑스트라 버진 올리브유는 요리에 기막힌 과일 향 풍미를 더해준다.
 3388,sentarse,B2,unit_113,es_u113_n3,앉다,[센타르세],Es muy agradable sentarse en un banco a la sombra de los tilos a contemplar el mar sereno.,보리수나무 그늘 아래 벤치에 편안히 앉아 잔잔한 바다를 바라보는 것은 참으로 평화롭다.
-3389,on,B2,unit_114,es_u114_n1,에,[온],El botón selector del equipo de audio mostraba la indicación luminosa power on en color verde.,오디오 장비의 전원 스위치 패널에는 초록색으로 밝게 켜진 power on 표시등이 들어와 있었다.
+3389,on,B2,unit_114,es_u114_n1,켜짐,[온],El botón selector del equipo de audio mostraba la indicación luminosa power on en color verde.,오디오 장비의 전원 스위치 패널에는 초록색으로 밝게 켜진 power on 표시등이 들어와 있었다.
 3390,unión,B2,unit_114,es_u114_n1,노동조합,[우니온],La estrecha unión y la colaboración leal entre los miembros del equipo hicieron posible el éxito.,팀원들 간의 끈끈한 단결과 헌신적인 협업이 마침내 프로젝트의 눈부신 성공을 일궈냈다.
 3391,frankie,B2,unit_114,es_u114_n1,프랭키,[프랭키],Frankie restaura tablas de surf aplicando fibra de vidrio con acabado pulido y brillante.,프랭키는 유리섬유를 입히고 매끄럽게 광택 사포질을 하며 서핑보드를 새것처럼 수리한다.
 3392,reserva,B2,unit_114,es_u114_n1,예약,[레세르바],Confirmamos la reserva de una mesa en la terraza exterior del restaurante junto al muelle pesquero.,포구 부두 바로 옆에 자리한 해산물 식당의 야외 테라스 명당자리 예약을 확정했다.
@@ -3417,7 +3417,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3416,investigar,B2,unit_114,es_u114_n3,조사하다,[인베스티가르],Es apasionante investigar las raíces etimológicas de las palabras comunes de nuestro vocabulario.,우리가 일상에서 무심코 쓰는 단어들의 어원과 뿌리를 깊이 탐구하는 것은 참으로 흥미진진하다.
 3417,apellido,B2,unit_114,es_u114_n3,성,[아페이도],Escriba su nombre y su primer apellido con letra clara de imprenta en el formulario oficial.,공식 신청서 양식의 성명 란에 본인의 이름과 성을 또박또박 정자체로 기재해 주십시오.
 3418,actual,B2,unit_114,es_u114_n3,현재,[아크투알],La versión actual del archivo garantiza la compatibilidad plena con todas las plataformas de juego.,현재 정제된 파일 버전은 모든 게임 구동 환경에서 완벽한 데이터 호환성을 보장한다.
-3419,despertar,B2,unit_115,es_u115_n1,일어나,[데스페르타르],Disfruto al despertar temprano y escuchar el canto jubiloso de los mirlos en el jardín soleado.,아침 일찍 눈을 떠 햇볕 드는 정원에서 지저귀는 새들의 맑은 노랫소리를 듣는 시간을 아낀다.
+3419,despertar,B2,unit_115,es_u115_n1,깨어나다,[데스페르타르],Disfruto al despertar temprano y escuchar el canto jubiloso de los mirlos en el jardín soleado.,아침 일찍 눈을 떠 햇볕 드는 정원에서 지저귀는 새들의 맑은 노랫소리를 듣는 시간을 아낀다.
 3420,instante,B2,unit_115,es_u115_n1,인스턴트,[인스탄테],El cielo se iluminó por completo en un instante al asomar el sol sobre la línea del horizonte marino.,수평선 위로 아침 해가 솟아오르는 그 찰나의 순간에 온 하늘이 눈부신 황금빛으로 물들었다.
 3421,vincent,B2,unit_115,es_u115_n1,빈센트,[빈센트],Vincent pinta marinas al óleo capturando la luz cambiante de las aguas costeras al atardecer.,빈센트는 해 질 녘 시시각각 변하는 바닷물의 투명한 빛을 화폭에 담는 유화 풍경화를 그린다.
 3422,ud,B2,unit_115,es_u115_n1,당신,[우드],Tenga Ud. la bondad de tomar asiento en la sala de espera mientras el doctor revisa su historial.,의사 선생님께서 진료 기록을 확인하시는 동안 대기실 안락의자에 편히 앉아 계십시오.
@@ -3501,15 +3501,15 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3500,imperio,B2,unit_117,es_u117_n3,제국,[임페리오],El museo arqueológico expone mosaicos y calzadas del antiguo imperio romano en Hispania.,시립 고고학 박물관은 이베리아반도에 구축되었던 옛 로마 제국의 모자이크 도로 유적을 전시한다.
 3501,esperaré,B2,unit_117,es_u117_n3,기다릴 것이다,[에스페라레],Te esperaré en los bancos de madera de la plaza principal mientras terminas tus gestiones.,네가 행정 볼일을 마무리하는 동안 중앙 광장의 나무 벤치에 앉아 너를 기다리고 있겠다.
 3502,enfadada,B2,unit_117,es_u117_n3,화난,[엔파다다],Ella no estaba enfadada sino concentrada en resolver el problema técnico del servidor.,그녀는 화가 난 것이 아니라 서버의 기술적 결함을 해결하는 데 온 신경을 집중하고 있었다.
-3503,levantar,B2,unit_117,es_u117_n3,리프트,[레반타르],Flexiona las rodillas antes de levantar esa caja pesada de libros para no dañar la espalda.,허리에 무리가 가지 않도록 그 무거운 책 상자를 들어 올리기 전에 무릎을 먼저 굽혀라.
+3503,levantar,B2,unit_117,es_u117_n3,들어올리다,[레반타르],Flexiona las rodillas antes de levantar esa caja pesada de libros para no dañar la espalda.,허리에 무리가 가지 않도록 그 무거운 책 상자를 들어 올리기 전에 무릎을 먼저 굽혀라.
 3504,cartera,B2,unit_117,es_u117_n3,지갑,[카르테라],Guardó el billete de metro y el documento de identidad en el bolsillo interior de la cartera.,지갑 안쪽 수납칸에 지하철 승차권과 주민 신분증을 가지런히 넣어두었다.
 3505,jeremy,B2,unit_117,es_u117_n3,제레미,[제레미],Jeremy afina las pastillas electromagnéticas de su bajo eléctrico en el taller de luthería.,제레미는 악기 공방에서 베이스기타의 픽업 밸런스를 섬세하게 조율한다.
-3506,importar,B2,unit_117,es_u117_n3,수입,[임포르타르],No me va a importar esperar unos minutos más si con ello aseguramos un resultado impecable.,완벽한 결과물을 보장할 수만 있다면 몇 분 더 기다리는 것쯤은 전혀 개의치 않는다.
+3506,importar,B2,unit_117,es_u117_n3,중요하다,[임포르타르],No me va a importar esperar unos minutos más si con ello aseguramos un resultado impecable.,완벽한 결과물을 보장할 수만 있다면 몇 분 더 기다리는 것쯤은 전혀 개의치 않는다.
 3507,depósito,B2,unit_117,es_u117_n3,예금,[데포시토],Llenó el depósito de combustible del automóvil antes de iniciar la ruta por la autopista.,고속도로를 타고 장거리 운행에 나서기 전에 차량 연료 탱크를 가득 채웠다.
 3508,colegas,B2,unit_117,es_u117_n3,동료,[코레가스],Mis colegas de trabajo organizaron una comida de hermandad para celebrar el éxito del proyecto.,직장 동료들은 프로젝트의 성공적인 마무리를 자축하기 위해 화기애애한 점심 회식을 가졌다.
 3509,periodista,B2,unit_118,es_u118_n1,저널리스트,[페리오디스타],El veterano periodista redactó una crónica cultural muy precisa sobre las fiestas patronales.,베테랑 기자는 마을 전통 축제의 역사와 정취를 다룬 매우 깊이 있고 정확한 르포 기사를 썼다.
-3510,comprobar,B2,unit_118,es_u118_n1,확인,[콤프로바르],Es imprescindible comprobar que todas las líneas de datos carezcan de comas en su redacción.,모든 텍스트 데이터 문장 안에 쉼표가 단 하나도 들어가지 않았음을 확인하는 것은 필수적이다.
-3511,funcione,B2,unit_118,es_u118_n1,일,[푼시오네],Revisamos la base de datos para asegurar que el motor de búsqueda funcione a la perfección.,검색 엔진이 오차 없이 매끄럽게 돌아갈 수 있도록 데이터베이스 인덱스를 철저히 검토했다.
+3510,comprobar,B2,unit_118,es_u118_n1,확인하다,[콤프로바르],Es imprescindible comprobar que todas las líneas de datos carezcan de comas en su redacción.,모든 텍스트 데이터 문장 안에 쉼표가 단 하나도 들어가지 않았음을 확인하는 것은 필수적이다.
+3511,funcione,B2,unit_118,es_u118_n1,작동하다,[푼시오네],Revisamos la base de datos para asegurar que el motor de búsqueda funcione a la perfección.,검색 엔진이 오차 없이 매끄럽게 돌아갈 수 있도록 데이터베이스 인덱스를 철저히 검토했다.
 3512,nina,B2,unit_118,es_u118_n1,소녀,[니나],Nina ilustra cuentos de aventuras marinas utilizando acuarelas de tonos frescos y luminosos.,니나는 맑고 투명한 빛깔의 수채화 물감으로 흥미진진한 바다 모험 동화책 삽화를 그린다.
 3513,mereces,B2,unit_118,es_u118_n1,자격이,[메레세스],Te mereces un descanso reparador junto al mar tras tantas semanas de esfuerzo constante.,그토록 오랜 시간 쉼 없이 땀 흘려왔으니 바닷가에서 꿀맛 같은 휴식을 누릴 충분한 자격이 있다.
 3514,forense,B2,unit_118,es_u118_n1,법의학,[포렌세],El equipo forense analizó las pruebas periciales recogidas en el lugar con rigor científico.,법의학 수사 감식팀은 현장에서 확보한 증거물들을 철저한 과학적 엄밀성에 입각해 분석했다.
@@ -3626,7 +3626,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3625,convertirse,B2,unit_121,es_u121_n3,되다,[콘베르티르세],El aprendizaje diario de vocabulario puede convertirse en un hábito sumamente ameno y gratificante.,매일 조금씩 어휘를 익혀나가는 습관은 지루한 공부가 아닌 참으로 유쾌하고 보람찬 일상이 된다.
 3626,almas,B2,unit_121,es_u121_n3,영혼,[알마스],El concierto de guitarra clásica conmovió las almas de todos los asistentes reunidos en el claustro.,수도원 회랑에 울려 퍼진 클래식 기타의 영롱한 선율은 그곳에 모인 모든 이의 영혼을 울렸다.
 3627,salto,B2,unit_121,es_u121_n3,점프,[살토],El atleta dio un salto prodigioso superando el listón colocado a una altura impresionante.,육상 높이뛰기 선수는 놀라운 탄력으로 몸을 솟구쳐 올려 높은 바를 가뿐하게 뛰어넘었다.
-3628,sonar,B2,unit_121,es_u121_n3,소리,[소나르],El reloj antiguo de la torre empezó a sonar dando las doce campanadas con un eco profundo.,광장 시계탑의 유서 깊은 고시계가 깊은 울림을 내며 정오를 알리는 열두 번의 타종을 울리기 시작했다.
+3628,sonar,B2,unit_121,es_u121_n3,소리나다,[소나르],El reloj antiguo de la torre empezó a sonar dando las doce campanadas con un eco profundo.,광장 시계탑의 유서 깊은 고시계가 깊은 울림을 내며 정오를 알리는 열두 번의 타종을 울리기 시작했다.
 3629,publicidad,B2,unit_122,es_u122_n1,광고,[푸블리시다드],La campaña de publicidad institucional destaca la importancia de preservar los ecosistemas marinos.,지자체의 공익 홍보 캠페인은 연안 해양 생태계를 온전히 보존하는 일의 중요성을 널리 알린다.
 3630,russell,B2,unit_122,es_u122_n1,러셀,[러셀],Russell investiga algoritmos de renderizado gráfico para optimizar la tasa de cuadros por segundo.,러셀은 화면 프레임 레이트를 부드럽게 유지하기 위해 그래픽 렌더링 파이프라인을 튜닝한다.
 3631,temporal,B2,unit_122,es_u122_n1,임시,[템포랄],Habilitaron un desvío temporal bien señalizado mientras duraban las obras de asfaltado de la vía.,도로 포장 정비 공사가 진행되는 동안 안전 표지판이 갖춰진 임시 우회 도로가 개통되었다.
@@ -3779,7 +3779,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3778,ánimo,B2,unit_126,es_u126_n3,격려,[아니모],Mucho ánimo que ya queda muy poco para coronar las cinco mil palabras de este catálogo magistral.,조금만 더 힘을 내자 이 명품 5천 단어 마스터 사전을 정복할 날이 이제 머지않았다!
 3779,viajes,B2,unit_127,es_u127_n1,여행,[비아헤스],Los libros sobre antiguos viajes marinos y descubrimientos geográficos despiertan una gran curiosidad.,옛 해양 항해기와 지리상의 발견을 다룬 고전 기록문학은 가슴 설레는 호기심을 일깨운다.
 3780,lujo,B2,unit_127,es_u127_n1,사치,[루호],Poder pasear frente al mar Mediterráneo en una tarde templada de otoño es un auténtico lujo cotidiano.,포근한 가을날 오후 지중해 백사장을 여유롭게 거닐 수 있다는 것은 실로 값진 일상의 축복이다.
-3781,mia,B2,unit_127,es_u127_n1,내,[미아],Esa libreta encuadernada en tela azul marino con esquinas reforzadas que ves en la balda es mia.,선반 위에 꽂혀 있는 저 모서리가 튼튼한 짙은 남색 패브릭 양장 노트는 내 것이다.
+3781,mia,B2,unit_127,es_u127_n1,내 것,[미아],Esa libreta encuadernada en tela azul marino con esquinas reforzadas que ves en la balda es mia.,선반 위에 꽂혀 있는 저 모서리가 튼튼한 짙은 남색 패브릭 양장 노트는 내 것이다.
 3782,cantando,B2,unit_127,es_u127_n1,노래하는,[칸탄도],El mirlo negro pasaba la tarde cantando alegremente posado en la copa del gran olivo del jardín.,정원의 커다란 올리브나무 꼭대기 가지에 앉은 검은 지빠귀가 오후 내내 청아하게 울고 있었다.
 3783,religión,B2,unit_127,es_u127_n1,종교,[레리히온],El museo provincial expone tallas góticas y relicarios dorados de gran valor para la historia de la religión.,도립 박물관은 종교사의 흐름을 생생히 증언하는 귀중한 중세 고딕 목조 성물들을 전시한다.
 3784,nate,B2,unit_127,es_u127_n1,네이트,[나테],Nate ajusta la ecualización y los niveles de audio en la mesa de mezclas del estudio de sonido.,네이트는 음향 녹음실의 믹싱 콘솔에서 주파수 이퀄라이저와 음량 밸런스를 세밀히 맞춘다.
@@ -3830,7 +3830,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3829,vince,B2,unit_128,es_u128_n3,빈스,[빈세],Vince repara bicicletas de carretera ajustando los cambios y la tensión de los radios con precisión.,빈스는 스포크 휠 장력과 변속기 유격을 정밀하게 조율하며 로드 자전거를 수리한다.
 3830,prohibido,B2,unit_128,es_u128_n3,금지된,[프로이비도],Está terminantemente prohibido encender fuego en toda la zona protegida del pinar costero.,해안 소나무 생태 보존 구역 전역에서는 취사나 모닥불을 피우는 행위가 일체 엄격히 금지된다.
 3831,caray,B2,unit_128,es_u128_n3,젠장,[카라이],¡Caray qué rápido pasa el tiempo cuando uno se concentra en un trabajo apasionante y bien planificado!,흥미진진하고 체계적인 작업에 푹 빠져 몰입하다 보면 어쩌면 이렇게 시간이 쏜살같이 지나가는지!
-3832,arruinar,B2,unit_128,es_u128_n3,파멸,[아루이나르],Un formato descuidado con comas fuera de sitio puede arruinar la correcta lectura de una tabla CSV.,제자리를 벗어난 쉼표 기호 하나가 CSV 표의 정상적인 데이터 파싱 구조를 망가뜨릴 수 있다.
+3832,arruinar,B2,unit_128,es_u128_n3,망치다,[아루이나르],Un formato descuidado con comas fuera de sitio puede arruinar la correcta lectura de una tabla CSV.,제자리를 벗어난 쉼표 기호 하나가 CSV 표의 정상적인 데이터 파싱 구조를 망가뜨릴 수 있다.
 3833,masa,B2,unit_128,es_u128_n3,반죽,[마사],Dejó reposar la masa de pan artesanal sobre la encimera para que fermentara de forma natural.,수제 빵 반죽이 속까지 포근하게 부풀어 오를 수 있도록 조리대 위에 두고 자연 발효시켰다.
 3834,existencia,B2,unit_128,es_u128_n3,존재,[에스이스텐시아],El hallazgo de cerámicas antiguas confirmó la existencia de un asentamiento romano en la bahía.,고대 도자기 파편이 출토됨으로써 이 바다 만에 로마 시대 정착지가 실재했음이 입증되었다.
 3835,túnel,B2,unit_128,es_u128_n3,터널,[투넬],El tren de cercanías atravesó el largo túnel excavado bajo la montaña antes de llegar a la costa.,근교선 열차는 해안가에 닿기 직전 산악 지대 지하를 관통하는 긴 터널을 시원하게 빠져나왔다.
@@ -3933,7 +3933,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 3932,habrían,B2,unit_132,es_u132_n1,그랬을 것이다,[아브리안],Si hubieran consultado el mapa topográfico los senderistas no se habrían desorientado en el cruce.,지형도 지침을 확인했더라면 등산객들이 숲속 갈림길에서 길을 잃고 헤매지 않았을 텐데.
 3933,ponerle,B2,unit_132,es_u132_n1,넣어,[포네르레],Conviene ponerle una tapa hermética al frasco de cristal para que las especias no pierdan su aroma fresco.,허브 향신료의 그윽한 향이 날아가지 않도록 유리병에 밀폐 뚜껑을 꼭 닫아두는 것이 좋다.
 3934,empiece,B2,unit_132,es_u132_n1,시작,[엠피에세],Esperen a que el árbitro pite para que empiece el partido de fútbol sala en la pista deportiva.,코트 위에서 풋살 경기가 킥오프를 알릴 수 있도록 심판의 경기 시작 휘슬을 기다려라.
-3935,devolver,B2,unit_132,es_u132_n1,반환,[데볼베르],Voy a la biblioteca municipal para devolver los volúmenes prestados antes de que venza el plazo oficial.,대출 기한이 마감되기 전에 빌렸던 학술 도서들을 반납하러 시립 공공도서관에 다녀올 것이다.
+3935,devolver,B2,unit_132,es_u132_n1,반납하다,[데볼베르],Voy a la biblioteca municipal para devolver los volúmenes prestados antes de que venza el plazo oficial.,대출 기한이 마감되기 전에 빌렸던 학술 도서들을 반납하러 시립 공공도서관에 다녀올 것이다.
 3936,propuesta,B2,unit_132,es_u132_n1,제안,[프로푸에스타],La junta directiva aprobó por unanimidad la propuesta de actualizar toda la infraestructura de servidores.,이사진은 서버 인프라 전면 업그레이드 현대화 사업 기획안을 만장일치로 공식 승인했다.
 3937,tómalo,B2,unit_132,es_u132_n1,가져가,[토마로],Tómalo con serenidad y descansa un rato que el esfuerzo metódico de hoy ha dado un fruto extraordinario.,오늘 하루 체계적으로 쏟아부은 노력이 대단한 결실을 맺었으니 마음 편히 차분하게 쉬어라.
 3938,michelle,B2,unit_132,es_u132_n1,미셸,[미체예],Michelle ilustra guías de campo sobre aves litorales con dibujos al pastel de gran delicadeza cromática.,미셸은 섬세한 색채 감각의 파스텔화로 연안 서식 조류 야외 생태 도감을 그려낸다.
@@ -4070,13 +4070,13 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4069,refería,B2,unit_136,es_u136_n3,추천됨,[레페리아],El autor se refería al valor de la práctica contextualizada cuando hablaba del dominio del idioma.,작가는 언어를 유창하게 마스터하는 비결을 논할 때 실제 문맥 속 실전 훈련의 가치를 강조했다.
 4070,notado,B2,unit_136,es_u136_n3,눈치채다,[노타도],Los estudiantes han notado un avance extraordinario en su soltura oral gracias a las lecturas en voz alta.,매일 소리 내어 문장을 읽는 연습 덕분에 학생들은 입이 트이는 눈부신 실력 향상을 체감했다.
 4071,maquillaje,B2,unit_136,es_u136_n3,메이크업,[마끼야헤],Los actores del teatro clásico se aplicaron el maquillaje escénico antes de salir a la función.,고전극 배우들은 정기 공연 무대에 오르기 전 분장실에서 무대용 메이크업 분장을 마쳤다.
-4072,lanzar,B2,unit_136,es_u136_n3,던져,[란사르],El equipo de desarrollo va a lanzar la nueva versión de la aplicación tras concluir las pruebas.,개발팀은 최종 베타 테스트를 성공적으로 마무리한 후 앱의 최신 메이저 버전을 출시할 예정이다.
+4072,lanzar,B2,unit_136,es_u136_n3,출시하다,[란사르],El equipo de desarrollo va a lanzar la nueva versión de la aplicación tras concluir las pruebas.,개발팀은 최종 베타 테스트를 성공적으로 마무리한 후 앱의 최신 메이저 버전을 출시할 예정이다.
 4073,cadáveres,B2,unit_136,es_u136_n3,시체,[카다베레스],El documental histórico mostraba cómo los arqueólogos recuperaron los restos de soldados caídos en batalla.,역사 다큐멘터리는 고고학 발굴단이 전사자들의 유해를 엄숙히 수습하는 과정을 조명했다.
 4074,atacó,B2,unit_136,es_u136_n3,공격을 받았다,[아타코],El equipo juvenil atacó por ambas bandas con una velocidad vertiginosa que desbordó a la defensa rival.,유소년 축구단은 번개 같은 측면 날개 공격을 퍼부으며 상대 수비 진영을 완전히 무너뜨렸다.
 4075,vendiendo,B2,unit_136,es_u136_n3,판매,[벤디엔도],La panadería tradicional sigue vendiendo hogazas de pan de masa madre horneadas en horno de leña.,동네 전통 빵집은 참나무 화덕에서 손수 구워낸 겉바속촉 수제 식빵을 변함없이 판매하고 있다.
 4076,bailando,B2,unit_136,es_u136_n3,댄스,[바이란도],Los vecinos celebraron la llegada de la primavera bailando jotas tradicionales en la plaza mayor.,마을 주민들은 중앙 광장에 모여 흥겨운 전통 호타 춤을 추며 봄의 시작을 성대히 자축했다.
 4077,tenerte,B2,unit_136,es_u136_n3,있나요?,[테네르테],Es un auténtico privilegio tenerte como colaborador en este ambicioso proyecto de catalogación de datos.,이 방대한 어휘 사전 편찬 프로젝트에 너처럼 든든한 파트너와 함께할 수 있어 참으로 큰 행운이다.
-4078,cubrir,B2,unit_136,es_u136_n3,커버,[쿠브리르],Conviene cubrir las plantas más delicadas del balcón con una lona térmica para protegerlas de la escarcha.,서리 피해를 막기 위해 발코니의 여린 화초들을 보온 덮개로 꼭 감싸주는 것이 바람직하다.
+4078,cubrir,B2,unit_136,es_u136_n3,덮다,[쿠브리르],Conviene cubrir las plantas más delicadas del balcón con una lona térmica para protegerlas de la escarcha.,서리 피해를 막기 위해 발코니의 여린 화초들을 보온 덮개로 꼭 감싸주는 것이 바람직하다.
 4079,liz,B2,unit_137,es_u137_n1,리즈,[리스],Liz compone piezas de música de cámara para cuarteto de cuerda con armonías de gran sobriedad.,리즈는 군더더기 없는 담백하고 우아한 화성의 현악 4중주 클래식 소품을 작곡한다.
 4080,policial,B2,unit_137,es_u137_n1,경찰,[포리시알],La rápida intervención policial disuadió a los ladrones que intentaban forzar la puerta del almacén.,경찰 순찰대의 신속한 현장 출동 덕분에 창고 문을 따고 침입하려던 도둑들을 바로 쫓아냈다.
 4081,fase,B2,unit_137,es_u137_n1,단계,[파세],Hemos entrado en la última fase de validación técnica de los registros de palabras de este nivel.,우리는 마침내 이 학습 구간의 어휘 데이터를 최종 검증하는 마지막 개발 단계에 진입했다.
@@ -4119,9 +4119,9 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4118,mago,B2,unit_138,es_u138_n1,마술사,[마고],El ilusionista actuó como un auténtico mago sorprendiendo a toda la sala con trucos de cartas.,그 마술사는 현란한 카드 묘기를 연이어 성공시키며 객석의 모든 관객을 깜짝 놀라게 했다.
 4119,hojas,B2,unit_138,es_u138_n2,나뭇잎,[오하스],El viento suave de otoño desprendía las hojas secas de los plátanos del paseo marítimo.,선선한 가을바람이 해안 산책로 가로수 플라타너스의 마른 낙엽들을 한 잎 두 잎 흩날렸다.
 4120,conocerla,B2,unit_138,es_u138_n2,그녀를 만나다,[코노세르라],Fue una satisfacción inmensa conocerla en persona y charlar sobre sus métodos de investigación léxica.,그녀를 직접 만나 어휘 연구 방법론에 관한 깊이 있는 담소를 나눌 수 있어서 참으로 뜻깊었다.
-4121,hallar,B2,unit_138,es_u138_n2,찾기,[아야르],Con paciencia perseverante y buen método estructurado se logra hallar la solución a cualquier enigma.,원리를 짚어가는 끈기 있는 탐구심만 있다면 그 어떤 복잡한 수수께끼도 해답을 찾아낼 수 있다.
+4121,hallar,B2,unit_138,es_u138_n2,발견하다,[아야르],Con paciencia perseverante y buen método estructurado se logra hallar la solución a cualquier enigma.,원리를 짚어가는 끈기 있는 탐구심만 있다면 그 어떤 복잡한 수수께끼도 해답을 찾아낼 수 있다.
 4122,mantequilla,B2,unit_138,es_u138_n2,버터,[만테끼야],Untó una capa fina de mantequilla artesanal sobre la rebanada de pan caliente recién tostado.,바삭하게 갓 구워낸 따끈따끈한 식빵 토스트 위에 고소한 수제 버터를 얇게 펴 발랐다.
-4123,lidiar,B2,unit_138,es_u138_n2,거래,[리디아르],El capitán del barco supo lidiar con las corrientes adversas manteniendo la embarcación en rumbo fijo.,선박 지휘관은 거친 역조류의 저항을 능숙하게 다스리며 배를 정해진 항로로 똑바로 몰았다.
+4123,lidiar,B2,unit_138,es_u138_n2,다스리다,[리디아르],El capitán del barco supo lidiar con las corrientes adversas manteniendo la embarcación en rumbo fijo.,선박 지휘관은 거친 역조류의 저항을 능숙하게 다스리며 배를 정해진 항로로 똑바로 몰았다.
 4124,sentencia,B2,unit_138,es_u138_n2,문장,[센텐시아],El tribunal provincial dictaminó una sentencia firme y justa que sentó un precedente ejemplar.,도 지방법원 재판부는 법조계에 귀감이 될 만한 공명정대하고 확고한 판결을 선고했다.
 4125,ideal,B2,unit_138,es_u138_n2,이상적인,[이데알],Esta terraza sombreada frente al puerto es el rincón ideal para leer un buen libro al atardecer.,항구가 한눈에 내다보이는 이 그늘진 노천 테라스는 해질녘 독서를 즐기기에 더없이 이상적인 명당이다.
 4126,dámelo,B2,unit_138,es_u138_n2,나에게 줘,[다메로],Pásame ese cuaderno de notas encuadernado en tela y dámelo para que apunte las últimas métricas.,수치 데이터를 메모할 수 있도록 테이블 위에 놓인 패브릭 양장 수첩을 이쪽으로 건네다오.
@@ -4132,7 +4132,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4131,ayudo,B2,unit_138,es_u138_n3,도와준다,[아유도],Siempre ayudo a mis compañeros de equipo a revisar los scripts de Python para eliminar errores de sintaxis.,구문 에러를 깨끗이 털어낼 수 있도록 동료들의 파이썬 스크립트 디버깅을 언제나 기꺼이 거든다.
 4132,sigamos,B2,unit_138,es_u138_n3,계속하자,[시가모스],Sigamos trabajando con esta misma constancia rigurosa hasta coronar con éxito las cinco mil palabras.,5천 단어 전체의 마스터 데이터를 성공리에 완주할 때까지 지금의 꼼꼼한 텐션을 그대로 이어가자.
 4133,jennifer,B2,unit_138,es_u138_n3,제니퍼,[헨니페르],Jennifer programa algoritmos de optimización de imágenes vectoriales para entornos interactivos web.,제니퍼는 웹 인터랙티브 환경에 맞춰 벡터 그래픽 렌더링을 최적화하는 알고리즘을 짠다.
-4134,engañar,B2,unit_138,es_u138_n3,속임수,[엔가냐르],En el trabajo técnico riguroso no cabe engañar a nadie porque los datos demuestran la verdad de forma objetiva.,객관적인 데이터 수치가 명명백백히 진실을 보여주므로 기술 엔지니어링에는 결코 속임수가 통하지 않는다.
+4134,engañar,B2,unit_138,es_u138_n3,속이다,[엔가냐르],En el trabajo técnico riguroso no cabe engañar a nadie porque los datos demuestran la verdad de forma objetiva.,객관적인 데이터 수치가 명명백백히 진실을 보여주므로 기술 엔지니어링에는 결코 속임수가 통하지 않는다.
 4135,baje,B2,unit_138,es_u138_n3,내리다,[바헤],Tenga precaución y baje despacio por los peldaños de piedra húmeda del mirador de la torre.,전망대 탑의 축축한 돌계단에 미끄러지지 않도록 발을 헛디디지 말고 천천히 내려오십시오.
 4136,contaré,B2,unit_138,es_u138_n3,말할 것이다,[콘타레],En cuanto nos veamos en la terraza del café te contaré con detalle cómo resolvimos el dilema técnico.,카페 테라스에서 만나는 대로 그 복잡했던 기술 난제를 어떻게 명쾌히 풀어냈는지 자세히 들려주겠다.
 4137,guantes,B2,unit_138,es_u138_n3,장갑,[구안테스],Ponte guantes gruesos de cuero antes de manipular las cajas de herramientas pesadas del taller.,작업실의 무거운 공구 상자들을 운반하기 전에 손을 다치지 않도록 두툼한 가죽 장갑을 껴라.
@@ -4165,7 +4165,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4164,técnicamente,B2,unit_139,es_u139_n3,기술적으로,[테크니카멘테],El fichero maestro está técnicamente impecable y listo para integrarse en la base de datos de producción.,마스터 사전 파일은 기술적으로 티 없이 완벽하여 운영 서버 데이터베이스에 즉시 반영할 수 있다.
 4165,dejara,B2,unit_139,es_u139_n3,떠날 것이다,[데하라],Sería un gran alivio que el temporal amainara y dejara una tarde apacible y soleada junto al mar.,성난 비바람이 잦아들고 바닷가에 온화하고 화창한 오후 햇살이 다시 드리운다면 참으로 다행일 텐데.
 4166,medias,B2,unit_139,es_u139_n3,스타킹,[메디아스],No hagas las cosas a medias y completa la revisión de cada registro con la máxima atención al detalle.,어떤 일이든 어설프게 반쯤 하다가 말지 말고 끝까지 디테일에 집중해 완벽하게 매듭지어라.
-4167,míralo,B2,unit_139,es_u139_n3,봐,[미라로],Míralo con detenimiento en la pantalla de alta resolución y comprueba cómo el diseño respira orden y limpieza.,고해상도 화면으로 유심히 살펴보아라 화면 레이아웃이 어찌나 정갈하고 깔끔하게 떨어지는지.
+4167,míralo,B2,unit_139,es_u139_n3,살펴보아라,[미라로],Míralo con detenimiento en la pantalla de alta resolución y comprueba cómo el diseño respira orden y limpieza.,고해상도 화면으로 유심히 살펴보아라 화면 레이아웃이 어찌나 정갈하고 깔끔하게 떨어지는지.
 4168,físico,B2,unit_139,es_u139_n3,물리적,[피시코],El ejercicio físico moderado y el descanso reparador son los dos pilares de una vida equilibrada.,무리 없는 규칙적인 유산소 운동과 질 좋은 수면은 건강하고 균형 잡힌 삶을 지탱하는 두 기둥이다.
 4169,hacerla,B2,unit_140,es_u140_n1,해라,[아세르라],Si tenemos la receta casera tradicional de la abuela será sumamente fácil y agradable hacerla hoy.,할머니의 전통 수제 비법 레시피가 있으니 오늘 그 요리를 만들어보는 것은 무척 쉽고 즐거울 것이다.
 4170,multitud,B2,unit_140,es_u140_n1,군중,[물티투드],Una multitud entusiasta de vecinos y visitantes llenó la plaza mayor durante las fiestas patronales.,마을 수호성인 축제를 맞아 광장 가득 모여든 수많은 주민과 관광객들이 거리를 가득 메웠다.
@@ -4190,20 +4190,20 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4189,dennis,B2,unit_140,es_u140_n3,데니스,[덴니스],Dennis calibra los motores de su telescopio astronómico para seguir la trayectoria de los planetas.,데니스는 행성의 밤하늘 궤적을 오차 없이 추적하기 위해 천체망원경 구동 모터를 정밀 조율한다.
 4190,demasiados,B2,unit_140,es_u140_n3,너무 많다,[데마시아도스],No conviene cargar el diseño con demasiados elementos visuales superfluos que distraigan la atención.,사용자의 주의를 흐트러뜨리는 불필요한 장식 그래픽 요소를 화면에 너무 어지럽게 배치하지 마라.
 4191,éstas,B2,unit_140,es_u140_n3,이것들,[에스타스],Éstas son las oraciones limpias y contextualizadas que garantizan la solidez del corpus de datos.,이 완성형 예문들이야말로 어휘 마스터 데이터의 무결성과 완성도를 뒷받침하는 든든한 초석이다.
-4192,interrumpir,B2,unit_140,es_u140_n3,인터럽트,[인테룸피르],Por favor guarden silencio para no interrumpir la concentración de los alumnos en la sala de lectura.,열람실에서 공부에 몰입하고 있는 학생들의 집중을 방해하지 않도록 정숙을 지켜주십시오.
+4192,interrumpir,B2,unit_140,es_u140_n3,방해하다,[인테룸피르],Por favor guarden silencio para no interrumpir la concentración de los alumnos en la sala de lectura.,열람실에서 공부에 몰입하고 있는 학생들의 집중을 방해하지 않도록 정숙을 지켜주십시오.
 4193,representa,B2,unit_140,es_u140_n3,나타냅니다,[레프레센타],Cada término normalizado representa un paso firme y medible hacia la meta de las cinco mil palabras.,규격에 맞추어 검수된 단어 하나하나는 5천 단어 완전 정복을 향해 내딛는 확실한 한 걸음이다.
 4194,socios,B2,unit_140,es_u140_n3,파트너,[소시오스],Los socios fundadores de la agencia de diseño acordaron ampliar el equipo con dos nuevos ingenieros.,디자인 에이전시 공동 창립 파트너들은 실력파 개발자 두 명을 새로 영입하기로 뜻을 모았다.
 4195,pecados,B2,unit_140,es_u140_n3,죄,[페카도스],En el trabajo de catalogación meter comas dentro de los textos es uno de los mayores pecados técnicos.,CSV 데이터 정제 작업에서 문장 안에 쉼표를 집어넣는 것은 가장 치명적인 기술적 금기이다.
 4196,novela,B2,unit_140,es_u140_n3,소설,[노베라],Pasé la tarde leyendo una cautivadora novela histórica ambientada en las villas marineras del siglo pasado.,지난 세기 바닷가 포구 마을들을 배경으로 펼쳐지는 매혹적인 역사 소설을 읽으며 오후를 보냈다.
 4197,herramientas,B2,unit_140,es_u140_n3,도구,[에라미엔타스],El artesano ebanista guarda sus herramientas de corte afiladas en un panel de madera organizado con mimo.,가구 장인은 날이 바짝 선 목공 조각 도구들을 정갈하게 구획된 원목 거치대에 소중히 보관한다.
 4198,desaparece,B2,unit_140,es_u140_n3,사라지다,[데사파레세],La niebla matinal que cubría la bahía desaparece por completo al levantarse el sol en el horizonte.,수평선 위로 아침 해가 솟아오르자 바다 만을 덮고 있던 짙은 해무 바다안개가 순식간에 걷혀 사라진다.
-4199,apostar,B2,unit_141,es_u141_n1,내기,[아포스타르],Apostar por una formación lingüística rigurosa y constante es la mejor inversión de futuro personal.,철저하고 꾸준한 어학 학습에 시간과 열정을 투자하는 것은 스스로를 위한 가장 값진 미래 투자다.
+4199,apostar,B2,unit_141,es_u141_n1,내기하다,[아포스타르],Apostar por una formación lingüística rigurosa y constante es la mejor inversión de futuro personal.,철저하고 꾸준한 어학 학습에 시간과 열정을 투자하는 것은 스스로를 위한 가장 값진 미래 투자다.
 4200,septiembre,B2,unit_141,es_u141_n1,9월,[세프티엠브레],En el mes de septiembre las playas recuperan una calma sosegada ideal para pasear al atardecer.,구월이 찾아오면 북적이던 해변은 고요를 되찾아 해 질 녘 호젓하게 산책을 즐기기에 참 좋다.
 4201,vestidos,B2,unit_141,es_u141_n1,드레스,[베스티도스],La sastrería tradicional confecciona vestidos veraniegos de lino blanco con acabados muy cuidados.,맞춤 양장점은 꼼꼼한 바느질 마감으로 시원하고 단정한 순백 린넨 여름 원피스를 짓는다.
 4202,festival,B2,unit_141,es_u141_n1,축제,[페스티발],El festival de música sinfónica reunió a orquestas de prestigio en el auditorio municipal al aire libre.,교향악 음악 축제는 시립 야외 음악당에서 명망 높은 오케스트라들을 초청해 화려한 막을 올렸다.
 4203,franceses,B2,unit_141,es_u141_n1,프랑스어,[프란세세스],Varios turistas franceses admiraban la arquitectura gótica de la basílica histórica del casco antiguo.,프랑스인 관광객 몇몇이 구도심 유서 깊은 성당의 아름다운 고딕 건축 양식을 올려다보며 감탄했다.
 4204,queria,B2,unit_141,es_u141_n1,원했다,[께리아],El profesor queria asegurarse de que todos los alumnos comprendieran la diferencia entre ambos pasados.,선생님은 모든 학생이 두 과거 시제의 뉘앙스 차이를 명확히 체득했는지 거듭 확인하고 싶어 하셨다.
-4205,gustar,B2,unit_141,es_u141_n1,같은,[구스타르],Este método de aprendizaje mediante oraciones cotidianas te va a gustar por su enorme eficacia real.,실생활 통문장으로 어휘를 익혀나가는 이 학습법은 실전 회화에 즉각 도움이 되어 마음에 쏙 들 것이다.
+4205,gustar,B2,unit_141,es_u141_n1,좋아하다,[구스타르],Este método de aprendizaje mediante oraciones cotidianas te va a gustar por su enorme eficacia real.,실생활 통문장으로 어휘를 익혀나가는 이 학습법은 실전 회화에 즉각 도움이 되어 마음에 쏙 들 것이다.
 4206,auxilio,B2,unit_141,es_u141_n1,도움,[아우스이리오],Los socorristas de guardia acudieron en auxilio del nadador con una lancha motora de rescate rápido.,대기 중이던 해안 구조요원들은 쾌속 구조정을 띄워 조류에 휩쓸린 수영객을 신속히 구조했다.
 4207,éstos,B2,unit_141,es_u141_n1,이것들,[에스토스],Éstos son los ejemplos verificados que garantizan que el archivo CSV no sufra ningún desplazamiento de celda.,이 엄선된 예문 데이터들이야말로 CSV 파일의 셀 밀림 현상을 완벽히 차단하는 든든한 안전장치다.
 4208,fracaso,B2,unit_141,es_u141_n1,실패,[프라카소],El único fracaso real en el estudio es rendirse antes de tiempo por falta de constancia metodológica.,배움에 있어 유일한 진짜 실패는 원칙을 놓아버린 채 조급한 마음에 중도 포기하는 것뿐이다.
@@ -4213,7 +4213,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4212,empezaron,B2,unit_141,es_u141_n2,시작했다,[엠페사론],Los trabajos de restauración del antiguo muelle pesquero empezaron puntuales a primera hora de la mañana.,포구의 낡은 어선 부두를 현대화하는 리모델링 공사가 아침 일찍 정시에 맞추어 시작되었다.
 4213,spencer,B2,unit_141,es_u141_n2,스펜서,[스펜세르],Spencer diseña maquetas de barcos de vela tradicionales tallando las cuadernas con formones finos.,스펜서는 미세한 조각도로 선체 늑골을 깎아내며 전통 목조 돛단배의 정밀 축소 모형을 제작한다.
 4214,fíjate,B2,unit_141,es_u141_n2,공지,[피하테],Fíjate bien en la concordancia de género y número al redactar las frases para que no haya desajustes.,문법적 불일치가 생기지 않도록 문장을 지을 때 명사와 형용사의 성수 일치를 꼼꼼히 살펴라.
-4215,votar,B2,unit_141,es_u141_n2,투표,[보타르],Los ciudadanos acudieron a los colegios electorales para votar en la consulta sobre el nuevo parque comarcal.,주민들은 지역 생태 공원 조성안에 대한 주민 찬반 투표에 참여하기 위해 투표소를 찾았다.
+4215,votar,B2,unit_141,es_u141_n2,투표하다,[보타르],Los ciudadanos acudieron a los colegios electorales para votar en la consulta sobre el nuevo parque comarcal.,주민들은 지역 생태 공원 조성안에 대한 주민 찬반 투표에 참여하기 위해 투표소를 찾았다.
 4216,merezco,B2,unit_141,es_u141_n2,그럴 자격이 있다,[메레스코],Tras tantas semanas de trabajo metódico merezco tomarme una tarde libre y pasear frente al mar sereno.,수주 동안 쉼 없이 땀 흘려왔으니 잔잔한 바다를 마주하고 오후 한나절 푹 쉴 자격이 내게 있다.
 4217,infantil,B2,unit_141,es_u141_n2,유치한,[인판틸],La biblioteca municipal inauguró una sala de lectura infantil con muebles ergonómicos y cuentos clásicos.,시립 도서관은 유아용 인체공학 가구와 고전 동화책을 갖춘 쾌적한 어린이 전용 열람실을 개관했다.
 4218,estacionamiento,B2,unit_141,es_u141_n2,주차,[에스타시오나미엔토],El ayuntamiento habilitó un área de estacionamiento sombreada para los usuarios del paseo marítimo.,시청은 바닷가 산책로를 이용하는 시민들을 위해 나무 그늘이 드리운 환승 주차장을 마련했다.
@@ -4221,7 +4221,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4220,sentarte,B2,unit_141,es_u141_n3,앉다,[센타르테],Puedes sentarte en este banco de madera a la sombra mientras terminamos de cargar el equipaje ligero.,짐을 차에 다 실을 동안 시원한 나무 그늘 아래 놓인 이 벤치에 편안히 앉아 기다려도 좋다.
 4221,mintió,B2,unit_141,es_u141_n3,거짓말을 했다,[민티오],El sospechoso mintió descaradamente sobre su paradero pero los registros de las cámaras lo delataron.,용의자는 알리바이에 대해 뻔뻔하게 거짓말을 늘어놓았으나 CCTV 녹화 영상에 덜미가 잡혔다.
 4222,grita,B2,unit_141,es_u141_n3,비명,[그리타],El público del polideportivo grita entusiasmado animando al equipo juvenil en la final del campeonato.,체육관 관람석의 관중들은 결승전에 임한 청소년 팀을 향해 뜨거운 응원의 함성을 내지른다.
-4223,ofrecer,B2,unit_141,es_u141_n3,제안,[오프레세르],El restaurante tradicional suele ofrecer un plato del día con pescado de roca recién desembarcado de la lonja.,그 전통 식당은 당일 위판장에서 직송된 싱싱한 바위 생선으로 끓여낸 오늘의 특선 메뉴를 선보인다.
+4223,ofrecer,B2,unit_141,es_u141_n3,제공하다,[오프레세르],El restaurante tradicional suele ofrecer un plato del día con pescado de roca recién desembarcado de la lonja.,그 전통 식당은 당일 위판장에서 직송된 싱싱한 바위 생선으로 끓여낸 오늘의 특선 메뉴를 선보인다.
 4224,ruth,B2,unit_141,es_u141_n3,루스,[루스],Ruth restaura alfombras antiguas de pura lana hilando hebras teñidas con pigmentos vegetales naturales.,루스는 천연 식물성 염료로 물들인 실을 잣아가며 유서 깊은 순모 수제 카펫을 복원한다.
 4225,esclavos,B2,unit_141,es_u141_n3,노예,[에스클라보스],El museo histórico documenta la lucha emancipadora que abolió el tráfico de esclavos en el siglo diecinueve.,역사 박물관은 19세기 노예 무역이라는 반인륜적 악습을 철폐하기 위해 싸웠던 해방 투쟁사를 전시한다.
 4226,academia,B2,unit_141,es_u141_n3,아카데미,[아카데미아],La prestigiosa academia de idiomas ofrece cursos intensivos de inmersión lingüística muy estructurados.,그 명문 어학원은 체계적인 커리큘럼을 갖춘 단기 몰입형 실전 스페인어 집중 강좌를 운영한다.
@@ -4261,10 +4261,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4260,patético,B2,unit_143,es_u143_n1,한심한,[파테티코],Intentar culpar a los demás de los propios errores metodológicos resulta una excusa de tono patético.,자신의 작업 미숙과 실수를 남의 탓으로 돌리려는 태도는 참으로 구차하고 한심한 변명일 뿐이다.
 4261,abril,B2,unit_143,es_u143_n1,4월,[아브릴],En el mes de abril los valles costeros se llenan de flores silvestres y los campos lucen un verde intenso.,사월이 찾아오면 해안 골짜기는 온통 야생화로 뒤덮이고 들판은 싱그러운 초록빛으로 물든다.
 4262,matemáticas,B2,unit_143,es_u143_n1,수학,[마테마티카스],La profesora de matemáticas explicaba las fórmulas de cálculo diferencial con gráficos vectoriales muy claros.,수학 선생님은 선명한 벡터 시각화 그래프를 활용해 미적분 계산 공식을 일목요연하게 풀어주셨다.
-4263,eliminar,B2,unit_143,es_u143_n1,삭제,[에리미나르],El script automatizado permite eliminar cualquier espacio sobrante y normalizar el texto de las celdas.,자동화 스크립트는 불필요한 공백을 말끔히 지우고 셀 텍스트를 표준 규격으로 일괄 가공해 준다.
+4263,eliminar,B2,unit_143,es_u143_n1,삭제하다,[에리미나르],El script automatizado permite eliminar cualquier espacio sobrante y normalizar el texto de las celdas.,자동화 스크립트는 불필요한 공백을 말끔히 지우고 셀 텍스트를 표준 규격으로 일괄 가공해 준다.
 4264,venid,B2,unit_143,es_u143_n1,오다,[베니드],Venid a tomar un café aromático a la terraza del puerto antes de que se oculte el sol en el horizonte.,수평선 너머로 해가 저물기 전에 항구 노천 카페 테라스로 건너와 향긋한 커피 한잔들 나누자.
 4265,hicieras,B2,unit_143,es_u143_n1,할 것이다,[이시에라스],Me alegraría mucho que hicieras una pausa en el trabajo para almorzar juntos en este mesón marinero.,이 해변 식당에서 함께 밥을 먹으며 머리를 식힐 수 있도록 네가 잠시 짬을 내어준다면 참 좋겠다.
-4266,causar,B2,unit_143,es_u143_n1,원인,[카우사르],Meter caracteres no deseados en la tabla puede causar un fallo crítico en la base de datos de producción.,데이터 표 안에 불량 문자를 섞어 넣는 것은 운영 서버 데이터베이스에 치명적인 장애를 유발할 수 있다.
+4266,causar,B2,unit_143,es_u143_n1,일으키다,[카우사르],Meter caracteres no deseados en la tabla puede causar un fallo crítico en la base de datos de producción.,데이터 표 안에 불량 문자를 섞어 넣는 것은 운영 서버 데이터베이스에 치명적인 장애를 유발할 수 있다.
 4267,demasiadas,B2,unit_143,es_u143_n1,너무 많다,[데마시아다스],No añadas demasiadas especias fuertes a la sopa que el pescado de roca ya aporta su sabor natural.,바위 생선 자체에서 깊은 천연 감칠맛이 우러나오니 국물에 자극적인 양념을 너무 많이 치지 마라.
 4268,vigilando,B2,unit_143,es_u143_n1,보고있다,[비히란도],La patrulla de vigilancia costera sigue vigilando las calas protegidas para prevenir la pesca ilegal.,해안 순찰 경비대는 불법 어로 행위를 차단하기 위해 해양 생태 보호구역 만을 상시 감시하고 있다.
 4269,función,B2,unit_143,es_u143_n2,기능,[푼시온],La función de autocompletado del buscador permite localizar cualquier término léxico en milisegundos.,검색 엔진의 자동완성 기능 덕분에 찾고자 하는 어휘를 단 몇 밀리초 만에 즉각 찾아낼 수 있다.
@@ -4291,7 +4291,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4290,champán,B2,unit_144,es_u144_n1,샴페인,[참판],Brindamos con una copa fría de champán francés en la terraza para celebrar el éxito del proyecto.,프로젝트의 눈부신 결실을 자축하기 위해 시원한 프랑스산 샴페인 한 잔으로 테라스에서 건배했다.
 4291,quedaba,B2,unit_144,es_u144_n1,남아있다,[께다바],Solo quedaba un pequeño tramo de costa por recorrer antes de alcanzar el faro antiguo del cabo.,외딴 곶의 옛 등대에 다다르기까지 이제 눈앞에 아주 짧은 해안 산책로 구간만 남아 있었다.
 4292,viera,B2,unit_144,es_u144_n1,보다,[비에라],Sería magnífico que todo el equipo técnico viera el resultado de este esfuerzo constante y riguroso.,이 끈기 있고 빈틈없는 정성으로 완성된 결과물을 개발팀 전원이 함께 확인할 수 있다면 참 좋을 텐데.
-4293,formar,B2,unit_144,es_u144_n1,형태,[포르마르],Los estudiantes se organizaron para formar pequeños grupos de debate lingüístico en la biblioteca.,학생들은 도서관에 모여 스페인어 회화 토론을 진행하기 위해 소규모 스터디 그룹을 결성했다.
+4293,formar,B2,unit_144,es_u144_n1,형성하다,[포르마르],Los estudiantes se organizaron para formar pequeños grupos de debate lingüístico en la biblioteca.,학생들은 도서관에 모여 스페인어 회화 토론을 진행하기 위해 소규모 스터디 그룹을 결성했다.
 4294,walker,B2,unit_144,es_u144_n1,워커,[워커],El profesor Walker imparte seminarios avanzados sobre la historia del derecho marítimo mediterráneo.,워커 교수님은 대학원 강단에서 지중해 해양법 및 해상 무역 규범사를 주제로 심화 세미나를 이끄신다.
 4295,detectives,B2,unit_144,es_u144_n1,형사,[데테크티베스],Los experimentados detectives analizaron las pistas recogidas en el lugar con rigor forense avanzado.,베테랑 형사들은 현장에서 수습된 단서들을 첨단 과학수사 기법을 총동원해 면밀히 분석했다.
 4296,entenderlo,B2,unit_144,es_u144_n1,이해해,[엔텐데르로],El método de asociar cada palabra con un ejemplo de la vida real ayuda a entenderlo a la primera.,각 단어를 실제 생활 속 생생한 맥락 예문과 연결해 익히면 누구나 단번에 쉽게 이해할 수 있다.
@@ -4367,11 +4367,11 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4366,dispuesta,B2,unit_146,es_u146_n2,기꺼이,[디스푸에스타],Ella estuvo siempre dispuesta a compartir sus conocimientos de programación con los aprendices.,그녀는 후배 수습 개발자들에게 자신의 기술 노하우를 기꺼이 공유하는 열린 자세를 보였다.
 4367,necesitaré,B2,unit_146,es_u146_n2,필요할 것이다,[네세시타레],Mañana necesitaré dedicar un par de horas concentradas a validar los últimos quinientos términos léxicos.,내일은 마지막 500개 단어의 검수를 완벽히 매듭짓기 위해 두어 시간 온전히 집중해야겠다.
 4368,cuartel,B2,unit_146,es_u146_n2,막사,[쿠아르텔],El histórico edificio que sirvió de cuartel en el siglo dieciocho alberga hoy una biblioteca comarcal.,18세기에 군 병영 막사로 쓰였던 웅장한 역사 건축물은 오늘날 현대적인 도서관으로 운영된다.
-4369,cazar,B2,unit_146,es_u146_n3,사냥,[카사르],El águila real sobrevolaba la meseta en amplios círculos esperando el momento propicio para cazar.,검독수리는 평원 상공을 커다란 원을 그리며 선회하다가 먹잇감을 덮칠 기회를 엿보았다.
+4369,cazar,B2,unit_146,es_u146_n3,사냥하다,[카사르],El águila real sobrevolaba la meseta en amplios círculos esperando el momento propicio para cazar.,검독수리는 평원 상공을 커다란 원을 그리며 선회하다가 먹잇감을 덮칠 기회를 엿보았다.
 4370,robando,B2,unit_146,es_u146_n3,도둑질,[로반도],La policía interceptó al infractor cuando intentaba forzar el candado robando una bicicleta pública.,경찰은 공공자전거 거치대 자물쇠를 절단기로 끊고 자전거를 훔치려던 절도범을 현장에서 검거했다.
 4371,convencer,B2,unit_146,es_u146_n3,설득하다,[콘벤세르],Supo convencer a todo el equipo técnico exponiendo argumentos objetivos avalados por pruebas reales.,실제 데이터로 검증된 객관적인 논거를 제시함으로써 개발 기술팀 전원을 완벽히 설득해 냈다.
 4372,rollo,B2,unit_146,es_u146_n3,롤,[로요],Compró un rollo de papel kraft de alto gramaje para embalar los libros antiguos sin dañarlos.,고서적이 훼손되지 않도록 안전하게 포장하기 위해 두툼한 친환경 크라프트지 롤을 구매했다.
-4373,pescar,B2,unit_146,es_u146_n3,물고기,[페스카르],Los pescadores tradicionales salían a pescar calamares al curricán en las noches calmas de verano.,어부들은 고요한 여름 밤바다를 갈라 나룻배를 띄우고 줄낚시로 한치 오징어를 낚으러 출항했다.
+4373,pescar,B2,unit_146,es_u146_n3,낚시하다,[페스카르],Los pescadores tradicionales salían a pescar calamares al curricán en las noches calmas de verano.,어부들은 고요한 여름 밤바다를 갈라 나룻배를 띄우고 줄낚시로 한치 오징어를 낚으러 출항했다.
 4374,mezcla,B2,unit_146,es_u146_n3,섞다,[메스클라],Esa receta tradicional marina combina una mezcla perfecta de hierbas aromáticas y aceite virgen extra.,그 전통 해산물 요리는 향긋한 천연 허브와 엑스트라 버진 올리브유가 기막힌 조화를 이룬다.
 4375,parejas,B2,unit_146,es_u146_n3,커플,[파레하스],Varias parejas paseaban cogidas de la mano por el paseo marítimo disfrutando de la caída de la tarde.,여러 연인 커플들이 정답게 손을 잡고 해 질 녘 바닷가 산책로를 따라 다정하게 거닐고 있었다.
 4376,condicional,B2,unit_146,es_u146_n3,조건부,[콘디시오날],El uso del tiempo condicional permite expresar hipótesis y fórmulas de cortesía con gran elegancia.,조건법 시제를 적절히 활용하면 가설이나 공손한 부탁의 표현을 대단히 품격 있게 나타낼 수 있다.
@@ -4405,7 +4405,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4404,lata,B2,unit_147,es_u147_n3,캔,[라타],Abrió una lata de filetes de bonito del norte en aceite de oliva para enriquecer la ensalada de tomate.,토마토 샐러드에 풍미를 더하기 위해 올리브유에 절인 최고급 참치 캔 통조림 하나를 땄다.
 4405,enseñaré,B2,unit_147,es_u147_n3,가르칠 것이다,[엔세냐레],En cuanto nos veamos te enseñaré cómo automatizar la limpieza de cadenas de texto con expresiones regulares.,우리가 만나는 대로 정규표현식을 활용해 텍스트 데이터를 일괄 정제하는 꿀팁을 가르쳐주겠다.
 4406,velas,B2,unit_147,es_u147_n3,양초,[베라스],Encendieron varias velas de cera de abeja natural que perfumaron el salón con un aroma suave y dulce.,은은하고 달콤한 꿀 향기를 풍기는 천연 밀랍 양초 몇 자루를 켜서 거실을 아늑하게 밝혔다.
-4407,suyos,B2,unit_147,es_u147_n3,너의 것,[수요스],Esos manuales de gramática española con anotaciones en los márgenes que están sobre la mesa son los suyos.,책상 위에 놓여 있는 여백에 꼼꼼한 필기가 적힌 저 스페인어 문법 교재들이 바로 그의 것이다.
+4407,suyos,B2,unit_147,es_u147_n3,그들의 것,[수요스],Esos manuales de gramática española con anotaciones en los márgenes que están sobre la mesa son los suyos.,책상 위에 놓여 있는 여백에 꼼꼼한 필기가 적힌 저 스페인어 문법 교재들이 바로 그의 것이다.
 4408,símbolo,B2,unit_147,es_u147_n3,상징,[심보로],El faro marítimo que corona el cabo es el símbolo histórico más representativo de esta villa marinera.,외딴 곶 꼭대기에 우뚝 솟은 해안 등대는 이 포구 마을을 대표하는 가장 유서 깊은 상징물이다.
 4409,reconocimiento,B2,unit_148,es_u148_n1,인식,[레코노시미엔토],El constante rigor metodológico demostrado en este proyecto merece un reconocimiento profesional unánime.,이 방대한 프로젝트에서 보여준 한결같은 꼼꼼함과 기술적 완성도는 아낌없는 찬사를 받을 만하다.
 4410,típico,B2,unit_148,es_u148_n1,전형적인,[티피코],El arroz a banda cocinado a fuego lento sobre brasas de leña es el plato más típico de nuestra costa.,장작불 숯불에서 뭉근하게 안쳐낸 아로스 아 반다는 우리 해안가를 상징하는 가장 대표적인 향토 요리다.
@@ -4469,7 +4469,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4468,cartel,B2,unit_149,es_u149_n3,포스터,[카르텔],Colocaron un hermoso cartel ilustrado en la entrada de la biblioteca anunciando la semana cultural.,도서관 정문 로비에 시립 문화 주간 행사를 알리는 아름다운 삽화 포스터가 내걸렸다.
 4469,disparen,B2,unit_150,es_u150_n1,쏘다,[디스파렌],El entrenador de fútbol sala pide a sus jugadores que disparen a puerta con decisión desde media distancia.,풋살 감독님은 선수들에게 기회가 났을 때 중거리에서 주저하지 말고 과감하게 슈팅을 날리라고 주문한다.
 4470,esperad,B2,unit_150,es_u150_n1,잠깐,[에스페라드],Esperad un momento en la entrada del muelle mientras verificamos que las barcas estén bien amarradas.,어선들의 정박 밧줄이 단단히 묶였는지 확인할 동안 부두 입구 그늘에서 잠시만 기다려라.
-4471,cargar,B2,unit_150,es_u150_n1,부하,[카르가르],Es aconsejable cargar la batería del teléfono móvil antes de salir a recorrer los senderos del cerro.,산 둘레길을 산책하러 집을 나서기에 앞서 휴대전화 배터리를 미리 완충해 두는 것이 바람직하다.
+4471,cargar,B2,unit_150,es_u150_n1,충전하다,[카르가르],Es aconsejable cargar la batería del teléfono móvil antes de salir a recorrer los senderos del cerro.,산 둘레길을 산책하러 집을 나서기에 앞서 휴대전화 배터리를 미리 완충해 두는 것이 바람직하다.
 4472,enviaron,B2,unit_150,es_u150_n1,보냈습니다,[엔비아론],Los técnicos enviaron el paquete de datos completamente validado a través de una conexión cifrada segura.,개발 엔지니어들은 암호화된 전용망을 통해 전수 검증된 데이터 패키지를 안전하게 전송했다.
 4473,jodida,B2,unit_150,es_u150_n1,엿,[호디다],Se nos pinchó una rueda en mitad de la autovía y pasamos una tarde verdaderamente jodida reparándola.,고속도로 한복판에서 타이어 펑크가 나는 바람에 그걸 수리하느라 오후 내내 진땀을 뺐다.
 4474,seguí,B2,unit_150,es_u150_n1,계속했다,[세기],Seguí las indicaciones del mapa topográfico al pie de la letra y alcancé la cima del monte sin extraviarme.,지형도 지침을 글자 그대로 철저히 따른 덕분에 길을 잃지 않고 산 정상 꼭대기에 무사히 올랐다.
@@ -4513,7 +4513,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4512,saqué,B2,unit_151,es_u151_n2,꺼냈다,[사께],Saqué una fotografía panorámica nítida del atardecer dorado sobre las murallas del castillo.,고성 성곽 위로 붉게 물드는 황금빛 노을의 장관을 고화질 파노라마 사진에 담았다.
 4513,taller,B2,unit_151,es_u151_n2,작업장,[타예르],El artesano ebanista trabaja con maderas nobles pulidas a mano en su acogedor taller.,가구 장인은 아늑한 공방 작업장에서 최고급 원목을 손수 사포질하며 가구를 짠다.
 4514,fantástica,B2,unit_151,es_u151_n2,환상적인,[판타스티카],Tuvimos una estancia fantástica en aquella villa marinera disfrutando de la calma del mar.,그 포구 마을에서 바다의 고요를 만끽하며 더없이 환상적인 휴가를 보냈다.
-4515,practicar,B2,unit_151,es_u151_n2,연습,[프라크티카르],Es fundamental practicar la pronunciación en voz alta cada día para ganar agilidad oral.,입이 트이도록 하려면 매일 소리 내어 소리 발음을 훈련하는 것이 기본이다.
+4515,practicar,B2,unit_151,es_u151_n2,연습하다,[프라크티카르],Es fundamental practicar la pronunciación en voz alta cada día para ganar agilidad oral.,입이 트이도록 하려면 매일 소리 내어 소리 발음을 훈련하는 것이 기본이다.
 4516,asientos,B2,unit_151,es_u151_n2,좌석,[아시엔토스],Reservamos tres asientos contiguos junto a la ventanilla en el tren de cercanías costero.,해안 근교선 열차의 풍경이 내다보이는 창가 쪽 나란한 좌석 세 자리를 예매했다.
 4517,armado,B2,unit_151,es_u151_n2,무장한,[아르마도],El patrullero guardacostas navegaba armado con instrumental óptico de vigilancia marina.,해안 경비정은 정밀 광학 해상 감시 레이더 장비를 갖추고 수역을 순찰했다.
 4518,gibbs,B2,unit_151,es_u151_n2,깁스,[히브브스],El profesor Gibbs coordina los proyectos de investigación sobre sociolingüística aplicada.,깁스 교수님은 학과에서 응용 사회언어학 실전 조사 연구를 총괄 지휘하신다.
@@ -4541,7 +4541,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4540,sentirme,B2,unit_152,es_u152_n2,느낌,[센티르메],Caminar por la orilla del mar al amanecer me hace sentirme lleno de energía renovada.,동틀 녘 바닷가를 거니는 것은 온몸에 활력과 생기를 가득 채워주는 기분을 느끼게 한다.
 4541,riesgos,B2,unit_152,es_u152_n2,위험,[리에스고스],Planificar con rigor cada paso del desarrollo técnico evita riesgos innecesarios de caída del servidor.,개발 프로세스를 꼼꼼히 설계해 두면 서버 다운 같은 불필요한 시스템 위험을 차단한다.
 4542,dificil,B2,unit_152,es_u152_n2,어려운,[디피실],No resulta nada dificil memorizar el vocabulario cuando se asocia con oraciones de la vida real.,생생한 실생활 통문장과 연결하여 익힌다면 단어 암기는 결코 어렵지 않다.
-4543,besar,B2,unit_152,es_u152_n2,키스,[베사르],La abuela no dudó en besar en la mejilla a su nieto pequeño al recibirlo con una sonrisa cálida.,할머니는 활짝 웃으시며 문간으로 들어서는 어린 손자의 뺨에 다정하게 뽀뽀해 주셨다.
+4543,besar,B2,unit_152,es_u152_n2,입맞추다,[베사르],La abuela no dudó en besar en la mejilla a su nieto pequeño al recibirlo con una sonrisa cálida.,할머니는 활짝 웃으시며 문간으로 들어서는 어린 손자의 뺨에 다정하게 뽀뽀해 주셨다.
 4544,lavar,B2,unit_152,es_u152_n2,씻다,[라바르],Es importante lavar la fruta fresca con agua abundante antes de prepararla para la merienda.,오후 다과 간식으로 준비하기 전에 싱싱한 과일을 깨끗한 물에 씻는 것이 중요하다.
 4545,sacarte,B2,unit_152,es_u152_n2,너를 데리고 나가,[사카르테],Voy a sacarte a pasear por el muelle pesquero para que desconectes un rato del trabajo frente al ordenador.,컴퓨터 앞 과중한 업무에서 잠시 벗어날 수 있게 너를 데리고 항구 부두로 바람 쐬러 나가겠다.
 4546,cuyo,B2,unit_152,es_u152_n2,누구의,[쿠요],Visitamos un antiguo molino de marea cuyo mecanismo de madera sigue intacto tras dos siglos.,2백 년 세월에도 원목 회전 기어가 고스란히 남아 있는 옛 조수 방앗간을 둘러보았다.
@@ -4567,7 +4567,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4566,celosa,B2,unit_153,es_u153_n1,질투하다,[세로사],La gata vieja se mostró algo celosa cuando trajimos al cachorro blanco a casa por primera vez.,작고 하얀 강아지를 집에 처음 데려왔을 때 늙은 고양이는 살짝 샘을 내며 경계했다.
 4567,instinto,B2,unit_153,es_u153_n1,본능,[인스틴토],El perro pastor guio al rebaño hacia el corral siguiendo un instinto protector muy despierto.,목양견은 영민하고 깨어있는 보호 본능을 발휘해 양 떼를 축사로 안전하게 몰았다.
 4568,bancos,B2,unit_153,es_u153_n1,벤치,[반코스],Varios ancianos conversaban plácidamente al sol en los bancos de madera de la plaza mayor.,마을 어르신들이 중앙 광장의 원목 벤치에 나란히 앉아 햇볕을 쬐며 담소를 나누셨다.
-4569,mías,B2,unit_153,es_u153_n2,내,[미아스],Esas libretas de bocetos con tapas de cartón kraft colocadas sobre la balda son mías.,서가 선반 위에 꽂혀 있는 저 크라프트지 표지의 드로잉 스케치북들은 모두 내 것이다.
+4569,mías,B2,unit_153,es_u153_n2,내 것들,[미아스],Esas libretas de bocetos con tapas de cartón kraft colocadas sobre la balda son mías.,서가 선반 위에 꽂혀 있는 저 크라프트지 표지의 드로잉 스케치북들은 모두 내 것이다.
 4570,emocionado,B2,unit_153,es_u153_n2,흥분하다,[에모시오나도],El niño estaba muy emocionado abriendo los paquetes de libros ilustrados de aventuras marinas.,아이는 바다 모험 그림책 선물 상자를 뜯으며 벅찬 설렘과 기쁨을 감추지 못했다.
 4571,juguete,B2,unit_153,es_u153_n2,장난감,[후게테],El artesano talló un barco velero de juguete en madera de pino pulida para su nieto pequeño.,목공 장인은 어린 손자를 위해 부드러운 소나무를 깎아 예쁜 장난감 돛단배를 만들었다.
 4572,villa,B2,unit_153,es_u153_n2,별장,[비야],Aquella hermosa villa marinera de casas blancas conserva un encanto tradicional que cautiva al visitante.,하얀 집들이 모인 그 아름다운 어촌 포구 마을은 여행자의 발길을 붙드는 정취를 간직한다.
@@ -4657,7 +4657,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4656,go,B2,unit_156,es_u156_n1,가다,[고],El panel del control de salidas del aeropuerto mostraba la indicación en inglés gate open go to board.,공항 출국 전광판에는 게이트가 열렸으니 어서 탑승하라는 영문 안내 문구가 떠 있었다.
 4657,motel,B2,unit_156,es_u156_n1,모텔,[모텔],Hicieron noche en un tranquilo motel de carretera antes de reanudar el viaje hacia la costa sur.,남부 해안으로 내려가던 중 도로변에 자리한 한적하고 깨끗한 모텔 숙소에서 하룻밤 묵었다.
 4658,venimos,B2,unit_156,es_u156_n1,온다,[베니모스],Nosotros venimos a caminar por este paseo litoral atraídos por la luz dorada del atardecer.,바다 위로 은은하게 번져가는 황금빛 저녁 노을빛을 즐기기 위해 우리는 이 해변을 찾아왔다.
-4659,cuente,B2,unit_156,es_u156_n2,카운트,[쿠엔테],Es conveniente que el archivo maestro cuente con ejemplos completos redactados en lenguaje real.,마스터 사전이 실제 일상생활에서 쓰이는 생생한 표현으로 채워지는 것은 대단히 유익하다.
+4659,cuente,B2,unit_156,es_u156_n2,세다,[쿠엔테],Es conveniente que el archivo maestro cuente con ejemplos completos redactados en lenguaje real.,마스터 사전이 실제 일상생활에서 쓰이는 생생한 표현으로 채워지는 것은 대단히 유익하다.
 4660,a.,B2,unit_156,es_u156_n2,에게,[아.],La opción correcta en el test de gramática correspondía al apartado a de la hoja de respuestas.,실전 문법 모의고사 답안지의 정답은 a번 보기 문항에 정확히 들어맞았다.
 4661,preguntes,B2,unit_156,es_u156_n2,당신이 물어,[프레군테스],No dudes en acudir al profesor siempre que tengas alguna duda y le preguntes sin reparos.,문법에 아리송한 대목이 생겼을 때는 주저하지 말고 선생님께 편하게 질문해라.
 4662,mentido,B2,unit_156,es_u156_n2,거짓말을 했다,[멘티도],El sospechoso había mentido sobre su paradero pero los registros del tren de cercanías lo delataron.,용의자는 알리바이에 대해 거짓말을 늘어놓았으나 광역 전철 발권 내역에 덜미가 잡혔다.
@@ -4713,7 +4713,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4712,vela,B2,unit_158,es_u158_n1,양초,[베라],Encendimos una vela de cera de abeja natural que desprendía un suave aroma a miel silvestre.,사방에 은은한 꿀 향기를 퍼뜨리는 천연 밀랍 양초 한 자루를 켜서 방을 아늑하게 밝혔다.
 4713,muelle,B2,unit_158,es_u158_n1,독,[무에예],Caminamos hasta el extremo de piedra del muelle para contemplar los barcos de pesca amarrados.,정박해 있는 어선들의 풍경을 감상하기 위해 부두 방파제 석조 끝자락까지 걸어갔다.
 4714,tiroteo,B2,unit_158,es_u158_n1,사격,[티로테오],La policía acordonó el polígono industrial tras disuadir a los sospechosos en un tenso tiroteo.,경찰은 산업단지 외곽에서 대치 끝에 용의자들을 검거하고 주변 일대를 신속히 봉쇄했다.
-4715,dirigir,B2,unit_158,es_u158_n1,리드,[디리히르],El experimentado capitán supo dirigir la maniobra de atraque del velero con absoluta calma.,노련한 베테랑 선장은 차분한 침착성을 발휘해 요트의 부두 접안 작전을 완벽히 지휘했다.
+4715,dirigir,B2,unit_158,es_u158_n1,이끌다,[디리히르],El experimentado capitán supo dirigir la maniobra de atraque del velero con absoluta calma.,노련한 베테랑 선장은 차분한 침착성을 발휘해 요트의 부두 접안 작전을 완벽히 지휘했다.
 4716,enterrado,B2,unit_158,es_u158_n1,묻힌,[엔테라도],Los arqueólogos hallaron un antiguo ánfora romana enterrado bajo las dunas de arena fina.,고고학 발굴팀은 고운 모래언덕 밑에 묻혀 있던 고대 로마 시대의 온전한 항아리를 수습했다.
 4717,acento,B2,unit_158,es_u158_n1,악센트,[아센토],Asegúrate de colocar el acento ortográfico correcto sobre cada vocal para preservar el rigor del texto.,단어의 정확성을 온전히 살릴 수 있도록 모음 위에 알맞은 악센트 띨데를 꼭 표기해라.
 4718,psiquiatra,B2,unit_158,es_u158_n1,정신과 의사,[프시끼아트라],El prestigioso psiquiatra destacó el valor terapéutico del descanso regular y los paseos al aire libre.,명망 높은 전문의 선생님은 규칙적인 휴식과 야외 산책이 선사하는 마음 치유의 힘을 역설했다.
@@ -4861,7 +4861,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4860,pagando,B2,unit_163,es_u163_n1,지불,[파간도],Los clientes del mercado tradicional siguen pagando las compras de proximidad con monedas de curso legal.,재래시장 손님들은 동네 가게에서 물건을 살 때 여전히 잔돈 동전과 지폐로 장보기 대금을 치른다.
 4861,cenizas,B2,unit_163,es_u163_n1,재,[세니사스],Retiró con una pala las cenizas frías de la chimenea de leña antes de encender el fuego de la tarde.,저녁 장작불을 지피기에 앞서 벽난로에 하얗게 식어 남아있던 마른 재들을 삽으로 말끔히 치웠다.
 4862,retraso,B2,unit_163,es_u163_n1,지연,[레트라소],El tren de alta velocidad llegó a la estación central con puntualidad británica y sin ningún retraso.,고속열차는 단 1분의 연착도 없이 칼 같은 정밀한 시각에 맞춰 중앙역 승강장으로 들어왔다.
-4863,asesinar,B2,unit_163,es_u163_n1,살인,[아세시나르],En la trama de la novela policíaca el villano planeaba asesinar al noble para apoderarse de sus tierras.,추리 소설의 악당은 영주의 영지 부동산을 강탈하고자 그를 은밀히 살해하려는 음모를 꾸몄다.
+4863,asesinar,B2,unit_163,es_u163_n1,살해하다,[아세시나르],En la trama de la novela policíaca el villano planeaba asesinar al noble para apoderarse de sus tierras.,추리 소설의 악당은 영주의 영지 부동산을 강탈하고자 그를 은밀히 살해하려는 음모를 꾸몄다.
 4864,mentí,B2,unit_163,es_u163_n1,거짓말을 했다,[멘티],Jamás mentí cuando aseguré que este corpus de vocabulario quedaría completamente libre de comas.,이 어휘 사전이 단 하나의 쉼표도 없이 완벽하게 정제될 것이라 장담했을 때 결코 허언을 한 적이 없다.
 4865,imaginas,B2,unit_163,es_u163_n1,상상한다,[이마히나스],¿Te imaginas lo gratificante que será ver este catálogo léxico completo publicado y listo para estudiar?,5천 단어 전체가 실생활 통문장으로 완벽히 매듭지어져 배포되는 순간이 얼마나 뿌듯할지 상상해 보아라.
 4866,haciéndolo,B2,unit_163,es_u163_n1,하고 있다,[아시엔도로],Seguimos haciéndolo con el mismo rigor técnico y atención al detalle hasta la última línea del archivo.,우리는 파일의 마지막 맨 끝 행에 도달할 때까지 변함없는 꼼꼼함과 집중력으로 작업을 이어가고 있다.
@@ -4927,10 +4927,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4926,oreja,B2,unit_165,es_u165_n1,귀,[오레하],El perro pastor levantaba la oreja con atención ante el menor ruido procedente del camino rural.,목양견은 시골길 쪽에서 들려오는 아주 작은 기척에도 귀를 쫑긋 세우며 집중했다.
 4927,calientes,B2,unit_165,es_u165_n1,뜨거운,[카리엔테스],El mesón del puerto sirvió unas tapas marineras bien calientes recién sacadas del fuego de leña.,항구 식당은 장작 화덕에서 갓 꺼내 김이 모락모락 나는 따끈따끈한 해물 타파스를 냈다.
 4928,personajes,B2,unit_165,es_u165_n1,등장인물,[페르소나헤스],La novela histórica recreaba con maestría las andanzas de personajes marineros del siglo pasado.,역사 소설은 지난 세기 거친 바다를 누비던 뱃사람들의 삶을 생동감 넘치게 그려냈다.
-4929,liberar,B2,unit_165,es_u165_n2,릴리스,[리베라르],El centro de recuperación marina procedió a liberar a la tortuga boba recuperada en la cala.,해양동물 구조센터는 건강을 되찾은 붉은바다거북을 보호구역 만 바다로 무사히 방류했다.
+4929,liberar,B2,unit_165,es_u165_n2,해방하다,[리베라르],El centro de recuperación marina procedió a liberar a la tortuga boba recuperada en la cala.,해양동물 구조센터는 건강을 되찾은 붉은바다거북을 보호구역 만 바다로 무사히 방류했다.
 4930,cogió,B2,unit_165,es_u165_n2,잡힌,[코히오],El excursionista cogió el sendero botánico de la ladera para subir hasta el mirador del cerro.,등산객은 언덕 꼭대기 바다 전망대로 오르기 위해 피톤치드 숲길 오솔길로 접어들었다.
 4931,toro,B2,unit_165,es_u165_n2,황소,[토로],La escultura de bronce situada en la rotonda representa la figura imponente de un toro ibérico.,로터리 한가운데 우뚝 선 청동 조형물은 이베리아 황소의 위풍당당한 자태를 형상화했다.
-4932,pintar,B2,unit_165,es_u165_n2,페인트,[핀타르],El artista eligió acuarelas de tonos luminosos para pintar el atardecer dorado sobre la bahía.,화가는 바다 만 위로 번지는 황금빛 저녁 노을을 화폭에 담기 위해 맑은 수채화 물감을 골랐다.
+4932,pintar,B2,unit_165,es_u165_n2,그리다,[핀타르],El artista eligió acuarelas de tonos luminosos para pintar el atardecer dorado sobre la bahía.,화가는 바다 만 위로 번지는 황금빛 저녁 노을을 화폭에 담기 위해 맑은 수채화 물감을 골랐다.
 4933,eternidad,B2,unit_165,es_u165_n2,영원,[에테르니다드],Contemplar la inmensidad del mar desde el acantilado rocoso produce una sensación de paz y eternidad.,바위 절벽에 서서 드넓은 망망대해를 바라보고 있노라면 영원한 평온의 감동이 밀려온다.
 4934,similar,B2,unit_165,es_u165_n2,비슷한,[시미라르],Ese tono de azul marino es muy similar al color que adquieren las aguas profundas en días despejados.,저 짙은 네이비블루 색감은 구름 없이 맑게 갠 날 깊은 바다가 내는 빛깔과 쏙 빼닮았다.
 4935,sobrina,B2,unit_165,es_u165_n2,조카,[소브리나],Mi sobrina pequeña aprende a nadar en la piscina municipal con enorme soltura y alegría.,어린 조카는 시립 수영장에서 물살을 가르며 신나게 수영 기본기를 배운다.
@@ -4953,7 +4953,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4952,manzanas,B2,unit_166,es_u166_n1,사과,[만사나스],Compramos dos kilos de manzanas rojas crujientes y dulces en el mercado de abastos tradicional.,재래시장에서 갓 수확한 달콤하고 아삭아삭한 빨간 사과 2킬로그램을 샀다.
 4953,ratón,B2,unit_166,es_u166_n1,쥐,[라톤],El ratón inalámbrico ergonómico facilita el trabajo de maquetación en el ordenador durante horas.,손목이 편안한 인체공학 무선 마우스 덕분에 장시간 모니터 앞 편집 작업도 피로가 덜하다.
 4954,eléctrica,B2,unit_166,es_u166_n1,전기,[에레크트리카],Se desplaza por las calles de la villa en una bicicleta eléctrica ligera y muy silenciosa.,소음 없이 가볍게 달리는 친환경 전기자전거를 타고 동네 골목골목을 이동한다.
-4955,ee,B2,unit_166,es_u166_n1,에,[에에],El índice geográfico incluía la abreviatura oficial EE. UU. para designar al país norteamericano.,지명 색인 목록에는 북미 국가를 가리키는 공식 스페인어 표준 약어가 등재되어 있었다.
+4955,ee,B2,unit_166,es_u166_n1,미국,[에에],El índice geográfico incluía la abreviatura oficial EE. UU. para designar al país norteamericano.,지명 색인 목록에는 북미 국가를 가리키는 공식 스페인어 표준 약어가 등재되어 있었다.
 4956,productor,B2,unit_166,es_u166_n1,생산자,[프로두크토르],El productor agrícola local cultiva cítricos ecológicos regados con aguas de manantial puro.,지역 유기농 농장주는 맑은 천연 암반수를 대어 당도 높은 친환경 오렌지를 재배한다.
 4957,quédense,B2,unit_166,es_u166_n1,머무르다,[께덴세],Quédense sentados en la terraza sombreada mientras preparamos una jarra de limonada fresca.,시원한 수제 레모네이드 한 병을 준비할 동안 그늘진 테라스에 편히 앉아 계십시오.
 4958,demuestra,B2,unit_166,es_u166_n1,시연하다,[데무에스트라],La ausencia total de errores demuestra el extraordinario cuidado puesto en este trabajo léxico.,단 하나의 서식 결함도 없다는 사실은 이 어휘 사전에 쏟아부은 지극한 정성을 명백히 증명한다.
@@ -4963,7 +4963,7 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4962,reciente,B2,unit_166,es_u166_n2,최근,[레시엔테],La versión más reciente del archivo garantiza la plena compatibilidad con todas las plataformas.,가장 최근에 빌드된 최신 버전 파일은 모든 기기 환경에서 완벽한 데이터 호환성을 보장한다.
 4963,empiezan,B2,unit_166,es_u166_n2,시작한다,[엠피에산],Las clases de español para adultos empiezan puntuales a las nueve de la mañana en la academia.,어학원 성인 스페인어 강좌는 매일 아침 9시 정각에 차질 없이 시작된다.
 4964,pasaste,B2,unit_166,es_u166_n2,합격했다,[파사스테],Qué gran alegría que pasaste las pruebas oficiales del nivel B2 con una calificación sobresaliente.,DELE B2 공인 어학시험을 최고 수준의 우수한 성적으로 통과했다니 정말 기쁘다.
-4965,enfrentar,B2,unit_166,es_u166_n2,얼굴,[엔프렌타르],Afrontar los nuevos retos con serenidad y método permite enfrentar cualquier dificultad con éxito.,평정심과 원칙을 품고 매사에 임한다면 그 어떤 난관도 슬기롭게 헤쳐 나갈 수 있다.
+4965,enfrentar,B2,unit_166,es_u166_n2,직면하다,[엔프렌타르],Afrontar los nuevos retos con serenidad y método permite enfrentar cualquier dificultad con éxito.,평정심과 원칙을 품고 매사에 임한다면 그 어떤 난관도 슬기롭게 헤쳐 나갈 수 있다.
 4966,dejaba,B2,unit_166,es_u166_n2,남겼다,[데하바],El barco pesquero tradicional dejaba una estela blanca de espuma sobre las aguas calmas al zarpar.,출항하는 전통 어선 나룻배는 잔잔한 수면 뒤편으로 하얗게 부서지는 물보라 궤적을 남겼다.
 4967,escucharme,B2,unit_166,es_u166_n2,내 말 좀 들어봐,[에스쿠차르메],Ven a sentarte a mi lado y tómate unos minutos para escucharme con calma antes de decidir.,결정을 내리기에 앞서 내 곁에 편히 앉아 내 이야기를 차분하게 들어다오.
 4968,apariencia,B2,unit_166,es_u166_n2,외관,[아파리엔시아],El diseño limpio y la tipografía sobria confieren una apariencia sumamente profesional al juego.,정갈한 레이아웃과 단정한 글꼴은 교육용 게임에 대단히 품격 있는 전문성을 부여한다.
@@ -4976,10 +4976,10 @@ Rank,Word,Level,Unit_ID,Node_ID,Meaning,Pronunciation,Example_ES,Example_KO
 4975,síntomas,B2,unit_166,es_u166_n3,증상,[신토마스],El médico comprobó que el paciente ya no presentaba síntomas febriles tras el descanso adecuado.,의사 선생님은 환자가 푹 쉬고 난 뒤 열이나 통증 증상이 완전히 사라졌음을 확인했다.
 4976,japoneses,B2,unit_166,es_u166_n3,일본어,[하포네세스],La biblioteca conserva manuales de caligrafía tradicional y grabados en madera japoneses.,도서관은 일본 전통 붓글씨 교본과 섬세한 목판화 판화집을 소장 보존한다.
 4977,kurt,B2,unit_166,es_u166_n3,커트,[크우르트],Kurt restaura compases náuticos antiguos calibrando la rosa de los vientos con precisión fina.,쿠르트는 방위각 오차를 정밀하게 보정하며 오래된 선박 나침반 계기를 수리한다.
-4978,juzgar,B2,unit_166,es_u166_n3,판사,[후스가르],Es preferible no juzgar precipitadamente y analizar los datos objetivos antes de sacar conclusiones.,섣불리 선입견으로 판단하지 말고 객관적인 데이터를 꼼꼼히 살핀 뒤 결론을 내려라.
+4978,juzgar,B2,unit_166,es_u166_n3,판단하다,[후스가르],Es preferible no juzgar precipitadamente y analizar los datos objetivos antes de sacar conclusiones.,섣불리 선입견으로 판단하지 말고 객관적인 데이터를 꼼꼼히 살핀 뒤 결론을 내려라.
 4979,adrian,B2,unit_167,es_u167_n1,아드리안,[아드리안],Adrián entrena a diario en el campo municipal mejorando su velocidad y su disparo a puerta.,아드리안은 시립 축구장에서 매일 땀 흘리며 스피드와 정교한 슈팅을 연마한다.
 4980,cervezas,B2,unit_167,es_u167_n1,맥주,[세르베사스],Tomamos unas cervezas artesanales bien frías en la terraza sombreada para acompañar las tapas.,노천 테라스에서 해산물 타파스 안주에 곁들여 마실 시원한 수제 생맥주 몇 잔을 즐겼다.
-4981,quemar,B2,unit_167,es_u167_n1,화상,[께마르],Vigila el fuego de la cocina para no quemar el sofrito de tomate y cebolla dulce de la paella.,파에야 양념 소프리토가 타지 않도록 약불 조절에 세심하게 신경을 써라.
+4981,quemar,B2,unit_167,es_u167_n1,태우다,[께마르],Vigila el fuego de la cocina para no quemar el sofrito de tomate y cebolla dulce de la paella.,파에야 양념 소프리토가 타지 않도록 약불 조절에 세심하게 신경을 써라.
 4982,kent,B2,unit_167,es_u167_n1,켄트,[크엔트],El profesor Kent imparte seminarios de literatura comparada en el paraninfo universitario central.,켄트 교수님은 대학 중앙 대강당 강단에서 동서양 비교 문학 특강 세미나를 주재하신다.
 4983,marzo,B2,unit_167,es_u167_n1,3월,[마르소],En el mes de marzo los campos de almendros florecen cubriendo los valles de tonos blancos y rosas.,삼월이 찾아오면 들판의 아몬드 과수원이 만개하여 온 골짜기를 화사하게 수놓는다.
 4984,meterme,B2,unit_167,es_u167_n1,들어가다,[메테르메],Prefiero no meterme en debates estériles y concentrar toda mi energía en completar la tarea.,소모적인 입씨름에 휘말리지 않고 오롯이 내게 맡겨진 과업을 완수하는 데 집중하겠다.
