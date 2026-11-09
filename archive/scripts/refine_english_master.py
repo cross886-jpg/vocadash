@@ -922,6 +922,8 @@ def clean_meaning(raw, word=None):
     if not raw:
         return ""
     w = (word or "").lower()
+    if w == "of":
+        return "~의"
     if w in ("computer", "computers") or "계산자" in raw:
         return "계산기"
     if w == "fifty":

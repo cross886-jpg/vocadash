@@ -4,7 +4,7 @@
 build_english_master.py
 english_5000_master.csv(9대 정규 필드)를 읽어
 표준 30단어 규격(Stage 1: 10단어, Stage 2: 10단어, Stage 3: 10단어)의
-웹 앱 런타임 데이터 파일(js/data_en.js 및 js/data/data_en.js)로 빌드하는 스크립트.
+웹 앱 런타임 데이터 파일(js/data_en.js)로 빌드하는 스크립트.
 """
 
 import csv
@@ -12,17 +12,8 @@ import json
 import os
 import sys
 
-from refine_english_master import (
-    CURATED_WORDS,
-    clean_meaning,
-    clean_pron,
-    clean_ex_en,
-    clean_ex_ko
-)
-
-INPUT_CSV = "english_5000_master.csv"
+INPUT_CSV = os.path.join("data", "english_5000_master.csv")
 OUTPUT_FILES = [
-    os.path.join("js", "data_en.js"),
     os.path.join("js", "data", "data_en.js")
 ]
 
@@ -31,33 +22,17 @@ EXPECTED_HEADERS = [
     "Meaning", "Pronunciation", "Example_EN", "Example_KO"
 ]
 
-def to_roman(n):
-    val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-    syb = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
-    roman = ""
-    i = 0
-    while n > 0:
-        for _ in range(n // val[i]):
-            roman += syb[i]
-            n -= val[i]
-        i += 1
-    return roman
-
 def get_unit_metadata(u_num, word_count=30, total_words=4998):
     if u_num <= 30:
         lvl_name = "A1 기초 핵심 어휘"
-        sub_idx = u_num
     elif u_num <= 70:
         lvl_name = "A2 실전 도약 어휘"
-        sub_idx = u_num - 30
     elif u_num <= 120:
         lvl_name = "B1 중급 심화 어휘"
-        sub_idx = u_num - 70
     else:
         lvl_name = "B2 고급 마스터 어휘"
-        sub_idx = u_num - 120
 
-    title = f"Unit {u_num}. {lvl_name} {to_roman(sub_idx)}"
+    title = f"Unit {u_num}. {lvl_name}"
     start_r = (u_num - 1) * 30 + 1
     end_r = min(total_words, start_r + word_count - 1)
     subtitle = f"빈도수 상위 {start_r}~{end_r}위 단어 {word_count}개 집중 훈련"
@@ -113,23 +88,12 @@ def build_english_runtime_data():
             raw_example_en = row[col_idx["Example_EN"]].strip()
             raw_example_ko = row[col_idx["Example_KO"]].strip()
 
-            w_lower = word.lower()
-            if w_lower in CURATED_WORDS:
-                c = CURATED_WORDS[w_lower]
-                meaning = clean_meaning(c["meaning"], w_lower)
-                phonetic_str = clean_pron(raw_pronunciation)
-                example_en = c["ex_en"]
-                example_ko = c["ex_ko"]
-            else:
-                meaning = clean_meaning(raw_meaning, w_lower)
-                phonetic_str = clean_pron(raw_pronunciation)
-                example_en = clean_ex_en(raw_example_en)
-                example_ko = clean_ex_ko(raw_example_ko)
-
-            # 쉼표 전면 배제 (파싱 무결성 유지)
-            meaning = meaning.replace(",", " ")
-            example_en = example_en.replace(",", " ")
-            example_ko = example_ko.replace(",", " ")
+            meaning = raw_meaning.replace(",", " ")
+            phonetic_str = raw_pronunciation.strip()
+            if phonetic_str and not phonetic_str.startswith('['):
+                phonetic_str = f"[{phonetic_str}]"
+            example_en = raw_example_en.replace(",", " ")
+            example_ko = raw_example_ko.replace(",", " ")
 
             # 유닛 번호 산출 (unit_001 -> 1)
             try:

@@ -3,9 +3,8 @@ import json
 import os
 import sys
 
-INPUT_CSV = "spanish_5000_master.csv"
+INPUT_CSV = os.path.join("data", "spanish_5000_master.csv")
 OUTPUT_FILES = [
-    os.path.join("js", "data_es.js"),
     os.path.join("js", "data", "data_es.js")
 ]
 
