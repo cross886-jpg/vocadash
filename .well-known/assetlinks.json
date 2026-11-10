@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.teamcross.vocadash",
+      "sha256_cert_fingerprints": [
+        "24:96:6A:4C:67:38:41:10:0A:91:1A:50:89:82:23:48:BE:77:2B:96:95:C4:63:2C:6D:70:49:9A:7C:BD:C8:CA"
+      ]
+    }
+  }
+]

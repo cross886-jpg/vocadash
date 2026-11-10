@@ -106,7 +106,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  if (request.mode === 'navigate') {
+  const isHtmlNav = request.mode === 'navigate' && !url.pathname.startsWith('/.well-known/') && !url.pathname.endsWith('.json');
+  if (isHtmlNav) {
     event.respondWith(
       fetch(request)
         .then((response) => {
