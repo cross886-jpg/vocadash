@@ -507,13 +507,20 @@
       bIco.textContent = !isBonusUnlocked ? '🎁' : (isBonusDone ? '📦' : '🎁');
       bIco.className = `text-3xl select-none leading-none drop-shadow-sm ${!isBonusUnlocked ? '' : (isBonusDone ? '' : (isBonusActive ? 'animate-bounce' : 'animate-wiggle'))} relative z-10`;
     }
-    if (el('node-bonus-badge-icon')) el('node-bonus-badge-icon').textContent = !isBonusUnlocked ? '🔒' : (isBonusDone ? '📦' : '🎁');
-    if (bTxt) {
-      bTxt.textContent = !isBonusUnlocked ? '잠김' : (isBonusDone ? '수령 완료' : '+15 💎');
-      bTxt.className = `text-[11px] ${!isBonusUnlocked ? 'text-slate-400' : (isBonusDone ? 'text-slate-500' : 'text-amber-600')} font-extrabold`;
-    }
     if (bCard) {
-      bCard.className = `mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${!isBonusUnlocked ? 'border-slate-200' : (isBonusDone ? 'border-slate-200' : (isBonusActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none`;
+      if (!isBonusUnlocked) {
+        bCard.classList.add('hidden');
+        bCard.style.display = 'none';
+      } else {
+        bCard.classList.remove('hidden');
+        bCard.style.display = 'flex';
+        bCard.className = `mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${isBonusDone ? 'border-slate-200' : (isBonusActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200')} pointer-events-none`;
+        if (el('node-bonus-badge-icon')) el('node-bonus-badge-icon').textContent = isBonusDone ? '📦' : '🎁';
+        if (bTxt) {
+          bTxt.textContent = isBonusDone ? '수령 완료' : '+15 💎';
+          bTxt.className = `text-[11px] ${isBonusDone ? 'text-slate-500' : 'text-amber-600'} font-extrabold`;
+        }
+      }
     }
 
     // 3. Review Node (Unit 2~4와 100% 동일한 불투명 솔리드 규격)

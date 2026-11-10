@@ -178,15 +178,17 @@
   // 3. 실제 코스 데이터(data_es.js 등)의 유닛별 정규 단어를 VOCA_DATA에 우선 동기화
   function syncCurriculumUnits() {
     let sourceUnits = null;
+    let sourceCourse = null;
     if (typeof window !== 'undefined') {
-      const course = window.courseData_es || window.courseData || (window.COURSES && window.COURSES['es_main']);
-      if (course && Array.isArray(course.units)) {
-        sourceUnits = course.units;
+      sourceCourse = window.courseData_es || window.courseData || (window.COURSES && window.COURSES['es_main']);
+      if (sourceCourse && Array.isArray(sourceCourse.units)) {
+        sourceUnits = sourceCourse.units;
       }
     } else if (typeof require !== 'undefined') {
       try {
         const d = require('./data_es.js');
         if (d && Array.isArray(d.units)) {
+          sourceCourse = d;
           sourceUnits = d.units;
         }
       } catch (e) {
@@ -196,6 +198,9 @@
 
     if (!Array.isArray(sourceUnits)) return;
 
+    const allWords = [];
+    const byLevel = {};
+
     sourceUnits.forEach(u => {
       const uNum = parseInt(u.unitNumber || u.unitId || u.unit || u.id, 10);
       if (!uNum || !Array.isArray(u.words) || u.words.length === 0) return;
@@ -204,29 +209,41 @@
       const aliasKey = 'unit_' + String(uNum).padStart(3, '0');
 
       // 정규화된 단어 객체 배열 보장
-      const formattedWords = u.words.map((w, idx) => ({
-        id: w.id || `es_u${uNum}_${idx + 1}`,
-        rank: w.rank || (idx + 1),
-        word: w.word || w.term || '',
-        term: w.term || w.word || '',
-        meaning: w.meaning || w.korean || w.ko || '',
-        pronunciation: w.pronunciation || w.pron || w.phonetic || '',
-        phonetic: formatPhonetic(w.phonetic || w.pronunciation || w.pron),
-        exampleTarget: w.exampleTarget || w.example || '',
-        exampleMeaning: w.exampleMeaning || w.exampleKo || '',
-        gender: w.gender || null,
-        partOfSpeech: w.partOfSpeech || w.pos || null,
-        level: w.level || (uNum <= 2 ? 'A1' : (uNum <= 4 ? 'A2' : 'B1')),
-        unitId: aliasKey,
-        unitNumber: uNum,
-        lang: 'es'
-      }));
+      const formattedWords = u.words.map((w, idx) => {
+        const wordObj = {
+          id: w.id || `es_u${uNum}_${idx + 1}`,
+          rank: w.rank || (idx + 1),
+          word: w.word || w.term || '',
+          term: w.term || w.word || '',
+          meaning: w.meaning || w.korean || w.ko || '',
+          pronunciation: w.pronunciation || w.pron || w.phonetic || '',
+          phonetic: formatPhonetic(w.phonetic || w.pronunciation || w.pron),
+          exampleTarget: w.exampleTarget || w.example || '',
+          exampleMeaning: w.exampleMeaning || w.exampleKo || '',
+          gender: w.gender || null,
+          partOfSpeech: w.partOfSpeech || w.pos || null,
+          level: w.level || (uNum <= 2 ? 'A1' : (uNum <= 4 ? 'A2' : 'B1')),
+          unitId: aliasKey,
+          unitNumber: uNum,
+          lang: 'es'
+        };
+        allWords.push(wordObj);
+        if (!byLevel[wordObj.level]) byLevel[wordObj.level] = [];
+        byLevel[wordObj.level].push(wordObj);
+        return wordObj;
+      });
 
       // byUnit에 커리큘럼 단어 덮어쓰기 (풍부한 한국어 뜻과 발음 보존)
       VOCA_DATA.byUnit[unitKey] = formattedWords;
       VOCA_DATA.byUnit[aliasKey] = formattedWords;
       VOCA_DATA.byUnit[String(uNum)] = formattedWords;
     });
+
+    if (allWords.length > 0) {
+      VOCA_DATA.allWords = allWords;
+      VOCA_DATA.byLevel = byLevel;
+      VOCA_DATA.isLoaded = true;
+    }
   }
 
   // 4. 안전한 Unit 단어 조회 유틸 (비동기 로딩 찰나에도 빈 배열 [] 안전 fallback)
@@ -241,7 +258,7 @@
   }
 
   // 5. 1회 비동기 fetch 및 전역 캐싱
-  async function loadSpanish5000(csvUrl = './spanish_5000_master.csv') {
+  async function loadSpanish5000(csvUrl = 'data/spanish_5000_master.csv') {
     if (VOCA_DATA.isLoaded && VOCA_DATA.allWords.length > 0) {
       return VOCA_DATA;
     }
@@ -260,7 +277,7 @@
           // Node.js 환경 지원
           const fs = require('fs');
           const path = require('path');
-          const p = path.resolve(__dirname, '../spanish_5000_master.csv');
+          const p = path.resolve(__dirname, '../data/spanish_5000_master.csv');
           if (fs.existsSync(p)) {
             const text = fs.readFileSync(p, 'utf8');
             indexCsvData(text);
@@ -277,9 +294,9 @@
     return promise;
   }
 
-  // 브라우저 및 Node 환경에서 즉시 1회 초기화 (커리큘럼 유닛 우선 동기화 후 CSV 로드)
+  // 브라우저 및 Node 환경에서 즉시 1회 초기화 (커리큘럼 유닛 우선 동기화 후 필요 시에만 CSV 로드)
   syncCurriculumUnits();
-  if (typeof fetch === 'function' || typeof require !== 'undefined') {
+  if (!VOCA_DATA.isLoaded && (typeof fetch === 'function' || typeof require !== 'undefined')) {
     loadSpanish5000();
   }
 
@@ -293,5 +310,9 @@
   root.loadSpanish5000 = loadSpanish5000;
   root.parseCSV = parseCSV;
   root.getWordsByUnit = getWordsByUnit;
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = VOCA_DATA;
+  }
 
 })(typeof window !== 'undefined' ? window : this);

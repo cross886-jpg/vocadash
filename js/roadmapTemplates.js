@@ -219,8 +219,8 @@
         ${isLocked ? `<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shadow-xs ring-2 ring-white pointer-events-none z-20" ${lockIdAttr}><span class="material-symbols-outlined text-[13px] font-bold">lock</span></div>` : ''}
         ${renderStartBadgeHtml(effectiveActive)}
       </div>
-      <div class="mt-2 flex items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${isLocked ? 'border-slate-200' : (effectiveCompleted ? 'border-slate-200' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200'))} pointer-events-none" ${cardIdAttr}>
-        <div class="flex items-center gap-1"><span class="text-xs" ${badgeIconIdAttr}>${isLocked ? '🔒' : (effectiveCompleted ? '📦' : '🎁')}</span><span class="text-[11px] ${isLocked ? 'text-slate-400' : (effectiveCompleted ? 'text-slate-500' : 'text-amber-600')} font-extrabold" ${badgeTextIdAttr}>${isLocked ? '잠김' : (effectiveCompleted ? '수령 완료' : '+15 💎')}</span></div>
+      <div class="mt-2 ${isLocked ? 'hidden' : 'flex'} items-center justify-center bg-white px-2.5 py-1 rounded-full shadow-sm border ${effectiveCompleted ? 'border-slate-200' : (effectiveActive ? 'border-2 border-amber-400 ring-2 ring-amber-100' : 'border-amber-200')} pointer-events-none" ${isLocked ? 'style="display: none;"' : ''} ${cardIdAttr}>
+        <div class="flex items-center gap-1"><span class="text-xs" ${badgeIconIdAttr}>${effectiveCompleted ? '📦' : '🎁'}</span><span class="text-[11px] ${effectiveCompleted ? 'text-slate-500' : 'text-amber-600'} font-extrabold" ${badgeTextIdAttr}>${effectiveCompleted ? '수령 완료' : '+15 💎'}</span></div>
       </div>
     </div>`;
   }

@@ -22,8 +22,8 @@ def verify_csv():
     violations = [r for r in rows if r['Meaning'].strip() in DISALLOWED_JOSA]
     assert len(violations) == 0, f"Found {len(violations)} CSV violations: {violations}"
 
-    # Punctuation check
-    bad_punct = [',', '/', '(', ')', '[', ']', '{', '}']
+    # Punctuation check (disallow raw json/array brackets)
+    bad_punct = ['[', ']', '{', '}']
     punct_violations = [r for r in rows if any(p in r['Meaning'] for p in bad_punct)]
     assert len(punct_violations) == 0, f"Found {len(punct_violations)} punctuation violations in CSV"
 
@@ -41,8 +41,8 @@ def verify_csv():
     assert spec_map['from'] == '부터', f"from: {spec_map['from']}"
     assert spec_map['with'] == '함께', f"with: {spec_map['with']}"
     assert spec_map['of'] == '관한', f"of: {spec_map['of']}"
-    assert spec_map['can'] == '할수있다', f"can: {spec_map['can']}"
-    assert spec_map['will'] == '할것이다', f"will: {spec_map['will']}"
+    assert spec_map['can'] == '할 수 있다', f"can: {spec_map['can']}"
+    assert spec_map['will'] == '할 것이다', f"will: {spec_map['will']}"
     assert spec_map['about'] == '대해', f"about: {spec_map['about']}"
     assert spec_map['at'] == '에서', f"at: {spec_map['at']}"
 

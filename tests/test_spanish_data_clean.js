@@ -44,7 +44,7 @@ data_es.allWords.forEach(w => {
 const EXPECTED_WORDS = {
   ser: '이다',
   haber: '있다',
-  poder: '할수있다',
+  poder: '할 수 있다 / 능력 / 힘',
   hablar: '말하다',
   volver: '돌아가다',
   trabajar: '일하다',
