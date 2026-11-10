@@ -1,9 +1,10 @@
-const CACHE_NAME = 'vocadash-cache-v1';
+const CACHE_NAME = 'vocadash-cache-v2';
 
 const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
+  './favicon.png',
   './css/tailwind.prod.css',
   './css/style.css',
   './assets/icons/icon-192.png',
