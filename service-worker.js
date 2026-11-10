@@ -1,4 +1,5 @@
-const CACHE_NAME = 'vocadash-cache-v2';
+const CACHE_NAME = 'vocadash-cache-v3';
+const MATERIAL_SYMBOLS_URL = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200';
 
 const PRECACHE_URLS = [
   './',
@@ -64,7 +65,10 @@ const PRECACHE_URLS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .then((cache) => Promise.all([
+        cache.addAll(PRECACHE_URLS),
+        cache.add(MATERIAL_SYMBOLS_URL).catch(() => {})
+      ]))
       .then(() => self.skipWaiting())
   );
 });
@@ -79,8 +83,8 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function staleWhileRevalidate(request) {
-  return caches.match(request, { ignoreSearch: true }).then((cached) => {
+function staleWhileRevalidate(request, ignoreSearch = false) {
+  return caches.match(request, { ignoreSearch }).then((cached) => {
     const networkFetch = fetch(request)
       .then((response) => {
         if (response && (response.ok || response.type === 'opaque')) {
@@ -123,7 +127,10 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'fonts.gstatic.com' ||
     url.hostname === 'cdn.jsdelivr.net';
 
-  if (isSameOrigin || isFontOrCdnAsset) {
-    event.respondWith(staleWhileRevalidate(request));
+  if (isSameOrigin) {
+    event.respondWith(staleWhileRevalidate(request, true));
+  } else if (isFontOrCdnAsset) {
+    // Query string(?family=...) distinguishes Noto Sans KR vs Material Symbols Outlined
+    event.respondWith(staleWhileRevalidate(request, false));
   }
 });
