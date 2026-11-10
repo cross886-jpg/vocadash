@@ -49,43 +49,6 @@
     class="relative w-full max-w-[440px] min-h-screen bg-surface flex flex-col shadow-2xl overflow-hidden border-x border-slate-200/80">
 
     <!-- ================================================= -->
-    <!-- 0. BRAND SPLASH INTRO SCREEN                      -->
-    <!-- ================================================= -->
-    <div id="splash-screen"
-      class="fixed inset-0 z-[100] max-w-[440px] mx-auto bg-white flex flex-col items-center justify-between py-12 px-6 select-none cursor-pointer transition-opacity duration-400 ease-out"
-      role="banner" aria-label="VocaDash Splash Screen">
-      <!-- Top Spacer -->
-      <div class="h-6"></div>
-
-      <!-- Center Brand Identity -->
-      <div class="flex flex-col items-center text-center -mt-8">
-        <div class="relative w-36 h-36 flex items-center justify-center mb-5">
-          <div class="absolute inset-0 bg-emerald-100/70 rounded-full blur-2xl transform scale-110 animate-pulse"></div>
-          <img id="splash-mascot-img" alt="VocaDash Cat Mascot"
-            class="relative z-10 w-32 h-32 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)] transition-transform duration-300 transform hover:scale-105"
-            src="assets/characters/es-idle.webp?v=88">
-        </div>
-        <h1
-          class="font-headline-lg text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none flex items-center justify-center">
-          Voca<span class="text-[#22c55e]">Dash</span></h1>
-        <p class="font-body-md text-[15px] font-semibold text-slate-500 mt-2.5 tracking-tight">
-          단어로 질주하는 보카 대시 ⚡️
-        </p>
-      </div>
-
-      <!-- Bottom Hint & Progress bar -->
-      <div class="flex flex-col items-center gap-2">
-        <div class="w-24 h-1 bg-slate-100 rounded-full overflow-hidden">
-          <div id="splash-progress-bar"
-            class="h-full bg-[#22c55e] rounded-full w-0 transition-all duration-1000 ease-out"></div>
-        </div>
-        <p class="text-[11px] font-medium text-slate-400 flex items-center gap-1">
-          <span>화면을 탭하면 바로 시작합니다</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- ================================================= -->
     <!-- 1. TOP FIXED HEADER                               -->
     <!-- ================================================= -->
     <header id="roadmap-header"

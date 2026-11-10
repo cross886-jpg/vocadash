@@ -38,35 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
-  // 2. 브랜드 스플래시 인트로 컨트롤러 (1.2초 자동 + 터치 시 스킵)
-  const splashScreen = document.getElementById('splash-screen');
-  const splashProgressBar = document.getElementById('splash-progress-bar');
-  const splashMascot = document.getElementById('splash-mascot-img');
-
-  function dismissSplash() {
-    if (!splashScreen) return;
-    splashScreen.style.pointerEvents = "none";
-    splashScreen.classList.add("opacity-0", "pointer-events-none");
-    setTimeout(() => {
-      splashScreen.classList.add("hidden");
-      splashScreen.style.display = "none";
-      splashScreen.style.pointerEvents = "none";
-    }, 300);
-  }
-  window.dismissSplash = dismissSplash;
-
-  if (splashScreen) {
-    if (splashMascot) {
-      let savedLang = 'es';
-      try { savedLang = localStorage.getItem('vocadash_language') || 'es'; } catch (_) { }
-      splashMascot.src = `assets/characters/${savedLang}-idle.webp?v=68`;
-    }
-    if (splashProgressBar) setTimeout(() => { splashProgressBar.style.width = '100%'; }, 50);
-    ['click', 'touchstart'].forEach(evt => splashScreen.addEventListener(evt, dismissSplash, { passive: true }));
-    const autoDismiss = () => setTimeout(dismissSplash, 1200);
-    if (document.readyState === 'complete') autoDismiss(); else window.addEventListener('load', autoDismiss);
-    setTimeout(dismissSplash, 3000);
-  }
+  // 2. 인앱 중복 스플래시 제거 (OS 스플래시 종료 후 즉시 로드맵 진입; 호환용 no-op 유지)
+  window.dismissSplash = () => {};
 
   // 3. 애플리케이션 초기화 부트스트랩 (각 모듈 진입점 순차 호출)
   const initialLang = (typeof window.getSavedLanguage === 'function') ? window.getSavedLanguage() : 'es';
