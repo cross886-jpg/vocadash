@@ -1,4 +1,6 @@
-:root {
+:root,
+html,
+body {
   color-scheme: light only;
 }
 
