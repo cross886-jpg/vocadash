@@ -1,0 +1,27 @@
+{
+  "name": "VocaDash - 2D 러너 단어 퀴즈",
+  "short_name": "VocaDash",
+  "description": "게이미피케이션 기반 스페인어·영어 2D 러너 단어 퀴즈 학습 앱",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF8FF",
+  "theme_color": "#10B981",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

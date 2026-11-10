@@ -150,14 +150,12 @@
     const theme = getUnitTheme(unitNum);
     const getNodeProg = (typeof window.getNodeProgress === 'function') ? window.getNodeProgress : null;
     const nodeData = getNodeProg ? getNodeProg(resolvedId) : { clearedCount: 0, stars: 0 };
-    const pCount = effectiveCompleted ? 3 : (effectiveActive ? (nodeData.clearedCount || 0) : 0);
+    const pCount = isLocked ? 0 : (effectiveCompleted ? 3 : (nodeData.clearedCount || 0));
 
-    // 100% 불투명 솔리드 배경 적용
+    // 100% 불투명 솔리드 배경 적용 (해금된 모든 스테이지는 활성 테마 컬러 유지)
     const btnClass = isLocked
       ? 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm pointer-events-none'
-      : (effectiveCompleted || effectiveActive
-        ? theme.activeBtn
-        : 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm');
+      : theme.activeBtn;
     const esc = (typeof window.escapeHTML === 'function') ? window.escapeHTML : ((str) => String(str || ''));
 
     const isU1 = unitNum === 1;
@@ -282,9 +280,7 @@
 
     const btnClass = isLocked
       ? 'bg-[#E2E8F0] border-2 border-slate-300 shadow-sm pointer-events-none'
-      : (effectiveCompleted || effectiveActive
-        ? theme.activeBtn
-        : 'bg-slate-200 border-b-4 border-slate-300');
+      : theme.activeBtn;
 
     const containerId = unitNum === 1 ? 'node-boss-container' : `u${unitNum}_node-boss-container`;
     const targetId = unitNum === 1 ? 'node-boss-target' : `u${unitNum}_node-boss-target`;

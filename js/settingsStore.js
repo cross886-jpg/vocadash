@@ -22,7 +22,11 @@
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          settings = { ...DEFAULT_SETTINGS, ...parsed };
+          if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+            settings = { ...DEFAULT_SETTINGS, ...parsed };
+          } else {
+            localStorage.removeItem(STORAGE_KEY);
+          }
         }
         const soundDirect = localStorage.getItem('vocadash_sound_enabled');
         if (soundDirect !== null) {
@@ -30,6 +34,7 @@
         }
       }
     } catch (e) {
+      try { if (typeof localStorage !== 'undefined') localStorage.removeItem(STORAGE_KEY); } catch (_) { }
       console.warn('settingsStore: 설정 로드 실패, 기본값 사용:', e);
     }
     return settings;

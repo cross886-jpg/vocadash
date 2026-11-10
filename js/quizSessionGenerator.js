@@ -82,7 +82,7 @@
     const s = String(id).toLowerCase();
     if (s.includes('boss') || s.endsWith('_n6') || s === 'node-boss') return 'node-boss';
     if (s.includes('review') || s.endsWith('_n4') || s === 'node-review') return 'node-review';
-    if (s.includes('bonus') || (s.endsWith('_n3') && s.includes('bonus'))) return 'node-bonus';
+    if (s.includes('bonus') || /^(?:es|en|fb)_\d+_n3$/i.test(s)) return 'node-bonus';
     if (s.endsWith('_n5') || s.endsWith('node-3') || s.endsWith('stage-3')) return 'node-3';
     const match = s.match(/(?:node|stage|n|-)(\d+)$/i);
     if (match) {

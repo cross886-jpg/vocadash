@@ -7,7 +7,7 @@
     set: (k, v) => { try { (typeof localStorage !== 'undefined' ? localStorage : target.localStorage)?.setItem(k, String(v)); } catch (_) { } },
     remove: (k) => { try { (typeof localStorage !== 'undefined' ? localStorage : target.localStorage)?.removeItem(k); } catch (_) { } }
   };
-  const getLang = (l) => (l || target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+  const getLang = (l) => (l || target.currentLanguage || target.currentActiveCourse || storage.get('vocadash_language') || 'es') === 'en' ? 'en' : 'es';
   const getCourse = (c, lang) => {
     let cid = c || target.currentCourseId || target.activeCourseId;
     if (!cid && storage.get) cid = storage.get(`vocadash_active_course_${getLang(lang)}`) || storage.get('vocadash_active_course');
@@ -16,6 +16,58 @@
     }
     return 'main';
   };
+  function getCoursePrefix(lang, cid) {
+    return (cid === 'pack_football') ? 'fb' : (lang === 'en' ? 'en' : 'es');
+  }
+  function getStageDataSlot(nodeIndex) {
+    if (nodeIndex === 3) return 5;
+    if (nodeIndex === 'bonus') return 3;
+    if (nodeIndex === 'review') return 4;
+    return nodeIndex;
+  }
+  function safeParseObject(raw) {
+    if (!raw || typeof raw !== 'string') return null;
+    try {
+      const parsed = JSON.parse(raw);
+      return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : null;
+    } catch (_) {
+      return null;
+    }
+  }
+  function safeParseArray(raw) {
+    if (!raw || typeof raw !== 'string') return null;
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : null;
+    } catch (_) {
+      return null;
+    }
+  }
+  function getSafeUserData() {
+    const raw = storage.get('vocadash_user_data');
+    if (raw === null || raw === undefined || raw === '') return {};
+    const parsed = safeParseObject(raw);
+    if (parsed) return parsed;
+    storage.remove('vocadash_user_data');
+    return {};
+  }
+  function parseRawCount(raw) {
+    if (raw === null || raw === undefined || raw === '') return null;
+    try {
+      const p = JSON.parse(raw);
+      if (typeof p === 'number' && !isNaN(p)) return p;
+      if (p && typeof p === 'object' && !Array.isArray(p)) {
+        const val = p.clearedCount ?? p.stars ?? (p.cleared ? 3 : 0);
+        return isNaN(Number(val)) ? 0 : Number(val);
+      }
+    } catch (_) {
+      if (/^-?\d+$/.test(String(raw).trim())) {
+        const num = parseInt(raw, 10);
+        if (!isNaN(num)) return num;
+      }
+    }
+    return null;
+  }
   function getCompositeNodeKey(nodeId, unitId = null) {
     if (!nodeId) return `u${unitId || 1}_node-1`;
     const str = String(nodeId).trim();
@@ -27,29 +79,44 @@
     const str = String(nodeId).trim();
     const uM = str.match(/(?:^|[_uU])(\d+)(?:[_nN-]|$)/);
     const u = uM ? (parseInt(uM[1], 10) || fallbackUnit) : fallbackUnit;
-    if (str.includes('boss') || str.endsWith('_n6')) return { unitIndex: u, nodeIndex: 6 };
-    if (str.endsWith('_n5') || str.endsWith('-n3') || str === 'node-3') return { unitIndex: u, nodeIndex: 3 };
-    if (str.includes('review') || str.endsWith('_n4')) return { unitIndex: u, nodeIndex: 'review' };
-    if (str.includes('bonus') || str.endsWith('_n3')) return { unitIndex: u, nodeIndex: 'bonus' };
+    if (str.includes('boss') || /_n6$/i.test(str)) return { unitIndex: u, nodeIndex: 6 };
+    if (/_n5$/i.test(str) || /(?:^|[_-])(?:node|stage)-3$/i.test(str) || /_u\d+_n3$/i.test(str) || /^u\d+_n3$/i.test(str)) return { unitIndex: u, nodeIndex: 3 };
+    if (str.includes('review') || /_n4$/i.test(str)) return { unitIndex: u, nodeIndex: 'review' };
+    if (str.includes('bonus') || /^(?:es|en|fb)_\d+_n3$/i.test(str)) return { unitIndex: u, nodeIndex: 'bonus' };
     const nM = str.match(/(?:node|stage|n|-)?(\d+)$/i);
     return { unitIndex: u, nodeIndex: nM ? (parseInt(nM[1], 10) || 1) : 1 };
   }
+  function getDefaultCourseProgress() {
+    return { completedNodes: [], claimedBonuses: [], unlockedUnits: [1], unlockedNodes: [], nodeProgressMap: { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 } };
+  }
   function getCourseProgress(courseId, targetLang) {
     const lang = getLang(targetLang), cid = getCourse(courseId, lang);
-    try {
-      const raw = storage.get(`vocadash_progress_${lang}_${cid}`);
-      if (raw) {
-        const p = JSON.parse(raw);
-        if (p && typeof p === 'object') return { completedNodes: p.completedNodes || [], claimedBonuses: p.claimedBonuses || [], unlockedUnits: p.unlockedUnits || [1], nodeProgressMap: p.nodeProgressMap || { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 } };
+    const key = `vocadash_progress_${lang}_${cid}`;
+    const raw = storage.get(key);
+    if (raw !== null && raw !== undefined && raw !== '') {
+      const p = safeParseObject(raw);
+      if (p) {
+        const npm = (p.nodeProgressMap && typeof p.nodeProgressMap === 'object' && !Array.isArray(p.nodeProgressMap))
+          ? p.nodeProgressMap
+          : { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+        return {
+          completedNodes: Array.isArray(p.completedNodes) ? p.completedNodes : [],
+          claimedBonuses: Array.isArray(p.claimedBonuses) ? p.claimedBonuses : [],
+          unlockedUnits: Array.isArray(p.unlockedUnits) && p.unlockedUnits.length > 0 ? p.unlockedUnits : [1],
+          unlockedNodes: Array.isArray(p.unlockedNodes) ? p.unlockedNodes : [],
+          nodeProgressMap: npm
+        };
       }
-    } catch (_) { }
-    return { completedNodes: [], claimedBonuses: [], unlockedUnits: [1], nodeProgressMap: { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 } };
+      // 손상된/비정상 문자열("done", 깨진 JSON 등) 자동 정리 후 안전 기본값 복구
+      storage.remove(key);
+    }
+    return getDefaultCourseProgress();
   }
   function saveCourseProgress(progressData, courseId, targetLang) {
     storage.set(`vocadash_progress_${getLang(targetLang)}_${getCourse(courseId, targetLang)}`, JSON.stringify(progressData || {}));
   }
   function getMaxCourseUnits(courseId, targetLang) {
-    const lang = getLang(targetLang), cid = getCourse(targetCourseId => targetCourseId, lang);
+    const lang = getLang(targetLang), cid = getCourse(courseId, lang);
     const resolvedCid = (cid === 'pack_football' || courseId === 'es_soccer') ? 'es_soccer' : (lang === 'en' ? 'en_main' : 'es_main');
     const cs = target.courseSections;
     if (cs && cs[resolvedCid] && Array.isArray(cs[resolvedCid].sections)) {
@@ -62,13 +129,22 @@
     const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
     const maxUnits = getMaxCourseUnits(cid, lang);
     try {
-      const val = storage.get(`vocadash_unlocked_${lang}_${cid}`);
-      if (val !== null) { const num = parseInt(val, 10); if (!isNaN(num) && num >= 1 && num <= maxUnits) return num; }
+      const candidates = [
+        storage.get(`vocadash_unlocked_${lang}_${cid}`),
+        storage.get(`vocadash_unlocked_unit_${lang}_${cid}`),
+        (cid === 'main') ? storage.get(`vocadash_unlocked_unit_${lang}`) : null
+      ];
+      for (const val of candidates) {
+        if (val !== null && val !== undefined && val !== '') {
+          const num = parseInt(val, 10);
+          if (!isNaN(num) && num >= 1 && num <= maxUnits) return num;
+        }
+      }
     } catch (_) { }
     return 1;
   }
   function setUnlockedUnitLevel(level, targetLang, targetCourseId) {
-    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang), prefix = getCoursePrefix(lang, cid);
     const maxUnits = getMaxCourseUnits(cid, lang);
     const lvl = Math.max(1, Math.min(maxUnits, parseInt(level, 10) || 1));
     storage.set(`vocadash_unlocked_${lang}_${cid}`, String(lvl));
@@ -85,24 +161,36 @@
 
     // 💡 [Back-fill Unlock] 상위 유닛 도달 시 이전 번호(1 ~ lvl-1) 모든 게이트/노드 자동 완벽 해금
     if (!target.nodeProgressMap) target.nodeProgressMap = {};
+    const uData = getSafeUserData();
+    if (!uData.clearedNodes || typeof uData.clearedNodes !== 'object' || Array.isArray(uData.clearedNodes)) uData.clearedNodes = {};
+
     for (let u = 1; u < lvl; u++) {
       [1, 2, 3].forEach(n => {
+        const dataSlot = getStageDataSlot(n);
         const stdKey = `vocadash_prog_${lang}_${cid}_u${u}_n${n}`;
         storage.set(stdKey, '3');
         storage.set(`node_progress_${lang}_${cid}_u${u}_node-${n}`, '3');
         storage.set(`node_progress_${lang}_${cid}_u${u}_stage-${n}`, '3');
         target.nodeProgressMap[`u${u}_node-${n}`] = 3;
         target.nodeProgressMap[`u${u}_stage-${n}`] = 3;
+        target.nodeProgressMap[`u${u}_n${dataSlot}`] = 3;
+        target.nodeProgressMap[`${prefix}_${u}_n${dataSlot}`] = 3;
         target.nodeProgressMap[`${lang}_${cid}_u${u}_n${n}`] = 3;
         if (u === 1) {
           storage.set(`node_progress_${lang}_${cid}_node-${n}`, '3');
           target.nodeProgressMap[`node-${n}`] = 3;
+        }
+        if (n === 3) {
+          uData.clearedNodes[`u${u}_node-3`] = { cleared: true, clearedCount: 3, actuallyPlayed: true };
+          uData.clearedNodes[`${prefix}_${u}_n5`] = { cleared: true, clearedCount: 3, actuallyPlayed: true };
+          if (u === 1) uData.clearedNodes['node-3'] = { cleared: true, clearedCount: 3, actuallyPlayed: true };
         }
       });
       const bossKey = `vocadash_prog_${lang}_${cid}_u${u}_n6`;
       storage.set(bossKey, '1');
       storage.set(`node_progress_${lang}_${cid}_u${u}_node-boss`, '1');
       target.nodeProgressMap[`u${u}_node-boss`] = 1;
+      target.nodeProgressMap[`${prefix}_${u}_n6`] = 1;
       target.nodeProgressMap[`${lang}_${cid}_u${u}_n6`] = 1;
       if (u === 1) {
         storage.set(`node_progress_${lang}_${cid}_node-boss`, '1');
@@ -113,21 +201,23 @@
       const bonusKey = `u${u}_node-bonus`;
       markBonusClaimed(bonusKey);
       target.nodeProgressMap[bonusKey] = 1;
+      target.nodeProgressMap[`${prefix}_${u}_n3`] = 1;
       if (u === 1) target.nodeProgressMap['node-bonus'] = 1;
 
       const reviewKey = `u${u}_node-review`;
       markReviewNodeCompleted(reviewKey, u);
       target.nodeProgressMap[reviewKey] = 1;
+      target.nodeProgressMap[`${prefix}_${u}_n4`] = 1;
       if (u === 1) target.nodeProgressMap['node-review'] = 1;
     }
+    try { storage.set('vocadash_user_data', JSON.stringify(uData)); } catch (_) { }
 
     // 목표 유닛의 첫 번째 스테이지 활성화 보장
-    if (target.nodeProgressMap[`u${lvl}_node-1`] === undefined) {
-      target.nodeProgressMap[`u${lvl}_node-1`] = 0;
-    }
-    if (lvl === 1 && target.nodeProgressMap['node-1'] === undefined) {
-      target.nodeProgressMap['node-1'] = 0;
-    }
+    if (target.nodeProgressMap[`u${lvl}_node-1`] === undefined) target.nodeProgressMap[`u${lvl}_node-1`] = 0;
+    if (target.nodeProgressMap[`${prefix}_${lvl}_n1`] === undefined) target.nodeProgressMap[`${prefix}_${lvl}_n1`] = 0;
+    if (lvl === 1 && target.nodeProgressMap['node-1'] === undefined) target.nodeProgressMap['node-1'] = 0;
+
+    syncUnlockedNodesForCourse(lang, cid, lvl);
     try {
       if (typeof saveNodeProgressData === 'function') saveNodeProgressData();
     } catch (_) { }
@@ -143,55 +233,208 @@
     return lvl;
   }
 
-  function getNodeProgress(nodeId, targetLang, targetCourseId) {
-    if (!nodeId) return { clearedCount: 0, stars: 0, valueOf() { return 0; }, toString() { return '0'; } };
-    const lang = getLang(targetLang), cid = String(nodeId).startsWith('fb_') ? 'pack_football' : getCourse(targetCourseId, lang);
-    const { unitIndex, nodeIndex } = parseNodeCoordinates(nodeId), key = `vocadash_prog_${lang}_${cid}_u${unitIndex}_n${nodeIndex}`;
-    let count = 0;
-    try {
-      const raw = storage.get(key);
-      if (raw !== null) { const p = JSON.parse(raw); count = typeof p === 'number' ? p : (p?.clearedCount ?? p?.stars ?? 0); }
-    } catch (_) { const num = parseInt(storage.get(key), 10); if (!isNaN(num)) count = num; }
-    if (count === 0 && target.nodeProgressMap) {
-      count = Number(target.nodeProgressMap[`${lang}_${cid}_u${unitIndex}_n${nodeIndex}`] || 0);
-      if (count === 0 && cid === getCourse(undefined, lang) && lang === getLang()) {
-        count = Number(target.nodeProgressMap[nodeId] || target.nodeProgressMap[`u${unitIndex}_node-${nodeIndex}`] || (unitIndex === 1 ? target.nodeProgressMap[`node-${nodeIndex}`] : 0) || 0);
+  function syncUnlockedNodesForCourse(targetLang, targetCourseId, hintUnit = 1) {
+    const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);
+    const prefix = getCoursePrefix(lang, cid);
+    const unlockedLevel = getUnlockedUnitLevel(lang, cid);
+    const maxCheckUnit = Math.max(unlockedLevel, parseInt(hintUnit, 10) || 1);
+    const activeLang = getLang(), activeCid = getCourse(target.currentCourseId || target.activeCourseId, activeLang);
+    const isActiveCourse = (lang === activeLang && cid === activeCid);
+
+    const prog = getCourseProgress(cid, lang);
+    const unlockedSet = new Set(Array.isArray(prog.unlockedNodes) ? prog.unlockedNodes : []);
+    if (isActiveCourse && Array.isArray(target.unlockedNodes)) {
+      target.unlockedNodes.forEach(id => {
+        if (String(id).startsWith(`${prefix}_`) || String(id).startsWith('u') || String(id).startsWith('node-')) {
+          unlockedSet.add(id);
+        }
+      });
+    }
+
+    if (!target.nodeProgressMap) target.nodeProgressMap = {};
+    const ensureMapDefault = (keys) => {
+      if (!isActiveCourse) return;
+      keys.forEach(k => { if (target.nodeProgressMap[k] === undefined) target.nodeProgressMap[k] = 0; });
+    };
+
+    for (let u = 1; u <= maxCheckUnit; u++) {
+      const p1 = getNodeProgress(`${prefix}_${u}_n1`, lang, cid).clearedCount;
+      const p2 = getNodeProgress(`${prefix}_${u}_n2`, lang, cid).clearedCount;
+      const p3 = getNodeProgress(`${prefix}_${u}_n5`, lang, cid).clearedCount;
+      const pBoss = getNodeProgress(`${prefix}_${u}_n6`, lang, cid).clearedCount;
+      const prevBossCleared = (u > 1) ? ((getNodeProgress(`${prefix}_${u - 1}_n6`, lang, cid).clearedCount || 0) >= 1) : true;
+      const unitOpen = (u === 1) || (u <= unlockedLevel) || prevBossCleared;
+      if (!unitOpen) continue;
+
+      // Stage 1 unlocks when unit is open
+      const s1Keys = [`${prefix}_${u}_n1`, `u${u}_n1`, `u${u}_node-1`, `u${u}_stage-1`];
+      if (u === 1) s1Keys.push('node-1');
+      s1Keys.forEach(k => unlockedSet.add(k));
+      ensureMapDefault(s1Keys);
+
+      // Stage 2 unlocks when Stage 1 >= 3 (or has progress)
+      if (p1 >= 3 || p2 > 0) {
+        const s2Keys = [`${prefix}_${u}_n2`, `u${u}_n2`, `u${u}_node-2`, `u${u}_stage-2`];
+        if (u === 1) s2Keys.push('node-2');
+        s2Keys.forEach(k => unlockedSet.add(k));
+        ensureMapDefault(s2Keys);
+      }
+
+      // Sequential Chain: Stage 2 cleared -> Bonus -> Review claimed/completed -> Stage 3 -> Boss
+      if (p2 >= 3) {
+        const bonusKeys = [`${prefix}_${u}_n3`, `u${u}_node-bonus`];
+        if (u === 1) bonusKeys.push('node-bonus');
+        bonusKeys.forEach(k => unlockedSet.add(k));
+      }
+
+      const bonusClaimedForU = hasClaimedBonusForUnit(u, prefix, cid, lang);
+      if (bonusClaimedForU) {
+        const reviewKeys = [`${prefix}_${u}_n4`, `u${u}_node-review`];
+        if (u === 1) reviewKeys.push('node-review');
+        reviewKeys.forEach(k => unlockedSet.add(k));
+      }
+
+      const reviewCompletedForU = Boolean(
+        isReviewNodeCompleted(`${prefix}_${u}_n4`, u) ||
+        isReviewNodeCompleted(`u${u}_node-review`, u) ||
+        (u === 1 && isReviewNodeCompleted('node-review', 1))
+      );
+      if (reviewCompletedForU || p3 > 0) {
+        const s3Keys = [`${prefix}_${u}_n5`, `u${u}_n5`, `u${u}_node-3`, `u${u}_stage-3`];
+        if (u === 1) s3Keys.push('node-3');
+        s3Keys.forEach(k => unlockedSet.add(k));
+        ensureMapDefault(s3Keys);
+      }
+
+      // Boss (n6) unlocks when Stage 3 >= 3 (or has progress)
+      if (p3 >= 3 || pBoss > 0) {
+        const bossKeys = [`${prefix}_${u}_n6`, `u${u}_n6`, `u${u}_node-boss`];
+        if (u === 1) bossKeys.push('node-boss');
+        bossKeys.forEach(k => unlockedSet.add(k));
+        ensureMapDefault(bossKeys);
       }
     }
-    count = Math.max(0, Math.min(3, count));
+
+    const updatedList = Array.from(unlockedSet);
+    prog.unlockedNodes = updatedList;
+    saveCourseProgress(prog, cid, lang);
+    if (isActiveCourse) {
+      target.unlockedNodes = updatedList;
+    }
+    return updatedList;
+  }
+
+  function getNodeProgress(nodeId, targetLang, targetCourseId) {
+    if (!nodeId) return { clearedCount: 0, stars: 0, valueOf() { return 0; }, toString() { return '0'; } };
+    const strId = String(nodeId);
+    const inferredLang = targetLang || (strId.startsWith('en_') ? 'en' : ((strId.startsWith('es_') || strId.startsWith('fb_')) ? 'es' : undefined));
+    const lang = getLang(inferredLang), cid = strId.startsWith('fb_') ? 'pack_football' : getCourse(targetCourseId, lang);
+    const prefix = getCoursePrefix(lang, cid);
+    const { unitIndex, nodeIndex } = parseNodeCoordinates(nodeId);
+    const dataSlot = getStageDataSlot(nodeIndex);
+    const dataNodeId = `${prefix}_${unitIndex}_n${dataSlot}`;
+    const key = `vocadash_prog_${lang}_${cid}_u${unitIndex}_n${nodeIndex}`;
+
+    let count = parseRawCount(storage.get(key));
+    if (!count) {
+      const storageCandidates = [
+        dataSlot !== nodeIndex ? `vocadash_prog_${lang}_${cid}_u${unitIndex}_n${dataSlot}` : null,
+        `vocadash_prog_${lang}_${cid}_${dataNodeId}`,
+        `node_progress_${lang}_${cid}_u${unitIndex}_node-${nodeIndex}`,
+        `node_progress_${lang}_${cid}_u${unitIndex}_stage-${nodeIndex}`,
+        unitIndex === 1 ? `node_progress_${lang}_${cid}_node-${nodeIndex}` : null,
+        dataNodeId
+      ].filter(Boolean);
+
+      for (const sk of storageCandidates) {
+        const parsed = parseRawCount(storage.get(sk));
+        if (parsed !== null && parsed > 0) { count = parsed; break; }
+      }
+    }
+    if (!count && cid === 'main' && lang === 'es' && unitIndex === 1 && nodeIndex === 3) {
+      const legacyEs = parseRawCount(storage.get('u1_node-3') || storage.get('u1_stage-3'));
+      if (legacyEs !== null && legacyEs > 0) count = legacyEs;
+    }
+
+    if (!count) {
+      const savedProg = getCourseProgress(cid, lang);
+      const pm = savedProg.nodeProgressMap || {};
+      const mapVal = parseRawCount(pm[dataNodeId] ?? pm[`${lang}_${cid}_u${unitIndex}_n${nodeIndex}`] ?? pm[`u${unitIndex}_node-${nodeIndex}`] ?? (unitIndex === 1 ? pm[`node-${nodeIndex}`] : undefined));
+      if (mapVal !== null && mapVal > 0) count = mapVal;
+      else if (Array.isArray(savedProg.completedNodes) && (savedProg.completedNodes.includes(dataNodeId) || savedProg.completedNodes.includes(`u${unitIndex}_node-${nodeIndex}`))) {
+        count = 3;
+      }
+    }
+
+    if (!count) {
+      const uData = getSafeUserData();
+      const starVal = parseRawCount(uData?.stars?.[dataNodeId]);
+      if (starVal !== null && starVal > 0) count = starVal;
+      else {
+        const clearedEntry = uData?.clearedNodes?.[dataNodeId];
+        if (clearedEntry) {
+          const cVal = (typeof clearedEntry === 'object' && !Array.isArray(clearedEntry))
+            ? (clearedEntry.clearedCount ?? (clearedEntry.cleared ? 3 : 0))
+            : parseRawCount(clearedEntry);
+          if (cVal > 0) count = cVal;
+        }
+      }
+    }
+
+    if (!count && target.nodeProgressMap) {
+      count = Number(target.nodeProgressMap[`${lang}_${cid}_u${unitIndex}_n${nodeIndex}`] || target.nodeProgressMap[dataNodeId] || 0);
+      if (count === 0 && cid === getCourse(undefined, lang) && lang === getLang()) {
+        count = Number(target.nodeProgressMap[nodeId] || target.nodeProgressMap[`u${unitIndex}_n${dataSlot}`] || target.nodeProgressMap[`u${unitIndex}_node-${nodeIndex}`] || target.nodeProgressMap[`u${unitIndex}_stage-${nodeIndex}`] || (unitIndex === 1 ? target.nodeProgressMap[`node-${nodeIndex}`] : 0) || 0);
+      }
+    }
+    count = Math.max(0, Math.min(3, Number(count) || 0));
     return { clearedCount: count, stars: count, valueOf() { return count; }, toString() { return String(count); } };
   }
 
   function setNodeProgress(nodeId, clearedCount, stars, targetLang, targetCourseId) {
     if (!nodeId) return { clearedCount: 0, stars: 0, valueOf() { return 0; }, toString() { return '0'; } };
-    const lang = getLang(targetLang), cid = String(nodeId).startsWith('fb_') ? 'pack_football' : getCourse(targetCourseId, lang);
+    const strId = String(nodeId);
+    const inferredLang = targetLang || (strId.startsWith('en_') ? 'en' : ((strId.startsWith('es_') || strId.startsWith('fb_')) ? 'es' : undefined));
+    const lang = getLang(inferredLang), cid = strId.startsWith('fb_') ? 'pack_football' : getCourse(targetCourseId, lang);
+    const prefix = getCoursePrefix(lang, cid);
     const { unitIndex, nodeIndex } = parseNodeCoordinates(nodeId);
+    const dataSlot = getStageDataSlot(nodeIndex);
+    const dataNodeId = `${prefix}_${unitIndex}_n${dataSlot}`;
     const count = Math.min(3, Math.max(0, Number(clearedCount) || 0)), s = Math.min(3, Math.max(0, stars !== undefined ? Number(stars) : count));
     const key = `vocadash_prog_${lang}_${cid}_u${unitIndex}_n${nodeIndex}`, compNodeKey = `u${unitIndex}_node-${nodeIndex}`, compStageKey = `u${unitIndex}_stage-${nodeIndex}`;
+
     storage.set(key, String(count));
     storage.set(`node_progress_${lang}_${cid}_${compNodeKey}`, String(count));
     storage.set(`node_progress_${lang}_${cid}_${compStageKey}`, String(count));
     if (cid === 'main' && lang === 'es') { storage.set(compNodeKey, String(count)); storage.set(compStageKey, String(count)); }
-    if (nodeIndex === 3 || String(nodeId).includes('node-3') || String(nodeId).includes('stage-3')) {
+    if (nodeIndex === 3 || strId.includes('node-3') || strId.includes('stage-3') || strId.endsWith('_n5')) {
       try {
-        let uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-        if (!uData.clearedNodes) uData.clearedNodes = {};
-        uData.clearedNodes['node-3'] = uData.clearedNodes[compNodeKey] = uData.clearedNodes[compStageKey] = { cleared: count >= 3, clearedCount: count, actuallyPlayed: true };
+        const uData = getSafeUserData();
+        if (!uData.clearedNodes || typeof uData.clearedNodes !== 'object' || Array.isArray(uData.clearedNodes)) uData.clearedNodes = {};
+        const entry = { cleared: count >= 3, clearedCount: count, actuallyPlayed: true };
+        uData.clearedNodes[compNodeKey] = uData.clearedNodes[compStageKey] = uData.clearedNodes[dataNodeId] = entry;
+        if (unitIndex === 1) uData.clearedNodes['node-3'] = entry;
         storage.set('vocadash_user_data', JSON.stringify(uData));
       } catch (_) { }
     }
-    if (cid === 'pack_football' && String(nodeId).startsWith('fb_')) storage.set(`vocadash_node_progress_${nodeId}`, JSON.stringify({ clearedCount: count, stars: s }));
+    if (cid === 'pack_football' && strId.startsWith('fb_')) storage.set(`vocadash_node_progress_${nodeId}`, JSON.stringify({ clearedCount: count, stars: s }));
     if (!target.nodeProgressMap) target.nodeProgressMap = {};
-    target.nodeProgressMap[`${lang}_${cid}_u${unitIndex}_n${nodeIndex}`] = target.nodeProgressMap[nodeId] = target.nodeProgressMap[compStageKey] = target.nodeProgressMap[compNodeKey] = target.nodeProgressMap[`u${unitIndex}_n${nodeIndex}`] = count;
-    if (cid === 'pack_football') target.nodeProgressMap[`fb_${unitIndex}_n${nodeIndex}`] = count;
-    else target.nodeProgressMap[`${lang}_${unitIndex}_n${nodeIndex}`] = count;
-    if (String(nodeIndex) === '6' || String(nodeId).includes('boss')) target.nodeProgressMap[`u${unitIndex}_node-boss`] = count;
-    if (String(nodeIndex) === 'review' || String(nodeId).includes('review')) target.nodeProgressMap[`u${unitIndex}_node-review`] = count;
-    if (String(nodeIndex) === 'bonus' || String(nodeId).includes('bonus')) target.nodeProgressMap[`u${unitIndex}_node-bonus`] = count;
-    const curLang = (target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es', curCourse = target.currentCourseId || target.activeCourseId || 'main';
-    if (curLang === lang && curCourse === cid && unitIndex === 1) target.nodeProgressMap[`node-${nodeIndex}`] = count;
+    target.nodeProgressMap[`${lang}_${cid}_u${unitIndex}_n${nodeIndex}`] = target.nodeProgressMap[nodeId] = target.nodeProgressMap[dataNodeId] = target.nodeProgressMap[compStageKey] = target.nodeProgressMap[compNodeKey] = target.nodeProgressMap[`u${unitIndex}_n${dataSlot}`] = count;
+    if (String(nodeIndex) === '6' || strId.includes('boss')) target.nodeProgressMap[`u${unitIndex}_node-boss`] = count;
+    if (String(nodeIndex) === 'review' || strId.includes('review')) target.nodeProgressMap[`u${unitIndex}_node-review`] = count;
+    if (String(nodeIndex) === 'bonus' || strId.includes('bonus')) target.nodeProgressMap[`u${unitIndex}_node-bonus`] = count;
+    const activeLang = getLang(), activeCid = getCourse(target.currentCourseId || target.activeCourseId, activeLang);
+    if (activeLang === lang && activeCid === cid && unitIndex === 1) target.nodeProgressMap[`node-${nodeIndex}`] = count;
+
     if (!Array.isArray(target.completedStages)) target.completedStages = [];
-    if (count >= 3) { for (const k of [nodeId, compNodeKey, compStageKey]) if (!target.completedStages.includes(k)) target.completedStages.push(k); }
+    if (count >= 3) {
+      for (const k of [nodeId, dataNodeId, compNodeKey, compStageKey]) if (!target.completedStages.includes(k)) target.completedStages.push(k);
+    }
+
+    // 스테이지 마스터 또는 보스 클리어 시 후속 노드(특히 2과 -> 3과 _n5 / 보너스 / 복습) 해금 동기화
+    if (count >= 3 || (nodeIndex === 6 && count >= 1)) {
+      syncUnlockedNodesForCourse(lang, cid, unitIndex);
+    }
     return { clearedCount: count, stars: s, valueOf() { return count; }, toString() { return String(count); } };
   }
   function resolveNodeData(rawId, fallbackId) {
@@ -201,101 +444,148 @@
     return { clearedCount: 0, stars: 0 };
   }
 
+  function resolveCanonicalSlot(nodeIndex, node) {
+    const nodeId = node?.id || (typeof node === 'string' ? node : '');
+    const nodeType = node?.type || '';
+    if (nodeType === 'boss' || String(nodeId).includes('boss') || /_n6$/i.test(String(nodeId)) || nodeIndex === 5) return 6;
+    if (nodeType === 'review' || String(nodeId).includes('review') || /_n4$/i.test(String(nodeId)) || nodeIndex === 3 || nodeIndex === 'review') return 'review';
+    if (nodeType === 'bonus' || String(nodeId).includes('bonus') || /^(?:es|en|fb)_\d+_n3$/i.test(String(nodeId)) || nodeIndex === 2 || nodeIndex === 'bonus') return 'bonus';
+    if ((nodeType === 'stage' && node?.stageNumber === 3) || /_n5$/i.test(String(nodeId)) || /(?:^|[_-])(?:node|stage)-3$/i.test(String(nodeId)) || nodeIndex === 4) return 3;
+    if ((nodeType === 'stage' && node?.stageNumber === 2) || /_n2$/i.test(String(nodeId)) || /(?:^|[_-])(?:node|stage)-2$/i.test(String(nodeId)) || nodeIndex === 1) return 2;
+    if ((nodeType === 'stage' && node?.stageNumber === 1) || /_n1$/i.test(String(nodeId)) || /(?:^|[_-])(?:node|stage)-1$/i.test(String(nodeId)) || nodeIndex === 0) return 1;
+    if (nodeId) {
+      const parsed = parseNodeCoordinates(nodeId).nodeIndex;
+      if (parsed) return parsed;
+    }
+    return 1;
+  }
+
+  function getNormalizedUnitBonusKeys(unitNum, prefix) {
+    const keys = [`${prefix}_${unitNum}_n3`, `u${unitNum}_node-bonus`, `u${unitNum}-bonus`, `u${unitNum}_bonus`];
+    if (unitNum === 1) keys.push('node-bonus');
+    return keys;
+  }
+
+  function hasClaimedBonusForUnit(unitNum, prefix, courseId, lang) {
+    const resolvedLang = getLang(lang);
+    const resolvedCourse = getCourse(courseId, resolvedLang);
+    const resolvedPrefix = prefix || getCoursePrefix(resolvedLang, resolvedCourse);
+    const courseBonuses = getCourseProgress(resolvedCourse, resolvedLang).claimedBonuses || [];
+    let altCourseBonuses = [];
+    try {
+      const rawAlt = storage.get(`vocadash_progress_${resolvedCourse}`);
+      if (rawAlt) {
+        const parsedAlt = JSON.parse(rawAlt);
+        if (Array.isArray(parsedAlt?.claimedBonuses)) altCourseBonuses = parsedAlt.claimedBonuses;
+      }
+    } catch (_) { }
+    const claimedSet = new Set([...getClaimedBonuses(), ...courseBonuses, ...altCourseBonuses]);
+    return getNormalizedUnitBonusKeys(unitNum, resolvedPrefix).some(k => claimedSet.has(k));
+  }
+
   function isNodeUnlocked(currentUnitIndex, nodeIndex, node, course) {
     const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
+    const prefix = getCoursePrefix(lang, courseId);
     const unitNum = currentUnitIndex + 1;
     const unlockedLevel = (typeof target.getUnlockedUnitLevel === 'function' ? target.getUnlockedUnitLevel(lang, courseId) : 1) || 1;
-    if (unitNum < unlockedLevel) return true;
-    if (currentUnitIndex === 0 && nodeIndex === 0) return true;
+
+    const slot = resolveCanonicalSlot(nodeIndex, node);
     const targetCourse = course || (typeof target.getCurrentCourseData === 'function' ? target.getCurrentCourseData() : (target.packFootballData || target.courseData));
-    if (nodeIndex === 0) {
-      if (currentUnitIndex === 0) return true;
+
+    // 1. 유닛 진입 조건 (유닛 오픈과 내부 노드 순차 해금 분리 - 상위 유닛 프리패스 조기 반환 없음)
+    let isUnitOpen = (unitNum === 1) || (unlockedLevel >= unitNum);
+    if (!isUnitOpen && currentUnitIndex > 0) {
       const prevBoss = targetCourse?.units?.[currentUnitIndex - 1]?.nodes?.find(n => n.type === 'boss' || (n.id && (n.id.endsWith('_n6') || n.id.includes('boss'))));
-      if (prevBoss?.id && (getNodeProgress(prevBoss.id, lang, courseId)?.clearedCount || 0) >= 1) return true;
-      return ((typeof target.getUnlockedUnitLevel === 'function' ? target.getUnlockedUnitLevel(lang, courseId) : 1) || 1) >= currentUnitIndex + 1;
+      const prevBossId = prevBoss?.id || `${prefix}_${unitNum - 1}_n6`;
+      if ((getNodeProgress(prevBossId, lang, courseId)?.clearedCount || 0) >= 1) isUnitOpen = true;
     }
-    const nodeId = node?.id || (typeof node === 'string' ? node : ''), nodeType = node?.type || '';
-    if (currentUnitIndex === 0) {
-      if (nodeId === 'node-1' || nodeId === 'fb_1_n1' || nodeId === 'es_1_n1' || nodeId === 'en_1_n1' || nodeIndex === 0) return true;
-      const p1 = (getNodeProgress('node-1', lang, courseId)?.clearedCount || 0);
-      if (nodeId === 'node-2' || nodeId === 'fb_1_n2' || nodeId === 'es_1_n2' || nodeId === 'en_1_n2' || (nodeIndex === 1 && (nodeType === 'stage' || !nodeType))) return p1 >= 3;
-      const p2 = (getNodeProgress('node-2', lang, courseId)?.clearedCount || 0);
-      const isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('fb_1_n3') || isBonusClaimed('es_1_n3') || isBonusClaimed('en_1_n3');
-      if (nodeId === 'node-bonus' || nodeId === 'fb_1_n3' || nodeId === 'es_1_n3' || nodeId === 'en_1_n3' || nodeType === 'bonus' || nodeIndex === 2 || String(nodeId).includes('bonus')) return p2 >= 3;
-      if (nodeId === 'node-review' || nodeId === 'fb_1_n4' || nodeId === 'es_1_n4' || nodeId === 'en_1_n4' || nodeType === 'review' || nodeIndex === 3 || String(nodeId).includes('review')) return p2 >= 3 && isBonusDone;
-      const isReviewDone = isReviewNodeCompleted('node-review', 1) || isReviewNodeCompleted('fb_1_n4', 1) || isReviewNodeCompleted('es_1_n4', 1) || isReviewNodeCompleted('en_1_n4', 1);
-      if (nodeId === 'node-3' || nodeId === 'u1_node-3' || nodeId === 'fb_1_n5' || nodeId === 'es_1_n5' || nodeId === 'en_1_n5' || nodeIndex === 4 || (nodeType === 'stage' && (node?.stageNumber === 3 || String(nodeId).endsWith('3')))) return isReviewDone;
-      if (nodeId === 'node-boss' || nodeId === 'u1_node-boss' || nodeId === 'fb_1_n6' || nodeId === 'es_1_n6' || nodeId === 'en_1_n6' || nodeType === 'boss' || nodeIndex === 5 || String(nodeId).includes('boss')) return (getNodeProgress('node-3', lang, courseId)?.clearedCount || 0) >= 3;
+    if (!isUnitOpen) return false;
+
+    // 2. 노드별 순차 해금 체인: 1단계 ➔ 2단계 ➔ 선물 ➔ 오답 ➔ 3단계 ➔ 보스
+    if (slot === 1) return true;
+
+    const p1 = getNodeProgress(`${prefix}_${unitNum}_n1`, lang, courseId)?.clearedCount || 0;
+    const p2 = getNodeProgress(`${prefix}_${unitNum}_n2`, lang, courseId)?.clearedCount || 0;
+    const p3 = getNodeProgress(`${prefix}_${unitNum}_n5`, lang, courseId)?.clearedCount || 0;
+    const pBoss = getNodeProgress(`${prefix}_${unitNum}_n6`, lang, courseId)?.clearedCount || 0;
+
+    if (slot === 2) return p1 >= 3 || p2 > 0;
+    if (slot === 'bonus' || node?.type === 'bonus') return p2 >= 3;
+    if (slot === 'review' || node?.type === 'review') {
+      return hasClaimedBonusForUnit(unitNum, prefix, courseId, lang);
     }
-    if (targetCourse?.units?.[currentUnitIndex]?.nodes) {
-      const curNodes = targetCourse.units[currentUnitIndex].nodes, actualIdx = (typeof nodeIndex === 'number' && nodeIndex >= 0 && nodeIndex < curNodes.length) ? nodeIndex : curNodes.findIndex(n => n.id === nodeId);
-      if (actualIdx > 0) {
-        const prevNode = curNodes[actualIdx - 1];
-        if (prevNode.type === 'bonus') return isBonusClaimed(prevNode.id);
-        if (prevNode.type === 'review') return isReviewNodeCompleted(prevNode.id, currentUnitIndex + 1);
-        return (getNodeProgress(prevNode.id, lang, courseId).clearedCount || 0) >= 3;
-      }
+    if (slot === 3) {
+      const reviewCheckFn = (typeof target.isReviewNodeCompleted === 'function') ? target.isReviewNodeCompleted : isReviewNodeCompleted;
+      const reviewDone = Boolean(
+        reviewCheckFn(`${prefix}_${unitNum}_n4`, unitNum) ||
+        reviewCheckFn(`u${unitNum}_node-review`, unitNum) ||
+        (unitNum === 1 && reviewCheckFn('node-review', 1))
+      );
+      return reviewDone || p3 > 0;
     }
+    if (slot === 6 || node?.type === 'boss') return p3 >= 3 || pBoss > 0;
     return false;
   }
 
   function loadNodeProgress(targetLang, targetCourseId) {
     const lang = getLang(targetLang), courseId = getCourse(targetCourseId, lang);
+    const prefix = getCoursePrefix(lang, courseId);
+    const unlockedLevel = getUnlockedUnitLevel(lang, courseId);
     const result = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
     [1, 2, 3].forEach(n => {
-      const stdKey = `vocadash_prog_${lang}_${courseId}_u1_n${n}`;
-      let c = 0;
-      try {
-        const raw = storage.get(stdKey);
-        if (raw !== null) { const parsed = JSON.parse(raw); c = typeof parsed === 'number' ? parsed : (parsed?.clearedCount ?? parsed?.stars ?? 0); }
-      } catch (_) { const num = parseInt(storage.get(stdKey), 10); if (!isNaN(num)) c = num; }
-      if (c === 0) {
-        let rawAlt = storage.get(`node_progress_${lang}_${courseId}_node-${n}`) || storage.get(`node_progress_${lang}_${courseId}_u1_node-${n}`);
-        if (!rawAlt && courseId === 'main' && lang === 'es' && n === 3) rawAlt = storage.get('u1_node-3') || storage.get('u1_stage-3');
-        if (rawAlt) { const num = parseInt(rawAlt, 10); if (!isNaN(num)) c = num; }
-      }
-      c = Math.max(0, Math.min(3, c));
-      result[`node-${n}`] = result[`${lang}_${courseId}_u1_n${n}`] = result[`u1_stage-${n}`] = result[`u1_node-${n}`] = result[`u1_n${n}`] = c;
-      if (courseId === 'pack_football') result[`fb_1_n${n}`] = c;
+      const dataSlot = getStageDataSlot(n);
+      const dataNodeId = `${prefix}_1_n${dataSlot}`;
+      let c = getNodeProgress(dataNodeId, lang, courseId).clearedCount;
+      result[`node-${n}`] = result[`${lang}_${courseId}_u1_n${n}`] = result[`u1_stage-${n}`] = result[`u1_node-${n}`] = result[`u1_n${dataSlot}`] = result[dataNodeId] = c;
     });
-    try {
-      const uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-      if (!(uData.clearedNodes?.['node-3']?.actuallyPlayed || uData.clearedNodes?.['u1_node-3']?.actuallyPlayed) && result['node-3'] > 0) {
-        result['node-3'] = result[`${lang}_${courseId}_u1_n3`] = result['u1_stage-3'] = result['u1_node-3'] = 0;
+    if (unlockedLevel <= 1) {
+      const uData = getSafeUserData();
+      const hasPlayedN3 = Boolean(
+        uData.clearedNodes?.['node-3']?.actuallyPlayed ||
+        uData.clearedNodes?.['u1_node-3']?.actuallyPlayed ||
+        uData.clearedNodes?.['u1_stage-3']?.actuallyPlayed ||
+        uData.clearedNodes?.[`${prefix}_1_n5`]?.actuallyPlayed ||
+        uData.clearedNodes?.['u1_n5']?.actuallyPlayed
+      );
+      if (!hasPlayedN3 && result['node-3'] > 0) {
+        result['node-3'] = result[`${lang}_${courseId}_u1_n3`] = result['u1_stage-3'] = result['u1_node-3'] = result['u1_n5'] = result[`${prefix}_1_n5`] = 0;
         storage.remove(`vocadash_prog_${lang}_${courseId}_u1_n3`); storage.remove('u1_node-3');
       }
-    } catch (_) { }
-    let bossCount = 0;
-    try {
-      const rawBoss = storage.get(`vocadash_prog_${lang}_${courseId}_u1_n6`);
-      if (rawBoss !== null) bossCount = parseInt(rawBoss, 10) || (JSON.parse(rawBoss)?.clearedCount ?? 0);
-    } catch (_) { }
-    result['node-boss'] = result[`${lang}_${courseId}_u1_n6`] = result['u1_node-boss'] = bossCount;
-    if (courseId === 'pack_football') result['fb_1_n6'] = bossCount;
+    }
+    const bossCount = getNodeProgress(`${prefix}_1_n6`, lang, courseId).clearedCount;
+    result['node-boss'] = result[`${lang}_${courseId}_u1_n6`] = result['u1_node-boss'] = result['u1_n6'] = result[`${prefix}_1_n6`] = bossCount;
+
+    try { syncUnlockedNodesForCourse(lang, courseId, unlockedLevel); } catch (_) { }
     return result;
   }
 
   function getNodeStatus(nodeId, unitIndex = 0) {
     const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
-    let progMap = target.nodeProgressMap || {};
-    if (!progMap['node-1'] && !progMap['node-2']) progMap = Object.assign({}, loadNodeProgress(lang, courseId), progMap);
-    const normId = (nodeId || '').replace(/^u1_/, ''), prog1 = progMap['node-1'] || 0, prog2 = (prog1 >= 3) ? (progMap['node-2'] || 0) : 0;
-    const isBonusDone = isBonusClaimed('node-bonus') || isBonusClaimed('u1_node-bonus'), isReviewDone = isReviewNodeCompleted('u1_node-review', 1) || isReviewNodeCompleted('node-review', 1);
-    const prog3 = (prog2 >= 3) ? (progMap['node-3'] || 0) : 0, progBoss = (prog3 >= 3) ? (progMap['node-boss'] || 0) : 0;
+    const prefix = getCoursePrefix(lang, courseId);
+    const coords = parseNodeCoordinates(nodeId, unitIndex + 1);
+    const uNum = coords.unitIndex || (unitIndex + 1);
+    const slot = resolveCanonicalSlot(undefined, { id: nodeId });
+
+    const p1 = getNodeProgress(`${prefix}_${uNum}_n1`, lang, courseId).clearedCount;
+    const p2 = getNodeProgress(`${prefix}_${uNum}_n2`, lang, courseId).clearedCount;
+    const p3 = getNodeProgress(`${prefix}_${uNum}_n5`, lang, courseId).clearedCount;
+    const pBoss = getNodeProgress(`${prefix}_${uNum}_n6`, lang, courseId).clearedCount;
+
+    const isBonusDone = hasClaimedBonusForUnit(uNum, prefix, courseId, lang);
+    const isReviewDone = isReviewNodeCompleted(`${prefix}_${uNum}_n4`, uNum) || (uNum === 1 && isReviewNodeCompleted('node-review', 1));
+
     let clearedCount = 0, isLocked = false, isCompleted = false, isActive = false, type = 'stage';
-    if (normId === 'node-1' || normId === 'stage-1') { clearedCount = prog1; isCompleted = prog1 >= 3; isActive = prog1 < 3; }
-    else if (normId === 'node-2' || normId === 'stage-2') { clearedCount = prog2; isLocked = prog1 < 3; isCompleted = !isLocked && prog2 >= 3; isActive = !isLocked && !isCompleted; }
-    else if (normId === 'node-bonus' || normId.includes('bonus')) { clearedCount = isBonusDone ? 1 : 0; isLocked = prog1 < 3; isCompleted = isBonusDone; isActive = !isLocked && !isCompleted; type = 'bonus'; }
-    else if (normId === 'node-review' || normId.includes('review')) { clearedCount = isReviewDone ? 1 : 0; isLocked = !(prog1 >= 3 && isBonusDone); isCompleted = isReviewDone; isActive = !isLocked && !isCompleted; type = 'review'; }
-    else if (normId === 'node-3' || normId === 'stage-3') { clearedCount = prog3; isLocked = !(prog2 >= 3 && isBonusDone && isReviewDone); isCompleted = !isLocked && prog3 >= 3; isActive = !isLocked && !isCompleted; }
-    else if (normId === 'node-boss' || normId.includes('boss')) { clearedCount = progBoss; isLocked = prog3 < 3; isCompleted = !isLocked && progBoss >= 1; isActive = !isLocked && !isCompleted; type = 'boss'; }
-    else {
-      const p = getNodeProgress(nodeId, lang, courseId);
-      clearedCount = p.clearedCount || 0; isLocked = !isNodeUnlocked(unitIndex, undefined, { id: nodeId });
-      isCompleted = !isLocked && clearedCount >= 3; isActive = !isLocked && !isCompleted;
-      type = nodeId.includes('boss') ? 'boss' : (nodeId.includes('bonus') ? 'bonus' : (nodeId.includes('review') ? 'review' : 'stage'));
-    }
-    return { nodeId, unitIndex, type, clearedCount, stars: clearedCount, isLocked, isCompleted, isActive, status: isLocked ? 'locked' : (isCompleted ? 'completed' : (isActive ? 'active' : 'unlocked')) };
+    const unlocked = isNodeUnlocked(uNum - 1, undefined, { id: nodeId });
+    isLocked = !unlocked;
+
+    if (slot === 1) { clearedCount = p1; isCompleted = !isLocked && p1 >= 3; isActive = !isLocked && !isCompleted; }
+    else if (slot === 2) { clearedCount = p2; isCompleted = !isLocked && p2 >= 3; isActive = !isLocked && !isCompleted; }
+    else if (slot === 'bonus') { clearedCount = isBonusDone ? 1 : 0; isCompleted = isBonusDone; isActive = !isLocked && !isCompleted; type = 'bonus'; }
+    else if (slot === 'review') { clearedCount = isReviewDone ? 1 : 0; isCompleted = isReviewDone; isActive = !isLocked && !isCompleted; type = 'review'; }
+    else if (slot === 3) { clearedCount = p3; isCompleted = !isLocked && p3 >= 3; isActive = !isLocked && !isCompleted; }
+    else if (slot === 6) { clearedCount = pBoss; isCompleted = !isLocked && pBoss >= 1; isActive = !isLocked && !isCompleted; type = 'boss'; }
+
+    return { nodeId, unitIndex: uNum - 1, type, clearedCount, stars: clearedCount, isLocked, isCompleted, isActive, status: isLocked ? 'locked' : (isCompleted ? 'completed' : (isActive ? 'active' : 'unlocked')) };
   }
   function saveNodeProgress() {
     const prog = getCourseProgress(target.activeCourseId);
@@ -303,17 +593,19 @@
     saveCourseProgress(prog, target.activeCourseId);
   }
   function getClaimedBonuses() {
-    try {
-      const raw = storage.get('vocadash_claimed_bonuses');
-      if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) return parsed; }
-    } catch (_) { }
+    const raw = storage.get('vocadash_claimed_bonuses');
+    if (raw) {
+      const parsed = safeParseArray(raw);
+      if (parsed) return parsed;
+      storage.remove('vocadash_claimed_bonuses');
+    }
     return getCourseProgress(target.activeCourseId).claimedBonuses || [];
   }
   const isBonusClaimed = (nodeId = 'node-bonus') => {
     const list = getClaimedBonuses();
     if (list.includes(nodeId)) return true;
-    if (nodeId === 'node-bonus' || nodeId === 'u1_node-bonus' || nodeId === 'es_1_n3' || nodeId === 'en_1_n3' || nodeId === 'fb_1_n3') {
-      return list.includes('node-bonus') || list.includes('u1_node-bonus') || list.includes('es_1_n3') || list.includes('en_1_n3') || list.includes('fb_1_n3');
+    if (nodeId === 'node-bonus' || nodeId === 'u1_node-bonus' || nodeId === 'u1-bonus' || nodeId === 'es_1_n3' || nodeId === 'en_1_n3' || nodeId === 'fb_1_n3') {
+      return list.includes('node-bonus') || list.includes('u1_node-bonus') || list.includes('u1-bonus') || list.includes('es_1_n3') || list.includes('en_1_n3') || list.includes('fb_1_n3');
     }
     const coords = parseNodeCoordinates(nodeId);
     if (coords.unitIndex) {
@@ -323,30 +615,34 @@
     return false;
   };
   function markBonusClaimed(nodeId = 'node-bonus') {
+    const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
     const list = getClaimedBonuses();
     if (!list.includes(nodeId)) list.push(nodeId);
+    let claimedUnit = 1;
     if (nodeId === 'node-bonus' || String(nodeId).endsWith('_n3') || String(nodeId).includes('bonus')) {
       const coords = parseNodeCoordinates(nodeId);
-      const u = coords.unitIndex || 1;
-      const aliases = [`u${u}_node-bonus`, `u${u}-bonus`, `es_${u}_n3`, `en_${u}_n3`, `fb_${u}_n3`];
-      if (u === 1) aliases.push('node-bonus');
+      claimedUnit = coords.unitIndex || 1;
+      const aliases = [`u${claimedUnit}_node-bonus`, `u${claimedUnit}-bonus`, `es_${claimedUnit}_n3`, `en_${claimedUnit}_n3`, `fb_${claimedUnit}_n3`];
+      if (claimedUnit === 1) aliases.push('node-bonus');
       aliases.forEach(a => { if (!list.includes(a)) list.push(a); });
       try {
-        const lang = getLang();
-        localStorage.setItem(`vocadash_${lang}_bonus_u${u}`, 'done');
+        localStorage.setItem(`vocadash_${lang}_bonus_u${claimedUnit}`, 'done');
       } catch (_) {}
     }
     storage.set('vocadash_claimed_bonuses', JSON.stringify(list));
-    const prog = getCourseProgress(target.activeCourseId);
+    const prog = getCourseProgress(courseId, lang);
     prog.claimedBonuses = list;
-    saveCourseProgress(prog, target.activeCourseId);
+    saveCourseProgress(prog, courseId, lang);
+    try { syncUnlockedNodesForCourse(lang, courseId, claimedUnit); } catch (_) { }
   }
   function migrateLegacyReviewData() {
     let list = [];
-    try {
-      const raw = storage.get('vocadash_completed_reviews');
-      if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) list = parsed; }
-    } catch (_) { }
+    const raw = storage.get('vocadash_completed_reviews');
+    if (raw) {
+      const parsed = safeParseArray(raw);
+      if (parsed) list = parsed;
+      else storage.remove('vocadash_completed_reviews');
+    }
     if (storage.get('vocadash_review_completed_node-review') === 'true' && !list.includes('u1_node-review')) {
       list.push('u1_node-review', 'node-review');
       storage.set('vocadash_completed_reviews', JSON.stringify(list));
@@ -354,30 +650,34 @@
     return list;
   }
   function isReviewNodeCompleted(nodeId = 'node-review', unitNum = 1) {
+    const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
+    const prefix = getCoursePrefix(lang, courseId);
     const coords = parseNodeCoordinates(nodeId, unitNum);
     const uIndex = (/^u\d+_/i.test(nodeId)) ? coords.unitIndex : (unitNum || coords.unitIndex || 1);
-    const compositeKey = `u${uIndex}_node-review`, list = migrateLegacyReviewData();
-    if (list.includes(compositeKey) || (uIndex === 1 && (list.includes('node-review') || list.includes('u1_node-review')))) return true;
-    if (target.nodeProgressMap && (target.nodeProgressMap[compositeKey] || (uIndex === 1 && target.nodeProgressMap['node-review']))) return true;
-    try {
-      const uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-      if (uData.clearedNodes?.[compositeKey]?.cleared || (uIndex === 1 && uData.clearedNodes?.['node-review']?.cleared)) return true;
-    } catch (_) { }
+    const compositeKey = `u${uIndex}_node-review`, canonicalKey = `${prefix}_${uIndex}_n4`, list = migrateLegacyReviewData();
+    const directMatchKey = (nodeId && (nodeId !== 'node-review' || uIndex === 1)) ? nodeId : null;
+    if (list.includes(compositeKey) || list.includes(canonicalKey) || (directMatchKey && list.includes(directMatchKey)) || (uIndex === 1 && (list.includes('node-review') || list.includes('u1_node-review')))) return true;
+    if (target.nodeProgressMap && (target.nodeProgressMap[compositeKey] || target.nodeProgressMap[canonicalKey] || (directMatchKey && target.nodeProgressMap[directMatchKey]) || (uIndex === 1 && target.nodeProgressMap['node-review']))) return true;
+    const uData = getSafeUserData();
+    if (uData.clearedNodes?.[compositeKey]?.cleared || uData.clearedNodes?.[canonicalKey]?.cleared || (directMatchKey && uData.clearedNodes?.[directMatchKey]?.cleared) || (uIndex === 1 && uData.clearedNodes?.['node-review']?.cleared)) return true;
     return false;
   }
   function markReviewNodeCompleted(nodeId = 'node-review', unitNum = 1) {
+    const lang = getLang(), courseId = getCourse(target.activeCourseId, lang);
+    const prefix = getCoursePrefix(lang, courseId);
     const coords = parseNodeCoordinates(nodeId, unitNum);
     const uIndex = (/^u\d+_/i.test(nodeId)) ? coords.unitIndex : (unitNum || coords.unitIndex || 1);
-    const compositeKey = `u${uIndex}_node-review`, list = migrateLegacyReviewData();
-    if (!list.includes(compositeKey)) list.push(compositeKey);
+    const compositeKey = `u${uIndex}_node-review`, canonicalKey = `${prefix}_${uIndex}_n4`, list = migrateLegacyReviewData();
+    [compositeKey, canonicalKey].forEach(k => { if (!list.includes(k)) list.push(k); });
     if (uIndex === 1 && !list.includes('node-review')) list.push('node-review');
     storage.set('vocadash_completed_reviews', JSON.stringify(list));
     if (uIndex === 1) storage.set('vocadash_review_completed_node-review', 'true');
-    const prog = getCourseProgress(target.activeCourseId);
+    const prog = getCourseProgress(courseId, lang);
     if (!prog.completedReviews) prog.completedReviews = [];
-    if (!prog.completedReviews.includes(compositeKey)) prog.completedReviews.push(compositeKey);
+    [compositeKey, canonicalKey].forEach(k => { if (!prog.completedReviews.includes(k)) prog.completedReviews.push(k); });
     if (uIndex === 1 && !prog.completedReviews.includes('node-review')) prog.completedReviews.push('node-review');
-    saveCourseProgress(prog, target.activeCourseId);
+    saveCourseProgress(prog, courseId, lang);
+    try { syncUnlockedNodesForCourse(lang, courseId, uIndex); } catch (_) { }
   }
   function completeReviewNode(nodeId = 'node-review', unitId = null) {
     const coords = parseNodeCoordinates(nodeId), uIndex = unitId || coords.unitIndex || target.currentUnitNumber || 1, compositeKey = `u${uIndex}_node-review`;
@@ -388,8 +688,8 @@
     if (!Array.isArray(target.completedStages)) target.completedStages = [];
     for (const k of [nodeId, compositeKey]) if (!target.completedStages.includes(k)) target.completedStages.push(k);
     try {
-      let uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-      if (!uData.clearedNodes) uData.clearedNodes = {};
+      const uData = getSafeUserData();
+      if (!uData.clearedNodes || typeof uData.clearedNodes !== 'object' || Array.isArray(uData.clearedNodes)) uData.clearedNodes = {};
       uData.clearedNodes[compositeKey] = { cleared: true, clearedCount: 1 };
       if (uIndex === 1) uData.clearedNodes['node-review'] = { cleared: true, clearedCount: 1 };
       storage.set('vocadash_user_data', JSON.stringify(uData));
@@ -434,8 +734,9 @@
     return true;
   }
   function handleReviewNodeClick(nodeId = 'node-review', unitNum = 1) {
-    const bonusId = (unitNum === 1) ? 'node-bonus' : `u${unitNum}-bonus`;
-    if (!isBonusClaimed(bonusId)) return target.showToast?.('보너스 선물상자를 먼저 수령해 주세요! 🎁');
+    if (!isNodeUnlocked(unitNum - 1, 3, { type: 'review', id: nodeId })) {
+      return target.showToast?.('보너스 선물을 먼저 수령해야 열려요! 🔒');
+    }
 
     if (typeof target.openReviewSpeedrunModal === 'function') {
       target.openReviewSpeedrunModal(unitNum, nodeId);
@@ -467,12 +768,12 @@
     const curUnit = activeCourse?.units?.find(u => (u.unitNumber || u.id || u.unitId) === uIndex) || activeCourse?.units?.[uIndex - 1];
 
     if (curUnit?.nodes) {
-      const s = String(targetId).toLowerCase();
+      const slot = resolveCanonicalSlot(undefined, { id: targetId });
       let foundNode = null;
-      if (s === 'node-1' || s.endsWith('_n1') || coords.nodeIndex === 1) foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || n.id?.endsWith('_n1'));
-      else if (s === 'node-2' || s.endsWith('_n2') || coords.nodeIndex === 2) foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || n.id?.endsWith('_n2'));
-      else if (s === 'node-3' || s.endsWith('_n5') || coords.nodeIndex === 3) foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || n.id?.endsWith('_n5'));
-      else if (s === 'node-boss' || s.includes('boss') || s.endsWith('_n6') || coords.nodeIndex === 6) foundNode = curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'));
+      if (slot === 1) foundNode = curUnit.nodes.find(n => n.stageNumber === 1 || n.id?.endsWith('_n1'));
+      else if (slot === 2) foundNode = curUnit.nodes.find(n => n.stageNumber === 2 || n.id?.endsWith('_n2'));
+      else if (slot === 3) foundNode = curUnit.nodes.find(n => n.stageNumber === 3 || n.id?.endsWith('_n5'));
+      else if (slot === 6) foundNode = curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'));
       if (foundNode) return foundNode;
     }
 
@@ -486,11 +787,11 @@
   function getSlotAlias(activeNodeId, targetNodeId) {
     const check = (id) => {
       if (!id) return null;
-      const s = String(id).toLowerCase();
-      if (s === 'node-1' || s.endsWith('_n1') || s.endsWith('node-1') || s.endsWith('stage-1')) return 'node-1';
-      if (s === 'node-2' || s.endsWith('_n2') || s.endsWith('node-2') || s.endsWith('stage-2')) return 'node-2';
-      if (s.endsWith('_n5') || s.endsWith('node-3') || s.endsWith('stage-3')) return 'node-3';
-      if (s.endsWith('_n6') || s.includes('boss')) return 'node-boss';
+      const slot = resolveCanonicalSlot(undefined, { id });
+      if (slot === 1) return 'node-1';
+      if (slot === 2) return 'node-2';
+      if (slot === 3) return 'node-3';
+      if (slot === 6) return 'node-boss';
       return null;
     };
     return check(targetNodeId) || check(activeNodeId) || null;
@@ -499,10 +800,10 @@
     const slot = getSlotAlias(curNodeId, curNodeId);
     if (curUnit?.nodes) {
       if (slot === 'node-1') return curUnit.nodes.find(n => n.stageNumber === 2 || n.id?.endsWith('_n2'))?.id || 'node-2';
-      if (slot === 'node-2') return curUnit.nodes.find(n => n.type === 'bonus' || n.id?.endsWith('_n3'))?.id || 'node-bonus';
+      if (slot === 'node-2') return curUnit.nodes.find(n => n.stageNumber === 3 || n.id?.endsWith('_n5'))?.id || 'node-3';
       if (slot === 'node-3') return curUnit.nodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6'))?.id || 'node-boss';
     }
-    return slot === 'node-1' ? 'node-2' : (slot === 'node-2' ? 'node-bonus' : 'node-boss');
+    return slot === 'node-1' ? 'node-2' : (slot === 'node-2' ? 'node-3' : 'node-boss');
   }
 
   function getNextRoadmapNode(nodeId, unitNum = null) {
@@ -518,17 +819,13 @@
       const idx = nodes.findIndex(n => {
         if (n.id === nodeId) return true;
         const c = parseNodeCoordinates(n.id, uIndex);
-        if (c && c.nodeIndex === coords.nodeIndex) return true;
-        if (coords.nodeIndex === 1 && (n.stageNumber === 1 || n.id?.endsWith('_n1') || n.id === 'node-1')) return true;
-        if (coords.nodeIndex === 2 && (n.stageNumber === 2 || n.id?.endsWith('_n2') || n.id === 'node-2')) return true;
-        if (coords.nodeIndex === 'bonus' && (n.type === 'bonus' || n.id?.includes('bonus') || n.id?.endsWith('_n3'))) return true;
-        if (coords.nodeIndex === 'review' && (n.type === 'review' || n.id?.includes('review') || n.id?.endsWith('_n4'))) return true;
-        if (coords.nodeIndex === 3 && (n.stageNumber === 3 || n.id?.endsWith('_n5') || n.id === 'node-3')) return true;
-        if ((coords.nodeIndex === 6 || coords.nodeIndex === 'boss') && (n.type === 'boss' || n.id?.includes('boss') || n.id?.endsWith('_n6'))) return true;
-        return false;
+        return Boolean(c && c.nodeIndex === coords.nodeIndex);
       });
 
       if (idx >= 0 && idx < nodes.length - 1) {
+        // 정규 학습 파이프라인은 선택 노드(보너스/복습)에 가로막히지 않고 다음 정규 스테이지로 직행
+        const nextRegular = nodes.slice(idx + 1).find(n => n.type !== 'bonus' && n.type !== 'review');
+        if (nextRegular) return nextRegular;
         return nodes[idx + 1];
       } else if (idx === nodes.length - 1) {
         const nextUnit = activeCourse.units?.[uIndex];
@@ -542,9 +839,7 @@
     const isU1 = uIndex === 1;
     const nIdx = coords.nodeIndex;
     if (nIdx === 1) return { id: isU1 ? 'node-2' : `u${uIndex}_stage-2`, stageNumber: 2, type: 'stage', title: '2과' };
-    if (nIdx === 2) return { id: isU1 ? 'node-bonus' : `u${uIndex}_node-bonus`, type: 'bonus', title: '보너스 상자' };
-    if (nIdx === 'bonus') return { id: isU1 ? 'node-review' : `u${uIndex}_node-review`, type: 'review', title: '약점 복습' };
-    if (nIdx === 'review') return { id: isU1 ? 'node-3' : `u${uIndex}_stage-3`, stageNumber: 3, type: 'stage', title: '3과' };
+    if (nIdx === 2 || nIdx === 'bonus' || nIdx === 'review') return { id: isU1 ? 'node-3' : `u${uIndex}_stage-3`, stageNumber: 3, type: 'stage', title: '3과' };
     if (nIdx === 3) return { id: isU1 ? 'node-boss' : `u${uIndex}_node-boss`, type: 'boss', title: `Unit ${uIndex} 보스전` };
     return { id: `u${uIndex + 1}_stage-1`, stageNumber: 1, type: 'stage', title: '1과' };
   }
@@ -582,23 +877,13 @@
     let curGems = (parseInt(storage.get('vocadash_gems'), 10) || 120) + addGems;
     storage.set('vocadash_gems', String(curGems));
     if (isBossNode) setUnlockedUnitLevel(uNum + 1, lang, cid);
-    const isStrictReview = Boolean(isReviewMode || isSpeedrun || (activeNodeId && String(activeNodeId).includes('review')));
+    const isStrictReview = Boolean(isReviewMode || isSpeedrun || (activeNodeId && (String(activeNodeId).includes('review') || String(activeNodeId).endsWith('_n4'))));
     if (isStrictReview) {
-      if (activeNodeId && String(activeNodeId).includes('review')) {
+      if (activeNodeId && (String(activeNodeId).includes('review') || String(activeNodeId).endsWith('_n4'))) {
         completeReviewNode(activeNodeId, uNum);
       }
     } else {
       setNodeProgress(activeNodeId, nextCount, nextCount, lang, cid);
-      if (uNum === 1 && (nIdx === 3 || String(activeNodeId).includes('3'))) {
-        try {
-          storage.set(`vocadash_prog_${lang}_${cid}_u1_n3`, String(nextCount)); storage.set('u1_node-3', String(nextCount)); storage.set('u1_stage-3', String(nextCount));
-          let uData = JSON.parse(storage.get('vocadash_user_data') || '{}');
-          if (!uData.clearedNodes) uData.clearedNodes = {};
-          uData.clearedNodes['node-3'] = uData.clearedNodes['u1_node-3'] = { cleared: nextCount >= 3, clearedCount: nextCount, actuallyPlayed: true };
-          storage.set('vocadash_user_data', JSON.stringify(uData));
-        } catch (_) { }
-        target.nodeProgressMap['node-3'] = target.nodeProgressMap['u1_node-3'] = nextCount;
-      }
     }
     target.saveNodeProgress?.(); target.updateRoadmapNodesUI?.(); target.renderRoadmap?.();
     return { activeNodeId, nextCount, accuracy: calculatedAccuracy, stars, addGems, curGems, addXp, isBoss: isBossNode, unitIndex: uNum, nodeIndex: nIdx };
@@ -617,12 +902,6 @@
       const nextNode = getNextRoadmapNode(currentPlayingId, currentUnitId);
       if (nextNode) {
         nextNodeId = nextNode.id;
-        if (nextNode.type === 'bonus' || String(nextNode.id).includes('bonus')) {
-          return { action: 'bonus', currentPlayingId, nextNodeId, nextRound: 1, unitIndex: currentUnitId, nextNode };
-        }
-        if (nextNode.type === 'review' || String(nextNode.id).includes('review')) {
-          return { action: 'review', currentPlayingId, nextNodeId, nextRound: 1, unitIndex: currentUnitId, nextNode };
-        }
         if (isCurrentBoss) {
           const nextUnitId = currentUnitId + 1;
           setUnlockedUnitLevel(nextUnitId, lang, cid);
@@ -640,13 +919,12 @@
           if (!target.nodeProgressMap) target.nodeProgressMap = {};
           target.nodeProgressMap[nextNodeId] = 0;
           return { action: 'next_unit', currentPlayingId, nextNodeId, nextUnitId, unitIndex: nextUnitId };
-        } else if (currentNodeIdx === 1 || String(currentPlayingId).endsWith('1')) nextNodeId = `u${currentUnitId}_node-2`;
-        else if (currentNodeIdx === 2 || String(currentPlayingId).endsWith('2')) {
-          return { action: 'bonus', currentPlayingId, nextNodeId: (currentUnitId === 1) ? 'node-bonus' : `u${currentUnitId}_node-bonus`, nextRound: 1, unitIndex: currentUnitId };
-        }
-        else if (currentNodeIdx === 3 || String(currentPlayingId).endsWith('3')) nextNodeId = `u${currentUnitId}_node-boss`;
+        } else if (currentNodeIdx === 1) nextNodeId = `u${currentUnitId}_node-2`;
+        else if (currentNodeIdx === 2) nextNodeId = `u${currentUnitId}_node-3`;
+        else if (currentNodeIdx === 3) nextNodeId = `u${currentUnitId}_node-boss`;
       }
     }
+    syncUnlockedNodesForCourse(lang, cid, currentUnitId);
     if (!Array.isArray(target.unlockedNodes)) target.unlockedNodes = [];
     if (!target.unlockedNodes.includes(nextNodeId)) target.unlockedNodes.push(nextNodeId);
     if (currentUnitId === 1 && nextNodeId.includes('boss') && !target.unlockedNodes.includes('node-boss')) target.unlockedNodes.push('node-boss');
@@ -786,6 +1064,109 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initUnitOverviewEvents);
     else initUnitOverviewEvents();
   }
+  function listStorageKeys() {
+    try {
+      const ls = (typeof localStorage !== 'undefined') ? localStorage : target.localStorage;
+      if (!ls) return [];
+      if (typeof ls.length === 'number' && typeof ls.key === 'function') {
+        const out = [];
+        for (let i = 0; i < ls.length; i++) {
+          const k = ls.key(i);
+          if (k) out.push(k);
+        }
+        return out;
+      }
+      return Object.keys(ls).filter(k => typeof ls.getItem !== 'function' || ls.getItem(k) !== null);
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function migrateLegacyProgressStorage() {
+    const keys = listStorageKeys();
+    const dirtyCourses = new Map();
+    const getProgBucket = (lang, cid) => {
+      const mapKey = `${lang}_${cid}`;
+      if (!dirtyCourses.has(mapKey)) {
+        dirtyCourses.set(mapKey, { lang, cid, prog: getCourseProgress(cid, lang), changed: false });
+      }
+      return dirtyCourses.get(mapKey);
+    };
+
+    for (const key of keys) {
+      const raw = storage.get(key);
+      if (raw === null || raw === undefined) continue;
+
+      // 1. 손상/비정상 문자열("done", 깨진 JSON 등) 방어 및 정리
+      if (key === 'vocadash_user_data' || key.startsWith('vocadash_progress_')) {
+        if (raw !== '' && !safeParseObject(raw)) {
+          storage.remove(key);
+        }
+        continue;
+      }
+      if (key === 'vocadash_claimed_bonuses' || key === 'vocadash_completed_reviews') {
+        if (raw !== '' && !safeParseArray(raw)) {
+          storage.remove(key);
+        }
+        continue;
+      }
+
+      // 2. 레거시 분산 진행도 키 흡수 통합 -> vocadash_progress_${lang}_${cid}.nodeProgressMap
+      let targetLang = null, targetCid = null, nodePart = null, shouldRemoveLegacy = true;
+      let m = key.match(/^node_progress_(es|en)_(main|pack_football)_(.+)$/);
+      if (m) {
+        targetLang = m[1]; targetCid = m[2]; nodePart = m[3];
+      } else if ((m = key.match(/^node_progress_(es_main|en_main|pack_football|es_soccer|main)_(.+)$/))) {
+        targetLang = m[1].startsWith('en') ? 'en' : 'es';
+        targetCid = (m[1] === 'pack_football' || m[1] === 'es_soccer') ? 'pack_football' : 'main';
+        nodePart = m[2];
+      } else if ((m = key.match(/^vocadash_node_progress_(node-\d+|node-boss|u\d+_.+)$/))) {
+        targetLang = getLang();
+        targetCid = getCourse(target.activeCourseId, targetLang);
+        nodePart = m[1];
+      } else if ((m = key.match(/^(u\d+_(?:node-(?:\d+|boss)|stage-\d+))$/))) {
+        targetLang = 'es'; targetCid = 'main'; nodePart = m[1];
+      } else {
+        shouldRemoveLegacy = false;
+      }
+
+      if (!nodePart) continue;
+
+      const parsedCount = parseRawCount(raw);
+      if (parsedCount !== null && parsedCount >= 0) {
+        const prefix = getCoursePrefix(targetLang, targetCid);
+        const { unitIndex, nodeIndex } = parseNodeCoordinates(nodePart);
+        const dataSlot = getStageDataSlot(nodeIndex);
+        const dataNodeId = `${prefix}_${unitIndex}_n${dataSlot}`;
+        const clamped = Math.max(0, Math.min(3, parsedCount));
+        const bucket = getProgBucket(targetLang, targetCid);
+        const npm = bucket.prog.nodeProgressMap || (bucket.prog.nodeProgressMap = {});
+        const absorbKeys = [dataNodeId, `${targetLang}_${targetCid}_u${unitIndex}_n${nodeIndex}`, `u${unitIndex}_node-${nodeIndex}`];
+        if (unitIndex === 1) absorbKeys.push(`node-${nodeIndex}`);
+        absorbKeys.forEach(ak => {
+          const prev = Number(npm[ak]) || 0;
+          if (clamped > prev) {
+            npm[ak] = clamped;
+            bucket.changed = true;
+          }
+        });
+        const stdSlotKey = `vocadash_prog_${targetLang}_${targetCid}_u${unitIndex}_n${nodeIndex}`;
+        if ((parseRawCount(storage.get(stdSlotKey)) ?? 0) < clamped) {
+          storage.set(stdSlotKey, String(clamped));
+        }
+      }
+      if (shouldRemoveLegacy) storage.remove(key);
+    }
+
+    for (const entry of dirtyCourses.values()) {
+      if (entry.changed) {
+        saveCourseProgress(entry.prog, entry.cid, entry.lang);
+      }
+    }
+    migrateLegacyReviewData();
+  }
+
+  try { migrateLegacyProgressStorage(); } catch (_) { }
   try { target.nodeProgressMap = loadNodeProgress(); } catch (_) { target.nodeProgressMap = { 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 }; }
 
   function getActiveLocation() {
@@ -866,9 +1247,9 @@
     unlockNextUnit,
     saveProgress: save,
     getCompositeNodeKey, parseNodeCoordinates, getCourseProgress, saveCourseProgress, getUnlockedUnitLevel, setUnlockedUnitLevel,
-    unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
+    syncUnlockedNodesForCourse, unlockUnitsUpTo, getNodeProgress, getNodeProgressData: getNodeProgress, setNodeProgress, saveNodeProgressData: setNodeProgress,
     resolveNodeData, isNodeUnlocked, getNodeStatus, loadNodeProgress, saveNodeProgress, getClaimedBonuses, isBonusClaimed,
-    markBonusClaimed, handleClaimBonus, claimBonusReward, claimBonus: claimBonusReward, migrateLegacyReviewData, isReviewNodeCompleted, isReviewCompleted: isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
+    markBonusClaimed, handleClaimBonus, claimBonusReward, claimBonus: claimBonusReward, migrateLegacyReviewData, migrateLegacyProgressStorage, isReviewNodeCompleted, isReviewCompleted: isReviewNodeCompleted, markReviewNodeCompleted, completeReviewNode,
     handleReviewNodeClick, resolveCurrentNode, getSlotAlias, getNextNodeId, getNextRoadmapNode, saveStageClearResult, getNextStageStep,
     openCourseDrawer: openCourseDrawerWrapper, closeCourseDrawer: closeCourseDrawerWrapper,
     openUnitOverviewModal: openCourseDrawerWrapper, closeUnitOverviewModal: closeCourseDrawerWrapper,

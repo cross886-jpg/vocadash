@@ -15,7 +15,7 @@
   const getInv = () => {
     try {
       const v = JSON.parse(localStorage.getItem('vocadash_inventory'));
-      if (v && typeof v === 'object') return { pass: v.pass ?? 2, freeze: v.freeze ?? 1, bomb: v.bomb ?? 1, heal: v.heal ?? 1 };
+      if (v && typeof v === 'object' && !Array.isArray(v)) return { pass: v.pass ?? 2, freeze: v.freeze ?? 1, bomb: v.bomb ?? 1, heal: v.heal ?? 1 };
     } catch (_) { }
     saveInv(DEF_INV);
     return { ...DEF_INV };

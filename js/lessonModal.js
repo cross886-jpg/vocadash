@@ -122,14 +122,18 @@
       progress = p?.clearedCount || 0;
     }
 
-    if (nodeId === "node-3" || nodeId === "u1_node-3" || nodeId === "u1_stage-3") {
+    const prefix = modalPack === "pack_football" ? "fb" : modalLang;
+    const isU1Stage3 = nodeId === "node-3" || nodeId === "u1_node-3" || nodeId === "u1_stage-3" || nodeId === `${prefix}_1_n5` || nodeId === "u1_n5";
+    if (isU1Stage3 && progress > 0 && activeLevel <= 1) {
       let isActuallyCleared = false;
       try {
         const uData = JSON.parse(localStorage.getItem("vocadash_user_data") || "{}");
         if (uData?.clearedNodes && (
           uData.clearedNodes["node-3"]?.actuallyPlayed ||
           uData.clearedNodes["u1_node-3"]?.actuallyPlayed ||
-          uData.clearedNodes["u1_stage-3"]?.actuallyPlayed
+          uData.clearedNodes["u1_stage-3"]?.actuallyPlayed ||
+          uData.clearedNodes[`${prefix}_1_n5`]?.actuallyPlayed ||
+          uData.clearedNodes["u1_n5"]?.actuallyPlayed
         )) isActuallyCleared = true;
       } catch (_) { }
 
@@ -146,6 +150,7 @@
           window.nodeProgressMap["node-3"] = 0;
           window.nodeProgressMap["u1_node-3"] = 0;
           window.nodeProgressMap["u1_stage-3"] = 0;
+          window.nodeProgressMap[`${prefix}_1_n5`] = 0;
           window.nodeProgressMap[`${modalLang}_${modalPack}_u1_n3`] = 0;
         }
       }
@@ -389,7 +394,9 @@
     const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
     let activeCourseId = window.activeCourseId || (typeof localStorage !== "undefined" ? localStorage.getItem("vocadash_active_course_" + currentLang) : null) || "main";
     activeCourseId = (activeCourseId === "pack_football") ? "pack_football" : "main";
-    const round = (window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0;
+    const round = (typeof window.getNodeProgress === "function")
+      ? (Number(window.getNodeProgress(targetNodeId, currentLang, activeCourseId)?.clearedCount) || 0)
+      : ((window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0);
 
     const effectiveWords = customWords || window.currentCustomWords || null;
     let session = [];

@@ -65,31 +65,32 @@
       const nBoss = uNodes.find(n => n.type === 'boss' || n.id?.endsWith('_n6') || n.id === 'node-boss') || { id: isUnit1 ? 'node-boss' : `u${unitNum}_node-boss`, title: `Unit ${unit?.unitNumber || unitNum} 보스전`, type: 'boss' };
 
       const bonusId = nBonus.id, reviewId = nReview.id;
-      const isBonusDone = isClaimedFn(bonusId) || unitNum < unlockedLevel;
-      const isReviewDone = isReviewCompletedFn(reviewId, unitNum) || unitNum < unlockedLevel;
+      const isBonusDone = isClaimedFn(bonusId);
+      const isReviewDone = isReviewCompletedFn(reviewId, unitNum);
 
       const n1Data = getNodeProgFn(n1.id), n2Data = getNodeProgFn(n2.id), n3Data = getNodeProgFn(n3.id), bossData = getNodeProgFn(nBoss.id);
+      const hasUnlockedFn = (typeof window.isNodeUnlocked === 'function');
 
-      const isN1Unlocked = isUnit1 ? true : isUnlockedFn(idx, 0, n1, course);
-      const isN2Unlocked = isN1Unlocked && (n1Data.clearedCount >= 3 || unitNum < unlockedLevel);
-      const isBonusUnlocked = isN2Unlocked && (n2Data.clearedCount >= 3 || unitNum < unlockedLevel);
-      const isReviewUnlocked = isBonusUnlocked && (isBonusDone || unitNum < unlockedLevel);
-      const isN3Unlocked = isReviewUnlocked && (isReviewDone || unitNum < unlockedLevel);
-      const isBossUnlocked = isN3Unlocked && (n3Data.clearedCount >= 3 || unitNum < unlockedLevel);
+      const isN1Unlocked = hasUnlockedFn ? isUnlockedFn(idx, 0, n1, course) : (isUnit1 || unitNum <= unlockedLevel);
+      const isN2Unlocked = hasUnlockedFn ? isUnlockedFn(idx, 1, n2, course) : (isN1Unlocked && (n1Data.clearedCount >= 3 || n2Data.clearedCount > 0));
+      const isBonusUnlocked = hasUnlockedFn ? isUnlockedFn(idx, 2, nBonus, course) : (isN1Unlocked && n2Data.clearedCount >= 3);
+      const isReviewUnlocked = hasUnlockedFn ? isUnlockedFn(idx, 3, nReview, course) : (isN1Unlocked && isBonusDone);
+      const isN3Unlocked = hasUnlockedFn ? isUnlockedFn(idx, 4, n3, course) : (isN1Unlocked && (isReviewDone || n3Data.clearedCount > 0));
+      const isBossUnlocked = hasUnlockedFn ? isUnlockedFn(idx, 5, nBoss, course) : (isN3Unlocked && (n3Data.clearedCount >= 3 || bossData.clearedCount > 0));
 
-      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone && unitNum >= unlockedLevel;
-      const isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone && unitNum >= unlockedLevel;
-      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3 && unitNum >= unlockedLevel;
-      const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1 && unitNum >= unlockedLevel;
+      const isN1Active = isN1Unlocked && n1Data.clearedCount < 3;
+      const isN2Active = !isN1Active && isN2Unlocked && n2Data.clearedCount < 3;
+      const isBonusActive = !isN1Active && !isN2Active && isBonusUnlocked && !isBonusDone;
+      const isReviewActive = !isN1Active && !isN2Active && !isBonusActive && isReviewUnlocked && !isReviewDone;
+      const isN3Active = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && isN3Unlocked && n3Data.clearedCount < 3;
+      const isBossActive = !isN1Active && !isN2Active && !isBonusActive && !isReviewActive && !isN3Active && isBossUnlocked && bossData.clearedCount < 1;
 
-      return `${renderUnitNodeHtml({ unitNum, stageNum: 1, title: n1.title, align: 'ml-5 mb-11', width: '200px', isCompleted: (!isN1Unlocked) ? false : (n1Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN1Active, isLocked: !isN1Unlocked, nodeId: n1.id })}`
-        + `${renderUnitNodeHtml({ unitNum, stageNum: 2, title: n2.title, align: 'mr-7 ml-auto mb-11', width: '200px', isCompleted: (!isN2Unlocked) ? false : (n2Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN2Active, isLocked: !isN2Unlocked, nodeId: n2.id })}`
+      return `${renderUnitNodeHtml({ unitNum, stageNum: 1, title: n1.title, align: 'ml-5 mb-11', width: '200px', isCompleted: isN1Unlocked && n1Data.clearedCount >= 3, isActive: isN1Active, isLocked: !isN1Unlocked, nodeId: n1.id })}`
+        + `${renderUnitNodeHtml({ unitNum, stageNum: 2, title: n2.title, align: 'mr-7 ml-auto mb-11', width: '200px', isCompleted: isN2Unlocked && n2Data.clearedCount >= 3, isActive: isN2Active, isLocked: !isN2Unlocked, nodeId: n2.id })}`
         + `${renderUnitBonusHtml({ unitNum, align: 'ml-6 mb-11', width: '170px', isCompleted: isBonusDone, isActive: isBonusActive, isLocked: !isBonusUnlocked, nodeId: bonusId })}`
         + `${renderUnitReviewHtml({ unitNum, align: 'ml-auto mr-7 mb-11', width: '170px', isCompleted: isReviewDone, isActive: isReviewActive, isLocked: !isReviewUnlocked, nodeId: reviewId })}`
-        + `${renderUnitNodeHtml({ unitNum, stageNum: 3, title: n3.title, align: 'ml-6 mb-11', width: '210px', isCompleted: (!isN3Unlocked) ? false : (n3Data.clearedCount >= 3 || unitNum < unlockedLevel), isActive: isN3Active, isLocked: !isN3Unlocked, nodeId: n3.id })}`
-        + `${renderUnitBossHtml({ unitNum, align: 'mx-auto mb-6', width: '290px', isCompleted: (!isBossUnlocked) ? false : (bossData.clearedCount >= 1 || unitNum < unlockedLevel), isActive: isBossActive, isLocked: !isBossUnlocked, nodeId: nBoss.id })}`;
+        + `${renderUnitNodeHtml({ unitNum, stageNum: 3, title: n3.title, align: 'ml-6 mb-11', width: '210px', isCompleted: isN3Unlocked && n3Data.clearedCount >= 3, isActive: isN3Active, isLocked: !isN3Unlocked, nodeId: n3.id })}`
+        + `${renderUnitBossHtml({ unitNum, align: 'mx-auto mb-6', width: '290px', isCompleted: isBossUnlocked && bossData.clearedCount >= 1, isActive: isBossActive, isLocked: !isBossUnlocked, nodeId: nBoss.id })}`;
     }
 
     if (startUnit === 1) {
@@ -338,7 +339,18 @@
 
     if (!window.nodeProgressMap) window.nodeProgressMap = {};
 
+    const prefix = currentCoursePack === 'pack_football' ? 'fb' : currentLang;
     const readProgForNode = (nIndex) => {
+      const dataSlot = nIndex === 3 ? 5 : nIndex;
+      if (typeof window.getNodeProgress === 'function') {
+        const candidates = [`${prefix}_1_n${dataSlot}`, `u1_node-${nIndex}`, `node-${nIndex}`];
+        let maxC = 0;
+        for (const cid of candidates) {
+          const val = Number(window.getNodeProgress(cid, currentLang, currentCoursePack)?.clearedCount || 0);
+          if (val > maxC) maxC = val;
+        }
+        return Math.max(0, Math.min(3, maxC));
+      }
       const stdKey = `vocadash_prog_${currentLang}_${currentCoursePack}_u1_n${nIndex}`;
       let c = 0;
       try {
@@ -355,61 +367,62 @@
           const numAlt = parseInt(rawAlt, 10);
           if (!isNaN(numAlt)) c = numAlt;
         }
-        if (c === 0 && window.nodeProgressMap) c = Number(window.nodeProgressMap[`u1_node-${nIndex}`] || window.nodeProgressMap[`node-${nIndex}`] || 0);
+        if (c === 0 && window.nodeProgressMap) c = Number(window.nodeProgressMap[`${prefix}_1_n${dataSlot}`] || window.nodeProgressMap[`u1_node-${nIndex}`] || window.nodeProgressMap[`node-${nIndex}`] || 0);
       }
       return Math.max(0, Math.min(3, c));
     };
 
-    const isUnit1Completed = unlockedLevel > 1 || (typeof window.isUnitCompleted === 'function' && window.isUnitCompleted(1)) || (Array.isArray(window.completedUnits) && window.completedUnits.includes(1));
+    const isUnit1Completed = (typeof window.isUnitCompleted === 'function' && window.isUnitCompleted(1)) || (Array.isArray(window.completedUnits) && window.completedUnits.includes(1));
 
     const prog1 = isUnit1Completed ? Math.max(3, readProgForNode(1)) : readProgForNode(1);
-    const prog2 = isUnit1Completed ? Math.max(3, readProgForNode(2)) : ((prog1 >= 3) ? readProgForNode(2) : 0);
-    const prog3 = isUnit1Completed ? Math.max(3, readProgForNode(3)) : ((prog2 >= 3) ? readProgForNode(3) : 0);
-    const progBoss = isUnit1Completed ? Math.max(1, readProgForNode(6)) : ((prog3 >= 3) ? readProgForNode(6) : 0);
+    const prog2 = isUnit1Completed ? Math.max(3, readProgForNode(2)) : readProgForNode(2);
+    const prog3 = isUnit1Completed ? Math.max(3, readProgForNode(3)) : readProgForNode(3);
+    const progBoss = isUnit1Completed ? Math.max(1, readProgForNode(6)) : readProgForNode(6);
 
     [1, 2, 3].forEach(n => {
       const val = n === 1 ? prog1 : (n === 2 ? prog2 : prog3);
+      const dataSlot = n === 3 ? 5 : n;
       window.nodeProgressMap[`node-${n}`] = val;
       window.nodeProgressMap[`u1_node-${n}`] = val;
+      window.nodeProgressMap[`u1_stage-${n}`] = val;
+      window.nodeProgressMap[`u1_n${dataSlot}`] = val;
+      window.nodeProgressMap[`${prefix}_1_n${dataSlot}`] = val;
       window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n${n}`] = val;
     });
     window.nodeProgressMap['node-boss'] = progBoss;
     window.nodeProgressMap['u1_node-boss'] = progBoss;
+    window.nodeProgressMap[`${prefix}_1_n6`] = progBoss;
     window.nodeProgressMap[`${currentLang}_${currentCoursePack}_u1_n6`] = progBoss;
 
-    const isBonusDone = isUnit1Completed || ((typeof window.isBonusClaimed === 'function') && (window.isBonusClaimed('node-bonus') || window.isBonusClaimed('u1_node-bonus')));
-    const isReviewDone = isUnit1Completed || ((typeof window.isReviewNodeCompleted === 'function') && (window.isReviewNodeCompleted('u1_node-review', 1) || window.isReviewNodeCompleted('node-review', 1)));
+    const isBonusDone = isUnit1Completed || ((typeof window.isBonusClaimed === 'function') && (window.isBonusClaimed(`${prefix}_1_n3`) || window.isBonusClaimed('node-bonus') || window.isBonusClaimed('u1_node-bonus')));
+    const isReviewDone = isUnit1Completed || ((typeof window.isReviewNodeCompleted === 'function') && (window.isReviewNodeCompleted(`${prefix}_1_n4`, 1) || window.isReviewNodeCompleted('u1_node-review', 1) || window.isReviewNodeCompleted('node-review', 1)));
 
-    const currentCourseLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const currentCourseLang = currentLang;
     const unitIndex = typeof window.currentUnitIndex === 'number' ? window.currentUnitIndex : 0;
     const currentTheme = getUnitTheme(1);
 
-    const safeUnitCompleted = typeof isUnit1Completed === 'boolean'
-      ? (isUnit1Completed && (window.lastCompletedCourseLang === currentCourseLang))
-      : false;
-    const safeBonusDone = typeof isBonusDone === 'boolean'
-      ? (isBonusDone && (localStorage.getItem(`vocadash_${currentCourseLang}_bonus_u${unitIndex + 1}`) === 'done'))
-      : false;
-    const safeReviewDone = typeof isReviewDone === 'boolean'
-      ? (isReviewDone && (localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done'))
-      : false;
+    const safeUnitCompleted = Boolean(isUnit1Completed);
+    const bonusClaimed = Boolean(isBonusDone);
+    const reviewCompleted = Boolean(isReviewDone);
+    const hasUnlockedFn = (typeof window.isNodeUnlocked === 'function');
 
-    const bonusClaimed = Boolean(isBonusDone || safeBonusDone || localStorage.getItem(`vocadash_${currentCourseLang}_bonus_u${unitIndex + 1}`) === 'done');
-    const reviewCompleted = Boolean(isReviewDone || safeReviewDone || localStorage.getItem(`vocadash_${currentCourseLang}_review_u${unitIndex + 1}`) === 'done');
+    const isNode1Unlocked = hasUnlockedFn ? window.isNodeUnlocked(0, 0, { id: `${prefix}_1_n1`, type: 'stage', stageNumber: 1 }) : true;
+    const isNode2Unlocked = safeUnitCompleted || (hasUnlockedFn ? window.isNodeUnlocked(0, 1, { id: `${prefix}_1_n2`, type: 'stage', stageNumber: 2 }) : (prog1 >= 3 || prog2 > 0));
+    const isBonusUnlocked = safeUnitCompleted || (hasUnlockedFn ? window.isNodeUnlocked(0, 2, { id: `${prefix}_1_n3`, type: 'bonus' }) : (prog2 >= 3));
+    const isReviewUnlocked = safeUnitCompleted || (hasUnlockedFn ? window.isNodeUnlocked(0, 3, { id: `${prefix}_1_n4`, type: 'review' }) : bonusClaimed);
+    const isNode3Unlocked = safeUnitCompleted || (hasUnlockedFn ? window.isNodeUnlocked(0, 4, { id: `${prefix}_1_n5`, type: 'stage', stageNumber: 3 }) : (reviewCompleted || prog3 > 0));
+    const isBossUnlocked = safeUnitCompleted || (hasUnlockedFn ? window.isNodeUnlocked(0, 5, { id: `${prefix}_1_n6`, type: 'boss' }) : (prog3 >= 3 || progBoss > 0));
 
-    const isNode1Unlocked = true;
-    const isNode2Unlocked = safeUnitCompleted || (prog1 >= 3);
-    const isBonusUnlocked = safeUnitCompleted || (prog2 >= 3);
-    const isReviewUnlocked = safeUnitCompleted || (isBonusUnlocked && bonusClaimed);
-    const isNode3Unlocked = safeUnitCompleted || (isReviewUnlocked && reviewCompleted);
-    const isBossUnlocked = safeUnitCompleted || (prog3 >= 3);
-
-    const isNode1Active = !safeUnitCompleted && (prog1 < 3);
-    const isNode2Active = !safeUnitCompleted && (!isNode1Active && prog2 < 3);
+    const isNode1Active = !safeUnitCompleted && isNode1Unlocked && (prog1 < 3);
+    const isNode2Active = !safeUnitCompleted && (!isNode1Active && isNode2Unlocked && prog2 < 3);
     const isBonusActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && isBonusUnlocked && !bonusClaimed);
     const isReviewActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && isReviewUnlocked && !reviewCompleted);
     const isNode3Active = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && isNode3Unlocked && prog3 < 3);
     const isBossActive = !safeUnitCompleted && (!isNode1Active && !isNode2Active && !isBonusActive && !isReviewActive && !isNode3Active && isBossUnlocked && progBoss < 1);
+
+    if (typeof window.syncUnlockedNodesForCourse === 'function') {
+      try { window.syncUnlockedNodesForCourse(currentLang, currentCoursePack, 1); } catch (_) { }
+    }
 
     const el = (id) => (typeof document !== 'undefined' ? document.getElementById(id) : null);
     const setVis = (node, isVisible) => {
@@ -453,9 +466,7 @@
       if (btn) {
         const btnStateClass = isL
           ? 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm pointer-events-none'
-          : (isC || isA
-            ? currentTheme.activeBtn
-            : 'bg-slate-200 text-slate-400 font-black text-2xl border-b-4 border-slate-300 shadow-sm');
+          : currentTheme.activeBtn;
         btn.className = `node-btn btn-3d relative w-[72px] h-[72px] rounded-full ${btnStateClass} flex items-center justify-center active:translate-y-1 active:border-b-0 transition-all cursor-pointer overflow-hidden`;
         btn.title = isL ? `${n}과: 잠김` : (isC ? `${n}과 (완료)` : `${n}과`);
         btn.dataset.isLocked = isL ? 'true' : 'false';
@@ -793,8 +804,11 @@
       const isLocked = targetBtn.dataset.isLocked === 'true' || targetBtn.getAttribute('data-is-locked') === 'true' || nodeContainer.dataset?.nodeType === 'locked';
       const uNum = parseInt(targetBtn.dataset.unitNumber || nodeContainer.dataset?.unitIndex || '0', 10) + (targetBtn.dataset.unitNumber ? 0 : 1);
 
+      const isBonusNode = nType === 'bonus' || rawNodeId.includes('bonus') || /^(?:es|en|fb)_\d+_n3$/i.test(rawNodeId);
+      const isReviewNode = nType === 'review' || rawNodeId.includes('review') || /_n4$/i.test(rawNodeId);
+
       if (isLocked) {
-        if (nType === 'bonus' || rawNodeId.includes('bonus')) {
+        if (isBonusNode) {
           if (typeof window.showToast === 'function') window.showToast('🔒 1과와 2과를 모두 마스터해야 보너스 상자를 열 수 있어요! 🎁');
           else alert('1과와 2과를 모두 마스터해야 보너스 상자를 열 수 있어요! 🎁');
           return;
@@ -804,9 +818,9 @@
         return;
       }
 
-      if (nType === 'bonus' || rawNodeId.includes('bonus')) {
+      if (isBonusNode) {
         if (typeof window.openBonusModal === 'function') window.openBonusModal(rawNodeId);
-      } else if (nType === 'review' || rawNodeId.includes('review')) {
+      } else if (isReviewNode) {
         if (typeof window.openReviewSpeedrunModal === 'function') window.openReviewSpeedrunModal(uNum, rawNodeId);
       } else {
         if (typeof window.openLessonModal === 'function') window.openLessonModal(rawNodeId, uNum);

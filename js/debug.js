@@ -5,9 +5,19 @@
     const old = document.getElementById('debug-cheat-panel');
     if (old) old.remove();
 
-    // 1. 치트 패널 DOM 생성
+    const isDebugMode = (() => {
+        try {
+            if (typeof window !== 'undefined' && window.location && window.location.search) {
+                return new URLSearchParams(window.location.search).get('debug') === 'true';
+            }
+        } catch (_) { }
+        return false;
+    })();
+
+    // 1. 치트 패널 DOM 생성 (?debug=true 일 때만 노출, 기본 hidden)
     const panel = document.createElement('div');
     panel.id = 'debug-cheat-panel';
+    if (!isDebugMode && panel.classList) panel.classList.add('hidden');
     panel.style.cssText = `
         position: fixed;
         bottom: 20px;
@@ -18,7 +28,7 @@
         border-radius: 12px;
         padding: 12px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        display: flex;
+        display: ${isDebugMode ? 'flex' : 'none'};
         flex-direction: column;
         gap: 8px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
