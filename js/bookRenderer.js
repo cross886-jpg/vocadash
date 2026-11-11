@@ -27,7 +27,7 @@
   }
 
   // 1. 단어장 상단 코스 뱃지 갱신
-  function updateBookCourseBadge(lang = (window.currentLanguage || window.currentActiveCourse || 'es'), courseId) {
+  function updateBookCourseBadge(lang = (window.currentLanguage || window.currentActiveCourse || 'en'), courseId) {
     let icon = '🇪🇸';
     let title = '일상 실전 패턴';
 
@@ -58,7 +58,7 @@
 
   // 2. 단어장 중간 학습 진도 배너 및 필터 칩 개수 동적 동기화
   function updateBookProgressHero() {
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const activeCourse = (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null)
       || (currentLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
@@ -1009,9 +1009,9 @@
         }, 350);
 
         if (typeof window.safePlayTTS === 'function') {
-          window.safePlayTTS(term, window.currentActiveCourse || 'es-ES', btn);
+          window.safePlayTTS(term, window.currentActiveCourse || 'en-US', btn);
         } else if (typeof window.speakWord === 'function') {
-          window.speakWord(term, window.currentActiveCourse || 'es-ES', btn);
+          window.speakWord(term, window.currentActiveCourse || 'en-US', btn);
         }
       });
     });

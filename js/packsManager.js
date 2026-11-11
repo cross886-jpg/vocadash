@@ -100,8 +100,8 @@
     const packsScreen = document.getElementById('packs-screen');
     if (!packsScreen) return;
 
-    // 언어 탭 상태 결정: 파라미터 -> window.currentPacksLang -> window.currentLanguage -> 'es'
-    const currentLang = lang || window.currentPacksLang || (window.currentLanguage === 'en' ? 'en' : 'es');
+    // 언어 탭 상태 결정: 파라미터 -> window.currentPacksLang -> window.currentLanguage -> 'en'
+    const currentLang = lang || window.currentPacksLang || (window.currentLanguage === 'es' ? 'es' : 'en');
     window.currentPacksLang = currentLang;
 
     const supportedLangs = window.SUPPORTED_LANGUAGES || [
@@ -150,7 +150,7 @@
       if (heroTitle) heroTitle.textContent = '스페인 축구 실전 (Official DLC)';
       if (heroDesc) heroDesc.textContent = '스페인 현지 경기장 & 피치 콜 필수 어휘 60개';
       if (heroIcon) heroIcon.textContent = '⚽';
-    } else if ((window.currentLanguage || 'es') === 'en') {
+    } else if ((window.currentLanguage || 'en') === 'en') {
       if (heroTitle) heroTitle.textContent = '영어 정규 코스 (기본 코스)';
       if (heroDesc) heroDesc.textContent = '일상 회화 & 실전 기초 어휘 마스터 40개';
       if (heroIcon) heroIcon.textContent = '🇺🇸';
@@ -170,8 +170,8 @@
       packCardsContainer.innerHTML = catalog.map(pack => {
         const isEquipped = !pack.isComingSoon && (
           (pack.id === activeId) ||
-          (pack.id === 'main_en' && activeId === 'main' && (window.currentLanguage || 'es') === 'en') ||
-          (pack.id === 'main' && activeId === 'main' && (window.currentLanguage || 'es') === 'es')
+          (pack.id === 'main_en' && activeId === 'main' && (window.currentLanguage || 'en') === 'en') ||
+          (pack.id === 'main' && activeId === 'main' && (window.currentLanguage || 'en') === 'es')
         );
         visibleCount++;
         return renderPackCardHtml(pack, isEquipped);

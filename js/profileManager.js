@@ -7,24 +7,29 @@
 
   const VALID_AVATARS = ['profile-spanish.webp', 'profile-english.webp', 'profile-artist.webp', 'profile-explorer.webp'];
 
+  const getStorage = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
+  const setStorage = (key, val) => { try { localStorage.setItem(key, typeof val === 'object' ? JSON.stringify(val) : String(val)); } catch (_) { } };
+
+  const getDefaultAvatarFile = () => {
+    const lang = target.currentLanguage || target.currentActiveCourse || getStorage('vocadash_language') || 'en';
+    return lang === 'es' ? 'profile-spanish.webp' : 'profile-english.webp';
+  };
+
   const resolveAvatarFile = (val) => {
-    if (!val) return 'profile-spanish.webp';
+    if (!val) return getDefaultAvatarFile();
     const clean = String(val).split('?')[0].split('/').pop();
     if (VALID_AVATARS.includes(clean)) return clean;
     if (clean.includes('english') || clean.includes('sunglass')) return 'profile-english.webp';
     if (clean.includes('artist') || clean.includes('scholar')) return 'profile-artist.webp';
     if (clean.includes('explorer') || clean.includes('relax')) return 'profile-explorer.webp';
-    return 'profile-spanish.webp';
+    return getDefaultAvatarFile();
   };
 
   const resolveAvatarSrc = (val) => `assets/profiles/${resolveAvatarFile(val)}?v=88`;
 
-  let selectedAvatarFile = 'profile-spanish.webp';
+  let selectedAvatarFile = getDefaultAvatarFile();
   let selectedAvatarSrc = resolveAvatarSrc(selectedAvatarFile);
   let selectedTitle = '초급 마스터';
-
-  const getStorage = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
-  const setStorage = (key, val) => { try { localStorage.setItem(key, typeof val === 'object' ? JSON.stringify(val) : String(val)); } catch (_) { } };
 
   function loadSavedProfileData() {
     const saved = getStorage('vocadash_profile') || getStorage('vocadash_profile_avatar');
@@ -197,7 +202,7 @@
     const saveBtn = document.getElementById('save-profile-btn') || document.querySelector('#profile-modal-card button.bg-\\[\\#22c55e\\]');
     saveBtn?.addEventListener('click', (e) => {
       e.preventDefault();
-      const nick = document.getElementById('nickname-input')?.value.trim() || '스페인어 질주러';
+      const nick = document.getElementById('nickname-input')?.value.trim() || (getDefaultAvatarFile() === 'profile-english.webp' ? '영어 질주러' : '스페인어 질주러');
       const statsNick = document.getElementById('stats-nickname');
       if (statsNick) statsNick.textContent = nick;
       const statsBadge = document.getElementById('stats-title-badge');

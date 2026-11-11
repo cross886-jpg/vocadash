@@ -269,7 +269,7 @@
         }
       }
 
-      const isEn = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en';
+      const isEn = (window.currentLanguage || window.currentActiveCourse || 'en') === 'en';
       let title = isEn ? "STAGE CLEAR!" : "¡STAGE CLEAR!", sub = `${actualTitle} (${nextCount}/3) 클리어!`, btn = nextCount < 3 ? `다음 라운드 (${nextCount + 1}/3) ▶` : "다음 스테이지 ▶";
       if (stars === 0) {
         title = "클리어 실패";
@@ -352,7 +352,7 @@
       setTxt("result-gems-text", `+${saveRes?.addGems ?? 10} 💎`);
       setTxt("result-xp-text", `+${saveRes?.addXp ?? 50} XP`);
     } else {
-      const isEn = (window.currentLanguage || window.currentActiveCourse || "es") === "en";
+      const isEn = (window.currentLanguage || window.currentActiveCourse || "en") === "en";
       const lastFailed = missed[missed.length - 1] || questions[qIdx];
       const charPrefix = isEn ? "en" : "es";
       document.querySelectorAll("#game-result-gameover-card img").forEach(img => { img.src = `assets/characters/${charPrefix}-sad.webp?v=68`; });
@@ -712,7 +712,7 @@
           const word = document.getElementById("result-missed-word")?.textContent?.trim() ||
                        document.getElementById("gameover-missed-word")?.textContent?.trim();
           if (word && typeof window.speakWord === "function") {
-            const lang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+            const lang = (window.currentLanguage || window.currentActiveCourse || "en") === "es" ? "es" : "en";
             window.speakWord(word, lang);
           }
           return;

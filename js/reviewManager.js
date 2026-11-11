@@ -26,7 +26,7 @@
   const DEFAULT_WRONG_WORDS_EN = [];
 
   function getWrongStorageKey(lang) {
-    const curLang = (lang || target.currentLanguage || target.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const curLang = (lang || target.currentLanguage || target.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     return `vocadash_wrong_answers_${curLang}`;
   }
 
@@ -678,7 +678,7 @@
   }
 
   // 초기 상태 로드
-  target.wrongWords = loadWrongWords(target.currentLanguage || 'es');
+  target.wrongWords = loadWrongWords(target.currentLanguage || 'en');
 
   // Exports to Window / Global
   target.DEFAULT_WRONG_WORDS_ES = DEFAULT_WRONG_WORDS_ES;
@@ -702,7 +702,7 @@
   target.wrong_words_store = {
     load: loadWrongWords,
     save: saveWrongWords,
-    getAll: () => loadWrongWords(target.currentLanguage || 'es'),
+    getAll: () => loadWrongWords(target.currentLanguage || 'en'),
     recordResult: recordAnswerResult
   };
 

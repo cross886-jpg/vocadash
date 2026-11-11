@@ -384,7 +384,7 @@
 
   // 현재 유닛 및 코스의 일반 단어 풀 추출 헬퍼 함수
   function getCurrentUnitGeneralWords(currentLang) {
-    const lang = (currentLang || (typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'es') === 'en' ? 'en' : 'es';
+    const lang = (currentLang || (typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'en') === 'es' ? 'es' : 'en';
     let pool = [];
 
     const db = (typeof window !== 'undefined' && window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
@@ -476,7 +476,7 @@
         if (val === 'en' || val === 'es') return val;
       }
     } catch (_) { }
-    return 'es';
+    return 'en';
   }
   target.getSavedLanguage = getSavedLanguage;
   if (typeof window !== 'undefined') {
@@ -511,10 +511,10 @@
     get 'pack_football'() { return (typeof window !== 'undefined' ? window.packFootballData : null); },
     get 'en_main'() { return (typeof window !== 'undefined' ? window.courseData_en : null); },
     get 'main'() {
-      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'es';
-      return (curLang === 'en' && typeof window !== 'undefined' && window.courseData_en)
-        ? window.courseData_en
-        : (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null);
+      const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'en';
+      return (curLang === 'es' && typeof window !== 'undefined' && (window.courseData_es || window.courseData))
+        ? (window.courseData_es || window.courseData)
+        : (typeof window !== 'undefined' ? window.courseData_en : null);
     },
     get 'main_en'() { return (typeof window !== 'undefined' ? window.courseData_en : null); },
     get 'main_es'() { return (typeof window !== 'undefined' ? (window.courseData_es || window.courseData) : null); }
@@ -527,13 +527,13 @@
     es: { code: 'es', name: '스페인어', flag: '🇪🇸', title: '일상 실전 패턴', mascotImg: 'assets/characters/es-study.webp?v=68', ctaText: '스페인어로 학습하기', desc: '스페인어 (일상 실전 패턴)' },
     en: { code: 'en', name: '영어', flag: '🇺🇸', title: '필수 회화 & 어휘', mascotImg: 'assets/characters/en-study.webp?v=68', ctaText: '영어로 학습하기', desc: '영어 (필수 회화 & 어휘)' },
     get units() {
-      const lang = ((typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'es') === 'en' ? 'en' : 'es';
+      const lang = ((typeof window !== 'undefined' ? (window.currentLanguage || window.currentActiveCourse) : null) || 'en') === 'es' ? 'es' : 'en';
       const baseUnits = ((typeof window !== 'undefined' ? window.UNIT_LIST_PRESETS : null) && window.UNIT_LIST_PRESETS[lang]) || UNIT_LIST_PRESETS[lang] || [];
       const db = (typeof window !== 'undefined' && window.VOCA_DATA && window.VOCA_DATA.database) || (typeof database !== 'undefined' ? database : null);
       return baseUnits.map((u, idx) => {
         if (Array.isArray(u.words) && u.words.length > 0) return u;
         const dbKey = idx === 0 ? 'node-1' : idx === 1 ? 'node-2' : idx === 2 ? 'node-3' : 'node-boss';
-        const wList = (db && db[dbKey] && (db[dbKey][lang] || db[dbKey].es || [])) || [];
+        const wList = (db && db[dbKey] && (db[dbKey][lang] || db[dbKey].en || [])) || [];
         return { ...u, words: wList };
       });
     }
@@ -544,8 +544,8 @@
   }
 
   function getCurrentCourseData() {
-    let activeId = 'es_main';
-    const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) === 'en' ? 'en' : 'es';
+    let activeId = 'en_main';
+    const curLang = ((typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'en') === 'es' ? 'es' : 'en';
     try {
       if (typeof localStorage !== 'undefined') {
         activeId = localStorage.getItem('vocadash_active_course_' + curLang) || localStorage.getItem('vocadash_current_course') || localStorage.getItem('vocadash_active_course') || (typeof window !== 'undefined' && (window.currentCourseId || window.activeCourseId)) || (curLang === 'en' ? 'en_main' : 'es_main');

@@ -224,7 +224,7 @@
     }
 
     // 4지선다 보기 세팅 (해당 챕터 Unit 단어 풀 엄격 격리 및 빈칸 방어)
-    const currentLang = (window.currentLanguage || (window.currentActiveCourse === 'main_en' ? 'en' : 'es')) === 'en' ? 'en' : 'es';
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     let choices = [];
     if (typeof window.generateQuestionChoices === "function") {
       choices = window.generateQuestionChoices(q, gameQuestions, currentGameLessonId, currentLang);
@@ -654,7 +654,7 @@
     }
     window.isInfiniteHeart = isInfiniteHeart;
 
-    const currentLang = window.currentActiveCourse || "es";
+    const currentLang = window.currentActiveCourse || window.currentLanguage || "en";
     const incomingSession = (Array.isArray(session) && session.length > 0)
       ? session
       : (lessonId && typeof lessonId === "object" && Array.isArray(lessonId.session) && lessonId.session.length > 0)

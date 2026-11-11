@@ -78,7 +78,7 @@
       if (el) { el.classList.add('hidden'); el.style.display = 'none'; }
     });
 
-    const currentCourse = window.currentActiveCourse || 'es';
+    const currentCourse = window.currentActiveCourse || 'en';
     let deck = parsed.words;
     if ((!deck || deck.length === 0) && typeof window.quizSessionGenerator?.generateStageSession === 'function') {
       const clCount = window.nodeProgressMap?.[currentFlashcardLessonId] || 0;
@@ -176,7 +176,7 @@
     // scale 제거: translateY 오프셋과 opacity만 사용
     if (els.behind) { els.behind.style.transition = ''; els.behind.style.transform = 'translateY(-8px)'; els.behind.style.opacity = '0.7'; els.behind.style.display = 'flex'; }
     if (els.deckLayer2) { els.deckLayer2.style.transition = ''; els.deckLayer2.style.transform = 'translateY(-16px)'; els.deckLayer2.style.opacity = '0.8'; els.deckLayer2.style.display = 'block'; }
-    if (els.mascotImg) els.mascotImg.src = `assets/characters/${(window.currentLanguage || window.currentActiveCourse || currentCourse || 'es') === 'en' ? 'en' : 'es'}-study.webp?v=88`;
+    if (els.mascotImg) els.mascotImg.src = `assets/characters/${(window.currentLanguage || window.currentActiveCourse || currentCourse || 'en') === 'es' ? 'es' : 'en'}-study.webp?v=88`;
 
     renderCurrentCard();
     bindEvents();
@@ -391,7 +391,7 @@
     setTimeout(() => {
       currentCardIndex++;
       renderCurrentCard();
-      const currentCourse = window.currentActiveCourse || 'es', nextCard = activeDeck[currentCardIndex];
+      const currentCourse = window.currentActiveCourse || 'en', nextCard = activeDeck[currentCardIndex];
       if (nextCard && (!window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false) && typeof window.speakWord === 'function') {
         window.speakWord(nextCard.word || nextCard.term, currentCourse);
       }
@@ -410,7 +410,7 @@
     const topEl = els.wrapper || els.card;
     currentCardIndex--;
     renderCurrentCard();
-    const currentCourse = window.currentActiveCourse || 'es', prevCard = activeDeck[currentCardIndex];
+    const currentCourse = window.currentActiveCourse || 'en', prevCard = activeDeck[currentCardIndex];
     if (prevCard && (!window.vocadashSettings || window.vocadashSettings.autoPlayAudio !== false) && typeof window.speakWord === 'function') {
       window.speakWord(prevCard.word || prevCard.term, currentCourse);
     }
@@ -531,7 +531,7 @@
         els.speakerBtn.classList.add('scale-110');
         setTimeout(() => els.speakerBtn?.classList.remove('scale-110'), 180);
         const cardData = activeDeck[currentCardIndex];
-        const course = window.currentActiveCourse || 'es';
+        const course = window.currentActiveCourse || 'en';
         if (cardData && typeof window.speakWord === 'function') {
           window.speakWord(cardData.word || cardData.term, course, els.speakerBtn);
         }

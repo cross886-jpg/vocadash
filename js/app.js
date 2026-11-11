@@ -14,21 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof localStorage !== 'undefined') localStorage.clear();
       if (typeof sessionStorage !== 'undefined') sessionStorage.clear();
 
-      const DEFAULT_STATE = { currentCourse: 'pack_football', currentUnit: 0, currentNode: 0, stars: {}, clearedNodes: {}, unlockedNodes: ['fb_1_n1', 'node-1'], weakWords: [], gems: 0, hearts: 5 };
+      const DEFAULT_STATE = { currentCourse: 'en_main', currentUnit: 0, currentNode: 0, stars: {}, clearedNodes: {}, unlockedNodes: ['en_1_n1', 'node-1'], weakWords: [], gems: 0, hearts: 5 };
       try {
         localStorage.setItem('vocadash_user_data', JSON.stringify(DEFAULT_STATE));
-        localStorage.setItem('vocadash_active_course', 'pack_football');
-        localStorage.setItem('vocadash_current_course', 'pack_football');
-        localStorage.setItem('vocadash_language', 'es');
+        localStorage.setItem('vocadash_active_course', 'en_main');
+        localStorage.setItem('vocadash_current_course', 'en_main');
+        localStorage.setItem('vocadash_language', 'en');
         localStorage.setItem('vocadash_hearts', '5');
         localStorage.setItem('vocadash_gems', '0');
       } catch (_) { }
 
-      window.activeCourseId = 'pack_football';
-      window.currentCourseId = 'pack_football';
-      window.currentActiveCourse = 'es';
-      window.currentLanguage = 'es';
-      window.nodeProgressMap = { 'fb_1_n1': 0, 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
+      window.activeCourseId = 'main';
+      window.currentCourseId = 'en_main';
+      window.currentActiveCourse = 'en';
+      window.currentLanguage = 'en';
+      window.nodeProgressMap = { 'en_1_n1': 0, 'node-1': 0, 'node-2': 0, 'node-3': 0, 'node-boss': 0 };
 
       urlParams.delete('clean');
       const cleanUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '') + window.location.hash;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.dismissSplash = () => {};
 
   // 3. 애플리케이션 초기화 부트스트랩 (각 모듈 진입점 순차 호출)
-  const initialLang = (typeof window.getSavedLanguage === 'function') ? window.getSavedLanguage() : 'es';
+  const initialLang = (typeof window.getSavedLanguage === 'function') ? window.getSavedLanguage() : 'en';
   if (typeof window.setLanguage === 'function') window.setLanguage(initialLang);
 
   [

@@ -45,7 +45,7 @@
       window.isWrongWordsMiniReviewActive = false;
     }
 
-    const modalLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    const modalLang = (window.currentLanguage || window.currentActiveCourse || "en") === "es" ? "es" : "en";
     let modalPack = window.activeCourseId || (typeof localStorage !== "undefined" ? localStorage.getItem("vocadash_active_course_" + modalLang) : null) || "main";
     modalPack = (modalPack === "pack_football") ? "pack_football" : "main";
 
@@ -307,7 +307,7 @@
     window.currentReviewUnitNumber = resolvedUnit;
     window.currentReviewNodeId = resolvedNodeId;
 
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || "en") === "es" ? "es" : "en";
     let reviewQueue = [];
     if (typeof window.buildReviewQuestionQueue === "function") {
       reviewQueue = window.buildReviewQuestionQueue(resolvedUnit, currentLang) || [];
@@ -351,7 +351,7 @@
   function startRoadmapReviewSpeedrun() {
     closeReviewSpeedrunModal();
     if (typeof window.closeResultModal === "function") window.closeResultModal();
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || "en") === "es" ? "es" : "en";
     const targetReviewUnit = window.currentReviewUnitNumber || window.currentUnitNumber || 1;
     const targetReviewId = window.currentReviewNodeId || (typeof window.getCompositeNodeKey === "function" ? window.getCompositeNodeKey("node-review", targetReviewUnit) : `u${targetReviewUnit}_node-review`);
 
@@ -391,7 +391,7 @@
       window.isWrongWordsMiniReviewActive = false;
     }
 
-    const currentLang = (window.currentLanguage || window.currentActiveCourse || "es") === "en" ? "en" : "es";
+    const currentLang = (window.currentLanguage || window.currentActiveCourse || "en") === "es" ? "es" : "en";
     let activeCourseId = window.activeCourseId || (typeof localStorage !== "undefined" ? localStorage.getItem("vocadash_active_course_" + currentLang) : null) || "main";
     activeCourseId = (activeCourseId === "pack_football") ? "pack_football" : "main";
     const round = (typeof window.getNodeProgress === "function")

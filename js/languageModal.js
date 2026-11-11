@@ -7,7 +7,7 @@
   'use strict';
   const target = (typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : global));
 
-  let modalPendingLanguage = 'es';
+  let modalPendingLanguage = 'en';
   let modalPendingCourseId = 'main';
 
   function el(id) {
@@ -251,7 +251,7 @@
   function openLanguageModal() {
     window.closeCourseDropdown?.();
     const savedLang = localStorage?.getItem('vocadash_selected_lang') || localStorage?.getItem('vocadash_language');
-    modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || savedLang || 'es';
+    modalPendingLanguage = window.currentLanguage || window.currentActiveCourse || savedLang || 'en';
     modalPendingCourseId = window.activeCourseId || localStorage?.getItem('vocadash_active_course') || 'main';
 
     if (modalPendingLanguage === 'en') modalPendingCourseId = 'main';
@@ -305,7 +305,7 @@
   }
 
   function setLanguage(targetLang, explicitCourseId) {
-    const lang = (targetLang === 'en' || targetLang === 'en-US') ? 'en' : 'es';
+    const lang = (targetLang === 'es' || targetLang === 'es-ES') ? 'es' : 'en';
     window.currentActiveCourse = lang;
     window.currentLanguage = lang;
     try {
@@ -385,6 +385,17 @@
     if (typeof window.updateRoadmapSignpost === 'function') {
       window.updateRoadmapSignpost(lang);
     }
+    try {
+      if (!localStorage.getItem('vocadash_profile') && !localStorage.getItem('vocadash_profile_avatar') && typeof window.applyProfileAvatar === 'function') {
+        window.applyProfileAvatar(lang === 'en' ? 'profile-english.webp' : 'profile-spanish.webp');
+      }
+      if (!localStorage.getItem('vocadash_profile_nickname')) {
+        const defaultNick = (lang === 'en') ? '영어 질주러' : '스페인어 질주러';
+        const statsNick = document.getElementById('stats-nickname'); if (statsNick) statsNick.textContent = defaultNick;
+        const streakNick = document.getElementById('settings-streak-nickname'); if (streakNick) streakNick.textContent = defaultNick;
+        const nickInput = document.getElementById('nickname-input'); if (nickInput) nickInput.value = defaultNick;
+      }
+    } catch (_) { }
 
     // 7. 언어 선택 모달 내 상태 갱신 및 창 닫기
     updateModalCardsUI(lang);
@@ -443,7 +454,7 @@
     const btnConfirmLangCourse = document.getElementById('btn-confirm-language-course');
     if (btnConfirmLangCourse) {
       btnConfirmLangCourse.addEventListener('click', () => {
-        const finalLang = modalPendingLanguage || window.currentLanguage || localStorage.getItem('vocadash_selected_lang') || 'es';
+        const finalLang = modalPendingLanguage || window.currentLanguage || localStorage.getItem('vocadash_selected_lang') || 'en';
         const finalCourseId = modalPendingCourseId || window.currentCourseId || window.activeCourseId || (finalLang === 'en' ? 'en_main' : 'es_main');
 
         try {
@@ -478,7 +489,7 @@
     const courseDropdown = document.getElementById('course-dropdown-menu');
     const chevronIcon = document.getElementById('dropdown-chevron-icon');
     if (!courseDropdown) return;
-    renderCourseDropdown(window.currentLanguage || window.currentActiveCourse || 'es', window.currentCourseId);
+    renderCourseDropdown(window.currentLanguage || window.currentActiveCourse || 'en', window.currentCourseId);
     courseDropdown.classList.remove('hidden', 'opacity-0', '-translate-y-2', 'pointer-events-none');
     courseDropdown.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
     if (chevronIcon) chevronIcon.classList.add('rotate-180');
@@ -496,7 +507,7 @@
     }, 200);
   }
 
-  function renderCourseDropdown(lang = (window.currentLanguage || window.currentActiveCourse || 'es'), selectedCourseId) {
+  function renderCourseDropdown(lang = (window.currentLanguage || window.currentActiveCourse || 'en'), selectedCourseId) {
     const menu = document.getElementById('course-dropdown-menu');
     if (!menu) return;
 
@@ -587,7 +598,7 @@
         const titleEl = itemBtn.querySelector('.item-title');
         const title = titleEl ? titleEl.textContent.trim() : itemBtn.innerText.trim();
 
-        const currentLang = window.currentLanguage || window.currentActiveCourse || 'es';
+        const currentLang = window.currentLanguage || window.currentActiveCourse || 'en';
         const presets = (window.COURSE_PRESETS && window.COURSE_PRESETS[currentLang]) || (typeof COURSE_PRESETS !== 'undefined' ? COURSE_PRESETS[currentLang] || COURSE_PRESETS.es : []) || [];
         const matched = presets.find((c) => c.id === courseId);
         const courseCatMap = window.courseCategoryMap || (typeof courseCategoryMap !== 'undefined' ? courseCategoryMap : null);

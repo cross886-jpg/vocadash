@@ -24,7 +24,7 @@
     const course = activeCourse
       || (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const courseId = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
 
     // Section 데이터에서 현재 활성 섹션 파악 (SSOT)
@@ -188,10 +188,10 @@
   function updateTopUnitBanner(activeIdx, force = false) {
     const course = (typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData() : null)
       || (window.activeCourseId === 'pack_football' ? window.packFootballData : null);
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
 
     const courseId = window.currentCourseId || window.activeCourseId || (lang === 'en' ? 'en_main' : 'es_main');
-    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || window.courseSections.es_main) : null;
+    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || (lang === 'en' ? window.courseSections.en_main : window.courseSections.es_main)) : null;
     const lastSection = sectionsConfig?.sections?.[sectionsConfig.sections.length - 1];
     const totalGates = lastSection?.unitEnd || 30;
 
@@ -293,7 +293,7 @@
     window.currentUnitNumber = uNum;
 
     const courseId = window.currentCourseId || window.activeCourseId || ((window.currentLanguage === 'en' || window.currentActiveCourse === 'en') ? 'en_main' : 'es_main');
-    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || window.courseSections.es_main) : null;
+    const sectionsConfig = (typeof window.courseSections !== 'undefined') ? (window.courseSections[courseId] || (lang === 'en' ? window.courseSections.en_main : window.courseSections.es_main)) : null;
     const targetSection = sectionsConfig?.sections?.find(s => uNum >= s.unitStart && uNum <= s.unitEnd);
 
     // If target unit belongs to a different section, switch active section and re-render roadmap!
@@ -683,7 +683,7 @@
   function renderRoadmap() {
     const getCurrentCourse = typeof window.getCurrentCourseData === 'function' ? window.getCurrentCourseData : () => null;
     const activeCourse = getCurrentCourse();
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const activeCourseId = activeCourse?.id || window.activeCourseId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vocadash_active_course') : 'main') || 'main';
     const unlockedLevel = typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang, activeCourseId) : 1;
 
@@ -706,7 +706,7 @@
       unitIndex = !isNaN(parsed) ? Math.max(0, Math.min(activeCourse.units.length - 1, parsed - 1)) : Math.max(0, activeCourse.units.findIndex(u => u.id === unitIndexOrId || u.unit === unitIndexOrId));
     }
     const unitLevel = unitIndex + 1;
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     if (typeof window.setUnlockedUnitLevel === 'function') window.setUnlockedUnitLevel(unitLevel, lang);
     renderRoadmap();
     return activeCourse.units[unitIndex] || activeCourse.units[0];
@@ -714,7 +714,7 @@
 
   function nextUnit() {
     const activeCourse = (typeof window.getCurrentCourseData === 'function') ? window.getCurrentCourseData() : null;
-    const lang = (window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const lang = (window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const curLevel = (typeof window.getUnlockedUnitLevel === 'function' ? window.getUnlockedUnitLevel(lang) : 1) || 1;
     return (activeCourse?.units && curLevel < activeCourse.units.length) ? loadUnit(curLevel + 1) : null;
   }
@@ -780,7 +780,7 @@
       es: { icon: '🇪🇸', text: '마드리드행 쾌속선', code: 'MAD-01', codeClass: 'bg-emerald-100 text-emerald-800', flag: '🇪🇸' },
       en: { icon: '🇺🇸', text: '뉴욕행 직항로', code: 'NYC-01', codeClass: 'bg-sky-100 text-sky-800', flag: '🇺🇸' }
     });
-    const p = presets[lang] || presets.es;
+    const p = presets[lang] || presets.en;
     const el = id => document.getElementById(id);
     if (el('signpost-icon')) el('signpost-icon').textContent = p.icon;
     if (el('signpost-text')) el('signpost-text').textContent = p.text;

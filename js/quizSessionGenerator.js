@@ -54,7 +54,7 @@
 
   function findWordInCourse(wordId, course) {
     if (!wordId) return null;
-    const curLang = (typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) === 'en' ? 'en' : 'es';
+    const curLang = ((typeof window !== 'undefined' && (window.currentLanguage || window.currentActiveCourse)) || 'en') === 'es' ? 'es' : 'en';
     const courses = [
       course,
       window.getCurrentCourseData?.(),
@@ -99,7 +99,7 @@
   function getStageWordPool(lessonId, lang) {
     const rawId = lessonId || window.currentGameLessonId || 'node-2';
     const normId = normalizeLessonId(rawId);
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const course = (typeof window.getCurrentCourseData === 'function')
       ? window.getCurrentCourseData()
       : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
@@ -148,10 +148,10 @@
   }
 
   // 🎲 스테이지 세션 퀴즈 덱 생성 (플래시카드 순서 탈피: 무조건 셔플 보장)
-  function generateStageSession(lessonId = 'node-2', lang = 'es', roundIndex = 0) {
+  function generateStageSession(lessonId = 'node-2', lang = 'en', roundIndex = 0) {
     const rawLessonId = lessonId || 'node-2';
     const normId = normalizeLessonId(rawLessonId);
-    const courseLang = (window.currentLanguage || window.currentActiveCourse || lang || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (window.currentLanguage || window.currentActiveCourse || lang || 'en') === 'es' ? 'es' : 'en';
 
     // 복습 노드 인입 분기
     if (normId === 'node-review' || String(rawLessonId).includes('review')) {
@@ -246,7 +246,7 @@
 
   // 📚 특정 유닛(Unit)에 속한 전체 단어 목록 추출 유틸
   function getUnitWords(unitNum = 1, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
 
     const course = (typeof window.getCurrentCourseData === 'function')
@@ -270,7 +270,7 @@
 
   // 📚 이미 학습한 단어 풀(현재 유닛 또는 직전 클리어한 유닛들) 추출 헬퍼
   function getLearnedWordsPool(unitNum = 1, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
     const pool = [];
 
@@ -296,7 +296,7 @@
 
   // 오답 스테이지 단어 풀 생성 로직 (10문제 고정 풀이 시스템)
   function buildReviewQuestionQueue(unitId, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const targetU = parseInt(unitId, 10) || (window.currentUnitNumber || 1);
 
     // 1. 현재 저장된 유효 오답 리스트 조회
@@ -426,7 +426,7 @@
 
   // 약점 복습 세션 생성기 (10문제 고정 풀이 시스템 및 인게임 엔진 표준 규격)
   function generateReviewSession(unitNum = 1, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const targetU = parseInt(unitNum, 10) || (window.currentUnitNumber || 1);
 
     const queue = buildReviewQuestionQueue(targetU, courseLang);
@@ -547,7 +547,7 @@
   function generateQuestionChoices(q, sessionQuestions, lessonId = 'node-2', lang = 'es') {
     try {
       if (!q) return [];
-      const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+      const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
       const course = (typeof window.getCurrentCourseData === 'function')
         ? window.getCurrentCourseData()
         : (courseLang === 'en' ? window.courseData_en : (window.courseData_es || window.courseData));
@@ -580,7 +580,7 @@
   // ⚡ 챕터 건너뛰기 시험(Jump Test) 세션 생성기
   // 오직 targetUnitId(목표 Unit)의 단어 풀 안에서만 100% 무작위 셔플 추출 (타 챕터 및 이전 기초 단어 혼합 완전 차단)
   function generateJumpTestSession(targetUnitId = 2, count = 10, lang = 'es') {
-    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'es') === 'en' ? 'en' : 'es';
+    const courseLang = (lang || window.currentLanguage || window.currentActiveCourse || 'en') === 'es' ? 'es' : 'en';
     const uNum = parseInt(String(targetUnitId).replace(/[^\d]/g, ''), 10) || 2;
     const uKey = 'unit-' + uNum;
     const totalCount = Math.min(15, Math.max(10, parseInt(count, 10) || 10));

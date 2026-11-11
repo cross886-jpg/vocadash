@@ -86,7 +86,7 @@
       } catch (_) { }
     }
 
-    const lang = (typeof window !== 'undefined' && (window.currentLanguage === 'en' || window.currentActiveCourse === 'en')) ? 'en' : 'es';
+    const lang = (typeof window !== 'undefined' && ((window.currentLanguage || window.currentActiveCourse || 'en') === 'es')) ? 'es' : 'en';
 
     if (!cid || cid === 'main' || cid === 'basic') {
       return (lang === 'en') ? 'en_main' : 'es_main';
@@ -128,8 +128,9 @@
     if (targetCourseKey && allSections[targetCourseKey] && Array.isArray(allSections[targetCourseKey].sections) && allSections[targetCourseKey].sections.length > 0) {
       return allSections[targetCourseKey];
     }
-    // 3. Fallback to es_main
-    return allSections.es_main || allSections.es || null;
+    // 3. Fallback to active language main course
+    const fallbackLang = (typeof window !== 'undefined' && ((window.currentLanguage || window.currentActiveCourse || 'en') === 'es')) ? 'es' : 'en';
+    return (fallbackLang === 'en' ? allSections.en_main : allSections.es_main) || allSections.en_main || allSections.es_main || allSections.es || null;
   }
 
   function getUnlockedLevel(lang, courseKey) {

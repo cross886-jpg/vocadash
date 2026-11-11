@@ -7,7 +7,7 @@
     set: (k, v) => { try { (typeof localStorage !== 'undefined' ? localStorage : target.localStorage)?.setItem(k, String(v)); } catch (_) { } },
     remove: (k) => { try { (typeof localStorage !== 'undefined' ? localStorage : target.localStorage)?.removeItem(k); } catch (_) { } }
   };
-  const getLang = (l) => (l || target.currentLanguage || target.currentActiveCourse || storage.get('vocadash_language') || 'es') === 'en' ? 'en' : 'es';
+  const getLang = (l) => (l || target.currentLanguage || target.currentActiveCourse || storage.get('vocadash_language') || 'en') === 'es' ? 'es' : 'en';
   const getCourse = (c, lang) => {
     let cid = c || target.currentCourseId || target.activeCourseId;
     if (!cid && storage.get) cid = storage.get(`vocadash_active_course_${getLang(lang)}`) || storage.get('vocadash_active_course');

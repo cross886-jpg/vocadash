@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vocadash-cache-v4';
+const CACHE_NAME = 'vocadash-cache-v5';
 const MATERIAL_SYMBOLS_URL = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200';
 
 const PRECACHE_URLS = [

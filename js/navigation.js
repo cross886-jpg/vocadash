@@ -171,7 +171,7 @@
       } else if (normTab === "review") {
         window.renderReviewWords?.("waiting");
       } else if (normTab === "book") {
-        const curLang = window.currentLanguage || "es";
+        const curLang = window.currentLanguage || "en";
         const curCourse = window.activeCourseId || window.currentCourseId || "main";
         window.renderBookCourseDropdown?.(curLang, curCourse);
         window.renderBookWords?.(curLang, curCourse);
@@ -205,7 +205,7 @@
     window.currentGameLessonId = targetNodeId;
     window.closeLessonModal?.();
 
-    const currentCourse = window.currentActiveCourse || window.currentLanguage || "es";
+    const currentCourse = window.currentActiveCourse || window.currentLanguage || "en";
     const round = (typeof window.getNodeProgress === "function")
       ? (Number(window.getNodeProgress(targetNodeId, currentCourse)) || 0)
       : ((window.nodeProgressMap && window.nodeProgressMap[targetNodeId]) || 0);
