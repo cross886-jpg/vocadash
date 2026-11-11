@@ -630,12 +630,35 @@
             </div>
           </div>
           <div class="flex items-center gap-2 flex-shrink-0 text-slate-400">
+            <button type="button" class="btn-unit-flashcard px-2 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-700 border border-emerald-200 text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer" data-unit-num="${uNum}" title="Unit ${uNum} 플래시카드">
+              <span>🎴</span>
+              <span>플래시카드</span>
+            </button>
             <span class="text-xs font-semibold text-slate-400">${wordCount}단어</span>
             <span class="material-symbols-outlined text-[20px] unit-toggle-icon transition-transform duration-200 ${isInitiallyOpen ? 'rotate-180 text-emerald-600' : ''}">
               expand_more
             </span>
           </div>
         `;
+
+        const flashcardBtn = catHeader.querySelector('.btn-unit-flashcard');
+        if (flashcardBtn) {
+          flashcardBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (unitWords.length === 0) return;
+            const modalFn = window.openFlashcardModal || window.openFlashcardScreen;
+            if (typeof modalFn === 'function') {
+              modalFn({
+                words: unitWords,
+                lessonId: `unit_${uNum}_book`,
+                title: `Unit ${uNum} · 🎴 플래시카드 (${unitWords.length}단어)`,
+                returnTab: 'book',
+                onComplete: () => window.closeFlashcardScreen?.(true)
+              });
+            }
+          });
+        }
 
         const wordsListContainer = document.createElement('div');
         wordsListContainer.className = 'book-unit-words-wrap unit-word-list flex flex-col gap-2.5 px-3.5 pb-3.5 pt-2 border-t border-slate-100/80 bg-slate-50/30' + (isInitiallyOpen ? '' : ' hidden');

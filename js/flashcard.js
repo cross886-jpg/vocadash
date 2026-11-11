@@ -162,7 +162,8 @@
     }
     let currentRound = typeof activeFlashcardOptions.round === 'number' ? activeFlashcardOptions.round : Math.min(3, Math.max(1, (clearedCount || 0) + 1));
 
-    if (isBossNode) currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔥 FINAL BOSS · 단어 예습`;
+    if (activeFlashcardOptions.title) currentLessonDeckTitle = activeFlashcardOptions.title;
+    else if (isBossNode) currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔥 FINAL BOSS · 단어 예습`;
     else if (isReviewNode) currentLessonDeckTitle = `Unit ${resolvedUnitId} · 🔄 약점 극복 · 단어 예습`;
     else currentLessonDeckTitle = `Unit ${resolvedUnitId} · Stage ${stageIndex} (${currentRound}/3) · 단어 예습`;
 
@@ -200,11 +201,14 @@
     if (els.container) { els.container.classList.remove('translate-y-0'); els.container.classList.add('translate-y-full'); }
     if (els.screen) { els.screen.classList.remove('opacity-100', 'pointer-events-auto'); els.screen.classList.add('opacity-0', 'pointer-events-none', 'hidden'); els.screen.style.display = 'none'; }
     if (restoreRoadmap) {
+      const returnTab = activeFlashcardOptions?.returnTab || 'home';
       const rs = document.getElementById('roadmap-screen'), rh = document.getElementById('roadmap-header'), bn = document.getElementById('bottom-nav') || document.querySelector('nav');
-      if (rs) { rs.classList.remove('hidden'); rs.style.display = ''; }
-      if (rh) { rh.classList.remove('hidden'); rh.style.display = ''; }
-      if (bn) bn.classList.remove('hidden');
-      if (typeof window.switchMainTab === 'function') window.switchMainTab('home', true);
+      if (returnTab === 'home') {
+        if (rs) { rs.classList.remove('hidden'); rs.style.display = ''; }
+        if (rh) { rh.classList.remove('hidden'); rh.style.display = ''; }
+      }
+      if (bn) { bn.classList.remove('hidden'); bn.style.display = ''; }
+      if (typeof window.switchMainTab === 'function') window.switchMainTab(returnTab, true);
     }
   }
 
@@ -551,7 +555,7 @@
   });
 
   Object.assign(window, {
-    openFlashcardScreen, openFlashcard: openFlashcardScreen, startFlashcard: openFlashcardScreen,
+    openFlashcardScreen, openFlashcardModal: openFlashcardScreen, openFlashcard: openFlashcardScreen, startFlashcard: openFlashcardScreen,
     showFlashcardScreen: openFlashcardScreen, closeFlashcardScreen, finishFlashcards,
     launchGameDirectly, initFlashcardDeck: openFlashcardScreen, loadFlashcards: openFlashcardScreen,
     toggleCardFlip, handleNextCard, handlePrevCard, renderCurrentCard

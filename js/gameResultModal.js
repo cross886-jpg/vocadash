@@ -322,11 +322,12 @@
 
       const btnWrong = document.getElementById("btn-result-wrong-review");
       const missedSec = document.getElementById("result-missed-section");
+      const sessionReviewDeck = buildSessionReviewDeck(missed, questions);
       if (missed.length > 0) {
         btnWrong?.classList.remove("hidden"); if (btnWrong) btnWrong.style.display = "flex";
         const iconSpan = btnWrong?.querySelector("span.text-lg");
-        if (iconSpan) iconSpan.textContent = "⚡";
-        setTxt("btn-result-wrong-review-text", `헷갈린 단어 ${missed.length}개 복습하기`);
+        if (iconSpan) iconSpan.textContent = "⚠️";
+        setTxt("btn-result-wrong-review-text", `세션 단어 복습하기 (오답 ${missed.length}개 포함)`);
         missedSec?.classList.remove("hidden"); if (missedSec) missedSec.style.display = "block";
         const firstMissed = missed[0];
         setTxt("result-missed-word", firstMissed.word || firstMissed.term || "");
@@ -344,7 +345,14 @@
           }
         }
       } else {
-        btnWrong?.classList.add("hidden"); if (btnWrong) btnWrong.style.display = "none";
+        if (sessionReviewDeck.length > 0) {
+          btnWrong?.classList.remove("hidden"); if (btnWrong) btnWrong.style.display = "flex";
+          const iconSpan = btnWrong?.querySelector("span.text-lg");
+          if (iconSpan) iconSpan.textContent = "🎴";
+          setTxt("btn-result-wrong-review-text", `학습 단어 복습하기 (${sessionReviewDeck.length}개)`);
+        } else {
+          btnWrong?.classList.add("hidden"); if (btnWrong) btnWrong.style.display = "none";
+        }
         missedSec?.classList.add("hidden"); if (missedSec) missedSec.style.display = "none";
       }
 
@@ -540,26 +548,47 @@
     return false;
   }
 
-  function startWrongWordsMiniReview() {
-    const wrongWords = (Array.isArray(window.currentSessionWrongWords) && window.currentSessionWrongWords.length > 0)
-      ? window.currentSessionWrongWords : (window.missedWords || []);
+  function buildSessionReviewDeck(missedList, sessionList) {
+    const combined = [
+      ...(Array.isArray(missedList) ? missedList : []),
+      ...(Array.isArray(sessionList) ? sessionList : [])
+    ];
+    const seen = new Set();
+    const deck = [];
+    for (const item of combined) {
+      if (!item) continue;
+      const key = String(item.id || item.word || item.term || "").trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      deck.push(item);
+    }
+    return deck;
+  }
 
-    if (!wrongWords || wrongWords.length === 0) {
-      window.showToast?.("복습할 오답 단어가 없습니다! 다음으로 진행합니다.", "👍");
+  function startWrongWordsMiniReview() {
+    const missedList = (Array.isArray(window.currentSessionWrongWords) && window.currentSessionWrongWords.length > 0)
+      ? window.currentSessionWrongWords
+      : (window.missedWords || []);
+    const sessionList = (Array.isArray(window.gameQuestions) && window.gameQuestions.length > 0)
+      ? window.gameQuestions
+      : (window.currentSessionQuestions || []);
+    const reviewWords = buildSessionReviewDeck(missedList, sessionList);
+
+    if (reviewWords.length === 0) {
+      window.showToast?.("복습할 단어가 없습니다! 다음으로 진행합니다.", "👍");
       return handleResultPrimary();
     }
 
     closeResultModal();
     const gScreen = document.getElementById("game-screen");
     if (gScreen) { gScreen.classList.add("hidden", "opacity-0", "pointer-events-none"); gScreen.style.display = "none"; }
-    const flashcardScreen = document.getElementById("flashcard-screen");
-    if (flashcardScreen) {
-      flashcardScreen.classList.remove("hidden", "opacity-0", "pointer-events-none");
-      flashcardScreen.classList.add("opacity-100", "pointer-events-auto");
-      flashcardScreen.style.removeProperty("display");
-      flashcardScreen.style.display = "";
-    }
-    window.openFlashcardScreen?.({ words: wrongWords, onComplete: () => window.closeFlashcardScreen?.(true) });
+    const modalFn = window.openFlashcardModal || window.openFlashcardScreen;
+    modalFn?.({
+      words: reviewWords,
+      title: "🔄 세션 단어 복습 · 플래시카드",
+      returnTab: "home",
+      onComplete: () => window.closeFlashcardScreen?.(true)
+    });
   }
 
   function handleResultSecondary(e) {
@@ -609,7 +638,7 @@
 
   function bindResultModalEvents() {
     const on = (id, fn) => { const el = document.getElementById(id); if (el) el.onclick = fn; };
-    on("btn-result-wrong-review", e => { e?.preventDefault?.(); startWrongWordsMiniReview(); });
+    on("btn-result-wrong-review", e => { e?.preventDefault?.(); e?.stopPropagation?.(); startWrongWordsMiniReview(); });
     ["btn-next-stage", "btn-result-primary"].forEach(id => on(id, e => { e?.preventDefault?.(); handleResultPrimary(e); }));
     on("btn-result-secondary", handleResultSecondary);
     const handleExit = e => {
@@ -728,7 +757,8 @@
     startWrongWordsMiniReview, showCourseCompletionModal, handleResultSecondary, bindResultModalEvents,
     gameResultModal: {
       finishGameStage, triggerGameOver, calculateStarsByAccuracy, renderModalStars,
-      renderResultModal, closeResultModal, handleResultPrimary, resetStageFinishingFlag: window.resetStageFinishingFlag
+      renderResultModal, closeResultModal, handleResultPrimary, startWrongWordsMiniReview,
+      resetStageFinishingFlag: window.resetStageFinishingFlag
     }
   });
 

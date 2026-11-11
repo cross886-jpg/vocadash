@@ -123,7 +123,7 @@
       const lastSec = cs[resolvedCid].sections[cs[resolvedCid].sections.length - 1];
       if (lastSec && typeof lastSec.unitEnd === 'number') return lastSec.unitEnd;
     }
-    return (lang === 'en') ? 166 : 216;
+    return 166;
   }
   function getUnlockedUnitLevel(targetLang, targetCourseId) {
     const lang = getLang(targetLang), cid = getCourse(targetCourseId, lang);

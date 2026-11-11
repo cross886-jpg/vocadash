@@ -77,36 +77,6 @@
           unitStart: 121,
           unitEnd: 166,
           themeColor: "indigo"
-        },
-        {
-          id: "es_sec_5",
-          tier: "C1 고급 · 30 게이트",
-          ticketCode: "VD-C1",
-          fromCode: "SVQ",
-          fromName: "세비야",
-          toCode: "SLM",
-          toName: "살라망카",
-          duration: "2.5h 고속철",
-          title: "살라망카 학술 & 전문 (C1)",
-          desc: "법률/행정 소송, 금융/거시경제, 학술 리포트, 고급 관용구 및 뉘앙스",
-          unitStart: 167,
-          unitEnd: 196,
-          themeColor: "rose"
-        },
-        {
-          id: "es_sec_6",
-          tier: "C2 최고급 · 20 게이트",
-          ticketCode: "VD-C2",
-          fromCode: "SLM",
-          fromName: "살라망카",
-          toCode: "TOL",
-          toName: "톨레도",
-          duration: "1h 셔틀",
-          title: "톨레도 원어민 마스터 (C2)",
-          desc: "역사/문학적 맥락, 철학/외교 담론, 스페인 고유 속담, 최상위 전문 어휘",
-          unitStart: 197,
-          unitEnd: 216,
-          themeColor: "emerald"
         }
       ],
       units: {}

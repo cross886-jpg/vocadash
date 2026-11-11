@@ -156,15 +156,18 @@
     const config = getSectionsConfig(cKey);
     if (!config || !Array.isArray(config.sections) || config.sections.length === 0) return null;
 
+    const visibleSections = config.sections.filter(s => !isCLevelSection(s));
+    const pool = visibleSections.length > 0 ? visibleSections : config.sections;
+
     const lang = getLangFromCourseKey(cKey);
     const unlockedLevel = getUnlockedLevel(lang, cKey);
 
     let activeSection = null;
     if (sectionId) {
-      activeSection = config.sections.find(s => s.id === sectionId);
+      activeSection = pool.find(s => s.id === sectionId);
     }
     if (!activeSection && typeof window !== 'undefined' && window.currentSectionId) {
-      activeSection = config.sections.find(s => s.id === window.currentSectionId);
+      activeSection = pool.find(s => s.id === window.currentSectionId);
     }
     if (!activeSection) {
       let savedSecId = null;
@@ -174,14 +177,14 @@
         }
       } catch (_) { }
       if (savedSecId) {
-        activeSection = config.sections.find(s => s.id === savedSecId);
+        activeSection = pool.find(s => s.id === savedSecId);
       }
     }
     if (!activeSection) {
-      activeSection = config.sections.find(s => unlockedLevel >= s.unitStart && unlockedLevel <= s.unitEnd);
+      activeSection = pool.find(s => unlockedLevel >= s.unitStart && unlockedLevel <= s.unitEnd);
     }
     if (!activeSection) {
-      activeSection = config.sections[0];
+      activeSection = pool[0];
     }
     return activeSection;
   }
@@ -391,10 +394,11 @@
       </div>
     `;
 
-    // 2. Ticket Pass List (대분류 코스 카드 세로 목록)
+    // 2. Ticket Pass List (대분류 코스 카드 세로 목록 - A1~B2까지만 노출)
+    const visibleSections = config.sections.filter(sec => !isCLevelSection(sec));
     const ticketsHtml = `
       <div id="course-ticket-list" class="flex flex-col gap-3 p-4 overflow-y-auto max-h-[72vh] no-scrollbar">
-        ${config.sections.map(sec => {
+        ${visibleSections.map(sec => {
           const isActive = (sec.id === activeSection.id);
           const isLockedLevel = isCLevelSection(sec);
           const theme = THEME_CONFIG[sec.themeColor] || THEME_CONFIG.primary;
